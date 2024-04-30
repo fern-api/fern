@@ -33,15 +33,23 @@ class InlinedRequestsClient:
         """
         POST with custom object in request body, response is an object
 
-        Parameters:
-            - string: str.
+        Parameters
+        ----------
+        string : str
 
-            - integer: int.
+        integer : int
 
-            - nested_object: ObjectWithOptionalField.
+        nested_object : ObjectWithOptionalField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -131,15 +139,23 @@ class AsyncInlinedRequestsClient:
         """
         POST with custom object in request body, response is an object
 
-        Parameters:
-            - string: str.
+        Parameters
+        ----------
+        string : str
 
-            - integer: int.
+        integer : int
 
-            - nested_object: ObjectWithOptionalField.
+        nested_object : ObjectWithOptionalField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         import datetime
         import uuid
 

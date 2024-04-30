@@ -20,11 +20,19 @@ class Ec2Client:
 
     def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - size: str.
+        Parameters
+        ----------
+        size : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedMultiUrlEnvironment
 
         client = SeedMultiUrlEnvironment(
@@ -75,11 +83,19 @@ class AsyncEc2Client:
 
     async def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - size: str.
+        Parameters
+        ----------
+        size : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedMultiUrlEnvironment
 
         client = AsyncSeedMultiUrlEnvironment(

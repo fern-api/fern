@@ -25,11 +25,19 @@ class ServiceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]].
+        Parameters
+        ----------
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedBytes
 
         client = SeedBytes(
@@ -81,11 +89,19 @@ class AsyncServiceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - request: typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]].
+        Parameters
+        ----------
+        request : typing.Union[bytes, typing.Iterator[bytes], typing.AsyncIterator[bytes]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedBytes
 
         client = AsyncSeedBytes(

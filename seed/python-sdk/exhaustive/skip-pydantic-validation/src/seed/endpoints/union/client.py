@@ -24,11 +24,19 @@ class UnionClient:
         self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
     ) -> Animal:
         """
-        Parameters:
-            - request: Animal.
+        Parameters
+        ----------
+        request : Animal
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Animal
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import Animal_Dog
 
@@ -86,11 +94,19 @@ class AsyncUnionClient:
         self, *, request: Animal, request_options: typing.Optional[RequestOptions] = None
     ) -> Animal:
         """
-        Parameters:
-            - request: Animal.
+        Parameters
+        ----------
+        request : Animal
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Animal
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import Animal_Dog
 

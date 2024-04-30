@@ -29,15 +29,23 @@ class AuthClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
-        Parameters:
-            - client_id: str.
+        Parameters
+        ----------
+        client_id : str
 
-            - client_secret: str.
+        client_secret : str
 
-            - scope: typing.Optional[str].
+        scope : typing.Optional[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponse
+
+        Examples
+        --------
         from seed.client import SeedOauthClientCredentials
 
         client = SeedOauthClientCredentials(
@@ -103,17 +111,25 @@ class AuthClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
-        Parameters:
-            - client_id: str.
+        Parameters
+        ----------
+        client_id : str
 
-            - client_secret: str.
+        client_secret : str
 
-            - refresh_token: str.
+        refresh_token : str
 
-            - scope: typing.Optional[str].
+        scope : typing.Optional[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponse
+
+        Examples
+        --------
         from seed.client import SeedOauthClientCredentials
 
         client = SeedOauthClientCredentials(
@@ -185,15 +201,23 @@ class AsyncAuthClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
-        Parameters:
-            - client_id: str.
+        Parameters
+        ----------
+        client_id : str
 
-            - client_secret: str.
+        client_secret : str
 
-            - scope: typing.Optional[str].
+        scope : typing.Optional[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedOauthClientCredentials
 
         client = AsyncSeedOauthClientCredentials(
@@ -259,17 +283,25 @@ class AsyncAuthClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TokenResponse:
         """
-        Parameters:
-            - client_id: str.
+        Parameters
+        ----------
+        client_id : str
 
-            - client_secret: str.
+        client_secret : str
 
-            - refresh_token: str.
+        refresh_token : str
 
-            - scope: typing.Optional[str].
+        scope : typing.Optional[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        TokenResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedOauthClientCredentials
 
         client = AsyncSeedOauthClientCredentials(

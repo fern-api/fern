@@ -24,11 +24,19 @@ class HttpMethodsClient:
 
     def test_get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -71,11 +79,19 @@ class HttpMethodsClient:
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - string: str.
+        Parameters
+        ----------
+        string : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -125,13 +141,21 @@ class HttpMethodsClient:
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - string: str.
+        string : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -197,35 +221,43 @@ class HttpMethodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - string: typing.Optional[str].
+        string : typing.Optional[str]
 
-            - integer: typing.Optional[int].
+        integer : typing.Optional[int]
 
-            - long: typing.Optional[int].
+        long : typing.Optional[int]
 
-            - double: typing.Optional[float].
+        double : typing.Optional[float]
 
-            - bool: typing.Optional[bool].
+        bool : typing.Optional[bool]
 
-            - datetime: typing.Optional[dt.datetime].
+        datetime : typing.Optional[dt.datetime]
 
-            - date: typing.Optional[dt.date].
+        date : typing.Optional[dt.date]
 
-            - uuid: typing.Optional[uuid.UUID].
+        uuid : typing.Optional[uuid.UUID]
 
-            - base_64: typing.Optional[str].
+        base_64 : typing.Optional[str]
 
-            - list: typing.Optional[typing.Sequence[str]].
+        list : typing.Optional[typing.Sequence[str]]
 
-            - set: typing.Optional[typing.Set[str]].
+        set : typing.Optional[typing.Set[str]]
 
-            - map: typing.Optional[typing.Dict[int, str]].
+        map : typing.Optional[typing.Dict[int, str]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -318,11 +350,19 @@ class HttpMethodsClient:
 
     def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -368,11 +408,19 @@ class AsyncHttpMethodsClient:
 
     async def test_get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -415,11 +463,19 @@ class AsyncHttpMethodsClient:
         self, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - string: str.
+        Parameters
+        ----------
+        string : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -469,13 +525,21 @@ class AsyncHttpMethodsClient:
         self, id: str, *, string: str, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - string: str.
+        string : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -541,35 +605,43 @@ class AsyncHttpMethodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - string: typing.Optional[str].
+        string : typing.Optional[str]
 
-            - integer: typing.Optional[int].
+        integer : typing.Optional[int]
 
-            - long: typing.Optional[int].
+        long : typing.Optional[int]
 
-            - double: typing.Optional[float].
+        double : typing.Optional[float]
 
-            - bool: typing.Optional[bool].
+        bool : typing.Optional[bool]
 
-            - datetime: typing.Optional[dt.datetime].
+        datetime : typing.Optional[dt.datetime]
 
-            - date: typing.Optional[dt.date].
+        date : typing.Optional[dt.date]
 
-            - uuid: typing.Optional[uuid.UUID].
+        uuid : typing.Optional[uuid.UUID]
 
-            - base_64: typing.Optional[str].
+        base_64 : typing.Optional[str]
 
-            - list: typing.Optional[typing.Sequence[str]].
+        list : typing.Optional[typing.Sequence[str]]
 
-            - set: typing.Optional[typing.Set[str]].
+        set : typing.Optional[typing.Set[str]]
 
-            - map: typing.Optional[typing.Dict[int, str]].
+        map : typing.Optional[typing.Dict[int, str]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -662,11 +734,19 @@ class AsyncHttpMethodsClient:
 
     async def test_delete(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(

@@ -23,11 +23,19 @@ class PrimitiveClient:
 
     def get_and_return_string(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -69,11 +77,19 @@ class PrimitiveClient:
 
     def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
-        Parameters:
-            - request: int.
+        Parameters
+        ----------
+        request : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        int
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -115,11 +131,19 @@ class PrimitiveClient:
 
     def get_and_return_long(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
-        Parameters:
-            - request: int.
+        Parameters
+        ----------
+        request : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        int
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -168,11 +192,19 @@ class PrimitiveClient:
         self, *, request: float, request_options: typing.Optional[RequestOptions] = None
     ) -> float:
         """
-        Parameters:
-            - request: float.
+        Parameters
+        ----------
+        request : float
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        float
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -214,11 +246,19 @@ class PrimitiveClient:
 
     def get_and_return_bool(self, *, request: bool, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Parameters:
-            - request: bool.
+        Parameters
+        ----------
+        request : bool
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -262,11 +302,19 @@ class PrimitiveClient:
         self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
     ) -> dt.datetime:
         """
-        Parameters:
-            - request: dt.datetime.
+        Parameters
+        ----------
+        request : dt.datetime
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        dt.datetime
+
+        Examples
+        --------
         import datetime
 
         from seed.client import SeedExhaustive
@@ -319,11 +367,19 @@ class PrimitiveClient:
         self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> dt.date:
         """
-        Parameters:
-            - request: dt.date.
+        Parameters
+        ----------
+        request : dt.date
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        dt.date
+
+        Examples
+        --------
         import datetime
 
         from seed.client import SeedExhaustive
@@ -376,11 +432,19 @@ class PrimitiveClient:
         self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
     ) -> uuid.UUID:
         """
-        Parameters:
-            - request: uuid.UUID.
+        Parameters
+        ----------
+        request : uuid.UUID
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        uuid.UUID
+
+        Examples
+        --------
         import uuid
 
         from seed.client import SeedExhaustive
@@ -431,11 +495,19 @@ class PrimitiveClient:
 
     def get_and_return_base_64(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -489,11 +561,19 @@ class AsyncPrimitiveClient:
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -535,11 +615,19 @@ class AsyncPrimitiveClient:
 
     async def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
-        Parameters:
-            - request: int.
+        Parameters
+        ----------
+        request : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        int
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -583,11 +671,19 @@ class AsyncPrimitiveClient:
         self, *, request: int, request_options: typing.Optional[RequestOptions] = None
     ) -> int:
         """
-        Parameters:
-            - request: int.
+        Parameters
+        ----------
+        request : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        int
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -636,11 +732,19 @@ class AsyncPrimitiveClient:
         self, *, request: float, request_options: typing.Optional[RequestOptions] = None
     ) -> float:
         """
-        Parameters:
-            - request: float.
+        Parameters
+        ----------
+        request : float
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        float
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -684,11 +788,19 @@ class AsyncPrimitiveClient:
         self, *, request: bool, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
-        Parameters:
-            - request: bool.
+        Parameters
+        ----------
+        request : bool
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -732,11 +844,19 @@ class AsyncPrimitiveClient:
         self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
     ) -> dt.datetime:
         """
-        Parameters:
-            - request: dt.datetime.
+        Parameters
+        ----------
+        request : dt.datetime
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        dt.datetime
+
+        Examples
+        --------
         import datetime
 
         from seed.client import AsyncSeedExhaustive
@@ -789,11 +909,19 @@ class AsyncPrimitiveClient:
         self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> dt.date:
         """
-        Parameters:
-            - request: dt.date.
+        Parameters
+        ----------
+        request : dt.date
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        dt.date
+
+        Examples
+        --------
         import datetime
 
         from seed.client import AsyncSeedExhaustive
@@ -846,11 +974,19 @@ class AsyncPrimitiveClient:
         self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
     ) -> uuid.UUID:
         """
-        Parameters:
-            - request: uuid.UUID.
+        Parameters
+        ----------
+        request : uuid.UUID
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        uuid.UUID
+
+        Examples
+        --------
         import uuid
 
         from seed.client import AsyncSeedExhaustive
@@ -903,11 +1039,19 @@ class AsyncPrimitiveClient:
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(

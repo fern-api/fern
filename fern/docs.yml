@@ -239,25 +239,38 @@ navigation:
         contents:
           - page: Accordion
             path: ./pages/docs/components/accordions.mdx
+            icon: 'square-caret-down'
           - page: Accordion Groups
             path: ./pages/docs/components/accordion-groups.mdx
+            icon: table-rows
           - page: Callouts
             path: ./pages/docs/components/callouts.mdx
+            icon: 'circle-exclamation'
           - page: Cards
             path: ./pages/docs/components/cards.mdx
+            icon: "rectangle"
           - page: Card Groups
             path: ./pages/docs/components/card-groups.mdx
+            icon: 'rectangles-mixed'
           - page: Code Blocks
             path: ./pages/docs/components/code-blocks.mdx
             slug: code-blocks
+            icon: "rectangle-code"
           - page: Steps
             path: ./pages/docs/components/steps.mdx
+            icon: 'arrow-progress'
+          - page: Frames
+            path: ./pages/docs/components/frames.mdx
+            icon: 'frame'
           - page: Tabs
             path: ./pages/docs/components/tabs.mdx
-          - page: Endpoint Snippets
-            path: ./pages/fern-docs/components/endpoint-snippets.mdx
-          - page: Icon
-            path: ./pages/fern-docs/components/icon.mdx
+            icon: 'window-restore'
+          - page: Endpoint Request Snippet
+            path: ./pages/docs/components/endpoint-request-snippet.mdx
+            icon: 'turn-up'
+          - page: Endpoint Response Snippet
+            path: ./pages/docs/components/endpoint-response-snippet.mdx
+            icon: 'turn-down'
   - tab: api
     layout:
       - api: API Reference

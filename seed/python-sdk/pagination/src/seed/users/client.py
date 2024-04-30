@@ -32,17 +32,29 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListUsersPaginationResponse:
         """
-        Parameters:
-            - page: typing.Optional[int]. Defaults to first page
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
 
-            - per_page: typing.Optional[int]. Defaults to per page
+        per_page : typing.Optional[int]
+            Defaults to per page
 
-            - order: typing.Optional[Order].
+        order : typing.Optional[Order]
 
-            - starting_after: typing.Optional[str]. The cursor used for pagination in order to fetch
-                                                    the next page of results.
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListUsersPaginationResponse
+
+        Examples
+        --------
         from seed.client import SeedPagination
 
         client = SeedPagination(
@@ -106,17 +118,29 @@ class UsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListUsersPaginationResponse:
         """
-        Parameters:
-            - page: typing.Optional[int]. Defaults to first page
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
 
-            - per_page: typing.Optional[int]. Defaults to per page
+        per_page : typing.Optional[int]
+            Defaults to per page
 
-            - order: typing.Optional[Order].
+        order : typing.Optional[Order]
 
-            - starting_after: typing.Optional[str]. The cursor used for pagination in order to fetch
-                                                    the next page of results.
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListUsersPaginationResponse
+
+        Examples
+        --------
         from seed.client import SeedPagination
 
         client = SeedPagination(
@@ -174,11 +198,19 @@ class UsersClient:
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> ListUsersExtendedResponse:
         """
-        Parameters:
-            - cursor: typing.Optional[uuid.UUID].
+        Parameters
+        ----------
+        cursor : typing.Optional[uuid.UUID]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListUsersExtendedResponse
+
+        Examples
+        --------
         import uuid
 
         from seed.client import SeedPagination
@@ -234,11 +266,21 @@ class UsersClient:
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> UsernameCursor:
         """
-        Parameters:
-            - starting_after: typing.Optional[str]. The cursor used for pagination in order to fetch
-                                                    the next page of results.
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UsernameCursor
+
+        Examples
+        --------
         from seed.client import SeedPagination
 
         client = SeedPagination(
@@ -290,11 +332,19 @@ class UsersClient:
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> UsernameContainer:
         """
-        Parameters:
-            - offset: typing.Optional[int].
+        Parameters
+        ----------
+        offset : typing.Optional[int]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UsernameContainer
+
+        Examples
+        --------
         from seed.client import SeedPagination
 
         client = SeedPagination(
@@ -357,17 +407,29 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListUsersPaginationResponse:
         """
-        Parameters:
-            - page: typing.Optional[int]. Defaults to first page
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
 
-            - per_page: typing.Optional[int]. Defaults to per page
+        per_page : typing.Optional[int]
+            Defaults to per page
 
-            - order: typing.Optional[Order].
+        order : typing.Optional[Order]
 
-            - starting_after: typing.Optional[str]. The cursor used for pagination in order to fetch
-                                                    the next page of results.
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListUsersPaginationResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(
@@ -431,17 +493,29 @@ class AsyncUsersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListUsersPaginationResponse:
         """
-        Parameters:
-            - page: typing.Optional[int]. Defaults to first page
+        Parameters
+        ----------
+        page : typing.Optional[int]
+            Defaults to first page
 
-            - per_page: typing.Optional[int]. Defaults to per page
+        per_page : typing.Optional[int]
+            Defaults to per page
 
-            - order: typing.Optional[Order].
+        order : typing.Optional[Order]
 
-            - starting_after: typing.Optional[str]. The cursor used for pagination in order to fetch
-                                                    the next page of results.
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListUsersPaginationResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(
@@ -499,11 +573,19 @@ class AsyncUsersClient:
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> ListUsersExtendedResponse:
         """
-        Parameters:
-            - cursor: typing.Optional[uuid.UUID].
+        Parameters
+        ----------
+        cursor : typing.Optional[uuid.UUID]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListUsersExtendedResponse
+
+        Examples
+        --------
         import uuid
 
         from seed.client import AsyncSeedPagination
@@ -559,11 +641,21 @@ class AsyncUsersClient:
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> UsernameCursor:
         """
-        Parameters:
-            - starting_after: typing.Optional[str]. The cursor used for pagination in order to fetch
-                                                    the next page of results.
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UsernameCursor
+
+        Examples
+        --------
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(
@@ -615,11 +707,19 @@ class AsyncUsersClient:
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> UsernameContainer:
         """
-        Parameters:
-            - offset: typing.Optional[int].
+        Parameters
+        ----------
+        offset : typing.Optional[int]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UsernameContainer
+
+        Examples
+        --------
         from seed.client import AsyncSeedPagination
 
         client = AsyncSeedPagination(

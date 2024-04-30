@@ -12,6 +12,8 @@ from .file import File
 
 class Directory(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import Directory, File
 
     Directory(

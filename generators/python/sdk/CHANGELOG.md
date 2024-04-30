@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.5.0-rc0] - 2024-04-30
+
 - Feat: The generator now supports inlining top-level request parameters instead of requiring users create a request object.
 
   Config:
+
   ```yaml
   generators:
     - name: fernapi/fern-python-sdk
@@ -17,38 +19,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```
 
   Code change:
-    Before:
-      ```python
-      def get_and_return_with_optional_field(
-          self,
-          *,
-          request: ObjectWithOptionalField,
-          request_options: typing.Optional[RequestOptions] = None
-      ) -> ObjectWithOptionalField:
-        ...
-      ```
+  Before:
+  `python def get_and_return_with_optional_field( self, *, request: ObjectWithOptionalField, request_options: typing.Optional[RequestOptions] = None ) -> ObjectWithOptionalField: ... `
 
-    After:
-      ```python
-      def get_and_return_with_optional_field(
-          self,
-          *,
-          string: typing.Optional[str] = OMIT,
-          integer: typing.Optional[int] = OMIT,
-          long: typing.Optional[int] = OMIT,
-          double: typing.Optional[float] = OMIT,
-          bool: typing.Optional[bool] = OMIT,
-          request_options: typing.Optional[RequestOptions] = None,
-      ) -> ObjectWithOptionalField:
-        ...
-      ```
+  After:
+  `python def get_and_return_with_optional_field( self, *, string: typing.Optional[str] = OMIT, integer: typing.Optional[int] = OMIT, long: typing.Optional[int] = OMIT, double: typing.Optional[float] = OMIT, bool: typing.Optional[bool] = OMIT, request_options: typing.Optional[RequestOptions] = None, ) -> ObjectWithOptionalField: ... `
+
+## [1.4.0] - 2024-04-29
+
+- Improvement: keyword arguments are now ordered such that required params are ordered before optional params. Note that since these are kwargs, this is a non-breaking change.
+- Improvement: docstrings now match numpydoc/PEP257 format
 
 ## [1.4.0-rc3] - 2024-04-24
 
 - Fix: Set `mypy` dev depenency in generated `pyproject.toml` to `1.9.0`.
-       This prevents upstream `mypy` bugs from affecting user builds. Note that
-       this is only a dev dependency, so it does not affect the behavior of the
-       SDK.
+  This prevents upstream `mypy` bugs from affecting user builds. Note that
+  this is only a dev dependency, so it does not affect the behavior of the
+  SDK.
 - Fix: Temporarily disable unit test generation.
 - Improvement: Use named parameters for all `httpx` request params.
 

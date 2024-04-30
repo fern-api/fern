@@ -10,6 +10,8 @@ from .migration_status import MigrationStatus
 
 class Migration(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import Migration
 
     Migration(

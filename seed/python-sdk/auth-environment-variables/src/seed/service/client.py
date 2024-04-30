@@ -21,9 +21,17 @@ class ServiceClient:
         """
         GET request with custom api key
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedAuthEnvironmentVariables
 
         client = SeedAuthEnvironmentVariables(
@@ -70,11 +78,20 @@ class ServiceClient:
         """
         GET request with custom api key
 
-        Parameters:
-            - x_endpoint_header: typing.Optional[str]. Specifies the endpoint key.
+        Parameters
+        ----------
+        x_endpoint_header : typing.Optional[str]
+            Specifies the endpoint key.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedAuthEnvironmentVariables
 
         client = SeedAuthEnvironmentVariables(
@@ -124,9 +141,17 @@ class AsyncServiceClient:
         """
         GET request with custom api key
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedAuthEnvironmentVariables
 
         client = AsyncSeedAuthEnvironmentVariables(
@@ -173,11 +198,20 @@ class AsyncServiceClient:
         """
         GET request with custom api key
 
-        Parameters:
-            - x_endpoint_header: typing.Optional[str]. Specifies the endpoint key.
+        Parameters
+        ----------
+        x_endpoint_header : typing.Optional[str]
+            Specifies the endpoint key.
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedAuthEnvironmentVariables
 
         client = AsyncSeedAuthEnvironmentVariables(

@@ -9,6 +9,8 @@ from ...core.pydantic_utilities import pydantic_v1
 
 class User(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import User
 
     User(

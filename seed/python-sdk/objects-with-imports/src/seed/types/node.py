@@ -10,6 +10,8 @@ from ..core.pydantic_utilities import pydantic_v1
 
 class Node(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import Node
     from seed.commons import Metadata
 

@@ -10,6 +10,8 @@ from .node import Node
 
 class Tree(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import Node, Tree
     from seed.commons import Metadata
 

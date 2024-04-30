@@ -23,11 +23,19 @@ class ReferenceClient:
 
     def send(self, *, request: SendRequest, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
-        Parameters:
-            - request: SendRequest.
+        Parameters
+        ----------
+        request : SendRequest
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed import SendRequest
         from seed.client import SeedLiteral
 
@@ -85,11 +93,19 @@ class AsyncReferenceClient:
         self, *, request: SendRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> SendResponse:
         """
-        Parameters:
-            - request: SendRequest.
+        Parameters
+        ----------
+        request : SendRequest
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed import SendRequest
         from seed.client import AsyncSeedLiteral
 
