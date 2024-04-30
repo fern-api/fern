@@ -10,6 +10,8 @@ from .file_info import FileInfo
 
 class File(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import File
 
     File(

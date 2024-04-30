@@ -11,6 +11,8 @@ from ......core.pydantic_utilities import pydantic_v1
 
 class Filename(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     "file.txt"
     """
 

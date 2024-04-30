@@ -23,11 +23,18 @@ class ParamsClient:
         """
         GET with path param
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -74,13 +81,21 @@ class ParamsClient:
         """
         GET with query param
 
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - number: int.
+        number : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -140,13 +155,21 @@ class ParamsClient:
         """
         GET with multiple of same query param
 
-        Parameters:
-            - query: typing.Union[str, typing.Sequence[str]].
+        Parameters
+        ----------
+        query : typing.Union[str, typing.Sequence[str]]
 
-            - numer: typing.Union[int, typing.Sequence[int]].
+        numer : typing.Union[int, typing.Sequence[int]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -202,13 +225,21 @@ class ParamsClient:
         """
         GET with path and query params
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - query: str.
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -265,13 +296,20 @@ class ParamsClient:
         """
         PUT to update with path param
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - request: str.
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -323,11 +361,18 @@ class AsyncParamsClient:
         """
         GET with path param
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -374,13 +419,21 @@ class AsyncParamsClient:
         """
         GET with query param
 
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - number: int.
+        number : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -440,13 +493,21 @@ class AsyncParamsClient:
         """
         GET with multiple of same query param
 
-        Parameters:
-            - query: typing.Union[str, typing.Sequence[str]].
+        Parameters
+        ----------
+        query : typing.Union[str, typing.Sequence[str]]
 
-            - numer: typing.Union[int, typing.Sequence[int]].
+        numer : typing.Union[int, typing.Sequence[int]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -502,13 +563,21 @@ class AsyncParamsClient:
         """
         GET with path and query params
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - query: str.
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -565,13 +634,20 @@ class AsyncParamsClient:
         """
         PUT to update with path param
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - request: str.
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(

@@ -23,6 +23,8 @@ class _Factory:
 
 class Data(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.examples.resources.commons import Data_String
 
     Data_String(value="data")

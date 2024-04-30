@@ -5,12 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2024-04-29
+
+- Improvement: keyword arguments are now ordered such that required params are ordered before optional params. Note that since these are kwargs, this is a non-breaking change.
+- Improvement: docstrings now match numpydoc/PEP257 format
+
 ## [1.4.0-rc3] - 2024-04-24
 
 - Fix: Set `mypy` dev depenency in generated `pyproject.toml` to `1.9.0`.
-       This prevents upstream `mypy` bugs from affecting user builds. Note that
-       this is only a dev dependency, so it does not affect the behavior of the
-       SDK.
+  This prevents upstream `mypy` bugs from affecting user builds. Note that
+  this is only a dev dependency, so it does not affect the behavior of the
+  SDK.
 - Fix: Temporarily disable unit test generation.
 - Improvement: Use named parameters for all `httpx` request params.
 

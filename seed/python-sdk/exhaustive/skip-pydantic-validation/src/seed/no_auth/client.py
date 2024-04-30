@@ -27,11 +27,18 @@ class NoAuthClient:
         """
         POST request with no auth
 
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -91,11 +98,18 @@ class AsyncNoAuthClient:
         """
         POST request with no auth
 
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(

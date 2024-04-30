@@ -25,6 +25,8 @@ class _Factory:
 
 class Resource(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.mixed_case import Resource_User
 
     Resource_User(

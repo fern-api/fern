@@ -24,11 +24,18 @@ class ContainerClient:
         self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
-        Parameters:
-            - request: typing.Sequence[str].
+        Parameters
+        ----------
+        request : typing.Sequence[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[str]
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -80,11 +87,18 @@ class ContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Sequence[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ObjectWithRequiredField]
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -138,11 +152,18 @@ class ContainerClient:
         self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Set[str]:
         """
-        Parameters:
-            - request: typing.Set[str].
+        Parameters
+        ----------
+        request : typing.Set[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Set[str]
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -194,11 +215,18 @@ class ContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Sequence[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ObjectWithRequiredField]
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -252,11 +280,18 @@ class ContainerClient:
         self, *, request: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, str]:
         """
-        Parameters:
-            - request: typing.Dict[str, str].
+        Parameters
+        ----------
+        request : typing.Dict[str, str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, str]
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -308,11 +343,18 @@ class ContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Dict[str, ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Dict[str, ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, ObjectWithRequiredField]
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -369,11 +411,18 @@ class ContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Optional[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Optional[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[ObjectWithRequiredField]
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -430,11 +479,18 @@ class AsyncContainerClient:
         self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
-        Parameters:
-            - request: typing.Sequence[str].
+        Parameters
+        ----------
+        request : typing.Sequence[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[str]
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -486,11 +542,18 @@ class AsyncContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Sequence[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ObjectWithRequiredField]
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -544,11 +607,18 @@ class AsyncContainerClient:
         self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Set[str]:
         """
-        Parameters:
-            - request: typing.Set[str].
+        Parameters
+        ----------
+        request : typing.Set[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Set[str]
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -600,11 +670,18 @@ class AsyncContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Sequence[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ObjectWithRequiredField]
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -658,11 +735,18 @@ class AsyncContainerClient:
         self, *, request: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, str]:
         """
-        Parameters:
-            - request: typing.Dict[str, str].
+        Parameters
+        ----------
+        request : typing.Dict[str, str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, str]
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -714,11 +798,18 @@ class AsyncContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Dict[str, ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Dict[str, ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, ObjectWithRequiredField]
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -775,11 +866,18 @@ class AsyncContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Optional[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Optional[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[ObjectWithRequiredField]
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 

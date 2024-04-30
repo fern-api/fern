@@ -21,11 +21,18 @@ class UnionClient:
 
     def get(self, *, request: MyUnion, request_options: typing.Optional[RequestOptions] = None) -> MyUnion:
         """
-        Parameters:
-            - request: MyUnion.
+        Parameters
+        ----------
+        request : MyUnion
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MyUnion
+        Examples
+        --------
         from seed.client import SeedUndiscriminatedUnions
 
         client = SeedUndiscriminatedUnions(
@@ -76,11 +83,18 @@ class AsyncUnionClient:
 
     async def get(self, *, request: MyUnion, request_options: typing.Optional[RequestOptions] = None) -> MyUnion:
         """
-        Parameters:
-            - request: MyUnion.
+        Parameters
+        ----------
+        request : MyUnion
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MyUnion
+        Examples
+        --------
         from seed.client import AsyncSeedUndiscriminatedUnions
 
         client = AsyncSeedUndiscriminatedUnions(

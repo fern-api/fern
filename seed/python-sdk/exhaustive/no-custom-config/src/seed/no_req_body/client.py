@@ -21,9 +21,16 @@ class NoReqBodyClient:
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -62,9 +69,16 @@ class NoReqBodyClient:
 
     def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -113,9 +127,16 @@ class AsyncNoReqBodyClient:
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -154,9 +175,16 @@ class AsyncNoReqBodyClient:
 
     async def post_with_no_request_body(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(

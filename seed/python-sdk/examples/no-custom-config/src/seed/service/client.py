@@ -24,11 +24,18 @@ class ServiceClient:
 
     def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
-        Parameters:
-            - movie_id: MovieId.
+        Parameters
+        ----------
+        movie_id : MovieId
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Movie
+        Examples
+        --------
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -70,11 +77,18 @@ class ServiceClient:
 
     def create_movie(self, *, request: Movie, request_options: typing.Optional[RequestOptions] = None) -> MovieId:
         """
-        Parameters:
-            - request: Movie.
+        Parameters
+        ----------
+        request : Movie
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MovieId
+        Examples
+        --------
         from seed import Movie
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -137,21 +151,28 @@ class ServiceClient:
     def get_metadata(
         self,
         *,
+        x_api_version: str,
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        x_api_version: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Metadata:
         """
-        Parameters:
-            - shallow: typing.Optional[bool].
+        Parameters
+        ----------
+        x_api_version : str
 
-            - tag: typing.Optional[typing.Union[str, typing.Sequence[str]]].
+        shallow : typing.Optional[bool]
 
-            - x_api_version: str.
+        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Metadata
+        Examples
+        --------
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -211,11 +232,18 @@ class AsyncServiceClient:
 
     async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
-        Parameters:
-            - movie_id: MovieId.
+        Parameters
+        ----------
+        movie_id : MovieId
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Movie
+        Examples
+        --------
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -257,11 +285,18 @@ class AsyncServiceClient:
 
     async def create_movie(self, *, request: Movie, request_options: typing.Optional[RequestOptions] = None) -> MovieId:
         """
-        Parameters:
-            - request: Movie.
+        Parameters
+        ----------
+        request : Movie
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MovieId
+        Examples
+        --------
         from seed import Movie
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -324,21 +359,28 @@ class AsyncServiceClient:
     async def get_metadata(
         self,
         *,
+        x_api_version: str,
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
-        x_api_version: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Metadata:
         """
-        Parameters:
-            - shallow: typing.Optional[bool].
+        Parameters
+        ----------
+        x_api_version : str
 
-            - tag: typing.Optional[typing.Union[str, typing.Sequence[str]]].
+        shallow : typing.Optional[bool]
 
-            - x_api_version: str.
+        tag : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Metadata
+        Examples
+        --------
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 

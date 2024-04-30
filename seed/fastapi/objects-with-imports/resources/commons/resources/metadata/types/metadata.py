@@ -9,6 +9,8 @@ from ......core.pydantic_utilities import pydantic_v1
 
 class Metadata(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.objects_with_imports.resources.commons import Metadata
 
     Metadata(

@@ -21,11 +21,18 @@ class S3Client:
 
     def get_presigned_url(self, *, s_3_key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - s_3_key: str.
+        Parameters
+        ----------
+        s_3_key : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import SeedMultiUrlEnvironment
 
         client = SeedMultiUrlEnvironment(
@@ -76,11 +83,18 @@ class AsyncS3Client:
 
     async def get_presigned_url(self, *, s_3_key: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - s_3_key: str.
+        Parameters
+        ----------
+        s_3_key : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import AsyncSeedMultiUrlEnvironment
 
         client = AsyncSeedMultiUrlEnvironment(

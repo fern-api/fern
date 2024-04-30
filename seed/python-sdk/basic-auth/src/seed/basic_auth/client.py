@@ -26,9 +26,16 @@ class BasicAuthClient:
         """
         GET request with basic auth scheme
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+        Examples
+        --------
         from seed.client import SeedBasicAuth
 
         client = SeedBasicAuth(
@@ -76,11 +83,18 @@ class BasicAuthClient:
         """
         POST request with basic auth scheme
 
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+        Examples
+        --------
         from seed.client import SeedBasicAuth
 
         client = SeedBasicAuth(
@@ -141,9 +155,16 @@ class AsyncBasicAuthClient:
         """
         GET request with basic auth scheme
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+        Examples
+        --------
         from seed.client import AsyncSeedBasicAuth
 
         client = AsyncSeedBasicAuth(
@@ -191,11 +212,18 @@ class AsyncBasicAuthClient:
         """
         POST request with basic auth scheme
 
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+        Examples
+        --------
         from seed.client import AsyncSeedBasicAuth
 
         client = AsyncSeedBasicAuth(

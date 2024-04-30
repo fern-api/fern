@@ -20,11 +20,18 @@ class ServiceClient:
 
     def get_resource(self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Resource:
         """
-        Parameters:
-            - resource_id: str.
+        Parameters
+        ----------
+        resource_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Resource
+        Examples
+        --------
         from seed.client import SeedMixedCase
 
         client = SeedMixedCase(
@@ -68,13 +75,20 @@ class ServiceClient:
         self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Resource]:
         """
-        Parameters:
-            - page_limit: int.
+        Parameters
+        ----------
+        page_limit : int
 
-            - before_date: dt.date.
+        before_date : dt.date
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Resource]
+        Examples
+        --------
         import datetime
 
         from seed.client import SeedMixedCase
@@ -136,11 +150,18 @@ class AsyncServiceClient:
         self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Resource:
         """
-        Parameters:
-            - resource_id: str.
+        Parameters
+        ----------
+        resource_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Resource
+        Examples
+        --------
         from seed.client import AsyncSeedMixedCase
 
         client = AsyncSeedMixedCase(
@@ -184,13 +205,20 @@ class AsyncServiceClient:
         self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Resource]:
         """
-        Parameters:
-            - page_limit: int.
+        Parameters
+        ----------
+        page_limit : int
 
-            - before_date: dt.date.
+        before_date : dt.date
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Resource]
+        Examples
+        --------
         import datetime
 
         from seed.client import AsyncSeedMixedCase

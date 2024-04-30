@@ -24,13 +24,21 @@ class ServiceClient:
         """
         This endpoint returns a file by its name.
 
-        Parameters:
-            - filename: str. This is a filename
+        Parameters
+        ----------
+        filename : str
+            This is a filename
 
-            - x_file_api_version: str.
+        x_file_api_version : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        File
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -85,13 +93,21 @@ class AsyncServiceClient:
         """
         This endpoint returns a file by its name.
 
-        Parameters:
-            - filename: str. This is a filename
+        Parameters
+        ----------
+        filename : str
+            This is a filename
 
-            - x_file_api_version: str.
+        x_file_api_version : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        File
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 

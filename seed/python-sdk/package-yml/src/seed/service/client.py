@@ -17,13 +17,21 @@ class ServiceClient:
 
     def nop(self, id: str, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - nested_id: str.
+        nested_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedPackageYml
 
         client = SeedPackageYml(
@@ -71,13 +79,21 @@ class AsyncServiceClient:
 
     async def nop(self, id: str, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - nested_id: str.
+        nested_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(

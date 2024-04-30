@@ -22,11 +22,18 @@ class UnknownClient:
         self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[typing.Any]:
         """
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[typing.Any]
+        Examples
+        --------
         from seed.client import SeedUnknownAsAny
 
         client = SeedUnknownAsAny(
@@ -79,11 +86,18 @@ class AsyncUnknownClient:
         self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[typing.Any]:
         """
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[typing.Any]
+        Examples
+        --------
         from seed.client import AsyncSeedUnknownAsAny
 
         client = AsyncSeedUnknownAsAny(

@@ -12,7 +12,9 @@ from ..core.pydantic_utilities import pydantic_v1
 class TypeId(pydantic_v1.BaseModel):
     """
     An alias for type IDs.
-    ---
+
+    Examples
+    --------
     "type-kaljhv87"
     """
 

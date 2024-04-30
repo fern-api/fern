@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple
 
 import fern.ir.resources as ir_types
+from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from typing_extensions import Never
 
 from fern_python.codegen import AST
@@ -238,6 +239,7 @@ class EndpointFunctionGenerator:
                             ),
                         ),
                     )
+        parameters.sort(key=lambda x: x.type_hint is None or x.type_hint.is_optional)
         # Always include request options last.
         parameters.append(
             AST.NamedFunctionParameter(
@@ -399,56 +401,34 @@ class EndpointFunctionGenerator:
                 # Include a line between the endpoint docs and field docs.
                 writer.write_line()
             if len(parameters) > 0:
-                writer.write_line("Parameters:")
-                with writer.indent():
-                    for i, param in enumerate(parameters):
-                        if i > 0:
-                            writer.write_line()
+                writer.write_line("Parameters")
+                writer.write_line("----------")
+                for i, param in enumerate(parameters):
+                    if i > 0:
+                        writer.write_line()
+                        writer.write_line()
 
-                        if param.docs is None:
-                            writer.write(f"- {param.name}: ")
-                            if param.type_hint is not None:
-                                writer.write_node(param.type_hint)
-                            writer.write_line(".")
-                            continue
+                    writer.write(f"{param.name} : ")
+                    if param.type_hint is not None:
+                        writer.write_node(param.type_hint)
+                    
+                    if param.docs is not None:
+                        self._write_docs(writer, param.docs)
+                writer.write_line()
+                writer.write_line()
 
-                        split = param.docs.split("\n")
-                        if len(split) == 1:
-                            writer.write(f"- {param.name}: ")
-                            if param.type_hint is not None:
-                                writer.write_node(param.type_hint)
-                            writer.write_line(f". {param.docs}")
-                            continue
 
-                        # Handle multi-line comments at the same level of indentation for the same field,
-                        # e.g.
-                        #
-                        #  - userId: str. This is a multi-line comment.
-                        #                 This one has three lines
-                        #                 in total.
-                        #
-                        #  - request: Request. The request body.
-                        #
-                        indent = ""
-                        for i, line in enumerate(split):
-                            if i == 0:
-                                # Determine the level of indentation we need by capturing the length
-                                # before and after we write the type hint.
-                                writer.write(f"- {param.name}: ")
-                                before = writer.size()
-                                if param.type_hint is not None:
-                                    writer.write_node(param.type_hint)
-                                after = writer.size()
-                                writer.write_line(f". {line}")
-                                indent = " " * (len(param.name) + (after - before) + 4)
-                                continue
-                            writer.write(f" {indent} {line}")
-                            if i < len(split) - 1:
-                                writer.write_line()
+            self._write_response_body_type(writer, self._endpoint.response, (
+                self._get_response_body_type(self._endpoint.response, self._is_async)
+                if self._endpoint.response is not None
+                else AST.TypeHint.none()
+            ))
+
             if snippet is not None:
-                if endpoint.docs is not None or len(parameters) > 0:
-                    # Include a dashed line between the endpoint snippet and the rest of the docs, if any.
-                    writer.write_line("---")
+                writer.write_line()
+                # Include a dashed line between the endpoint snippet and the rest of the docs, if any.
+                writer.write_line("Examples")
+                writer.write_line("--------")
                 source_file = SourceFileFactory.create_snippet()
                 source_file.add_expression(snippet)
                 snippet_docstring = source_file.to_str()
@@ -595,6 +575,38 @@ class EndpointFunctionGenerator:
             ),
             text=lambda _: AST.TypeHint.str_(),
         )
+    
+    def _write_response_body_type(self, writer: NodeWriter, response: ir_types.HttpResponse, response_hint: AST.TypeHint) -> AST.TypeHint:
+        if response is not None:
+            if response.get_as_union().type == "fileDownload" or response.get_as_union().type == "streaming":
+                writer.write_line("Yields")
+                writer.write_line("------")
+                writer.write_node(response_hint)
+                if response.get_as_union().type == "fileDownload" and response.get_as_union().docs is not None:
+                    self._write_docs(writer, response.get_as_union().docs)
+
+            else:
+                writer.write_line("Returns")
+                writer.write_line("-------")
+
+                writer.write_node(response_hint)
+                if response.get_as_union().type == "json":
+                    if response.get_as_union().value.get_as_union().docs is not None:
+                        self._write_docs(writer, response.get_as_union().value.get_as_union().docs)
+                elif response.get_as_union().docs is not None:
+                    self._write_docs(writer, response.get_as_union().docs)
+        else:
+            writer.write_line("Returns")
+            writer.write_line("-------")
+            writer.write_line("None")
+       
+    def _write_docs(self, writer: NodeWriter, docs: str) -> None:
+        split = docs.split("\n")
+        with writer.indent():
+            for i, line in enumerate(split):
+                writer.write(line)
+                if i < len(split) - 1:
+                    writer.write_line()
 
     def _get_json_response_body_type(
         self,

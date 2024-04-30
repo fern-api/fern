@@ -20,11 +20,20 @@ class ServiceClient:
         """
         This endpoint checks the health of a resource.
 
-        Parameters:
-            - id: str. The id to check
+        Parameters
+        ----------
+        id : str
+            The id to check
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -68,9 +77,16 @@ class ServiceClient:
         """
         This endpoint checks the health of the service.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+        Examples
+        --------
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -117,11 +133,20 @@ class AsyncServiceClient:
         """
         This endpoint checks the health of a resource.
 
-        Parameters:
-            - id: str. The id to check
+        Parameters
+        ----------
+        id : str
+            The id to check
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -165,9 +190,16 @@ class AsyncServiceClient:
         """
         This endpoint checks the health of the service.
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+        Examples
+        --------
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 

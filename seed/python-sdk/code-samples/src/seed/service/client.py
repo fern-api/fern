@@ -22,11 +22,18 @@ class ServiceClient:
 
     def hello(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> MyResponse:
         """
-        Parameters:
-            - num_events: int.
+        Parameters
+        ----------
+        num_events : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MyResponse
+        Examples
+        --------
         from seed.client import SeedCodeSamples
 
         client = SeedCodeSamples(
@@ -77,11 +84,18 @@ class AsyncServiceClient:
 
     async def hello(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> MyResponse:
         """
-        Parameters:
-            - num_events: int.
+        Parameters
+        ----------
+        num_events : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MyResponse
+        Examples
+        --------
         from seed.client import AsyncSeedCodeSamples
 
         client = AsyncSeedCodeSamples(

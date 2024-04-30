@@ -29,15 +29,22 @@ class FooClient:
         request_options: typing.Optional[RequestOptions] = None
     ) -> ImportingType:
         """
-        Parameters:
-            - optional_string: OptionalString.
+        Parameters
+        ----------
+        optional_string : OptionalString
 
-            - public_property: typing.Optional[str].
+        public_property : typing.Optional[str]
 
-            - private_property: typing.Optional[int].
+        private_property : typing.Optional[int]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ImportingType
+        Examples
+        --------
         from seed.client import SeedAudiences
 
         client = SeedAudiences(
@@ -111,15 +118,22 @@ class AsyncFooClient:
         request_options: typing.Optional[RequestOptions] = None
     ) -> ImportingType:
         """
-        Parameters:
-            - optional_string: OptionalString.
+        Parameters
+        ----------
+        optional_string : OptionalString
 
-            - public_property: typing.Optional[str].
+        public_property : typing.Optional[str]
 
-            - private_property: typing.Optional[int].
+        private_property : typing.Optional[int]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ImportingType
+        Examples
+        --------
         from seed.client import AsyncSeedAudiences
 
         client = AsyncSeedAudiences(

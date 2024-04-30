@@ -27,17 +27,25 @@ class PathParamClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: Operand.
+        Parameters
+        ----------
+        operand : Operand
 
-            - maybe_operand: typing.Optional[Operand].
+        maybe_operand : typing.Optional[Operand]
 
-            - operand_or_color: ColorOrOperand.
+        operand_or_color : ColorOrOperand
 
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
+        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedEnum
 
         client = SeedEnum(
@@ -99,17 +107,25 @@ class AsyncPathParamClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: Operand.
+        Parameters
+        ----------
+        operand : Operand
 
-            - maybe_operand: typing.Optional[Operand].
+        maybe_operand : typing.Optional[Operand]
 
-            - operand_or_color: ColorOrOperand.
+        operand_or_color : ColorOrOperand
 
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
+        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(

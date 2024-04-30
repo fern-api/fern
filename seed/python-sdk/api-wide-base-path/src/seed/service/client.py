@@ -25,17 +25,25 @@ class ServiceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - path_param: str.
+        Parameters
+        ----------
+        path_param : str
 
-            - service_param: str.
+        service_param : str
 
-            - resource_param: str.
+        resource_param : str
 
-            - endpoint_param: int.
+        endpoint_param : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedApiWideBasePath
 
         client = SeedApiWideBasePath(
@@ -97,17 +105,25 @@ class AsyncServiceClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - path_param: str.
+        Parameters
+        ----------
+        path_param : str
 
-            - service_param: str.
+        service_param : str
 
-            - resource_param: str.
+        resource_param : str
 
-            - endpoint_param: int.
+        endpoint_param : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedApiWideBasePath
 
         client = AsyncSeedApiWideBasePath(

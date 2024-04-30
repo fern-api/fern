@@ -31,17 +31,24 @@ class PaymentClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> uuid.UUID:
         """
-        Parameters:
-            - amount: int.
+        Parameters
+        ----------
+        amount : int
 
-            - currency: Currency.
+        currency : Currency
 
-            - idempotency_key: str.
+        idempotency_key : str
 
-            - idempotency_expiration: int.
+        idempotency_expiration : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        uuid.UUID
+        Examples
+        --------
         from seed.client import SeedIdempotencyHeaders
 
         client = SeedIdempotencyHeaders(
@@ -93,11 +100,19 @@ class PaymentClient:
 
     def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - payment_id: str.
+        Parameters
+        ----------
+        payment_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedIdempotencyHeaders
 
         client = SeedIdempotencyHeaders(
@@ -153,17 +168,24 @@ class AsyncPaymentClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> uuid.UUID:
         """
-        Parameters:
-            - amount: int.
+        Parameters
+        ----------
+        amount : int
 
-            - currency: Currency.
+        currency : Currency
 
-            - idempotency_key: str.
+        idempotency_key : str
 
-            - idempotency_expiration: int.
+        idempotency_expiration : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        uuid.UUID
+        Examples
+        --------
         from seed.client import AsyncSeedIdempotencyHeaders
 
         client = AsyncSeedIdempotencyHeaders(
@@ -215,11 +237,19 @@ class AsyncPaymentClient:
 
     async def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - payment_id: str.
+        Parameters
+        ----------
+        payment_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedIdempotencyHeaders
 
         client = AsyncSeedIdempotencyHeaders(

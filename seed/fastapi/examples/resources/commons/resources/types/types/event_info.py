@@ -25,6 +25,8 @@ class _Factory:
 
 class EventInfo(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.examples.resources.commons import EventInfo_Metadata
 
     EventInfo_Metadata(

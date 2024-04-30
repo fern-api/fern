@@ -21,11 +21,18 @@ class ServiceClient:
         self, notification_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Exception:
         """
-        Parameters:
-            - notification_id: str.
+        Parameters
+        ----------
+        notification_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Exception
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -76,11 +83,18 @@ class AsyncServiceClient:
         self, notification_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Exception:
         """
-        Parameters:
-            - notification_id: str.
+        Parameters
+        ----------
+        notification_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Exception
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 

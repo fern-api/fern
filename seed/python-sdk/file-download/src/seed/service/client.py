@@ -16,9 +16,16 @@ class ServiceClient:
 
     def download_file(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+        Examples
+        --------
         from seed.client import SeedFileDownload
 
         client = SeedFileDownload(
@@ -69,9 +76,16 @@ class AsyncServiceClient:
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+        Examples
+        --------
         from seed.client import AsyncSeedFileDownload
 
         client = AsyncSeedFileDownload(

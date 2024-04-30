@@ -24,6 +24,8 @@ class _Factory:
 
 class Exception(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.examples import Exception_Generic
 
     Exception_Generic(

@@ -16,11 +16,19 @@ class PackageClient:
 
     def test(self, *, for_: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - for_: str.
+        Parameters
+        ----------
+        for_ : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedNurseryApi
 
         client = SeedNurseryApi(
@@ -77,11 +85,19 @@ class AsyncPackageClient:
 
     async def test(self, *, for_: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - for_: str.
+        Parameters
+        ----------
+        for_ : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedNurseryApi
 
         client = AsyncSeedNurseryApi(

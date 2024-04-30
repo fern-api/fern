@@ -19,9 +19,16 @@ class PathClient:
 
     def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+        Examples
+        --------
         from seed.client import SeedLiteral
 
         client = SeedLiteral(
@@ -67,9 +74,16 @@ class AsyncPathClient:
 
     async def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+        Examples
+        --------
         from seed.client import AsyncSeedLiteral
 
         client = AsyncSeedLiteral(

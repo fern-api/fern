@@ -10,6 +10,8 @@ from ....core.pydantic_utilities import pydantic_v1
 
 class Moment(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     import datetime
     import uuid
 

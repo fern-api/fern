@@ -10,6 +10,8 @@ from .movie import Movie
 
 class ExtendedMovie(Movie):
     """
+    Examples
+    --------
     from seed.examples import ExtendedMovie
 
     ExtendedMovie(

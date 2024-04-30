@@ -23,6 +23,8 @@ class _Factory:
 
 class Metadata(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.examples import Metadata_Html
 
     Metadata_Html(value="<head>...</head>")

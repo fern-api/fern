@@ -22,9 +22,16 @@ class PropertyBasedErrorClient:
         """
         GET request that always throws an error
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import SeedErrorProperty
 
         client = SeedErrorProperty(
@@ -74,9 +81,16 @@ class AsyncPropertyBasedErrorClient:
         """
         GET request that always throws an error
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+        Examples
+        --------
         from seed.client import AsyncSeedErrorProperty
 
         client = AsyncSeedErrorProperty(

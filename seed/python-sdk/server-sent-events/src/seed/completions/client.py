@@ -27,11 +27,18 @@ class CompletionsClient:
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[StreamedCompletion]:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamedCompletion]
+        Examples
+        --------
         from seed.client import SeedServerSentEvents
 
         client = SeedServerSentEvents(
@@ -88,11 +95,18 @@ class AsyncCompletionsClient:
         self, *, query: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[StreamedCompletion]:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamedCompletion]
+        Examples
+        --------
         from seed.client import AsyncSeedServerSentEvents
 
         client = AsyncSeedServerSentEvents(
