@@ -935,13 +935,22 @@ func (f *fileWriter) WriteClient(
 		f.P("}")
 		baseURLVariable := "baseURL"
 		if len(endpoint.PathSuffix) > 0 {
-			baseURLVariable = `baseURL + "/" + ` + fmt.Sprintf("%q", endpoint.PathSuffix)
+			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
-		urlStatement := fmt.Sprintf("endpointURL := %s", baseURLVariable)
 		if len(endpoint.PathParameterNames) > 0 {
-			urlStatement = "endpointURL := fmt.Sprintf(" + baseURLVariable + ", " + endpoint.PathParameterNames + ")"
+			if len(endpoint.PathParameterNames) == 1 {
+				f.P("endpointURL := core.EncodeURL(", baseURLVariable, ", ", endpoint.PathParameterNames[0], ")")
+			} else {
+				f.P("endpointURL := core.EncodeURL(")
+				f.P(baseURLVariable, ", ")
+				for _, pathParameterName := range endpoint.PathParameterNames {
+					f.P(pathParameterName, ",")
+				}
+				f.P(")")
+			}
+		} else {
+			f.P(fmt.Sprintf("endpointURL := %s", baseURLVariable))
 		}
-		f.P(urlStatement)
 		if len(endpoint.QueryParameters) > 0 {
 			f.P()
 			f.P("queryParams, err := core.QueryValues(", endpoint.RequestParameterName, ")")
@@ -1921,7 +1930,7 @@ type endpoint struct {
 	ResponseParameterName       string
 	ResponseInitializerFormat   string
 	ResponseIsOptionalParameter bool
-	PathParameterNames          string
+	PathParameterNames          []string
 	SignatureParameters         []*signatureParameter
 	ReturnValues                string
 	SuccessfulReturnValues      string
@@ -2262,7 +2271,7 @@ func (f *fileWriter) endpointFromIR(
 		ResponseParameterName:       responseParameterName,
 		ResponseInitializerFormat:   responseInitializerFormat,
 		ResponseIsOptionalParameter: responseIsOptionalParameter,
-		PathParameterNames:          strings.Join(pathParameterNames, ", "),
+		PathParameterNames:          pathParameterNames,
 		SignatureParameters:         signatureParameters,
 		ReturnValues:                signatureReturnValues,
 		SuccessfulReturnValues:      successfulReturnValues,

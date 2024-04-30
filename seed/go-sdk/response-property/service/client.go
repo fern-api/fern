@@ -44,7 +44,7 @@ func (c *Client) GetMovie(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -80,7 +80,7 @@ func (c *Client) GetMovieDocs(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -116,7 +116,7 @@ func (c *Client) GetMovieName(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -152,7 +152,7 @@ func (c *Client) GetMovieMetadata(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -188,7 +188,7 @@ func (c *Client) GetOptionalMovie(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -225,7 +225,7 @@ func (c *Client) GetOptionalMovieDocs(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -261,7 +261,7 @@ func (c *Client) GetOptionalMovieName(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

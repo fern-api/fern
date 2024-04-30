@@ -57,7 +57,7 @@ func (c *Client) GetFoo(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "foo"
+	endpointURL := baseURL + "/foo"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -92,7 +92,7 @@ func (c *Client) PostFoo(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "foo"
+	endpointURL := baseURL + "/foo"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

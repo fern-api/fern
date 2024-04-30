@@ -4,7 +4,6 @@ package service
 
 import (
 	context "context"
-	fmt "fmt"
 	core "github.com/variables/fern/core"
 	option "github.com/variables/fern/option"
 	http "net/http"
@@ -44,7 +43,7 @@ func (c *Client) Post(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", endpointParam)
+	endpointURL := core.EncodeURL(baseURL+"/%v", endpointParam)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

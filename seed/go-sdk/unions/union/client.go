@@ -4,7 +4,6 @@ package union
 
 import (
 	context "context"
-	fmt "fmt"
 	unionsgo "github.com/fern-api/unions-go"
 	core "github.com/fern-api/unions-go/core"
 	option "github.com/fern-api/unions-go/option"
@@ -45,7 +44,7 @@ func (c *Client) Get(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

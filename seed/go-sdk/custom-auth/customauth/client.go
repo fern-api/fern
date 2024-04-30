@@ -48,7 +48,7 @@ func (c *Client) GetWithCustomAuth(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "custom-auth"
+	endpointURL := baseURL + "/custom-auth"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -104,7 +104,7 @@ func (c *Client) PostWithCustomAuth(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "custom-auth"
+	endpointURL := baseURL + "/custom-auth"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

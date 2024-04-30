@@ -4,7 +4,6 @@ package notification
 
 import (
 	context "context"
-	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	notification "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/notification"
@@ -45,7 +44,7 @@ func (c *Client) List(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/notifications", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v/notifications", userId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

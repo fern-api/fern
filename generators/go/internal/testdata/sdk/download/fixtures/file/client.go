@@ -5,7 +5,6 @@ package file
 import (
 	bytes "bytes"
 	context "context"
-	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/download/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/download/fixtures/option"
 	io "io"
@@ -46,7 +45,7 @@ func (c *Client) Download(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"file/%v/download", filename)
+	endpointURL := core.EncodeURL(baseURL+"/file/%v/download", filename)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

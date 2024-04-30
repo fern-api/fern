@@ -46,7 +46,7 @@ func (c *Client) ListWithCursorPagination(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "users"
+	endpointURL := baseURL + "/users"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {
@@ -105,7 +105,7 @@ func (c *Client) ListWithOffsetPagination(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "users"
+	endpointURL := baseURL + "/users"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {
@@ -165,7 +165,7 @@ func (c *Client) ListWithExtendedResults(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "users"
+	endpointURL := baseURL + "/users"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {
@@ -224,7 +224,7 @@ func (c *Client) ListUsernames(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "users"
+	endpointURL := baseURL + "/users"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {
@@ -286,7 +286,7 @@ func (c *Client) ListWithGlobalConfig(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "users"
+	endpointURL := baseURL + "/users"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {

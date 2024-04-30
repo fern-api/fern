@@ -42,7 +42,7 @@ func (c *Client) GetAuth(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "auth"
+	endpointURL := baseURL + "/auth"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -76,7 +76,7 @@ func (c *Client) ListAuth(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "auth/list"
+	endpointURL := baseURL + "/auth/list"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -110,7 +110,7 @@ func (c *Client) ListPlants(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "auth/plants"
+	endpointURL := baseURL + "/auth/plants"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

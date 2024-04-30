@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-	fmt "fmt"
 	core "github.com/package-yml/fern/core"
 	option "github.com/package-yml/fern/option"
 	service "github.com/package-yml/fern/service"
@@ -49,7 +48,7 @@ func (c *Client) Echo(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"%v/", id)
+	endpointURL := core.EncodeURL(baseURL+"/%v/", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
