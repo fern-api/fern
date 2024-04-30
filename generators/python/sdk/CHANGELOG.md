@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1-rc0] - 2024-04-26
+
+- Fix: Discriminated union variants that are objects now have inlined properties instead of
+  extending a base type.
+
+  ```python
+
+  Circle_Shape(pydantic_v1.BaseModel):
+    type: typing.Literal["circle"]
+    radius: integer
+
+  Square_Shape(pydantic_v1.BaseModel):
+    type: typing.Literal["circle"]
+    side: integer
+  ```
+
+  instead of
+
+  ```python
+  Circle_Shape(Circle):
+    type: typing.Literal["circle"]
+
+  Square_Shape(Square):
+    type: typing.Literal["circle"]
+  ```
+
 ## [1.5.0-rc0] - 2024-04-30
 
 - Feat: The generator now supports inlining top-level request parameters instead of requiring users create a request object.
