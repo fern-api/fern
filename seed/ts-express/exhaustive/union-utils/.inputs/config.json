@@ -1,12 +1,15 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
             "type": "downloadFiles"
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null
     },
+    "publish": null,
     "customConfig": {
+        "outputSourceFiles": true,
         "doNotHandleUnrecognizedErrors": true,
         "includeUtilsOnUnionMembers": true,
         "includeOtherInUnionTypes": true
@@ -14,7 +17,7 @@
     "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

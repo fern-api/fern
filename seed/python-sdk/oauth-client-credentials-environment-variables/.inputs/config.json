@@ -1,24 +1,27 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/oauth-client-credentials-environment-variables/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "pypi",
                 "registryUrl": "",
                 "packageName": "fern_oauth-client-credentials-environment-variables",
                 "usernameEnvironmentVariable": "",
-                "passwordEnvironmentVariable": "",
-                "type": "pypi"
-            },
-            "type": "github"
+                "passwordEnvironmentVariable": ""
+            }
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "oauth-client-credentials-environment-variables",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

@@ -8,7 +8,7 @@ export class RuntimeImpl extends CoreUtility implements Runtime {
     public readonly MANIFEST = {
         name: "runtime",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/fetcher/src/runtime")
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/runtime")
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/runtime"),
         pathInCoreUtilities: [{ nameOnDisk: "runtime", exportDeclaration: { exportAll: true } }],

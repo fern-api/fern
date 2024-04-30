@@ -182,23 +182,9 @@ func (a Animal) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", a.Animal, a)
 	case "dog":
-		var marshaler = struct {
-			Animal string `json:"animal"`
-			*Dog
-		}{
-			Animal: "dog",
-			Dog:    a.Dog,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(a.Dog, "animal", "dog")
 	case "cat":
-		var marshaler = struct {
-			Animal string `json:"animal"`
-			*Cat
-		}{
-			Animal: "cat",
-			Cat:    a.Cat,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(a.Cat, "animal", "cat")
 	}
 }
 

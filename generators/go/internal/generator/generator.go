@@ -272,7 +272,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, modelFiles...)
 	files = append(files, newStringerFile(g.coordinator))
 	files = append(files, newTimeFile(g.coordinator))
-	if hasExtraProperties(ir) {
+	if needsExtraPropertyHelpers(ir) {
 		files = append(files, newExtraPropertiesFile(g.coordinator))
 		files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	}
@@ -281,6 +281,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	generatedRootClient := &GeneratedClient{
 		Instantiation: rootClientInstantiation,
 	}
+	var generatedPagination bool
 	switch mode {
 	case ModeFiber:
 		break
@@ -289,6 +290,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			generatedAuth        *GeneratedAuth
 			generatedEnvironment *GeneratedEnvironment
 		)
+		generatedPagination = needsPaginationHelpers(ir)
 		// Generate the core API files.
 		fileInfo := fileInfoForRequestOptionsDefinition()
 		writer := newFileWriter(
@@ -460,6 +462,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
 		}
+		if generatedPagination {
+			files = append(files, newPagerFile(g.coordinator))
+			files = append(files, newPageFile(g.coordinator))
+		}
 		clientTestFile, err := newClientTestFile(g.config.ImportPath, g.coordinator)
 		if err != nil {
 			return nil, err
@@ -594,7 +600,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	// The go.sum file will be generated after the
 	// go.mod file is written to disk.
 	if g.config.ModuleConfig != nil {
-		requiresGenerics := g.config.EnableExplicitNull || ir.SdkConfig.HasStreamingEndpoints
+		requiresGenerics := g.config.EnableExplicitNull || ir.SdkConfig.HasStreamingEndpoints || generatedPagination
 		file, generatedGoVersion, err := NewModFile(g.coordinator, g.config.ModuleConfig, requiresGenerics)
 		if err != nil {
 			return nil, err
@@ -944,6 +950,22 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
+	)
+}
+
+func newPagerFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/pager.go",
+		[]byte(pagerFile),
+	)
+}
+
+func newPageFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/page.go",
+		[]byte(pageFile),
 	)
 }
 
@@ -1477,12 +1499,31 @@ func generatorexecEndpointSnippetToString(endpointSnippet *generatorexec.Endpoin
 	)
 }
 
-// hasExtraProperties returns true if at least one object or in-lined request supports
-// extra properties.
-func hasExtraProperties(ir *fernir.IntermediateRepresentation) bool {
+// needsPaginationHelpers returns true if at least endpoint specifies pagination.
+func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
+	for _, irService := range ir.Services {
+		for _, irEndpoint := range irService.Endpoints {
+			if irEndpoint.Pagination != nil {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// needsExtraPropertyHelpers returns true if at least one object or in-lined request supports
+// extra properties, or any unions are specified with samePropertiesAsObject.
+func needsExtraPropertyHelpers(ir *fernir.IntermediateRepresentation) bool {
 	for _, irType := range ir.Types {
 		if irType.Shape.Object != nil && irType.Shape.Object.ExtraProperties {
 			return true
+		}
+		if irType.Shape.Union != nil {
+			for _, unionType := range irType.Shape.Union.Types {
+				if unionType.Shape.SamePropertiesAsObject != nil {
+					return true
+				}
+			}
 		}
 	}
 	for _, irService := range ir.Services {

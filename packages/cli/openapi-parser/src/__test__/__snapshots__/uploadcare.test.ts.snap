@@ -857,7 +857,7 @@ Log.d("TAG", file.toString())
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "BaseUploadRequestUploadcareStore",
+                "generatedName": "baseUploadRequestUploadcareStore",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -873,7 +873,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
-            "description": null,
+            "description": "File's content",
             "key": "{filename}",
             "schema": {
               "isArray": true,
@@ -888,7 +888,7 @@ Log.d("TAG", file.toString())
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "BaseUploadRequestMetadataKey",
+                "generatedName": "baseUploadRequestMetadataKey",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -910,7 +910,7 @@ Log.d("TAG", file.toString())
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "BaseUploadRequestSignature",
+                "generatedName": "baseUploadRequestSignature",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -932,7 +932,7 @@ Log.d("TAG", file.toString())
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "BaseUploadRequestExpire",
+                "generatedName": "baseUploadRequestExpire",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -1919,7 +1919,7 @@ Log.d("TAG", file.toString())
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "MultipartFileUploadStartRequestUploadcareStore",
+                "generatedName": "multipartFileUploadStartRequestUploadcareStore",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -1978,15 +1978,8 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
-                "description": "Multipart Uploads expect that you will split the uploaded file into equally sized
-parts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).
-By default, we assume that you will upload the files in 5 megabyte chunks,
-so we return a list of presigned AWS S3 URLs accordingly.
-If you intend to upload large files (for example, larger than a gigabyte),
-we recommend to bump the part size and to pass the expected chunk size
-to us as a value of the \`part_size\` parameter (in bytes).
-",
-                "generatedName": "MultipartFileUploadStartRequestPartSize",
+                "description": null,
+                "generatedName": "multipartFileUploadStartRequestPartSize",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -2036,7 +2029,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "MultipartFileUploadStartRequestMetadataKey",
+                "generatedName": "multipartFileUploadStartRequestMetadataKey",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -2058,7 +2051,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "MultipartFileUploadStartRequestSignature",
+                "generatedName": "multipartFileUploadStartRequestSignature",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -2080,7 +2073,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "MultipartFileUploadStartRequestExpire",
+                "generatedName": "multipartFileUploadStartRequestExpire",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -4994,7 +4987,7 @@ Log.d("TAG", file.toString())
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "FromUrlUploadRequestStore",
+                "generatedName": "fromUrlUploadRequestStore",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -5015,14 +5008,8 @@ Log.d("TAG", file.toString())
             "schema": {
               "type": "json",
               "value": {
-                "description": "Sets the file name of the resource fetched from the source URL.
-If not defined, the file name is obtained from either HTTP
-response headers or the \`source_url\`'s path.
-
-**Note:** The filename will be sanitized to only contain the following symbols:
-\`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._\`.
-",
-                "generatedName": "FromUrlUploadRequestFilename",
+                "description": null,
+                "generatedName": "fromUrlUploadRequestFilename",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -5053,11 +5040,8 @@ response headers or the \`source_url\`'s path.
             "schema": {
               "type": "json",
               "value": {
-                "description": "If set to "1", enables the \`source_url\` duplicates prevention.
-Specifically, if the \`source_url\` had already been fetched and uploaded previously,
-this request will return information about the already uploaded file.
-",
-                "generatedName": "FromUrlUploadRequestCheckUrlDuplicates",
+                "description": null,
+                "generatedName": "fromUrlUploadRequestCheckUrlDuplicates",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -5106,11 +5090,8 @@ this request will return information about the already uploaded file.
             "schema": {
               "type": "json",
               "value": {
-                "description": "Determines if the requested \`source_url\` should be kept in the history of
-fetched/uploaded URLs. If the value is not defined explicitly, it is set
-to the value of the \`check_URL_duplicates\` parameter.
-",
-                "generatedName": "FromUrlUploadRequestSaveUrlDuplicates",
+                "description": null,
+                "generatedName": "fromUrlUploadRequestSaveUrlDuplicates",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -5160,7 +5141,7 @@ to the value of the \`check_URL_duplicates\` parameter.
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "FromUrlUploadRequestMetadataKey",
+                "generatedName": "fromUrlUploadRequestMetadataKey",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -5182,7 +5163,7 @@ to the value of the \`check_URL_duplicates\` parameter.
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "FromUrlUploadRequestSignature",
+                "generatedName": "fromUrlUploadRequestSignature",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -5204,7 +5185,7 @@ to the value of the \`check_URL_duplicates\` parameter.
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "FromUrlUploadRequestExpire",
+                "generatedName": "fromUrlUploadRequestExpire",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -8706,7 +8687,7 @@ processing operations.
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "CreateFilesGroupRequestSignature",
+                "generatedName": "createFilesGroupRequestSignature",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -8728,7 +8709,7 @@ processing operations.
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "CreateFilesGroupRequestExpire",
+                "generatedName": "createFilesGroupRequestExpire",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",

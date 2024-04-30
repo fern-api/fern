@@ -11,7 +11,9 @@ from .type_id import TypeId
 class Type(pydantic_v1.BaseModel):
     """
     A simple type with just a name.
-    ---
+
+    Examples
+    --------
     from seed.alias import Type
 
     Type(

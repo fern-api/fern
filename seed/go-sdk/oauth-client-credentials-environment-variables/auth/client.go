@@ -44,7 +44,7 @@ func (c *Client) GetTokenWithClientCredentials(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "token"
+	endpointURL := baseURL + "/token"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -80,7 +80,7 @@ func (c *Client) RefreshToken(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "token"
+	endpointURL := baseURL + "/token"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

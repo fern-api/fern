@@ -20,9 +20,17 @@ class ServiceClient:
         """
         GET request with custom api key
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedBearerTokenEnvironmentVariable
 
         client = SeedBearerTokenEnvironmentVariable(
@@ -68,9 +76,17 @@ class AsyncServiceClient:
         """
         GET request with custom api key
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedBearerTokenEnvironmentVariable
 
         client = AsyncSeedBearerTokenEnvironmentVariable(

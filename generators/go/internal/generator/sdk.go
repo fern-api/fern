@@ -32,6 +32,12 @@ var (
 	//go:embed sdk/core/optional_test.go
 	optionalTestFile string
 
+	//go:embed sdk/core/page.go
+	pageFile string
+
+	//go:embed sdk/core/pager.go
+	pagerFile string
+
 	//go:embed sdk/core/pointer.go
 	pointerFile string
 
@@ -929,13 +935,22 @@ func (f *fileWriter) WriteClient(
 		f.P("}")
 		baseURLVariable := "baseURL"
 		if len(endpoint.PathSuffix) > 0 {
-			baseURLVariable = `baseURL + "/" + ` + fmt.Sprintf("%q", endpoint.PathSuffix)
+			baseURLVariable = `baseURL + ` + fmt.Sprintf(`"/%s"`, endpoint.PathSuffix)
 		}
-		urlStatement := fmt.Sprintf("endpointURL := %s", baseURLVariable)
 		if len(endpoint.PathParameterNames) > 0 {
-			urlStatement = "endpointURL := fmt.Sprintf(" + baseURLVariable + ", " + endpoint.PathParameterNames + ")"
+			if len(endpoint.PathParameterNames) == 1 {
+				f.P("endpointURL := core.EncodeURL(", baseURLVariable, ", ", endpoint.PathParameterNames[0], ")")
+			} else {
+				f.P("endpointURL := core.EncodeURL(")
+				f.P(baseURLVariable, ", ")
+				for _, pathParameterName := range endpoint.PathParameterNames {
+					f.P(pathParameterName, ",")
+				}
+				f.P(")")
+			}
+		} else {
+			f.P(fmt.Sprintf("endpointURL := %s", baseURLVariable))
 		}
-		f.P(urlStatement)
 		if len(endpoint.QueryParameters) > 0 {
 			f.P()
 			f.P("queryParams, err := core.QueryValues(", endpoint.RequestParameterName, ")")
@@ -947,9 +962,11 @@ func (f *fileWriter) WriteClient(
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
 				}
 			}
-			f.P("if len(queryParams) > 0 {")
-			f.P(`endpointURL += "?" + queryParams.Encode()`)
-			f.P("}")
+			if endpoint.PaginationInfo == nil {
+				f.P("if len(queryParams) > 0 {")
+				f.P(`endpointURL += "?" + queryParams.Encode()`)
+				f.P("}")
+			}
 		}
 
 		headersParameter := "headers"
@@ -1047,7 +1064,7 @@ func (f *fileWriter) WriteClient(
 		}
 
 		// Prepare a response variable.
-		if endpoint.ResponseType != "" && !endpoint.IsStreaming {
+		if endpoint.ResponseType != "" && !endpoint.IsStreaming && endpoint.PaginationInfo == nil {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
@@ -1164,6 +1181,121 @@ func (f *fileWriter) WriteClient(
 			f.P(")")
 			f.P("}")
 			f.P()
+		} else if endpoint.PaginationInfo != nil {
+			f.P("prepareCall := func(pageRequest *core.PageRequest[", endpoint.PaginationInfo.PageGoType, "]) *core.CallParams {")
+			f.P("if pageRequest.Cursor != ", endpoint.PaginationInfo.PageZeroValue, " {")
+			f.P(endpoint.PaginationInfo.SetPageRequestParameter)
+			f.P("}")
+			f.P("nextURL := endpointURL")
+			f.P("if len(queryParams) > 0 {")
+			f.P(`nextURL += "?" + queryParams.Encode()`)
+			f.P("}")
+			f.P("return &core.CallParams{")
+			f.P("URL: nextURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("Headers:", headersParameter, ",")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ResponseParameterName != "" {
+				f.P("Response: ", endpoint.ResponseParameterName, ",")
+			}
+			if endpoint.ResponseIsOptionalParameter {
+				f.P("ResponseIsOptional: true,")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("}")
+			f.P("}")
+
+			var pagerConstructor string
+			switch endpoint.PaginationInfo.Type {
+			case "cursor":
+				pagerConstructor = "core.NewCursorPager"
+
+				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
+				if len(endpoint.PaginationInfo.NextCursor.PropertyPath) > 0 {
+					f.P("var next ", endpoint.PaginationInfo.NextCursorGoType)
+					f.P(endpoint.PaginationInfo.NextCursorNilCheck)
+					f.P("next = ", endpoint.PaginationInfo.NextCursorPropertyPath, endpoint.PaginationInfo.NextCursor.Property.Name.Name.PascalCase.UnsafeName)
+					f.P("}")
+				} else {
+					f.P("next := ", endpoint.PaginationInfo.NextCursorPropertyPath, endpoint.PaginationInfo.NextCursor.Property.Name.Name.PascalCase.UnsafeName)
+				}
+				if len(endpoint.PaginationInfo.Results.PropertyPath) > 0 {
+					f.P("var results ", endpoint.PaginationInfo.ResultsGoType)
+					f.P(endpoint.PaginationInfo.ResultsNilCheck)
+					f.P("results = ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
+					f.P("}")
+				} else {
+					f.P("results := ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
+				}
+
+				if endpoint.PaginationInfo.NextCursorIsOptional && !endpoint.PaginationInfo.PageIsOptional {
+					f.P("if next == nil {")
+					f.P("return &core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+					f.P("Results: results,")
+					f.P("}")
+					f.P("}")
+				}
+
+				f.P("return &core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+				if endpoint.PaginationInfo.PageIsOptional != endpoint.PaginationInfo.NextCursorIsOptional {
+					if endpoint.PaginationInfo.NextCursorIsOptional {
+						f.P("Next: *next,")
+					} else {
+						f.P("Next: &next,")
+					}
+				} else {
+					f.P("Next: next,")
+				}
+				f.P("Results: results,")
+				f.P("}")
+				f.P("}")
+			case "offset":
+				pagerConstructor = "core.NewOffsetPager"
+
+				f.P("next := 1")
+				if len(endpoint.PaginationInfo.PageNilCheck) > 0 {
+					f.P(endpoint.PaginationInfo.PageNilCheck)
+					if endpoint.PaginationInfo.PageIsOptional {
+						f.P("next = *", endpoint.RequestParameterName, ".", endpoint.PaginationInfo.Page.Name.Name.PascalCase.UnsafeName)
+					} else {
+						f.P("next = ", endpoint.RequestParameterName, ".", endpoint.PaginationInfo.Page.Name.Name.PascalCase.UnsafeName)
+					}
+					f.P("}")
+				}
+
+				f.P("readPageResponse := func(response ", endpoint.ResponseType, ") *core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "] {")
+				f.P("next += 1")
+				if len(endpoint.PaginationInfo.Results.PropertyPath) > 0 {
+					f.P("var results ", endpoint.PaginationInfo.ResultsGoType)
+					f.P(endpoint.PaginationInfo.ResultsNilCheck)
+					f.P("results = ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
+					f.P("}")
+				} else {
+					f.P("results := ", endpoint.PaginationInfo.ResultsPropertyPath, endpoint.PaginationInfo.Results.Property.Name.Name.PascalCase.UnsafeName)
+				}
+
+				f.P("return &core.PageResponse[", endpoint.PaginationInfo.PageGoType, ",", endpoint.PaginationInfo.ResultsSingleGoType, "]{")
+				f.P("Next: ", endpoint.PaginationInfo.PageFirstRequestParameter, ",")
+				f.P("Results: results,")
+				f.P("}")
+				f.P("}")
+			}
+
+			f.P("pager := ", pagerConstructor, "(")
+			f.P(receiver, ".caller,")
+			f.P("prepareCall,")
+			f.P("readPageResponse,")
+			f.P(")")
+
+			f.P("return pager.GetPage(ctx, ", endpoint.PaginationInfo.PageFirstRequestParameter, ")")
+			f.P("}")
+			f.P()
 		} else {
 			f.P("if err := ", receiver, ".caller.Call(")
 			f.P("ctx,")
@@ -1200,6 +1332,165 @@ func (f *fileWriter) WriteClient(
 		irEndpoints,
 		rootClientInstantiation,
 	)
+}
+
+type paginationInfo struct {
+	Type                      string
+	Page                      *ir.QueryParameter
+	PageNilCheck              string
+	PageGoType                string
+	PageZeroValue             string
+	PageFirstRequestParameter string
+	PageIsOptional            bool
+	SetPageRequestParameter   string
+	Results                   *ir.ResponseProperty
+	ResultsPropertyPath       string
+	ResultsNilCheck           string
+	ResultsGoType             string
+	ResultsSingleGoType       string
+
+	// NextCursor is only relevant for cursor pagination.
+	NextCursor             *ir.ResponseProperty
+	NextCursorPropertyPath string
+	NextCursorNilCheck     string
+	NextCursorGoType       string
+	NextCursorIsOptional   bool
+}
+
+func (f *fileWriter) getPaginationInfo(
+	irEndpoint *ir.HttpEndpoint,
+	scope *gospec.Scope,
+	requestParameterName string,
+) (*paginationInfo, error) {
+	if irEndpoint.Pagination == nil {
+		return nil, nil
+	}
+	pagination := irEndpoint.Pagination
+	switch t := pagination.Type; t {
+	case "cursor":
+		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Cursor.Results)
+		if err != nil {
+			return nil, err
+		}
+		var (
+			pageIsOptional       = pagination.Cursor.Page.ValueType.Container != nil && pagination.Cursor.Page.ValueType.Container.Optional != nil
+			nextCursorIsOptional = pagination.Cursor.Next.Property.ValueType.Container != nil && pagination.Cursor.Next.Property.ValueType.Container.Optional != nil
+			valueTypeFormat      = formatForValueType(pagination.Cursor.Page.ValueType, f.types)
+			value                = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
+			wireValue            = pagination.Cursor.Page.Name.WireValue
+		)
+		return &paginationInfo{
+			Type:                      t,
+			Page:                      pagination.Cursor.Page,
+			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, pagination.Cursor.Page.Name.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
+			PageGoType:                typeReferenceToGoType(pagination.Cursor.Page.ValueType, f.types, scope, f.baseImportPath, "", false),
+			PageZeroValue:             valueTypeFormat.ZeroValue,
+			PageFirstRequestParameter: fmt.Sprintf("%s.%s", requestParameterName, pagination.Cursor.Page.Name.Name.PascalCase.UnsafeName),
+			PageIsOptional:            pageIsOptional,
+			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
+			Results:                   pagination.Cursor.Results,
+			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Cursor.Results.PropertyPath),
+			ResultsNilCheck:           responsePropertyPathToNilCheck("response", pagination.Cursor.Results.PropertyPath),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
+			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			NextCursor:                pagination.Cursor.Next,
+			NextCursorPropertyPath:    responsePropertyPathToFullPathString("response", pagination.Cursor.Next.PropertyPath),
+			NextCursorNilCheck:        responsePropertyPathToNilCheck("response", pagination.Cursor.Next.PropertyPath),
+			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			NextCursorIsOptional:      nextCursorIsOptional,
+		}, nil
+	case "offset":
+		resultsSingleType, err := singleTypeReferenceFromResponseProperty(pagination.Offset.Results)
+		if err != nil {
+			return nil, err
+		}
+		var (
+			pageIsOptional  = pagination.Offset.Page.ValueType.Container != nil && pagination.Offset.Page.ValueType.Container.Optional != nil
+			valueTypeFormat = formatForValueType(pagination.Offset.Page.ValueType, f.types)
+			value           = valueTypeFormat.Prefix + "pageRequest.Cursor" + valueTypeFormat.Suffix
+			wireValue       = pagination.Offset.Page.Name.WireValue
+		)
+		pageFirstRequestParameter := "next"
+		if pageIsOptional {
+			pageFirstRequestParameter = "&next"
+		}
+		return &paginationInfo{
+			Type:                      t,
+			Page:                      pagination.Offset.Page,
+			PageNilCheck:              fmt.Sprintf("if %s.%s != %s {", requestParameterName, pagination.Offset.Page.Name.Name.PascalCase.UnsafeName, valueTypeFormat.ZeroValue),
+			PageGoType:                typeReferenceToGoType(pagination.Offset.Page.ValueType, f.types, scope, f.baseImportPath, "", false),
+			PageZeroValue:             valueTypeFormat.ZeroValue,
+			PageFirstRequestParameter: pageFirstRequestParameter,
+			PageIsOptional:            pageIsOptional,
+			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
+			Results:                   pagination.Offset.Results,
+			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Offset.Results.PropertyPath),
+			ResultsNilCheck:           responsePropertyPathToNilCheck("response", pagination.Offset.Results.PropertyPath),
+			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
+			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
+		}, nil
+	default:
+		return nil, fmt.Errorf("%s pagination is not supported yet", t)
+	}
+}
+
+func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProperty) (*ir.TypeReference, error) {
+	if responseProperty == nil {
+		return nil, nil
+	}
+	property := responseProperty.Property
+	if property != nil && property.ValueType != nil {
+		valueType := property.ValueType
+		if property.ValueType.Container != nil && property.ValueType.Container.Optional != nil {
+			valueType = property.ValueType.Container.Optional
+		}
+		switch valueType.Type {
+		case "container":
+			switch valueType.Container.Type {
+			case "list":
+				return valueType.Container.List, nil
+			case "set":
+				return valueType.Container.Set, nil
+			}
+		}
+		return nil, fmt.Errorf("unsupported pagination results type %q", valueType.Type)
+	}
+	return nil, nil
+}
+
+// responsePropertyPathToString returns if condition that ensures we don't accidentally
+// cause a nil-dereference when accessing a response property path.
+//
+// Note that when we support method getters, we can simplify this.
+func responsePropertyPathToNilCheck(variable string, propertyPath []*ir.Name) string {
+	if len(propertyPath) == 0 {
+		return ""
+	}
+	result := "if "
+	var parts []string
+	for i, part := range propertyPath {
+		parts = append(parts, part.PascalCase.UnsafeName)
+		result += fmt.Sprintf("%s.%s != nil", variable, strings.Join(parts, "."))
+		if i < len(propertyPath)-1 {
+			result += " && "
+		}
+	}
+	result += " {"
+	return result
+}
+
+// responsePropertyPathToFullPathString returns the string used to access the response property.
+//
+// Note that when we support method getters, we can simplify this.
+func responsePropertyPathToFullPathString(variable string, propertyPath []*ir.Name) string {
+	if len(propertyPath) == 0 {
+		return variable + "."
+	}
+	var parts []string
+	for _, part := range propertyPath {
+		parts = append(parts, part.PascalCase.UnsafeName)
+	}
+	return variable + "." + strings.Join(parts, ".") + "."
 }
 
 // NewGeneratedClient constructs the snippets associated with the client's
@@ -1639,7 +1930,7 @@ type endpoint struct {
 	ResponseParameterName       string
 	ResponseInitializerFormat   string
 	ResponseIsOptionalParameter bool
-	PathParameterNames          string
+	PathParameterNames          []string
 	SignatureParameters         []*signatureParameter
 	ReturnValues                string
 	SuccessfulReturnValues      string
@@ -1660,6 +1951,7 @@ type endpoint struct {
 	FilePropertyInfo            *filePropertyInfo
 	FileProperties              []*ir.FileProperty
 	FileBodyProperties          []*ir.InlinedRequestBodyProperty
+	PaginationInfo              *paginationInfo
 }
 
 type signatureParameter struct {
@@ -1829,6 +2121,11 @@ func (f *fileWriter) endpointFromIR(
 		},
 	)
 
+	paginationInfo, err := f.getPaginationInfo(irEndpoint, scope, requestParameterName)
+	if err != nil {
+		return nil, err
+	}
+
 	// Format all of the response values.
 	var (
 		responseType              string
@@ -1863,6 +2160,13 @@ func (f *fileWriter) endpointFromIR(
 				signatureReturnValues = fmt.Sprintf("(%s, error)", responsePropertyType)
 				successfulReturnValues = fmt.Sprintf("response.%s, nil", responseProperty.Name.Name.PascalCase.UnsafeName)
 				errorReturnValues = fmt.Sprintf("%s, err", defaultValueForTypeReference(responsePropertyTypeReference, f.types))
+			}
+
+			if paginationInfo != nil {
+				responseInitializerFormat = ""
+				responseParameterName = "pageRequest.Response"
+				signatureReturnValues = fmt.Sprintf("(*core.Page[%s], error)", paginationInfo.ResultsSingleGoType)
+				errorReturnValues = "nil, err"
 			}
 		case "fileDownload":
 			responseType = "bytes.NewBuffer(nil)"
@@ -1967,7 +2271,7 @@ func (f *fileWriter) endpointFromIR(
 		ResponseParameterName:       responseParameterName,
 		ResponseInitializerFormat:   responseInitializerFormat,
 		ResponseIsOptionalParameter: responseIsOptionalParameter,
-		PathParameterNames:          strings.Join(pathParameterNames, ", "),
+		PathParameterNames:          pathParameterNames,
 		SignatureParameters:         signatureParameters,
 		ReturnValues:                signatureReturnValues,
 		SuccessfulReturnValues:      successfulReturnValues,
@@ -1988,6 +2292,7 @@ func (f *fileWriter) endpointFromIR(
 		FilePropertyInfo:            filePropertyInfo,
 		FileProperties:              fileProperties,
 		FileBodyProperties:          fileBodyProperties,
+		PaginationInfo:              paginationInfo,
 	}, nil
 }
 

@@ -3,6 +3,7 @@
  */
 
 export interface StringSchemaWithExample {
+    format: string | undefined;
     minLength: number | undefined;
     maxLength: number | undefined;
     example: string | undefined;

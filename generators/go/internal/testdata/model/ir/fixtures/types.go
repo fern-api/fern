@@ -78,32 +78,11 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", a.Type, a)
 	case "bearer":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*BearerAuthScheme
-		}{
-			Type:             "bearer",
-			BearerAuthScheme: a.Bearer,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(a.Bearer, "_type", "bearer")
 	case "basic":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*BasicAuthScheme
-		}{
-			Type:            "basic",
-			BasicAuthScheme: a.Basic,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(a.Basic, "_type", "basic")
 	case "header":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*HeaderAuthScheme
-		}{
-			Type:             "header",
-			HeaderAuthScheme: a.Header,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(a.Header, "_type", "header")
 	}
 }
 
@@ -396,23 +375,9 @@ func (e Environments) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "singleBaseUrl":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*SingleBaseUrlEnvironments
-		}{
-			Type:                      "singleBaseUrl",
-			SingleBaseUrlEnvironments: e.SingleBaseUrl,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.SingleBaseUrl, "type", "singleBaseUrl")
 	case "multipleBaseUrls":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*MultipleBaseUrlsEnvironments
-		}{
-			Type:                         "multipleBaseUrls",
-			MultipleBaseUrlsEnvironments: e.MultipleBaseUrls,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.MultipleBaseUrls, "type", "multipleBaseUrls")
 	}
 }
 
@@ -567,14 +532,7 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "property":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*NameAndWireValue
-		}{
-			Type:             "property",
-			NameAndWireValue: e.Property,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Property, "type", "property")
 	case "statusCode":
 		var marshaler = struct {
 			Type       string      `json:"type"`
@@ -767,23 +725,9 @@ func (e ExampleRequestBody) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "inlinedRequestBody":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleInlinedRequestBody
-		}{
-			Type:                      "inlinedRequestBody",
-			ExampleInlinedRequestBody: e.InlinedRequestBody,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.InlinedRequestBody, "type", "inlinedRequestBody")
 	case "reference":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleTypeReference
-		}{
-			Type:                 "reference",
-			ExampleTypeReference: e.Reference,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Reference, "type", "reference")
 	}
 }
 
@@ -847,23 +791,9 @@ func (e ExampleResponse) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "ok":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleEndpointSuccessResponse
-		}{
-			Type:                           "ok",
-			ExampleEndpointSuccessResponse: e.Ok,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Ok, "type", "ok")
 	case "error":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleEndpointErrorResponse
-		}{
-			Type:                         "error",
-			ExampleEndpointErrorResponse: e.Error,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Error, "type", "error")
 	}
 }
 
@@ -962,23 +892,9 @@ func (f FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", f.Type, f)
 	case "file":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*FileProperty
-		}{
-			Type:         "file",
-			FileProperty: f.File,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(f.File, "type", "file")
 	case "bodyProperty":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*InlinedRequestBodyProperty
-		}{
-			Type:                       "bodyProperty",
-			InlinedRequestBodyProperty: f.BodyProperty,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(f.BodyProperty, "type", "bodyProperty")
 	}
 }
 
@@ -1152,32 +1068,11 @@ func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "inlinedRequestBody":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*InlinedRequestBody
-		}{
-			Type:               "inlinedRequestBody",
-			InlinedRequestBody: h.InlinedRequestBody,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(h.InlinedRequestBody, "type", "inlinedRequestBody")
 	case "reference":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*HttpRequestBodyReference
-		}{
-			Type:                     "reference",
-			HttpRequestBodyReference: h.Reference,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(h.Reference, "type", "reference")
 	case "fileUpload":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*FileUploadRequest
-		}{
-			Type:              "fileUpload",
-			FileUploadRequest: h.FileUpload,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(h.FileUpload, "type", "fileUpload")
 	}
 }
 
@@ -1256,23 +1151,9 @@ func (h HttpResponse) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "json":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*JsonResponse
-		}{
-			Type:         "json",
-			JsonResponse: h.Json,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(h.Json, "type", "json")
 	case "fileDownload":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*FileDownloadResponse
-		}{
-			Type:                 "fileDownload",
-			FileDownloadResponse: h.FileDownload,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(h.FileDownload, "type", "fileDownload")
 	}
 }
 
@@ -1485,23 +1366,9 @@ func (s SdkRequestShape) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "justRequestBody":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*HttpRequestBodyReference
-		}{
-			Type:                     "justRequestBody",
-			HttpRequestBodyReference: s.JustRequestBody,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.JustRequestBody, "type", "justRequestBody")
 	case "wrapper":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*SdkRequestWrapper
-		}{
-			Type:              "wrapper",
-			SdkRequestWrapper: s.Wrapper,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.Wrapper, "type", "wrapper")
 	}
 }
 
@@ -1599,41 +1466,13 @@ func (s SdkResponse) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "json":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*JsonResponse
-		}{
-			Type:         "json",
-			JsonResponse: s.Json,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.Json, "type", "json")
 	case "streaming":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*StreamingResponse
-		}{
-			Type:              "streaming",
-			StreamingResponse: s.Streaming,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.Streaming, "type", "streaming")
 	case "maybeStreaming":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*MaybeStreamingResponse
-		}{
-			Type:                   "maybeStreaming",
-			MaybeStreamingResponse: s.MaybeStreaming,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.MaybeStreaming, "type", "maybeStreaming")
 	case "fileDownload":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*FileDownloadResponse
-		}{
-			Type:                 "fileDownload",
-			FileDownloadResponse: s.FileDownload,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.FileDownload, "type", "fileDownload")
 	}
 }
 
@@ -1824,14 +1663,7 @@ func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "property":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ErrorDiscriminationByPropertyStrategy
-		}{
-			Type:                                  "property",
-			ErrorDiscriminationByPropertyStrategy: e.Property,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Property, "type", "property")
 	}
 }
 
@@ -2050,14 +1882,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "map":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*MapType
-		}{
-			Type:    "map",
-			MapType: c.Map,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(c.Map, "_type", "map")
 	case "optional":
 		var marshaler = struct {
 			Type     string         `json:"_type"`
@@ -2657,23 +2482,9 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "samePropertiesAsObject":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleNamedType
-		}{
-			Type:             "samePropertiesAsObject",
-			ExampleNamedType: e.SamePropertiesAsObject,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.SamePropertiesAsObject, "type", "samePropertiesAsObject")
 	case "singleProperty":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleTypeReference
-		}{
-			Type:                 "singleProperty",
-			ExampleTypeReference: e.SingleProperty,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.SingleProperty, "type", "singleProperty")
 	case "noProperties":
 		var marshaler = struct {
 			Type         string      `json:"type"`
@@ -2830,14 +2641,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleNamedType
-		}{
-			Type:             "named",
-			ExampleNamedType: e.Named,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Named, "type", "named")
 	}
 }
 
@@ -2929,41 +2733,13 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "alias":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleAliasType
-		}{
-			Type:             "alias",
-			ExampleAliasType: e.Alias,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Alias, "type", "alias")
 	case "enum":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleEnumType
-		}{
-			Type:            "enum",
-			ExampleEnumType: e.Enum,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Enum, "type", "enum")
 	case "object":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleObjectType
-		}{
-			Type:              "object",
-			ExampleObjectType: e.Object,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Object, "type", "object")
 	case "union":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExampleSingleUnionType
-		}{
-			Type:                   "union",
-			ExampleSingleUnionType: e.Union,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Union, "type", "union")
 	}
 }
 
@@ -3222,14 +2998,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*ResolvedNamedType
-		}{
-			Type:              "named",
-			ResolvedNamedType: r.Named,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(r.Named, "_type", "named")
 	case "primitive":
 		var marshaler = struct {
 			Type      string        `json:"_type"`
@@ -3369,23 +3138,9 @@ func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.PropertiesType, s)
 	case "samePropertiesAsObject":
-		var marshaler = struct {
-			PropertiesType string `json:"_type"`
-			*DeclaredTypeName
-		}{
-			PropertiesType:   "samePropertiesAsObject",
-			DeclaredTypeName: s.SamePropertiesAsObject,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.SamePropertiesAsObject, "_type", "samePropertiesAsObject")
 	case "singleProperty":
-		var marshaler = struct {
-			PropertiesType string `json:"_type"`
-			*SingleUnionTypeProperty
-		}{
-			PropertiesType:          "singleProperty",
-			SingleUnionTypeProperty: s.SingleProperty,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(s.SingleProperty, "_type", "singleProperty")
 	case "noProperties":
 		var marshaler = struct {
 			PropertiesType string      `json:"_type"`
@@ -3506,50 +3261,15 @@ func (t Type) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "alias":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*AliasTypeDeclaration
-		}{
-			Type:                 "alias",
-			AliasTypeDeclaration: t.Alias,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(t.Alias, "_type", "alias")
 	case "enum":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*EnumTypeDeclaration
-		}{
-			Type:                "enum",
-			EnumTypeDeclaration: t.Enum,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(t.Enum, "_type", "enum")
 	case "object":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*ObjectTypeDeclaration
-		}{
-			Type:                  "object",
-			ObjectTypeDeclaration: t.Object,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(t.Object, "_type", "object")
 	case "union":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*UnionTypeDeclaration
-		}{
-			Type:                 "union",
-			UnionTypeDeclaration: t.Union,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(t.Union, "_type", "union")
 	case "undiscriminatedUnion":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*UndiscriminatedUnionTypeDeclaration
-		}{
-			Type:                                "undiscriminatedUnion",
-			UndiscriminatedUnionTypeDeclaration: t.UndiscriminatedUnion,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(t.UndiscriminatedUnion, "_type", "undiscriminatedUnion")
 	}
 }
 
@@ -3675,14 +3395,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "named":
-		var marshaler = struct {
-			Type string `json:"_type"`
-			*DeclaredTypeName
-		}{
-			Type:             "named",
-			DeclaredTypeName: t.Named,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(t.Named, "_type", "named")
 	case "primitive":
 		var marshaler = struct {
 			Type      string        `json:"_type"`

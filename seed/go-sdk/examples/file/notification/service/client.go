@@ -4,7 +4,6 @@ package service
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
 	option "github.com/examples/fern/option"
@@ -45,7 +44,7 @@ func (c *Client) GetException(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"file/notification/%v", notificationId)
+	endpointURL := core.EncodeURL(baseURL+"/file/notification/%v", notificationId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

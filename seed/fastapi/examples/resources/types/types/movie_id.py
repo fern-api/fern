@@ -11,6 +11,8 @@ from ....core.pydantic_utilities import pydantic_v1
 
 class MovieId(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     "movie-c06a4ad7"
     """
 

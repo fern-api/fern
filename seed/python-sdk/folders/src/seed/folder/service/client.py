@@ -22,9 +22,17 @@ class ServiceClient:
 
     def endpoint(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedApi
 
         client = SeedApi(
@@ -62,11 +70,19 @@ class ServiceClient:
 
     def unknown_request(self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedApi
 
         client = SeedApi(
@@ -119,9 +135,17 @@ class AsyncServiceClient:
 
     async def endpoint(self, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(
@@ -161,11 +185,19 @@ class AsyncServiceClient:
         self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(

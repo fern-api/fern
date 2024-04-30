@@ -27,15 +27,23 @@ class ReqWithHeadersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - x_test_service_header: str.
+        x_test_service_header : str
 
-            - x_test_endpoint_header: str.
+        x_test_endpoint_header : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -97,15 +105,23 @@ class AsyncReqWithHeadersClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - x_test_service_header: str.
+        x_test_service_header : str
 
-            - x_test_endpoint_header: str.
+        x_test_endpoint_header : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(

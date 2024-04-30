@@ -22,11 +22,19 @@ class UserClient:
 
     def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
-        Parameters:
-            - name: str.
+        Parameters
+        ----------
+        name : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
         from seed.client import SeedExtraProperties
 
         client = SeedExtraProperties(
@@ -77,11 +85,19 @@ class AsyncUserClient:
 
     async def create_user(self, *, name: str, request_options: typing.Optional[RequestOptions] = None) -> User:
         """
-        Parameters:
-            - name: str.
+        Parameters
+        ----------
+        name : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
         from seed.client import AsyncSeedExtraProperties
 
         client = AsyncSeedExtraProperties(

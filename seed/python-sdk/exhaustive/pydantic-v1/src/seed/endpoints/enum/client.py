@@ -24,11 +24,19 @@ class EnumClient:
         self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
     ) -> WeatherReport:
         """
-        Parameters:
-            - request: WeatherReport.
+        Parameters
+        ----------
+        request : WeatherReport
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WeatherReport
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -77,11 +85,19 @@ class AsyncEnumClient:
         self, *, request: WeatherReport, request_options: typing.Optional[RequestOptions] = None
     ) -> WeatherReport:
         """
-        Parameters:
-            - request: WeatherReport.
+        Parameters
+        ----------
+        request : WeatherReport
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WeatherReport
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(

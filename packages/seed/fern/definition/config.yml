@@ -5,6 +5,7 @@ types:
     properties:
       irVersion: string
       language: optional<Language>
+      defaultCustomConfig: optional<map<string, unknown>>
       defaultOutputMode: OutputMode
       generatorType: GeneratorType
       docker: string
@@ -26,8 +27,12 @@ types:
   
   LocalBuildInfo: 
     properties: 
-      buildCommand: 
+      workingDirectory: 
         type: string
+        docs: | 
+          The working directory for the generator. 
+      buildCommand: 
+        type: list<string>
         docs: | 
           The command to build the generator locally. 
           `yarn workspace @fern-api/openapi-generator build` for example. 
@@ -36,19 +41,10 @@ types:
         docs: | 
           The command to run the generator locally. 
           `node generators/openapi/dist/cli.cjs` for example.
-  
-  DockerBuildInfo: 
-    properties: 
-      buildCommand: 
-        type: string
+      env: 
+        type: optional<map<string, string>>
         docs: | 
-          The command to build the generator locally. 
-          `yarn workspace @fern-api/openapi-generator build` for example. 
-      runCommand:
-        type: string
-        docs: | 
-          The command to run the generator locally. 
-          `node generators/openapi/dist/cli.cjs` for example.
+          Environment variables to set when running the generator locally.
 
   DockerCommand: 
     discriminated: false

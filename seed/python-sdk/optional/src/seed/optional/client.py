@@ -26,11 +26,20 @@ class OptionalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
-        Parameters:
-            - request: typing.Optional[typing.Dict[str, typing.Any]].
+        Parameters
+        ----------
+        request : typing.Optional[typing.Dict[str, typing.Any]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Id of the created resource
+
+        Examples
+        --------
         from seed.client import SeedObjectsWithImports
 
         client = SeedObjectsWithImports(
@@ -86,11 +95,20 @@ class AsyncOptionalClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> str:
         """
-        Parameters:
-            - request: typing.Optional[typing.Dict[str, typing.Any]].
+        Parameters
+        ----------
+        request : typing.Optional[typing.Dict[str, typing.Any]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+            Id of the created resource
+
+        Examples
+        --------
         from seed.client import AsyncSeedObjectsWithImports
 
         client = AsyncSeedObjectsWithImports(

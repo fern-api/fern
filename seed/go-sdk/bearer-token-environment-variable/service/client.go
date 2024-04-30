@@ -47,7 +47,7 @@ func (c *Client) GetWithBearerToken(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "apiKey"
+	endpointURL := baseURL + "/apiKey"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

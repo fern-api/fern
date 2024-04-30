@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.4.1-rc0] - 2024-04-26
+## [1.5.1-rc0] - 2024-04-26
 
 - Fix: Discriminated union variants that are objects now have inlined properties instead of
   extending a base type.
@@ -30,6 +30,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Square_Shape(Square):
     type: typing.Literal["circle"]
   ```
+
+## [1.5.0-rc0] - 2024-04-30
+
+- Feat: The generator now supports inlining top-level request parameters instead of requiring users create a request object.
+
+  Config:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        inline_request_params: true
+  ```
+
+  Code change:
+  Before:
+  `python def get_and_return_with_optional_field( self, *, request: ObjectWithOptionalField, request_options: typing.Optional[RequestOptions] = None ) -> ObjectWithOptionalField: ... `
+
+  After:
+  `python def get_and_return_with_optional_field( self, *, string: typing.Optional[str] = OMIT, integer: typing.Optional[int] = OMIT, long: typing.Optional[int] = OMIT, double: typing.Optional[float] = OMIT, bool: typing.Optional[bool] = OMIT, request_options: typing.Optional[RequestOptions] = None, ) -> ObjectWithOptionalField: ... `
+
+## [1.4.0] - 2024-04-29
+
+- Improvement: keyword arguments are now ordered such that required params are ordered before optional params. Note that since these are kwargs, this is a non-breaking change.
+- Improvement: docstrings now match numpydoc/PEP257 format
 
 ## [1.4.0-rc3] - 2024-04-24
 

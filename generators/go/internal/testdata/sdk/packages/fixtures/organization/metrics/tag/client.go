@@ -44,7 +44,7 @@ func (c *Client) PostTag(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "metrics/tag"
+	endpointURL := baseURL + "/metrics/tag"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

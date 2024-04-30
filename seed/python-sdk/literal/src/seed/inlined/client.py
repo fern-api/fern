@@ -28,13 +28,21 @@ class InlinedClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendResponse:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - temperature: typing.Optional[float].
+        temperature : typing.Optional[float]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed.client import SeedLiteral
 
         client = SeedLiteral(
@@ -99,13 +107,21 @@ class AsyncInlinedClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendResponse:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - temperature: typing.Optional[float].
+        temperature : typing.Optional[float]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedLiteral
 
         client = AsyncSeedLiteral(

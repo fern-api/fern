@@ -350,7 +350,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
                                         isOptional: singleFile.isOptional
                                     }),
                                     fileArray: (multipleFiles) => ({
-                                        type: "file",
+                                        type: "fileArray",
                                         key: multipleFiles.key.wireValue,
                                         isOptional: multipleFiles.isOptional
                                     }),

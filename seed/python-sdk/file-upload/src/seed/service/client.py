@@ -23,39 +23,51 @@ class ServiceClient:
     def post(
         self,
         *,
-        maybe_string: typing.Optional[str] = None,
         integer: int,
         file: core.File,
         file_list: typing.List[core.File],
+        list_of_objects: typing.List[MyObject],
+        maybe_string: typing.Optional[str] = None,
         maybe_file: typing.Optional[core.File] = None,
         maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
-        list_of_objects: typing.List[MyObject],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - maybe_string: typing.Optional[str].
+        Parameters
+        ----------
+        integer : int
 
-            - integer: int.
+        file : core.File
+            See core.File for more documentation
 
-            - file: core.File. See core.File for more documentation
+        file_list : typing.List[core.File]
+            See core.File for more documentation
 
-            - file_list: typing.List[core.File]. See core.File for more documentation
+        list_of_objects : typing.List[MyObject]
 
-            - maybe_file: typing.Optional[core.File]. See core.File for more documentation
+        maybe_string : typing.Optional[str]
 
-            - maybe_file_list: typing.Optional[typing.List[core.File]]. See core.File for more documentation
+        maybe_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - maybe_integer: typing.Optional[int].
+        maybe_file_list : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
-            - optional_list_of_strings: typing.Optional[typing.List[str]].
+        maybe_integer : typing.Optional[int]
 
-            - list_of_objects: typing.List[MyObject].
+        optional_list_of_strings : typing.Optional[typing.List[str]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedFileUpload
 
         client = SeedFileUpload(
@@ -124,11 +136,20 @@ class ServiceClient:
 
     def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - file: core.File. See core.File for more documentation
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedFileUpload
 
         client = SeedFileUpload(
@@ -174,30 +195,39 @@ class ServiceClient:
     def just_file_with_query_params(
         self,
         *,
-        maybe_string: typing.Optional[str] = None,
         integer: int,
-        maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.Union[str, typing.Sequence[str]],
-        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - maybe_string: typing.Optional[str].
+        Parameters
+        ----------
+        integer : int
 
-            - integer: int.
+        list_of_strings : typing.Union[str, typing.Sequence[str]]
 
-            - maybe_integer: typing.Optional[int].
+        file : core.File
+            See core.File for more documentation
 
-            - list_of_strings: typing.Union[str, typing.Sequence[str]].
+        maybe_string : typing.Optional[str]
 
-            - optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]].
+        maybe_integer : typing.Optional[int]
 
-            - file: core.File. See core.File for more documentation
+        optional_list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedFileUpload
 
         client = SeedFileUpload(
@@ -267,39 +297,51 @@ class AsyncServiceClient:
     async def post(
         self,
         *,
-        maybe_string: typing.Optional[str] = None,
         integer: int,
         file: core.File,
         file_list: typing.List[core.File],
+        list_of_objects: typing.List[MyObject],
+        maybe_string: typing.Optional[str] = None,
         maybe_file: typing.Optional[core.File] = None,
         maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
-        list_of_objects: typing.List[MyObject],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - maybe_string: typing.Optional[str].
+        Parameters
+        ----------
+        integer : int
 
-            - integer: int.
+        file : core.File
+            See core.File for more documentation
 
-            - file: core.File. See core.File for more documentation
+        file_list : typing.List[core.File]
+            See core.File for more documentation
 
-            - file_list: typing.List[core.File]. See core.File for more documentation
+        list_of_objects : typing.List[MyObject]
 
-            - maybe_file: typing.Optional[core.File]. See core.File for more documentation
+        maybe_string : typing.Optional[str]
 
-            - maybe_file_list: typing.Optional[typing.List[core.File]]. See core.File for more documentation
+        maybe_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - maybe_integer: typing.Optional[int].
+        maybe_file_list : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
-            - optional_list_of_strings: typing.Optional[typing.List[str]].
+        maybe_integer : typing.Optional[int]
 
-            - list_of_objects: typing.List[MyObject].
+        optional_list_of_strings : typing.Optional[typing.List[str]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
@@ -368,11 +410,20 @@ class AsyncServiceClient:
 
     async def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - file: core.File. See core.File for more documentation
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
@@ -418,30 +469,39 @@ class AsyncServiceClient:
     async def just_file_with_query_params(
         self,
         *,
-        maybe_string: typing.Optional[str] = None,
         integer: int,
-        maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.Union[str, typing.Sequence[str]],
-        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - maybe_string: typing.Optional[str].
+        Parameters
+        ----------
+        integer : int
 
-            - integer: int.
+        list_of_strings : typing.Union[str, typing.Sequence[str]]
 
-            - maybe_integer: typing.Optional[int].
+        file : core.File
+            See core.File for more documentation
 
-            - list_of_strings: typing.Union[str, typing.Sequence[str]].
+        maybe_string : typing.Optional[str]
 
-            - optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]].
+        maybe_integer : typing.Optional[int]
 
-            - file: core.File. See core.File for more documentation
+        optional_list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(

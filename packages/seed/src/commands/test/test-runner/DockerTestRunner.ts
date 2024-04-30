@@ -6,7 +6,6 @@ import { writeInputs } from "../../../commands/rewrite-inputs/rewriteInputsForWo
 import { runScript } from "../../../runScript";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
-import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow";
 import { TestRunner } from "./TestRunner";
 
 export class DockerTestRunner extends TestRunner {
@@ -89,9 +88,5 @@ export class DockerTestRunner extends TestRunner {
                 context: taskContext
             });
         }
-    }
-
-    private getParsedDockerName(): ParsedDockerName {
-        return parseDockerOrThrow(this.generator.workspaceConfig.docker);
     }
 }

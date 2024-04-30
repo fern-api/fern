@@ -29,11 +29,19 @@ class ImdbClient:
         """
         Add a movie to the database
 
-        Parameters:
-            - request: CreateMovieRequest.
+        Parameters
+        ----------
+        request : CreateMovieRequest
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MovieId
+
+        Examples
+        --------
         from seed import CreateMovieRequest
         from seed.client import SeedApi
 
@@ -84,11 +92,19 @@ class ImdbClient:
 
     def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
-        Parameters:
-            - movie_id: MovieId.
+        Parameters
+        ----------
+        movie_id : MovieId
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Movie
+
+        Examples
+        --------
         from seed.client import SeedApi
 
         client = SeedApi(
@@ -140,11 +156,19 @@ class AsyncImdbClient:
         """
         Add a movie to the database
 
-        Parameters:
-            - request: CreateMovieRequest.
+        Parameters
+        ----------
+        request : CreateMovieRequest
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MovieId
+
+        Examples
+        --------
         from seed import CreateMovieRequest
         from seed.client import AsyncSeedApi
 
@@ -195,11 +219,19 @@ class AsyncImdbClient:
 
     async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
-        Parameters:
-            - movie_id: MovieId.
+        Parameters
+        ----------
+        movie_id : MovieId
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Movie
+
+        Examples
+        --------
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(

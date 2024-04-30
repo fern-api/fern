@@ -10,6 +10,8 @@ from .docs import Docs
 
 class ExampleType(Docs):
     """
+    Examples
+    --------
     from seed import ExampleType
 
     ExampleType(

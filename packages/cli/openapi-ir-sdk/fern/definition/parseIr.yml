@@ -279,6 +279,7 @@ types:
 
   StringSchemaWithExample:
     properties:
+      format: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
       example: optional<string>

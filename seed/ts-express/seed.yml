@@ -4,6 +4,16 @@ dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLo
 language: typescript
 generatorType: Server
 defaultOutputMode: local_files
+defaultCustomConfig: 
+  outputSourceFiles: true
+local: 
+  workingDirectory: generators/typescript
+  buildCommand: 
+    - yarn workspace @fern-typescript/express-generator-cli compile 
+    - yarn workspace @fern-typescript/express-generator-cli build
+  runCommand: node express/cli/dist/cli.cjs
+  env: 
+    NODE_ENV: test
 fixtures:
   trace:
     - customConfig: null
@@ -15,8 +25,8 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        outputSourceFiles: true
-      outputFolder: output-source-files
+        outputSourceFiles: false
+      outputFolder: output-compiled
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config

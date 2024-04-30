@@ -17,11 +17,19 @@ class ServiceClient:
 
     def post(self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - endpoint_param: str.
+        Parameters
+        ----------
+        endpoint_param : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedVariables
 
         client = SeedVariables(
@@ -69,11 +77,19 @@ class AsyncServiceClient:
 
     async def post(self, endpoint_param: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - endpoint_param: str.
+        Parameters
+        ----------
+        endpoint_param : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedVariables
 
         client = AsyncSeedVariables(

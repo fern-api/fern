@@ -11,6 +11,8 @@ from .movie_id import MovieId
 
 class Movie(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import Movie
 
     Movie(

@@ -18,9 +18,17 @@ class ServiceClient:
 
     def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Response
+
+        Examples
+        --------
         from seed.client import SeedAudiences
 
         client = SeedAudiences(
@@ -63,9 +71,17 @@ class AsyncServiceClient:
 
     async def get_direct_thread(self, *, request_options: typing.Optional[RequestOptions] = None) -> Response:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Response
+
+        Examples
+        --------
         from seed.client import AsyncSeedAudiences
 
         client = AsyncSeedAudiences(

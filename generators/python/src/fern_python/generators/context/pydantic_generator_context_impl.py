@@ -84,7 +84,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         declaration = self.get_declaration_for_type_id(type_name)
         shape = declaration.shape.get_as_union()
         if shape.type != "object":
-            raise RuntimeError(f"Cannot get properties because {declaration.name.name.original_name} is not an object")
+            raise RuntimeError(
+                f"Cannot get properties because {declaration.name.name.original_name} is not an object, it's a {shape.type}"
+            )
 
         properties = shape.properties.copy()
         for extension in shape.extends:

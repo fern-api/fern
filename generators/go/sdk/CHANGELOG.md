@@ -7,12 +7,154 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.21.1 - 2024-04-29]
+
+- Fix: The Go generator now escapes path parameters that would previously create invalid URLs (e.g. "\\example").
+- Improvement: Refactor endpoint URL mapping with `core.EncodeURL`. All generated endpoints with path parameters
+  now see use cases like the following:
+
+  ```go
+  endpointURL := core.EncodeURL(baseURL+"/organizations/%v", orgID)
+  ```
+
+## [0.21.0 - 2024-04-29]
+
+- Feature: Add support for cursor and offset pagination.
+
+  For example, consider the following endpoint `/users` endpoint:
+
+  ```yaml
+  types:
+    User:
+      properties:
+        name: string
+
+    ListUserResponse:
+      properties:
+        next: optional<string>
+        data: list<User>
+
+  service:
+    auth: false
+    base-path: /users
+    endpoints:
+      list:
+        path: ""
+        method: GET
+        pagination:
+          cursor: $request.starting_after
+          next_cursor: $response.next
+          results: $response.data
+        request:
+          name: ListUsersRequest
+          query-parameters:
+            starting_after: optional<string>
+        response: ListUsersResponse
+  ```
+
+  The generated `client.Users.List` method now returns a generic `core.Page[T]`
+  that can be used to fetch the next page like so:
+
+  ```go
+  page, err := client.Users.List(
+    ctx,
+    &acme.ListUsersRequest{
+      StartingAfter: acme.String("user_xyz"),
+    },
+  )
+  if err != nil {
+    return nil, err
+  }
+  for page != nil {
+    for _, user := range page.Results {
+      fmt.Printf("Got user: %v\n", user.Name)
+    }
+    page, err = page.GetNextPage()
+    if errors.Is(err, core.ErrNoPages) {
+      break
+    }
+    if err != nil {
+      // Handle the error!
+    }
+  }
+  ```
+
+  If you don't need to explicitly request every individual page, you can
+  convert the `core.Page` into a `core.PageIterator` and simply iterate over
+  each element like so:
+
+  ```go
+  page, err := client.Users.List(
+    ctx,
+    &acme.ListUsersRequest{
+      StartingAfter: acme.String("user_xyz"),
+    },
+  )
+  if err != nil {
+    return nil, err
+  }
+  iter := page.Iterator()
+  for iter.Next() {
+    user := iter.Current()
+    fmt.Printf("Got user: %v\n", user.Name)
+  }
+  if err := iter.Err(); err != nil {
+    // Handle the error!
+  }
+  ```
+
+  The iterator will automatically fetch the next page as needed and continue
+  to iterate until all the pages are read.
+
+## [0.20.2 - 2024-04-26]
+
+- Improvement: Enhance extra property serialization performance.
+- Improvement: Generate additional extra property tests into the SDK.
+- Fix: Resolve an non-deterministic key ordering issue for snippets of
+  type `unknown`.
+- Fix: Resolve an issue with discriminated union serialization. This
+  only occurs when the union varaint requires its own custom JSON
+  serialization strategy _and_ the union variant contains the same
+  properties as another object.
+
+  For example, consider the following union definition:
+
+  ```yaml
+  Circle:
+    properties:
+      created_at: datetime
+
+  Square:
+    properties:
+      created_at: datetime
+
+  Shape:
+    union:
+      circle: Circle
+      square: Square
+  ```
+
+  The generated `json.Marshaler` method now looks like the following, where
+  the discriminant is added directly to the serialized JSON object:
+
+  ```go
+  func (s Shape) MarshalJSON() ([]byte, error) {
+    if s.Circle != nil {
+      return core.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
+    }
+    if s.Square != nil {
+      return core.MarshalJSONWithExtraProperty(s.Square, "type", "square")
+    }
+    return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+  }
+  ```
+
 ## [0.20.1 - 2024-04-25]
 
 - Fix: The `omitempty` struct tag is now only used for nil-able types. It was
-       previously used for non-optional enums, which was never intended. For
-       example, the following `RequestType` enum will no longer include an
-       `omitempty` tag:
+  previously used for non-optional enums, which was never intended. For
+  example, the following `RequestType` enum will no longer include an
+  `omitempty` tag:
 
   ```go
   type Request struct {
@@ -21,7 +163,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```
 
 - Fix: Update the query encoder to prevent unintentional errors whenever the
-       `omitempty` is used for a non-optional field.
+  `omitempty` is used for a non-optional field.
 
 ## [0.20.0 - 2024-04-24]
 

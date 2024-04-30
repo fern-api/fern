@@ -5,6 +5,7 @@ package mixedcase
 import (
 	json "encoding/json"
 	fmt "fmt"
+	core "github.com/mixed-case/fern/core"
 	time "time"
 )
 
@@ -60,27 +61,9 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", r.ResourceType, r)
 	case "user":
-		var marshaler = struct {
-			ResourceType string         `json:"resource_type"`
-			Status       ResourceStatus `json:"status"`
-			*User
-		}{
-			ResourceType: "user",
-			Status:       r.Status,
-			User:         r.User,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(r.User, "resource_type", "user")
 	case "Organization":
-		var marshaler = struct {
-			ResourceType string         `json:"resource_type"`
-			Status       ResourceStatus `json:"status"`
-			*Organization
-		}{
-			ResourceType: "Organization",
-			Status:       r.Status,
-			Organization: r.Organization,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(r.Organization, "resource_type", "Organization")
 	}
 }
 

@@ -8,7 +8,7 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
     public readonly MANIFEST = {
         name: "form-data-utils",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/form-data-utils/src")
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/form-data-utils/src")
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/form-data-utils"),
         pathInCoreUtilities: [{ nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } }],

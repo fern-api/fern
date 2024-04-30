@@ -44,7 +44,7 @@ func (c *Client) CreateNested(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "nested"
+	endpointURL := baseURL + "/nested"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

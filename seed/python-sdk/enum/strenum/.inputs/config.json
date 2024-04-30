@@ -1,20 +1,23 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/enum/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "pypi",
                 "registryUrl": "",
                 "packageName": "fern_enum",
                 "usernameEnvironmentVariable": "",
-                "passwordEnvironmentVariable": "",
-                "type": "pypi"
-            },
-            "type": "github"
+                "passwordEnvironmentVariable": ""
+            }
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "customConfig": {
         "pydantic_config": {
             "use_str_enums": true
@@ -23,7 +26,7 @@
     "workspaceName": "enum",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

@@ -45,7 +45,7 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "headers"
+	endpointURL := baseURL + "/headers"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Version", fmt.Sprintf("%v", "02-12-2024"))

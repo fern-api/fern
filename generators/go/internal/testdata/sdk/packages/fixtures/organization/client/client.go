@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
@@ -49,7 +48,7 @@ func (c *Client) Check(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"organization/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/organization/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

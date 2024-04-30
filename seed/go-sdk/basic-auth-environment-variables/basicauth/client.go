@@ -55,7 +55,7 @@ func (c *Client) GetWithBasicAuth(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "basic-auth"
+	endpointURL := baseURL + "/basic-auth"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -111,7 +111,7 @@ func (c *Client) PostWithBasicAuth(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "basic-auth"
+	endpointURL := baseURL + "/basic-auth"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

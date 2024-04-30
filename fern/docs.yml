@@ -23,7 +23,7 @@ tabs:
   sdks:
     display-name: SDKs
     slug: sdks
-  api: 
+  api:
     display-name: API Reference
     slug: api
 
@@ -37,7 +37,7 @@ navigation:
   - tab: api-definition
     layout:
       - section: Introduction
-        contents: 
+        contents:
           - page: What is an API Definition?
             path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
       - section: OpenAPI
@@ -84,11 +84,11 @@ navigation:
   - tab: sdks
     layout:
       - section: Introduction
-        contents: 
+        contents:
           - page: Overview
             path: ./pages/sdks/introduction/overview.mdx
       - section: Getting Started
-        contents: 
+        contents:
           - page: Generate your first SDK
             path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
       - section: Features
@@ -178,20 +178,16 @@ navigation:
       #     - page: Update SDKs with Fern's GitHub Bot
       #       path: ./pages/fern-sdks/guides/github-bot.mdx
       #       slug: github-bot
-      #       icon: 
+      #       icon:
   - tab: docs
     layout:
-      - page: Overview
-        path: ./pages/fern-docs/docs-overview.mdx
-      - section: Quickstarts
-        slug: quickstarts
+      - section: Introduction
         contents:
-          - page: Use OpenAPI
-            slug: openapi
-            path: ./pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
-          - page: Use a Fern Definition
-            slug: ferndef
-            path: ./pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
+          - page: Overview
+            path: ./pages/docs/introduction/overview.mdx
+          - page: Quickstart
+            slug: quickstart
+            path: ./pages/docs/introduction/quickstart.mdx
       - section: Configuration
         slug: config
         contents:
@@ -212,7 +208,6 @@ navigation:
                 path: ./pages/fern-docs/config/branding/logo-and-favicon.mdx
               - page: Custom domain
                 path: ./pages/fern-docs/config/branding/custom-domain.mdx
-
       - section: Write content
         slug: content
         contents:
@@ -223,7 +218,6 @@ navigation:
             path: ./pages/fern-docs/content/front-matter.mdx
           - page: Code snippets
             path: ./pages/fern-docs/content/code-snippets.mdx
-
       - section: API references
         contents:
           - page: Generate API reference
@@ -235,31 +229,50 @@ navigation:
             path: ./pages/fern-docs/config/sdk-snippets.mdx
           - page: Endpoint errors
             path: ./pages/fern-docs/config/endpoint-errors.mdx
+          - page: Reorder API Reference pages
+            path: ./pages/fern-docs/content/reorder-api-ref.mdx
+          - page: Write markdown in API Reference
+            path: ./pages/fern-docs/content/api-ref-content.mdx
 
       - section: Components
         slug: components
         contents:
           - page: Accordion
-            path: ./pages/fern-docs/components/accordion.mdx
-          - page: Availability
-            path: ./pages/fern-docs/components/availability.mdx
-          - page: Callout
-            path: ./pages/fern-docs/components/callout.mdx
+            path: ./pages/docs/components/accordions.mdx
+            icon: 'square-caret-down'
+          - page: Accordion Groups
+            path: ./pages/docs/components/accordion-groups.mdx
+            icon: table-rows
+          - page: Callouts
+            path: ./pages/docs/components/callouts.mdx
+            icon: 'circle-exclamation'
           - page: Cards
-            path: ./pages/fern-docs/components/card.mdx
+            path: ./pages/docs/components/cards.mdx
+            icon: "rectangle"
+          - page: Card Groups
+            path: ./pages/docs/components/card-groups.mdx
+            icon: 'rectangles-mixed'
           - page: Code Blocks
-            path: ./pages/fern-docs/components/codeblocks.mdx
-            slug: codeblocks
-          - page: Endpoint Snippets
-            path: ./pages/fern-docs/components/endpoint-snippets.mdx
-          - page: Icon
-            path: ./pages/fern-docs/components/icon.mdx
+            path: ./pages/docs/components/code-blocks.mdx
+            slug: code-blocks
+            icon: "rectangle-code"
           - page: Steps
-            path: ./pages/fern-docs/components/steps.mdx
+            path: ./pages/docs/components/steps.mdx
+            icon: 'arrow-progress'
+          - page: Frames
+            path: ./pages/docs/components/frames.mdx
+            icon: 'frame'
           - page: Tabs
-            path: ./pages/fern-docs/components/tabs.mdx
+            path: ./pages/docs/components/tabs.mdx
+            icon: 'window-restore'
+          - page: Endpoint Request Snippet
+            path: ./pages/docs/components/endpoint-request-snippet.mdx
+            icon: 'turn-up'
+          - page: Endpoint Response Snippet
+            path: ./pages/docs/components/endpoint-response-snippet.mdx
+            icon: 'turn-down'
   - tab: api
-    layout: 
+    layout:
       - api: API Reference
         api-name: public-api
         # audiences:

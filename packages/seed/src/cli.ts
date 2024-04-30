@@ -6,7 +6,7 @@ import { rewriteInputsForWorkspace } from "./commands/rewrite-inputs/rewriteInpu
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
 import { ScriptRunner } from "./commands/test/ScriptRunner";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
-import { DockerTestRunner } from "./commands/test/test-runner";
+import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner";
 import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
@@ -62,6 +62,11 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     default: false
                 })
+                .option("local", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false
+                })
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS
@@ -78,16 +83,30 @@ function addTestCommand(cli: Argv) {
                 if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
                     continue;
                 }
+                let testRunner;
                 const scriptRunner = new ScriptRunner(generator);
-                const testRunner = new DockerTestRunner({
-                    generator,
-                    lock,
-                    taskContextFactory,
-                    skipScripts: argv.skipScripts,
-                    keepDocker: argv.keepDocker,
-                    scriptRunner: new ScriptRunner(generator)
-                });
-                scriptRunners.push(scriptRunner);
+
+                if (argv.local && generator.workspaceConfig.local != null) {
+                    testRunner = new LocalTestRunner({
+                        generator,
+                        lock,
+                        taskContextFactory,
+                        skipScripts: argv.skipScripts,
+                        scriptRunner: new ScriptRunner(generator),
+                        keepDocker: false // dummy
+                    });
+                } else {
+                    testRunner = new DockerTestRunner({
+                        generator,
+                        lock,
+                        taskContextFactory,
+                        skipScripts: argv.skipScripts,
+                        keepDocker: argv.keepDocker,
+                        scriptRunner: new ScriptRunner(generator)
+                    });
+                    scriptRunners.push(scriptRunner);
+                    CONSOLE_LOGGER.info(`${generator.workspaceName} does not support local mode. Running in docker.`);
+                }
 
                 tests.push(
                     testGenerator({

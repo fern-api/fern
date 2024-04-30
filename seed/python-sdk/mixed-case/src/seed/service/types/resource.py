@@ -12,6 +12,8 @@ from .resource_status import ResourceStatus
 
 class Base(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import Resource_User
 
     Resource_User(
