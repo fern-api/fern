@@ -7,6 +7,95 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.21.0 - 2024-04-29]
+
+- Feature: Add support for cursor and offset pagination.
+
+  For example, consider the following endpoint `/users` endpoint:
+
+  ```yaml
+  types:
+    User:
+      properties:
+        name: string
+
+    ListUserResponse:
+      properties:
+        next: optional<string>
+        data: list<User>
+
+  service:
+    auth: false
+    base-path: /users
+    endpoints:
+      list:
+        path: ""
+        method: GET
+        pagination:
+          cursor: $request.starting_after
+          next_cursor: $response.next
+          results: $response.data
+        request:
+          name: ListUsersRequest
+          query-parameters:
+            starting_after: optional<string>
+        response: ListUsersResponse
+  ```
+
+  The generated `client.Users.List` method now returns a generic `core.Page[T]`
+  that can be used to fetch the next page like so:
+
+  ```go
+  page, err := client.Users.List(
+    ctx,
+    &acme.ListUsersRequest{
+      StartingAfter: acme.String("user_xyz"),
+    },
+  )
+  if err != nil {
+    return nil, err
+  }
+  for page != nil {
+    for _, user := range page.Results {
+      fmt.Printf("Got user: %v\n", user.Name)
+    }
+    page, err = page.GetNextPage()
+    if errors.Is(err, core.ErrNoPages) {
+      break
+    }
+    if err != nil {
+      // Handle the error!
+    }
+  }
+  ```
+
+  If you don't need to explicitly request every individual page, you can
+  convert the `core.Page` into a `core.PageIterator` and simply iterate over
+  each element like so:
+
+  ```go
+  page, err := client.Users.List(
+    ctx,
+    &acme.ListUsersRequest{
+      StartingAfter: acme.String("user_xyz"),
+    },
+  )
+  if err != nil {
+    return nil, err
+  }
+  iter := page.Iterator()
+  for iter.Next() {
+    user := iter.Current()
+    fmt.Printf("Got user: %v\n", user.Name)
+  }
+  if err := iter.Err(); err != nil {
+    // Handle the error!
+  }
+  ```
+
+  The iterator will automatically fetch the next page as needed and continue
+  to iterate until all the pages are read.
+
 ## [0.20.2 - 2024-04-26]
 
 - Improvement: Enhance extra property serialization performance.
@@ -53,9 +142,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.20.1 - 2024-04-25]
 
 - Fix: The `omitempty` struct tag is now only used for nil-able types. It was
-       previously used for non-optional enums, which was never intended. For
-       example, the following `RequestType` enum will no longer include an
-       `omitempty` tag:
+  previously used for non-optional enums, which was never intended. For
+  example, the following `RequestType` enum will no longer include an
+  `omitempty` tag:
 
   ```go
   type Request struct {
@@ -64,7 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```
 
 - Fix: Update the query encoder to prevent unintentional errors whenever the
-       `omitempty` is used for a non-optional field.
+  `omitempty` is used for a non-optional field.
 
 ## [0.20.0 - 2024-04-24]
 
