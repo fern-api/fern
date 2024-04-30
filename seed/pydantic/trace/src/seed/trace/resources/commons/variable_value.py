@@ -39,8 +39,9 @@ class VariableValue_CharValue(pydantic_v1.BaseModel):
     value: str
 
 
-class VariableValue_MapValue(MapValue):
+class VariableValue_MapValue(pydantic_v1.BaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
+    key_value_pairs: typing.List[KeyValuePair] = pydantic_v1.Field(alias="keyValuePairs")
 
     class Config:
         allow_population_by_field_name = True
@@ -52,28 +53,22 @@ class VariableValue_ListValue(pydantic_v1.BaseModel):
     value: typing.List[VariableValue]
 
 
-class VariableValue_BinaryTreeValue(BinaryTreeValue):
+class VariableValue_BinaryTreeValue(pydantic_v1.BaseModel):
     type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+    root: typing.Optional[NodeId]
+    nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
 
 
-class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
+class VariableValue_SinglyLinkedListValue(pydantic_v1.BaseModel):
     type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+    head: typing.Optional[NodeId]
+    nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
 
 
-class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
+class VariableValue_DoublyLinkedListValue(pydantic_v1.BaseModel):
     type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+    head: typing.Optional[NodeId]
+    nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
 
 
 class VariableValue_NullValue(pydantic_v1.BaseModel):
@@ -96,5 +91,5 @@ VariableValue = typing.Union[
 from .key_value_pair import KeyValuePair  # noqa: E402
 from .map_value import MapValue  # noqa: E402
 
-VariableValue_MapValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
-VariableValue_ListValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
+VariableValue_MapValue.update_forward_refs(KeyValuePair=KeyValuePair)
+VariableValue_ListValue.update_forward_refs(KeyValuePair=KeyValuePair)

@@ -5,7 +5,8 @@ from __future__ import annotations
 import typing
 
 from .......core.pydantic_utilities import pydantic_v1
-from .test_case_implementation import TestCaseImplementation
+from .test_case_function import TestCaseFunction
+from .test_case_implementation_description import TestCaseImplementationDescription
 from .test_case_template_id import TestCaseTemplateId
 
 
@@ -14,12 +15,10 @@ class TestCaseImplementationReference_TemplateId(pydantic_v1.BaseModel):
     value: TestCaseTemplateId
 
 
-class TestCaseImplementationReference_Implementation(TestCaseImplementation):
+class TestCaseImplementationReference_Implementation(pydantic_v1.BaseModel):
     type: typing.Literal["implementation"] = "implementation"
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+    description: TestCaseImplementationDescription
+    function: TestCaseFunction
 
 
 TestCaseImplementationReference = typing.Union[

@@ -4,29 +4,35 @@ from __future__ import annotations
 
 import typing
 
-from .custom_test_cases_unsupported import CustomTestCasesUnsupported
-from .submission_id_not_found import SubmissionIdNotFound
-from .unexpected_language_error import UnexpectedLanguageError
+from ...core.pydantic_utilities import pydantic_v1
+from ..commons.language import Language
+from ..commons.problem_id import ProblemId
+from .submission_id import SubmissionId
 
 
-class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
+class InvalidRequestCause_SubmissionIdNotFound(pydantic_v1.BaseModel):
     type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
+    missing_submission_id: SubmissionId = pydantic_v1.Field(alias="missingSubmissionId")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported):
+class InvalidRequestCause_CustomTestCasesUnsupported(pydantic_v1.BaseModel):
     type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
+    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
+class InvalidRequestCause_UnexpectedLanguage(pydantic_v1.BaseModel):
     type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
+    expected_language: Language = pydantic_v1.Field(alias="expectedLanguage")
+    actual_language: Language = pydantic_v1.Field(alias="actualLanguage")
 
     class Config:
         allow_population_by_field_name = True
