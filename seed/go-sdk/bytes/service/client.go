@@ -44,7 +44,7 @@ func (c *Client) Upload(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "upload-content"
+	endpointURL := baseURL + "/upload-content"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Set("Content-Type", "application/octet-stream")

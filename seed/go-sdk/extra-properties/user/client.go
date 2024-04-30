@@ -44,7 +44,7 @@ func (c *Client) CreateUser(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "user"
+	endpointURL := baseURL + "/user"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

@@ -45,7 +45,7 @@ func (c *Client) GetAllUsers(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "users/all"
+	endpointURL := baseURL + "/users/all"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {

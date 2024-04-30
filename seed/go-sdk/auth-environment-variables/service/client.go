@@ -52,7 +52,7 @@ func (c *Client) GetWithApiKey(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "apiKey"
+	endpointURL := baseURL + "/apiKey"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -88,7 +88,7 @@ func (c *Client) GetWithHeader(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "apiKeyInHeader"
+	endpointURL := baseURL + "/apiKeyInHeader"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))

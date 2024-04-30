@@ -44,7 +44,7 @@ func (c *Client) GenerateStream(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "generate-stream"
+	endpointURL := baseURL + "/generate-stream"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

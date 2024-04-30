@@ -48,7 +48,7 @@ func (c *Client) SetName(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v/set-name", userId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
@@ -105,7 +105,7 @@ func (c *Client) UpdateName(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/update-name", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v/update-name", userId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))

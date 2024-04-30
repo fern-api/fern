@@ -44,7 +44,7 @@ func (c *Client) GetUsername(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "user"
+	endpointURL := baseURL + "/user"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {

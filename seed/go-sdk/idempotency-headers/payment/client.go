@@ -4,7 +4,6 @@ package payment
 
 import (
 	context "context"
-	fmt "fmt"
 	uuid "github.com/google/uuid"
 	fern "github.com/idempotency-headers/fern"
 	core "github.com/idempotency-headers/fern/core"
@@ -46,7 +45,7 @@ func (c *Client) Create(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "payment"
+	endpointURL := baseURL + "/payment"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -82,7 +81,7 @@ func (c *Client) Delete(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"payment/%v", paymentId)
+	endpointURL := core.EncodeURL(baseURL+"/payment/%v", paymentId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

@@ -4,7 +4,6 @@ package client
 
 import (
 	context "context"
-	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/option"
 	organization "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/organization"
@@ -50,7 +49,7 @@ func (c *Client) CreateMetricsTag(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "metrics"
+	endpointURL := baseURL + "/metrics"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -86,7 +85,7 @@ func (c *Client) GetMetricsTag(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"metrics/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/metrics/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

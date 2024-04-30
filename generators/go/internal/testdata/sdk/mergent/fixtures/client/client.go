@@ -7,7 +7,6 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
-	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/option"
@@ -48,7 +47,7 @@ func (c *Client) GetTasks(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "tasks"
+	endpointURL := baseURL + "/tasks"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -83,7 +82,7 @@ func (c *Client) PostTasks(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "tasks"
+	endpointURL := baseURL + "/tasks"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -147,7 +146,7 @@ func (c *Client) GetTasksTaskId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
+	endpointURL := core.EncodeURL(baseURL+"/tasks/%v", taskId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -204,7 +203,7 @@ func (c *Client) PatchTasksTaskId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
+	endpointURL := core.EncodeURL(baseURL+"/tasks/%v", taskId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -275,7 +274,7 @@ func (c *Client) DeleteTasksTaskId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
+	endpointURL := core.EncodeURL(baseURL+"/tasks/%v", taskId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -330,7 +329,7 @@ func (c *Client) PostTasksTaskIdRun(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v/run", taskId)
+	endpointURL := core.EncodeURL(baseURL+"/tasks/%v/run", taskId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -396,7 +395,7 @@ func (c *Client) PostTasksBatchCreate(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "tasks/batch-create"
+	endpointURL := baseURL + "/tasks/batch-create"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -477,7 +476,7 @@ func (c *Client) PostTasksBatchDelete(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "tasks/batch-delete"
+	endpointURL := baseURL + "/tasks/batch-delete"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -537,7 +536,7 @@ func (c *Client) GetSchedules(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "schedules"
+	endpointURL := baseURL + "/schedules"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -572,7 +571,7 @@ func (c *Client) PostSchedules(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "schedules"
+	endpointURL := baseURL + "/schedules"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -629,7 +628,7 @@ func (c *Client) GetSchedulesScheduleId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
+	endpointURL := core.EncodeURL(baseURL+"/schedules/%v", scheduleId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -686,7 +685,7 @@ func (c *Client) PatchSchedulesScheduleId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
+	endpointURL := core.EncodeURL(baseURL+"/schedules/%v", scheduleId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -750,7 +749,7 @@ func (c *Client) DeleteSchedulesScheduleId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
+	endpointURL := core.EncodeURL(baseURL+"/schedules/%v", scheduleId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -804,7 +803,7 @@ func (c *Client) GetSchedulesScheduleIdTasks(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v/tasks", scheduleId)
+	endpointURL := core.EncodeURL(baseURL+"/schedules/%v/tasks", scheduleId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

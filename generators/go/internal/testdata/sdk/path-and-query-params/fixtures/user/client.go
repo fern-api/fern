@@ -4,7 +4,6 @@ package user
 
 import (
 	context "context"
-	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/path-and-query-params/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-and-query-params/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/path-and-query-params/fixtures/option"
@@ -46,7 +45,7 @@ func (c *Client) GetUser(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v", userId)
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {
