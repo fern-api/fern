@@ -96,7 +96,7 @@ export class TemplateGenerator {
     }): FdrSnippetTemplate.Template {
         return FdrSnippetTemplate.Template.generic({
             imports: [],
-            templateString: name != null ? `${name}: ${TEMPLATE_SENTINEL}` : `"${TEMPLATE_SENTINEL}"`,
+            templateString: name != null ? `${name}: ${TEMPLATE_SENTINEL}` : `${TEMPLATE_SENTINEL}`,
             isOptional: true,
             templateInputs: [
                 FdrSnippetTemplate.TemplateInput.payload({

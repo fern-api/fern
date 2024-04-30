@@ -32,7 +32,7 @@
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
-                                            "templateString": "\"$FERN_INPUT\"",
+                                            "templateString": "$FERN_INPUT",
                                             "isOptional": true,
                                             "templateInputs": [
                                                 {
@@ -169,7 +169,7 @@
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
-                                            "templateString": "\"$FERN_INPUT\"",
+                                            "templateString": "$FERN_INPUT",
                                             "isOptional": true,
                                             "templateInputs": [
                                                 {
@@ -307,7 +307,7 @@
                                         "keyValueSeparator": ": ",
                                         "keyTemplate": {
                                             "imports": [],
-                                            "templateString": "\"$FERN_INPUT\"",
+                                            "templateString": "$FERN_INPUT",
                                             "isOptional": true,
                                             "templateInputs": [
                                                 {
@@ -319,7 +319,7 @@
                                         },
                                         "valueTemplate": {
                                             "imports": [],
-                                            "templateString": "\"$FERN_INPUT\"",
+                                            "templateString": "$FERN_INPUT",
                                             "isOptional": true,
                                             "templateInputs": [
                                                 {
@@ -382,7 +382,7 @@
                                         "keyValueSeparator": ": ",
                                         "keyTemplate": {
                                             "imports": [],
-                                            "templateString": "\"$FERN_INPUT\"",
+                                            "templateString": "$FERN_INPUT",
                                             "isOptional": true,
                                             "templateInputs": [
                                                 {
@@ -583,7 +583,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -699,7 +699,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -791,7 +791,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -975,7 +975,7 @@
                                                     "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1002,7 +1002,7 @@
                                                     "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1030,7 +1030,7 @@
                                                     "keyValueSeparator": ": ",
                                                     "keyTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1042,7 +1042,7 @@
                                                     },
                                                     "valueTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1105,7 +1105,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -1313,7 +1313,7 @@
                                                     "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1340,7 +1340,7 @@
                                                     "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1368,7 +1368,7 @@
                                                     "keyValueSeparator": ": ",
                                                     "keyTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1380,7 +1380,7 @@
                                                     },
                                                     "valueTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1520,7 +1520,7 @@
                                                     "keyValueSeparator": ": ",
                                                     "keyTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -1538,7 +1538,7 @@
                                                         "keyValueSeparator": ": ",
                                                         "keyTemplate": {
                                                             "imports": [],
-                                                            "templateString": "\"$FERN_INPUT\"",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
                                                             "templateInputs": [
                                                                 {
@@ -1550,7 +1550,7 @@
                                                         },
                                                         "valueTemplate": {
                                                             "imports": [],
-                                                            "templateString": "\"$FERN_INPUT\"",
+                                                            "templateString": "$FERN_INPUT",
                                                             "isOptional": true,
                                                             "templateInputs": [
                                                                 {
@@ -1798,7 +1798,7 @@
                                                                 "delimiter": ",\n\t\t\t\t\t",
                                                                 "innerTemplate": {
                                                                     "imports": [],
-                                                                    "templateString": "\"$FERN_INPUT\"",
+                                                                    "templateString": "$FERN_INPUT",
                                                                     "isOptional": true,
                                                                     "templateInputs": [
                                                                         {
@@ -1825,7 +1825,7 @@
                                                                 "delimiter": ",\n\t\t\t\t\t",
                                                                 "innerTemplate": {
                                                                     "imports": [],
-                                                                    "templateString": "\"$FERN_INPUT\"",
+                                                                    "templateString": "$FERN_INPUT",
                                                                     "isOptional": true,
                                                                     "templateInputs": [
                                                                         {
@@ -1853,7 +1853,7 @@
                                                                 "keyValueSeparator": ": ",
                                                                 "keyTemplate": {
                                                                     "imports": [],
-                                                                    "templateString": "\"$FERN_INPUT\"",
+                                                                    "templateString": "$FERN_INPUT",
                                                                     "isOptional": true,
                                                                     "templateInputs": [
                                                                         {
@@ -1865,7 +1865,7 @@
                                                                 },
                                                                 "valueTemplate": {
                                                                     "imports": [],
-                                                                    "templateString": "\"$FERN_INPUT\"",
+                                                                    "templateString": "$FERN_INPUT",
                                                                     "isOptional": true,
                                                                     "templateInputs": [
                                                                         {
@@ -2112,7 +2112,7 @@
                                                                 "delimiter": ",\n\t\t\t\t\t",
                                                                 "innerTemplate": {
                                                                     "imports": [],
-                                                                    "templateString": "\"$FERN_INPUT\"",
+                                                                    "templateString": "$FERN_INPUT",
                                                                     "isOptional": true,
                                                                     "templateInputs": [
                                                                         {
@@ -2139,7 +2139,7 @@
                                                                 "delimiter": ",\n\t\t\t\t\t",
                                                                 "innerTemplate": {
                                                                     "imports": [],
-                                                                    "templateString": "\"$FERN_INPUT\"",
+                                                                    "templateString": "$FERN_INPUT",
                                                                     "isOptional": true,
                                                                     "templateInputs": [
                                                                         {
@@ -2167,7 +2167,7 @@
                                                                 "keyValueSeparator": ": ",
                                                                 "keyTemplate": {
                                                                     "imports": [],
-                                                                    "templateString": "\"$FERN_INPUT\"",
+                                                                    "templateString": "$FERN_INPUT",
                                                                     "isOptional": true,
                                                                     "templateInputs": [
                                                                         {
@@ -2179,7 +2179,7 @@
                                                                 },
                                                                 "valueTemplate": {
                                                                     "imports": [],
-                                                                    "templateString": "\"$FERN_INPUT\"",
+                                                                    "templateString": "$FERN_INPUT",
                                                                     "isOptional": true,
                                                                     "templateInputs": [
                                                                         {
@@ -2431,7 +2431,7 @@
                                                                     "delimiter": ",\n\t\t\t\t\t\t",
                                                                     "innerTemplate": {
                                                                         "imports": [],
-                                                                        "templateString": "\"$FERN_INPUT\"",
+                                                                        "templateString": "$FERN_INPUT",
                                                                         "isOptional": true,
                                                                         "templateInputs": [
                                                                             {
@@ -2458,7 +2458,7 @@
                                                                     "delimiter": ",\n\t\t\t\t\t\t",
                                                                     "innerTemplate": {
                                                                         "imports": [],
-                                                                        "templateString": "\"$FERN_INPUT\"",
+                                                                        "templateString": "$FERN_INPUT",
                                                                         "isOptional": true,
                                                                         "templateInputs": [
                                                                             {
@@ -2486,7 +2486,7 @@
                                                                     "keyValueSeparator": ": ",
                                                                     "keyTemplate": {
                                                                         "imports": [],
-                                                                        "templateString": "\"$FERN_INPUT\"",
+                                                                        "templateString": "$FERN_INPUT",
                                                                         "isOptional": true,
                                                                         "templateInputs": [
                                                                             {
@@ -2498,7 +2498,7 @@
                                                                     },
                                                                     "valueTemplate": {
                                                                         "imports": [],
-                                                                        "templateString": "\"$FERN_INPUT\"",
+                                                                        "templateString": "$FERN_INPUT",
                                                                         "isOptional": true,
                                                                         "templateInputs": [
                                                                             {
@@ -2572,7 +2572,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -2760,7 +2760,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -2840,7 +2840,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -2868,7 +2868,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -2919,7 +2919,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -2970,7 +2970,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3021,7 +3021,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3072,7 +3072,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3123,7 +3123,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3174,7 +3174,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3225,7 +3225,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3276,7 +3276,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3327,7 +3327,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3722,7 +3722,7 @@
                                                     "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -3749,7 +3749,7 @@
                                                     "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -3777,7 +3777,7 @@
                                                     "keyValueSeparator": ": ",
                                                     "keyTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -3789,7 +3789,7 @@
                                                     },
                                                     "valueTemplate": {
                                                         "imports": [],
-                                                        "templateString": "\"$FERN_INPUT\"",
+                                                        "templateString": "$FERN_INPUT",
                                                         "isOptional": true,
                                                         "templateInputs": [
                                                             {
@@ -3852,7 +3852,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -3965,7 +3965,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {

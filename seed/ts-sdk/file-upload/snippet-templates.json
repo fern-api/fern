@@ -162,7 +162,7 @@
                                         "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
-                                            "templateString": "\"$FERN_INPUT\"",
+                                            "templateString": "$FERN_INPUT",
                                             "isOptional": true,
                                             "templateInputs": [
                                                 {
