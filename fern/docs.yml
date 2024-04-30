@@ -238,24 +238,26 @@ navigation:
         slug: components
         contents:
           - page: Accordion
-            path: ./pages/fern-docs/components/accordion.mdx
-          - page: Availability
-            path: ./pages/fern-docs/components/availability.mdx
-          - page: Callout
-            path: ./pages/fern-docs/components/callout.mdx
+            path: ./pages/docs/components/accordions.mdx
+          - page: Accordion Groups
+            path: ./pages/docs/components/accordion-groups.mdx
+          - page: Callouts
+            path: ./pages/docs/components/callouts.mdx
           - page: Cards
-            path: ./pages/fern-docs/components/card.mdx
+            path: ./pages/docs/components/cards.mdx
+          - page: Card Groups
+            path: ./pages/docs/components/card-groups.mdx
           - page: Code Blocks
-            path: ./pages/fern-docs/components/codeblocks.mdx
-            slug: codeblocks
+            path: ./pages/docs/components/code-blocks.mdx
+            slug: code-blocks
+          - page: Steps
+            path: ./pages/docs/components/steps.mdx
+          - page: Tabs
+            path: ./pages/docs/components/tabs.mdx
           - page: Endpoint Snippets
             path: ./pages/fern-docs/components/endpoint-snippets.mdx
           - page: Icon
             path: ./pages/fern-docs/components/icon.mdx
-          - page: Steps
-            path: ./pages/fern-docs/components/steps.mdx
-          - page: Tabs
-            path: ./pages/fern-docs/components/tabs.mdx
   - tab: api
     layout:
       - api: API Reference

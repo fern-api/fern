@@ -1,0 +1,50 @@
+---
+title: Code Blocks
+excerpt: "Combine multiple code snippets in a tabbed view"
+---
+
+The `CodeBlocks` component is used to display multiple code snippets in a tabbed view.
+It does not take any props.
+
+<CodeBlocks>
+```javascript title="helloWorld.js"
+console.log("Hello World");
+```
+
+```python title="hello_world.py"
+print('Hello World!')
+```
+
+```java title="HelloWorld.java"
+class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+</CodeBlocks>
+
+<Aside>
+<CodeBlock title="Markdown">
+````jsx
+<CodeBlocks>
+```javascript title="helloWorld.js"
+console.log("Hello World");
+```
+
+```python title="hello_world.py"
+print('Hello World!')
+```
+
+```java title="HelloWorld.java"
+    class HelloWorld {
+        public static void main(String[] args) {
+            System.out.println("Hello, World!");
+        }
+    }
+```
+</CodeBlocks>
+````
+</CodeBlock>
+
+</Aside>
