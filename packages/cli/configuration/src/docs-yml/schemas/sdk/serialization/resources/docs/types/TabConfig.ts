@@ -11,6 +11,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
         displayName: core.serialization.property("display-name", core.serialization.string()),
         icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
+        href: core.serialization.string().optional(),
     });
 
 export declare namespace TabConfig {
@@ -18,5 +19,6 @@ export declare namespace TabConfig {
         "display-name": string;
         icon?: string | null;
         slug?: string | null;
+        href?: string | null;
     }
 }
