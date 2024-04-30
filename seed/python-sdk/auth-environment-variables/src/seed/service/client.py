@@ -29,6 +29,7 @@ class ServiceClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedAuthEnvironmentVariables
@@ -88,6 +89,7 @@ class ServiceClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedAuthEnvironmentVariables
@@ -147,6 +149,7 @@ class AsyncServiceClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedAuthEnvironmentVariables
@@ -206,6 +209,7 @@ class AsyncServiceClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedAuthEnvironmentVariables

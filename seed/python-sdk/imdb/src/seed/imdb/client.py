@@ -39,6 +39,7 @@ class ImdbClient:
         Returns
         -------
         MovieId
+
         Examples
         --------
         from seed import CreateMovieRequest
@@ -101,6 +102,7 @@ class ImdbClient:
         Returns
         -------
         Movie
+
         Examples
         --------
         from seed.client import SeedApi
@@ -164,6 +166,7 @@ class AsyncImdbClient:
         Returns
         -------
         MovieId
+
         Examples
         --------
         from seed import CreateMovieRequest
@@ -226,6 +229,7 @@ class AsyncImdbClient:
         Returns
         -------
         Movie
+
         Examples
         --------
         from seed.client import AsyncSeedApi

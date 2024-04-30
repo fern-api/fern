@@ -585,6 +585,7 @@ class EndpointFunctionGenerator:
         writer.write_node(response_hint)
         if docs is not None:
             self._write_docs(writer, docs)
+        writer.write_line()
 
     def _write_standard_return(self, writer: NodeWriter, response_hint: AST.TypeHint, docs: Optional[str]) -> None:
         writer.write_line("Returns")
@@ -592,6 +593,7 @@ class EndpointFunctionGenerator:
         writer.write_node(response_hint)
         if docs is not None:
             self._write_docs(writer, docs)
+        writer.write_line()
 
     def _write_response_body_type(
         self, writer: NodeWriter, response: Optional[ir_types.HttpResponse], response_hint: AST.TypeHint

@@ -34,6 +34,7 @@ class BasicAuthClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import SeedBasicAuth
@@ -93,6 +94,7 @@ class BasicAuthClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import SeedBasicAuth
@@ -163,6 +165,7 @@ class AsyncBasicAuthClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import AsyncSeedBasicAuth
@@ -222,6 +225,7 @@ class AsyncBasicAuthClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import AsyncSeedBasicAuth

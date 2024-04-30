@@ -90,6 +90,7 @@ class BaseSeedExhaustive:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -203,6 +204,7 @@ class AsyncBaseSeedExhaustive:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

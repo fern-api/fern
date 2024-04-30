@@ -25,6 +25,7 @@ class ServiceClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedPlainText
@@ -80,6 +81,7 @@ class AsyncServiceClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedPlainText

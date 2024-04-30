@@ -32,6 +32,7 @@ class UnionClient:
         Returns
         -------
         Shape
+
         Examples
         --------
         from seed.client import SeedUnions
@@ -83,6 +84,7 @@ class UnionClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed import Shape_Circle
@@ -149,6 +151,7 @@ class AsyncUnionClient:
         Returns
         -------
         Shape
+
         Examples
         --------
         from seed.client import AsyncSeedUnions
@@ -200,6 +203,7 @@ class AsyncUnionClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed import Shape_Circle

@@ -43,6 +43,7 @@ class AuthClient:
         Returns
         -------
         TokenResponse
+
         Examples
         --------
         from seed.client import SeedOauthClientCredentials
@@ -126,6 +127,7 @@ class AuthClient:
         Returns
         -------
         TokenResponse
+
         Examples
         --------
         from seed.client import SeedOauthClientCredentials
@@ -213,6 +215,7 @@ class AsyncAuthClient:
         Returns
         -------
         TokenResponse
+
         Examples
         --------
         from seed.client import AsyncSeedOauthClientCredentials
@@ -296,6 +299,7 @@ class AsyncAuthClient:
         Returns
         -------
         TokenResponse
+
         Examples
         --------
         from seed.client import AsyncSeedOauthClientCredentials

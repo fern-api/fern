@@ -43,6 +43,7 @@ class FooClient:
         Returns
         -------
         ImportingType
+
         Examples
         --------
         from seed.client import SeedAudiences
@@ -132,6 +133,7 @@ class AsyncFooClient:
         Returns
         -------
         ImportingType
+
         Examples
         --------
         from seed.client import AsyncSeedAudiences

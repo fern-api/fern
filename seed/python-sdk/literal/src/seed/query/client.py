@@ -29,6 +29,7 @@ class QueryClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed.client import SeedLiteral
@@ -99,6 +100,7 @@ class AsyncQueryClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed.client import AsyncSeedLiteral

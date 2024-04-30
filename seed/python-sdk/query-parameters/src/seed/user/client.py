@@ -71,6 +71,7 @@ class UserClient:
         Returns
         -------
         User
+
         Examples
         --------
         import datetime
@@ -221,6 +222,7 @@ class AsyncUserClient:
         Returns
         -------
         User
+
         Examples
         --------
         import datetime

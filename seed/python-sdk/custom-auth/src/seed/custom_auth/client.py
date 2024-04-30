@@ -34,6 +34,7 @@ class CustomAuthClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import SeedCustomAuth
@@ -92,6 +93,7 @@ class CustomAuthClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import SeedCustomAuth
@@ -161,6 +163,7 @@ class AsyncCustomAuthClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import AsyncSeedCustomAuth
@@ -219,6 +222,7 @@ class AsyncCustomAuthClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import AsyncSeedCustomAuth

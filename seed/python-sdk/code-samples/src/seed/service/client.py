@@ -32,6 +32,7 @@ class ServiceClient:
         Returns
         -------
         MyResponse
+
         Examples
         --------
         from seed.client import SeedCodeSamples
@@ -94,6 +95,7 @@ class AsyncServiceClient:
         Returns
         -------
         MyResponse
+
         Examples
         --------
         from seed.client import AsyncSeedCodeSamples

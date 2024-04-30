@@ -26,6 +26,7 @@ class ServiceClient:
         Returns
         -------
         Response
+
         Examples
         --------
         from seed.client import SeedAudiences
@@ -78,6 +79,7 @@ class AsyncServiceClient:
         Returns
         -------
         Response
+
         Examples
         --------
         from seed.client import AsyncSeedAudiences

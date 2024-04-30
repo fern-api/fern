@@ -26,6 +26,7 @@ class DummyClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedSingleUrlEnvironmentDefault
@@ -78,6 +79,7 @@ class AsyncDummyClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedSingleUrlEnvironmentDefault

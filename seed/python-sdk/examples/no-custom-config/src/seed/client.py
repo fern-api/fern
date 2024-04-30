@@ -90,6 +90,7 @@ class SeedExamples:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedExamples
@@ -203,6 +204,7 @@ class AsyncSeedExamples:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedExamples

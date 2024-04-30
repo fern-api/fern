@@ -24,6 +24,7 @@ class ServiceClient:
         Yields
         ------
         typing.Iterator[bytes]
+
         Examples
         --------
         from seed.client import SeedFileDownload
@@ -84,6 +85,7 @@ class AsyncServiceClient:
         Yields
         ------
         typing.AsyncIterator[bytes]
+
         Examples
         --------
         from seed.client import AsyncSeedFileDownload

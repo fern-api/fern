@@ -47,6 +47,7 @@ class PaymentClient:
         Returns
         -------
         uuid.UUID
+
         Examples
         --------
         from seed.client import SeedIdempotencyHeaders
@@ -184,6 +185,7 @@ class AsyncPaymentClient:
         Returns
         -------
         uuid.UUID
+
         Examples
         --------
         from seed.client import AsyncSeedIdempotencyHeaders

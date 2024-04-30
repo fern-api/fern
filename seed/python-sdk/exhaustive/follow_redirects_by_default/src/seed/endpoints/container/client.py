@@ -34,6 +34,7 @@ class ContainerClient:
         Returns
         -------
         typing.List[str]
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -97,6 +98,7 @@ class ContainerClient:
         Returns
         -------
         typing.List[ObjectWithRequiredField]
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -162,6 +164,7 @@ class ContainerClient:
         Returns
         -------
         typing.Set[str]
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -225,6 +228,7 @@ class ContainerClient:
         Returns
         -------
         typing.List[ObjectWithRequiredField]
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -290,6 +294,7 @@ class ContainerClient:
         Returns
         -------
         typing.Dict[str, str]
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -353,6 +358,7 @@ class ContainerClient:
         Returns
         -------
         typing.Dict[str, ObjectWithRequiredField]
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -421,6 +427,7 @@ class ContainerClient:
         Returns
         -------
         typing.Optional[ObjectWithRequiredField]
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -489,6 +496,7 @@ class AsyncContainerClient:
         Returns
         -------
         typing.List[str]
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -552,6 +560,7 @@ class AsyncContainerClient:
         Returns
         -------
         typing.List[ObjectWithRequiredField]
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -617,6 +626,7 @@ class AsyncContainerClient:
         Returns
         -------
         typing.Set[str]
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -680,6 +690,7 @@ class AsyncContainerClient:
         Returns
         -------
         typing.List[ObjectWithRequiredField]
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -745,6 +756,7 @@ class AsyncContainerClient:
         Returns
         -------
         typing.Dict[str, str]
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -808,6 +820,7 @@ class AsyncContainerClient:
         Returns
         -------
         typing.Dict[str, ObjectWithRequiredField]
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -876,6 +889,7 @@ class AsyncContainerClient:
         Returns
         -------
         typing.Optional[ObjectWithRequiredField]
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

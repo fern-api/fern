@@ -37,6 +37,7 @@ class OptionalClient:
         -------
         str
             Id of the created resource
+
         Examples
         --------
         from seed.client import SeedObjectsWithImports
@@ -105,6 +106,7 @@ class AsyncOptionalClient:
         -------
         str
             Id of the created resource
+
         Examples
         --------
         from seed.client import AsyncSeedObjectsWithImports

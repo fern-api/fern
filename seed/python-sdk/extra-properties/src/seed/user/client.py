@@ -32,6 +32,7 @@ class UserClient:
         Returns
         -------
         User
+
         Examples
         --------
         from seed.client import SeedExtraProperties
@@ -94,6 +95,7 @@ class AsyncUserClient:
         Returns
         -------
         User
+
         Examples
         --------
         from seed.client import AsyncSeedExtraProperties

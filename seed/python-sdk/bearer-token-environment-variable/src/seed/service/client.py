@@ -28,6 +28,7 @@ class ServiceClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedBearerTokenEnvironmentVariable
@@ -83,6 +84,7 @@ class AsyncServiceClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedBearerTokenEnvironmentVariable

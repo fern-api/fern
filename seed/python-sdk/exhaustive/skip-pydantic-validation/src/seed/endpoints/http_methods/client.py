@@ -33,6 +33,7 @@ class HttpMethodsClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -87,6 +88,7 @@ class HttpMethodsClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -152,6 +154,7 @@ class HttpMethodsClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -218,6 +221,7 @@ class HttpMethodsClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         import datetime
@@ -300,6 +304,7 @@ class HttpMethodsClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -357,6 +362,7 @@ class AsyncHttpMethodsClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -411,6 +417,7 @@ class AsyncHttpMethodsClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -476,6 +483,7 @@ class AsyncHttpMethodsClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -542,6 +550,7 @@ class AsyncHttpMethodsClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         import datetime
@@ -624,6 +633,7 @@ class AsyncHttpMethodsClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

@@ -32,6 +32,7 @@ class HeadersClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed.client import SeedLiteral
@@ -96,6 +97,7 @@ class AsyncHeadersClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed.client import AsyncSeedLiteral

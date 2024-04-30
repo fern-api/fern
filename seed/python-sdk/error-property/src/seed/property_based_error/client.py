@@ -30,6 +30,7 @@ class PropertyBasedErrorClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedErrorProperty
@@ -89,6 +90,7 @@ class AsyncPropertyBasedErrorClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedErrorProperty

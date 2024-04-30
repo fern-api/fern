@@ -26,6 +26,7 @@ class DummyClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedNoEnvironment
@@ -79,6 +80,7 @@ class AsyncDummyClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedNoEnvironment

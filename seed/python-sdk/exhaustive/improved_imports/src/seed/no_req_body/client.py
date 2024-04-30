@@ -29,6 +29,7 @@ class NoReqBodyClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -77,6 +78,7 @@ class NoReqBodyClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -135,6 +137,7 @@ class AsyncNoReqBodyClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -183,6 +186,7 @@ class AsyncNoReqBodyClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

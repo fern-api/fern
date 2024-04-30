@@ -33,6 +33,7 @@ class ReferenceClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed import SendRequest
@@ -102,6 +103,7 @@ class AsyncReferenceClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed import SendRequest

@@ -31,6 +31,7 @@ class ServiceClient:
         Returns
         -------
         Exception
+
         Examples
         --------
         from seed.client import SeedExamples
@@ -93,6 +94,7 @@ class AsyncServiceClient:
         Returns
         -------
         Exception
+
         Examples
         --------
         from seed.client import AsyncSeedExamples

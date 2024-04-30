@@ -27,6 +27,7 @@ class PathClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed.client import SeedLiteral
@@ -82,6 +83,7 @@ class AsyncPathClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed.client import AsyncSeedLiteral

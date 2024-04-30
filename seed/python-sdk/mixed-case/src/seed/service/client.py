@@ -30,6 +30,7 @@ class ServiceClient:
         Returns
         -------
         Resource
+
         Examples
         --------
         from seed.client import SeedMixedCase
@@ -87,6 +88,7 @@ class ServiceClient:
         Returns
         -------
         typing.List[Resource]
+
         Examples
         --------
         import datetime
@@ -160,6 +162,7 @@ class AsyncServiceClient:
         Returns
         -------
         Resource
+
         Examples
         --------
         from seed.client import AsyncSeedMixedCase
@@ -217,6 +220,7 @@ class AsyncServiceClient:
         Returns
         -------
         typing.List[Resource]
+
         Examples
         --------
         import datetime

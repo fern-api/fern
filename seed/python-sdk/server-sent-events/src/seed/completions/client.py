@@ -37,6 +37,7 @@ class CompletionsClient:
         Yields
         ------
         typing.Iterator[StreamedCompletion]
+
         Examples
         --------
         from seed.client import SeedServerSentEvents
@@ -105,6 +106,7 @@ class AsyncCompletionsClient:
         Yields
         ------
         typing.AsyncIterator[StreamedCompletion]
+
         Examples
         --------
         from seed.client import AsyncSeedServerSentEvents

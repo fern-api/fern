@@ -47,6 +47,7 @@ class InlinedRequestsClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         import datetime
@@ -150,6 +151,7 @@ class AsyncInlinedRequestsClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         import datetime

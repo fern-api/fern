@@ -34,6 +34,7 @@ class UnionClient:
         Returns
         -------
         Animal
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -103,6 +104,7 @@ class AsyncUnionClient:
         Returns
         -------
         Animal
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

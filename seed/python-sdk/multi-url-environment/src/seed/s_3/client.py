@@ -31,6 +31,7 @@ class S3Client:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedMultiUrlEnvironment
@@ -93,6 +94,7 @@ class AsyncS3Client:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedMultiUrlEnvironment

@@ -35,6 +35,7 @@ class DummyClient:
         Yields
         ------
         typing.Iterator[StreamResponse]
+
         Examples
         --------
         from seed.client import SeedStreaming
@@ -104,6 +105,7 @@ class AsyncDummyClient:
         Yields
         ------
         typing.AsyncIterator[StreamResponse]
+
         Examples
         --------
         from seed.client import AsyncSeedStreaming

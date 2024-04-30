@@ -85,6 +85,7 @@ class ServiceClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -198,6 +199,7 @@ class AsyncServiceClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

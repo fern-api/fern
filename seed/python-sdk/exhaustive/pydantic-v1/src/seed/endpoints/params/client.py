@@ -33,6 +33,7 @@ class ParamsClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -308,6 +309,7 @@ class ParamsClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -371,6 +373,7 @@ class AsyncParamsClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -646,6 +649,7 @@ class AsyncParamsClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

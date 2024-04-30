@@ -34,6 +34,7 @@ class ServiceClient:
         Returns
         -------
         Movie
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -87,6 +88,7 @@ class ServiceClient:
         Returns
         -------
         MovieId
+
         Examples
         --------
         from seed import Movie
@@ -171,6 +173,7 @@ class ServiceClient:
         Returns
         -------
         Metadata
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -242,6 +245,7 @@ class AsyncServiceClient:
         Returns
         -------
         Movie
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -295,6 +299,7 @@ class AsyncServiceClient:
         Returns
         -------
         MovieId
+
         Examples
         --------
         from seed import Movie
@@ -379,6 +384,7 @@ class AsyncServiceClient:
         Returns
         -------
         Metadata
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

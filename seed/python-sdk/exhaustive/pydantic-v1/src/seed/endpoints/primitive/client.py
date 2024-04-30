@@ -33,6 +33,7 @@ class PrimitiveClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -86,6 +87,7 @@ class PrimitiveClient:
         Returns
         -------
         int
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -139,6 +141,7 @@ class PrimitiveClient:
         Returns
         -------
         int
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -199,6 +202,7 @@ class PrimitiveClient:
         Returns
         -------
         float
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -252,6 +256,7 @@ class PrimitiveClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -307,6 +312,7 @@ class PrimitiveClient:
         Returns
         -------
         dt.datetime
+
         Examples
         --------
         import datetime
@@ -371,6 +377,7 @@ class PrimitiveClient:
         Returns
         -------
         dt.date
+
         Examples
         --------
         import datetime
@@ -435,6 +442,7 @@ class PrimitiveClient:
         Returns
         -------
         uuid.UUID
+
         Examples
         --------
         import uuid
@@ -497,6 +505,7 @@ class PrimitiveClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -562,6 +571,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -615,6 +625,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         int
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -670,6 +681,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         int
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -730,6 +742,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         float
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -785,6 +798,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         bool
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -840,6 +854,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         dt.datetime
+
         Examples
         --------
         import datetime
@@ -904,6 +919,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         dt.date
+
         Examples
         --------
         import datetime
@@ -968,6 +984,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         uuid.UUID
+
         Examples
         --------
         import uuid
@@ -1032,6 +1049,7 @@ class AsyncPrimitiveClient:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

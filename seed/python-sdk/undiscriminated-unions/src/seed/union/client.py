@@ -31,6 +31,7 @@ class UnionClient:
         Returns
         -------
         MyUnion
+
         Examples
         --------
         from seed.client import SeedUndiscriminatedUnions
@@ -93,6 +94,7 @@ class AsyncUnionClient:
         Returns
         -------
         MyUnion
+
         Examples
         --------
         from seed.client import AsyncSeedUndiscriminatedUnions

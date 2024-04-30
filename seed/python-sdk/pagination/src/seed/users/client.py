@@ -52,6 +52,7 @@ class UsersClient:
         Returns
         -------
         ListUsersPaginationResponse
+
         Examples
         --------
         from seed.client import SeedPagination
@@ -137,6 +138,7 @@ class UsersClient:
         Returns
         -------
         ListUsersPaginationResponse
+
         Examples
         --------
         from seed.client import SeedPagination
@@ -206,6 +208,7 @@ class UsersClient:
         Returns
         -------
         ListUsersExtendedResponse
+
         Examples
         --------
         import uuid
@@ -275,6 +278,7 @@ class UsersClient:
         Returns
         -------
         UsernameCursor
+
         Examples
         --------
         from seed.client import SeedPagination
@@ -338,6 +342,7 @@ class UsersClient:
         Returns
         -------
         UsernameContainer
+
         Examples
         --------
         from seed.client import SeedPagination
@@ -422,6 +427,7 @@ class AsyncUsersClient:
         Returns
         -------
         ListUsersPaginationResponse
+
         Examples
         --------
         from seed.client import AsyncSeedPagination
@@ -507,6 +513,7 @@ class AsyncUsersClient:
         Returns
         -------
         ListUsersPaginationResponse
+
         Examples
         --------
         from seed.client import AsyncSeedPagination
@@ -576,6 +583,7 @@ class AsyncUsersClient:
         Returns
         -------
         ListUsersExtendedResponse
+
         Examples
         --------
         import uuid
@@ -645,6 +653,7 @@ class AsyncUsersClient:
         Returns
         -------
         UsernameCursor
+
         Examples
         --------
         from seed.client import AsyncSeedPagination
@@ -708,6 +717,7 @@ class AsyncUsersClient:
         Returns
         -------
         UsernameContainer
+
         Examples
         --------
         from seed.client import AsyncSeedPagination

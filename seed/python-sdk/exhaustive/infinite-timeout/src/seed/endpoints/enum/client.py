@@ -34,6 +34,7 @@ class EnumClient:
         Returns
         -------
         WeatherReport
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -94,6 +95,7 @@ class AsyncEnumClient:
         Returns
         -------
         WeatherReport
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive

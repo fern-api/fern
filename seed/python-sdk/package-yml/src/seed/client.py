@@ -79,6 +79,7 @@ class SeedPackageYml:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import SeedPackageYml
@@ -182,6 +183,7 @@ class AsyncSeedPackageYml:
         Returns
         -------
         str
+
         Examples
         --------
         from seed.client import AsyncSeedPackageYml

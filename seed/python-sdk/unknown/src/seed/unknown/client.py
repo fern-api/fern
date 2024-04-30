@@ -32,6 +32,7 @@ class UnknownClient:
         Returns
         -------
         typing.List[typing.Any]
+
         Examples
         --------
         from seed.client import SeedUnknownAsAny
@@ -96,6 +97,7 @@ class AsyncUnknownClient:
         Returns
         -------
         typing.List[typing.Any]
+
         Examples
         --------
         from seed.client import AsyncSeedUnknownAsAny

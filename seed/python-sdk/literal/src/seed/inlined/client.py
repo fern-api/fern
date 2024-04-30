@@ -40,6 +40,7 @@ class InlinedClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed.client import SeedLiteral
@@ -118,6 +119,7 @@ class AsyncInlinedClient:
         Returns
         -------
         SendResponse
+
         Examples
         --------
         from seed.client import AsyncSeedLiteral

@@ -38,6 +38,7 @@ class ObjectClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         import datetime
@@ -123,6 +124,7 @@ class ObjectClient:
         Returns
         -------
         ObjectWithRequiredField
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -188,6 +190,7 @@ class ObjectClient:
         Returns
         -------
         ObjectWithMapOfMap
+
         Examples
         --------
         from seed.client import SeedExhaustive
@@ -253,6 +256,7 @@ class ObjectClient:
         Returns
         -------
         NestedObjectWithOptionalField
+
         Examples
         --------
         import datetime
@@ -341,6 +345,7 @@ class ObjectClient:
         Returns
         -------
         NestedObjectWithRequiredField
+
         Examples
         --------
         import datetime
@@ -432,6 +437,7 @@ class ObjectClient:
         Returns
         -------
         NestedObjectWithRequiredField
+
         Examples
         --------
         import datetime
@@ -527,6 +533,7 @@ class AsyncObjectClient:
         Returns
         -------
         ObjectWithOptionalField
+
         Examples
         --------
         import datetime
@@ -612,6 +619,7 @@ class AsyncObjectClient:
         Returns
         -------
         ObjectWithRequiredField
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -677,6 +685,7 @@ class AsyncObjectClient:
         Returns
         -------
         ObjectWithMapOfMap
+
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
@@ -742,6 +751,7 @@ class AsyncObjectClient:
         Returns
         -------
         NestedObjectWithOptionalField
+
         Examples
         --------
         import datetime
@@ -830,6 +840,7 @@ class AsyncObjectClient:
         Returns
         -------
         NestedObjectWithRequiredField
+
         Examples
         --------
         import datetime
@@ -921,6 +932,7 @@ class AsyncObjectClient:
         Returns
         -------
         NestedObjectWithRequiredField
+
         Examples
         --------
         import datetime
