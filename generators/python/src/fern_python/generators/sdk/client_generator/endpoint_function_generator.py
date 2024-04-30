@@ -2,10 +2,10 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple
 
 import fern.ir.resources as ir_types
-from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from typing_extensions import Never
 
 from fern_python.codegen import AST
+from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX, UrlLibParse
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
@@ -411,18 +411,21 @@ class EndpointFunctionGenerator:
                     writer.write(f"{param.name} : ")
                     if param.type_hint is not None:
                         writer.write_node(param.type_hint)
-                    
+
                     if param.docs is not None:
                         self._write_docs(writer, param.docs)
                 writer.write_line()
                 writer.write_line()
 
-
-            self._write_response_body_type(writer, self._endpoint.response, (
-                self._get_response_body_type(self._endpoint.response, self._is_async)
-                if self._endpoint.response is not None
-                else AST.TypeHint.none()
-            ))
+            self._write_response_body_type(
+                writer,
+                self._endpoint.response,
+                (
+                    self._get_response_body_type(self._endpoint.response, self._is_async)
+                    if self._endpoint.response is not None
+                    else AST.TypeHint.none()
+                ),
+            )
 
             if snippet is not None:
                 writer.write_line()
@@ -575,31 +578,40 @@ class EndpointFunctionGenerator:
             ),
             text=lambda _: AST.TypeHint.str_(),
         )
-    
-    def _write_response_body_type(self, writer: NodeWriter, response: ir_types.HttpResponse, response_hint: AST.TypeHint) -> AST.TypeHint:
+
+    def _write_yielding_return(self, writer: NodeWriter, response_hint: AST.TypeHint, docs: Optional[str]) -> None:
+        writer.write_line("Yields")
+        writer.write_line("------")
+        writer.write_node(response_hint)
+        if docs is not None:
+            self._write_docs(writer, docs)
+
+    def _write_standard_return(self, writer: NodeWriter, response_hint: AST.TypeHint, docs: Optional[str]) -> None:
+        writer.write_line("Returns")
+        writer.write_line("-------")
+        writer.write_node(response_hint)
+        if docs is not None:
+            self._write_docs(writer, docs)
+
+    def _write_response_body_type(
+        self, writer: NodeWriter, response: Optional[ir_types.HttpResponse], response_hint: AST.TypeHint
+    ) -> None:
         if response is not None:
-            if response.get_as_union().type == "fileDownload" or response.get_as_union().type == "streaming":
-                writer.write_line("Yields")
-                writer.write_line("------")
-                writer.write_node(response_hint)
-                if response.get_as_union().type == "fileDownload" and response.get_as_union().docs is not None:
-                    self._write_docs(writer, response.get_as_union().docs)
-
-            else:
-                writer.write_line("Returns")
-                writer.write_line("-------")
-
-                writer.write_node(response_hint)
-                if response.get_as_union().type == "json":
-                    if response.get_as_union().value.get_as_union().docs is not None:
-                        self._write_docs(writer, response.get_as_union().value.get_as_union().docs)
-                elif response.get_as_union().docs is not None:
-                    self._write_docs(writer, response.get_as_union().docs)
+            response.visit(
+                file_download=lambda fd: self._write_yielding_return(writer, response_hint, fd.docs),
+                json=lambda json_response: self._write_standard_return(
+                    writer, response_hint, json_response.get_as_union().docs
+                ),
+                streaming=lambda stream_response: self._write_yielding_return(
+                    writer, response_hint, stream_response.get_as_union().docs
+                ),
+                text=lambda t: self._write_standard_return(writer, response_hint, t.docs),
+            )
         else:
             writer.write_line("Returns")
             writer.write_line("-------")
             writer.write_line("None")
-       
+
     def _write_docs(self, writer: NodeWriter, docs: str) -> None:
         split = docs.split("\n")
         with writer.indent():

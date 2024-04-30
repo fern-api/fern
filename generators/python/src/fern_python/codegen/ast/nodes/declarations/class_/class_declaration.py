@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from ast import AST
 from typing import List, Optional, Sequence
 
 from ordered_set import OrderedSet
@@ -197,13 +196,13 @@ class ClassDeclaration(AstNode):
                                 writer.write(line)
                                 if i < len(split) - 1:
                                     writer.write_line()
-                                    
+
                                 if self.snippet is None:
                                     writer.write_line('"""')
                                 else:
                                     writer.write_line()
                 writer.write_line()
-            
+
             if self.snippet is not None:
                 writer.write_line("Examples")
                 writer.write_line("--------")
