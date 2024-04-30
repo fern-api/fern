@@ -6,4 +6,10 @@ export interface TabConfig {
     displayName: string;
     icon?: string;
     slug?: string;
+    /**
+     * If `href` is set, clicking on the tab will redirect to the given URL.
+     *
+     * Tabs with `href` must not have children in the navigation config.
+     */
+    href?: string;
 }

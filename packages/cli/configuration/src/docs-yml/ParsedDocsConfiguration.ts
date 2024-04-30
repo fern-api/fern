@@ -125,7 +125,7 @@ export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | Tabbed
 
 export interface TabbedNavigation {
     tab: string;
-    layout: DocsNavigationItem[];
+    layout?: DocsNavigationItem[];
 }
 
 export type DocsNavigationItem =

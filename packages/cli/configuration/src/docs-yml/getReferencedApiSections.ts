@@ -51,7 +51,7 @@ export function visitNavigation({
     switch (navigation.type) {
         case "tabbed":
             navigation.items.forEach((tab) => {
-                tab.layout.forEach((item) => {
+                tab.layout?.forEach((item) => {
                     visitDocsNavigationItem({ item, collector });
                 });
             });
