@@ -252,12 +252,14 @@ navigation:
             slug: code-blocks
           - page: Steps
             path: ./pages/docs/components/steps.mdx
+          - page: Frames
+            path: ./pages/docs/components/frames.mdx
           - page: Tabs
             path: ./pages/docs/components/tabs.mdx
-          - page: Endpoint Snippets
-            path: ./pages/fern-docs/components/endpoint-snippets.mdx
-          - page: Icon
-            path: ./pages/fern-docs/components/icon.mdx
+          - page: Endpoint Request Snippet
+            path: ./pages/docs/components/endpoint-request-snippet.mdx
+          - page: Endpoint Response Snippet
+            path: ./pages/docs/components/endpoint-response-snippet.mdx
   - tab: api
     layout:
       - api: API Reference
