@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WebsocketChannel } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { buildHeader } from "./buildHeader";
+import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { buildWebsocketSessionExample } from "./buildWebsocketSessionExample";
@@ -24,6 +25,20 @@ export function buildChannel({
 
     if (channel.summary != null) {
         convertedChannel["display-name"] = channel.summary;
+    }
+
+    const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
+    if (channel.handshake.pathParameters.length > 0) {
+        for (const pathParameter of channel.handshake.pathParameters) {
+            pathParameters[pathParameter.name] = buildPathParameter({
+                pathParameter,
+                context,
+                fileContainingReference: declarationFile
+            });
+        }
+    }
+    if (Object.keys(pathParameters).length > 0) {
+        convertedChannel["path-parameters"] = pathParameters;
     }
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};

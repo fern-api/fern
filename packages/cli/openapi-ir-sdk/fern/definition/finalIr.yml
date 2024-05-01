@@ -81,6 +81,7 @@ types:
     properties:
       queryParameters: list<QueryParameter>
       headers: list<Header>
+      pathParameters: list<PathParameter>
 
   WebsocketSessionExample:
     docs: |
