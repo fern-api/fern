@@ -1,7 +1,9 @@
 {
   "type": "cli",
   "cliName": "seed",
-  "additionalFiles": ["fern/"],
+  "additionalFiles": [
+    "fern/"
+  ],
   "environment": {
     "environments": {
       "prod": {
@@ -14,8 +16,8 @@
   "rules": {
     "package-json": {
       "scripts": {
-        "dist:cli": "yarn compile && node build.cjs && cp -R ../../test-definitions/fern dist",
-        "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public",
+        "dist:cli": "pnpm compile && node build.cjs && cp -R ../../test-definitions/fern dist",
+        "publish:cli": "pnpm dist:cli && cd dist && pnpm npm publish --access public",
         "generate": "fern generate --local"
       }
     }

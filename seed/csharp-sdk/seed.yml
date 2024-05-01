@@ -1,6 +1,6 @@
 irVersion: v33
 docker: fernapi/fern-csharp-sdk:latest
-dockerCommand: yarn workspace @fern-api/fern-csharp-sdk dockerTagLatest
+dockerCommand: pnpm workspace @fern-api/fern-csharp-sdk dockerTagLatest
 language: java # change to csharp
 generatorType: SDK
 defaultOutputMode: github

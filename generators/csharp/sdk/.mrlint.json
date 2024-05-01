@@ -11,15 +11,19 @@
   },
   "rules": {
     "depcheck": {
-      "ignores": ["@fern-fern/ir-sdk"]
+      "ignores": [
+        "@fern-fern/ir-sdk"
+      ]
     },
     "duplicate-dependencies": {
-      "exclude": ["@fern-fern/ir-sdk"]
+      "exclude": [
+        "@fern-fern/ir-sdk"
+      ]
     },
     "package-json": {
       "scripts": {
-        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-csharp-sdk:latest ../../..",
-        "dist:cli": "yarn compile && node build.cjs && cp -R ../codegen/src/asIs dist"
+        "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-csharp-sdk:latest ../../..",
+        "dist:cli": "pnpm compile && node build.cjs && cp -R ../codegen/src/asIs dist"
       }
     }
   },

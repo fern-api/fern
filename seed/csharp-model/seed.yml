@@ -1,6 +1,6 @@
 irVersion: v33
 docker: fernapi/fern-csharp-model:latest
-dockerCommand: yarn workspace @fern-api/fern-csharp-model dockerTagLatest
+dockerCommand: pnpm workspace @fern-api/fern-csharp-model dockerTagLatest
 language: csharp
 generatorType: SDK
 defaultOutputMode: github

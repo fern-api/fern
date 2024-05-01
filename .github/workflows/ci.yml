@@ -41,25 +41,25 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install
-        run: yarn install
+        run: pnpm install
 
       - name: Lint Monorepo
-        run: yarn lint:monorepo
+        run: pnpm lint:monorepo
 
       - name: Check dependencies
-        run: yarn depcheck
+        run: pnpm depcheck
 
       - name: Lint
-        run: yarn lint:style
+        run: pnpm lint:style
 
       - name: generate (dev) JSON Schema
-        run: yarn generate-json-schema:dev
+        run: pnpm generate-json-schema:dev
 
       - name: Format
-        run: yarn format:check
+        run: pnpm format:check
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -73,13 +73,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install
-        run: yarn install
+        run: pnpm install
 
       - name: compile
-        run: yarn compile
+        run: pnpm compile
 
   eslint:
     runs-on: ubuntu-latest
@@ -90,13 +90,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install
-        run: yarn install
+        run: pnpm install
 
       - name: lint:eslint
-        run: yarn lint:eslint
+        run: pnpm lint:eslint
 
   test:
     runs-on: Test
@@ -107,13 +107,13 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install
-        run: yarn install
+        run: pnpm install
 
       - name: Run tests
-        run: yarn test --maxWorkers 15 --ci --silent
+        run: pnpm test --maxWorkers 15 --ci --silent
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -127,16 +127,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install
-        run: yarn install
+        run: pnpm install
 
       - name: Run ETE tests
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
-          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} yarn test:ete
+          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -152,10 +152,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install
-        run: yarn install
+        run: pnpm install
 
       - name: Check API definition is valid
         env:
@@ -164,6 +164,6 @@ jobs:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
-          yarn workspace @fern-api/cli dist:cli:dev
-          cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
+          pnpm --filter=@fern-api/cli dist:cli:dev
+          cli_path="$(pnpm --filter=@fern-api/cli bin fern:dev)"
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
