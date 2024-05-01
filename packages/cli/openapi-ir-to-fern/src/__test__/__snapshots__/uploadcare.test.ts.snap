@@ -133,7 +133,7 @@ Log.d("TAG", group.toString())
                   "body": {
                     "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                     "datetime_created": "2018-09-12T10:03:38Z",
-                    "datetime_stored": "2015-09-21T12:39:13Z",
+                    "datetime_stored": "2024-01-15T09:30:00Z",
                     "files": [
                       {
                         "content_info": {
@@ -330,7 +330,7 @@ Log.d("TAG", group.toString())
                   "body": {
                     "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                     "datetime_created": "2018-09-12T10:03:38Z",
-                    "datetime_stored": "2015-09-21T12:39:13Z",
+                    "datetime_stored": "2024-01-15T09:30:00Z",
                     "files": [
                       {
                         "content_info": {
@@ -686,7 +686,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-09-13T20:23:40Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -734,7 +734,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-09-13T20:23:40Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -1056,7 +1056,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-09-13T20:23:40Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -1104,7 +1104,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-09-13T20:23:40Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -1500,7 +1500,7 @@ Log.d("TAG", status.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-09-13T20:23:40Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -1548,7 +1548,7 @@ Log.d("TAG", status.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-09-13T20:23:40Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -1926,7 +1926,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-09-13T20:23:40Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -1974,7 +1974,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-09-13T20:23:40Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -4227,7 +4227,7 @@ Log.d("TAG", group.toString())
                   "body": {
                     "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                     "datetime_created": "2018-09-12T10:03:38Z",
-                    "datetime_stored": "2015-09-21T12:39:13Z",
+                    "datetime_stored": "2024-01-15T09:30:00Z",
                     "files": [
                       {
                         "content_info": {
@@ -4424,7 +4424,7 @@ Log.d("TAG", group.toString())
                   "body": {
                     "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                     "datetime_created": "2018-09-12T10:03:38Z",
-                    "datetime_stored": "2015-09-21T12:39:13Z",
+                    "datetime_stored": "2024-01-15T09:30:00Z",
                     "files": [
                       {
                         "content_info": {
@@ -4780,7 +4780,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-09-13T20:23:40Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -4828,7 +4828,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-09-13T20:23:40Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -5150,7 +5150,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-09-13T20:23:40Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -5198,7 +5198,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-09-13T20:23:40Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -5594,7 +5594,7 @@ Log.d("TAG", status.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-09-13T20:23:40Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -5642,7 +5642,7 @@ Log.d("TAG", status.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-09-13T20:23:40Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -6020,7 +6020,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-09-13T20:23:40Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -6068,7 +6068,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-09-13T20:23:40Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
