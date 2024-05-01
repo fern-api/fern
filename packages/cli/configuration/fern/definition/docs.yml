@@ -400,6 +400,12 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      flattened:
+        type: optional<boolean>
+        docs: |
+          If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.
+
+          This setting is useful if the API reference is short and you want to display all endpoints at the top level.
 
   ApiNavigationItem:
     docs: |

@@ -19,4 +19,10 @@ export interface ApiSectionConfiguration {
     icon?: string;
     hidden?: boolean;
     skipSlug?: boolean;
+    /**
+     * If `flattened` is set to true, the title specified in `api` will be hidden, and nested subpackages will be displayed as top-level sections.
+     *
+     * This setting is useful if the reference is short and you want to display all endpoints at the top level.
+     */
+    flattened?: boolean;
 }

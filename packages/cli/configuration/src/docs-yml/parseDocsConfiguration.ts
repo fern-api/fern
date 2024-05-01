@@ -569,7 +569,8 @@ async function convertNavigationItem({
                       })
                     : undefined,
             hidden: rawConfig.hidden ?? undefined,
-            skipUrlSlug: rawConfig.skipSlug ?? false
+            skipUrlSlug: rawConfig.skipSlug ?? false,
+            flattened: rawConfig.flattened ?? false
         };
     }
     if (isRawLinkConfig(rawConfig)) {

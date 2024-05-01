@@ -167,6 +167,7 @@ export declare namespace DocsNavigationItem {
         navigation: ParsedApiNavigationItem[];
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
+        flattened: boolean | undefined;
     }
 
     export interface Link {
