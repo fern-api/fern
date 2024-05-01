@@ -1030,7 +1030,8 @@ async function convertNavigationItem({
                     item.navigation,
                     parsedDocsConfig.absoluteFilepath,
                     fullSlugs
-                )
+                ),
+                flattened: item.flattened
             };
             break;
         }
