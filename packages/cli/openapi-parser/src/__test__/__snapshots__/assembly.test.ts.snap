@@ -161,7 +161,7 @@ The parameter should map to a JSON encoded list of strings.
           },
         ],
       },
-      "path": "/",
+      "path": "/{userId}",
       "publish": {
         "type": "oneOf",
         "value": {

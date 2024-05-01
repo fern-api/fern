@@ -310,11 +310,10 @@ The LLM response data, as well as any context provided in the original request w
               },
               {
                 "body": {
-                  "expires_at": "2024-01-15T09:30:00Z",
                   "message_type": "SessionBegins",
-                  "session_id": "session_id",
+                  "terminate_session": true,
                 },
-                "type": "subscribe",
+                "type": "publish",
               },
             ],
           },
@@ -342,7 +341,7 @@ The LLM response data, as well as any context provided in the original request w
             "origin": "server",
           },
         },
-        "path": "/",
+        "path": "/{userId}",
         "query-parameters": {
           "sample_rate": {
             "docs": "The sample rate of the streamed audio.",
@@ -3744,11 +3743,10 @@ The LLM response data, as well as any context provided in the original request w
               },
               {
                 "body": {
-                  "expires_at": "2024-01-15T09:30:00Z",
                   "message_type": "SessionBegins",
-                  "session_id": "session_id",
+                  "terminate_session": true,
                 },
-                "type": "subscribe",
+                "type": "publish",
               },
             ],
           },
@@ -3776,7 +3774,7 @@ The LLM response data, as well as any context provided in the original request w
             "origin": "server",
           },
         },
-        "path": "/",
+        "path": "/{userId}",
         "query-parameters": {
           "sample_rate": {
             "docs": "The sample rate of the streamed audio.",

@@ -1,5 +1,7 @@
 import {
     HeaderWithExample,
+    PathParameter,
+    PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
     Schema,
     SchemaId,
@@ -55,6 +57,32 @@ export function parseAsyncAPI({
         if (channel.bindings?.ws == null) {
             context.logger.error(`Channel ${channelPath} does not have websocket bindings. Skipping.`);
             continue;
+        }
+
+        const pathParameters: PathParameter[] = [];
+        if (channel.parameters != null) {
+            for (const [name, parameter] of Object.entries(channel.parameters ?? {})) {
+                pathParameters.push({
+                    name,
+                    description: parameter.description,
+                    schema:
+                        parameter.schema != null
+                            ? convertSchema(parameter.schema, false, context, breadcrumbs)
+                            : SchemaWithExample.primitive({
+                                  schema: PrimitiveSchemaValueWithExample.string({
+                                      example: undefined,
+                                      format: undefined,
+                                      maxLength: undefined,
+                                      minLength: undefined
+                                  }),
+                                  description: undefined,
+                                  generatedName: "",
+                                  groupName: undefined,
+                                  nameOverride: undefined
+                              }),
+                    variableReference: undefined
+                });
+            }
         }
 
         const headers: HeaderWithExample[] = [];
