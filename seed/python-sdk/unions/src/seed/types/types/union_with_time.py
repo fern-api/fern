@@ -9,8 +9,8 @@ from ...core.pydantic_utilities import pydantic_v1
 
 
 class UnionWithTime_Value(pydantic_v1.BaseModel):
-    type: typing.Literal["value"] = "value"
     value: int
+    type: typing.Literal["value"] = "value"
 
     class Config:
         frozen = True
@@ -18,8 +18,8 @@ class UnionWithTime_Value(pydantic_v1.BaseModel):
 
 
 class UnionWithTime_Date(pydantic_v1.BaseModel):
-    type: typing.Literal["date"] = "date"
     value: dt.date
+    type: typing.Literal["date"] = "date"
 
     class Config:
         frozen = True
@@ -27,8 +27,8 @@ class UnionWithTime_Date(pydantic_v1.BaseModel):
 
 
 class UnionWithTime_Datetime(pydantic_v1.BaseModel):
-    type: typing.Literal["datetime"] = "datetime"
     value: dt.datetime
+    type: typing.Literal["datetime"] = "datetime"
 
     class Config:
         frozen = True

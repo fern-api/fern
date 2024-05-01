@@ -26,30 +26,23 @@ from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
 
 
-class TestSubmissionStatus_Stopped(pydantic_v1.BaseModel):
-    type: typing.Literal["stopped"] = "stopped"
-
-
 class TestSubmissionStatus_Errored(pydantic_v1.BaseModel):
-    type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
+    type: typing.Literal["errored"] = "errored"
 
 
 class TestSubmissionStatus_Running(pydantic_v1.BaseModel):
-    type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
+    type: typing.Literal["running"] = "running"
 
 
 class TestSubmissionStatus_TestCaseIdToState(pydantic_v1.BaseModel):
-    type: typing.Literal["testCaseIdToState"] = "testCaseIdToState"
     value: typing.Dict[str, SubmissionStatusForTestCase]
+    type: typing.Literal["testCaseIdToState"] = "testCaseIdToState"
 
 
 TestSubmissionStatus = typing.Union[
-    TestSubmissionStatus_Stopped,
-    TestSubmissionStatus_Errored,
-    TestSubmissionStatus_Running,
-    TestSubmissionStatus_TestCaseIdToState,
+    TestSubmissionStatus_Errored, TestSubmissionStatus_Running, TestSubmissionStatus_TestCaseIdToState
 ]
 from ..commons.key_value_pair import KeyValuePair  # noqa: E402
 from ..commons.map_value import MapValue  # noqa: E402

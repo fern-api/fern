@@ -10,13 +10,13 @@ from .primitive_value import PrimitiveValue
 
 
 class ContainerValue_List(pydantic_v1.BaseModel):
-    type: typing.Literal["list"] = "list"
     value: typing.List[FieldValue]
+    type: typing.Literal["list"] = "list"
 
 
 class ContainerValue_Optional(pydantic_v1.BaseModel):
-    type: typing.Literal["optional"] = "optional"
     value: typing.Optional[FieldValue] = None
+    type: typing.Literal["optional"] = "optional"
 
 
 ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]

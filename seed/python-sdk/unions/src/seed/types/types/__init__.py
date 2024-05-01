@@ -14,7 +14,7 @@ from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
 from .union_with_optional_time import UnionWithOptionalTime, UnionWithOptionalTime_Date, UnionWithOptionalTime_Dateimte
 from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer, UnionWithPrimitive_String
 from .union_with_time import UnionWithTime, UnionWithTime_Date, UnionWithTime_Datetime, UnionWithTime_Value
-from .union_with_unknown import UnionWithUnknown, UnionWithUnknown_Foo, UnionWithUnknown_Unknown
+from .union_with_unknown import UnionWithUnknown, UnionWithUnknown_Foo
 from .union_without_key import UnionWithoutKey, UnionWithoutKey_Bar, UnionWithoutKey_Foo
 
 __all__ = [
@@ -42,7 +42,6 @@ __all__ = [
     "UnionWithTime_Value",
     "UnionWithUnknown",
     "UnionWithUnknown_Foo",
-    "UnionWithUnknown_Unknown",
     "UnionWithoutKey",
     "UnionWithoutKey_Bar",
     "UnionWithoutKey_Foo",

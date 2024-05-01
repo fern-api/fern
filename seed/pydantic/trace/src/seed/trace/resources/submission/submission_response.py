@@ -2,50 +2,64 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
+from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import pydantic_v1
 from ..commons.problem_id import ProblemId
 from .code_execution_update import CodeExecutionUpdate
 
 
-class SubmissionResponse_ServerInitialized(pydantic_v1.BaseModel):
-    type: typing.Literal["serverInitialized"] = "serverInitialized"
-
-
 class SubmissionResponse_ProblemInitialized(pydantic_v1.BaseModel):
-    type: typing.Literal["problemInitialized"] = "problemInitialized"
     value: ProblemId
-
-
-class SubmissionResponse_WorkspaceInitialized(pydantic_v1.BaseModel):
-    type: typing.Literal["workspaceInitialized"] = "workspaceInitialized"
+    type: typing.Literal["problemInitialized"] = "problemInitialized"
 
 
 class SubmissionResponse_ServerErrored(pydantic_v1.BaseModel):
-    type: typing.Literal["serverErrored"] = "serverErrored"
     exception_type: str = pydantic_v1.Field(alias="exceptionType")
     exception_message: str = pydantic_v1.Field(alias="exceptionMessage")
     exception_stacktrace: str = pydantic_v1.Field(alias="exceptionStacktrace")
+    type: typing.Literal["serverErrored"] = "serverErrored"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().dict(**kwargs_with_defaults)
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class SubmissionResponse_CodeExecutionUpdate(pydantic_v1.BaseModel):
-    type: typing.Literal["codeExecutionUpdate"] = "codeExecutionUpdate"
     value: CodeExecutionUpdate
+    type: typing.Literal["codeExecutionUpdate"] = "codeExecutionUpdate"
 
 
 class SubmissionResponse_Terminated(pydantic_v1.BaseModel):
     type: typing.Literal["terminated"] = "terminated"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().dict(**kwargs_with_defaults)
+
+    class Config:
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
+
 
 SubmissionResponse = typing.Union[
-    SubmissionResponse_ServerInitialized,
     SubmissionResponse_ProblemInitialized,
-    SubmissionResponse_WorkspaceInitialized,
     SubmissionResponse_ServerErrored,
     SubmissionResponse_CodeExecutionUpdate,
     SubmissionResponse_Terminated,

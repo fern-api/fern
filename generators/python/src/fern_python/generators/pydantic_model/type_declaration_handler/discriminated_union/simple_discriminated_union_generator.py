@@ -203,11 +203,6 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     single_union_type_references.append(internal_single_union_type)
 
-                    self._update_forward_refs(
-                        internal_pydantic_model_for_single_union_type=internal_pydantic_model_for_single_union_type,
-                        single_union_type=single_union_type,
-                    )
-
             if self._custom_config.skip_validation:
                 type_hint = AST.TypeHint.annotated(
                     type=AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references)),
@@ -250,7 +245,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
 
     def _update_forward_refs(
         self,
-        internal_pydantic_model_for_single_union_type: Union[FernAwarePydanticModel, PydanticModel],
+        internal_pydantic_model_for_single_union_type: PydanticModel,
         single_union_type: ir_types.SingleUnionType,
     ):
         # if any of our fields are forward refs, we need to call
