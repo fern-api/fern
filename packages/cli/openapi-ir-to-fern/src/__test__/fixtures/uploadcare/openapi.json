@@ -2283,7 +2283,7 @@
                             "latitude": 55.62013611111111,
                             "longitude": 37.66299166666666
                         },
-                        "datetime_original": "2018-08-20T08:59:50",
+                        
                         "dpi": [
                             72,
                             72
@@ -2307,7 +2307,7 @@
                                 "latitude": 55.62013611111111,
                                 "longitude": 37.66299166666666
                             },
-                            "datetime_original": "2018-08-20T08:59:50",
+                            
                             "dpi": [
                                 72,
                                 72
@@ -2400,7 +2400,7 @@
                             "latitude": 55.62013611111111,
                             "longitude": 37.66299166666666
                         },
-                        "datetime_original": "2018-08-20T08:59:50",
+                        
                         "dpi": [
                             72,
                             72
@@ -2424,7 +2424,7 @@
                                 "latitude": 55.62013611111111,
                                 "longitude": 37.66299166666666
                             },
-                            "datetime_original": "2018-08-20T08:59:50",
+                            
                             "dpi": [
                                 72,
                                 72
@@ -2526,15 +2526,13 @@
                     "datetime_created": {
                         "type": "string",
                         "description": "ISO-8601 date and time when the group was created.",
-                        "format": "date-time",
-                        "example": "2015-09-21T12:39:13.743754Z"
+                        "format": "date-time"
                     },
                     "datetime_stored": {
                         "nullable": true,
                         "description": "ISO-8601 date and time when the group was marked as stored.",
                         "type": "string",
                         "format": "date-time",
-                        "example": "2015-09-21T12:39:13.953757Z",
                         "deprecated": true
                     },
                     "files_count": {
@@ -2605,7 +2603,7 @@
                                     "latitude": 55.62013611111111,
                                     "longitude": 37.66299166666666
                                 },
-                                "datetime_original": "2018-08-20T08:59:50",
+                                
                                 "dpi": [
                                     72,
                                     72
@@ -2629,7 +2627,7 @@
                                         "latitude": 55.62013611111111,
                                         "longitude": 37.66299166666666
                                     },
-                                    "datetime_original": "2018-08-20T08:59:50",
+                                    
                                     "dpi": [
                                         72,
                                         72
@@ -3048,8 +3046,7 @@
                         "type": "string",
                         "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
                         "nullable": true,
-                        "format": "date-time",
-                        "example": "2018-09-13T16:23:40"
+                        "format": "date-time"
                     },
                     "dpi": {
                         "type": "array",
@@ -3238,8 +3235,7 @@
                         "type": "string",
                         "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
                         "nullable": true,
-                        "format": "date-time",
-                        "example": "2018-09-13T16:23:40"
+                        "format": "date-time"
                     },
                     "dpi": {
                         "type": "array",
@@ -3624,7 +3620,7 @@
                             "latitude": 55.62013611111111,
                             "longitude": 37.66299166666666
                         },
-                        "datetime_original": "2018-08-20T08:59:50",
+                        
                         "dpi": [
                             72,
                             72
@@ -3648,7 +3644,7 @@
                                 "latitude": 55.62013611111111,
                                 "longitude": 37.66299166666666
                             },
-                            "datetime_original": "2018-08-20T08:59:50",
+                            
                             "dpi": [
                                 72,
                                 72
@@ -3686,7 +3682,7 @@
                             "latitude": 55.62013611111111,
                             "longitude": 37.66299166666666
                         },
-                        "datetime_original": "2018-08-20T08:59:50",
+                        
                         "dpi": [
                             72,
                             72
@@ -3710,7 +3706,7 @@
                                 "latitude": 55.62013611111111,
                                 "longitude": 37.66299166666666
                             },
-                            "datetime_original": "2018-08-20T08:59:50",
+                            
                             "dpi": [
                                 72,
                                 72

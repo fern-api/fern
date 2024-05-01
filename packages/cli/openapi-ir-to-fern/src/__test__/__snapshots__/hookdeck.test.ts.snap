@@ -7600,7 +7600,10 @@ exports[`open api parser hookdeck docs 1`] = `
         "docs": undefined,
         "properties": {
           "strategy": "AlertStrategy",
-          "type": "literal<"alert">",
+          "type": {
+            "docs": "An alert rule must be of type \`alert\`",
+            "type": "literal<"alert">",
+          },
         },
       },
       "AlertStrategy": {
@@ -7938,7 +7941,10 @@ exports[`open api parser hookdeck docs 1`] = `
             "docs": "Delay to introduce in MS",
             "type": "integer",
           },
-          "type": "literal<"delay">",
+          "type": {
+            "docs": "A delay rule must be of type \`delay\`",
+            "type": "literal<"delay">",
+          },
         },
       },
       "DeletedBookmarkResponse": {
@@ -8364,7 +8370,10 @@ exports[`open api parser hookdeck docs 1`] = `
           "headers": "optional<ConnectionFilterProperty>",
           "path": "optional<ConnectionFilterProperty>",
           "query": "optional<ConnectionFilterProperty>",
-          "type": "literal<"filter">",
+          "type": {
+            "docs": "A filter rule must be of type \`filter\`",
+            "type": "literal<"filter">",
+          },
         },
       },
       "FilteredMeta": {
@@ -8902,7 +8911,10 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "optional<integer>",
           },
           "strategy": "RetryStrategy",
-          "type": "literal<"retry">",
+          "type": {
+            "docs": "A retry rule must be of type \`retry\`",
+            "type": "literal<"retry">",
+          },
         },
       },
       "RetryStrategy": {
@@ -9162,7 +9174,10 @@ exports[`open api parser hookdeck docs 1`] = `
             "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
             "type": "optional<string>",
           },
-          "type": "literal<"transform">",
+          "type": {
+            "docs": "A transformation rule must be of type \`transformation\`",
+            "type": "literal<"transform">",
+          },
         },
       },
       "TransformFullTransformation": {
@@ -9189,7 +9204,10 @@ exports[`open api parser hookdeck docs 1`] = `
             "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
             "type": "string",
           },
-          "type": "literal<"transform">",
+          "type": {
+            "docs": "A transformation rule must be of type \`transformation\`",
+            "type": "literal<"transform">",
+          },
         },
       },
       "TransformRule": {
@@ -16337,7 +16355,10 @@ exports[`open api parser hookdeck simple 1`] = `
         "docs": undefined,
         "properties": {
           "strategy": "AlertStrategy",
-          "type": "literal<"alert">",
+          "type": {
+            "docs": "An alert rule must be of type \`alert\`",
+            "type": "literal<"alert">",
+          },
         },
       },
       "AlertStrategy": {
@@ -16675,7 +16696,10 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "Delay to introduce in MS",
             "type": "integer",
           },
-          "type": "literal<"delay">",
+          "type": {
+            "docs": "A delay rule must be of type \`delay\`",
+            "type": "literal<"delay">",
+          },
         },
       },
       "DeletedBookmarkResponse": {
@@ -17101,7 +17125,10 @@ exports[`open api parser hookdeck simple 1`] = `
           "headers": "optional<ConnectionFilterProperty>",
           "path": "optional<ConnectionFilterProperty>",
           "query": "optional<ConnectionFilterProperty>",
-          "type": "literal<"filter">",
+          "type": {
+            "docs": "A filter rule must be of type \`filter\`",
+            "type": "literal<"filter">",
+          },
         },
       },
       "FilteredMeta": {
@@ -17639,7 +17666,10 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "optional<integer>",
           },
           "strategy": "RetryStrategy",
-          "type": "literal<"retry">",
+          "type": {
+            "docs": "A retry rule must be of type \`retry\`",
+            "type": "literal<"retry">",
+          },
         },
       },
       "RetryStrategy": {
@@ -17899,7 +17929,10 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
             "type": "optional<string>",
           },
-          "type": "literal<"transform">",
+          "type": {
+            "docs": "A transformation rule must be of type \`transformation\`",
+            "type": "literal<"transform">",
+          },
         },
       },
       "TransformFullTransformation": {
@@ -17926,7 +17959,10 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
             "type": "string",
           },
-          "type": "literal<"transform">",
+          "type": {
+            "docs": "A transformation rule must be of type \`transformation\`",
+            "type": "literal<"transform">",
+          },
         },
       },
       "TransformRule": {

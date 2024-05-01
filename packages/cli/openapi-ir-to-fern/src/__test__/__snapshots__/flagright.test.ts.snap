@@ -1845,7 +1845,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "ACHPaymentMethod": "literal<"ACH">",
+      "ACHPaymentMethod": {
+        "docs": "Classify the method of payment as "ACH" for ACHDetails",
+        "type": "literal<"ACH">",
+      },
       "AcquisitionChannel": {
         "docs": "Model for User acquisition channel",
         "enum": [
@@ -2087,7 +2090,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "state": "optional<string>",
         },
       },
-      "CardPaymentMethod": "literal<"CARD">",
+      "CardPaymentMethod": {
+        "docs": "Classify the method of payment as "Card" for CardDetails
+",
+        "type": "literal<"CARD">",
+      },
       "CaseClosedDetails": {
         "docs": undefined,
         "properties": {
@@ -2170,7 +2177,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "DECLINED",
         ],
       },
-      "CheckPaymentMethod": "literal<"CHECK">",
+      "CheckPaymentMethod": {
+        "docs": "Classify the method of payment as "CHECK" for CheckDetails",
+        "type": "literal<"CHECK">",
+      },
       "CompanyFinancialDetails": {
         "docs": "Model for business user company financial details",
         "properties": {
@@ -2941,7 +2951,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "isFalsePositive": "boolean",
         },
       },
-      "GeneralBankAccountPaymentMethod": "literal<"GENERIC_BANK_ACCOUNT">",
+      "GeneralBankAccountPaymentMethod": {
+        "docs": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
+        "type": "literal<"GENERIC_BANK_ACCOUNT">",
+      },
       "GenericBankAccountDetails": {
         "docs": "Model for any generic bank account",
         "properties": {
@@ -3024,7 +3037,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "tags": "optional<Tag>",
         },
       },
-      "IBANPaymentMethod": "literal<"IBAN">",
+      "IBANPaymentMethod": {
+        "docs": "Classify the method of payment as "IBAN" for IBANDetails
+",
+        "type": "literal<"IBAN">",
+      },
       "KYCStatus": {
         "enum": [
           "SUCCESSFUL",
@@ -3198,7 +3215,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "PromotionPayment",
         ],
       },
-      "MpesaPaymentMethod": "literal<"MPESA">",
+      "MpesaPaymentMethod": {
+        "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
+        "type": "literal<"MPESA">",
+      },
       "PEPStatus": {
         "docs": undefined,
         "properties": {
@@ -3399,7 +3419,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "SWIFTPaymentMethod": "literal<"SWIFT">",
+      "SWIFTPaymentMethod": {
+        "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
+        "type": "literal<"SWIFT">",
+      },
       "SanctionsDetails": {
         "docs": undefined,
         "properties": {
@@ -3677,7 +3700,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "UPIPaymentMethod": "literal<"UPI">",
+      "UPIPaymentMethod": {
+        "docs": "Classify the method of payment as "UPI" for UPIDetails",
+        "type": "literal<"UPI">",
+      },
       "User": {
         "docs": "Model for User details",
         "extends": [
@@ -3828,7 +3854,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "WalletPaymentMethod": "literal<"WALLET">",
+      "WalletPaymentMethod": {
+        "docs": "Classify the method of payment as "Wallet" for WalletDetails",
+        "type": "literal<"WALLET">",
+      },
       "WebhookEvent": {
         "docs": undefined,
         "properties": {
@@ -5609,7 +5638,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "ACHPaymentMethod": "literal<"ACH">",
+      "ACHPaymentMethod": {
+        "docs": "Classify the method of payment as "ACH" for ACHDetails",
+        "type": "literal<"ACH">",
+      },
       "AcquisitionChannel": {
         "docs": "Model for User acquisition channel",
         "enum": [
@@ -5851,7 +5883,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "state": "optional<string>",
         },
       },
-      "CardPaymentMethod": "literal<"CARD">",
+      "CardPaymentMethod": {
+        "docs": "Classify the method of payment as "Card" for CardDetails
+",
+        "type": "literal<"CARD">",
+      },
       "CaseClosedDetails": {
         "docs": undefined,
         "properties": {
@@ -5934,7 +5970,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "DECLINED",
         ],
       },
-      "CheckPaymentMethod": "literal<"CHECK">",
+      "CheckPaymentMethod": {
+        "docs": "Classify the method of payment as "CHECK" for CheckDetails",
+        "type": "literal<"CHECK">",
+      },
       "CompanyFinancialDetails": {
         "docs": "Model for business user company financial details",
         "properties": {
@@ -6705,7 +6744,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "isFalsePositive": "boolean",
         },
       },
-      "GeneralBankAccountPaymentMethod": "literal<"GENERIC_BANK_ACCOUNT">",
+      "GeneralBankAccountPaymentMethod": {
+        "docs": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
+        "type": "literal<"GENERIC_BANK_ACCOUNT">",
+      },
       "GenericBankAccountDetails": {
         "docs": "Model for any generic bank account",
         "properties": {
@@ -6788,7 +6830,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "tags": "optional<Tag>",
         },
       },
-      "IBANPaymentMethod": "literal<"IBAN">",
+      "IBANPaymentMethod": {
+        "docs": "Classify the method of payment as "IBAN" for IBANDetails
+",
+        "type": "literal<"IBAN">",
+      },
       "KYCStatus": {
         "enum": [
           "SUCCESSFUL",
@@ -6962,7 +7008,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "PromotionPayment",
         ],
       },
-      "MpesaPaymentMethod": "literal<"MPESA">",
+      "MpesaPaymentMethod": {
+        "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
+        "type": "literal<"MPESA">",
+      },
       "PEPStatus": {
         "docs": undefined,
         "properties": {
@@ -7163,7 +7212,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "SWIFTPaymentMethod": "literal<"SWIFT">",
+      "SWIFTPaymentMethod": {
+        "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
+        "type": "literal<"SWIFT">",
+      },
       "SanctionsDetails": {
         "docs": undefined,
         "properties": {
@@ -7441,7 +7493,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "UPIPaymentMethod": "literal<"UPI">",
+      "UPIPaymentMethod": {
+        "docs": "Classify the method of payment as "UPI" for UPIDetails",
+        "type": "literal<"UPI">",
+      },
       "User": {
         "docs": "Model for User details",
         "extends": [
@@ -7592,7 +7647,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "WalletPaymentMethod": "literal<"WALLET">",
+      "WalletPaymentMethod": {
+        "docs": "Classify the method of payment as "Wallet" for WalletDetails",
+        "type": "literal<"WALLET">",
+      },
       "WebhookEvent": {
         "docs": undefined,
         "properties": {

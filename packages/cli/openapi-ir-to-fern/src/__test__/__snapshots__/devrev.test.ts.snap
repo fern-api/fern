@@ -4298,7 +4298,11 @@ token. Only applicable for application access tokens.
           },
         ],
       },
-      "AuthTokenTokenType": "literal<"bearer">",
+      "AuthTokenTokenType": {
+        "docs": "The type of the issued token. Bearer is the only supported token type.
+",
+        "type": "literal<"bearer">",
+      },
       "AuthTokensCreateResponse": {
         "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -5458,7 +5462,13 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       },
       "TimelineEntryBase": "AtomBase",
       "TimelineEntryType": "literal<"timeline_comment">",
-      "TimelineEntryVisibility": "literal<"private">",
+      "TimelineEntryVisibility": {
+        "docs": "The visibility of the entry. If 'private', then the entry is only
+visible to the creator, otherwise if not set, then the entry has
+default visibility.
+",
+        "type": "literal<"private">",
+      },
       "UserBase": {
         "docs": undefined,
         "extends": [
@@ -8908,7 +8918,11 @@ token. Only applicable for application access tokens.
           },
         ],
       },
-      "AuthTokenTokenType": "literal<"bearer">",
+      "AuthTokenTokenType": {
+        "docs": "The type of the issued token. Bearer is the only supported token type.
+",
+        "type": "literal<"bearer">",
+      },
       "AuthTokensCreateResponse": {
         "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -10068,7 +10082,13 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
       },
       "TimelineEntryBase": "AtomBase",
       "TimelineEntryType": "literal<"timeline_comment">",
-      "TimelineEntryVisibility": "literal<"private">",
+      "TimelineEntryVisibility": {
+        "docs": "The visibility of the entry. If 'private', then the entry is only
+visible to the creator, otherwise if not set, then the entry has
+default visibility.
+",
+        "type": "literal<"private">",
+      },
       "UserBase": {
         "docs": undefined,
         "extends": [

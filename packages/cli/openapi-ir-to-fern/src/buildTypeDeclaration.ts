@@ -4,7 +4,7 @@ import {
     ArraySchema,
     CasingOverrides,
     EnumSchema,
-    LiteralSchemaValue,
+    LiteralSchema,
     MapSchema,
     ObjectProperty,
     ObjectSchema,
@@ -61,7 +61,7 @@ export function buildTypeDeclaration({
         case "enum":
             return buildEnumTypeDeclaration(schema);
         case "literal":
-            return buildLiteralTypeDeclaration(schema.value, schema.nameOverride, schema.generatedName);
+            return buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName);
         case "object":
             return buildObjectTypeDeclaration({ schema, context, declarationFile });
         case "oneOf":
@@ -407,13 +407,13 @@ export function buildUnknownTypeDeclaration(
 }
 
 export function buildLiteralTypeDeclaration(
-    value: LiteralSchemaValue,
+    schema: LiteralSchema,
     nameOverride: string | null | undefined,
     generatedName: string
 ): ConvertedTypeDeclaration {
     return {
         name: nameOverride ?? generatedName,
-        schema: buildLiteralTypeReference(value)
+        schema: buildLiteralTypeReference(schema)
     };
 }
 
