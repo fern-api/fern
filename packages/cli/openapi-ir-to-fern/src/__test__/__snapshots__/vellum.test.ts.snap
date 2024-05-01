@@ -1892,7 +1892,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "results": "optional<list<SlimDocument>>",
         },
       },
-      "ProcessingFailureReasonEnum": "literal<"EXCEEDED_CHARACTER_LIMIT">",
+      "ProcessingFailureReasonEnum": {
+        "docs": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
+        "type": "literal<EXCEEDED_CHARACTER_LIMIT>",
+      },
       "ProcessingStateEnum": {
         "docs": "* \`QUEUED\` - Queued
 * \`PROCESSING\` - Processing
@@ -2353,7 +2356,10 @@ Used to submit feedback regarding the quality of previously generated completion
           },
         },
       },
-      "SlimDocumentStatusEnum": "literal<"ACTIVE">",
+      "SlimDocumentStatusEnum": {
+        "docs": "* \`ACTIVE\` - Active",
+        "type": "literal<ACTIVE>",
+      },
       "SubmitCompletionActualRequest": {
         "docs": undefined,
         "properties": {
@@ -4506,7 +4512,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "results": "optional<list<SlimDocument>>",
         },
       },
-      "ProcessingFailureReasonEnum": "literal<"EXCEEDED_CHARACTER_LIMIT">",
+      "ProcessingFailureReasonEnum": {
+        "docs": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
+        "type": "literal<EXCEEDED_CHARACTER_LIMIT>",
+      },
       "ProcessingStateEnum": {
         "docs": "* \`QUEUED\` - Queued
 * \`PROCESSING\` - Processing
@@ -4967,7 +4976,10 @@ Used to submit feedback regarding the quality of previously generated completion
           },
         },
       },
-      "SlimDocumentStatusEnum": "literal<"ACTIVE">",
+      "SlimDocumentStatusEnum": {
+        "docs": "* \`ACTIVE\` - Active",
+        "type": "literal<ACTIVE>",
+      },
       "SubmitCompletionActualRequest": {
         "docs": undefined,
         "properties": {

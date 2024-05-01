@@ -15639,7 +15639,10 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "GeolocationFieldEditor": "literal<"Map">",
+      "GeolocationFieldEditor": {
+        "docs": "",
+        "type": "literal<Map>",
+      },
       "GeolocationFieldPropertiesDto": {
         "docs": undefined,
         "properties": {
@@ -17206,7 +17209,10 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "UiFieldEditor": "literal<"Separator">",
+      "UiFieldEditor": {
+        "docs": "",
+        "type": "literal<Separator>",
+      },
       "UiFieldPropertiesDto": {
         "docs": undefined,
         "properties": {
@@ -30927,7 +30933,10 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "GeolocationFieldEditor": "literal<"Map">",
+      "GeolocationFieldEditor": {
+        "docs": "",
+        "type": "literal<Map>",
+      },
       "GeolocationFieldPropertiesDto": {
         "docs": undefined,
         "properties": {
@@ -32494,7 +32503,10 @@ You will be assigned as owner of the new team automatically.",
           },
         },
       },
-      "UiFieldEditor": "literal<"Separator">",
+      "UiFieldEditor": {
+        "docs": "",
+        "type": "literal<Separator>",
+      },
       "UiFieldPropertiesDto": {
         "docs": undefined,
         "properties": {

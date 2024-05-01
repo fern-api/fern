@@ -4298,7 +4298,11 @@ token. Only applicable for application access tokens.
           },
         ],
       },
-      "AuthTokenTokenType": "literal<"bearer">",
+      "AuthTokenTokenType": {
+        "docs": "The type of the issued token. Bearer is the only supported token type.
+",
+        "type": "literal<bearer>",
+      },
       "AuthTokensCreateResponse": {
         "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -4636,7 +4640,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorForbiddenForbidden": "map<string, unknown>",
-      "ErrorForbiddenType": "literal<"forbidden">",
+      "ErrorForbiddenType": "literal<forbidden>",
       "ErrorInternalServerError": {
         "docs": undefined,
         "extends": [
@@ -4645,7 +4649,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorInternalServerErrorInternalError": "map<string, unknown>",
-      "ErrorInternalServerErrorType": "literal<"internal_error">",
+      "ErrorInternalServerErrorType": "literal<internal_error>",
       "ErrorNotFound": {
         "docs": undefined,
         "extends": [
@@ -4654,7 +4658,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorNotFoundNotFound": "map<string, unknown>",
-      "ErrorNotFoundType": "literal<"not_found">",
+      "ErrorNotFoundType": "literal<not_found>",
       "ErrorServiceUnavailable": {
         "docs": undefined,
         "extends": [
@@ -4663,7 +4667,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorServiceUnavailableServiceUnavailable": "map<string, unknown>",
-      "ErrorServiceUnavailableType": "literal<"service_unavailable">",
+      "ErrorServiceUnavailableType": "literal<service_unavailable>",
       "ErrorTooManyRequests": {
         "docs": undefined,
         "extends": [
@@ -4672,7 +4676,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorTooManyRequestsTooManyRequests": "map<string, unknown>",
-      "ErrorTooManyRequestsType": "literal<"too_many_requests">",
+      "ErrorTooManyRequestsType": "literal<too_many_requests>",
       "ErrorUnauthorized": {
         "docs": undefined,
         "extends": [
@@ -4680,7 +4684,7 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
-      "ErrorUnauthorizedType": "literal<"unauthenticated">",
+      "ErrorUnauthorizedType": "literal<unauthenticated>",
       "ErrorUnauthorizedUnauthenticated": "map<string, unknown>",
       "EventPartCreated": {
         "docs": undefined,
@@ -4877,7 +4881,7 @@ always be returned in the specified sort-by order.
           "rev_org": "RevOrgSummary",
         },
       },
-      "OrgType": "literal<"rev_org">",
+      "OrgType": "literal<rev_org>",
       "PartBase": {
         "docs": undefined,
         "extends": [
@@ -5357,7 +5361,7 @@ will appear in the response.
           },
         },
       },
-      "TimelineEntriesCreateRequestType": "literal<"timeline_comment">",
+      "TimelineEntriesCreateRequestType": "literal<timeline_comment>",
       "TimelineEntriesCreateResponse": {
         "docs": "The response to creating a timeline entry for an object.",
         "properties": {
@@ -5441,7 +5445,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           },
         },
       },
-      "TimelineEntriesUpdateRequestType": "literal<"timeline_comment">",
+      "TimelineEntriesUpdateRequestType": "literal<timeline_comment>",
       "TimelineEntriesUpdateResponse": {
         "docs": "The response to updating a timeline entry.",
         "properties": {
@@ -5457,8 +5461,14 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
       },
       "TimelineEntryBase": "AtomBase",
-      "TimelineEntryType": "literal<"timeline_comment">",
-      "TimelineEntryVisibility": "literal<"private">",
+      "TimelineEntryType": "literal<timeline_comment>",
+      "TimelineEntryVisibility": {
+        "docs": "The visibility of the entry. If 'private', then the entry is only
+visible to the creator, otherwise if not set, then the entry has
+default visibility.
+",
+        "type": "literal<private>",
+      },
       "UserBase": {
         "docs": undefined,
         "extends": [
@@ -8908,7 +8918,11 @@ token. Only applicable for application access tokens.
           },
         ],
       },
-      "AuthTokenTokenType": "literal<"bearer">",
+      "AuthTokenTokenType": {
+        "docs": "The type of the issued token. Bearer is the only supported token type.
+",
+        "type": "literal<bearer>",
+      },
       "AuthTokensCreateResponse": {
         "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -9246,7 +9260,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorForbiddenForbidden": "map<string, unknown>",
-      "ErrorForbiddenType": "literal<"forbidden">",
+      "ErrorForbiddenType": "literal<forbidden>",
       "ErrorInternalServerError": {
         "docs": undefined,
         "extends": [
@@ -9255,7 +9269,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorInternalServerErrorInternalError": "map<string, unknown>",
-      "ErrorInternalServerErrorType": "literal<"internal_error">",
+      "ErrorInternalServerErrorType": "literal<internal_error>",
       "ErrorNotFound": {
         "docs": undefined,
         "extends": [
@@ -9264,7 +9278,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorNotFoundNotFound": "map<string, unknown>",
-      "ErrorNotFoundType": "literal<"not_found">",
+      "ErrorNotFoundType": "literal<not_found>",
       "ErrorServiceUnavailable": {
         "docs": undefined,
         "extends": [
@@ -9273,7 +9287,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorServiceUnavailableServiceUnavailable": "map<string, unknown>",
-      "ErrorServiceUnavailableType": "literal<"service_unavailable">",
+      "ErrorServiceUnavailableType": "literal<service_unavailable>",
       "ErrorTooManyRequests": {
         "docs": undefined,
         "extends": [
@@ -9282,7 +9296,7 @@ sort order. If not set, then no prior elements exist.
         "properties": {},
       },
       "ErrorTooManyRequestsTooManyRequests": "map<string, unknown>",
-      "ErrorTooManyRequestsType": "literal<"too_many_requests">",
+      "ErrorTooManyRequestsType": "literal<too_many_requests>",
       "ErrorUnauthorized": {
         "docs": undefined,
         "extends": [
@@ -9290,7 +9304,7 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {},
       },
-      "ErrorUnauthorizedType": "literal<"unauthenticated">",
+      "ErrorUnauthorizedType": "literal<unauthenticated>",
       "ErrorUnauthorizedUnauthenticated": "map<string, unknown>",
       "EventPartCreated": {
         "docs": undefined,
@@ -9487,7 +9501,7 @@ always be returned in the specified sort-by order.
           "rev_org": "RevOrgSummary",
         },
       },
-      "OrgType": "literal<"rev_org">",
+      "OrgType": "literal<rev_org>",
       "PartBase": {
         "docs": undefined,
         "extends": [
@@ -9967,7 +9981,7 @@ will appear in the response.
           },
         },
       },
-      "TimelineEntriesCreateRequestType": "literal<"timeline_comment">",
+      "TimelineEntriesCreateRequestType": "literal<timeline_comment>",
       "TimelineEntriesCreateResponse": {
         "docs": "The response to creating a timeline entry for an object.",
         "properties": {
@@ -10051,7 +10065,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           },
         },
       },
-      "TimelineEntriesUpdateRequestType": "literal<"timeline_comment">",
+      "TimelineEntriesUpdateRequestType": "literal<timeline_comment>",
       "TimelineEntriesUpdateResponse": {
         "docs": "The response to updating a timeline entry.",
         "properties": {
@@ -10067,8 +10081,14 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
       },
       "TimelineEntryBase": "AtomBase",
-      "TimelineEntryType": "literal<"timeline_comment">",
-      "TimelineEntryVisibility": "literal<"private">",
+      "TimelineEntryType": "literal<timeline_comment>",
+      "TimelineEntryVisibility": {
+        "docs": "The visibility of the entry. If 'private', then the entry is only
+visible to the creator, otherwise if not set, then the entry has
+default visibility.
+",
+        "type": "literal<private>",
+      },
       "UserBase": {
         "docs": undefined,
         "extends": [
