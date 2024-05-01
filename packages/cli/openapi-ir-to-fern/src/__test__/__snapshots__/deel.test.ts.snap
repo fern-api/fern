@@ -12132,7 +12132,10 @@ exports[`open api parser deel docs 1`] = `
           },
         },
       },
-      "OffCyclePaymentTypeEnum": "literal<"offcycle">",
+      "OffCyclePaymentTypeEnum": {
+        "docs": "Type for Off-cycle payments",
+        "type": "literal<"offcycle">",
+      },
       "OrganizationList": "list<BasicOrganization>",
       "OrganizationListContainer": {
         "docs": undefined,
@@ -13187,7 +13190,10 @@ exports[`open api parser deel docs 1`] = `
           "quantity": "double",
         },
       },
-      "TimesheetTypeEnum": "literal<"work">",
+      "TimesheetTypeEnum": {
+        "docs": "Type for timesheet",
+        "type": "literal<"work">",
+      },
       "TimesheetTypeEnumList": "list<TimesheetTypeEnum>",
       "UniqueObjectIdentifier": {
         "discriminated": false,
@@ -22863,7 +22869,10 @@ exports[`open api parser deel simple 1`] = `
           },
         },
       },
-      "OffCyclePaymentTypeEnum": "literal<"offcycle">",
+      "OffCyclePaymentTypeEnum": {
+        "docs": "Type for Off-cycle payments",
+        "type": "literal<"offcycle">",
+      },
       "OrganizationList": "list<BasicOrganization>",
       "OrganizationListContainer": {
         "docs": undefined,
@@ -23918,7 +23927,10 @@ exports[`open api parser deel simple 1`] = `
           "quantity": "double",
         },
       },
-      "TimesheetTypeEnum": "literal<"work">",
+      "TimesheetTypeEnum": {
+        "docs": "Type for timesheet",
+        "type": "literal<"work">",
+      },
       "TimesheetTypeEnumList": "list<TimesheetTypeEnum>",
       "UniqueObjectIdentifier": {
         "discriminated": false,

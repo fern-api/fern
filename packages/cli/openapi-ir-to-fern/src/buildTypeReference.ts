@@ -4,7 +4,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ArraySchema,
     EnumSchema,
-    LiteralSchemaValue,
+    LiteralSchema,
     MapSchema,
     ObjectSchema,
     OneOfSchema,
@@ -54,7 +54,8 @@ export function buildTypeReference({
         case "enum":
             return buildEnumTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "literal":
-            return buildLiteralTypeReference(schema.value);
+            schema.value;
+            return buildLiteralTypeReference(schema);
         case "object":
             return buildObjectTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "oneOf":
@@ -203,15 +204,27 @@ export function buildUnknownTypeReference(): RawSchemas.TypeReferenceWithDocsSch
     return "unknown";
 }
 
-export function buildLiteralTypeReference(value: LiteralSchemaValue): RawSchemas.TypeReferenceWithDocsSchema {
-    switch (value.type) {
-        case "boolean":
-            return `literal<${value.value}>`;
-        case "string":
-            return `literal<"${value.value}">`;
+export function buildLiteralTypeReference(schema: LiteralSchema): RawSchemas.TypeReferenceWithDocsSchema {
+    let value: string;
+    switch (schema.value.type) {
+        case "boolean": {
+            value = `literal<${schema.value.value}>`;
+            break;
+        }
+        case "string": {
+            value = `literal<"${schema.value.value}">`;
+            break;
+        }
         default:
-            assertNever(value);
+            assertNever(schema.value);
     }
+    if (schema.description == null) {
+        return value;
+    }
+    return {
+        type: value,
+        docs: schema.description
+    };
 }
 
 export function buildEnumTypeReference({

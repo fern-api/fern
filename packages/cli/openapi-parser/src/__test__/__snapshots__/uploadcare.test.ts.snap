@@ -2769,7 +2769,7 @@ Log.d("TAG", file.toString())
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2018-08-20T08:59:50",
+                          "value": "2018-09-13T16:23:40",
                         },
                       },
                       "dpi": {
@@ -3017,7 +3017,7 @@ Log.d("TAG", file.toString())
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2018-08-20T08:59:50",
+                      "value": "2018-09-13T16:23:40",
                     },
                   },
                   "dpi": {
@@ -4392,7 +4392,7 @@ Log.d("TAG", file.toString())
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2018-08-20T08:59:50",
+                          "value": "2018-09-13T16:23:40",
                         },
                       },
                       "dpi": {
@@ -4640,7 +4640,7 @@ Log.d("TAG", file.toString())
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2018-08-20T08:59:50",
+                      "value": "2018-09-13T16:23:40",
                     },
                   },
                   "dpi": {
@@ -5656,7 +5656,7 @@ Log.d("TAG", status.toString())
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2018-08-20T08:59:50",
+                          "value": "2018-09-13T16:23:40",
                         },
                       },
                       "dpi": {
@@ -5904,7 +5904,7 @@ Log.d("TAG", status.toString())
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2018-08-20T08:59:50",
+                      "value": "2018-09-13T16:23:40",
                     },
                   },
                   "dpi": {
@@ -6837,7 +6837,7 @@ Log.d("TAG", file.toString())
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
-                          "value": "2018-08-20T08:59:50",
+                          "value": "2018-09-13T16:23:40",
                         },
                       },
                       "dpi": {
@@ -7085,7 +7085,7 @@ Log.d("TAG", file.toString())
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
-                      "value": "2018-08-20T08:59:50",
+                      "value": "2018-09-13T16:23:40",
                     },
                   },
                   "dpi": {
@@ -8229,19 +8229,6 @@ Log.d("TAG", group.toString())
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "datetime_original",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "2018-08-20T08:59:50",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
                                   "value": "dpi",
                                 },
                                 "value": {
@@ -8458,19 +8445,6 @@ Log.d("TAG", group.toString())
                                             },
                                           },
                                         ],
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "datetime_original",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "2018-08-20T08:59:50",
-                                        },
                                       },
                                     },
                                     {
@@ -9288,19 +9262,6 @@ Log.d("TAG", group.toString())
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "datetime_original",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "2018-08-20T08:59:50",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
                                   "value": "dpi",
                                 },
                                 "value": {
@@ -9517,19 +9478,6 @@ Log.d("TAG", group.toString())
                                             },
                                           },
                                         ],
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "datetime_original",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "2018-08-20T08:59:50",
-                                        },
                                       },
                                     },
                                     {

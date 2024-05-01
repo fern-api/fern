@@ -2399,7 +2399,10 @@ Valid values are in the range [0, 1] inclusive.
           "RealtimeBaseTranscript",
         ],
         "properties": {
-          "message_type": "literal<"FinalTranscript">",
+          "message_type": {
+            "docs": "Describes the type of message.",
+            "type": "literal<"FinalTranscript">",
+          },
           "punctuated": {
             "docs": "Whether the text has been punctuated and cased.",
             "type": "boolean",
@@ -2586,7 +2589,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "RealtimeBaseTranscript",
         ],
         "properties": {
-          "message_type": "literal<"PartialTranscript">",
+          "message_type": {
+            "docs": "Describes the type of message.",
+            "type": "literal<"PartialTranscript">",
+          },
         },
       },
       "PiiPolicy": {
@@ -2728,7 +2734,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       },
-      "RedactedAudioStatus": "literal<"redacted_audio_ready">",
+      "RedactedAudioStatus": {
+        "docs": "The status of the redacted audio",
+        "type": "literal<"redacted_audio_ready">",
+      },
       "SentencesResponse": {
         "docs": undefined,
         "properties": {
@@ -2781,7 +2790,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Timestamp when this session will expire.",
             "type": "datetime",
           },
-          "message_type": "literal<"SessionBegins">",
+          "message_type": {
+            "docs": "Describes the type of the message.",
+            "type": "literal<"SessionBegins">",
+          },
           "session_id": {
             "docs": "Unique identifier for the established session.",
             "type": "string",
@@ -2791,7 +2803,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "SessionTerminated": {
         "docs": undefined,
         "properties": {
-          "message_type": "literal<"SessionTerminated">",
+          "message_type": {
+            "docs": "Describes the type of the message.",
+            "type": "literal<"SessionTerminated">",
+          },
         },
       },
       "SeverityScoreSummary": {
@@ -5293,7 +5308,10 @@ Valid values are in the range [0, 1] inclusive.
           "RealtimeBaseTranscript",
         ],
         "properties": {
-          "message_type": "literal<"FinalTranscript">",
+          "message_type": {
+            "docs": "Describes the type of message.",
+            "type": "literal<"FinalTranscript">",
+          },
           "punctuated": {
             "docs": "Whether the text has been punctuated and cased.",
             "type": "boolean",
@@ -5480,7 +5498,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "RealtimeBaseTranscript",
         ],
         "properties": {
-          "message_type": "literal<"PartialTranscript">",
+          "message_type": {
+            "docs": "Describes the type of message.",
+            "type": "literal<"PartialTranscript">",
+          },
         },
       },
       "PiiPolicy": {
@@ -5622,7 +5643,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       },
-      "RedactedAudioStatus": "literal<"redacted_audio_ready">",
+      "RedactedAudioStatus": {
+        "docs": "The status of the redacted audio",
+        "type": "literal<"redacted_audio_ready">",
+      },
       "SentencesResponse": {
         "docs": undefined,
         "properties": {
@@ -5675,7 +5699,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Timestamp when this session will expire.",
             "type": "datetime",
           },
-          "message_type": "literal<"SessionBegins">",
+          "message_type": {
+            "docs": "Describes the type of the message.",
+            "type": "literal<"SessionBegins">",
+          },
           "session_id": {
             "docs": "Unique identifier for the established session.",
             "type": "string",
@@ -5685,7 +5712,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "SessionTerminated": {
         "docs": undefined,
         "properties": {
-          "message_type": "literal<"SessionTerminated">",
+          "message_type": {
+            "docs": "Describes the type of the message.",
+            "type": "literal<"SessionTerminated">",
+          },
         },
       },
       "SeverityScoreSummary": {
