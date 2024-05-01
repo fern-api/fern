@@ -82,6 +82,25 @@ exports[`open api parser assembly parse open api 1`] = `
             },
           },
         ],
+        "pathParameters": [
+          {
+            "description": "The ID of the user.",
+            "name": "userId",
+            "schema": {
+              "description": null,
+              "generatedName": "Realtime",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": {
+                "maxLength": null,
+                "minLength": null,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+            "variableReference": null,
+          },
+        ],
         "queryParameters": [
           {
             "description": "The sample rate of the streamed audio.",
@@ -161,7 +180,7 @@ The parameter should map to a JSON encoded list of strings.
           },
         ],
       },
-      "path": "/",
+      "path": "/{userId}",
       "publish": {
         "type": "oneOf",
         "value": {
