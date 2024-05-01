@@ -247,7 +247,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
         self,
         internal_pydantic_model_for_single_union_type: PydanticModel,
         single_union_type: ir_types.SingleUnionType,
-    ):
+    ) -> None:
         # if any of our fields are forward refs, we need to call
         # update_forwards_refs()
 
