@@ -68,6 +68,7 @@ class FernAwarePydanticModel:
             pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
                 self._custom_config.version
             ),
+            require_optional_fields=custom_config.require_optional_fields,
         )
         self._pydantic_model.add_json_encoder(
             key=AST.Expression(

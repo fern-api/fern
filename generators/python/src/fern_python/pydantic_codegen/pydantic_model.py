@@ -28,6 +28,7 @@ class PydanticModel:
         orm_mode: bool,
         smart_union: bool,
         version: PydanticVersionCompatibility,
+        require_optional_fields: bool,
         should_export: bool = None,
         base_models: Sequence[AST.ClassReference] = None,
         parent: ClassParent = None,
@@ -60,6 +61,7 @@ class PydanticModel:
         self._smart_union = smart_union
         self.name = name
         self.json_encoders: List[Tuple[AST.Expression, AST.Expression]] = []
+        self._require_optional_fields = require_optional_fields
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -73,11 +75,18 @@ class PydanticModel:
 
         is_aliased = field.json_field_name != field.name
         self._has_aliases |= is_aliased
+
+        default_value = (
+            AST.Expression("None")
+            if unsanitized_field.type_hint.is_optional and self._require_optional_fields is False
+            else None
+        ) if field.default_value is None else field.default_value
+
         initializer = get_field_name_initializer(
             alias=field.json_field_name if is_aliased else None,
             default_factory=field.default_factory,
             description=field.description,
-            default=field.default_value,
+            default=default_value,
             version=self._version,
         )
 
