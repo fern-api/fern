@@ -7,4 +7,5 @@ import * as FernOpenapiIr from "../../..";
 export interface WebsocketHandshake {
     queryParameters: FernOpenapiIr.QueryParameter[];
     headers: FernOpenapiIr.Header[];
+    pathParameters: FernOpenapiIr.PathParameter[];
 }

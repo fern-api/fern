@@ -1,6 +1,6 @@
 import {
     HeaderWithExample,
-    PathParameter,
+    PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
     Schema,
@@ -59,7 +59,7 @@ export function parseAsyncAPI({
             continue;
         }
 
-        const pathParameters: PathParameter[] = [];
+        const pathParameters: PathParameterWithExample[] = [];
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters ?? {})) {
                 pathParameters.push({
@@ -176,6 +176,12 @@ export function parseAsyncAPI({
                         };
                     }),
                     queryParameters: queryParameters.map((param) => {
+                        return {
+                            ...param,
+                            schema: convertSchemaWithExampleToSchema(param.schema)
+                        };
+                    }),
+                    pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
                             schema: convertSchemaWithExampleToSchema(param.schema)
