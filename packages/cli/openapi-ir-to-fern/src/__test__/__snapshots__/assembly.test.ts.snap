@@ -342,12 +342,15 @@ The LLM response data, as well as any context provided in the original request w
           },
         },
         "path": "/{userId}",
+<<<<<<< HEAD
         "path-parameters": {
           "userId": {
             "docs": "The ID of the user.",
             "type": "string",
           },
         },
+=======
+>>>>>>> f814eeda2 ((fix): support parsing path parameters in asyncapi v2)
         "query-parameters": {
           "sample_rate": {
             "docs": "The sample rate of the streamed audio.",
@@ -3781,12 +3784,15 @@ The LLM response data, as well as any context provided in the original request w
           },
         },
         "path": "/{userId}",
+<<<<<<< HEAD
         "path-parameters": {
           "userId": {
             "docs": "The ID of the user.",
             "type": "string",
           },
         },
+=======
+>>>>>>> f814eeda2 ((fix): support parsing path parameters in asyncapi v2)
         "query-parameters": {
           "sample_rate": {
             "docs": "The sample rate of the streamed audio.",
