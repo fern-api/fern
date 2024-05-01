@@ -33,7 +33,7 @@
                                         "keyValueSeparator": ": ",
                                         "keyTemplate": {
                                             "imports": [],
-                                            "templateString": "\"$FERN_INPUT\"",
+                                            "templateString": "$FERN_INPUT",
                                             "isOptional": true,
                                             "templateInputs": [
                                                 {
@@ -45,7 +45,7 @@
                                         },
                                         "valueTemplate": {
                                             "imports": [],
-                                            "templateString": "\"$FERN_INPUT\"",
+                                            "templateString": "$FERN_INPUT",
                                             "isOptional": true,
                                             "templateInputs": [
                                                 {

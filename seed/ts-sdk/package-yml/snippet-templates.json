@@ -27,7 +27,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -55,7 +55,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -106,7 +106,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
@@ -122,7 +122,7 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "\"$FERN_INPUT\"",
+                                        "templateString": "$FERN_INPUT",
                                         "isOptional": true,
                                         "templateInputs": [
                                             {
