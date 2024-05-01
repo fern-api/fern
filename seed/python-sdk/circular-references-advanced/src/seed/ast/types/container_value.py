@@ -10,8 +10,8 @@ from .primitive_value import PrimitiveValue
 
 
 class ContainerValue_List(pydantic_v1.BaseModel):
-    type: typing.Literal["list"] = "list"
     value: typing.List[FieldValue]
+    type: typing.Literal["list"] = "list"
 
     class Config:
         frozen = True
@@ -19,8 +19,8 @@ class ContainerValue_List(pydantic_v1.BaseModel):
 
 
 class ContainerValue_Optional(pydantic_v1.BaseModel):
-    type: typing.Literal["optional"] = "optional"
     value: typing.Optional[FieldValue] = None
+    type: typing.Literal["optional"] = "optional"
 
     class Config:
         frozen = True

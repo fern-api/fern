@@ -26,8 +26,8 @@ class Base(pydantic_v1.BaseModel):
 
 
 class UnionWithLiteral_Fern(Base):
-    type: typing.Literal["fern"] = "fern"
     value: typing.Literal["fern"]
+    type: typing.Literal["fern"] = "fern"
 
     class Config:
         allow_population_by_field_name = True

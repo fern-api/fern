@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
+from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import pydantic_v1
 from ..v_2.resources.problem.test_case_id import TestCaseId
 from .error_info import ErrorInfo
@@ -12,48 +14,58 @@ from .test_case_grade import TestCaseGrade
 
 
 class TestSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
-    type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
-
-
-class TestSubmissionUpdateInfo_Stopped(pydantic_v1.BaseModel):
-    type: typing.Literal["stopped"] = "stopped"
+    type: typing.Literal["running"] = "running"
 
 
 class TestSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
-    type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
+    type: typing.Literal["errored"] = "errored"
 
 
 class TestSubmissionUpdateInfo_GradedTestCase(pydantic_v1.BaseModel):
-    type: typing.Literal["gradedTestCase"] = "gradedTestCase"
     test_case_id: TestCaseId = pydantic_v1.Field(alias="testCaseId")
     grade: TestCaseGrade
+    type: typing.Literal["gradedTestCase"] = "gradedTestCase"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().dict(**kwargs_with_defaults)
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class TestSubmissionUpdateInfo_RecordedTestCase(pydantic_v1.BaseModel):
-    type: typing.Literal["recordedTestCase"] = "recordedTestCase"
     test_case_id: TestCaseId = pydantic_v1.Field(alias="testCaseId")
     trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
+    type: typing.Literal["recordedTestCase"] = "recordedTestCase"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().dict(**kwargs_with_defaults)
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-
-
-class TestSubmissionUpdateInfo_Finished(pydantic_v1.BaseModel):
-    type: typing.Literal["finished"] = "finished"
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 TestSubmissionUpdateInfo = typing.Union[
     TestSubmissionUpdateInfo_Running,
-    TestSubmissionUpdateInfo_Stopped,
     TestSubmissionUpdateInfo_Errored,
     TestSubmissionUpdateInfo_GradedTestCase,
     TestSubmissionUpdateInfo_RecordedTestCase,
-    TestSubmissionUpdateInfo_Finished,
 ]

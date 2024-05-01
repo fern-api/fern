@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
+from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
 from .exception_info import ExceptionInfo
@@ -12,53 +14,58 @@ from .running_submission_state import RunningSubmissionState
 
 
 class WorkspaceSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
-    type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
+    type: typing.Literal["running"] = "running"
 
 
 class WorkspaceSubmissionUpdateInfo_Ran(pydantic_v1.BaseModel):
-    type: typing.Literal["ran"] = "ran"
     exception_v_2: typing.Optional[ExceptionV2] = pydantic_v1.Field(alias="exceptionV2", default=None)
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
+    type: typing.Literal["ran"] = "ran"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().dict(**kwargs_with_defaults)
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-
-
-class WorkspaceSubmissionUpdateInfo_Stopped(pydantic_v1.BaseModel):
-    type: typing.Literal["stopped"] = "stopped"
-
-
-class WorkspaceSubmissionUpdateInfo_Traced(pydantic_v1.BaseModel):
-    type: typing.Literal["traced"] = "traced"
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class WorkspaceSubmissionUpdateInfo_TracedV2(pydantic_v1.BaseModel):
-    type: typing.Literal["tracedV2"] = "tracedV2"
     trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
+    type: typing.Literal["tracedV2"] = "tracedV2"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().dict(**kwargs_with_defaults)
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class WorkspaceSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
-    type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
-
-
-class WorkspaceSubmissionUpdateInfo_Finished(pydantic_v1.BaseModel):
-    type: typing.Literal["finished"] = "finished"
+    type: typing.Literal["errored"] = "errored"
 
 
 WorkspaceSubmissionUpdateInfo = typing.Union[
     WorkspaceSubmissionUpdateInfo_Running,
     WorkspaceSubmissionUpdateInfo_Ran,
-    WorkspaceSubmissionUpdateInfo_Stopped,
-    WorkspaceSubmissionUpdateInfo_Traced,
     WorkspaceSubmissionUpdateInfo_TracedV2,
     WorkspaceSubmissionUpdateInfo_Errored,
-    WorkspaceSubmissionUpdateInfo_Finished,
 ]

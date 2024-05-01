@@ -95,6 +95,7 @@ class FernAwarePydanticModel:
         json_field_name: str,
         type_reference: ir_types.TypeReference,
         description: Optional[str] = None,
+        default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
         field = self._create_pydantic_field(
             name=name,
@@ -102,6 +103,7 @@ class FernAwarePydanticModel:
             json_field_name=json_field_name,
             type_reference=type_reference,
             description=description,
+            default_value=default_value,
         )
         self._pydantic_model.add_field(field)
         return field
@@ -251,9 +253,10 @@ class FernAwarePydanticModel:
         json_field_name: str,
         type_reference: ir_types.TypeReference,
         description: Optional[str] = None,
+        default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
         type_hint = self.get_type_hint_for_type_reference(type_reference)
-        default_value = (
+        fallback_default_value = default_value or (
             AST.Expression("None")
             if type_hint.is_optional and self._custom_config.require_optional_fields is False
             else None
