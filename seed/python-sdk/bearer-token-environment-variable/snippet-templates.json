@@ -10,7 +10,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedBearerTokenEnvironmentVariable\n\nclient = AsyncSeedBearerTokenEnvironmentVariable(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedBearerTokenEnvironmentVariable\n\nclient = AsyncSeedBearerTokenEnvironmentVariable(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,

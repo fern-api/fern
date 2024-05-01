@@ -89,7 +89,8 @@ class SnippetTemplateFactory:
     ) -> str:
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
-        return snippet.to_str()
+        # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
+        return snippet.to_str().strip()
 
     # TODO: generate a sync snippet as well, right now we're just going to start with async only
     def _generate_client(self) -> str:
@@ -281,6 +282,7 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        indentation_level: int = 0,
     ) -> Union[Template, None]:
         sut_shape = sut.shape.get_as_union()
         if sut_shape.properties_type == "samePropertiesAsObject":
@@ -299,6 +301,7 @@ class SnippetTemplateFactory:
                     location=location,
                     wire_or_original_name=prop.name.wire_value,
                     name_breadcrumbs=child_breadcrumbs,
+                    indentation_level=indentation_level,
                 )
                 if template_input is not None:
                     template_inputs.append(template_input)
@@ -409,6 +412,7 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        indentation_level: int = 0,
     ) -> Template:
         member_templates: Dict[str, Template] = {}
         for sut in union_declaration.types:
@@ -419,6 +423,7 @@ class SnippetTemplateFactory:
                 location=location,
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
+                indentation_level=indentation_level,
             )
             if member_template is not None:
                 member_templates[sut.discriminant_value.wire_value] = member_template
@@ -451,6 +456,8 @@ class SnippetTemplateFactory:
         )
 
         template_inputs = []
+        child_indentation_level = indentation_level + 1
+
         for prop in object_properties:
             child_breadcrumbs = name_breadcrumbs or []
             if wire_or_original_name is not None:
@@ -461,12 +468,12 @@ class SnippetTemplateFactory:
                 location=location,
                 wire_or_original_name=prop.name.wire_value,
                 name_breadcrumbs=child_breadcrumbs,
+                indentation_level=child_indentation_level,
             )
             if template_input is not None:
                 template_inputs.append(template_input)
 
         object_class_name = type_name.name.pascal_case.unsafe_name
-        child_indentation_level = indentation_level + 1
         return Template.factory.generic(
             GenericTemplate(
                 imports=[self._imports_manager._get_import_as_string(object_reference.import_)]
@@ -529,6 +536,7 @@ class SnippetTemplateFactory:
                     location=location,
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
+                    indentation_level=indentation_level,
                 ),
                 undiscriminated_union=lambda _: None,
             )

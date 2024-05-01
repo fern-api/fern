@@ -18,7 +18,6 @@
         "snippetFilepath": "/fern/snippet.json"
     },
     "publish": null,
-    "customConfig": null,
     "workspaceName": "examples",
     "organization": "seed",
     "environment": {

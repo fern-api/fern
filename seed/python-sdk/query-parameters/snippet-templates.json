@@ -10,7 +10,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedQueryParameters\n\nclient = AsyncSeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedQueryParameters\n\nclient = AsyncSeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -126,8 +126,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "tags=[\n\t$FERN_INPUT\n]",
-                                        "delimiter": ",\n\t",
+                                        "containerTemplateString": "tags=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
                                             "isOptional": true,
@@ -242,7 +242,7 @@
                                             "from .user import User"
                                         ],
                                         "isOptional": true,
-                                        "templateString": "user=User(\n\t$FERN_INPUT\n)",
+                                        "templateString": "user=User(\n\t\t\t$FERN_INPUT\n\t\t)",
                                         "templateInputs": [
                                             {
                                                 "type": "template",
@@ -265,8 +265,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "tags=[\n\t$FERN_INPUT\n]",
-                                                    "delimiter": ",\n\t",
+                                                    "containerTemplateString": "tags=[\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
                                                         "isOptional": true,
@@ -288,7 +288,7 @@
                                                 }
                                             }
                                         ],
-                                        "inputDelimiter": ",\n\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "type": "generic"
                                     }
                                 }
@@ -327,8 +327,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "tags=[\n\t$FERN_INPUT\n]",
-                                        "delimiter": ",\n\t",
+                                        "containerTemplateString": "tags=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
                                             "isOptional": true,
@@ -384,8 +384,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "tags=[\n\t$FERN_INPUT\n]",
-                                        "delimiter": ",\n\t",
+                                        "containerTemplateString": "tags=[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
                                             "isOptional": true,

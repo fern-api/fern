@@ -10,7 +10,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -33,7 +33,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,

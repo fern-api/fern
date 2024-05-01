@@ -10,7 +10,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -50,7 +50,7 @@
             "method": "PATCH"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -69,7 +69,7 @@
                                         "from .shape import Shape"
                                     ],
                                     "isOptional": true,
-                                    "templateString": "request=from seed import Shape_Circle\n\nShape_Circle($FERN_INPUT, )\n",
+                                    "templateString": "request=from seed import Shape_Circle\n\nShape_Circle($FERN_INPUT, )",
                                     "templateInputs": [
                                         {
                                             "type": "template",
@@ -95,7 +95,7 @@
                                         "from .shape import Shape"
                                     ],
                                     "isOptional": true,
-                                    "templateString": "request=from seed import Shape_Square\n\nShape_Square($FERN_INPUT, )\n",
+                                    "templateString": "request=from seed import Shape_Square\n\nShape_Square($FERN_INPUT, )",
                                     "templateInputs": [
                                         {
                                             "type": "template",
