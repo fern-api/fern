@@ -64,7 +64,7 @@ class _ContainerValue:
 
     class Optional(pydantic_v1.BaseModel):
         type: typing.Literal["optional"] = "optional"
-        value: typing.Optional[FieldValue]
+        value: typing.Optional[FieldValue] = None
 
 
 _ContainerValue.List.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)

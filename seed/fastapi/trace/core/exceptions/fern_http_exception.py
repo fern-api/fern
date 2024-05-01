@@ -22,9 +22,9 @@ class FernHTTPException(abc.ABC, fastapi.HTTPException):
         self.content = content
 
     class Body(pydantic_v1.BaseModel):
-        error_name: typing.Optional[str] = pydantic_v1.Field(alias="errorName")
+        error_name: typing.Optional[str] = pydantic_v1.Field(alias="errorName", default=None)
         error_instance_id: uuid.UUID = pydantic_v1.Field(alias="errorInstanceId", default_factory=uuid.uuid4)
-        content: typing.Optional[typing.Any]
+        content: typing.Optional[typing.Any] = None
 
         class Config:
             allow_population_by_field_name = True

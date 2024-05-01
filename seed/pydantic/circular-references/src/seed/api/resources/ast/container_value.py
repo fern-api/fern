@@ -16,7 +16,7 @@ class ContainerValue_List(pydantic_v1.BaseModel):
 
 class ContainerValue_Optional(pydantic_v1.BaseModel):
     type: typing.Literal["optional"] = "optional"
-    value: typing.Optional[FieldValue]
+    value: typing.Optional[FieldValue] = None
 
 
 ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]

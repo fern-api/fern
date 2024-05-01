@@ -97,7 +97,7 @@ class DebugVariableValue_NullValue(pydantic_v1.BaseModel):
 
 class DebugVariableValue_GenericValue(pydantic_v1.BaseModel):
     type: typing.Literal["genericValue"] = "genericValue"
-    stringified_type: typing.Optional[str] = pydantic_v1.Field(alias="stringifiedType")
+    stringified_type: typing.Optional[str] = pydantic_v1.Field(alias="stringifiedType", default=None)
     stringified_value: str = pydantic_v1.Field(alias="stringifiedValue")
 
     class Config:

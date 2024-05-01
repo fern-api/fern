@@ -11,8 +11,8 @@ from .tag import Tag
 class EventInfo_Metadata(pydantic_v1.BaseModel):
     type: typing.Literal["metadata"] = "metadata"
     id: str
-    data: typing.Optional[typing.Dict[str, str]]
-    json_string: typing.Optional[str] = pydantic_v1.Field(alias="jsonString")
+    data: typing.Optional[typing.Dict[str, str]] = None
+    json_string: typing.Optional[str] = pydantic_v1.Field(alias="jsonString", default=None)
 
     class Config:
         frozen = True

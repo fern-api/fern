@@ -10,7 +10,7 @@ from ...core.pydantic_utilities import pydantic_v1
 
 class UnionWithOptionalTime_Date(pydantic_v1.BaseModel):
     type: typing.Literal["date"] = "date"
-    value: typing.Optional[dt.date]
+    value: typing.Optional[dt.date] = None
 
     class Config:
         frozen = True
@@ -19,7 +19,7 @@ class UnionWithOptionalTime_Date(pydantic_v1.BaseModel):
 
 class UnionWithOptionalTime_Dateimte(pydantic_v1.BaseModel):
     type: typing.Literal["dateimte"] = "dateimte"
-    value: typing.Optional[dt.datetime]
+    value: typing.Optional[dt.datetime] = None
 
     class Config:
         frozen = True

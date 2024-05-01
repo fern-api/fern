@@ -18,8 +18,8 @@ class WorkspaceSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
 
 class WorkspaceSubmissionUpdateInfo_Ran(pydantic_v1.BaseModel):
     type: typing.Literal["ran"] = "ran"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic_v1.Field(alias="exceptionV2")
-    exception: typing.Optional[ExceptionInfo]
+    exception_v_2: typing.Optional[ExceptionV2] = pydantic_v1.Field(alias="exceptionV2", default=None)
+    exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
     class Config:

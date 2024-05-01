@@ -14,7 +14,7 @@ from .submission_id import SubmissionId
 class SubmissionRequest_InitializeProblemRequest(pydantic_v1.BaseModel):
     type: typing.Literal["initializeProblemRequest"] = "initializeProblemRequest"
     problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic_v1.Field(alias="problemVersion")
+    problem_version: typing.Optional[int] = pydantic_v1.Field(alias="problemVersion", default=None)
 
     class Config:
         allow_population_by_field_name = True
@@ -31,8 +31,8 @@ class SubmissionRequest_SubmitV2(pydantic_v1.BaseModel):
     language: Language
     submission_files: typing.List[SubmissionFileInfo] = pydantic_v1.Field(alias="submissionFiles")
     problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic_v1.Field(alias="problemVersion")
-    user_id: typing.Optional[str] = pydantic_v1.Field(alias="userId")
+    problem_version: typing.Optional[int] = pydantic_v1.Field(alias="problemVersion", default=None)
+    user_id: typing.Optional[str] = pydantic_v1.Field(alias="userId", default=None)
 
     class Config:
         allow_population_by_field_name = True
@@ -44,7 +44,7 @@ class SubmissionRequest_WorkspaceSubmit(pydantic_v1.BaseModel):
     submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
     language: Language
     submission_files: typing.List[SubmissionFileInfo] = pydantic_v1.Field(alias="submissionFiles")
-    user_id: typing.Optional[str] = pydantic_v1.Field(alias="userId")
+    user_id: typing.Optional[str] = pydantic_v1.Field(alias="userId", default=None)
 
     class Config:
         allow_population_by_field_name = True
