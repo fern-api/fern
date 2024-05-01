@@ -423,7 +423,7 @@ class SnippetTemplateFactory:
                 location=location,
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
-                indentation_level=indentation_level
+                indentation_level=indentation_level,
             )
             if member_template is not None:
                 member_templates[sut.discriminant_value.wire_value] = member_template
