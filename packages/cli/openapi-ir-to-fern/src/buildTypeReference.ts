@@ -212,7 +212,7 @@ export function buildLiteralTypeReference(schema: LiteralSchema): RawSchemas.Typ
             break;
         }
         case "string": {
-            value = `literal<${schema.value.value}>`;
+            value = `literal<"${schema.value.value}">`;
             break;
         }
         default:

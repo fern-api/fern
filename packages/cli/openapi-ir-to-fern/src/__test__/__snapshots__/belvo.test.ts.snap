@@ -19728,7 +19728,7 @@ If you try to access older information than what we can access, we will return a
               "headers": {
                 "X-Belvo-Request-Mode": {
                   "name": "belvoRequestMode",
-                  "type": "literal<async>",
+                  "type": "literal<"async">",
                 },
               },
               "name": "RetrieveTransactionsAsyncRequest",
@@ -23025,7 +23025,7 @@ We return one of the following enum values:
       },
       "EnumBankAccountHolderTypePse": {
         "docs": "The type of bank account to create in Belvo. For business bank accounts, this field must the set to \`BUSINESS\`.",
-        "type": "literal<BUSINESS>",
+        "type": "literal<"BUSINESS">",
       },
       "EnumBankAccountPixAccountTypeOfpi": {
         "docs": "The type of bank account. Can be either:
@@ -23281,7 +23281,7 @@ We return one of the following enum values:
 
   - \`BANK\`
 ",
-        "type": "literal<BANK>",
+        "type": "literal<"BANK">",
       },
       "EnumIncomeStreamConfidence": {
         "docs": "Belvo's level of confidence for future incomes.
@@ -23360,14 +23360,14 @@ Can be either:
         "docs": "The type of account holder. Can be:
 
   - \`INDIVIDUAL\`",
-        "type": "literal<INDIVIDUAL>",
+        "type": "literal<"INDIVIDUAL">",
       },
       "EnumIncomeVerificationType": {
         "docs": "The direction of the transaction:
   
 - \`INFLOW\` indicates money coming into the account.
 ",
-        "type": "optional<literal<INFLOW>>",
+        "type": "optional<literal<"INFLOW">>",
       },
       "EnumInstitutionIntegrationType": {
         "docs": "The type of technology used to access the institution. We return one of the following values:
@@ -23474,7 +23474,7 @@ For Colombia's DIAN, we return one of the following values:
 
   - \`Factura Electrónica de Venta\`
 ",
-        "type": "optional<literal<Factura Electrónica de Venta>>",
+        "type": "optional<literal<"Factura Electrónica de Venta">>",
       },
       "EnumInvoiceDianPaymentMethod": {
         "docs": "The payment method used for this invoice, as defined by the legal entity of the country.
@@ -23685,7 +23685,7 @@ We return one of the following values:
         "docs": "The type of fee applied to the transaction. We return one of the following values:
 
   - \`TRANSACTION_FEE\`",
-        "type": "optional<literal<TRANSACTION_FEE>>",
+        "type": "optional<literal<"TRANSACTION_FEE">>",
       },
       "EnumReceivableTransactionStatus": {
         "docs": "The status of the transaction. Can be either:
@@ -23753,7 +23753,7 @@ We return one of the following values:
 
 ℹ️ **Note:** Belvo only identifies \`MONTHLY\` frequencies.
 ",
-        "type": "literal<MONTHLY>",
+        "type": "literal<"MONTHLY">",
       },
       "EnumRecurringExpensePaymentType": {
         "docs": "The type of recurring expense. We return one of the following values:
@@ -49645,7 +49645,7 @@ If you try to access older information than what we can access, we will return a
               "headers": {
                 "X-Belvo-Request-Mode": {
                   "name": "belvoRequestMode",
-                  "type": "literal<async>",
+                  "type": "literal<"async">",
                 },
               },
               "name": "RetrieveTransactionsAsyncRequest",
@@ -51567,7 +51567,7 @@ We return one of the following enum values:
       },
       "EnumBankAccountHolderTypePse": {
         "docs": "The type of bank account to create in Belvo. For business bank accounts, this field must the set to \`BUSINESS\`.",
-        "type": "literal<BUSINESS>",
+        "type": "literal<"BUSINESS">",
       },
       "EnumBankAccountPixAccountTypeOfpi": {
         "docs": "The type of bank account. Can be either:
@@ -51823,7 +51823,7 @@ We return one of the following enum values:
 
   - \`BANK\`
 ",
-        "type": "literal<BANK>",
+        "type": "literal<"BANK">",
       },
       "EnumIncomeStreamConfidence": {
         "docs": "Belvo's level of confidence for future incomes.
@@ -51902,14 +51902,14 @@ Can be either:
         "docs": "The type of account holder. Can be:
 
   - \`INDIVIDUAL\`",
-        "type": "literal<INDIVIDUAL>",
+        "type": "literal<"INDIVIDUAL">",
       },
       "EnumIncomeVerificationType": {
         "docs": "The direction of the transaction:
   
 - \`INFLOW\` indicates money coming into the account.
 ",
-        "type": "optional<literal<INFLOW>>",
+        "type": "optional<literal<"INFLOW">>",
       },
       "EnumInstitutionIntegrationType": {
         "docs": "The type of technology used to access the institution. We return one of the following values:
@@ -52016,7 +52016,7 @@ For Colombia's DIAN, we return one of the following values:
 
   - \`Factura Electrónica de Venta\`
 ",
-        "type": "optional<literal<Factura Electrónica de Venta>>",
+        "type": "optional<literal<"Factura Electrónica de Venta">>",
       },
       "EnumInvoiceDianPaymentMethod": {
         "docs": "The payment method used for this invoice, as defined by the legal entity of the country.
@@ -52227,7 +52227,7 @@ We return one of the following values:
         "docs": "The type of fee applied to the transaction. We return one of the following values:
 
   - \`TRANSACTION_FEE\`",
-        "type": "optional<literal<TRANSACTION_FEE>>",
+        "type": "optional<literal<"TRANSACTION_FEE">>",
       },
       "EnumReceivableTransactionStatus": {
         "docs": "The status of the transaction. Can be either:
@@ -52295,7 +52295,7 @@ We return one of the following values:
 
 ℹ️ **Note:** Belvo only identifies \`MONTHLY\` frequencies.
 ",
-        "type": "literal<MONTHLY>",
+        "type": "literal<"MONTHLY">",
       },
       "EnumRecurringExpensePaymentType": {
         "docs": "The type of recurring expense. We return one of the following values:

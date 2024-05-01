@@ -1894,7 +1894,7 @@ Used to submit feedback regarding the quality of previously generated completion
       },
       "ProcessingFailureReasonEnum": {
         "docs": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
-        "type": "literal<EXCEEDED_CHARACTER_LIMIT>",
+        "type": "literal<"EXCEEDED_CHARACTER_LIMIT">",
       },
       "ProcessingStateEnum": {
         "docs": "* \`QUEUED\` - Queued
@@ -2358,7 +2358,7 @@ Used to submit feedback regarding the quality of previously generated completion
       },
       "SlimDocumentStatusEnum": {
         "docs": "* \`ACTIVE\` - Active",
-        "type": "literal<ACTIVE>",
+        "type": "literal<"ACTIVE">",
       },
       "SubmitCompletionActualRequest": {
         "docs": undefined,
@@ -4514,7 +4514,7 @@ Used to submit feedback regarding the quality of previously generated completion
       },
       "ProcessingFailureReasonEnum": {
         "docs": "* \`EXCEEDED_CHARACTER_LIMIT\` - Exceeded Character Limit",
-        "type": "literal<EXCEEDED_CHARACTER_LIMIT>",
+        "type": "literal<"EXCEEDED_CHARACTER_LIMIT">",
       },
       "ProcessingStateEnum": {
         "docs": "* \`QUEUED\` - Queued
@@ -4978,7 +4978,7 @@ Used to submit feedback regarding the quality of previously generated completion
       },
       "SlimDocumentStatusEnum": {
         "docs": "* \`ACTIVE\` - Active",
-        "type": "literal<ACTIVE>",
+        "type": "literal<"ACTIVE">",
       },
       "SubmitCompletionActualRequest": {
         "docs": undefined,

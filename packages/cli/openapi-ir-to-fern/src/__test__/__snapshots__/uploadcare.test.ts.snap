@@ -2997,7 +2997,7 @@ page for a full list of all possible error codes.
           "status": {
             "docs": "The system failed to fetch and/or upload the file.
 ",
-            "type": "optional<literal<error>>",
+            "type": "optional<literal<"error">>",
           },
         },
       },
@@ -3007,7 +3007,7 @@ page for a full list of all possible error codes.
           "FileUploadInfo",
         ],
         "properties": {
-          "type": "optional<literal<file_info>>",
+          "type": "optional<literal<"file_info">>",
         },
       },
       "FileUploadInfoProgressStatus": {
@@ -3021,7 +3021,7 @@ page for a full list of all possible error codes.
           "status": {
             "docs": "The system is fetching/uploading the file.
 ",
-            "type": "optional<literal<progress>>",
+            "type": "optional<literal<"progress">>",
           },
           "total": {
             "docs": "The expected size of the fetched file (in bytes).
@@ -3088,7 +3088,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         "properties": {
           "status": {
             "docs": "The file has been fetched/uploaded successfully.",
-            "type": "optional<literal<success>>",
+            "type": "optional<literal<"success">>",
           },
         },
       },
@@ -3102,7 +3102,7 @@ Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
 period of time only. The endpoint can return the status \`unknown\` for the tasks
 that are tool old (or that have not been created at all).
 ",
-            "type": "optional<literal<unknown>>",
+            "type": "optional<literal<"unknown">>",
           },
         },
       },
@@ -3112,7 +3112,7 @@ that are tool old (or that have not been created at all).
           "status": {
             "docs": "The system is preparing to handle the request.
 ",
-            "type": "optional<literal<waiting>>",
+            "type": "optional<literal<"waiting">>",
           },
         },
       },
@@ -3378,7 +3378,7 @@ that are tool old (or that have not been created at all).
             "docs": "Token to identify a \`/from_url/\` request.",
             "type": "optional<string>",
           },
-          "type": "optional<literal<token>>",
+          "type": "optional<literal<"token">>",
         },
       },
       "GroupFileUrlParsingFailedError": "string",
@@ -6720,7 +6720,7 @@ page for a full list of all possible error codes.
           "status": {
             "docs": "The system failed to fetch and/or upload the file.
 ",
-            "type": "optional<literal<error>>",
+            "type": "optional<literal<"error">>",
           },
         },
       },
@@ -6730,7 +6730,7 @@ page for a full list of all possible error codes.
           "FileUploadInfo",
         ],
         "properties": {
-          "type": "optional<literal<file_info>>",
+          "type": "optional<literal<"file_info">>",
         },
       },
       "FileUploadInfoProgressStatus": {
@@ -6744,7 +6744,7 @@ page for a full list of all possible error codes.
           "status": {
             "docs": "The system is fetching/uploading the file.
 ",
-            "type": "optional<literal<progress>>",
+            "type": "optional<literal<"progress">>",
           },
           "total": {
             "docs": "The expected size of the fetched file (in bytes).
@@ -6765,7 +6765,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         "properties": {
           "status": {
             "docs": "The file has been fetched/uploaded successfully.",
-            "type": "optional<literal<success>>",
+            "type": "optional<literal<"success">>",
           },
         },
       },
@@ -6779,7 +6779,7 @@ Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
 period of time only. The endpoint can return the status \`unknown\` for the tasks
 that are tool old (or that have not been created at all).
 ",
-            "type": "optional<literal<unknown>>",
+            "type": "optional<literal<"unknown">>",
           },
         },
       },
@@ -6789,7 +6789,7 @@ that are tool old (or that have not been created at all).
           "status": {
             "docs": "The system is preparing to handle the request.
 ",
-            "type": "optional<literal<waiting>>",
+            "type": "optional<literal<"waiting">>",
           },
         },
       },
@@ -6821,7 +6821,7 @@ that are tool old (or that have not been created at all).
             "docs": "Token to identify a \`/from_url/\` request.",
             "type": "optional<string>",
           },
-          "type": "optional<literal<token>>",
+          "type": "optional<literal<"token">>",
         },
       },
       "GroupFileUrlParsingFailedError": "string",

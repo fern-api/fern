@@ -607,7 +607,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "properties": {
           "data": "Vehicle",
           "id": "string",
-          "type": "literal<vehicle>",
+          "type": "literal<"vehicle">",
         },
       },
       "Success": {
@@ -1309,7 +1309,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "properties": {
           "data": "Vehicle",
           "id": "string",
-          "type": "literal<vehicle>",
+          "type": "literal<"vehicle">",
         },
       },
       "Success": {

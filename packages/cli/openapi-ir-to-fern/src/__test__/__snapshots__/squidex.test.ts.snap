@@ -15641,7 +15641,7 @@ You will be assigned as owner of the new team automatically.",
       },
       "GeolocationFieldEditor": {
         "docs": "",
-        "type": "literal<Map>",
+        "type": "literal<"Map">",
       },
       "GeolocationFieldPropertiesDto": {
         "docs": undefined,
@@ -17211,7 +17211,7 @@ You will be assigned as owner of the new team automatically.",
       },
       "UiFieldEditor": {
         "docs": "",
-        "type": "literal<Separator>",
+        "type": "literal<"Separator">",
       },
       "UiFieldPropertiesDto": {
         "docs": undefined,
@@ -30935,7 +30935,7 @@ You will be assigned as owner of the new team automatically.",
       },
       "GeolocationFieldEditor": {
         "docs": "",
-        "type": "literal<Map>",
+        "type": "literal<"Map">",
       },
       "GeolocationFieldPropertiesDto": {
         "docs": undefined,
@@ -32505,7 +32505,7 @@ You will be assigned as owner of the new team automatically.",
       },
       "UiFieldEditor": {
         "docs": "",
-        "type": "literal<Separator>",
+        "type": "literal<"Separator">",
       },
       "UiFieldPropertiesDto": {
         "docs": undefined,
