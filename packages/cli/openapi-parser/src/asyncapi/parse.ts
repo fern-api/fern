@@ -1,10 +1,14 @@
 import {
     HeaderWithExample,
 <<<<<<< HEAD
+<<<<<<< HEAD
     PathParameterWithExample,
 =======
     PathParameter,
 >>>>>>> f814eeda2 ((fix): support parsing path parameters in asyncapi v2)
+=======
+    PathParameterWithExample,
+>>>>>>> d4974175b (tests pass)
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
     Schema,
@@ -64,10 +68,14 @@ export function parseAsyncAPI({
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         const pathParameters: PathParameterWithExample[] = [];
 =======
         const pathParameters: PathParameter[] = [];
 >>>>>>> f814eeda2 ((fix): support parsing path parameters in asyncapi v2)
+=======
+        const pathParameters: PathParameterWithExample[] = [];
+>>>>>>> d4974175b (tests pass)
         if (channel.parameters != null) {
             for (const [name, parameter] of Object.entries(channel.parameters ?? {})) {
                 pathParameters.push({

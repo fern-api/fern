@@ -343,14 +343,20 @@ The LLM response data, as well as any context provided in the original request w
         },
         "path": "/{userId}",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d4974175b (tests pass)
         "path-parameters": {
           "userId": {
             "docs": "The ID of the user.",
             "type": "string",
           },
         },
+<<<<<<< HEAD
 =======
 >>>>>>> f814eeda2 ((fix): support parsing path parameters in asyncapi v2)
+=======
+>>>>>>> d4974175b (tests pass)
         "query-parameters": {
           "sample_rate": {
             "docs": "The sample rate of the streamed audio.",
@@ -3785,14 +3791,20 @@ The LLM response data, as well as any context provided in the original request w
         },
         "path": "/{userId}",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d4974175b (tests pass)
         "path-parameters": {
           "userId": {
             "docs": "The ID of the user.",
             "type": "string",
           },
         },
+<<<<<<< HEAD
 =======
 >>>>>>> f814eeda2 ((fix): support parsing path parameters in asyncapi v2)
+=======
+>>>>>>> d4974175b (tests pass)
         "query-parameters": {
           "sample_rate": {
             "docs": "The sample rate of the streamed audio.",
