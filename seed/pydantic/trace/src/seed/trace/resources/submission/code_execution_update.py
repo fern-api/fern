@@ -4,101 +4,123 @@ from __future__ import annotations
 
 import typing
 
-from .building_executor_response import BuildingExecutorResponse
-from .errored_response import ErroredResponse
-from .finished_response import FinishedResponse
-from .graded_response import GradedResponse
-from .graded_response_v_2 import GradedResponseV2
-from .invalid_request_response import InvalidRequestResponse
-from .recorded_response_notification import RecordedResponseNotification
-from .recording_response_notification import RecordingResponseNotification
-from .running_response import RunningResponse
-from .stopped_response import StoppedResponse
-from .workspace_ran_response import WorkspaceRanResponse
+from ...core.pydantic_utilities import pydantic_v1
+from ..v_2.resources.problem.test_case_id import TestCaseId
+from .error_info import ErrorInfo
+from .execution_session_status import ExecutionSessionStatus
+from .invalid_request_cause import InvalidRequestCause
+from .lightweight_stackframe_information import LightweightStackframeInformation
+from .running_submission_state import RunningSubmissionState
+from .submission_id import SubmissionId
+from .submission_request import SubmissionRequest
+from .test_case_grade import TestCaseGrade
+from .test_case_result_with_stdout import TestCaseResultWithStdout
+from .traced_file import TracedFile
+from .workspace_run_details import WorkspaceRunDetails
 
 
-class CodeExecutionUpdate_BuildingExecutor(BuildingExecutorResponse):
+class CodeExecutionUpdate_BuildingExecutor(pydantic_v1.BaseModel):
     type: typing.Literal["buildingExecutor"] = "buildingExecutor"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    status: ExecutionSessionStatus
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_Running(RunningResponse):
+class CodeExecutionUpdate_Running(pydantic_v1.BaseModel):
     type: typing.Literal["running"] = "running"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    state: RunningSubmissionState
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_Errored(ErroredResponse):
+class CodeExecutionUpdate_Errored(pydantic_v1.BaseModel):
     type: typing.Literal["errored"] = "errored"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    error_info: ErrorInfo = pydantic_v1.Field(alias="errorInfo")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_Stopped(StoppedResponse):
+class CodeExecutionUpdate_Stopped(pydantic_v1.BaseModel):
     type: typing.Literal["stopped"] = "stopped"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_Graded(GradedResponse):
+class CodeExecutionUpdate_Graded(pydantic_v1.BaseModel):
     type: typing.Literal["graded"] = "graded"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    test_cases: typing.Dict[str, TestCaseResultWithStdout] = pydantic_v1.Field(alias="testCases")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_GradedV2(GradedResponseV2):
+class CodeExecutionUpdate_GradedV2(pydantic_v1.BaseModel):
     type: typing.Literal["gradedV2"] = "gradedV2"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic_v1.Field(alias="testCases")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_WorkspaceRan(WorkspaceRanResponse):
+class CodeExecutionUpdate_WorkspaceRan(pydantic_v1.BaseModel):
     type: typing.Literal["workspaceRan"] = "workspaceRan"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    run_details: WorkspaceRunDetails = pydantic_v1.Field(alias="runDetails")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_Recording(RecordingResponseNotification):
+class CodeExecutionUpdate_Recording(pydantic_v1.BaseModel):
     type: typing.Literal["recording"] = "recording"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    test_case_id: typing.Optional[str] = pydantic_v1.Field(alias="testCaseId")
+    line_number: int = pydantic_v1.Field(alias="lineNumber")
+    lightweight_stack_info: LightweightStackframeInformation = pydantic_v1.Field(alias="lightweightStackInfo")
+    traced_file: typing.Optional[TracedFile] = pydantic_v1.Field(alias="tracedFile")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_Recorded(RecordedResponseNotification):
+class CodeExecutionUpdate_Recorded(pydantic_v1.BaseModel):
     type: typing.Literal["recorded"] = "recorded"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
+    test_case_id: typing.Optional[str] = pydantic_v1.Field(alias="testCaseId")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class CodeExecutionUpdate_InvalidRequest(InvalidRequestResponse):
+class CodeExecutionUpdate_InvalidRequest(pydantic_v1.BaseModel):
     type: typing.Literal["invalidRequest"] = "invalidRequest"
-
-    class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+    request: SubmissionRequest
+    cause: InvalidRequestCause
 
 
-class CodeExecutionUpdate_Finished(FinishedResponse):
+class CodeExecutionUpdate_Finished(pydantic_v1.BaseModel):
     type: typing.Literal["finished"] = "finished"
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
 
     class Config:
         allow_population_by_field_name = True

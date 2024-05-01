@@ -131,35 +131,7 @@
                 "imports": [],
                 "isOptional": true,
                 "templateString": "await client.endpoints.container.get_and_return_set_of_primitives(\n\t$FERN_INPUT\n)",
-                "templateInputs": [
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
-                            "containerTemplateString": "request={\n\t\t$FERN_INPUT\n\t}",
-                            "delimiter": ",\n\t\t",
-                            "innerTemplate": {
-                                "imports": [],
-                                "isOptional": true,
-                                "templateString": "$FERN_INPUT",
-                                "templateInputs": [
-                                    {
-                                        "location": "RELATIVE",
-                                        "path": null,
-                                        "type": "payload"
-                                    }
-                                ],
-                                "type": "generic"
-                            },
-                            "templateInput": {
-                                "location": "BODY",
-                                "path": null
-                            },
-                            "type": "iterable"
-                        }
-                    }
-                ],
+                "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
@@ -182,49 +154,7 @@
                 "imports": [],
                 "isOptional": true,
                 "templateString": "await client.endpoints.container.get_and_return_set_of_objects(\n\t$FERN_INPUT\n)",
-                "templateInputs": [
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
-                            "containerTemplateString": "request={\n\t\t$FERN_INPUT\n\t}",
-                            "delimiter": ",\n\t\t",
-                            "innerTemplate": {
-                                "imports": [
-                                    "from .object_with_required_field import ObjectWithRequiredField"
-                                ],
-                                "isOptional": true,
-                                "templateString": "ObjectWithRequiredField(\n\t\t\t$FERN_INPUT\n\t\t)",
-                                "templateInputs": [
-                                    {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "string=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "RELATIVE",
-                                                    "path": "string",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
-                                    }
-                                ],
-                                "inputDelimiter": ",\n\t\t\t",
-                                "type": "generic"
-                            },
-                            "templateInput": {
-                                "location": "BODY",
-                                "path": null
-                            },
-                            "type": "iterable"
-                        }
-                    }
-                ],
+                "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
@@ -817,33 +747,6 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "set={\n\t\t$FERN_INPUT\n\t}",
-                            "delimiter": ",\n\t\t",
-                            "innerTemplate": {
-                                "imports": [],
-                                "isOptional": true,
-                                "templateString": "$FERN_INPUT",
-                                "templateInputs": [
-                                    {
-                                        "location": "RELATIVE",
-                                        "path": null,
-                                        "type": "payload"
-                                    }
-                                ],
-                                "type": "generic"
-                            },
-                            "templateInput": {
-                                "location": "BODY",
-                                "path": "set"
-                            },
-                            "type": "iterable"
-                        }
-                    },
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
                             "containerTemplateString": "map={\n\t\t$FERN_INPUT\n\t}",
                             "delimiter": ",\n\t\t",
                             "keyTemplate": {
@@ -1111,33 +1014,6 @@
                             "templateInput": {
                                 "location": "BODY",
                                 "path": "list"
-                            },
-                            "type": "iterable"
-                        }
-                    },
-                    {
-                        "type": "template",
-                        "value": {
-                            "imports": [],
-                            "isOptional": true,
-                            "containerTemplateString": "set={\n\t\t$FERN_INPUT\n\t}",
-                            "delimiter": ",\n\t\t",
-                            "innerTemplate": {
-                                "imports": [],
-                                "isOptional": true,
-                                "templateString": "$FERN_INPUT",
-                                "templateInputs": [
-                                    {
-                                        "location": "RELATIVE",
-                                        "path": null,
-                                        "type": "payload"
-                                    }
-                                ],
-                                "type": "generic"
-                            },
-                            "templateInput": {
-                                "location": "BODY",
-                                "path": "set"
                             },
                             "type": "iterable"
                         }
@@ -1538,33 +1414,6 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "set_={\n\t$FERN_INPUT\n}",
-                                        "delimiter": ",\n\t",
-                                        "innerTemplate": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "RELATIVE",
-                                                    "path": null,
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        },
-                                        "templateInput": {
-                                            "location": "BODY",
-                                            "path": "NestedObject.set"
-                                        },
-                                        "type": "iterable"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
                                         "containerTemplateString": "map_={\n\t$FERN_INPUT\n}",
                                         "delimiter": ",\n\t",
                                         "keyTemplate": {
@@ -1822,33 +1671,6 @@
                                         "templateInput": {
                                             "location": "BODY",
                                             "path": "NestedObject.list"
-                                        },
-                                        "type": "iterable"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "containerTemplateString": "set_={\n\t$FERN_INPUT\n}",
-                                        "delimiter": ",\n\t",
-                                        "innerTemplate": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "RELATIVE",
-                                                    "path": null,
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        },
-                                        "templateInput": {
-                                            "location": "BODY",
-                                            "path": "NestedObject.set"
                                         },
                                         "type": "iterable"
                                     }
@@ -2129,33 +1951,6 @@
                                                         "templateInput": {
                                                             "location": "RELATIVE",
                                                             "path": "NestedObject.list"
-                                                        },
-                                                        "type": "iterable"
-                                                    }
-                                                },
-                                                {
-                                                    "type": "template",
-                                                    "value": {
-                                                        "imports": [],
-                                                        "isOptional": true,
-                                                        "containerTemplateString": "set_={\n\t$FERN_INPUT\n}",
-                                                        "delimiter": ",\n\t",
-                                                        "innerTemplate": {
-                                                            "imports": [],
-                                                            "isOptional": true,
-                                                            "templateString": "$FERN_INPUT",
-                                                            "templateInputs": [
-                                                                {
-                                                                    "location": "RELATIVE",
-                                                                    "path": null,
-                                                                    "type": "payload"
-                                                                }
-                                                            ],
-                                                            "type": "generic"
-                                                        },
-                                                        "templateInput": {
-                                                            "location": "RELATIVE",
-                                                            "path": "NestedObject.set"
                                                         },
                                                         "type": "iterable"
                                                     }
@@ -3193,33 +2988,6 @@
                                         "templateInput": {
                                             "location": "BODY",
                                             "path": "NestedObject.list"
-                                        },
-                                        "type": "iterable"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "containerTemplateString": "set_={\n\t$FERN_INPUT\n}",
-                                        "delimiter": ",\n\t",
-                                        "innerTemplate": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "RELATIVE",
-                                                    "path": null,
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        },
-                                        "templateInput": {
-                                            "location": "BODY",
-                                            "path": "NestedObject.set"
                                         },
                                         "type": "iterable"
                                     }

@@ -453,34 +453,15 @@ async function convertNavigationConfig({
         }
         case "tabbed":
             config = {
-                tabs: await Promise.all(
-                    navigationConfig.items.map(async (tabbedItem) => {
-                        const tabConfig = tabs?.[tabbedItem.tab];
-                        if (tabConfig == null) {
-                            throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
-                        }
-                        const tabbedItems = await Promise.all(
-                            tabbedItem.layout.map((item) =>
-                                convertNavigationItem({
-                                    item,
-                                    parsedDocsConfig,
-                                    organization,
-                                    fernWorkspaces,
-                                    context,
-                                    token,
-                                    version,
-                                    fullSlugs
-                                })
-                            )
-                        );
-                        return {
-                            title: tabConfig.displayName,
-                            icon: tabConfig.icon,
-                            items: tabbedItems.map((tabItem) => tabItem.item),
-                            urlSlugOverride: tabConfig.slug
-                        };
-                    })
-                )
+                tabs: await convertTabbedNavigation(navigationConfig.items, tabs, {
+                    parsedDocsConfig,
+                    organization,
+                    fernWorkspaces,
+                    context,
+                    token,
+                    version,
+                    fullSlugs
+                })
             };
             break;
         case "versioned":
@@ -598,40 +579,15 @@ async function convertUnversionedNavigationConfig({
         }
         case "tabbed": {
             config = {
-                tabs: await Promise.all(
-                    navigationConfig.items.map(async (tabbedItem) => {
-                        const tabConfig = tabs?.[tabbedItem.tab];
-                        if (tabConfig == null) {
-                            throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
-                        }
-                        const tabItems = await Promise.all(
-                            tabbedItem.layout.map((item) =>
-                                convertNavigationItem({
-                                    item,
-                                    parsedDocsConfig,
-                                    organization,
-                                    fernWorkspaces,
-                                    context,
-                                    token,
-                                    version,
-                                    fullSlugs
-                                })
-                            )
-                        );
-                        for (const tabItem of tabItems) {
-                            pages = {
-                                ...pages,
-                                ...tabItem.pages
-                            };
-                        }
-                        return {
-                            title: tabConfig.displayName,
-                            icon: tabConfig.icon,
-                            items: tabItems.map((tabItem) => tabItem.item),
-                            urlSlugOverride: tabConfig.slug
-                        };
-                    })
-                )
+                tabs: await convertTabbedNavigation(navigationConfig.items, tabs, {
+                    parsedDocsConfig,
+                    organization,
+                    fernWorkspaces,
+                    context,
+                    token,
+                    version,
+                    fullSlugs
+                })
             };
             break;
         }
@@ -642,6 +598,79 @@ async function convertUnversionedNavigationConfig({
         config,
         pages
     };
+}
+
+function convertTabbedNavigation(
+    items: docsYml.TabbedNavigation[],
+    tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined,
+    {
+        parsedDocsConfig,
+        organization,
+        fernWorkspaces,
+        context,
+        token,
+        version,
+        fullSlugs
+    }: {
+        parsedDocsConfig: docsYml.ParsedDocsConfiguration;
+        organization: string;
+        fernWorkspaces: FernWorkspace[];
+        context: TaskContext;
+        token: FernToken;
+        version: string | undefined;
+        fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
+    }
+): Promise<DocsV1Write.NavigationTab[]> {
+    return Promise.all(
+        items.map(async (tabbedItem) => {
+            const tabConfig = tabs?.[tabbedItem.tab];
+            if (tabConfig == null) {
+                throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
+            }
+
+            if (tabConfig.href != null) {
+                if (tabbedItem.layout != null) {
+                    throw new Error(
+                        `Tab ${tabConfig.displayName} contains an external link (href), and should not have any items`
+                    );
+                }
+
+                return {
+                    title: tabConfig.displayName,
+                    icon: tabConfig.icon,
+                    url: tabConfig.href
+                };
+            }
+
+            if (tabbedItem.layout == null) {
+                throw new Error(
+                    `Tab ${tabConfig.displayName} does not contain an external link (href), and should have items`
+                );
+            }
+
+            const tabbedItems = await Promise.all(
+                tabbedItem.layout.map((item) =>
+                    convertNavigationItem({
+                        item,
+                        parsedDocsConfig,
+                        organization,
+                        fernWorkspaces,
+                        context,
+                        token,
+                        version,
+                        fullSlugs
+                    })
+                )
+            );
+
+            return {
+                title: tabConfig.displayName,
+                icon: tabConfig.icon,
+                items: tabbedItems.map((tabItem) => tabItem.item),
+                urlSlugOverride: tabConfig.slug
+            };
+        })
+    );
 }
 
 function convertDocsTypographyConfiguration({
@@ -1001,7 +1030,8 @@ async function convertNavigationItem({
                     item.navigation,
                     parsedDocsConfig.absoluteFilepath,
                     fullSlugs
-                )
+                ),
+                flattened: item.flattened
             };
             break;
         }

@@ -472,6 +472,9 @@ async function convertNavigationConfiguration({
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
         const tabbedNavigationItems = await Promise.all(
             rawNavigationConfig.map(async (item) => {
+                if (item.layout == null) {
+                    return { tab: item.tab };
+                }
                 const layout = await Promise.all(
                     item.layout.map((item) =>
                         convertNavigationItem({
@@ -566,7 +569,8 @@ async function convertNavigationItem({
                       })
                     : undefined,
             hidden: rawConfig.hidden ?? undefined,
-            skipUrlSlug: rawConfig.skipSlug ?? false
+            skipUrlSlug: rawConfig.skipSlug ?? false,
+            flattened: rawConfig.flattened ?? false
         };
     }
     if (isRawLinkConfig(rawConfig)) {

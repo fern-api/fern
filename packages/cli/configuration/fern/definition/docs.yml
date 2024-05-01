@@ -34,6 +34,12 @@ types:
       display-name: string
       icon: optional<string>
       slug: optional<string>
+      href:
+        type: optional<string>
+        docs: |
+          If `href` is set, clicking on the tab will redirect to the given URL.
+
+          Tabs with `href` must not have children in the navigation config.
 
   DocsInstances:
     properties:
@@ -142,7 +148,9 @@ types:
   TabbedNavigationItem:
     properties:
       tab: TabId
-      layout: list<NavigationItem>
+      layout:
+        type: optional<list<NavigationItem>>
+        docs: If `href` is set, `layout` must be null.
 
   NavigationItem:
     discriminated: false
@@ -392,6 +400,12 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      flattened:
+        type: optional<boolean>
+        docs: |
+          If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.
+
+          This setting is useful if the API reference is short and you want to display all endpoints at the top level.
 
   ApiNavigationItem:
     docs: |

@@ -137,7 +137,7 @@ You can use a trackable link in your URL. For example, if using [UTM parameters]
 
 ## Tabs
 
-Within the navigation, you can add `tabs`. Tabs are used to group sections together. The example below shows tabs for `Help Center` and `API Reference`. Each tab has a `title` and `icon`. [Browse the icons available](/learn/docs/components/icons) from FontAwesome.
+Within the navigation, you can add `tabs`. Tabs are used to group sections together. The example below shows tabs for `Help Center`, `API Reference`, and an external link to `Github`. Each tab has a `title` and `icon`. [Browse the icons available](/learn/docs/components/icons) from FontAwesome.
 
 <CodeBlock title="docs.yml">
 ```yaml
@@ -148,6 +148,10 @@ tabs:
   help:
     display-name: Help Center
     icon: home
+  github:
+    display-name: GitHub
+    icon: brands github
+    href: https://github.com/fern-api/fern
     
  navigation: 
   - tab: api
@@ -163,6 +167,7 @@ tabs:
         contents: 
           - page: Contact Us
               path: contact-us.mdx
+  - tab: github
 ```
 </CodeBlock>
 

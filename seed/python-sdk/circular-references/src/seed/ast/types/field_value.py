@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ...core.pydantic_utilities import pydantic_v1
-from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
 
@@ -18,14 +17,12 @@ class FieldValue_PrimitiveValue(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class FieldValue_ObjectValue(ObjectValue):
+class FieldValue_ObjectValue(pydantic_v1.BaseModel):
     type: typing.Literal["object_value"] = "object_value"
 
     class Config:
         frozen = True
         smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
 
 
 class FieldValue_ContainerValue(pydantic_v1.BaseModel):
@@ -40,4 +37,4 @@ class FieldValue_ContainerValue(pydantic_v1.BaseModel):
 FieldValue = typing.Union[FieldValue_PrimitiveValue, FieldValue_ObjectValue, FieldValue_ContainerValue]
 from .container_value import ContainerValue  # noqa: E402
 
-FieldValue_ContainerValue.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
+FieldValue_ContainerValue.update_forward_refs(ContainerValue=ContainerValue)
