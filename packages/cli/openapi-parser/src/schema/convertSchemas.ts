@@ -563,10 +563,7 @@ export function convertSchemaObject(
         for (const allOf of schema.allOf ?? []) {
             if (isReferenceObject(allOf)) {
                 filteredAllOfs.push(allOf);
-            } else if (
-                Object.keys(allOf).length > 0 &&
-                (isReferenceObject(allOf) || Object.keys(allOf).includes("type"))
-            ) {
+            } else if (Object.keys(allOf).length > 0 && Object.keys(allOf).includes("type")) {
                 filteredAllOfs.push(allOf);
             }
         }
