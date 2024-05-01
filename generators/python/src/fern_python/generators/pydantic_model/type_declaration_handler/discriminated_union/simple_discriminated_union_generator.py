@@ -7,8 +7,8 @@ from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
-from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.snippet import SnippetWriter
+from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ....context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
@@ -127,30 +127,34 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
             if class_reference_for_base is not None:
                 base_models.append(class_reference_for_base)
 
-            with PydanticModel(
-                version=self._custom_config.version,
-                name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
-                source_file=self._source_file,
-                base_models=base_models,
-                frozen=self._custom_config.frozen,
-                orm_mode=self._custom_config.orm_mode,
-                smart_union=self._custom_config.smart_union,
-                pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
-                    self._custom_config.version
-                ),
-                require_optional_fields=self._custom_config.require_optional_fields,
-            ) as internal_pydantic_model_for_single_union_type:
-                internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
-                single_union_type_references.append(internal_single_union_type)
+                # version=self._custom_config.version,
+                # name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
+                # source_file=self._source_file,
+                # base_models=base_models,
+                # frozen=self._custom_config.frozen,
+                # orm_mode=self._custom_config.orm_mode,
+                # smart_union=self._custom_config.smart_union,
+                # pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
+                #     self._custom_config.version
+                # ),
+                # require_optional_fields=self._custom_config.require_optional_fields,
 
-                discriminant_field = self._get_discriminant_field_for_single_union_type(
-                    single_union_type=single_union_type
-                )
-
-                internal_pydantic_model_for_single_union_type.add_field(discriminant_field)
-
-                shape = single_union_type.shape.get_as_union()
-                if shape.properties_type == "singleProperty":
+            shape = single_union_type.shape.get_as_union()
+            discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
+            if shape.properties_type == "singleProperty":
+                with PydanticModel(
+                    version=self._custom_config.version,
+                    name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
+                    source_file=self._source_file,
+                    base_models=base_models,
+                    frozen=self._custom_config.frozen,
+                    orm_mode=self._custom_config.orm_mode,
+                    smart_union=self._custom_config.smart_union,
+                    pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
+                        self._custom_config.version
+                    ),
+                    require_optional_fields=self._custom_config.require_optional_fields,
+                ) as internal_pydantic_model_for_single_union_type:
                     internal_pydantic_model_for_single_union_type.add_field(
                         PydanticField(
                             name=shape.name.name.snake_case.unsafe_name,
@@ -159,54 +163,58 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                             type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                         )
                     )
+
+                    internal_pydantic_model_for_single_union_type.add_field(PydanticField(
+                        name=get_discriminant_parameter_name(self._union.discriminant),
+                        pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
+                        type_hint=AST.TypeHint.literal(discriminant_value),
+                        json_field_name=self._union.discriminant.wire_value,
+                        default_value=discriminant_value,
+                    ))
                     all_referenced_types.append(shape.type)
-                elif shape.properties_type == "samePropertiesAsObject":
+                    internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
+                    single_union_type_references.append(internal_single_union_type)
+
+                    self._update_forward_refs(internal_pydantic_model_for_single_union_type=internal_pydantic_model_for_single_union_type, single_union_type=single_union_type)
+
+            elif shape.properties_type == "samePropertiesAsObject":
+                with  FernAwarePydanticModel(
+                    type_name=None,
+                    class_name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
+                    context=self._context,
+                    custom_config=self._custom_config,
+                    source_file=self._source_file,
+                    docstring=self._docs,
+                    snippet=self._snippet,
+                ) as internal_pydantic_model_for_single_union_type:
+
                     object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
                     for object_property in object_properties:
                         internal_pydantic_model_for_single_union_type.add_field(
-                            PydanticField(
-                                name=object_property.name.name.snake_case.unsafe_name,
-                                pascal_case_field_name=object_property.name.name.pascal_case.unsafe_name,
-                                json_field_name=object_property.name.wire_value,
-                                type_hint=self._context.get_type_hint_for_type_reference(
-                                    type_reference=object_property.value_type
-                                ),
+                            name=object_property.name.name.snake_case.unsafe_name,
+                            pascal_case_field_name=object_property.name.name.pascal_case.unsafe_name,
+                            json_field_name=object_property.name.wire_value,
+                            type_reference=object_property.value_type,
+                        )
+                    internal_pydantic_model_for_single_union_type.add_field(
+                        name=get_discriminant_parameter_name(self._union.discriminant),
+                        pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
+                        type_reference=ir_types.TypeReference.factory.container(
+                            ir_types.ContainerType.factory.literal(
+                                ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
                             )
-                        )
-
-                # if any of our fields are forward refs, we need to call
-                # update_forwards_refs()
-
-                # we assume that the forward-refed types are the ones
-                # that circularly reference this union type
-                referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
-                    same_properties_as_object=lambda type_name: self._context.get_referenced_types(type_name.type_id),
-                    single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
-                        single_property.type
-                    ),
-                    no_properties=lambda: set(),
-                )
-                forward_refed_types = [
-                    referenced_type_id
-                    for referenced_type_id in referenced_type_ids
-                    if (
-                        referenced_type_id not in self._extended_types
-                        or (
-                            referenced_type_id in self._extended_types and referenced_type_id in self._property_type_ids
-                        )
+                        ),
+                        json_field_name=self._union.discriminant.wire_value,
+                        default_value=discriminant_value,
                     )
-                    and referenced_type_id != self._name.type_id
-                    and self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id)
-                ]
-                if len(forward_refed_types) > 0:
-                    # when calling update_forward_refs, Pydantic will throw
-                    # if an inherited field's type is not defined in this
-                    # file. https://github.com/pydantic/pydantic/issues/4902.
-                    # as a workaround, we explicitly pass references to update_forward_refs
-                    # so they are in scope
-                    internal_pydantic_model_for_single_union_type.update_forward_refs(
-                        {self._context.get_class_reference_for_type_id(type_id) for type_id in forward_refed_types}
-                    )
+
+
+                    internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
+                    single_union_type_references.append(internal_single_union_type)
+
+                    self._update_forward_refs(internal_pydantic_model_for_single_union_type=internal_pydantic_model_for_single_union_type, single_union_type=single_union_type)
+
+
 
             if self._custom_config.skip_validation:
                 type_hint = AST.TypeHint.annotated(
@@ -248,17 +256,40 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
             should_export=True,
         )
 
-    def _get_discriminant_field_for_single_union_type(
-        self, single_union_type: ir_types.SingleUnionType
-    ) -> PydanticField:
-        discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
-        return PydanticField(
-            name=get_discriminant_parameter_name(self._union.discriminant),
-            pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
-            type_hint=AST.TypeHint.literal(discriminant_value),
-            json_field_name=self._union.discriminant.wire_value,
-            default_value=discriminant_value,
+    def _update_forward_refs(self, internal_pydantic_model_for_single_union_type: Union[FernAwarePydanticModel, PydanticModel], single_union_type: ir_types.SingleUnionType):
+        # if any of our fields are forward refs, we need to call
+        # update_forwards_refs()
+
+        # we assume that the forward-refed types are the ones
+        # that circularly reference this union type
+        referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
+            same_properties_as_object=lambda type_name: self._context.get_referenced_types(type_name.type_id),
+            single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
+                single_property.type
+            ),
+            no_properties=lambda: set(),
         )
+        forward_refed_types = [
+            referenced_type_id
+            for referenced_type_id in referenced_type_ids
+            if (
+                referenced_type_id not in self._extended_types
+                or (
+                    referenced_type_id in self._extended_types and referenced_type_id in self._property_type_ids
+                )
+            )
+            and referenced_type_id != self._name.type_id
+            and self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id)
+        ]
+        if len(forward_refed_types) > 0:
+            # when calling update_forward_refs, Pydantic will throw
+            # if an inherited field's type is not defined in this
+            # file. https://github.com/pydantic/pydantic/issues/4902.
+            # as a workaround, we explicitly pass references to update_forward_refs
+            # so they are in scope
+            internal_pydantic_model_for_single_union_type.update_forward_refs(
+                {self._context.get_class_reference_for_type_id(type_id) for type_id in forward_refed_types}
+            )
 
     def _get_discriminant_value_for_single_union_type(
         self,
