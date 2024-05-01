@@ -3930,7 +3930,10 @@ exports[`open api parser suger docs 1`] = `
                     "type": "optional<string>",
                   },
                   "reportType": "root.SharedRevenueReportType",
-                  "service": "literal<"MARKETPLACE">",
+                  "service": {
+                    "docs": "Required.",
+                    "type": "literal<"MARKETPLACE">",
+                  },
                 },
               },
               "headers": undefined,
@@ -11643,7 +11646,10 @@ exports[`open api parser suger simple 1`] = `
                     "type": "optional<string>",
                   },
                   "reportType": "root.SharedRevenueReportType",
-                  "service": "literal<"MARKETPLACE">",
+                  "service": {
+                    "docs": "Required.",
+                    "type": "literal<"MARKETPLACE">",
+                  },
                 },
               },
               "headers": undefined,

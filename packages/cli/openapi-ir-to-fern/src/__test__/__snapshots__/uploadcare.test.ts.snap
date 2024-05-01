@@ -133,13 +133,12 @@ Log.d("TAG", group.toString())
                   "body": {
                     "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                     "datetime_created": "2018-09-12T10:03:38Z",
-                    "datetime_stored": "2015-09-21T12:39:13Z",
+                    "datetime_stored": "2024-01-15T09:30:00Z",
                     "files": [
                       {
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "datetime_original": "2018-08-20T08:59:50",
                             "dpi": {
                               "0": 72,
                               "1": 72,
@@ -166,7 +165,6 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "datetime_original": "2018-08-20T08:59:50",
                           "dpi": {
                             "0": 72,
                             "1": 72,
@@ -332,13 +330,12 @@ Log.d("TAG", group.toString())
                   "body": {
                     "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                     "datetime_created": "2018-09-12T10:03:38Z",
-                    "datetime_stored": "2015-09-21T12:39:13Z",
+                    "datetime_stored": "2024-01-15T09:30:00Z",
                     "files": [
                       {
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "datetime_original": "2018-08-20T08:59:50",
                             "dpi": {
                               "0": 72,
                               "1": 72,
@@ -365,7 +362,6 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "datetime_original": "2018-08-20T08:59:50",
                           "dpi": {
                             "0": 72,
                             "1": 72,
@@ -690,7 +686,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -738,7 +734,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -1060,7 +1056,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -1108,7 +1104,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -1504,7 +1500,7 @@ Log.d("TAG", status.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -1552,7 +1548,7 @@ Log.d("TAG", status.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -1930,7 +1926,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -1978,7 +1974,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -2994,7 +2990,11 @@ page for a full list of all possible error codes.
 ",
             "type": "optional<string>",
           },
-          "status": "optional<literal<"error">>",
+          "status": {
+            "docs": "The system failed to fetch and/or upload the file.
+",
+            "type": "optional<literal<"error">>",
+          },
         },
       },
       "FileUploadInfoFromUrl": {
@@ -3014,7 +3014,11 @@ page for a full list of all possible error codes.
 ",
             "type": "optional<double>",
           },
-          "status": "optional<literal<"progress">>",
+          "status": {
+            "docs": "The system is fetching/uploading the file.
+",
+            "type": "optional<literal<"progress">>",
+          },
           "total": {
             "docs": "The expected size of the fetched file (in bytes).
 
@@ -3078,19 +3082,34 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "FileUploadInfo",
         ],
         "properties": {
-          "status": "optional<literal<"success">>",
+          "status": {
+            "docs": "The file has been fetched/uploaded successfully.",
+            "type": "optional<literal<"success">>",
+          },
         },
       },
       "FileUploadInfoUnknownStatus": {
         "docs": undefined,
         "properties": {
-          "status": "optional<literal<"unknown">>",
+          "status": {
+            "docs": "The system does not have information about the task.
+
+Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
+period of time only. The endpoint can return the status \`unknown\` for the tasks
+that are tool old (or that have not been created at all).
+",
+            "type": "optional<literal<"unknown">>",
+          },
         },
       },
       "FileUploadInfoWaitingStatus": {
         "docs": undefined,
         "properties": {
-          "status": "optional<literal<"waiting">>",
+          "status": {
+            "docs": "The system is preparing to handle the request.
+",
+            "type": "optional<literal<"waiting">>",
+          },
         },
       },
       "FilesGroupInfoRequestBadRequestErrorBody": {
@@ -4208,13 +4227,12 @@ Log.d("TAG", group.toString())
                   "body": {
                     "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                     "datetime_created": "2018-09-12T10:03:38Z",
-                    "datetime_stored": "2015-09-21T12:39:13Z",
+                    "datetime_stored": "2024-01-15T09:30:00Z",
                     "files": [
                       {
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "datetime_original": "2018-08-20T08:59:50",
                             "dpi": {
                               "0": 72,
                               "1": 72,
@@ -4241,7 +4259,6 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "datetime_original": "2018-08-20T08:59:50",
                           "dpi": {
                             "0": 72,
                             "1": 72,
@@ -4407,13 +4424,12 @@ Log.d("TAG", group.toString())
                   "body": {
                     "cdn_url": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
                     "datetime_created": "2018-09-12T10:03:38Z",
-                    "datetime_stored": "2015-09-21T12:39:13Z",
+                    "datetime_stored": "2024-01-15T09:30:00Z",
                     "files": [
                       {
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "datetime_original": "2018-08-20T08:59:50",
                             "dpi": {
                               "0": 72,
                               "1": 72,
@@ -4440,7 +4456,6 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "datetime_original": "2018-08-20T08:59:50",
                           "dpi": {
                             "0": 72,
                             "1": 72,
@@ -4765,7 +4780,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -4813,7 +4828,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -5135,7 +5150,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -5183,7 +5198,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -5579,7 +5594,7 @@ Log.d("TAG", status.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -5627,7 +5642,7 @@ Log.d("TAG", status.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -6005,7 +6020,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2024-01-15T09:30:00Z",
                         "dpi": [
                           72,
                           72,
@@ -6053,7 +6068,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2024-01-15T09:30:00Z",
                       "dpi": [
                         72,
                         72,
@@ -6694,7 +6709,11 @@ page for a full list of all possible error codes.
 ",
             "type": "optional<string>",
           },
-          "status": "optional<literal<"error">>",
+          "status": {
+            "docs": "The system failed to fetch and/or upload the file.
+",
+            "type": "optional<literal<"error">>",
+          },
         },
       },
       "FileUploadInfoFromUrl": {
@@ -6714,7 +6733,11 @@ page for a full list of all possible error codes.
 ",
             "type": "optional<double>",
           },
-          "status": "optional<literal<"progress">>",
+          "status": {
+            "docs": "The system is fetching/uploading the file.
+",
+            "type": "optional<literal<"progress">>",
+          },
           "total": {
             "docs": "The expected size of the fetched file (in bytes).
 
@@ -6732,19 +6755,34 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "FileUploadInfo",
         ],
         "properties": {
-          "status": "optional<literal<"success">>",
+          "status": {
+            "docs": "The file has been fetched/uploaded successfully.",
+            "type": "optional<literal<"success">>",
+          },
         },
       },
       "FileUploadInfoUnknownStatus": {
         "docs": undefined,
         "properties": {
-          "status": "optional<literal<"unknown">>",
+          "status": {
+            "docs": "The system does not have information about the task.
+
+Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
+period of time only. The endpoint can return the status \`unknown\` for the tasks
+that are tool old (or that have not been created at all).
+",
+            "type": "optional<literal<"unknown">>",
+          },
         },
       },
       "FileUploadInfoWaitingStatus": {
         "docs": undefined,
         "properties": {
-          "status": "optional<literal<"waiting">>",
+          "status": {
+            "docs": "The system is preparing to handle the request.
+",
+            "type": "optional<literal<"waiting">>",
+          },
         },
       },
       "FilesRequiredError": "string",

@@ -99,10 +99,7 @@ jobs:
         run: yarn lint:eslint
 
   test:
-    runs-on: CLI
-    strategy:
-      matrix:
-        shard: [1, 2, 3, 4]
+    runs-on: Test
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -116,7 +113,7 @@ jobs:
         run: yarn install
 
       - name: Run tests
-        run: yarn test --maxWorkers 15 --shard=${{ matrix.shard }}/${{ strategy.job-total }} --ci
+        run: yarn test --maxWorkers 15 --ci --silent
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

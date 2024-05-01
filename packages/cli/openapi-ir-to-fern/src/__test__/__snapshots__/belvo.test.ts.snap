@@ -23023,7 +23023,10 @@ We return one of the following enum values:
           "BUSINESS",
         ],
       },
-      "EnumBankAccountHolderTypePse": "literal<"BUSINESS">",
+      "EnumBankAccountHolderTypePse": {
+        "docs": "The type of bank account to create in Belvo. For business bank accounts, this field must the set to \`BUSINESS\`.",
+        "type": "literal<"BUSINESS">",
+      },
       "EnumBankAccountPixAccountTypeOfpi": {
         "docs": "The type of bank account. Can be either:
 
@@ -23272,7 +23275,14 @@ You can send through one of the following values:
           "LOW",
         ],
       },
-      "EnumIncomeSourceType": "literal<"BANK">",
+      "EnumIncomeSourceType": {
+        "docs": "The type of source we generate income insights from.
+We return one of the following enum values:
+
+  - \`BANK\`
+",
+        "type": "literal<"BANK">",
+      },
       "EnumIncomeStreamConfidence": {
         "docs": "Belvo's level of confidence for future incomes.
 
@@ -23346,7 +23356,12 @@ Can be either:
           "SAVINGS_ACCOUNT",
         ],
       },
-      "EnumIncomeVerificationAccountHolderType": "literal<"INDIVIDUAL">",
+      "EnumIncomeVerificationAccountHolderType": {
+        "docs": "The type of account holder. Can be:
+
+  - \`INDIVIDUAL\`",
+        "type": "literal<"INDIVIDUAL">",
+      },
       "EnumIncomeVerificationType": {
         "docs": "The direction of the transaction:
   
@@ -23732,7 +23747,14 @@ We return one of the following values:
           "Taxes",
         ],
       },
-      "EnumRecurringExpenseFrequency": "literal<"MONTHLY">",
+      "EnumRecurringExpenseFrequency": {
+        "docs": "The frequency at which this recurring expense occurs.
+
+
+ℹ️ **Note:** Belvo only identifies \`MONTHLY\` frequencies.
+",
+        "type": "literal<"MONTHLY">",
+      },
       "EnumRecurringExpensePaymentType": {
         "docs": "The type of recurring expense. We return one of the following values:
 
@@ -51543,7 +51565,10 @@ We return one of the following enum values:
           "BUSINESS",
         ],
       },
-      "EnumBankAccountHolderTypePse": "literal<"BUSINESS">",
+      "EnumBankAccountHolderTypePse": {
+        "docs": "The type of bank account to create in Belvo. For business bank accounts, this field must the set to \`BUSINESS\`.",
+        "type": "literal<"BUSINESS">",
+      },
       "EnumBankAccountPixAccountTypeOfpi": {
         "docs": "The type of bank account. Can be either:
 
@@ -51792,7 +51817,14 @@ You can send through one of the following values:
           "LOW",
         ],
       },
-      "EnumIncomeSourceType": "literal<"BANK">",
+      "EnumIncomeSourceType": {
+        "docs": "The type of source we generate income insights from.
+We return one of the following enum values:
+
+  - \`BANK\`
+",
+        "type": "literal<"BANK">",
+      },
       "EnumIncomeStreamConfidence": {
         "docs": "Belvo's level of confidence for future incomes.
 
@@ -51866,7 +51898,12 @@ Can be either:
           "SAVINGS_ACCOUNT",
         ],
       },
-      "EnumIncomeVerificationAccountHolderType": "literal<"INDIVIDUAL">",
+      "EnumIncomeVerificationAccountHolderType": {
+        "docs": "The type of account holder. Can be:
+
+  - \`INDIVIDUAL\`",
+        "type": "literal<"INDIVIDUAL">",
+      },
       "EnumIncomeVerificationType": {
         "docs": "The direction of the transaction:
   
@@ -52252,7 +52289,14 @@ We return one of the following values:
           "Taxes",
         ],
       },
-      "EnumRecurringExpenseFrequency": "literal<"MONTHLY">",
+      "EnumRecurringExpenseFrequency": {
+        "docs": "The frequency at which this recurring expense occurs.
+
+
+ℹ️ **Note:** Belvo only identifies \`MONTHLY\` frequencies.
+",
+        "type": "literal<"MONTHLY">",
+      },
       "EnumRecurringExpensePaymentType": {
         "docs": "The type of recurring expense. We return one of the following values:
 

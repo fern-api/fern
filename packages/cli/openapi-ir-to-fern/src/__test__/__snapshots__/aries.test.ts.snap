@@ -9761,7 +9761,10 @@ exports[`open api parser aries docs 1`] = `
                     "docs": "Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection.",
                     "type": "optional<string>",
                   },
-                  "key_management_mode": "optional<literal<"managed">>",
+                  "key_management_mode": {
+                    "docs": "Key management method to use for this wallet.",
+                    "type": "optional<literal<"managed">>",
+                  },
                   "label": {
                     "docs": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",
                     "type": "optional<string>",
@@ -17715,7 +17718,10 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Indy revocation registry identifier",
             "type": "optional<string>",
           },
-          "revocDefType": "optional<literal<"CL_ACCUM">>",
+          "revocDefType": {
+            "docs": "Revocation registry type (specify CL_ACCUM)",
+            "type": "optional<literal<"CL_ACCUM">>",
+          },
           "tag": {
             "docs": "Revocation registry tag",
             "type": "optional<string>",
@@ -17980,7 +17986,10 @@ exports[`open api parser aries docs 1`] = `
             "docs": "Issuer revocation registry record identifier",
             "type": "optional<string>",
           },
-          "revoc_def_type": "optional<literal<"CL_ACCUM">>",
+          "revoc_def_type": {
+            "docs": "Revocation registry type (specify CL_ACCUM)",
+            "type": "optional<literal<"CL_ACCUM">>",
+          },
           "revoc_reg_def": "optional<IssuerRevRegRecordRevocRegDef>",
           "revoc_reg_entry": "optional<IssuerRevRegRecordRevocRegEntry>",
           "revoc_reg_id": {
@@ -30187,7 +30196,10 @@ exports[`open api parser aries simple 1`] = `
                     "docs": "Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection.",
                     "type": "optional<string>",
                   },
-                  "key_management_mode": "optional<literal<"managed">>",
+                  "key_management_mode": {
+                    "docs": "Key management method to use for this wallet.",
+                    "type": "optional<literal<"managed">>",
+                  },
                   "label": {
                     "docs": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",
                     "type": "optional<string>",
@@ -38141,7 +38153,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Indy revocation registry identifier",
             "type": "optional<string>",
           },
-          "revocDefType": "optional<literal<"CL_ACCUM">>",
+          "revocDefType": {
+            "docs": "Revocation registry type (specify CL_ACCUM)",
+            "type": "optional<literal<"CL_ACCUM">>",
+          },
           "tag": {
             "docs": "Revocation registry tag",
             "type": "optional<string>",
@@ -38406,7 +38421,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Issuer revocation registry record identifier",
             "type": "optional<string>",
           },
-          "revoc_def_type": "optional<literal<"CL_ACCUM">>",
+          "revoc_def_type": {
+            "docs": "Revocation registry type (specify CL_ACCUM)",
+            "type": "optional<literal<"CL_ACCUM">>",
+          },
           "revoc_reg_def": "optional<IssuerRevRegRecordRevocRegDef>",
           "revoc_reg_entry": "optional<IssuerRevRegRecordRevocRegEntry>",
           "revoc_reg_id": {
