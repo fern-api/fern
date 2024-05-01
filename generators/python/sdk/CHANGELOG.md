@@ -44,12 +44,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         inline_request_params: true
   ```
 
-  Code change:
   Before:
-  `python def get_and_return_with_optional_field( self, *, request: ObjectWithOptionalField, request_options: typing.Optional[RequestOptions] = None ) -> ObjectWithOptionalField: ... `
+
+  ```python
+  def get_and_return_with_optional_field(
+    self,
+    *,
+    request: ObjectWithOptionalField,
+    request_options: typing.Optional[RequestOptions] = None
+  ) -> ObjectWithOptionalField:
+    ...
+  ```
 
   After:
-  `python def get_and_return_with_optional_field( self, *, string: typing.Optional[str] = OMIT, integer: typing.Optional[int] = OMIT, long: typing.Optional[int] = OMIT, double: typing.Optional[float] = OMIT, bool: typing.Optional[bool] = OMIT, request_options: typing.Optional[RequestOptions] = None, ) -> ObjectWithOptionalField: ... `
+
+  ```python
+  def get_and_return_with_optional_field(
+    self,
+    *,
+    string: typing.Optional[str] = OMIT,
+    integer: typing.Optional[int] = OMIT,
+    long: typing.Optional[int] = OMIT,
+    double: typing.Optional[float] = OMIT,
+    bool: typing.Optional[bool] = OMIT,
+    request_options: typing.Optional[RequestOptions] = None
+  ) -> ObjectWithOptionalField:
+    ...
+  ```
 
 ## [1.4.0] - 2024-04-29
 
