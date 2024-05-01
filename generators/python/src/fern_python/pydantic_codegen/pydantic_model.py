@@ -77,10 +77,14 @@ class PydanticModel:
         self._has_aliases |= is_aliased
 
         default_value = (
-            AST.Expression("None")
-            if unsanitized_field.type_hint.is_optional and self._require_optional_fields is False
-            else None
-        ) if field.default_value is None else field.default_value
+            (
+                AST.Expression("None")
+                if unsanitized_field.type_hint.is_optional and self._require_optional_fields is False
+                else None
+            )
+            if field.default_value is None
+            else field.default_value
+        )
 
         initializer = get_field_name_initializer(
             alias=field.json_field_name if is_aliased else None,
