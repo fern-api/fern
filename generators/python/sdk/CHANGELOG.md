@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1-rc2] - 2024-05-01
+
+- Fix: The vanilla pydantic base model now respects the `require_optional_fields`, this became a regression in 1.5.1-rc0 when we started to inline union properties which leverages the vanilla base model.
+
 ## [1.5.1-rc1] - 2024-05-01
 
 - Fix: Address formatting issues with snippet templates, we now strip newlines off OG snippets as well as plumb through indentation metadata to places that were previously missing it.

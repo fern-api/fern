@@ -17,8 +17,8 @@ class TestCaseGrade_Hidden(pydantic_v1.BaseModel):
 class TestCaseGrade_NonHidden(pydantic_v1.BaseModel):
     type: typing.Literal["nonHidden"] = "nonHidden"
     passed: bool
-    actual_result: typing.Optional[VariableValue] = pydantic_v1.Field(alias="actualResult")
-    exception: typing.Optional[ExceptionV2]
+    actual_result: typing.Optional[VariableValue] = pydantic_v1.Field(alias="actualResult", default=None)
+    exception: typing.Optional[ExceptionV2] = None
     stdout: str
 
     class Config:

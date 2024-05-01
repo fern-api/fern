@@ -30,7 +30,7 @@ class VariableType_CharType(pydantic_v1.BaseModel):
 class VariableType_ListType(pydantic_v1.BaseModel):
     type: typing.Literal["listType"] = "listType"
     value_type: VariableType = pydantic_v1.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic_v1.Field(alias="isFixedLength")
+    is_fixed_length: typing.Optional[bool] = pydantic_v1.Field(alias="isFixedLength", default=None)
 
     class Config:
         allow_population_by_field_name = True

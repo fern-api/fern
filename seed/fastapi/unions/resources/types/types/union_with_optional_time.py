@@ -58,11 +58,11 @@ class UnionWithOptionalTime(pydantic_v1.BaseModel):
 class _UnionWithOptionalTime:
     class Date(pydantic_v1.BaseModel):
         type: typing.Literal["date"] = "date"
-        value: typing.Optional[dt.date]
+        value: typing.Optional[dt.date] = None
 
     class Dateimte(pydantic_v1.BaseModel):
         type: typing.Literal["dateimte"] = "dateimte"
-        value: typing.Optional[dt.datetime]
+        value: typing.Optional[dt.datetime] = None
 
 
 UnionWithOptionalTime.update_forward_refs()

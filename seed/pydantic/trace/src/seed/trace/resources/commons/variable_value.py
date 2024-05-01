@@ -55,19 +55,19 @@ class VariableValue_ListValue(pydantic_v1.BaseModel):
 
 class VariableValue_BinaryTreeValue(pydantic_v1.BaseModel):
     type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
-    root: typing.Optional[NodeId]
+    root: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
 
 
 class VariableValue_SinglyLinkedListValue(pydantic_v1.BaseModel):
     type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
-    head: typing.Optional[NodeId]
+    head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
 
 
 class VariableValue_DoublyLinkedListValue(pydantic_v1.BaseModel):
     type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
-    head: typing.Optional[NodeId]
+    head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
 
 

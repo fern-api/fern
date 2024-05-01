@@ -78,6 +78,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
                         self._custom_config.version
                     ),
+                    require_optional_fields=self._custom_config.require_optional_fields,
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     internal_single_union_types.append(internal_single_union_type)
