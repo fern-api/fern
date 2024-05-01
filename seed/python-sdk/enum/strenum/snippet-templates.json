@@ -10,7 +10,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -23,9 +23,9 @@
                             "isOptional": true,
                             "templateString": "operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"\n",
-                                "=": "\"=\"\n",
-                                "less_than": "\"less_than\"\n"
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
                             },
                             "templateInput": {
                                 "location": "BODY",
@@ -41,9 +41,9 @@
                             "isOptional": true,
                             "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"\n",
-                                "=": "\"=\"\n",
-                                "less_than": "\"less_than\"\n"
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
                             },
                             "templateInput": {
                                 "location": "BODY",
@@ -70,7 +70,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -83,9 +83,9 @@
                             "isOptional": true,
                             "templateString": "operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"\n",
-                                "=": "\"=\"\n",
-                                "less_than": "\"less_than\"\n"
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
                             },
                             "templateInput": {
                                 "location": "PATH",
@@ -101,9 +101,9 @@
                             "isOptional": true,
                             "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"\n",
-                                "=": "\"=\"\n",
-                                "less_than": "\"less_than\"\n"
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
                             },
                             "templateInput": {
                                 "location": "PATH",
@@ -130,7 +130,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -143,9 +143,9 @@
                             "isOptional": true,
                             "templateString": "operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"\n",
-                                "=": "\"=\"\n",
-                                "less_than": "\"less_than\"\n"
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
                             },
                             "templateInput": {
                                 "location": "QUERY",
@@ -161,9 +161,9 @@
                             "isOptional": true,
                             "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"\n",
-                                "=": "\"=\"\n",
-                                "less_than": "\"less_than\"\n"
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
                             },
                             "templateInput": {
                                 "location": "QUERY",
@@ -190,7 +190,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -203,9 +203,9 @@
                             "isOptional": true,
                             "templateString": "operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"\n",
-                                "=": "\"=\"\n",
-                                "less_than": "\"less_than\"\n"
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
                             },
                             "templateInput": {
                                 "location": "QUERY",
@@ -221,9 +221,9 @@
                             "isOptional": true,
                             "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"\n",
-                                "=": "\"=\"\n",
-                                "less_than": "\"less_than\"\n"
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
                             },
                             "templateInput": {
                                 "location": "QUERY",

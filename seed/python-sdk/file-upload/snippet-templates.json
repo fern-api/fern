@@ -10,7 +10,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -236,7 +236,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -276,7 +276,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1-rc1] - 2024-05-01
+
+- Fix: Address formatting issues with snippet templates, we now strip newlines off OG snippets as well as plumb through indentation metadata to places that were previously missing it.
+
 ## [1.5.1-rc0] - 2024-04-26
 
 - Fix: Discriminated union variants that are objects now have inlined properties instead of

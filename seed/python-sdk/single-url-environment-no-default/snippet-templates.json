@@ -10,7 +10,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedSingleUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedSingleUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,

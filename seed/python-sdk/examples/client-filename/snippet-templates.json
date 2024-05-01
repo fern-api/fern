@@ -10,7 +10,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -50,7 +50,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -73,7 +73,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -113,7 +113,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -153,7 +153,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -176,7 +176,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -216,7 +216,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -348,8 +348,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "metadata={\n\t$FERN_INPUT\n}",
-                                        "delimiter": ",\n\t",
+                                        "containerTemplateString": "metadata={\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "delimiter": ",\n\t\t\t",
                                         "keyTemplate": {
                                             "imports": [],
                                             "isOptional": true,
@@ -407,7 +407,7 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,

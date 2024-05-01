@@ -10,7 +10,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedFileDownload\n\nclient = AsyncSeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "clientInstantiation": "from seed.client import AsyncSeedFileDownload\n\nclient = AsyncSeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
