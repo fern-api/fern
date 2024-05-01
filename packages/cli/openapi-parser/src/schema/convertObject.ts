@@ -13,10 +13,10 @@ import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaWithExampleEqual } from "./utils/isSchemaEqual";
-import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId;
