@@ -7,4 +7,5 @@ import * as FernOpenapiIr from "../../..";
 export interface MultipartRequestProperty extends FernOpenapiIr.WithDescription {
     key: string;
     schema: FernOpenapiIr.MultipartSchema;
+    contentType: string | undefined;
 }

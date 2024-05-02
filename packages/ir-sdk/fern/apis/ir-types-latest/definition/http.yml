@@ -102,6 +102,7 @@ types:
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
+      contentType: optional<string>
   FileUploadRequest:
     properties:
       name: commons.Name
@@ -122,10 +123,12 @@ types:
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
+      contentType: optional<string>
   FilePropertyArray:
     properties:
       key: commons.NameAndWireValue
       isOptional: boolean
+      contentType: optional<string>
   HttpRequestBodyReference:
     extends: commons.WithDocs
     properties:
@@ -185,21 +188,21 @@ types:
     extends: commons.WithDocs
 
   StreamingResponse:
-    union: 
+    union:
       json: JsonStreamChunk
       text: TextStreamChunk
       sse: SseStreamChunk
-    
-  TextStreamChunk: 
+
+  TextStreamChunk:
     extends: commons.WithDocs
     properties: {}
-    
+
   JsonStreamChunk:
     extends: commons.WithDocs
     properties:
       payload: types.TypeReference
       terminator: optional<string>
-  
+
   SseStreamChunk:
     extends: commons.WithDocs
     properties:

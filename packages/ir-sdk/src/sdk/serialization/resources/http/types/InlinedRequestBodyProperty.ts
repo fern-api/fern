@@ -13,6 +13,7 @@ export const InlinedRequestBodyProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: core.serialization.lazyObject(async () => (await import("../../..")).NameAndWireValue),
         valueType: core.serialization.lazy(async () => (await import("../../..")).TypeReference),
+        contentType: core.serialization.string().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
 
@@ -20,5 +21,6 @@ export declare namespace InlinedRequestBodyProperty {
     interface Raw extends serializers.WithDocs.Raw {
         name: serializers.NameAndWireValue.Raw;
         valueType: serializers.TypeReference.Raw;
+        contentType?: string | null;
     }
 }
