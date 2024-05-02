@@ -2349,6 +2349,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {

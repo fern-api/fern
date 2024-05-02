@@ -185,7 +185,8 @@ async function visitEndpoint({
                                                     location: TypeReferenceLocation.InlinedRequestProperty
                                                 });
                                             },
-                                            audiences: noop
+                                            audiences: noop,
+                                            "content-type": noop
                                         });
                                     }
                                 }
