@@ -11,16 +11,23 @@
   },
   "rules": {
     "depcheck": {
-      "ignores": ["ts-loader", "@fern-fern/ir-sdk"],
-      "ignore-patterns": ["docker/bundle.js"]
+      "ignores": [
+        "ts-loader",
+        "@fern-fern/ir-sdk"
+      ],
+      "ignore-patterns": [
+        "docker/bundle.js"
+      ]
     },
     "duplicate-dependencies": {
-      "exclude": ["@fern-fern/ir-sdk"]
+      "exclude": [
+        "@fern-fern/ir-sdk"
+      ]
     },
     "package-json": {
       "scripts": {
-        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-sdk:latest ../../..",
-        "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-sdk:${0} ../../.."
+        "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-sdk:latest ../../..",
+        "dockerTagVersion": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-sdk:${0} ../../.."
       }
     }
   },

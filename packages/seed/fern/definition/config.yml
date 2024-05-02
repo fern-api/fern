@@ -35,7 +35,7 @@ types:
         type: list<string>
         docs: | 
           The command to build the generator locally. 
-          `yarn workspace @fern-api/openapi-generator build` for example. 
+          `pnpm workspace @fern-api/openapi-generator build` for example. 
       runCommand:
         type: string
         docs: | 

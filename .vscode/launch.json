@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Debug current test file",
-      "runtimeExecutable": "yarn",
+      "runtimeExecutable": "pnpm",
       "runtimeArgs": [
         "run",
         "--inspect-brk",

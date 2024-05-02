@@ -1,0 +1,7 @@
+packages:
+  - "generators/**"
+  - "!generators/**/lib"
+  - "!generators/**/dist"
+  - "packages/**"
+  - "!packages/**/lib"
+  - "!packages/**/dist"

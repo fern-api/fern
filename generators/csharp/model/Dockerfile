@@ -5,7 +5,6 @@ RUN apk --no-cache add bash curl git zip && git config --global user.name "fern"
 
 RUN dotnet tool install -g csharpier
 ENV PATH="$PATH:/root/.dotnet/tools"
-ENV YARN_CACHE_FOLDER=/.yarn
 
 COPY generators/csharp/model/dist /dist
 
