@@ -590,6 +590,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
      * REQUEST OPTIONS *
      *******************/
 
+    public getRequestOptionsType(idempotent: boolean): string {
+        return idempotent
+            ? `${this.serviceClassName}.${GeneratedSdkClientClassImpl.IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME}`
+            : `${this.serviceClassName}.${GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME}`;
+    }
+
     private generateRequestOptionsInterface(): OptionalKind<InterfaceDeclarationStructure> {
         return {
             name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,

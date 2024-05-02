@@ -26,6 +26,9 @@ export class Imdb {
     /**
      * Add a movie to the database
      *
+     * @param {SeedApi.CreateMovieRequest} request
+     * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedApi.imdb.createMovie({
      *         title: "string",
@@ -84,6 +87,9 @@ export class Imdb {
     }
 
     /**
+     * @param {SeedApi.MovieId} movieId
+     * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedApi.MovieDoesNotExistError}
      *
      * @example

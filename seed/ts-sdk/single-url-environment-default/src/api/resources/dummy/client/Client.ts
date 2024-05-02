@@ -23,6 +23,12 @@ export declare namespace Dummy {
 export class Dummy {
     constructor(protected readonly _options: Dummy.Options) {}
 
+    /**
+     * @param {Dummy.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedSingleUrlEnvironmentDefault.dummy.getDummy()
+     */
     public async getDummy(requestOptions?: Dummy.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(

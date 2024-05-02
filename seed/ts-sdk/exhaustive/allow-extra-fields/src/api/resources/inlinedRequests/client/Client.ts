@@ -25,6 +25,10 @@ export class InlinedRequests {
 
     /**
      * POST with custom object in request body, response is an object
+     *
+     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example

@@ -23,6 +23,13 @@ export declare namespace SeedPackageYmlClient {
 export class SeedPackageYmlClient {
     constructor(protected readonly _options: SeedPackageYmlClient.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {SeedPackageYmlClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPackageYml.echo("Hello world!")
+     */
     public async echo(request: string, requestOptions?: SeedPackageYmlClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(

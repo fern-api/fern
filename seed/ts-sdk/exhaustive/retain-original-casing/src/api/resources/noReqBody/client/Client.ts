@@ -23,6 +23,12 @@ export declare namespace NoReqBody {
 export class NoReqBody {
     constructor(protected readonly _options: NoReqBody.Options) {}
 
+    /**
+     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.noReqBody.getWithNoRequestBody()
+     */
     public async getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
@@ -72,6 +78,12 @@ export class NoReqBody {
         }
     }
 
+    /**
+     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.noReqBody.postWithNoRequestBody()
+     */
     public async postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),

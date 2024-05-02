@@ -24,6 +24,15 @@ export declare namespace Migration {
 export class Migration {
     constructor(protected readonly _options: Migration.Options = {}) {}
 
+    /**
+     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
+     * @param {Migration.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.migration.getAttemptedMigrations({
+     *         "admin-key-header": "string"
+     *     })
+     */
     public async getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions

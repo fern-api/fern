@@ -21,6 +21,17 @@ export declare namespace Foo {
 export class Foo {
     constructor(protected readonly _options: Foo.Options) {}
 
+    /**
+     * @param {SeedAudiences.FindRequest} request
+     * @param {Foo.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedAudiences.foo.find({
+     *         optionalString: "string",
+     *         publicProperty: "string",
+     *         privateProperty: 1
+     *     })
+     */
     public async find(
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions

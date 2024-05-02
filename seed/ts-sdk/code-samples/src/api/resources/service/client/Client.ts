@@ -22,6 +22,15 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {SeedCodeSamples.MyRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedCodeSamples.service.hello({
+     *         numEvents: 5
+     *     })
+     */
     public async hello(
         request: SeedCodeSamples.MyRequest,
         requestOptions?: Service.RequestOptions

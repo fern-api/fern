@@ -28,6 +28,10 @@ export class Playlist {
     /**
      * Create a new playlist
      *
+     * @param {number} serviceParam
+     * @param {SeedTrace.CreatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.playlist.createPlaylist(1, {
      *         datetime: new Date("2024-01-15T09:30:00.000Z"),
@@ -107,6 +111,10 @@ export class Playlist {
 
     /**
      * Returns the user's playlists
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.GetPlaylistsRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.playlist.getPlaylists(1, {
@@ -200,6 +208,11 @@ export class Playlist {
 
     /**
      * Returns a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      * @throws {@link SeedTrace.UnauthorizedError}
      *
@@ -282,6 +295,12 @@ export class Playlist {
 
     /**
      * Updates a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {SeedTrace.UpdatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      *
      * @example
@@ -371,6 +390,10 @@ export class Playlist {
 
     /**
      * Deletes a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.playlist.deletePlaylist(1, "string")

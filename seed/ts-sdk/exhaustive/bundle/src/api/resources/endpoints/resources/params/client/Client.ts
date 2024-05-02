@@ -25,6 +25,9 @@ export class Params {
     /**
      * GET with path param
      *
+     * @param {string} param
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.getWithPath("string")
      */
@@ -71,6 +74,9 @@ export class Params {
     /**
      * GET with query param
      *
+     * @param {Fiddle.endpoints.GetWithQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.getWithQuery({
      *         query: "string",
@@ -116,6 +122,9 @@ export class Params {
 
     /**
      * GET with multiple of same query param
+     *
+     * @param {Fiddle.endpoints.GetWithMultipleQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await fiddle.endpoints.params.getWithAllowMultipleQuery({
@@ -173,6 +182,10 @@ export class Params {
     /**
      * GET with path and query params
      *
+     * @param {string} param
+     * @param {Fiddle.endpoints.GetWithPathAndQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.getWithPathAndQuery("string", {
      *         query: "string"
@@ -220,6 +233,10 @@ export class Params {
 
     /**
      * PUT to update with path param
+     *
+     * @param {string} param
+     * @param {string} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await fiddle.endpoints.params.modifyWithPath("string", "string")

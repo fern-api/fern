@@ -23,6 +23,12 @@ export declare namespace Homepage {
 export class Homepage {
     constructor(protected readonly _options: Homepage.Options = {}) {}
 
+    /**
+     * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.homepage.getHomepageProblems()
+     */
     public async getHomepageProblems(
         requestOptions?: Homepage.RequestOptions
     ): Promise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
@@ -61,6 +67,13 @@ export class Homepage {
         };
     }
 
+    /**
+     * @param {SeedTrace.ProblemId[]} request
+     * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.homepage.setHomepageProblems(["string"])
+     */
     public async setHomepageProblems(
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions

@@ -22,6 +22,13 @@ export declare namespace Enum {
 export class Enum {
     constructor(protected readonly _options: Enum.Options) {}
 
+    /**
+     * @param {Fiddle.types.WeatherReport} request
+     * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.enum.getAndReturnEnum(Fiddle.types.WeatherReport.Sunny)
+     */
     public async getAndReturnEnum(
         request: Fiddle.types.WeatherReport,
         requestOptions?: Enum.RequestOptions

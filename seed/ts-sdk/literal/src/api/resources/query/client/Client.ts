@@ -22,6 +22,17 @@ export declare namespace Query {
 export class Query {
     constructor(protected readonly _options: Query.Options) {}
 
+    /**
+     * @param {SeedLiteral.SendLiteralsInQueryRequest} request
+     * @param {Query.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedLiteral.query.send({
+     *         prompt: "You are a helpful assistant",
+     *         stream: false,
+     *         query: "What is the weather today"
+     *     })
+     */
     public async send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions

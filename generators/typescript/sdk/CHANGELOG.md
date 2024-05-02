@@ -5,7 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-<!-- ## Unreleased -->
+## [0.16.0-rc7] - 2024-05-02
+
+- Improvement: The SDK generator now supports `@param` JSDoc comments for endpoint parameters.
+  The generator now arranges JSDoc in a few separate groups, one for each of `@param`, `@throws`,
+  and `@examples` like so:
+
+  ```ts
+    /**
+     * This endpoint checks the health of a resource.
+     *
+     * @param {string} id - A unique identifier.
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Acme.UnauthorizedRequest}
+     * @throws {@link Acme.BadRequest}
+     *
+     * @example
+     *     await testSdk.health.service.check("id-2sdx82h")
+     */
+    public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
+      ...
+    }
+  ```
 
 - Improvement: The generator will only include user-provided examples if they exist, and otherwise
   only include a single generated example, like so:

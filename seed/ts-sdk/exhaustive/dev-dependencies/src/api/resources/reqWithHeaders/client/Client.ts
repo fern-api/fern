@@ -22,6 +22,17 @@ export declare namespace ReqWithHeaders {
 export class ReqWithHeaders {
     constructor(protected readonly _options: ReqWithHeaders.Options) {}
 
+    /**
+     * @param {Fiddle.ReqWithHeaders} request
+     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.reqWithHeaders.getWithCustomHeader({
+     *         xTestServiceHeader: "string",
+     *         xTestEndpointHeader: "string",
+     *         body: "string"
+     *     })
+     */
     public async getWithCustomHeader(
         request: Fiddle.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions

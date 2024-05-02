@@ -23,6 +23,14 @@ export declare namespace Sysprop {
 export class Sysprop {
     constructor(protected readonly _options: Sysprop.Options = {}) {}
 
+    /**
+     * @param {SeedTrace.Language} language
+     * @param {number} numWarmInstances
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
+     */
     public async setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
@@ -63,6 +71,12 @@ export class Sysprop {
         };
     }
 
+    /**
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.sysprop.getNumWarmInstances()
+     */
     public async getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions
     ): Promise<

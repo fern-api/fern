@@ -22,6 +22,12 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApi.folder.service.endpoint()
+     */
     public async endpoint(requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/service"),
@@ -64,6 +70,9 @@ export class Service {
     }
 
     /**
+     * @param {unknown} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedApi.folder.NotFoundError}
      *
      * @example

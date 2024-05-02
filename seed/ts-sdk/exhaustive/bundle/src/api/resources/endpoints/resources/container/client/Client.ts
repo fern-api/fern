@@ -22,6 +22,13 @@ export declare namespace Container {
 export class Container {
     constructor(protected readonly _options: Container.Options) {}
 
+    /**
+     * @param {string[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.container.getAndReturnListOfPrimitives(["string"])
+     */
     public async getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions
@@ -65,6 +72,15 @@ export class Container {
         };
     }
 
+    /**
+     * @param {Fiddle.types.ObjectWithRequiredField[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.container.getAndReturnListOfObjects([{
+     *             string: "string"
+     *         }])
+     */
     public async getAndReturnListOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions
@@ -113,6 +129,13 @@ export class Container {
         };
     }
 
+    /**
+     * @param {Set<string>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
         requestOptions?: Container.RequestOptions
@@ -156,6 +179,15 @@ export class Container {
         };
     }
 
+    /**
+     * @param {Fiddle.types.ObjectWithRequiredField[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *             string: "string"
+     *         }]))
+     */
     public async getAndReturnSetOfObjects(
         request: Fiddle.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions
@@ -204,6 +236,15 @@ export class Container {
         };
     }
 
+    /**
+     * @param {Record<string, string>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.container.getAndReturnMapPrimToPrim({
+     *         "string": "string"
+     *     })
+     */
     public async getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions
@@ -247,6 +288,17 @@ export class Container {
         };
     }
 
+    /**
+     * @param {Record<string, Fiddle.types.ObjectWithRequiredField>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.container.getAndReturnMapOfPrimToObject({
+     *         "string": {
+     *             string: "string"
+     *         }
+     *     })
+     */
     public async getAndReturnMapOfPrimToObject(
         request: Record<string, Fiddle.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions
@@ -295,6 +347,15 @@ export class Container {
         };
     }
 
+    /**
+     * @param {Fiddle.types.ObjectWithRequiredField} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.container.getAndReturnOptional({
+     *         string: "string"
+     *     })
+     */
     public async getAndReturnOptional(
         request?: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions

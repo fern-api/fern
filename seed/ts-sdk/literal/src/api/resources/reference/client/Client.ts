@@ -22,6 +22,17 @@ export declare namespace Reference {
 export class Reference {
     constructor(protected readonly _options: Reference.Options) {}
 
+    /**
+     * @param {SeedLiteral.SendRequest} request
+     * @param {Reference.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedLiteral.reference.send({
+     *         prompt: "You are a helpful assistant",
+     *         stream: false,
+     *         query: "What is the weather today"
+     *     })
+     */
     public async send(
         request: SeedLiteral.SendRequest,
         requestOptions?: Reference.RequestOptions

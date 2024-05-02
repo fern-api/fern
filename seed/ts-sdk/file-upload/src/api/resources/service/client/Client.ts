@@ -23,6 +23,17 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {File | fs.ReadStream} file
+     * @param {File | fs.ReadStream} fileList
+     * @param {File | fs.ReadStream | undefined} maybeFile
+     * @param {File | fs.ReadStream | undefined} maybeFileList
+     * @param {SeedFileUpload.MyRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedFileUpload.service.post(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {})
+     */
     public async post(
         file: File | fs.ReadStream,
         fileList: File | fs.ReadStream,
@@ -102,6 +113,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {File | fs.ReadStream} file
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedFileUpload.service.justFile(fs.createReadStream("/path/to/your/file"))
+     */
     public async justFile(file: File | fs.ReadStream, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = new FormData();
         _request.append("file", file);
@@ -146,6 +164,20 @@ export class Service {
         }
     }
 
+    /**
+     * @param {File | fs.ReadStream} file
+     * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedFileUpload.service.justFileWithQueryParams(fs.createReadStream("/path/to/your/file"), {
+     *         maybeString: "string",
+     *         integer: 1,
+     *         maybeInteger: 1,
+     *         listOfStrings: "string",
+     *         optionalListOfStrings: "string"
+     *     })
+     */
     public async justFileWithQueryParams(
         file: File | fs.ReadStream,
         request: SeedFileUpload.JustFileWithQueryParamsRequet,

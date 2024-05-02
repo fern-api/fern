@@ -20,6 +20,15 @@ export declare namespace Unknown {
 export class Unknown {
     constructor(protected readonly _options: Unknown.Options) {}
 
+    /**
+     * @param {any} request
+     * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedUnknownAsAny.unknown.post({
+     *         "key": "value"
+     *     })
+     */
     public async post(request?: any, requestOptions?: Unknown.RequestOptions): Promise<any[]> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
