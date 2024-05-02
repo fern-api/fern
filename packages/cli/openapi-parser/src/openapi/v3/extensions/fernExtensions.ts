@@ -342,7 +342,12 @@ export const FernOpenAPIExtension = {
      *    name: version
      *    type: literal<"2.10"> # The type of the header to use
      */
-    FERN_GLOBAL_HEADERS: "x-fern-global-headers"
+    FERN_GLOBAL_HEADERS: "x-fern-global-headers",
+
+    /**
+     * Allows a user to configure the property name for the schema.
+     */
+    FERN_PROPERTY_NAME: "x-fern-property-name"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
