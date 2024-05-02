@@ -543,7 +543,8 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     schema: convertSchemaToSchemaWithExample(property.schema.value),
                     audiences: [],
                     conflict: {},
-                    generatedName: property.key
+                    generatedName: property.key,
+                    nameOverride: undefined,
                 };
             })
             .filter(isNonNullish),

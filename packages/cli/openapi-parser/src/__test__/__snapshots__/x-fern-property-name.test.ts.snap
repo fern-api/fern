@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
+{
+  "channel": [],
+  "description": null,
+  "endpoints": [],
+  "globalHeaders": [],
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [],
+  "schemas": {
+    "BaseUser": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": null,
+      "generatedName": "BaseUser",
+      "groupName": null,
+      "nameOverride": null,
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "baseUserId",
+          "key": "id",
+          "nameOverride": "renamed_id",
+          "schema": {
+            "description": null,
+            "generatedName": "baseUserId",
+            "groupName": null,
+            "nameOverride": null,
+            "type": "optional",
+            "value": {
+              "description": null,
+              "generatedName": "BaseUserId",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": {
+                "maxLength": null,
+                "minLength": null,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": null,
+    "tagsById": {},
+  },
+  "title": "Test extension \`x-fern-property-name\`",
+  "variables": {},
+  "webhooks": [],
+}
+`;
