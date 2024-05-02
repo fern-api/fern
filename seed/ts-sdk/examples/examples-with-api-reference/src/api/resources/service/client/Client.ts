@@ -31,7 +31,7 @@ export class Service {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/movie/${await serializers.MovieId.jsonOrThrow(movieId)}`
+                `/movie/${encodeURIComponent(await serializers.MovieId.jsonOrThrow(movieId))}`
             ),
             method: "GET",
             headers: {

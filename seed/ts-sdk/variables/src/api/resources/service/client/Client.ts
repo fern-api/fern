@@ -23,7 +23,10 @@ export class Service {
 
     public async post(requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${this._options.rootVariable}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/${encodeURIComponent(this._options.rootVariable)}`
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",

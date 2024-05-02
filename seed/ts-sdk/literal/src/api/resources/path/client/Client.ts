@@ -24,7 +24,7 @@ export class Path {
 
     public async send(id: "123", requestOptions?: Path.RequestOptions): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `path/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `path/${encodeURIComponent(id)}`),
             method: "POST",
             headers: {
                 "X-API-Version": "02-02-2024",

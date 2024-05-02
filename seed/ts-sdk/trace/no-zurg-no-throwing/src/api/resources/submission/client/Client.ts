@@ -41,7 +41,7 @@ export class Submission {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/create-session/${language}`
+                `/sessions/create-session/${encodeURIComponent(language)}`
             ),
             method: "POST",
             headers: {
@@ -88,7 +88,7 @@ export class Submission {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/${sessionId}`
+                `/sessions/${encodeURIComponent(sessionId)}`
             ),
             method: "GET",
             headers: {
@@ -133,7 +133,7 @@ export class Submission {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/stop/${sessionId}`
+                `/sessions/stop/${encodeURIComponent(sessionId)}`
             ),
             method: "DELETE",
             headers: {

@@ -32,11 +32,11 @@ export class PathParam {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `path/${await serializers.Operand.jsonOrThrow(
-                    operand
-                )}/${maybeOperand}/${await serializers.ColorOrOperand.jsonOrThrow(
-                    operandOrColor
-                )}/${maybeOperandOrColor}`
+                `path/${encodeURIComponent(await serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(
+                    maybeOperand
+                )}/${encodeURIComponent(
+                    await serializers.ColorOrOperand.jsonOrThrow(operandOrColor)
+                )}/${encodeURIComponent(maybeOperandOrColor)}`
             ),
             method: "POST",
             headers: {

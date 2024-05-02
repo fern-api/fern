@@ -40,7 +40,7 @@ export class Service {
     ): Promise<SeedExamples.File_> {
         const { xFileApiVersion } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/${filename}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/${encodeURIComponent(filename)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

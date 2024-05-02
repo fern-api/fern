@@ -29,7 +29,10 @@ export class Service {
         requestOptions?: Service.RequestOptions
     ): Promise<SeedExamples.Exception> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/notification/${notificationId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/file/notification/${encodeURIComponent(notificationId)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

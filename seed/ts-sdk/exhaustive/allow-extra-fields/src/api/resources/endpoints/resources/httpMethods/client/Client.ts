@@ -25,7 +25,7 @@ export class HttpMethods {
 
     public async testGet(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -131,7 +131,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -187,7 +187,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -239,7 +239,7 @@ export class HttpMethods {
 
     public async testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

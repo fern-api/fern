@@ -32,7 +32,7 @@ export class Sysprop {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${language}/${numWarmInstances}`
+                `/sysprop/num-warm-instances/${encodeURIComponent(language)}/${encodeURIComponent(numWarmInstances)}`
             ),
             method: "PUT",
             headers: {

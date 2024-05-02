@@ -93,7 +93,7 @@ export class Imdb {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/movies/${await serializers.MovieId.jsonOrThrow(movieId)}`
+                `/movies/${encodeURIComponent(await serializers.MovieId.jsonOrThrow(movieId))}`
             ),
             method: "GET",
             headers: {

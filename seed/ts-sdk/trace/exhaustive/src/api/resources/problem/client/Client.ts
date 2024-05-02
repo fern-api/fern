@@ -150,7 +150,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problem-crud/update/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "POST",
             headers: {
@@ -202,7 +202,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problem-crud/delete/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "DELETE",
             headers: {

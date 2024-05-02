@@ -23,7 +23,10 @@ export class Service {
 
     public async nop(nestedId: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${this._options.id}//${nestedId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

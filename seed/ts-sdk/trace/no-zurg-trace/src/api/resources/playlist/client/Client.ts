@@ -52,7 +52,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/create`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/create`
             ),
             method: "POST",
             headers: {
@@ -141,7 +141,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/all`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/all`
             ),
             method: "GET",
             headers: {
@@ -203,7 +203,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${playlistId}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`
             ),
             method: "GET",
             headers: {
@@ -276,7 +276,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${playlistId}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`
             ),
             method: "PUT",
             headers: {
@@ -343,7 +343,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${playlistId}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`
             ),
             method: "DELETE",
             headers: {
