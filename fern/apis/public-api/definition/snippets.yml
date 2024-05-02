@@ -10,7 +10,7 @@ service:
     get:
       path: ""
       docs: Get snippet by endpoint method and path
-      display-name: Get SDK snippet for endpoint
+      display-name: Get snippet for endpoint
       availability: pre-release
       audiences:
         - external
@@ -30,17 +30,28 @@ service:
               docs: |
                 If you have more than one API, you must specify its ID.
             sdks:
-              type: optional<list<SDK>>
+              type: optional<list<SDKRequest>>
               docs: |
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
-            endpoint: EndpointIdentifier
+            endpoint: commons.EndpointIdentifier
             payload:
               type: optional<CustomSnippetPayload>
               docs: |
                 The JSON payload to be used as the input for the code snippet. This should just be thought of as the
                 request body you'd be sending to the endpoint as a cURL. If not specified then the default payload will be used.
+
       response: list<Snippet>
+      errors:
+        - commons.UnauthorizedError
+        - commons.UserNotInOrgError
+        - commons.UnavailableError
+        - ApiIdRequiredError
+        - OrgIdRequiredError
+        - OrgIdAndApiIdNotFound
+        - OrgIdNotFound
+        - EndpointNotFound
+        - SDKNotFound
       examples:
         - request:
             endpoint:
@@ -78,10 +89,10 @@ service:
 
     load:
       path: /load
-      display-name: Load all SDK snippets
+      display-name: Load all snippets
       method: POST
       availability: pre-release
-      audiences: 
+      audiences:
         - external
         - fiddle
       request:
@@ -100,16 +111,21 @@ service:
               docs: |
                 If you have more than one API, you must specify its ID.
             sdks:
-              type: optional<list<SDK>>
+              type: optional<list<SDKRequest>>
               docs: |
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
-            loadLevel: 
-              type: optional<SnippetLoadLevel>
-              docs: |
-                The level of detail to load for the snippet. If unspecified, 
-                the full snippet will be returned.
       response: SnippetsPage
+      errors:
+        - commons.UnauthorizedError
+        - commons.UserNotInOrgError
+        - commons.UnavailableError
+        - InvalidPageError
+        - ApiIdRequiredError
+        - OrgIdRequiredError
+        - OrgIdAndApiIdNotFound
+        - OrgIdNotFound
+        - SDKNotFound
       examples:
         - query-parameters:
             page: 1
@@ -119,7 +135,7 @@ service:
             sdks:
               - type: python
                 package: vellum-ai
-                version: 1.2.1
+                # version: 1.2.1
           response:
             body:
               next: 2
@@ -185,49 +201,50 @@ service:
                         })
 
 types:
-  ParameterPayload:
+  SDKRequest:
+    union:
+      typescript: TypeScriptSDKRequest
+      python: PythonSDKRequest
+      go: GoSDKRequest
+      ruby: RubySDKRequest
+      java: JavaSDKRequest
+
+  TypeScriptSDKRequest:
     properties:
-      name: string
-      value: unknown
-  CustomSnippetPayload:
+      package: string
+      version: optional<string>
+
+  PythonSDKRequest:
     properties:
-      headers: optional<list<ParameterPayload>>
-      pathParameters: optional<list<ParameterPayload>>
-      queryParameters: optional<list<ParameterPayload>>
-      requestBody: optional<unknown>
+      package: string
+      version: optional<string>
 
-  SnippetLoadLevel: 
-    enum: 
-      - value: full
-        docs: | 
-          The full snippet including client instantiation and method call.
-      - value: endpoint
-        docs: | 
-          Only returns the part of the snippet for the endpoint call. In 
-          other words, the client instantiation is not included.
-
-  EndpointIdentifier:
+  GoSDKRequest:
     properties:
-      path: EndpointPath
-      method: EndpointMethod
+      githubRepo: string
+      version: optional<string>
 
-  EndpointPath:
-    type: string
-    docs: The relative path for an endpont (e.g. `/users/{userId}`)
+  RubySDKRequest:
+    properties:
+      gem: string
+      version: optional<string>
 
-  EndpointMethod:
-    enum:
-      - PUT
-      - POST
-      - GET
-      - PATCH
-      - DELETE
+  JavaSDKRequest:
+    properties:
+      group:
+        type: string
+        docs: The maven repository group (e.g. `com.stripe.java`)
+      artifact:
+        type: string
+        docs: The artifact (e.g. `stripe-java`)
+      version: optional<string>
 
   SDK:
     union:
       typescript: TypeScriptSDK
       python: PythonSDK
       go: GoSDK
+      ruby: RubySDK
       java: JavaSDK
 
   TypeScriptSDK:
@@ -245,6 +262,11 @@ types:
       githubRepo: string
       version: string
 
+  RubySDK:
+    properties:
+      gem: string
+      version: string
+
   JavaSDK:
     properties:
       group:
@@ -254,48 +276,107 @@ types:
         type: string
         docs: The artifact (e.g. `stripe-java`)
       version: string
-  
+
   ####### Load Snippets #######
+
+  ### Load Snippets Custom Payload ###
+  ParameterPayload:
+    properties:
+      name: string
+      value: unknown
+  CustomSnippetPayload:
+    properties:
+      headers: optional<list<ParameterPayload>>
+      pathParameters: optional<list<ParameterPayload>>
+      queryParameters: optional<list<ParameterPayload>>
+      requestBody: optional<unknown>
 
   SnippetsPage:
     properties:
       next:
         type: optional<integer>
         docs: If present, pass this into the `page` query parameter to load the next page.
-      snippets:  
-        type: map<EndpointPath, SnippetsByEndpointMethod>
-        docs: | 
+      snippets:
+        type: map<commons.EndpointPath, SnippetsByEndpointMethod>
+        docs: |
           The snippets are returned as a map of endpoint path (e.g. `/api/users`) 
-          to a map of endpoint method (e.g. `POST`) to snippets. 
-  
-  SnippetsByEndpointMethod: 
-    type: map<EndpointMethod, list<Snippet>>
+          to a map of endpoint method (e.g. `POST`) to snippets.
 
-  Snippet: 
-    union: 
+  SnippetsByEndpointMethod:
+    type: map<commons.EndpointMethod, list<Snippet>>
+
+  Snippet:
+    union:
       typescript: TypeScriptSnippet
       python: PythonSnippet
       java: JavaSnippet
       go: GoSnippet
-  
-  TypeScriptSnippet: 
-    properties: 
+      ruby: RubySnippet
+
+  TypeScriptSnippet:
+    properties:
       sdk: TypeScriptSDK
       client: string
-  
-  PythonSnippet: 
-    properties: 
+
+  PythonSnippet:
+    properties:
       sdk: PythonSDK
       async_client: string
       sync_client: string
-  
-  GoSnippet: 
-    properties: 
+
+  GoSnippet:
+    properties:
       sdk: GoSDK
       client: string
-  
-  JavaSnippet: 
-    properties: 
+
+  RubySnippet:
+    properties:
+      sdk: RubySDK
+      client: string
+
+  JavaSnippet:
+    properties:
       sdk: JavaSDK
       async_client: string
       sync_client: string
+
+errors:
+  ApiIdRequiredError:
+    status-code: 400
+    docs: "An ApiId is required"
+    type: string
+
+  OrgIdRequiredError:
+    status-code: 400
+    docs: "An OrgId is required"
+    type: string
+
+  SnippetTemplateNotFoundError:
+    status-code: 404
+    docs: "A template for this snippet could not be found"
+    type: string
+
+  InvalidPageError:
+    status-code: 400
+    docs: "Page must be >=1"
+    type: string
+
+  OrgIdAndApiIdNotFound:
+    status-code: 404
+    docs: The requested OrgId and ApiId was not found
+    type: string
+
+  EndpointNotFound:
+    status-code: 404
+    docs: The requested endpoint was not found
+    type: string
+
+  OrgIdNotFound:
+    status-code: 404
+    docs: The requested OrgId was not found
+    type: string
+
+  SDKNotFound:
+    status-code: 404
+    docs: The requested SDK was not found
+    type: string
