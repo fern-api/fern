@@ -105,7 +105,11 @@ class SnippetTemplateFactory:
         return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
 
     def _generate_client(self, is_async: Optional[bool] = False) -> str:
-        return self._expression_to_snippet_str(self._generated_root_client.async_instantiation if is_async else self._generated_root_client.sync_instantiation)
+        return self._expression_to_snippet_str(
+            self._generated_root_client.async_instantiation
+            if is_async
+            else self._generated_root_client.sync_instantiation
+        )
 
     def _get_subpackage_client_accessor(
         self,
@@ -803,9 +807,10 @@ class SnippetTemplateFactory:
                         additional_templates={
                             "async": VersionedSnippetTemplate.factory.v_1(
                                 SnippetTemplate(
-                                    client_instantiation=async_client_instantiation, function_invocation=async_function_template
+                                    client_instantiation=async_client_instantiation,
+                                    function_invocation=async_function_template,
                                 )
-                            )  
+                            )
                         },
                     )
                 )
