@@ -36,7 +36,7 @@ class SourceFile(ClassParent):
         ...
 
     @abstractmethod
-    def to_str(self, include_imports: Optional[bool]) -> str:
+    def to_str(self, include_imports: Optional[bool] = True) -> str:
         ...
 
     @abstractmethod
