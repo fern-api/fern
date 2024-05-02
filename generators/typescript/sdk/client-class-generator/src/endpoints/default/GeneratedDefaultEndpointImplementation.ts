@@ -1,5 +1,5 @@
 import { ExampleEndpointCall, HttpEndpoint } from "@fern-fern/ir-sdk/api";
-import { Fetcher, GetReferenceOpts, getTextOfTsNode } from "@fern-typescript/commons";
+import { Fetcher, getExampleEndpointCalls, GetReferenceOpts, getTextOfTsNode } from "@fern-typescript/commons";
 import { EndpointSignature, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
@@ -88,7 +88,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const groups: string[] = [lines.join("\n")];
-        for (const example of this.endpoint.examples) {
+        for (const example of getExampleEndpointCalls(this.endpoint.examples)) {
             const generatedExample = this.getExample({
                 context,
                 example,

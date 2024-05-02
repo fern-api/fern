@@ -354,11 +354,6 @@ export class Service {
      *     await testSdk.file.service.getFile("file.txt", {
      *         xFileApiVersion: "0.0.2"
      *     })
-     *
-     * @example
-     *     await testSdk.file.service.getFile("string", {
-     *         xFileApiVersion: "string"
-     *     })
      */
     public async getFile(filename: string, request: TestSdk.file.GetFileRequest, requestOptions?: Service.RequestOptions): Promise<TestSdk.File_> {
         const { xFileApiVersion } = request;
@@ -428,16 +423,6 @@ export * from "./requests";
  * @example
  *     {
  *         xFileApiVersion: "0.0.2"
- *     }
- *
- * @example
- *     {
- *         xFileApiVersion: "string"
- *     }
- *
- * @example
- *     {
- *         xFileApiVersion: "string"
  *     }
  */
 export interface GetFileRequest {
@@ -548,9 +533,6 @@ export class Service {
      *
      * @example
      *     await testSdk.health.service.check("id-2sdx82h")
-     *
-     * @example
-     *     await testSdk.health.service.check("string")
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -855,13 +837,6 @@ export * from "./requests";
  *         xApiVersion: "0.0.1",
  *         shallow: false,
  *         tag: "development"
- *     }
- *
- * @example
- *     {
- *         xApiVersion: "string",
- *         shallow: true,
- *         tag: "string"
  *     }
  */
 export interface GetMetadataRequest {
