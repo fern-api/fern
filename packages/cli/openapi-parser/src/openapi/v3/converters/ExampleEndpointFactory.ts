@@ -544,7 +544,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
                     audiences: [],
                     conflict: {},
                     generatedName: property.key,
-                    nameOverride: undefined,
+                    nameOverride: undefined
                 };
             })
             .filter(isNonNullish),
