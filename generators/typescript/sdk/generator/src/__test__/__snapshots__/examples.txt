@@ -260,6 +260,13 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {
     }
 
+    /**
+     * @param {string} notificationId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.file.notification.service.getException("notification-hsy129x")
+     */
     public async getException(notificationId: string, requestOptions?: Service.RequestOptions): Promise<TestSdk.Exception> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/notification/\${encodeURIComponent(notificationId)}\`),
@@ -348,6 +355,11 @@ export class Service {
 
     /**
      * This endpoint returns a file by its name.
+     *
+     * @param {string} filename - This is a filename
+     * @param {TestSdk.file.GetFileRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link TestSdk.NotFoundError}
      *
      * @example
@@ -531,6 +543,9 @@ export class Service {
     /**
      * This endpoint checks the health of a resource.
      *
+     * @param {string} id - The id to check
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await testSdk.health.service.check("id-2sdx82h")
      */
@@ -575,6 +590,8 @@ export class Service {
 
     /**
      * This endpoint checks the health of the service.
+     *
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await testSdk.health.service.ping()
@@ -676,6 +693,13 @@ export class Service {
     constructor(protected readonly _options: Service.Options) {
     }
 
+    /**
+     * @param {TestSdk.MovieId} movieId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.service.getMovie("movie-c06a4ad7")
+     */
     public async getMovie(movieId: TestSdk.MovieId, requestOptions?: Service.RequestOptions): Promise<TestSdk.Movie> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), \`/movie/\${encodeURIComponent(await serializers.MovieId.jsonOrThrow(movieId))}\`),
@@ -715,6 +739,33 @@ export class Service {
         }
     }
 
+    /**
+     * @param {TestSdk.Movie} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.service.createMovie({
+     *         id: "movie-c06a4ad7",
+     *         prequel: "movie-cv9b914f",
+     *         title: "The Boy and the Heron",
+     *         from: "Hayao Miyazaki",
+     *         rating: 8,
+     *         type: "movie",
+     *         tag: "tag-wf9as23d",
+     *         metadata: {
+     *             "actors": [
+     *                 "Christian Bale",
+     *                 "Florence Pugh",
+     *                 "Willem Dafoe"
+     *             ],
+     *             "releaseDate": "2023-12-08",
+     *             "ratings": {
+     *                 "rottenTomatoes": 97,
+     *                 "imdb": 7.6
+     *             }
+     *         }
+     *     })
+     */
     public async createMovie(request: TestSdk.Movie, requestOptions?: Service.RequestOptions): Promise<TestSdk.MovieId> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/movie"),
@@ -755,6 +806,17 @@ export class Service {
         }
     }
 
+    /**
+     * @param {TestSdk.GetMetadataRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.service.getMetadata({
+     *         xApiVersion: "0.0.1",
+     *         shallow: false,
+     *         tag: "development"
+     *     })
+     */
     public async getMetadata(request: TestSdk.GetMetadataRequest, requestOptions?: Service.RequestOptions): Promise<TestSdk.Metadata> {
         const { shallow, tag, xApiVersion } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -1432,6 +1494,13 @@ export class TestSdkClient {
     constructor(protected readonly _options: TestSdkClient.Options) {
     }
 
+    /**
+     * @param {string} request
+     * @param {TestSdkClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await testSdk.echo("Hello world!\\\\n\\\\nwith\\\\n\\\\tnewlines")
+     */
     public async echo(request: string, requestOptions?: TestSdkClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
