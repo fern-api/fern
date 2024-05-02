@@ -34,3 +34,12 @@ export const TypeReferenceDeclarationWithEnvOverride = extendTypeReferenceSchema
     }).shape
 );
 export type TypeReferenceDeclarationWithEnvOverride = z.infer<typeof TypeReferenceDeclarationWithEnvOverride>;
+
+export const TypeReferenceDeclarationWithContentType = extendTypeReferenceSchema(
+    DeclarationWithNameSchema.extend({
+        ["content-type"]: z.optional(z.string(), {
+            description: "Only applicable for multipart/form-data body properties"
+        })
+    }).shape
+);
+export type TypeReferenceDeclarationWithContentType = z.infer<typeof TypeReferenceDeclarationWithContentType>;

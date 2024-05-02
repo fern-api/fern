@@ -15,6 +15,7 @@ export declare namespace RawFileUploadRequest {
         isFile: true;
         isOptional: boolean;
         isArray: boolean;
+        contentType: string | undefined;
     }
 
     export interface InlinedRequestBodyProperty extends BaseProperty {
@@ -52,7 +53,8 @@ export function parseFileUploadRequest(request: HttpRequestSchema | string): Raw
                     key,
                     docs,
                     isOptional: maybeParsedFileType.isOptional,
-                    isArray: maybeParsedFileType.isArray
+                    isArray: maybeParsedFileType.isArray,
+                    contentType: typeof propertyType !== "string" ? propertyType["content-type"] : undefined
                 });
             } else {
                 acc.push({ isFile: false, key, propertyType, docs });
