@@ -100,7 +100,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from .user import User"
+                                "from seed import User"
                             ],
                             "isOptional": true,
                             "templateString": "user=User(\n\t\t$FERN_INPUT\n\t)",
@@ -214,7 +214,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from .nested_user import NestedUser"
+                                "from seed import NestedUser"
                             ],
                             "isOptional": true,
                             "templateString": "nested_user=NestedUser(\n\t\t$FERN_INPUT\n\t)",
@@ -239,7 +239,7 @@
                                     "type": "template",
                                     "value": {
                                         "imports": [
-                                            "from .user import User"
+                                            "from seed import User"
                                         ],
                                         "isOptional": true,
                                         "templateString": "user=User(\n\t\t\t$FERN_INPUT\n\t\t)",
@@ -301,7 +301,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from .user import User"
+                                "from seed import User"
                             ],
                             "isOptional": true,
                             "templateString": "optional_user=User(\n\t\t$FERN_INPUT\n\t)",
@@ -358,7 +358,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from .user import User"
+                                "from seed import User"
                             ],
                             "isOptional": true,
                             "templateString": "exclude_user=User(\n\t\t$FERN_INPUT\n\t)",

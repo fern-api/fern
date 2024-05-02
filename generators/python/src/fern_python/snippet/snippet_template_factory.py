@@ -456,9 +456,7 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         indentation_level: int = 0,
     ) -> Template:
-        object_reference = self._context.pydantic_generator_context.get_class_reference_for_type_id(
-            type_id=type_name.type_id
-        )
+        object_reference = self._snippet_writer.get_class_reference_for_declared_type_name(name=type_name)
         object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
             type_name=type_name.type_id
         )

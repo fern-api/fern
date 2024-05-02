@@ -48,7 +48,7 @@
                                             "USD": "SeedIdempotencyHeaders.Currency.Usd",
                                             "YEN": "SeedIdempotencyHeaders.Currency.Yen"
                                         },
-                                        "templateString": "currency: '$FERN_INPUT'",
+                                        "templateString": "currency: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "BODY",
                                             "path": "currency",

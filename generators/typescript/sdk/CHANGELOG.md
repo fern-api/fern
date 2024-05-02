@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.0-rc6] - 2024-04-30
+
+- Fix: snippet templates now move file upload parameters to unnamed args
+
 ## [0.16.0-rc5] - 2024-04-30
 
 - Fix: remove duplicate quotation marks in snippet templates

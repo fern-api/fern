@@ -226,7 +226,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from .movie import Movie"
+                                "from seed import Movie"
                             ],
                             "isOptional": true,
                             "templateString": "request=Movie(\n\t\t$FERN_INPUT\n\t)",
