@@ -332,23 +332,21 @@ class SnippetTemplateFactory:
                 example_expression=AST.Expression(self.TEMPLATE_SENTINEL),
                 single_union_type=sut,
             ).generate_snippet_template()
-            imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
-            return (
-                Template.factory.generic(
-                    GenericTemplate(
-                        imports=[imports]
-                        if imports is not None
-                        else [],
-                        is_optional=True,
-                        template_string=f"{name}={snippet_template_str}"
-                        if name is not None
-                        else f"{snippet_template_str}",
-                        template_inputs=template_inputs,
+            if snippet_template is not None:
+                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+                return Template.factory.generic(
+                        GenericTemplate(
+                            imports=[imports]
+                            if imports is not None
+                            else [],
+                            is_optional=True,
+                            template_string=f"{name}={snippet_template_str}"
+                            if name is not None
+                            else f"{snippet_template_str}",
+                            template_inputs=template_inputs,
+                        )
                     )
-                )
-                if snippet_template is not None
-                else None
-            )
+            return None
 
         elif sut_shape.properties_type == "singleProperty":
             object_reference = self._context.pydantic_generator_context.get_class_reference_for_type_id(
@@ -364,32 +362,31 @@ class SnippetTemplateFactory:
             child_breadcrumbs = name_breadcrumbs or []
             if wire_or_original_name is not None:
                 child_breadcrumbs.append(wire_or_original_name)
-            imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+            
+            if snippet_template is not None:
+                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
 
-            return (
-                Template.factory.generic(
-                    GenericTemplate(
-                        imports=[imports]
-                        if imports is not None
-                        else [],
-                        is_optional=True,
-                        template_string=f"{name}={snippet_template_str}"
-                        if name is not None
-                        else f"{snippet_template_str}",
-                        template_inputs=[
-                            self.get_type_reference_template_input(
-                                type_=sut_shape.type,
-                                name=name,
-                                location=location,
-                                wire_or_original_name=sut_shape.name.wire_value,
-                                name_breadcrumbs=child_breadcrumbs,
-                            )
-                        ],
+                return Template.factory.generic(
+                        GenericTemplate(
+                            imports=[imports]
+                            if imports is not None
+                            else [],
+                            is_optional=True,
+                            template_string=f"{name}={snippet_template_str}"
+                            if name is not None
+                            else f"{snippet_template_str}",
+                            template_inputs=[
+                                self.get_type_reference_template_input(
+                                    type_=sut_shape.type,
+                                    name=name,
+                                    location=location,
+                                    wire_or_original_name=sut_shape.name.wire_value,
+                                    name_breadcrumbs=child_breadcrumbs,
+                                )
+                            ],
+                        )
                     )
-                )
-                if snippet_template is not None
-                else None
-            )
+            return None
 
         elif sut_shape.properties_type == "noProperties":
             object_reference = self._context.pydantic_generator_context.get_class_reference_for_type_id(
@@ -402,24 +399,23 @@ class SnippetTemplateFactory:
                 example_expression=AST.Expression(self.TEMPLATE_SENTINEL),
                 single_union_type=sut,
             ).generate_snippet_template()
-            imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
 
-            return (
-                Template.factory.generic(
-                    GenericTemplate(
-                        imports=[imports]
-                        if imports is not None
-                        else [],
-                        is_optional=True,
-                        template_string=f"{name}={snippet_template_str}"
-                        if name is not None
-                        else f"{snippet_template_str}",
-                        template_inputs=[],
+            if snippet_template is not None:
+                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+
+                return Template.factory.generic(
+                        GenericTemplate(
+                            imports=[imports]
+                            if imports is not None
+                            else [],
+                            is_optional=True,
+                            template_string=f"{name}={snippet_template_str}"
+                            if name is not None
+                            else f"{snippet_template_str}",
+                            template_inputs=[],
+                        )
                     )
-                )
-                if snippet_template is not None
-                else None
-            )
+            return None
         else:
             return None
 

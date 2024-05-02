@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from typing import Callable, List, TypeVar
+from typing import Callable, List, TypeVar, Optional
 
 from ordered_set import OrderedSet
 
