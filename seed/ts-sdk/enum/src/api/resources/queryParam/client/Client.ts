@@ -21,6 +21,16 @@ export declare namespace QueryParam {
 export class QueryParam {
     constructor(protected readonly _options: QueryParam.Options) {}
 
+    /**
+     * @param {SeedEnum.SendEnumAsQueryParamRequest} request
+     * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedEnum.queryParam.send({
+     *         operand: SeedEnum.Operand.GreaterThan,
+     *         operandOrColor: SeedEnum.Color.Red
+     *     })
+     */
     public async send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions
@@ -80,6 +90,18 @@ export class QueryParam {
         }
     }
 
+    /**
+     * @param {SeedEnum.SendEnumListAsQueryParamRequest} request
+     * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedEnum.queryParam.sendList({
+     *         operand: SeedEnum.Operand.GreaterThan,
+     *         maybeOperand: SeedEnum.Operand.GreaterThan,
+     *         operandOrColor: SeedEnum.Color.Red,
+     *         maybeOperandOrColor: SeedEnum.Color.Red
+     *     })
+     */
     public async sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions

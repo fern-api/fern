@@ -19,6 +19,12 @@ export declare namespace C {
 export class C {
     constructor(protected readonly _options: C.Options) {}
 
+    /**
+     * @param {C.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApi.a.c.foo()
+     */
     public async foo(requestOptions?: C.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

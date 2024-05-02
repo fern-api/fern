@@ -23,6 +23,17 @@ export declare namespace ReqWithHeaders {
 export class ReqWithHeaders {
     constructor(protected readonly _options: ReqWithHeaders.Options) {}
 
+    /**
+     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.reqWithHeaders.getWithCustomHeader({
+     *         "X-TEST-SERVICE-HEADER": "string",
+     *         "X-TEST-ENDPOINT-HEADER": "string",
+     *         body: "string"
+     *     })
+     */
     public async getWithCustomHeader(
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions

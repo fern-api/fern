@@ -26,6 +26,11 @@ export class Service {
 
     /**
      * This endpoint returns a file by its name.
+     *
+     * @param {string} filename - This is a filename
+     * @param {SeedExamples.file.GetFileRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedExamples.NotFoundError}
      *
      * @example

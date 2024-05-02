@@ -22,6 +22,16 @@ export declare namespace PathParam {
 export class PathParam {
     constructor(protected readonly _options: PathParam.Options) {}
 
+    /**
+     * @param {SeedEnum.Operand} operand
+     * @param {SeedEnum.Operand | undefined} maybeOperand
+     * @param {SeedEnum.ColorOrOperand} operandOrColor
+     * @param {SeedEnum.ColorOrOperand | undefined} maybeOperandOrColor
+     * @param {PathParam.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, SeedEnum.Operand.LessThan, SeedEnum.Color.Red, SeedEnum.Color.Red)
+     */
     public async send(
         operand: SeedEnum.Operand,
         maybeOperand: SeedEnum.Operand | undefined,

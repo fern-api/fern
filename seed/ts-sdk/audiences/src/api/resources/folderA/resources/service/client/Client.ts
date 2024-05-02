@@ -21,6 +21,12 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedAudiences.folderA.service.getDirectThread()
+     */
     public async getDirectThread(requestOptions?: Service.RequestOptions): Promise<SeedAudiences.folderA.Response> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

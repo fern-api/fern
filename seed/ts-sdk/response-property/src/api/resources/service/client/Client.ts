@@ -22,6 +22,13 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedResponseProperty.service.getMovie("string")
+     */
     public async getMovie(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -72,6 +79,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedResponseProperty.service.getMovieDocs("string")
+     */
     public async getMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -124,6 +138,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedResponseProperty.service.getMovieName("string")
+     */
     public async getMovieName(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -176,6 +197,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedResponseProperty.service.getMovieMetadata("string")
+     */
     public async getMovieMetadata(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -228,6 +256,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedResponseProperty.service.getOptionalMovie("string")
+     */
     public async getOptionalMovie(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -280,6 +315,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedResponseProperty.service.getOptionalMovieDocs("string")
+     */
     public async getOptionalMovieDocs(
         request: string,
         requestOptions?: Service.RequestOptions
@@ -332,6 +374,13 @@ export class Service {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedResponseProperty.service.getOptionalMovieName("string")
+     */
     public async getOptionalMovieName(
         request: string,
         requestOptions?: Service.RequestOptions

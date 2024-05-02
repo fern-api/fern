@@ -26,6 +26,15 @@ export declare namespace S3 {
 export class S3 {
     constructor(protected readonly _options: S3.Options) {}
 
+    /**
+     * @param {SeedMultiUrlEnvironment.GetPresignedUrlRequest} request
+     * @param {S3.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMultiUrlEnvironment.s3.getPresignedUrl({
+     *         s3Key: "string"
+     *     })
+     */
     public async getPresignedUrl(
         request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
         requestOptions?: S3.RequestOptions

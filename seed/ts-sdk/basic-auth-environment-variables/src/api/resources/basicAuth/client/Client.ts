@@ -26,6 +26,9 @@ export class BasicAuth {
 
     /**
      * GET request with basic auth scheme
+     *
+     * @param {BasicAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
      *
      * @example
@@ -92,6 +95,10 @@ export class BasicAuth {
 
     /**
      * POST request with basic auth scheme
+     *
+     * @param {unknown} request
+     * @param {BasicAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedBasicAuthEnvironmentVariables.UnauthorizedRequest}
      * @throws {@link SeedBasicAuthEnvironmentVariables.BadRequest}
      *

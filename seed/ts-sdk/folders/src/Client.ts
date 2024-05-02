@@ -21,6 +21,12 @@ export declare namespace SeedApiClient {
 export class SeedApiClient {
     constructor(protected readonly _options: SeedApiClient.Options) {}
 
+    /**
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApi.foo()
+     */
     public async foo(requestOptions?: SeedApiClient.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

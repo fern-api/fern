@@ -25,6 +25,13 @@ export declare namespace SeedExamplesClient {
 export class SeedExamplesClient {
     constructor(protected readonly _options: SeedExamplesClient.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines")
+     */
     public async echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

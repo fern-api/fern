@@ -21,6 +21,15 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} serviceParam
+     * @param {string} resourceParam
+     * @param {number} endpointParam
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApiWideBasePath.service.post("string", "string", 1)
+     */
     public async post(
         serviceParam: string,
         resourceParam: string,

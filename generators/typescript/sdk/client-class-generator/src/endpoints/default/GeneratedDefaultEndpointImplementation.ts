@@ -8,7 +8,8 @@ import { buildUrl } from "../utils/buildUrl";
 import {
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression
+    getTimeoutExpression,
+    REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 
@@ -74,20 +75,44 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public getDocs(context: SdkContext): string | undefined {
-        const lines: string[] = [];
+        const groups: string[] = [];
         if (this.endpoint.docs != null) {
-            lines.push(this.endpoint.docs);
+            groups.push(this.endpoint.docs);
         }
 
+        const params: string[] = [];
+        for (const parameter of this.request.getEndpointParameters(context)) {
+            if (parameter.docs == null) {
+                params.push(`@param {${parameter.type}} ${parameter.name}`);
+                continue;
+            }
+            const docsStrPrefix = `@param {${parameter.type}} ${parameter.name} - `;
+            const docsStrs = parameter.docs.split("\n").map((line, index) => {
+                if (index === 0) {
+                    return `${docsStrPrefix}${line}`;
+                } else {
+                    return `${" ".repeat(docsStrPrefix.length)}${line}`;
+                }
+            });
+            params.push(...docsStrs);
+        }
+
+        // Every method supports request options, so we always include this parameter last.
+        const requestOptionsType = this.generatedSdkClientClass.getRequestOptionsType(this.endpoint.idempotent);
+        params.push(
+            `@param {${requestOptionsType}} ${REQUEST_OPTIONS_PARAMETER_NAME} - Request-specific configuration.`
+        );
+        groups.push(params.join("\n"));
+
+        const exceptions: string[] = [];
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
-            lines.push(`@throws {@link ${errorName}}`);
+            exceptions.push(`@throws {@link ${errorName}}`);
+        }
+        if (exceptions.length > 0) {
+            groups.push(exceptions.join("\n"));
         }
 
-        if (lines.length === 0) {
-            return undefined;
-        }
-
-        const groups: string[] = [lines.join("\n")];
+        const examples: string[] = [];
         for (const example of getExampleEndpointCalls(this.endpoint.examples)) {
             const generatedExample = this.getExample({
                 context,
@@ -101,9 +126,13 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
             exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
             // Only add if it doesn't already exist
-            if (!groups.includes(exampleStr)) {
-                groups.push(exampleStr);
+            if (!examples.includes(exampleStr)) {
+                examples.push(exampleStr);
             }
+        }
+        if (examples.length > 0) {
+            // Each example is its own group.
+            groups.push(...examples);
         }
 
         return groups.join("\n\n");

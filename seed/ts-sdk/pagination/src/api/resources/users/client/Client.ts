@@ -23,6 +23,18 @@ export declare namespace Users {
 export class Users {
     constructor(protected readonly _options: Users.Options) {}
 
+    /**
+     * @param {SeedPagination.ListUsersCursorPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listWithCursorPagination({
+     *         page: 1,
+     *         perPage: 1,
+     *         order: SeedPagination.Order.Asc,
+     *         startingAfter: "string"
+     *     })
+     */
     public async listWithCursorPagination(
         request: SeedPagination.ListUsersCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions
@@ -92,6 +104,18 @@ export class Users {
         }
     }
 
+    /**
+     * @param {SeedPagination.ListUsersOffsetPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listWithOffsetPagination({
+     *         page: 1,
+     *         perPage: 1,
+     *         order: SeedPagination.Order.Asc,
+     *         startingAfter: "string"
+     *     })
+     */
     public async listWithOffsetPagination(
         request: SeedPagination.ListUsersOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions
@@ -161,6 +185,15 @@ export class Users {
         }
     }
 
+    /**
+     * @param {SeedPagination.ListUsersExtendedRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listWithExtendedResults({
+     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+     *     })
+     */
     public async listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
         requestOptions?: Users.RequestOptions
@@ -218,6 +251,15 @@ export class Users {
         }
     }
 
+    /**
+     * @param {SeedPagination.ListUsernamesRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listUsernames({
+     *         startingAfter: "string"
+     *     })
+     */
     public async listUsernames(
         request: SeedPagination.ListUsernamesRequest = {},
         requestOptions?: Users.RequestOptions
@@ -275,6 +317,15 @@ export class Users {
         }
     }
 
+    /**
+     * @param {SeedPagination.ListWithGlobalConfigRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listWithGlobalConfig({
+     *         offset: 1
+     *     })
+     */
     public async listWithGlobalConfig(
         request: SeedPagination.ListWithGlobalConfigRequest = {},
         requestOptions?: Users.RequestOptions

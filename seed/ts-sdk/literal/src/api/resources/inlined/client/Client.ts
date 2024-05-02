@@ -22,6 +22,18 @@ export declare namespace Inlined {
 export class Inlined {
     constructor(protected readonly _options: Inlined.Options) {}
 
+    /**
+     * @param {SeedLiteral.SendLiteralsInlinedRequest} request
+     * @param {Inlined.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedLiteral.inlined.send({
+     *         temperature: 10.1,
+     *         prompt: "You are a helpful assistant",
+     *         stream: false,
+     *         query: "What is the weather today"
+     *     })
+     */
     public async send(
         request: SeedLiteral.SendLiteralsInlinedRequest,
         requestOptions?: Inlined.RequestOptions

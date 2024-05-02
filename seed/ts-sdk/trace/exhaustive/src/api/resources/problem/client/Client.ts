@@ -27,6 +27,9 @@ export class Problem {
     /**
      * Creates a problem
      *
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.problem.createProblem({
      *         problemName: "string",
@@ -108,6 +111,10 @@ export class Problem {
 
     /**
      * Updates a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.updateProblem(SeedTrace.ProblemId("string"), {
@@ -192,6 +199,9 @@ export class Problem {
     /**
      * Soft deletes a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.problem.deleteProblem(SeedTrace.ProblemId("string"))
      */
@@ -237,6 +247,9 @@ export class Problem {
 
     /**
      * Returns default starter files for problem
+     *
+     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.getDefaultStarterFiles({
