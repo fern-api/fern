@@ -66,10 +66,10 @@
                             "members": {
                                 "circle": {
                                     "imports": [
-                                        "from .shape import Shape"
+                                        "from seed import Shape_Circle"
                                     ],
                                     "isOptional": true,
-                                    "templateString": "request=from seed import Shape_Circle\n\nShape_Circle($FERN_INPUT, )",
+                                    "templateString": "request=Shape_Circle($FERN_INPUT, )",
                                     "templateInputs": [
                                         {
                                             "type": "template",
@@ -92,10 +92,10 @@
                                 },
                                 "square": {
                                     "imports": [
-                                        "from .shape import Shape"
+                                        "from seed import Shape_Square"
                                     ],
                                     "isOptional": true,
-                                    "templateString": "request=from seed import Shape_Square\n\nShape_Square($FERN_INPUT, )",
+                                    "templateString": "request=Shape_Square($FERN_INPUT, )",
                                     "templateInputs": [
                                         {
                                             "type": "template",

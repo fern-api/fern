@@ -2670,10 +2670,10 @@
                             "members": {
                                 "dog": {
                                     "imports": [
-                                        "from .animal import Animal"
+                                        "from seed.types import Animal_Dog"
                                     ],
                                     "isOptional": true,
-                                    "templateString": "request=from seed.types import Animal_Dog\n\nAnimal_Dog($FERN_INPUT, )",
+                                    "templateString": "request=Animal_Dog($FERN_INPUT, )",
                                     "templateInputs": [
                                         {
                                             "type": "template",
@@ -2712,10 +2712,10 @@
                                 },
                                 "cat": {
                                     "imports": [
-                                        "from .animal import Animal"
+                                        "from seed.types import Animal_Cat"
                                     ],
                                     "isOptional": true,
-                                    "templateString": "request=from seed.types import Animal_Cat\n\nAnimal_Cat($FERN_INPUT, )",
+                                    "templateString": "request=Animal_Cat($FERN_INPUT, )",
                                     "templateInputs": [
                                         {
                                             "type": "template",

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.1-rc4] - 2024-05-01
+
+- Fix: The SDK now generates discriminated union snippet templates correctly.
+
 ## [1.5.1-rc3] - 2024-05-01
 
 - Improvement: Union types leverage the fern aware base model to include JSON and Dict function overrides.
@@ -127,8 +131,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.3.0-rc0] - 2024-04-21
 
-- Feature: The generator now registers snippet templates which can be used for dynamic
+- Beta, feature: The generator now registers snippet templates which can be used for dynamic
   SDK code snippet generation.
+
+  **Note**: You must be on the enterprise tier to enable this mode.
 
 ## [1.2.0-rc2] - 2024-04-10
 

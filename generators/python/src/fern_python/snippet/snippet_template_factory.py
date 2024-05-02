@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Tuple, Union
 
 import fern.ir.resources as ir_types
 from fdr import (
@@ -91,6 +91,18 @@ class SnippetTemplateFactory:
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet.to_str().strip()
+
+    def _expression_to_snippet_str_and_imports(
+        self,
+        expr: AST.Expression,
+    ) -> Tuple[str, str]:
+        snippet = SourceFileFactory.create_snippet()
+        snippet.add_expression(expr)
+        snippet_full = snippet.to_str()
+        snippet_without_imports = snippet.to_str(include_imports=False)
+
+        # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
+        return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
 
     # TODO: generate a sync snippet as well, right now we're just going to start with async only
     def _generate_client(self) -> str:
@@ -239,14 +251,14 @@ class SnippetTemplateFactory:
 
     def _convert_enum_value_to_str(
         self, type_name: ir_types.DeclaredTypeName, enum_value: ir_types.NameAndWireValue
-    ) -> str:
+    ) -> Tuple[str, str]:
         enum_snippet = EnumSnippetGenerator(
             snippet_writer=self._snippet_writer,
             name=type_name,
             example=enum_value,
             use_str_enums=self._context.custom_config.pydantic_config.use_str_enums,
         ).generate_snippet()
-        return self._expression_to_snippet_str(enum_snippet)
+        return self._expression_to_snippet_str_and_imports(enum_snippet)
 
     def _get_enum_template(
         self,
@@ -257,8 +269,9 @@ class SnippetTemplateFactory:
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
     ) -> Template:
+        # TODO: we should also be making it so you can easily grab the right import depending on the enum you use
         value_map = {
-            value.name.wire_value: self._convert_enum_value_to_str(type_name=type_name, enum_value=value.name)
+            value.name.wire_value: self._convert_enum_value_to_str(type_name=type_name, enum_value=value.name)[1]
             for value in values
         }
         return Template.factory.enum(
@@ -284,6 +297,8 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         indentation_level: int = 0,
     ) -> Union[Template, None]:
+        child_indentation_level = indentation_level + 1
+        example_expression = f"\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}"
         sut_shape = sut.shape.get_as_union()
         if sut_shape.properties_type == "samePropertiesAsObject":
             object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
@@ -316,22 +331,19 @@ class SnippetTemplateFactory:
                 example_expression=AST.Expression(self.TEMPLATE_SENTINEL),
                 single_union_type=sut,
             ).generate_snippet_template()
-            return (
-                Template.factory.generic(
+            if snippet_template is not None:
+                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+                return Template.factory.generic(
                     GenericTemplate(
-                        imports=[self._imports_manager._get_import_as_string(object_reference.import_)]
-                        if object_reference.import_ is not None
-                        else [],
+                        imports=[imports] if imports is not None else [],
                         is_optional=True,
-                        template_string=f"{name}={self._expression_to_snippet_str(snippet_template)}"
+                        template_string=f"{name}={snippet_template_str}"
                         if name is not None
-                        else f"{self.TEMPLATE_SENTINEL}",
+                        else f"{snippet_template_str}",
                         template_inputs=template_inputs,
                     )
                 )
-                if snippet_template is not None
-                else None
-            )
+            return None
 
         elif sut_shape.properties_type == "singleProperty":
             object_reference = self._context.pydantic_generator_context.get_class_reference_for_type_id(
@@ -348,16 +360,16 @@ class SnippetTemplateFactory:
             if wire_or_original_name is not None:
                 child_breadcrumbs.append(wire_or_original_name)
 
-            return (
-                Template.factory.generic(
+            if snippet_template is not None:
+                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+
+                return Template.factory.generic(
                     GenericTemplate(
-                        imports=[self._imports_manager._get_import_as_string(object_reference.import_)]
-                        if object_reference.import_ is not None
-                        else [],
+                        imports=[imports] if imports is not None else [],
                         is_optional=True,
-                        template_string=f"{name}={self._expression_to_snippet_str(snippet_template)}"
+                        template_string=f"{name}={snippet_template_str}"
                         if name is not None
-                        else f"{self.TEMPLATE_SENTINEL}",
+                        else f"{snippet_template_str}",
                         template_inputs=[
                             self.get_type_reference_template_input(
                                 type_=sut_shape.type,
@@ -369,9 +381,7 @@ class SnippetTemplateFactory:
                         ],
                     )
                 )
-                if snippet_template is not None
-                else None
-            )
+            return None
 
         elif sut_shape.properties_type == "noProperties":
             object_reference = self._context.pydantic_generator_context.get_class_reference_for_type_id(
@@ -385,22 +395,20 @@ class SnippetTemplateFactory:
                 single_union_type=sut,
             ).generate_snippet_template()
 
-            return (
-                Template.factory.generic(
+            if snippet_template is not None:
+                imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
+
+                return Template.factory.generic(
                     GenericTemplate(
-                        imports=[self._imports_manager._get_import_as_string(object_reference.import_)]
-                        if object_reference.import_ is not None
-                        else [],
+                        imports=[imports] if imports is not None else [],
                         is_optional=True,
-                        template_string=f"{name}={self._expression_to_snippet_str(snippet_template)}"
+                        template_string=f"{name}={snippet_template_str}"
                         if name is not None
-                        else f"{self.TEMPLATE_SENTINEL}",
+                        else f"{snippet_template_str}",
                         template_inputs=[],
                     )
                 )
-                if snippet_template is not None
-                else None
-            )
+            return None
         else:
             return None
 
