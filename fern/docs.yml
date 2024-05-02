@@ -243,6 +243,9 @@ navigation:
           - page: Accordion Groups
             path: ./pages/docs/components/accordion-groups.mdx
             icon: table-rows
+          - page: Aside
+            path: ./pages/docs/components/asides.mdx
+            icon: align-right
           - page: Callouts
             path: ./pages/docs/components/callouts.mdx
             icon: 'circle-exclamation'
