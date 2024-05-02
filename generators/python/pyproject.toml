@@ -10,7 +10,7 @@ pydantic = "^1.9.2,<=1.10.14"
 typer = {extras = ["all"], version = "^0.6.1"}
 fern-fern-generator-exec-sdk = {version = "0.0.750", source = "fern-prod"}
 ordered-set = "^4.1.0"
-fern-fern-fdr-sdk = {version = "0.0.5321", source = "fern-prod"}
+fern-fern-fdr-sdk = {version = "0.0.5407", source = "fern-prod"}
 fern-fern-ir-v39 = "^0.0.3473"
 
 [tool.poetry.dev-dependencies]
