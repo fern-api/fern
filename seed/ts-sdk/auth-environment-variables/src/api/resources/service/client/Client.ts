@@ -27,6 +27,8 @@ export class Service {
     /**
      * GET request with custom api key
      *
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedAuthEnvironmentVariables.service.getWithApiKey()
      */
@@ -80,6 +82,9 @@ export class Service {
 
     /**
      * GET request with custom api key
+     *
+     * @param {SeedAuthEnvironmentVariables.HeaderAuthRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedAuthEnvironmentVariables.service.getWithHeader({

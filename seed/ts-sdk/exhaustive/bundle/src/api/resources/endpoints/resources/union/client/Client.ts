@@ -22,6 +22,16 @@ export declare namespace Union {
 export class Union {
     constructor(protected readonly _options: Union.Options) {}
 
+    /**
+     * @param {Fiddle.types.Animal} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.union.getAndReturnUnion(Fiddle.types.Animal.dog({
+     *         name: "string",
+     *         likesToWoof: true
+     *     }))
+     */
     public async getAndReturnUnion(
         request: Fiddle.types.Animal,
         requestOptions?: Union.RequestOptions

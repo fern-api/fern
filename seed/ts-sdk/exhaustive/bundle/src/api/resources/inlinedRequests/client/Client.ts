@@ -25,6 +25,9 @@ export class InlinedRequests {
     /**
      * POST with custom object in request body, response is an object
      *
+     * @param {Fiddle.PostWithObjectBody} request
+     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",

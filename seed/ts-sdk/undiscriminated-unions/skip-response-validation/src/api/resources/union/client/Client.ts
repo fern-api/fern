@@ -21,6 +21,13 @@ export declare namespace Union {
 export class Union {
     constructor(protected readonly _options: Union.Options) {}
 
+    /**
+     * @param {SeedUndiscriminatedUnions.MyUnion} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedUndiscriminatedUnions.union.get("string")
+     */
     public async get(
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: Union.RequestOptions

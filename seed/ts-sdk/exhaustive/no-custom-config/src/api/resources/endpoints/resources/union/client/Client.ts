@@ -23,6 +23,17 @@ export declare namespace Union {
 export class Union {
     constructor(protected readonly _options: Union.Options) {}
 
+    /**
+     * @param {SeedExhaustive.types.Animal} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.union.getAndReturnUnion({
+     *         animal: "dog",
+     *         name: "string",
+     *         likesToWoof: true
+     *     })
+     */
     public async getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions

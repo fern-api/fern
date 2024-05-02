@@ -25,6 +25,9 @@ export class NoAuth {
     /**
      * POST request with no auth
      *
+     * @param {unknown} request
+     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.noAuth.postWithNoAuth({
      *         "key": "value"

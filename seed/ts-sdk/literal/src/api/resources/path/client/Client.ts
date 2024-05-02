@@ -22,6 +22,13 @@ export declare namespace Path {
 export class Path {
     constructor(protected readonly _options: Path.Options) {}
 
+    /**
+     * @param {"123"} id
+     * @param {Path.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedLiteral.path.send("123")
+     */
     public async send(id: "123", requestOptions?: Path.RequestOptions): Promise<SeedLiteral.SendResponse> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `path/${encodeURIComponent(id)}`),

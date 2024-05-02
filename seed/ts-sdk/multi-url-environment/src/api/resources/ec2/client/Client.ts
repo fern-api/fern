@@ -26,6 +26,15 @@ export declare namespace Ec2 {
 export class Ec2 {
     constructor(protected readonly _options: Ec2.Options) {}
 
+    /**
+     * @param {SeedMultiUrlEnvironment.BootInstanceRequest} request
+     * @param {Ec2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMultiUrlEnvironment.ec2.bootInstance({
+     *         size: "string"
+     *     })
+     */
     public async bootInstance(
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2.RequestOptions

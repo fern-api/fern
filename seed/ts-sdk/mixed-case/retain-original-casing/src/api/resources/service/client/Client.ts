@@ -22,6 +22,13 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} ResourceID
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMixedCase.service.getResource("rsc-xyz")
+     */
     public async getResource(
         ResourceID: string,
         requestOptions?: Service.RequestOptions
@@ -74,6 +81,16 @@ export class Service {
         }
     }
 
+    /**
+     * @param {SeedMixedCase.ListResourcesRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMixedCase.service.listResources({
+     *         page_limit: 10,
+     *         beforeDate: "2023-01-01"
+     *     })
+     */
     public async listResources(
         request: SeedMixedCase.ListResourcesRequest,
         requestOptions?: Service.RequestOptions

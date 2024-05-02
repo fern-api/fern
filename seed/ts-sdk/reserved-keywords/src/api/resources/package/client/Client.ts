@@ -20,6 +20,15 @@ export declare namespace Package {
 export class Package {
     constructor(protected readonly _options: Package.Options) {}
 
+    /**
+     * @param {SeedNurseryApi.TestRequest} request
+     * @param {Package.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedNurseryApi.package.test({
+     *         for: "string"
+     *     })
+     */
     public async test(request: SeedNurseryApi.TestRequest, requestOptions?: Package.RequestOptions): Promise<void> {
         const { for: for_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};

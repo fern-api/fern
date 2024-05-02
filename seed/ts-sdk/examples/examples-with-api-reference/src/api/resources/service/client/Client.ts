@@ -24,6 +24,13 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {SeedExamples.MovieId} movieId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExamples.service.getMovie("movie-c06a4ad7")
+     */
     public async getMovie(
         movieId: SeedExamples.MovieId,
         requestOptions?: Service.RequestOptions
@@ -77,6 +84,33 @@ export class Service {
         }
     }
 
+    /**
+     * @param {SeedExamples.Movie} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExamples.service.createMovie({
+     *         id: "movie-c06a4ad7",
+     *         prequel: "movie-cv9b914f",
+     *         title: "The Boy and the Heron",
+     *         from: "Hayao Miyazaki",
+     *         rating: 8,
+     *         type: "movie",
+     *         tag: "tag-wf9as23d",
+     *         metadata: {
+     *             "actors": [
+     *                 "Christian Bale",
+     *                 "Florence Pugh",
+     *                 "Willem Dafoe"
+     *             ],
+     *             "releaseDate": "2023-12-08",
+     *             "ratings": {
+     *                 "rottenTomatoes": 97,
+     *                 "imdb": 7.6
+     *             }
+     *         }
+     *     })
+     */
     public async createMovie(
         request: SeedExamples.Movie,
         requestOptions?: Service.RequestOptions
@@ -128,6 +162,17 @@ export class Service {
         }
     }
 
+    /**
+     * @param {SeedExamples.GetMetadataRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExamples.service.getMetadata({
+     *         xApiVersion: "0.0.1",
+     *         shallow: false,
+     *         tag: "development"
+     *     })
+     */
     public async getMetadata(
         request: SeedExamples.GetMetadataRequest,
         requestOptions?: Service.RequestOptions

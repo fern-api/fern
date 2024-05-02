@@ -22,6 +22,16 @@ export declare namespace InlinedRequest {
 export class InlinedRequest {
     constructor(protected readonly _options: InlinedRequest.Options) {}
 
+    /**
+     * @param {SeedEnum.SendEnumInlinedRequest} request
+     * @param {InlinedRequest.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedEnum.inlinedRequest.send({
+     *         operand: SeedEnum.Operand.GreaterThan,
+     *         operandOrColor: SeedEnum.Color.Red
+     *     })
+     */
     public async send(
         request: SeedEnum.SendEnumInlinedRequest,
         requestOptions?: InlinedRequest.RequestOptions

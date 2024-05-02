@@ -1,0 +1,104 @@
+openapi: 3.0.1
+info:
+  title: multi-line-docs
+  version: ''
+paths:
+  /users/{userId}:
+    get:
+      description: |-
+        Retrieve a user.
+        This endpoint is used to retrieve a user.
+      operationId: user_getUser
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          description: |-
+            The ID of the user to retrieve.
+            This ID is unique to each user.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+  /users:
+    post:
+      description: |-
+        Create a new user.
+        This endpoint is used to create a new user.
+      operationId: user_createUser
+      tags:
+        - User
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: |
+                    The name of the user to create.
+                    This name is unique to each user.
+                age:
+                  type: integer
+                  nullable: true
+                  description: |
+                    The age of the user.
+                    This propery is not required.
+              required:
+                - name
+components:
+  schemas:
+    Operand:
+      title: Operand
+      type: string
+      enum:
+        - '>'
+        - '='
+        - less_than
+      description: |-
+        Tests enum name and value can be
+        different.
+    User:
+      title: User
+      type: object
+      description: |-
+        A user object. This type is used throughout the following APIs:
+
+        - createUser
+        - getUser
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          description: >-
+            The user's name. This name is unique to each user. A few examples
+            are included below:
+
+
+            - Alice
+
+            - Bob
+
+            - Charlie
+        age:
+          type: integer
+          nullable: true
+          description: The user's age.
+      required:
+        - id
+        - name
+  securitySchemes: {}

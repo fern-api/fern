@@ -26,6 +26,9 @@ export class Service {
     /**
      * This endpoint checks the health of a resource.
      *
+     * @param {string} id - The id to check
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedExamples.health.service.check("id-2sdx82h")
      */
@@ -73,6 +76,8 @@ export class Service {
 
     /**
      * This endpoint checks the health of the service.
+     *
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedExamples.health.service.ping()

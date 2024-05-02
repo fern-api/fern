@@ -25,6 +25,10 @@ export class NoAuth {
 
     /**
      * POST request with no auth
+     *
+     * @param {unknown} request
+     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
