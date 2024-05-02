@@ -208,6 +208,10 @@ types:
       conflict:
         type: map<commons.SchemaId, finalIr.ObjectPropertyConflictInfo>
         docs: The schemas that conflict with this property
+      nameOverride: 
+        type: optional<string>
+        docs: | 
+          An optional name override populated via `x-fern-property-name`. 
       generatedName:
         type: string
         docs: |

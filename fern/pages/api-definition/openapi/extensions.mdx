@@ -291,6 +291,23 @@ paths:
       ...
 ```
 
+## Property Names
+
+The `x-fern-property-name` extension allows you to customize the variable name for object 
+properties. 
+
+For example, if you had a property called `_metadata` in your schema but you wanted the 
+variable to be called `data` in your SDK you would do the following: 
+
+```yaml {6}
+components: 
+  schemas: 
+    MyUser: 
+      _metadata: 
+        type: object
+        x-fern-property-name: data
+```
+
 ## Server names
 
 The `x-fern-server-name` extension is used to name your servers.
