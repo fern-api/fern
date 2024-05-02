@@ -104,10 +104,12 @@ class SnippetTemplateFactory:
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
 
-    # TODO: generate a sync snippet as well, right now we're just going to start with async only
-    def _generate_client(self) -> str:
-        # TODO: once the FDR endpoints allow for configuring client input, accept that here
-        return self._expression_to_snippet_str(self._generated_root_client.async_instantiation)
+    def _generate_client(self, is_async: Optional[bool] = False) -> str:
+        return self._expression_to_snippet_str(
+            self._generated_root_client.async_instantiation
+            if is_async
+            else self._generated_root_client.sync_instantiation
+        )
 
     def _get_subpackage_client_accessor(
         self,
@@ -659,7 +661,6 @@ class SnippetTemplateFactory:
             return "DELETE"
 
     def generate_templates(self) -> List[SnippetRegistryEntry]:
-        client_instantiation = self._generate_client()
         snippet_templates: List[SnippetRegistryEntry] = []
         if self._project._project_config is None:
             return []
@@ -754,8 +755,22 @@ class SnippetTemplateFactory:
                             top_level_template_inputs.append(ti)
 
                 # Create the outermost template, with the above template inputs
-                init_expression = AST.Expression(
+                async_init_expression = AST.Expression(
                     f"await {self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n\t{self.TEMPLATE_SENTINEL}\n)"
+                )
+                async_init_string_template = self._expression_to_snippet_str(async_init_expression)
+                async_function_template = Template.factory.generic(
+                    GenericTemplate(
+                        imports=[],
+                        template_string=async_init_string_template,
+                        template_inputs=top_level_template_inputs,
+                        input_delimiter=",\n\t",
+                        is_optional=True,
+                    )
+                )
+
+                init_expression = AST.Expression(
+                    f"{self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n\t{self.TEMPLATE_SENTINEL}\n)"
                 )
                 init_string_template = self._expression_to_snippet_str(init_expression)
                 function_template = Template.factory.generic(
@@ -777,6 +792,9 @@ class SnippetTemplateFactory:
                         )
                     )
                 )
+
+                client_instantiation = self._generate_client()
+                async_client_instantiation = self._generate_client(is_async=True)
                 snippet_templates.append(
                     SnippetRegistryEntry(
                         sdk=sdk,
@@ -786,6 +804,14 @@ class SnippetTemplateFactory:
                                 client_instantiation=client_instantiation, function_invocation=function_template
                             )
                         ),
+                        additional_templates={
+                            "async": VersionedSnippetTemplate.factory.v_1(
+                                SnippetTemplate(
+                                    client_instantiation=async_client_instantiation,
+                                    function_invocation=async_function_template,
+                                )
+                            )
+                        },
                     )
                 )
         return snippet_templates
