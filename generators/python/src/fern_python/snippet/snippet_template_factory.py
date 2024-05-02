@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Tuple
 
 import fern.ir.resources as ir_types
 from fdr import (
@@ -99,10 +99,11 @@ class SnippetTemplateFactory:
     ) -> Tuple[str, str]:
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
-        imports = snippet.get_imports_manager()._get_import_as_string()
+        snippet_full = snippet.to_str()
+        snippet_without_imports = snippet.to_str(include_imports=False)
 
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
-        return imports.strip(), snippet.to_str().replace(imports, "").strip()
+        return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
 
     # TODO: generate a sync snippet as well, right now we're just going to start with async only
     def _generate_client(self) -> str:
@@ -269,8 +270,9 @@ class SnippetTemplateFactory:
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
     ) -> Template:
+        # TODO: we should also be making it so you can easily grab the right import depending on the enum you use
         value_map = {
-            value.name.wire_value: self._convert_enum_value_to_str(type_name=type_name, enum_value=value.name)
+            value.name.wire_value: self._convert_enum_value_to_str(type_name=type_name, enum_value=value.name)[1]
             for value in values
         }
         return Template.factory.enum(
@@ -296,6 +298,8 @@ class SnippetTemplateFactory:
         name_breadcrumbs: Optional[List[str]],
         indentation_level: int = 0,
     ) -> Union[Template, None]:
+        child_indentation_level = indentation_level + 1
+        example_expression = f"\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}"
         sut_shape = sut.shape.get_as_union()
         if sut_shape.properties_type == "samePropertiesAsObject":
             object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
