@@ -4,25 +4,14 @@ excerpt: Push any content inside the Aside component to the right of the page in
 icon: 'align-right'
 ---
 
-<Card
-title='Example'
-icon='sticky-note'
->
-You can put any component on the left side and have an Aside component on the right side.
-</Card>
-
+<CodeBlock title="Markdown">
+```jsx
+<Aside>
+<EndpointRequestSnippet endpoint='POST /snippets' />
+</Aside>
+```
+</CodeBlock>
 
 <Aside>
-    <CodeBlock title="This CodeBlock is positioned Aside">
-    ```jsx
-    <Aside>
-        <CodeBlock title="This CodeBlock is positioned Aside">
-        ```text
-        I'm a code block inside an Aside component
-        ```
-        </CodeBlock>
-    </Aside>
-    ```
-    </CodeBlock>
+<EndpointRequestSnippet endpoint='POST /snippets' />
 </Aside>
-
