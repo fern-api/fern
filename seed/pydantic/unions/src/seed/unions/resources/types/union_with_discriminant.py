@@ -10,8 +10,8 @@ from .foo import Foo
 
 
 class UnionWithDiscriminant_Foo(pydantic_v1.BaseModel):
-    type: typing.Literal["foo"] = pydantic_v1.Field(alias="_type", default="foo")
     foo: Foo
+    type: typing.Literal["foo"] = pydantic_v1.Field(alias="_type", default="foo")
 
     class Config:
         allow_population_by_field_name = True
@@ -19,8 +19,8 @@ class UnionWithDiscriminant_Foo(pydantic_v1.BaseModel):
 
 
 class UnionWithDiscriminant_Bar(pydantic_v1.BaseModel):
-    type: typing.Literal["bar"] = pydantic_v1.Field(alias="_type", default="bar")
     bar: Bar
+    type: typing.Literal["bar"] = pydantic_v1.Field(alias="_type", default="bar")
 
     class Config:
         allow_population_by_field_name = True

@@ -10,13 +10,13 @@ from .foo import Foo
 
 
 class Union_Foo(pydantic_v1.BaseModel):
-    type: typing.Literal["foo"] = "foo"
     foo: Foo
+    type: typing.Literal["foo"] = "foo"
 
 
 class Union_Bar(pydantic_v1.BaseModel):
-    type: typing.Literal["bar"] = "bar"
     bar: Bar
+    type: typing.Literal["bar"] = "bar"
 
 
 Union = typing.Union[Union_Foo, Union_Bar]

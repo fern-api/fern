@@ -9,8 +9,8 @@ from .playlist_id import PlaylistId
 
 
 class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic_v1.BaseModel):
-    type: typing.Literal["playlistId"] = "playlistId"
     value: PlaylistId
+    type: typing.Literal["playlistId"] = "playlistId"
 
 
 PlaylistIdNotFoundErrorBody = typing.Union[PlaylistIdNotFoundErrorBody_PlaylistId]

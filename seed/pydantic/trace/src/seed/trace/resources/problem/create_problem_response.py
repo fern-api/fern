@@ -10,13 +10,13 @@ from .create_problem_error import CreateProblemError
 
 
 class CreateProblemResponse_Success(pydantic_v1.BaseModel):
-    type: typing.Literal["success"] = "success"
     value: ProblemId
+    type: typing.Literal["success"] = "success"
 
 
 class CreateProblemResponse_Error(pydantic_v1.BaseModel):
-    type: typing.Literal["error"] = "error"
     value: CreateProblemError
+    type: typing.Literal["error"] = "error"
 
 
 CreateProblemResponse = typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error]

@@ -8,8 +8,8 @@ from ....core.pydantic_utilities import pydantic_v1
 
 
 class Data_String(pydantic_v1.BaseModel):
-    type: typing.Literal["string"] = "string"
     value: str
+    type: typing.Literal["string"] = "string"
 
     class Config:
         frozen = True
@@ -17,8 +17,8 @@ class Data_String(pydantic_v1.BaseModel):
 
 
 class Data_Base64(pydantic_v1.BaseModel):
-    type: typing.Literal["base64"] = "base64"
     value: str
+    type: typing.Literal["base64"] = "base64"
 
     class Config:
         frozen = True

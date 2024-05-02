@@ -35,8 +35,8 @@ class Base(pydantic_v1.BaseModel):
 
 
 class Metadata_Html(Base):
-    type: typing.Literal["html"] = "html"
     value: str
+    type: typing.Literal["html"] = "html"
 
     class Config:
         allow_population_by_field_name = True
@@ -44,8 +44,8 @@ class Metadata_Html(Base):
 
 
 class Metadata_Markdown(Base):
-    type: typing.Literal["markdown"] = "markdown"
     value: str
+    type: typing.Literal["markdown"] = "markdown"
 
     class Config:
         allow_population_by_field_name = True

@@ -1,7 +1,6 @@
 import { Audiences } from "@fern-api/configuration";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
-import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
@@ -10,7 +9,6 @@ import { generateIntermediateRepresentation } from "../generateIntermediateRepre
 
 require("jest-specific-snapshot");
 
-const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
 const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
 
 const TEST_DEFINITION_CONFIG: Record<string, TestConfig> = {
@@ -24,18 +22,7 @@ interface TestConfig {
 }
 
 it("generate IR", async () => {
-    let apiWorkspaces: APIWorkspace[] = [];
-
-    // Test definitions
-    apiWorkspaces = await loadApis({
-        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
-        context: createMockTaskContext(),
-        cliVersion: "0.0.0",
-        cliName: "fern",
-        commandLineApiWorkspace: undefined,
-        defaultToAllApiWorkspaces: true
-    });
-
+    const apiWorkspaces: APIWorkspace[] = [];
     // FHIR
     // The FHIR API definition is huge and we previously encountered issues with serializing it.
     // Here we add the FHIR spec to the list of API definitions to test. If this test doesn't

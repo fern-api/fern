@@ -9,13 +9,13 @@ from .parameter_id import ParameterId
 
 
 class TestCaseImplementationDescriptionBoard_Html(pydantic_v1.BaseModel):
-    type: typing.Literal["html"] = "html"
     value: str
+    type: typing.Literal["html"] = "html"
 
 
 class TestCaseImplementationDescriptionBoard_ParamId(pydantic_v1.BaseModel):
-    type: typing.Literal["paramId"] = "paramId"
     value: ParameterId
+    type: typing.Literal["paramId"] = "paramId"
 
 
 TestCaseImplementationDescriptionBoard = typing.Union[

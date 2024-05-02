@@ -2,26 +2,30 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
+from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import pydantic_v1
 
 
 class UnionWithUnknown_Foo(pydantic_v1.BaseModel):
-    type: typing.Literal["foo"] = "foo"
     name: str
+    type: typing.Literal["foo"] = "foo"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().dict(**kwargs_with_defaults)
 
     class Config:
         frozen = True
         smart_union = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
-class UnionWithUnknown_Unknown(pydantic_v1.BaseModel):
-    type: typing.Literal["unknown"] = "unknown"
-
-    class Config:
-        frozen = True
-        smart_union = True
-
-
-UnionWithUnknown = typing.Union[UnionWithUnknown_Foo, UnionWithUnknown_Unknown]
+UnionWithUnknown = typing.Union[UnionWithUnknown_Foo]
