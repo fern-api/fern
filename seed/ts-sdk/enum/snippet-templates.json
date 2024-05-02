@@ -33,7 +33,7 @@
                                             "=": "SeedEnum.Operand.EqualTo",
                                             "less_than": "SeedEnum.Operand.LessThan"
                                         },
-                                        "templateString": "operand: '$FERN_INPUT'",
+                                        "templateString": "operand: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "BODY",
                                             "path": "operand",
@@ -52,7 +52,7 @@
                                             "=": "SeedEnum.Operand.EqualTo",
                                             "less_than": "SeedEnum.Operand.LessThan"
                                         },
-                                        "templateString": "maybeOperand: '$FERN_INPUT'",
+                                        "templateString": "maybeOperand: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "BODY",
                                             "path": "maybeOperand",
@@ -107,7 +107,7 @@
                                             "=": "SeedEnum.Operand.EqualTo",
                                             "less_than": "SeedEnum.Operand.LessThan"
                                         },
-                                        "templateString": "'$FERN_INPUT'",
+                                        "templateString": "$FERN_INPUT",
                                         "templateInput": {
                                             "location": "PATH",
                                             "path": "operand",
@@ -126,7 +126,7 @@
                                             "=": "SeedEnum.Operand.EqualTo",
                                             "less_than": "SeedEnum.Operand.LessThan"
                                         },
-                                        "templateString": "'$FERN_INPUT'",
+                                        "templateString": "$FERN_INPUT",
                                         "templateInput": {
                                             "location": "PATH",
                                             "path": "maybeOperand",
@@ -181,7 +181,7 @@
                                             "=": "SeedEnum.Operand.EqualTo",
                                             "less_than": "SeedEnum.Operand.LessThan"
                                         },
-                                        "templateString": "operand: '$FERN_INPUT'",
+                                        "templateString": "operand: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "QUERY",
                                             "path": "operand",
@@ -200,7 +200,7 @@
                                             "=": "SeedEnum.Operand.EqualTo",
                                             "less_than": "SeedEnum.Operand.LessThan"
                                         },
-                                        "templateString": "maybeOperand: '$FERN_INPUT'",
+                                        "templateString": "maybeOperand: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "QUERY",
                                             "path": "maybeOperand",
@@ -255,7 +255,7 @@
                                             "=": "SeedEnum.Operand.EqualTo",
                                             "less_than": "SeedEnum.Operand.LessThan"
                                         },
-                                        "templateString": "operand: '$FERN_INPUT'",
+                                        "templateString": "operand: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "QUERY",
                                             "path": "operand",
@@ -274,7 +274,7 @@
                                             "=": "SeedEnum.Operand.EqualTo",
                                             "less_than": "SeedEnum.Operand.LessThan"
                                         },
-                                        "templateString": "maybeOperand: '$FERN_INPUT'",
+                                        "templateString": "maybeOperand: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "QUERY",
                                             "path": "maybeOperand",

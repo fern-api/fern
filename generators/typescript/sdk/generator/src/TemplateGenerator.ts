@@ -137,7 +137,7 @@ export class TemplateGenerator {
             imports: [],
             isOptional: true,
             values: mappedEnumValues,
-            templateString: this.getAsNamedParameterTemplate(name, `'${TEMPLATE_SENTINEL}'`),
+            templateString: this.getAsNamedParameterTemplate(name, `${TEMPLATE_SENTINEL}`),
             templateInput: FdrSnippetTemplate.TemplateInput.payload({
                 location,
                 path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
@@ -544,6 +544,48 @@ export class TemplateGenerator {
         return template != null ? this.getTemplateInputFromTemplate(template) : template;
     }
 
+    private getFileUploadRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
+        const frp: FdrSnippetTemplate.TemplateInput[] = [];
+        const rbpt = this.endpoint.requestBody?._visit<(FdrSnippetTemplate.TemplateInput | undefined)[] | undefined>({
+            fileUpload: (fu) =>
+                fu.properties.flatMap((prop) =>
+                    prop._visit<FdrSnippetTemplate.TemplateInput | undefined>({
+                        file: (file) =>
+                            file._visit({
+                                file: (f) => this.getTemplateInputFromTemplate(this.fileUploadTemplate(f.key)),
+                                fileArray: (fa) =>
+                                    this.getTemplateInputFromTemplate(this.fileUploadArrayTemplate(fa.key)),
+                                _other: () => undefined
+                            }),
+                        bodyProperty: (bp) =>
+                            this.getTemplateInputFromTypeReference({
+                                typeReference: bp.valueType,
+                                name: this.getPropertyKey(bp.name.name),
+                                location: FdrSnippetTemplate.PayloadLocation.Body,
+                                wireOrOriginalName: bp.name.wireValue,
+                                nameBreadcrumbs: undefined,
+                                indentationLevel: 2
+                            }),
+                        _other: () => undefined
+                    })
+                ),
+            // Just getting file params
+            inlinedRequestBody: () => undefined,
+            reference: () => undefined,
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+        if (rbpt != null) {
+            for (const ti of rbpt) {
+                if (ti != null) {
+                    frp.push(ti);
+                }
+            }
+        }
+
+        return frp;
+    }
+
     private getNonRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
         const nrp: FdrSnippetTemplate.TemplateInput[] = [];
         this.endpoint.allPathParameters.forEach((pathParameter) => {
@@ -564,7 +606,7 @@ export class TemplateGenerator {
     }
 
     private getRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
-        const nrp: FdrSnippetTemplate.TemplateInput[] = [];
+        const rp: FdrSnippetTemplate.TemplateInput[] = [];
         this.endpoint.queryParameters.forEach((pathParameter) => {
             const pt = this.getTemplateInputFromTypeReference({
                 typeReference: pathParameter.valueType,
@@ -575,7 +617,7 @@ export class TemplateGenerator {
                 indentationLevel: 2
             });
             if (pt != null) {
-                nrp.push(pt);
+                rp.push(pt);
             }
         });
 
@@ -589,7 +631,7 @@ export class TemplateGenerator {
                 indentationLevel: 2
             });
             if (pt != null) {
-                nrp.push(pt);
+                rp.push(pt);
             }
         });
 
@@ -616,28 +658,8 @@ export class TemplateGenerator {
                     indentationLevel: 2
                 })
             ],
-            fileUpload: (fu) =>
-                fu.properties.flatMap((prop) =>
-                    prop._visit<FdrSnippetTemplate.TemplateInput | undefined>({
-                        file: (file) =>
-                            file._visit({
-                                file: (f) => this.getTemplateInputFromTemplate(this.fileUploadTemplate(f.key)),
-                                fileArray: (fa) =>
-                                    this.getTemplateInputFromTemplate(this.fileUploadArrayTemplate(fa.key)),
-                                _other: () => undefined
-                            }),
-                        bodyProperty: (bp) =>
-                            this.getTemplateInputFromTypeReference({
-                                typeReference: bp.valueType,
-                                name: this.getPropertyKey(bp.name.name),
-                                location: FdrSnippetTemplate.PayloadLocation.Body,
-                                wireOrOriginalName: bp.name.wireValue,
-                                nameBreadcrumbs: undefined,
-                                indentationLevel: 2
-                            }),
-                        _other: () => undefined
-                    })
-                ),
+            // File properties are handled separately
+            fileUpload: (fu) => undefined,
             // Bytes currently not supported
             bytes: () => undefined,
             // No sense in throwing, just ignore this.
@@ -646,12 +668,12 @@ export class TemplateGenerator {
         if (rbpt != null) {
             for (const ti of rbpt) {
                 if (ti != null) {
-                    nrp.push(ti);
+                    rp.push(ti);
                 }
             }
         }
 
-        return nrp;
+        return rp;
     }
 
     private fileUploadArrayTemplate(key: NameAndWireValue) {
@@ -694,6 +716,21 @@ export class TemplateGenerator {
         // path parameters matter since they are unnamed, if they're not present undefined is required
         // Generally its: (`path parameters`, {`request parameter`}}
 
+        const fileParamInputs = this.getFileUploadRequestParametersFromEndpoint();
+        if (fileParamInputs.length > 0) {
+            topLevelTemplateInputs.push(
+                FdrSnippetTemplate.TemplateInput.template(
+                    FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: TEMPLATE_SENTINEL,
+                        isOptional: false,
+                        inputDelimiter: ",\n\t",
+                        templateInputs: fileParamInputs
+                    })
+                )
+            );
+        }
+
         // Add the unnamed, non-request params first
         const nonRequestParamInputs = this.getNonRequestParametersFromEndpoint();
         if (nonRequestParamInputs.length > 0) {
@@ -704,7 +741,7 @@ export class TemplateGenerator {
                         templateString: TEMPLATE_SENTINEL,
                         isOptional: false,
                         inputDelimiter: ",\n\t",
-                        templateInputs: this.getNonRequestParametersFromEndpoint()
+                        templateInputs: nonRequestParamInputs
                     })
                 )
             );
@@ -720,7 +757,7 @@ export class TemplateGenerator {
                         templateString: `{\n\t\t${TEMPLATE_SENTINEL}\n\t}`,
                         isOptional: true,
                         inputDelimiter: ",\n\t\t",
-                        templateInputs: this.getRequestParametersFromEndpoint()
+                        templateInputs: requestParamInputs
                     })
                 )
             );

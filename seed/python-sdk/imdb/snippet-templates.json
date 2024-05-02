@@ -20,7 +20,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from .create_movie_request import CreateMovieRequest"
+                                "from seed import CreateMovieRequest"
                             ],
                             "isOptional": true,
                             "templateString": "request=CreateMovieRequest(\n\t\t$FERN_INPUT\n\t)",

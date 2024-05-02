@@ -179,7 +179,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from .send_request import SendRequest"
+                                "from seed import SendRequest"
                             ],
                             "isOptional": true,
                             "templateString": "request=SendRequest(\n\t\t$FERN_INPUT\n\t)",

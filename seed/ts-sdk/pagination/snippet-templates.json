@@ -64,7 +64,7 @@
                                             "asc": "SeedPagination.Order.Asc",
                                             "desc": "SeedPagination.Order.Desc"
                                         },
-                                        "templateString": "order: '$FERN_INPUT'",
+                                        "templateString": "order: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "QUERY",
                                             "path": "order",
@@ -166,7 +166,7 @@
                                             "asc": "SeedPagination.Order.Asc",
                                             "desc": "SeedPagination.Order.Desc"
                                         },
-                                        "templateString": "order: '$FERN_INPUT'",
+                                        "templateString": "order: $FERN_INPUT",
                                         "templateInput": {
                                             "location": "QUERY",
                                             "path": "order",

@@ -535,7 +535,7 @@
                                             "RAINING": "SeedExhaustive.WeatherReport.Raining",
                                             "SNOWING": "SeedExhaustive.WeatherReport.Snowing"
                                         },
-                                        "templateString": "'$FERN_INPUT'",
+                                        "templateString": "$FERN_INPUT",
                                         "templateInput": {
                                             "location": "BODY",
                                             "type": "payload"
