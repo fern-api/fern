@@ -107,21 +107,21 @@ export function buildObjectTypeDeclaration({
             context,
             fileContainingReference: declarationFile
         });
-        if (property.audiences.length > 0 && property.nameOverride != null) {
+        const audiences = property.audiences;
+        const name = property.nameOverride;
+        if (audiences.length > 0 && name != null) {
             properties[property.key] =
                 typeof typeReference === "string"
-                    ? { type: typeReference, audiences: property.audiences, name: property.nameOverride }
-                    : { ...typeReference, audiences: property.audiences, name: property.nameOverride };
-        } else if (property.nameOverride != null) {
+                    ? { type: typeReference, audiences, name }
+                    : { ...typeReference, audiences, name };
+        } else if (name != null) {
+            properties[property.key] =
+                typeof typeReference === "string" ? { type: typeReference, name } : { ...typeReference, name };
+        } else if (audiences.length > 0) {
             properties[property.key] =
                 typeof typeReference === "string"
-                    ? { type: typeReference, name: property.nameOverride }
-                    : { ...typeReference, name: property.nameOverride };
-        } else if (property.audiences.length > 0) {
-            properties[property.key] =
-                typeof typeReference === "string"
-                    ? { type: typeReference, audiences: property.audiences }
-                    : { ...typeReference, audiences: property.audiences };
+                    ? { type: typeReference, audiences }
+                    : { ...typeReference, audiences };
         } else {
             properties[property.key] = typeReference;
         }
