@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from typing import Callable, List, TypeVar, Optional
+from typing import Callable, List, Optional, TypeVar
 
 from ordered_set import OrderedSet
 
@@ -213,7 +213,7 @@ class SourceFileImpl(SourceFile):
             writer.write_node(node=statement.node)
             writer.write_newline_if_last_line_not()
         return writer
-    
+
     def get_exports(self) -> set[str]:
         return self._exports
 

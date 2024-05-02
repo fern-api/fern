@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional, Union, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 import fern.ir.resources as ir_types
 from fdr import (
@@ -91,7 +91,6 @@ class SnippetTemplateFactory:
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet.to_str().strip()
-
 
     def _expression_to_snippet_str_and_imports(
         self,
@@ -335,17 +334,15 @@ class SnippetTemplateFactory:
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
                 return Template.factory.generic(
-                        GenericTemplate(
-                            imports=[imports]
-                            if imports is not None
-                            else [],
-                            is_optional=True,
-                            template_string=f"{name}={snippet_template_str}"
-                            if name is not None
-                            else f"{snippet_template_str}",
-                            template_inputs=template_inputs,
-                        )
+                    GenericTemplate(
+                        imports=[imports] if imports is not None else [],
+                        is_optional=True,
+                        template_string=f"{name}={snippet_template_str}"
+                        if name is not None
+                        else f"{snippet_template_str}",
+                        template_inputs=template_inputs,
                     )
+                )
             return None
 
         elif sut_shape.properties_type == "singleProperty":
@@ -362,30 +359,28 @@ class SnippetTemplateFactory:
             child_breadcrumbs = name_breadcrumbs or []
             if wire_or_original_name is not None:
                 child_breadcrumbs.append(wire_or_original_name)
-            
+
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
 
                 return Template.factory.generic(
-                        GenericTemplate(
-                            imports=[imports]
-                            if imports is not None
-                            else [],
-                            is_optional=True,
-                            template_string=f"{name}={snippet_template_str}"
-                            if name is not None
-                            else f"{snippet_template_str}",
-                            template_inputs=[
-                                self.get_type_reference_template_input(
-                                    type_=sut_shape.type,
-                                    name=name,
-                                    location=location,
-                                    wire_or_original_name=sut_shape.name.wire_value,
-                                    name_breadcrumbs=child_breadcrumbs,
-                                )
-                            ],
-                        )
+                    GenericTemplate(
+                        imports=[imports] if imports is not None else [],
+                        is_optional=True,
+                        template_string=f"{name}={snippet_template_str}"
+                        if name is not None
+                        else f"{snippet_template_str}",
+                        template_inputs=[
+                            self.get_type_reference_template_input(
+                                type_=sut_shape.type,
+                                name=name,
+                                location=location,
+                                wire_or_original_name=sut_shape.name.wire_value,
+                                name_breadcrumbs=child_breadcrumbs,
+                            )
+                        ],
                     )
+                )
             return None
 
         elif sut_shape.properties_type == "noProperties":
@@ -404,17 +399,15 @@ class SnippetTemplateFactory:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
 
                 return Template.factory.generic(
-                        GenericTemplate(
-                            imports=[imports]
-                            if imports is not None
-                            else [],
-                            is_optional=True,
-                            template_string=f"{name}={snippet_template_str}"
-                            if name is not None
-                            else f"{snippet_template_str}",
-                            template_inputs=[],
-                        )
+                    GenericTemplate(
+                        imports=[imports] if imports is not None else [],
+                        is_optional=True,
+                        template_string=f"{name}={snippet_template_str}"
+                        if name is not None
+                        else f"{snippet_template_str}",
+                        template_inputs=[],
                     )
+                )
             return None
         else:
             return None
