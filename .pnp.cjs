@@ -7547,6 +7547,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["pretty-ms", "npm:9.0.0"],\
             ["tmp-promise", "npm:3.0.3"],\
+            ["tsup", "virtual:7fd4d27628c3743ebc965c3a5559b2f471c2d0ff304c92680b4764724aa0c3780f0f5fda9fc8045c34b169da479e01e8cef2d25c59b27f5ec7b3dc4810e345bc#npm:8.0.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["yargs", "npm:17.7.2"]\
           ],\
