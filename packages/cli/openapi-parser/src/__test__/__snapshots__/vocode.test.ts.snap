@@ -3056,6 +3056,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "actionPageItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ActionPageItems",
@@ -3107,6 +3108,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "actionPagePage",
           "key": "page",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ActionPagePage",
@@ -3123,6 +3125,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "actionPageSize",
           "key": "size",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ActionPageSize",
@@ -3139,6 +3142,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "actionPageHasMore",
           "key": "has_more",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ActionPageHasMore",
@@ -3242,6 +3246,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentId",
@@ -3260,6 +3265,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentUserId",
@@ -3278,6 +3284,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentPrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentPrompt",
@@ -3296,6 +3303,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentLanguage",
           "key": "language",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentLanguage",
@@ -3317,6 +3325,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentActions",
           "key": "actions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentActions",
@@ -3368,6 +3377,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentVoice",
           "key": "voice",
+          "nameOverride": null,
           "schema": {
             "type": "oneOf",
             "value": {
@@ -3420,6 +3430,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentInitialMessage",
           "key": "initial_message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentInitialMessage",
@@ -3445,6 +3456,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentWebhook",
           "key": "webhook",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentWebhook",
@@ -3466,6 +3478,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentVectorDatabase",
           "key": "vector_database",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentVectorDatabase",
@@ -3487,6 +3500,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentInterruptSensitivity",
           "key": "interrupt_sensitivity",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentInterruptSensitivity",
@@ -3519,6 +3533,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentPageItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentPageItems",
@@ -3540,6 +3555,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentPagePage",
           "key": "page",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentPagePage",
@@ -3556,6 +3572,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentPageSize",
           "key": "size",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentPageSize",
@@ -3572,6 +3589,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentPageHasMore",
           "key": "has_more",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentPageHasMore",
@@ -3599,6 +3617,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentParamsPrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AgentParamsPrompt",
@@ -3617,6 +3636,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentParamsLanguage",
           "key": "language",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentParamsLanguage",
@@ -3638,6 +3658,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentParamsActions",
           "key": "actions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentParamsActions",
@@ -3720,6 +3741,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentParamsVoice",
           "key": "voice",
+          "nameOverride": null,
           "schema": {
             "type": "oneOf",
             "value": {
@@ -3796,6 +3818,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentParamsInitialMessage",
           "key": "initial_message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentParamsInitialMessage",
@@ -3821,6 +3844,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentParamsWebhook",
           "key": "webhook",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentParamsWebhook",
@@ -3866,6 +3890,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentParamsVectorDatabase",
           "key": "vector_database",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentParamsVectorDatabase",
@@ -3911,6 +3936,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentParamsInterruptSensitivity",
           "key": "interrupt_sensitivity",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentParamsInterruptSensitivity",
@@ -3943,6 +3969,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUpdateParamsPrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentUpdateParamsPrompt",
@@ -3988,6 +4015,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUpdateParamsLanguage",
           "key": "language",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentUpdateParamsLanguage",
@@ -4029,6 +4057,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUpdateParamsActions",
           "key": "actions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentUpdateParamsActions",
@@ -4131,6 +4160,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUpdateParamsVoice",
           "key": "voice",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentUpdateParamsVoice",
@@ -4222,6 +4252,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUpdateParamsInitialMessage",
           "key": "initial_message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentUpdateParamsInitialMessage",
@@ -4267,6 +4298,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUpdateParamsWebhook",
           "key": "webhook",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentUpdateParamsWebhook",
@@ -4320,6 +4352,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUpdateParamsVectorDatabase",
           "key": "vector_database",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentUpdateParamsVectorDatabase",
@@ -4373,6 +4406,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "agentUpdateParamsInterruptSensitivity",
           "key": "interrupt_sensitivity",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "agentUpdateParamsInterruptSensitivity",
@@ -4425,6 +4459,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AzureVoiceId",
@@ -4443,6 +4478,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AzureVoiceUserId",
@@ -4461,6 +4497,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceVoiceName",
           "key": "voice_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AzureVoiceVoiceName",
@@ -4479,6 +4516,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoicePitch",
           "key": "pitch",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "azureVoicePitch",
@@ -4502,6 +4540,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceRate",
           "key": "rate",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "azureVoiceRate",
@@ -4536,6 +4575,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceParamsVoiceName",
           "key": "voice_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AzureVoiceParamsVoiceName",
@@ -4554,6 +4594,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceParamsPitch",
           "key": "pitch",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "azureVoiceParamsPitch",
@@ -4577,6 +4618,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceParamsRate",
           "key": "rate",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "azureVoiceParamsRate",
@@ -4611,6 +4653,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceUpdateParamsVoiceName",
           "key": "voice_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "azureVoiceUpdateParamsVoiceName",
@@ -4656,6 +4699,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceUpdateParamsPitch",
           "key": "pitch",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "azureVoiceUpdateParamsPitch",
@@ -4699,6 +4743,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "azureVoiceUpdateParamsRate",
           "key": "rate",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "azureVoiceUpdateParamsRate",
@@ -4753,6 +4798,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallId",
@@ -4771,6 +4817,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallUserId",
@@ -4789,6 +4836,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "callStatus",
@@ -4810,6 +4858,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callErrorMessage",
           "key": "error_message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "callErrorMessage",
@@ -4835,6 +4884,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callRecordingAvailable",
           "key": "recording_available",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "callRecordingAvailable",
@@ -4858,6 +4908,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callTranscript",
           "key": "transcript",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "callTranscript",
@@ -4883,6 +4934,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callToNumber",
           "key": "to_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallToNumber",
@@ -4901,6 +4953,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callFromNumber",
           "key": "from_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallFromNumber",
@@ -4919,6 +4972,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callAgent",
           "key": "agent",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallAgent",
@@ -4933,6 +4987,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callAgentPhoneNumber",
           "key": "agent_phone_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallAgentPhoneNumber",
@@ -4951,6 +5006,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callStartTime",
           "key": "start_time",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "callStartTime",
@@ -4974,6 +5030,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callEndTime",
           "key": "end_time",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "callEndTime",
@@ -5008,6 +5065,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callPageItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallPageItems",
@@ -5029,6 +5087,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callPagePage",
           "key": "page",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallPagePage",
@@ -5045,6 +5104,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callPageSize",
           "key": "size",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallPageSize",
@@ -5061,6 +5121,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "callPageHasMore",
           "key": "has_more",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CallPageHasMore",
@@ -5145,6 +5206,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallAgentParamsPrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CreateCallAgentParamsPrompt",
@@ -5163,6 +5225,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallAgentParamsLanguage",
           "key": "language",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createCallAgentParamsLanguage",
@@ -5184,6 +5247,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallAgentParamsActions",
           "key": "actions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createCallAgentParamsActions",
@@ -5266,6 +5330,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallAgentParamsVoice",
           "key": "voice",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createCallAgentParamsVoice",
@@ -5349,6 +5414,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallAgentParamsInitialMessage",
           "key": "initial_message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createCallAgentParamsInitialMessage",
@@ -5374,6 +5440,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallAgentParamsWebhook",
           "key": "webhook",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createCallAgentParamsWebhook",
@@ -5419,6 +5486,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallAgentParamsVectorDatabase",
           "key": "vector_database",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createCallAgentParamsVectorDatabase",
@@ -5464,6 +5532,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallAgentParamsInterruptSensitivity",
           "key": "interrupt_sensitivity",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createCallAgentParamsInterruptSensitivity",
@@ -5496,6 +5565,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallRequestFromNumber",
           "key": "from_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CreateCallRequestFromNumber",
@@ -5514,6 +5584,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallRequestToNumber",
           "key": "to_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CreateCallRequestToNumber",
@@ -5532,6 +5603,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "createCallRequestAgent",
           "key": "agent",
+          "nameOverride": null,
           "schema": {
             "type": "oneOf",
             "value": {
@@ -5581,6 +5653,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "dtmfActionId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DtmfActionId",
@@ -5599,6 +5672,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "dtmfActionUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DtmfActionUserId",
@@ -5617,6 +5691,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "dtmfActionConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "dtmfActionConfig",
@@ -5649,6 +5724,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "dtmfActionParamsConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "dtmfActionParamsConfig",
@@ -5681,6 +5757,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "dtmfActionUpdateParamsConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "dtmfActionUpdateParamsConfig",
@@ -5733,6 +5810,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ElevenLabsVoiceId",
@@ -5751,6 +5829,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ElevenLabsVoiceUserId",
@@ -5769,6 +5848,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceVoiceId",
           "key": "voice_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ElevenLabsVoiceVoiceId",
@@ -5787,6 +5867,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceStability",
           "key": "stability",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "elevenLabsVoiceStability",
@@ -5810,6 +5891,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceSimilarityBoost",
           "key": "similarity_boost",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "elevenLabsVoiceSimilarityBoost",
@@ -5833,6 +5915,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ElevenLabsVoiceApiKey",
@@ -5862,6 +5945,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceParamsVoiceId",
           "key": "voice_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ElevenLabsVoiceParamsVoiceId",
@@ -5880,6 +5964,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceParamsStability",
           "key": "stability",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "elevenLabsVoiceParamsStability",
@@ -5903,6 +5988,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceParamsSimilarityBoost",
           "key": "similarity_boost",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "elevenLabsVoiceParamsSimilarityBoost",
@@ -5926,6 +6012,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceParamsApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ElevenLabsVoiceParamsApiKey",
@@ -5955,6 +6042,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceUpdateParamsVoiceId",
           "key": "voice_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "elevenLabsVoiceUpdateParamsVoiceId",
@@ -6000,6 +6088,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceUpdateParamsStability",
           "key": "stability",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "elevenLabsVoiceUpdateParamsStability",
@@ -6043,6 +6132,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceUpdateParamsSimilarityBoost",
           "key": "similarity_boost",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "elevenLabsVoiceUpdateParamsSimilarityBoost",
@@ -6086,6 +6176,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "elevenLabsVoiceUpdateParamsApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "elevenLabsVoiceUpdateParamsApiKey",
@@ -6152,6 +6243,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "endConversationActionId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "EndConversationActionId",
@@ -6170,6 +6262,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "endConversationActionUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "EndConversationActionUserId",
@@ -6188,6 +6281,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "endConversationActionConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "endConversationActionConfig",
@@ -6220,6 +6314,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "endConversationActionParamsConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "endConversationActionParamsConfig",
@@ -6252,6 +6347,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "endConversationActionUpdateParamsConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "endConversationActionUpdateParamsConfig",
@@ -6418,6 +6514,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "httpValidationErrorDetail",
           "key": "detail",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "httpValidationErrorDetail",
@@ -6535,6 +6632,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedAgentId",
@@ -6553,6 +6651,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedAgentUserId",
@@ -6571,6 +6670,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentPrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedAgentPrompt",
@@ -6589,6 +6689,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentLanguage",
           "key": "language",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedAgentLanguage",
@@ -6610,6 +6711,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentActions",
           "key": "actions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedAgentActions",
@@ -6635,6 +6737,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentVoice",
           "key": "voice",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedAgentVoice",
@@ -6653,6 +6756,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentInitialMessage",
           "key": "initial_message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedAgentInitialMessage",
@@ -6678,6 +6782,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentWebhook",
           "key": "webhook",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedAgentWebhook",
@@ -6703,6 +6808,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentVectorDatabase",
           "key": "vector_database",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedAgentVectorDatabase",
@@ -6748,6 +6854,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedAgentInterruptSensitivity",
           "key": "interrupt_sensitivity",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedAgentInterruptSensitivity",
@@ -6780,6 +6887,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedCallId",
@@ -6798,6 +6906,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedCallUserId",
@@ -6816,6 +6925,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedCallStatus",
@@ -6837,6 +6947,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallErrorMessage",
           "key": "error_message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedCallErrorMessage",
@@ -6862,6 +6973,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallRecordingAvailable",
           "key": "recording_available",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedCallRecordingAvailable",
@@ -6885,6 +6997,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallTranscript",
           "key": "transcript",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedCallTranscript",
@@ -6910,6 +7023,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallToNumber",
           "key": "to_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedCallToNumber",
@@ -6928,6 +7042,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallFromNumber",
           "key": "from_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedCallFromNumber",
@@ -6946,6 +7061,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallAgent",
           "key": "agent",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedCallAgent",
@@ -6964,6 +7080,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallAgentPhoneNumber",
           "key": "agent_phone_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedCallAgentPhoneNumber",
@@ -6982,6 +7099,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallStartTime",
           "key": "start_time",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedCallStartTime",
@@ -7005,6 +7123,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedCallEndTime",
           "key": "end_time",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedCallEndTime",
@@ -7039,6 +7158,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedPhoneNumberId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedPhoneNumberId",
@@ -7057,6 +7177,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedPhoneNumberUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedPhoneNumberUserId",
@@ -7075,6 +7196,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedPhoneNumberActive",
           "key": "active",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedPhoneNumberActive",
@@ -7098,6 +7220,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedPhoneNumberLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "normalizedPhoneNumberLabel",
@@ -7123,6 +7246,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedPhoneNumberInboundAgent",
           "key": "inbound_agent",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedPhoneNumberInboundAgent",
@@ -7141,6 +7265,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "normalizedPhoneNumberNumber",
           "key": "number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedPhoneNumberNumber",
@@ -7170,6 +7295,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PhoneNumberId",
@@ -7188,6 +7314,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PhoneNumberUserId",
@@ -7206,6 +7333,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberActive",
           "key": "active",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "phoneNumberActive",
@@ -7229,6 +7357,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "phoneNumberLabel",
@@ -7254,6 +7383,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberInboundAgent",
           "key": "inbound_agent",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PhoneNumberInboundAgent",
@@ -7268,6 +7398,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberNumber",
           "key": "number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PhoneNumberNumber",
@@ -7297,6 +7428,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberPageItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PhoneNumberPageItems",
@@ -7318,6 +7450,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberPagePage",
           "key": "page",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PhoneNumberPagePage",
@@ -7334,6 +7467,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberPageSize",
           "key": "size",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PhoneNumberPageSize",
@@ -7350,6 +7484,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "phoneNumberPageHasMore",
           "key": "has_more",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PhoneNumberPageHasMore",
@@ -7377,6 +7512,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseId",
@@ -7395,6 +7531,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseUserId",
@@ -7413,6 +7550,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseType",
@@ -7430,6 +7568,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseIndex",
           "key": "index",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseIndex",
@@ -7448,6 +7587,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseApiKey",
@@ -7466,6 +7606,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseApiEnvironment",
           "key": "api_environment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseApiEnvironment",
@@ -7495,6 +7636,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseParamsType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseParamsType",
@@ -7512,6 +7654,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseParamsIndex",
           "key": "index",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseParamsIndex",
@@ -7530,6 +7673,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseParamsApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseParamsApiKey",
@@ -7548,6 +7692,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseParamsApiEnvironment",
           "key": "api_environment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseParamsApiEnvironment",
@@ -7577,6 +7722,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUpdateParamsType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PineconeVectorDatabaseUpdateParamsType",
@@ -7594,6 +7740,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUpdateParamsIndex",
           "key": "index",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "pineconeVectorDatabaseUpdateParamsIndex",
@@ -7639,6 +7786,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUpdateParamsApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "pineconeVectorDatabaseUpdateParamsApiKey",
@@ -7684,6 +7832,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "pineconeVectorDatabaseUpdateParamsApiEnvironment",
           "key": "api_environment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "pineconeVectorDatabaseUpdateParamsApiEnvironment",
@@ -7785,6 +7934,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PlayHtVoiceId",
@@ -7803,6 +7953,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PlayHtVoiceUserId",
@@ -7821,6 +7972,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceVoiceId",
           "key": "voice_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PlayHtVoiceVoiceId",
@@ -7839,6 +7991,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceApiUserId",
           "key": "api_user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PlayHtVoiceApiUserId",
@@ -7857,6 +8010,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PlayHtVoiceApiKey",
@@ -7886,6 +8040,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceParamsVoiceId",
           "key": "voice_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PlayHtVoiceParamsVoiceId",
@@ -7904,6 +8059,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceParamsApiUserId",
           "key": "api_user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PlayHtVoiceParamsApiUserId",
@@ -7922,6 +8078,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceParamsApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PlayHtVoiceParamsApiKey",
@@ -7951,6 +8108,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceUpdateParamsVoiceId",
           "key": "voice_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "playHtVoiceUpdateParamsVoiceId",
@@ -7996,6 +8154,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceUpdateParamsApiUserId",
           "key": "api_user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "playHtVoiceUpdateParamsApiUserId",
@@ -8041,6 +8200,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "playHtVoiceUpdateParamsApiKey",
           "key": "api_key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "playHtVoiceUpdateParamsApiKey",
@@ -8097,6 +8257,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "rimeVoiceId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RimeVoiceId",
@@ -8115,6 +8276,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "rimeVoiceUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RimeVoiceUserId",
@@ -8133,6 +8295,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "rimeVoiceSpeaker",
           "key": "speaker",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RimeVoiceSpeaker",
@@ -8162,6 +8325,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "rimeVoiceParamsSpeaker",
           "key": "speaker",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RimeVoiceParamsSpeaker",
@@ -8191,6 +8355,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "rimeVoiceUpdateParamsSpeaker",
           "key": "speaker",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "rimeVoiceUpdateParamsSpeaker",
@@ -8247,6 +8412,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "transferCallActionId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransferCallActionId",
@@ -8265,6 +8431,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "transferCallActionUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransferCallActionUserId",
@@ -8283,6 +8450,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "transferCallActionConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransferCallActionConfig",
@@ -8308,6 +8476,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "transferCallActionParamsConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransferCallActionParamsConfig",
@@ -8333,6 +8502,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "transferCallActionUpdateParamsConfig",
           "key": "config",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferCallActionUpdateParamsConfig",
@@ -8385,6 +8555,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "transferCallConfigPhoneNumber",
           "key": "phone_number",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransferCallConfigPhoneNumber",
@@ -8424,6 +8595,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "updateNumberRequestLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "updateNumberRequestLabel",
@@ -8469,6 +8641,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "updateNumberRequestInboundAgent",
           "key": "inbound_agent",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "updateNumberRequestInboundAgent",
@@ -8533,6 +8706,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "usageUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UsageUserId",
@@ -8551,6 +8725,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "usagePlanType",
           "key": "plan_type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UsagePlanType",
@@ -8565,6 +8740,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "usageMonthlyUsageMinutes",
           "key": "monthly_usage_minutes",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UsageMonthlyUsageMinutes",
@@ -8581,6 +8757,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "usageMonthlyUsageLimitMinutes",
           "key": "monthly_usage_limit_minutes",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UsageMonthlyUsageLimitMinutes",
@@ -8608,6 +8785,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "validationErrorLoc",
           "key": "loc",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ValidationErrorLoc",
@@ -8655,6 +8833,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "validationErrorMsg",
           "key": "msg",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ValidationErrorMsg",
@@ -8673,6 +8852,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "validationErrorType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ValidationErrorType",
@@ -8702,6 +8882,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "voicePageItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "VoicePageItems",
@@ -8761,6 +8942,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "voicePagePage",
           "key": "page",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "VoicePagePage",
@@ -8777,6 +8959,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "voicePageSize",
           "key": "size",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "VoicePageSize",
@@ -8793,6 +8976,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "voicePageHasMore",
           "key": "has_more",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "VoicePageHasMore",
@@ -8912,6 +9096,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookId",
@@ -8930,6 +9115,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookUserId",
           "key": "user_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookUserId",
@@ -8948,6 +9134,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookSubscriptions",
           "key": "subscriptions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookSubscriptions",
@@ -8969,6 +9156,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookUrl",
           "key": "url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookUrl",
@@ -8987,6 +9175,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookMethod",
           "key": "method",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "webhookMethod",
@@ -9019,6 +9208,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookPageItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookPageItems",
@@ -9040,6 +9230,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookPagePage",
           "key": "page",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookPagePage",
@@ -9056,6 +9247,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookPageSize",
           "key": "size",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookPageSize",
@@ -9072,6 +9264,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookPageHasMore",
           "key": "has_more",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookPageHasMore",
@@ -9099,6 +9292,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookParamsSubscriptions",
           "key": "subscriptions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookParamsSubscriptions",
@@ -9120,6 +9314,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookParamsUrl",
           "key": "url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookParamsUrl",
@@ -9138,6 +9333,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookParamsMethod",
           "key": "method",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "webhookParamsMethod",
@@ -9170,6 +9366,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookUpdateParamsSubscriptions",
           "key": "subscriptions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "webhookUpdateParamsSubscriptions",
@@ -9218,6 +9415,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookUpdateParamsUrl",
           "key": "url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "webhookUpdateParamsUrl",
@@ -9263,6 +9461,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "conflict": {},
           "generatedName": "webhookUpdateParamsMethod",
           "key": "method",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "webhookUpdateParamsMethod",
