@@ -7,27 +7,79 @@ The `EndpointRequestSnippet` component is used to reference an endpoint request 
 
 <EndpointRequestSnippet endpoint="POST /snippets" />
 
+### Examples
+
+If you want to reference a particular example in the request snippet, you can do so by specifying the 
+example id in the `example` prop. 
+
+<Steps>
+  ### Define named examples
+  <AccordionGroup>
+    <Accordion title="OpenAPI">
+      ```yaml {11-16}
+      paths:
+        /pet:
+          put:
+            summary: Update an existing pet 
+            operationId: pets_update
+            requestBody: 
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Pet'
+                  examples:
+                    ExampleWithMarkley:
+                      summary: This is an example of a Pet
+                      value: 
+                        name: Markley
+                        id: 44
+      ```
+    </Accordion>
+    <Accordion title="Fern Definition">
+    ```yaml {11-15}
+    service:
+      auth: true
+      base-path: ""
+      endpoints:
+        update:
+          docs: Update an existing pet 
+          method: PUT
+          path: /pet
+          request: Pet
+          examples:
+            - name: ExampleWithMarkley
+              docs: This is an example of a Pet
+              request:
+                name: Markley
+                id: 44
+    ```
+    </Accordion>
+  </AccordionGroup>
+
+  ### Reference the example
+
+  In the API Definition, the example had a name `ExampleWithMarkley`. You can reference
+  the example directly: 
+
+  ```jsx
+    <EndpointRequestSnippet endpoint="PUT /pet" example="ExampleWithMarkley"/>
+  ```
+</Steps>
+
 ### Props
 
 Below is a description of all the supported props for the `EndpointRequestSnippet` component. 
 
-<CodeBlocks>
-  ```yaml Schema
-  EndpointRequestSnippetProps:
-    properties:
-      endpoint:
-        type: string
-        docs: The endpoint using `METHOD /path` format.
-      example:
-        type: optional<string>
-        docs: The name of the example to display, defaults to the first example.
-  ```
-
-  ```jsx JSX
-    <EndpointRequestSnippet endpoint="POST /your/endpoint" example="example-name"/>
-  ```
-
-</CodeBlocks>
+```fern
+EndpointRequestSnippetProps:
+  properties:
+    endpoint:
+      type: string
+      docs: The endpoint using `METHOD /path` format.
+    example:
+      type: optional<string>
+      docs: The name of the example to display, defaults to the first example.
+```
 
 <Aside>
 
