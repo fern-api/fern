@@ -6,7 +6,6 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/cli/configuration"
   },
-  "private": true,
   "files": [
     "lib"
   ],
