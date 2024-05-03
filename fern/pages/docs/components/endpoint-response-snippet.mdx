@@ -4,7 +4,7 @@ excerpt: Reference an endpoint response from your API Reference
 ---
 
 The `EndpointResponseSnippet` component is used to reference an endpoint 
-request from your API Reference. Below is an example of referencing the 
+response from your API Reference. Below is an example of referencing the 
 response for the `POST /snippets` endpoint.
 
 <CodeBlock title="Markdown">
@@ -20,7 +20,7 @@ will be rendered as
 
 ### Reference particular examples
 
-If you want to reference a particular example in the request snippet, you can set `example` prop
+If you want to reference a particular example in the response snippet, you can set `example` prop
 to the name of the example. See the steps below: 
 
 <Steps>
@@ -37,7 +37,7 @@ to the name of the example. See the steps below:
             summary: Get a pet 
             operationId: pets_get
             responses: 
-              `200`: 
+              '200': 
                 content:
                   application/json:
                     schema:
@@ -64,9 +64,10 @@ to the name of the example. See the steps below:
           examples:
             - name: ExampleWithMarkley
               docs: This is an example of a Pet
-              request:
-                name: Markley
-                id: 44
+              response:
+                body: 
+                  name: Markley
+                  id: 44
     ```
     </Accordion>
   </AccordionGroup>
@@ -77,8 +78,8 @@ to the name of the example. See the steps below:
   the example directly: 
 
   ```jsx {3}
-    <EndpointRequestSnippet 
-      endpoint="PUT /pet" 
+    <EndpointResponseSnippet 
+      endpoint="GET /pet/{petId}" 
       example="ExampleWithMarkley"
     />
   ```
@@ -86,7 +87,7 @@ to the name of the example. See the steps below:
 
 {/* ### Props
 
-Below is a description of all the supported props for the `EndpointRequestSnippet` component. 
+Below is a description of all the supported props for the `EndpointResponseSnippet` component. 
 
 ```fern
 EndpointResponseSnippetProps:
