@@ -7,11 +7,31 @@ icon: 'align-right'
 <CodeBlock title="Markdown">
 ```jsx
 <Aside>
-<EndpointRequestSnippet endpoint='POST /snippets' />
+  
+  ```ts helloWorld.ts
+  export function helloWorld() {
+    console.log("Hello World!");
+  }
+  ```
+
+  The code snippet shows how to print `Hello World`. 
 </Aside>
 ```
 </CodeBlock>
 
+Any markdown content inside of the `Aside` component will be 
+rendered to the right of the page. This pattern is often used to 
+render code samples 
+
+<
 <Aside>
-<EndpointRequestSnippet endpoint='POST /snippets' />
+  
+  ```ts helloWorld.ts
+  export function helloWorld() {
+    console.log("Hello World!");
+  }
+  ```
+
+  The code snippet shows how to print `Hello World`. 
 </Aside>
+

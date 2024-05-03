@@ -188,52 +188,26 @@ navigation:
           - page: Quickstart
             slug: quickstart
             path: ./pages/docs/introduction/quickstart.mdx
-      - section: Configuration
-        slug: config
+      - section: Concepts
         contents:
-          - page: Overview
-            path: ./pages/fern-docs/config/config-overview.mdx
+          - page: The Fern Folder
+            path: ./pages/docs/todo.mdx
+          - page: docs.yml
+            path: ./pages/docs/todo.mdx
           - page: Navigation
-            path: ./pages/fern-docs/config/navigation.mdx
-          - page: PR previews
-            slug: previews
-            path: ./pages/fern-docs/config/previews.mdx
-          - section: Customize branding
-            slug: branding
-            contents:
-              - page: Colors, fonts, and background image
-                path: ./pages/fern-docs/config/branding/colors-fonts-background-image.mdx
-                slug: colors-fonts-background-image
-              - page: Logo and favicon
-                path: ./pages/fern-docs/config/branding/logo-and-favicon.mdx
-              - page: Custom domain
-                path: ./pages/fern-docs/config/branding/custom-domain.mdx
-      - section: Write content
-        slug: content
+            path: ./pages/docs/todo.mdx
+          - page: API Reference
+            path: ./pages/docs/todo.mdx
+      - section: Features
         contents:
-          - page: Write Markdown content
-            path: ./pages/fern-docs/content/write-markdown.mdx
-            slug: write-markdown
-          - page: Frontmatter
-            path: ./pages/fern-docs/content/front-matter.mdx
-          - page: Code snippets
-            path: ./pages/fern-docs/content/code-snippets.mdx
-      - section: API references
-        contents:
-          - page: Generate API reference
-            path: ./pages/fern-docs/content/generate-api-ref.mdx
-            slug: generate-api-ref
-          - page: Audiences
-            path: ./pages/fern-docs/config/audiences.mdx
-          - page: SDK snippets
-            path: ./pages/fern-docs/config/sdk-snippets.mdx
-          - page: Endpoint errors
-            path: ./pages/fern-docs/config/endpoint-errors.mdx
-          - page: Reorder API Reference pages
-            path: ./pages/fern-docs/content/reorder-api-ref.mdx
-          - page: Write markdown in API Reference
-            path: ./pages/fern-docs/content/api-ref-content.mdx
-
+          - section: API
+            contents: []
+          - section: Content
+            contents: []
+          - section: Customization
+            contents: []
+          - section: Deployment
+            contents: []
       - section: Components
         slug: components
         contents:
