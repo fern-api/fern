@@ -14,9 +14,12 @@ to the name of the example. See the steps below:
 
 <Steps>
   ### Define named examples
+
+  The highlighed lines show how to set the example name. 
+  
   <AccordionGroup>
     <Accordion title="OpenAPI">
-      ```yaml {11-16}
+      ```yaml {12}
       paths:
         /pet:
           put:
@@ -36,7 +39,7 @@ to the name of the example. See the steps below:
       ```
     </Accordion>
     <Accordion title="Fern Definition">
-    ```yaml {11-15}
+    ```yaml {11}
     service:
       auth: true
       base-path: ""
@@ -61,8 +64,11 @@ to the name of the example. See the steps below:
   In the API Definition, the example had a name `ExampleWithMarkley`. You can reference
   the example directly: 
 
-  ```jsx
-    <EndpointRequestSnippet endpoint="PUT /pet" example="ExampleWithMarkley"/>
+  ```jsx {3}
+    <EndpointRequestSnippet 
+      endpoint="PUT /pet" 
+      example="ExampleWithMarkley"
+    />
   ```
 </Steps>
 
