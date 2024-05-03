@@ -20,13 +20,22 @@ export async function loadRawGeneratorsConfiguration({
         return undefined;
     }
     const contentsStr = await readFile(filepath);
-    const contentsParsed = yaml.load(contentsStr.toString());
-    return validateSchema({
-        schema: GeneratorsConfigurationSchema,
-        value: contentsParsed,
-        context,
-        filepathBeingParsed: filepath
-    });
+    try {
+        const contentsParsed = yaml.load(contentsStr.toString());
+        return validateSchema({
+            schema: GeneratorsConfigurationSchema,
+            value: contentsParsed,
+            context,
+            filepathBeingParsed: filepath
+        });
+    } catch (e) {
+        if (e instanceof yaml.YAMLException) {
+            context.failAndThrow(`Failed to parse ${GENERATORS_CONFIGURATION_FILENAME}: ${e.reason}`);
+        } else {
+            throw e;
+        }
+    }
+    return undefined;
 }
 
 export async function loadGeneratorsConfiguration({
