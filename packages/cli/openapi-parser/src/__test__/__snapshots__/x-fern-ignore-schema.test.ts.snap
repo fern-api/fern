@@ -23,6 +23,7 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
           "conflict": {},
           "generatedName": "schemaToKeepId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schemaToKeepId",

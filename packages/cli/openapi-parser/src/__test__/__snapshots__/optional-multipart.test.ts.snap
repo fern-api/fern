@@ -438,6 +438,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyAudio",
           "key": "audio",
+          "nameOverride": null,
           "schema": {
             "description": "The audio file.",
             "generatedName": "SpeechBodyAudio",
@@ -456,6 +457,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyModelId",
           "key": "model_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyModelId",
@@ -481,6 +483,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyVoiceSettings",
           "key": "voice_settings",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyVoiceSettings",
@@ -517,6 +520,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamAudio",
           "key": "audio",
+          "nameOverride": null,
           "schema": {
             "description": "The audio file.",
             "generatedName": "SpeechBodyStreamAudio",
@@ -535,6 +539,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamModelId",
           "key": "model_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyStreamModelId",
@@ -560,6 +565,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamVoiceSettings",
           "key": "voice_settings",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyStreamVoiceSettings",
@@ -585,6 +591,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamMyEnum",
           "key": "my_enum",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyStreamMyEnum",
@@ -631,6 +638,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamMyRef",
           "key": "my_ref",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyStreamMyRef",
@@ -663,6 +671,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "requestModelVoiceId",
           "key": "voice_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RequestModelVoiceId",
