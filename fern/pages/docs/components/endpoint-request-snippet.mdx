@@ -7,6 +7,28 @@ The `EndpointRequestSnippet` component is used to reference an endpoint request 
 
 <EndpointRequestSnippet endpoint="POST /snippets" />
 
+### Props
+
+Below is a description of all the supported props for the `EndpointRequestSnippet` component. 
+
+<CodeBlocks>
+  ```fern Schema
+  EndpointRequestSnippetProps:
+    properties:
+      endpoint:
+        type: string
+        docs: The endpoint using `METHOD /path` format.
+      example:
+        type: optional<string>
+        docs: The name of the example to display, defaults to the first example.
+  ```
+
+  ```jsx JSX
+    <EndpointRequestSnippet endpoint="POST /your/endpoint" example="example-name"/>
+  ```
+
+</CodeBlocks>
+
 <Aside>
 
 <CodeBlock title="Markdown">
@@ -14,16 +36,5 @@ The `EndpointRequestSnippet` component is used to reference an endpoint request 
   <EndpointRequestSnippet endpoint="POST /snippets" />
   ```
 </CodeBlock>
-
-```fern JSX Props for EndpointRequestSnippet
-EndpointRequestSnippetProps:
-  properties:
-    endpoint:
-      type: string
-      docs: The endpoint using `METHOD /path` format.
-    example:
-      type: optional<string>
-      docs: The name of the example to display, defaults to the first example.
-```
 
 </Aside>
