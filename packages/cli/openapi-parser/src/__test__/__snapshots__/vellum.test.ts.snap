@@ -3798,6 +3798,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "chatMessageText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ChatMessageText",
@@ -3816,6 +3817,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "chatMessageRole",
           "key": "role",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ChatMessageRole",
@@ -3841,6 +3843,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "chatMessageRequestText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ChatMessageRequestText",
@@ -3859,6 +3862,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "chatMessageRequestRole",
           "key": "role",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ChatMessageRequestRole",
@@ -3944,6 +3948,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "conditionalNodeResultData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ConditionalNodeResultData",
@@ -3969,6 +3974,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "conditionalNodeResultDataSourceHandleId",
           "key": "source_handle_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "conditionalNodeResultDataSourceHandleId",
@@ -4046,6 +4052,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentNodeResultData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentNodeResultData",
@@ -4071,6 +4078,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentNodeResultDataOutputId",
           "key": "output_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentNodeResultDataOutputId",
@@ -4089,6 +4097,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentNodeResultDataText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deploymentNodeResultDataText",
@@ -4121,6 +4130,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentNodeResultDataDelta",
           "key": "delta",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deploymentNodeResultDataDelta",
@@ -4164,6 +4174,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentReadId",
@@ -4182,6 +4193,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadCreated",
           "key": "created",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentReadCreated",
@@ -4198,6 +4210,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-readable label for the deployment",
             "generatedName": "DeploymentReadLabel",
@@ -4216,6 +4229,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "A name that uniquely identifies this deployment within its workspace",
             "generatedName": "DeploymentReadName",
@@ -4234,6 +4248,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deploymentReadStatus",
@@ -4259,6 +4274,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadEnvironment",
           "key": "environment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deploymentReadEnvironment",
@@ -4284,6 +4300,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadModelType",
           "key": "model_type",
+          "nameOverride": null,
           "schema": {
             "description": "The type of model this deployment serves
 
@@ -4301,6 +4318,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadActiveModelVersionIds",
           "key": "active_model_version_ids",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentReadActiveModelVersionIds",
@@ -4326,6 +4344,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "deploymentReadLastDeployedOn",
           "key": "last_deployed_on",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentReadLastDeployedOn",
@@ -4400,6 +4419,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the document.",
             "generatedName": "DocumentId",
@@ -4418,6 +4438,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "The human-readable name for the document.",
             "generatedName": "DocumentLabel",
@@ -4436,6 +4457,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "documentExternalId",
@@ -4479,6 +4501,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentDocumentToDocumentIndexId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this link.",
             "generatedName": "DocumentDocumentToDocumentIndexId",
@@ -4497,6 +4520,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentDocumentToDocumentIndexDocumentIndexId",
           "key": "document_index_id",
+          "nameOverride": null,
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
             "generatedName": "DocumentDocumentToDocumentIndexDocumentIndexId",
@@ -4515,6 +4539,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentDocumentToDocumentIndexIndexingState",
           "key": "indexing_state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "documentDocumentToDocumentIndexIndexingState",
@@ -4553,6 +4578,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexCreateRequestLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-readable label for the document index",
             "generatedName": "DocumentIndexCreateRequestLabel",
@@ -4571,6 +4597,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexCreateRequestName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "A name that uniquely identifies this index within its workspace",
             "generatedName": "DocumentIndexCreateRequestName",
@@ -4589,6 +4616,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexCreateRequestStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "documentIndexCreateRequestStatus",
@@ -4613,6 +4641,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexCreateRequestEnvironment",
           "key": "environment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "documentIndexCreateRequestEnvironment",
@@ -4638,6 +4667,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexCreateRequestIndexingConfig",
           "key": "indexing_config",
+          "nameOverride": null,
           "schema": {
             "description": "Configuration representing how documents should be indexed",
             "generatedName": "DocumentIndexCreateRequestIndexingConfig",
@@ -4667,6 +4697,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexCreateRequestCopyDocumentsFromIndexId",
           "key": "copy_documents_from_index_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "documentIndexCreateRequestCopyDocumentsFromIndexId",
@@ -4703,6 +4734,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexReadId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DocumentIndexReadId",
@@ -4721,6 +4753,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexReadCreated",
           "key": "created",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DocumentIndexReadCreated",
@@ -4737,6 +4770,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexReadLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-readable label for the document index",
             "generatedName": "DocumentIndexReadLabel",
@@ -4755,6 +4789,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexReadName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "A name that uniquely identifies this index within its workspace",
             "generatedName": "DocumentIndexReadName",
@@ -4773,6 +4808,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexReadStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "documentIndexReadStatus",
@@ -4797,6 +4833,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexReadEnvironment",
           "key": "environment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "documentIndexReadEnvironment",
@@ -4822,6 +4859,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "documentIndexReadIndexingConfig",
           "key": "indexing_config",
+          "nameOverride": null,
           "schema": {
             "description": "Configuration representing how documents should be indexed",
             "generatedName": "DocumentIndexReadIndexingConfig",
@@ -4896,6 +4934,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The Vellum-generated ID of the completion.",
             "generatedName": "EnrichedNormalizedCompletionId",
@@ -4914,6 +4953,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "enrichedNormalizedCompletionExternalId",
@@ -4946,6 +4986,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The text generated by the LLM.",
             "generatedName": "EnrichedNormalizedCompletionText",
@@ -4964,6 +5005,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionFinishReason",
           "key": "finish_reason",
+          "nameOverride": null,
           "schema": {
             "description": "The reason the generation finished.
 
@@ -4989,6 +5031,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionLogprobs",
           "key": "logprobs",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "enrichedNormalizedCompletionLogprobs",
@@ -5017,6 +5060,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionModelVersionId",
           "key": "model_version_id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the model version used to generate this completion.",
             "generatedName": "EnrichedNormalizedCompletionModelVersionId",
@@ -5035,6 +5079,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "enrichedNormalizedCompletionType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "enrichedNormalizedCompletionType",
@@ -5114,6 +5159,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "evaluationParamsTarget",
           "key": "target",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "evaluationParamsTarget",
@@ -5150,6 +5196,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "evaluationParamsRequestTarget",
           "key": "target",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "evaluationParamsRequestTarget",
@@ -5186,6 +5233,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentId",
           "key": "workflow_deployment_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentId",
@@ -5218,6 +5266,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentName",
           "key": "workflow_deployment_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "executeWorkflowStreamRequestWorkflowDeploymentName",
@@ -5250,6 +5299,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestReleaseTag",
           "key": "release_tag",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "executeWorkflowStreamRequestReleaseTag",
@@ -5282,6 +5332,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestInputs",
           "key": "inputs",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ExecuteWorkflowStreamRequestInputs",
@@ -5303,6 +5354,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "executeWorkflowStreamRequestExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "executeWorkflowStreamRequestExternalId",
@@ -5393,6 +5445,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateBodyRequestDeploymentId",
           "key": "deployment_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateBodyRequestDeploymentId",
@@ -5425,6 +5478,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateBodyRequestDeploymentName",
           "key": "deployment_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateBodyRequestDeploymentName",
@@ -5457,6 +5511,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateBodyRequestRequests",
           "key": "requests",
+          "nameOverride": null,
           "schema": {
             "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
             "generatedName": "GenerateBodyRequestRequests",
@@ -5478,6 +5533,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateBodyRequestOptions",
           "key": "options",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateBodyRequestOptions",
@@ -5517,6 +5573,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateErrorResponseDetail",
           "key": "detail",
+          "nameOverride": null,
           "schema": {
             "description": "Details about why the request failed.",
             "generatedName": "GenerateErrorResponseDetail",
@@ -5546,6 +5603,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateOptionsRequestLogprobs",
           "key": "logprobs",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateOptionsRequestLogprobs",
@@ -5581,6 +5639,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateRequestInputValues",
           "key": "input_values",
+          "nameOverride": null,
           "schema": {
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
             "generatedName": "GenerateRequestInputValues",
@@ -5610,6 +5669,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateRequestChatHistory",
           "key": "chat_history",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateRequestChatHistory",
@@ -5638,6 +5698,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateRequestExternalIds",
           "key": "external_ids",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateRequestExternalIds",
@@ -5688,6 +5749,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateResponseResults",
           "key": "results",
+          "nameOverride": null,
           "schema": {
             "description": "The results of each generation request.",
             "generatedName": "GenerateResponseResults",
@@ -5720,6 +5782,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateResultData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateResultData",
@@ -5741,6 +5804,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateResultError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateResultError",
@@ -5773,6 +5837,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateResultDataCompletions",
           "key": "completions",
+          "nameOverride": null,
           "schema": {
             "description": "The generated completions. This will generally be a list of length one.",
             "generatedName": "GenerateResultDataCompletions",
@@ -5805,6 +5870,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateResultErrorMessage",
           "key": "message",
+          "nameOverride": null,
           "schema": {
             "description": "The error message returned by the LLM provider.",
             "generatedName": "GenerateResultErrorMessage",
@@ -5834,6 +5900,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamBodyRequestDeploymentId",
           "key": "deployment_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateStreamBodyRequestDeploymentId",
@@ -5866,6 +5933,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamBodyRequestDeploymentName",
           "key": "deployment_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateStreamBodyRequestDeploymentName",
@@ -5898,6 +5966,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamBodyRequestRequests",
           "key": "requests",
+          "nameOverride": null,
           "schema": {
             "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
             "generatedName": "GenerateStreamBodyRequestRequests",
@@ -5919,6 +5988,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamBodyRequestOptions",
           "key": "options",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateStreamBodyRequestOptions",
@@ -5958,6 +6028,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamResponseDelta",
           "key": "delta",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GenerateStreamResponseDelta",
@@ -5983,6 +6054,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamResultRequestIndex",
           "key": "request_index",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GenerateStreamResultRequestIndex",
@@ -5999,6 +6071,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamResultData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateStreamResultData",
@@ -6020,6 +6093,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamResultError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "generateStreamResultError",
@@ -6052,6 +6126,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamResultDataCompletionIndex",
           "key": "completion_index",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GenerateStreamResultDataCompletionIndex",
@@ -6068,6 +6143,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "generateStreamResultDataCompletion",
           "key": "completion",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GenerateStreamResultDataCompletion",
@@ -6234,6 +6310,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionBuildConfigBaseModel",
           "key": "base_model",
+          "nameOverride": null,
           "schema": {
             "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
             "generatedName": "ModelVersionBuildConfigBaseModel",
@@ -6252,6 +6329,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionBuildConfigSandboxSnapshot",
           "key": "sandbox_snapshot",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionBuildConfigSandboxSnapshot",
@@ -6291,6 +6369,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionCompilePromptRequestRequestInputValues",
           "key": "input_values",
+          "nameOverride": null,
           "schema": {
             "description": "Key/value pairs for each variable found within the model version's prompt template.",
             "generatedName": "ModelVersionCompilePromptRequestRequestInputValues",
@@ -6331,6 +6410,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionCompilePromptResponsePrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": "Information about the compiled prompt.",
             "generatedName": "ModelVersionCompilePromptResponsePrompt",
@@ -6356,6 +6436,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionCompiledPromptText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The fully compiled prompt in normalized ChatML syntax after all variable substitutions and templating functions are applied.",
             "generatedName": "ModelVersionCompiledPromptText",
@@ -6374,6 +6455,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionCompiledPromptNumTokens",
           "key": "num_tokens",
+          "nameOverride": null,
           "schema": {
             "description": "The approximate number of tokens used by the compiled prompt.",
             "generatedName": "ModelVersionCompiledPromptNumTokens",
@@ -6401,6 +6483,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParameters",
           "key": "parameters",
+          "nameOverride": null,
           "schema": {
             "description": "The generation parameters that are passed to the LLM provider at runtime.",
             "generatedName": "ModelVersionExecConfigParameters",
@@ -6415,6 +6498,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigInputVariables",
           "key": "input_variables",
+          "nameOverride": null,
           "schema": {
             "description": "Names of the input variables specified in the prompt template.",
             "generatedName": "ModelVersionExecConfigInputVariables",
@@ -6436,6 +6520,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigPromptTemplate",
           "key": "prompt_template",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionExecConfigPromptTemplate",
@@ -6461,6 +6546,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigPromptBlockData",
           "key": "prompt_block_data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionExecConfigPromptBlockData",
@@ -6482,6 +6568,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigPromptSyntaxVersion",
           "key": "prompt_syntax_version",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionExecConfigPromptSyntaxVersion",
@@ -6516,6 +6603,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersTemperature",
           "key": "temperature",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ModelVersionExecConfigParametersTemperature",
@@ -6532,6 +6620,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersMaxTokens",
           "key": "max_tokens",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ModelVersionExecConfigParametersMaxTokens",
@@ -6548,6 +6637,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersTopP",
           "key": "top_p",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ModelVersionExecConfigParametersTopP",
@@ -6564,6 +6654,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersFrequencyPenalty",
           "key": "frequency_penalty",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ModelVersionExecConfigParametersFrequencyPenalty",
@@ -6580,6 +6671,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersPresencePenalty",
           "key": "presence_penalty",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ModelVersionExecConfigParametersPresencePenalty",
@@ -6596,6 +6688,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersLogitBias",
           "key": "logit_bias",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionExecConfigParametersLogitBias",
@@ -6651,6 +6744,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersStop",
           "key": "stop",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionExecConfigParametersStop",
@@ -6690,6 +6784,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionExecConfigParametersTopK",
           "key": "top_k",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionExecConfigParametersTopK",
@@ -6724,6 +6819,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this model version.",
             "generatedName": "ModelVersionReadId",
@@ -6742,6 +6838,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadCreated",
           "key": "created",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp of when this model version was created.",
             "generatedName": "ModelVersionReadCreated",
@@ -6758,6 +6855,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "Human-friendly name for this model version.",
             "generatedName": "ModelVersionReadLabel",
@@ -6776,6 +6874,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadModelType",
           "key": "model_type",
+          "nameOverride": null,
           "schema": {
             "description": "The type of task this model is used for.
 
@@ -6793,6 +6892,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadProvider",
           "key": "provider",
+          "nameOverride": null,
           "schema": {
             "description": "Which LLM provider this model version is associated with.
 
@@ -6816,6 +6916,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": "The unique id of this model version as it exists in the above provider's system.",
             "generatedName": "ModelVersionReadExternalId",
@@ -6834,6 +6935,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadBuildConfig",
           "key": "build_config",
+          "nameOverride": null,
           "schema": {
             "description": "Configuration used to build this model version.",
             "generatedName": "ModelVersionReadBuildConfig",
@@ -6848,6 +6950,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadExecConfig",
           "key": "exec_config",
+          "nameOverride": null,
           "schema": {
             "description": "Configuration used to execute this model version.",
             "generatedName": "ModelVersionReadExecConfig",
@@ -6862,6 +6965,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionReadStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionReadStatus",
@@ -6954,6 +7058,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionSandboxSnapshotId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the sandbox snapshot.",
             "generatedName": "ModelVersionSandboxSnapshotId",
@@ -6972,6 +7077,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionSandboxSnapshotPromptIndex",
           "key": "prompt_index",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionSandboxSnapshotPromptIndex",
@@ -6995,6 +7101,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionSandboxSnapshotPromptId",
           "key": "prompt_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "modelVersionSandboxSnapshotPromptId",
@@ -7020,6 +7127,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "modelVersionSandboxSnapshotSandboxId",
           "key": "sandbox_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ModelVersionSandboxSnapshotSandboxId",
@@ -7056,6 +7164,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "normalizedLogProbsTokens",
           "key": "tokens",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedLogProbsTokens",
@@ -7077,6 +7186,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "normalizedLogProbsLikelihood",
           "key": "likelihood",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedLogProbsLikelihood",
@@ -7111,6 +7221,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "normalizedTokenLogProbsToken",
           "key": "token",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedTokenLogProbsToken",
@@ -7129,6 +7240,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "normalizedTokenLogProbsLogprob",
           "key": "logprob",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedTokenLogProbsLogprob",
@@ -7152,6 +7264,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "normalizedTokenLogProbsTopLogprobs",
           "key": "top_logprobs",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedTokenLogProbsTopLogprobs",
@@ -7200,6 +7313,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "normalizedTokenLogProbsTextOffset",
           "key": "text_offset",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NormalizedTokenLogProbsTextOffset",
@@ -7227,6 +7341,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "paginatedSlimDocumentListCount",
           "key": "count",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "paginatedSlimDocumentListCount",
@@ -7250,6 +7365,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "paginatedSlimDocumentListNext",
           "key": "next",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "paginatedSlimDocumentListNext",
@@ -7282,6 +7398,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "paginatedSlimDocumentListPrevious",
           "key": "previous",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "paginatedSlimDocumentListPrevious",
@@ -7314,6 +7431,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "paginatedSlimDocumentListResults",
           "key": "results",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "paginatedSlimDocumentListResults",
@@ -7424,6 +7542,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptNodeResultData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptNodeResultData",
@@ -7449,6 +7568,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptNodeResultDataOutputId",
           "key": "output_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptNodeResultDataOutputId",
@@ -7467,6 +7587,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptNodeResultDataText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptNodeResultDataText",
@@ -7499,6 +7620,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptNodeResultDataDelta",
           "key": "delta",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptNodeResultDataDelta",
@@ -7542,6 +7664,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockId",
@@ -7560,6 +7683,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockBlockType",
           "key": "block_type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockBlockType",
@@ -7574,6 +7698,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockProperties",
           "key": "properties",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockProperties",
@@ -7599,6 +7724,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockDataVersion",
           "key": "version",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockDataVersion",
@@ -7615,6 +7741,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockDataBlocks",
           "key": "blocks",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockDataBlocks",
@@ -7647,6 +7774,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockDataRequestVersion",
           "key": "version",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockDataRequestVersion",
@@ -7663,6 +7791,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockDataRequestBlocks",
           "key": "blocks",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockDataRequestBlocks",
@@ -7695,6 +7824,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesChatRole",
           "key": "chat_role",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesChatRole",
@@ -7723,6 +7853,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesChatMessageUnterminated",
           "key": "chat_message_unterminated",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesChatMessageUnterminated",
@@ -7746,6 +7877,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesTemplate",
           "key": "template",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesTemplate",
@@ -7778,6 +7910,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesTemplateType",
           "key": "template_type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesTemplateType",
@@ -7806,6 +7939,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesFunctionName",
           "key": "function_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesFunctionName",
@@ -7838,6 +7972,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesFunctionDescription",
           "key": "function_description",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesFunctionDescription",
@@ -7870,6 +8005,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesFunctionParameters",
           "key": "function_parameters",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesFunctionParameters",
@@ -7913,6 +8049,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesBlocks",
           "key": "blocks",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesBlocks",
@@ -7959,6 +8096,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestChatRole",
           "key": "chat_role",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesRequestChatRole",
@@ -7987,6 +8125,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestChatMessageUnterminated",
           "key": "chat_message_unterminated",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesRequestChatMessageUnterminated",
@@ -8010,6 +8149,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestTemplate",
           "key": "template",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesRequestTemplate",
@@ -8042,6 +8182,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestTemplateType",
           "key": "template_type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesRequestTemplateType",
@@ -8070,6 +8211,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestFunctionName",
           "key": "function_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesRequestFunctionName",
@@ -8102,6 +8244,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestFunctionDescription",
           "key": "function_description",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesRequestFunctionDescription",
@@ -8134,6 +8277,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestFunctionParameters",
           "key": "function_parameters",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesRequestFunctionParameters",
@@ -8177,6 +8321,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockPropertiesRequestBlocks",
           "key": "blocks",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "promptTemplateBlockPropertiesRequestBlocks",
@@ -8223,6 +8368,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockRequestId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockRequestId",
@@ -8241,6 +8387,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockRequestBlockType",
           "key": "block_type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockRequestBlockType",
@@ -8255,6 +8402,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateBlockRequestProperties",
           "key": "properties",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PromptTemplateBlockRequestProperties",
@@ -8280,6 +8428,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateInputVariableKey",
           "key": "key",
+          "nameOverride": null,
           "schema": {
             "description": "The name of the input variable.",
             "generatedName": "PromptTemplateInputVariableKey",
@@ -8309,6 +8458,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "promptTemplateInputVariableRequestKey",
           "key": "key",
+          "nameOverride": null,
           "schema": {
             "description": "The name of the input variable.",
             "generatedName": "PromptTemplateInputVariableRequestKey",
@@ -8450,6 +8600,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptErrorResponseDetail",
           "key": "detail",
+          "nameOverride": null,
           "schema": {
             "description": "Details about why the request failed.",
             "generatedName": "RegisterPromptErrorResponseDetail",
@@ -8479,6 +8630,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestTemperature",
           "key": "temperature",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RegisterPromptModelParametersRequestTemperature",
@@ -8495,6 +8647,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestMaxTokens",
           "key": "max_tokens",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RegisterPromptModelParametersRequestMaxTokens",
@@ -8511,6 +8664,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestStop",
           "key": "stop",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RegisterPromptModelParametersRequestStop",
@@ -8543,6 +8697,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestTopP",
           "key": "top_p",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RegisterPromptModelParametersRequestTopP",
@@ -8559,6 +8714,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestTopK",
           "key": "top_k",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "registerPromptModelParametersRequestTopK",
@@ -8582,6 +8738,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestFrequencyPenalty",
           "key": "frequency_penalty",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RegisterPromptModelParametersRequestFrequencyPenalty",
@@ -8598,6 +8755,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestPresencePenalty",
           "key": "presence_penalty",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RegisterPromptModelParametersRequestPresencePenalty",
@@ -8614,6 +8772,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptModelParametersRequestLogitBias",
           "key": "logit_bias",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "registerPromptModelParametersRequestLogitBias",
@@ -8680,6 +8839,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptPromptId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the generated prompt.",
             "generatedName": "RegisterPromptPromptId",
@@ -8698,6 +8858,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptPromptLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-friendly label for the generated prompt.",
             "generatedName": "RegisterPromptPromptLabel",
@@ -8727,6 +8888,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptPromptInfoRequestPromptSyntaxVersion",
           "key": "prompt_syntax_version",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "registerPromptPromptInfoRequestPromptSyntaxVersion",
@@ -8750,6 +8912,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptPromptInfoRequestPromptBlockData",
           "key": "prompt_block_data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RegisterPromptPromptInfoRequestPromptBlockData",
@@ -8764,6 +8927,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptPromptInfoRequestInputVariables",
           "key": "input_variables",
+          "nameOverride": null,
           "schema": {
             "description": "Names of the input variables specified in the prompt template.",
             "generatedName": "RegisterPromptPromptInfoRequestInputVariables",
@@ -8796,6 +8960,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptRequestRequestLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-friendly label for corresponding entities created in Vellum.",
             "generatedName": "RegisterPromptRequestRequestLabel",
@@ -8814,6 +8979,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptRequestRequestName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "A uniquely-identifying name for corresponding entities created in Vellum.",
             "generatedName": "RegisterPromptRequestRequestName",
@@ -8832,6 +8998,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptRequestRequestPrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": "Information about how to execute the prompt template.",
             "generatedName": "RegisterPromptRequestRequestPrompt",
@@ -8846,6 +9013,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptRequestRequestProvider",
           "key": "provider",
+          "nameOverride": null,
           "schema": {
             "description": "The initial LLM provider to use for this prompt
 
@@ -8869,6 +9037,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptRequestRequestModel",
           "key": "model",
+          "nameOverride": null,
           "schema": {
             "description": "The initial model to use for this prompt",
             "generatedName": "RegisterPromptRequestRequestModel",
@@ -8887,6 +9056,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptRequestRequestParameters",
           "key": "parameters",
+          "nameOverride": null,
           "schema": {
             "description": "The initial model parameters to use for  this prompt",
             "generatedName": "RegisterPromptRequestRequestParameters",
@@ -8901,6 +9071,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptRequestRequestMeta",
           "key": "meta",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "registerPromptRequestRequestMeta",
@@ -8948,6 +9119,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptResponsePrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": "Information about the generated prompt",
             "generatedName": "RegisterPromptResponsePrompt",
@@ -8962,6 +9134,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptResponseSandboxSnapshot",
           "key": "sandbox_snapshot",
+          "nameOverride": null,
           "schema": {
             "description": "Information about the generated sandbox snapshot",
             "generatedName": "RegisterPromptResponseSandboxSnapshot",
@@ -8976,6 +9149,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptResponseSandbox",
           "key": "sandbox",
+          "nameOverride": null,
           "schema": {
             "description": "Information about the generated sandbox",
             "generatedName": "RegisterPromptResponseSandbox",
@@ -8990,6 +9164,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptResponseModelVersion",
           "key": "model_version",
+          "nameOverride": null,
           "schema": {
             "description": "Information about the generated model version",
             "generatedName": "RegisterPromptResponseModelVersion",
@@ -9004,6 +9179,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registerPromptResponseDeployment",
           "key": "deployment",
+          "nameOverride": null,
           "schema": {
             "description": "Information about the generated deployment",
             "generatedName": "RegisterPromptResponseDeployment",
@@ -9029,6 +9205,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registeredPromptDeploymentId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the generated deployment.",
             "generatedName": "RegisteredPromptDeploymentId",
@@ -9047,6 +9224,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registeredPromptDeploymentName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "A uniquely-identifying name for generated deployment.",
             "generatedName": "RegisteredPromptDeploymentName",
@@ -9065,6 +9243,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registeredPromptDeploymentLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-friendly label for the generated deployment.",
             "generatedName": "RegisteredPromptDeploymentLabel",
@@ -9094,6 +9273,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registeredPromptModelVersionId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the generated model version.",
             "generatedName": "RegisteredPromptModelVersionId",
@@ -9112,6 +9292,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registeredPromptModelVersionLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-friendly label for the generated model version.",
             "generatedName": "RegisteredPromptModelVersionLabel",
@@ -9141,6 +9322,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registeredPromptSandboxId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the generated sandbox.",
             "generatedName": "RegisteredPromptSandboxId",
@@ -9159,6 +9341,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registeredPromptSandboxLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-friendly label for the generated sandbox.",
             "generatedName": "RegisteredPromptSandboxLabel",
@@ -9188,6 +9371,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "registeredPromptSandboxSnapshotId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the generated sandbox snapshot.",
             "generatedName": "RegisteredPromptSandboxSnapshotId",
@@ -9217,6 +9401,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxMetricInputParamsParams",
           "key": "params",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sandboxMetricInputParamsParams",
@@ -9256,6 +9441,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxMetricInputParamsRequestParams",
           "key": "params",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sandboxMetricInputParamsRequestParams",
@@ -9295,6 +9481,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxNodeResultData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SandboxNodeResultData",
@@ -9320,6 +9507,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxNodeResultDataOutputId",
           "key": "output_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SandboxNodeResultDataOutputId",
@@ -9338,6 +9526,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxNodeResultDataText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sandboxNodeResultDataText",
@@ -9370,6 +9559,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxNodeResultDataDelta",
           "key": "delta",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sandboxNodeResultDataDelta",
@@ -9413,6 +9603,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxScenarioLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sandboxScenarioLabel",
@@ -9438,6 +9629,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxScenarioInputs",
           "key": "inputs",
+          "nameOverride": null,
           "schema": {
             "description": "The inputs for the scenario",
             "generatedName": "SandboxScenarioInputs",
@@ -9459,6 +9651,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxScenarioId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The id of the scenario",
             "generatedName": "SandboxScenarioId",
@@ -9477,6 +9670,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "sandboxScenarioMetricInputParams",
           "key": "metric_input_params",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SandboxScenarioMetricInputParams",
@@ -9502,6 +9696,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "scenarioInputKey",
           "key": "key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ScenarioInputKey",
@@ -9520,6 +9715,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "scenarioInputType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "scenarioInputType",
@@ -9548,6 +9744,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "scenarioInputValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "scenarioInputValue",
@@ -9573,6 +9770,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "scenarioInputChatHistory",
           "key": "chat_history",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "scenarioInputChatHistory",
@@ -9612,6 +9810,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "scenarioInputRequestKey",
           "key": "key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ScenarioInputRequestKey",
@@ -9630,6 +9829,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "scenarioInputRequestType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "scenarioInputRequestType",
@@ -9658,6 +9858,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "scenarioInputRequestValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "scenarioInputRequestValue",
@@ -9683,6 +9884,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "scenarioInputRequestChatHistory",
           "key": "chat_history",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "scenarioInputRequestChatHistory",
@@ -9756,6 +9958,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchErrorResponseDetail",
           "key": "detail",
+          "nameOverride": null,
           "schema": {
             "description": "Details about why the request failed.",
             "generatedName": "SearchErrorResponseDetail",
@@ -9785,6 +9988,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchFiltersRequestExternalIds",
           "key": "external_ids",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchFiltersRequestExternalIds",
@@ -9835,6 +10039,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchNodeResultData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SearchNodeResultData",
@@ -9860,6 +10065,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchNodeResultDataResultsOutputId",
           "key": "results_output_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SearchNodeResultDataResultsOutputId",
@@ -9878,6 +10084,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchNodeResultDataResults",
           "key": "results",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SearchNodeResultDataResults",
@@ -9914,6 +10121,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchNodeResultDataTextOutputId",
           "key": "text_output_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchNodeResultDataTextOutputId",
@@ -9946,6 +10154,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchNodeResultDataText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchNodeResultDataText",
@@ -9989,6 +10198,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchRequestBodyRequestIndexId",
           "key": "index_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchRequestBodyRequestIndexId",
@@ -10021,6 +10231,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchRequestBodyRequestIndexName",
           "key": "index_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchRequestBodyRequestIndexName",
@@ -10053,6 +10264,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchRequestBodyRequestQuery",
           "key": "query",
+          "nameOverride": null,
           "schema": {
             "description": "The query to search for.",
             "generatedName": "SearchRequestBodyRequestQuery",
@@ -10071,6 +10283,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchRequestBodyRequestOptions",
           "key": "options",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchRequestBodyRequestOptions",
@@ -10110,6 +10323,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchRequestOptionsRequestLimit",
           "key": "limit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchRequestOptionsRequestLimit",
@@ -10140,6 +10354,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchRequestOptionsRequestWeights",
           "key": "weights",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchRequestOptionsRequestWeights",
@@ -10168,6 +10383,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchRequestOptionsRequestResultMerging",
           "key": "result_merging",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchRequestOptionsRequestResultMerging",
@@ -10196,6 +10412,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchRequestOptionsRequestFilters",
           "key": "filters",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "searchRequestOptionsRequestFilters",
@@ -10235,6 +10452,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchResponseResults",
           "key": "results",
+          "nameOverride": null,
           "schema": {
             "description": "The results of the search. Each result represents a chunk that matches the search query.",
             "generatedName": "SearchResponseResults",
@@ -10267,6 +10485,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchResultDocument",
           "key": "document",
+          "nameOverride": null,
           "schema": {
             "description": "The document that contains the chunk that matched the search query.",
             "generatedName": "SearchResultDocument",
@@ -10281,6 +10500,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchResultText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The text of the chunk that matched the search query.",
             "generatedName": "SearchResultText",
@@ -10299,6 +10519,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchResultKeywords",
           "key": "keywords",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SearchResultKeywords",
@@ -10324,6 +10545,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchResultScore",
           "key": "score",
+          "nameOverride": null,
           "schema": {
             "description": "A score representing how well the chunk matches the search query.",
             "generatedName": "SearchResultScore",
@@ -10351,6 +10573,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchResultMergingRequestEnabled",
           "key": "enabled",
+          "nameOverride": null,
           "schema": {
             "description": "Whether to enable merging results",
             "generatedName": "SearchResultMergingRequestEnabled",
@@ -10378,6 +10601,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchWeightsRequestSemanticSimilarity",
           "key": "semantic_similarity",
+          "nameOverride": null,
           "schema": {
             "description": "The relative weight to give to semantic similarity",
             "generatedName": "SearchWeightsRequestSemanticSimilarity",
@@ -10394,6 +10618,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "searchWeightsRequestKeywords",
           "key": "keywords",
+          "nameOverride": null,
           "schema": {
             "description": "The relative weight to give to keyword matches",
             "generatedName": "SearchWeightsRequestKeywords",
@@ -10421,6 +10646,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "Vellum-generated ID that uniquely identifies this document.",
             "generatedName": "SlimDocumentId",
@@ -10439,6 +10665,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "slimDocumentExternalId",
@@ -10471,6 +10698,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentLastUploadedAt",
           "key": "last_uploaded_at",
+          "nameOverride": null,
           "schema": {
             "description": "A timestamp representing when this document was most recently uploaded.",
             "generatedName": "SlimDocumentLastUploadedAt",
@@ -10487,6 +10715,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "Human-friendly name for this document.",
             "generatedName": "SlimDocumentLabel",
@@ -10505,6 +10734,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentProcessingState",
           "key": "processing_state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "slimDocumentProcessingState",
@@ -10531,6 +10761,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentProcessingFailureReason",
           "key": "processing_failure_reason",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "slimDocumentProcessingFailureReason",
@@ -10561,6 +10792,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "slimDocumentStatus",
@@ -10584,6 +10816,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentKeywords",
           "key": "keywords",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "slimDocumentKeywords",
@@ -10616,6 +10849,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "slimDocumentDocumentToDocumentIndexes",
           "key": "document_to_document_indexes",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SlimDocumentDocumentToDocumentIndexes",
@@ -10659,6 +10893,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualRequestId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "submitCompletionActualRequestId",
@@ -10691,6 +10926,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualRequestExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "submitCompletionActualRequestExternalId",
@@ -10723,6 +10959,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualRequestText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "submitCompletionActualRequestText",
@@ -10755,6 +10992,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualRequestQuality",
           "key": "quality",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "submitCompletionActualRequestQuality",
@@ -10785,6 +11023,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualRequestTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "submitCompletionActualRequestTimestamp",
@@ -10826,6 +11065,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualsErrorResponseDetail",
           "key": "detail",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SubmitCompletionActualsErrorResponseDetail",
@@ -10855,6 +11095,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualsRequestDeploymentId",
           "key": "deployment_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "submitCompletionActualsRequestDeploymentId",
@@ -10887,6 +11128,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualsRequestDeploymentName",
           "key": "deployment_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "submitCompletionActualsRequestDeploymentName",
@@ -10919,6 +11161,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "submitCompletionActualsRequestActuals",
           "key": "actuals",
+          "nameOverride": null,
           "schema": {
             "description": "Feedback regarding the quality of previously generated completions",
             "generatedName": "SubmitCompletionActualsRequestActuals",
@@ -10951,6 +11194,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "terminalNodeChatHistoryResultName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
             "generatedName": "TerminalNodeChatHistoryResultName",
@@ -10969,6 +11213,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "terminalNodeChatHistoryResultValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TerminalNodeChatHistoryResultValue",
@@ -11001,6 +11246,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "terminalNodeJsonResultName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
             "generatedName": "TerminalNodeJsonResultName",
@@ -11019,6 +11265,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "terminalNodeJsonResultValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TerminalNodeJsonResultValue",
@@ -11059,6 +11306,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "terminalNodeResultData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TerminalNodeResultData",
@@ -11084,6 +11332,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "terminalNodeResultDataOutput",
           "key": "output",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TerminalNodeResultDataOutput",
@@ -11147,6 +11396,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "terminalNodeStringResultName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "The unique name given to the terminal node that produced this output.",
             "generatedName": "TerminalNodeStringResultName",
@@ -11165,6 +11415,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "terminalNodeStringResultValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TerminalNodeStringResultValue",
@@ -11194,6 +11445,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "testSuiteTestCaseTestCaseId",
           "key": "test_case_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "testSuiteTestCaseTestCaseId",
@@ -11219,6 +11471,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "testSuiteTestCaseLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "testSuiteTestCaseLabel",
@@ -11251,6 +11504,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "testSuiteTestCaseInputValues",
           "key": "input_values",
+          "nameOverride": null,
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
             "generatedName": "TestSuiteTestCaseInputValues",
@@ -11280,6 +11534,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "testSuiteTestCaseEvaluationParams",
           "key": "evaluation_params",
+          "nameOverride": null,
           "schema": {
             "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
             "generatedName": "TestSuiteTestCaseEvaluationParams",
@@ -11305,6 +11560,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "testSuiteTestCaseRequestTestCaseId",
           "key": "test_case_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "testSuiteTestCaseRequestTestCaseId",
@@ -11330,6 +11586,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "testSuiteTestCaseRequestLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "testSuiteTestCaseRequestLabel",
@@ -11362,6 +11619,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "testSuiteTestCaseRequestInputValues",
           "key": "input_values",
+          "nameOverride": null,
           "schema": {
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
             "generatedName": "TestSuiteTestCaseRequestInputValues",
@@ -11391,6 +11649,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "testSuiteTestCaseRequestEvaluationParams",
           "key": "evaluation_params",
+          "nameOverride": null,
           "schema": {
             "description": "Parameters to use when evaluating the test case, specific to the test suite's evaluation metric.",
             "generatedName": "TestSuiteTestCaseRequestEvaluationParams",
@@ -11416,6 +11675,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestAddToIndexNames",
           "key": "add_to_index_names",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "uploadDocumentBodyRequestAddToIndexNames",
@@ -11455,6 +11715,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "uploadDocumentBodyRequestExternalId",
@@ -11487,6 +11748,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-friendly name for this document. Typically the filename.",
             "generatedName": "UploadDocumentBodyRequestLabel",
@@ -11505,6 +11767,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestContents",
           "key": "contents",
+          "nameOverride": null,
           "schema": {
             "description": "The file contents of the document.",
             "generatedName": "UploadDocumentBodyRequestContents",
@@ -11523,6 +11786,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "uploadDocumentBodyRequestKeywords",
           "key": "keywords",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "uploadDocumentBodyRequestKeywords",
@@ -11573,6 +11837,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "uploadDocumentErrorResponseDetail",
           "key": "detail",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UploadDocumentErrorResponseDetail",
@@ -11602,6 +11867,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "uploadDocumentResponseDocumentId",
           "key": "document_id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the newly created document.",
             "generatedName": "UploadDocumentResponseDocumentId",
@@ -11631,6 +11897,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "upsertSandboxScenarioRequestRequestLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "upsertSandboxScenarioRequestRequestLabel",
@@ -11656,6 +11923,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "upsertSandboxScenarioRequestRequestInputs",
           "key": "inputs",
+          "nameOverride": null,
           "schema": {
             "description": "The inputs for the scenario",
             "generatedName": "UpsertSandboxScenarioRequestRequestInputs",
@@ -11677,6 +11945,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "upsertSandboxScenarioRequestRequestScenarioId",
           "key": "scenario_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "upsertSandboxScenarioRequestRequestScenarioId",
@@ -11702,6 +11971,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "upsertSandboxScenarioRequestRequestMetricInputParams",
           "key": "metric_input_params",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "upsertSandboxScenarioRequestRequestMetricInputParams",
@@ -11734,6 +12004,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowEventErrorMessage",
           "key": "message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowEventErrorMessage",
@@ -11752,6 +12023,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowEventErrorCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowEventErrorCode",
@@ -11811,6 +12083,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowExecutionNodeResultEventRunId",
           "key": "run_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowExecutionNodeResultEventRunId",
@@ -11829,6 +12102,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowExecutionNodeResultEventExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "workflowExecutionNodeResultEventExternalId",
@@ -11861,6 +12135,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowExecutionNodeResultEventData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowExecutionNodeResultEventData",
@@ -11886,6 +12161,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowExecutionWorkflowResultEventRunId",
           "key": "run_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowExecutionWorkflowResultEventRunId",
@@ -11904,6 +12180,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowExecutionWorkflowResultEventExternalId",
           "key": "external_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "workflowExecutionWorkflowResultEventExternalId",
@@ -11936,6 +12213,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowExecutionWorkflowResultEventData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowExecutionWorkflowResultEventData",
@@ -12023,6 +12301,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowNodeResultEventId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowNodeResultEventId",
@@ -12041,6 +12320,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowNodeResultEventNodeId",
           "key": "node_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowNodeResultEventNodeId",
@@ -12059,6 +12339,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowNodeResultEventNodeResultId",
           "key": "node_result_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowNodeResultEventNodeResultId",
@@ -12077,6 +12358,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowNodeResultEventState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowNodeResultEventState",
@@ -12091,6 +12373,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowNodeResultEventTs",
           "key": "ts",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "workflowNodeResultEventTs",
@@ -12121,6 +12404,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowNodeResultEventData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowNodeResultEventData",
@@ -12142,6 +12426,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowNodeResultEventError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "workflowNodeResultEventError",
@@ -12241,6 +12526,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowRequestChatHistoryInputRequestName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
             "generatedName": "WorkflowRequestChatHistoryInputRequestName",
@@ -12259,6 +12545,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowRequestChatHistoryInputRequestValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowRequestChatHistoryInputRequestValue",
@@ -12329,6 +12616,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowRequestJsonInputRequestName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
             "generatedName": "WorkflowRequestJsonInputRequestName",
@@ -12347,6 +12635,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowRequestJsonInputRequestValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowRequestJsonInputRequestValue",
@@ -12387,6 +12676,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowRequestStringInputRequestName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "The variable's name, as defined in the Workflow.",
             "generatedName": "WorkflowRequestStringInputRequestName",
@@ -12405,6 +12695,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowRequestStringInputRequestValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowRequestStringInputRequestValue",
@@ -12434,6 +12725,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventId",
@@ -12452,6 +12744,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventState",
@@ -12466,6 +12759,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventTs",
           "key": "ts",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventTs",
@@ -12482,6 +12776,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutput",
           "key": "output",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutput",
@@ -12503,6 +12798,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "workflowResultEventError",
@@ -12580,6 +12876,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataChatHistoryName",
@@ -12598,6 +12895,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataChatHistoryState",
@@ -12612,6 +12910,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryNodeId",
           "key": "node_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataChatHistoryNodeId",
@@ -12630,6 +12929,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryDelta",
           "key": "delta",
+          "nameOverride": null,
           "schema": {
             "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
             "generatedName": "WorkflowResultEventOutputDataChatHistoryDelta",
@@ -12655,6 +12955,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataChatHistoryValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "workflowResultEventOutputDataChatHistoryValue",
@@ -12701,6 +13002,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataJsonName",
@@ -12719,6 +13021,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataJsonState",
@@ -12733,6 +13036,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonNodeId",
           "key": "node_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataJsonNodeId",
@@ -12751,6 +13055,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonDelta",
           "key": "delta",
+          "nameOverride": null,
           "schema": {
             "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
             "generatedName": "WorkflowResultEventOutputDataJsonDelta",
@@ -12776,6 +13081,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataJsonValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataJsonValue",
@@ -12823,6 +13129,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataStringName",
@@ -12841,6 +13148,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataStringState",
@@ -12855,6 +13163,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringNodeId",
           "key": "node_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WorkflowResultEventOutputDataStringNodeId",
@@ -12873,6 +13182,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringDelta",
           "key": "delta",
+          "nameOverride": null,
           "schema": {
             "description": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
             "generatedName": "WorkflowResultEventOutputDataStringDelta",
@@ -12898,6 +13208,7 @@ Upload a document to be indexed and used for search.
           "conflict": {},
           "generatedName": "workflowResultEventOutputDataStringValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": "The entire string value. Will be non-null for events of state FULFILLED.",
             "generatedName": "WorkflowResultEventOutputDataStringValue",
