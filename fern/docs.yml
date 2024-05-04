@@ -6,7 +6,7 @@ instances:
         owner: fern-api
         repo: fern
         branch: main
-  # - url: fern-beta.docs.buildwithfern.com/learn
+  - url: fern.docs.dev.buildwithfern.com/learn
   #   custom-domain: staging.buildwithfern.com/learn
 title: Fern
 

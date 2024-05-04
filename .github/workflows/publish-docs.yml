@@ -21,4 +21,14 @@ jobs:
       - name: Publish Docs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        run: fern generate --docs --log-level debug
+        run: fern generate --docs --log-level debug --instance fern.docs.buildwithfern.com/learn
+
+      - name: Install fern-dev CLI
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.YARN_NPM_AUTH_TOKEN }}
+          npm install -g @fern-api/fern-api-dev --prefix=$HOME/.local
+      
+      - name: Publish Docs to dev
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        run: fern-dev generate --docs --log-level debug  --instance fern.docs.dev.buildwithfern.com/learn
