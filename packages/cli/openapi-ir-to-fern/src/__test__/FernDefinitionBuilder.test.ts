@@ -7,6 +7,7 @@ describe("Fern Definition Builder", () => {
             {
                 title: undefined,
                 description: undefined,
+                basePath: undefined,
                 servers: [],
                 tags: {
                     tagsById: {},

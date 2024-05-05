@@ -2,6 +2,7 @@
 
 exports[`open api parser vellum parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "
 ## Vellum API Documentation

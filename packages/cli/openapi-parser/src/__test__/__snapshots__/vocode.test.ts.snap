@@ -2,6 +2,7 @@
 
 exports[`open api parser vocode parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "
         Vocode's Hosted API helps you automate phone calls in minutes. 🚀

@@ -14,6 +14,17 @@ export const FernOpenAPIExtension = {
     SERVER_NAME_V2: "x-fern-server-name",
 
     /**
+     * Prepends the configured base path to all of the endpoint paths.
+    *
+     * x-fern-base-path: /v1
+     * servers:
+     *   - url: https://api.example.com
+     * paths:
+     *   /path/to/my/endpoint:
+     */
+    BASE_PATH: "x-fern-base-path",
+
+    /**
      * Should align with the OpenAPI spec's `x-fern-sdk-group-name` extension.
      * This is a place where you can specify any display names related to the
      * configured SDK group names. These display names and descriptions will
