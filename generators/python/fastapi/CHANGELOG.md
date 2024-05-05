@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.9.1-rc0] - 2024-04-22
+
+- Fix: Pydantic utilities are now copied over to the project
+
 ## [0.9.0-rc1] - 2024-04-22
 
 - Feature: The generator now depends on v39 of Intermediate Representation which requires the latest
