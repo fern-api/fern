@@ -2,6 +2,7 @@
 
 exports[`optional-multipart optional-multipart parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [

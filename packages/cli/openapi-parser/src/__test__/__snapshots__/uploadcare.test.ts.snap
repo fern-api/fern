@@ -2,6 +2,7 @@
 
 exports[`open api parser uploadcare parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "### Summary
 Upload API provides several ways of uploading files to Uploadcare servers in a

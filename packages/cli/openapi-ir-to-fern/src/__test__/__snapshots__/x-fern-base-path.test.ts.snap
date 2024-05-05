@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-base-path x-fern-base-path docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {},
+  "rootApiFile": {
+    "base-path": "/v1",
+    "default-environment": "Default",
+    "display-name": "Acme API",
+    "environments": {
+      "Default": "https://api.acme.com",
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-base-path x-fern-base-path docs 2`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "exampleEndpoint": {
+          "auth": false,
+          "display-name": "Example endpoint",
+          "docs": undefined,
+          "examples": [
+            {},
+          ],
+          "method": "GET",
+          "path": "/example",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "base-path": "/v1",
+    "default-environment": "Default",
+    "display-name": "Acme API",
+    "environments": {
+      "Default": "https://api.acme.com",
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-base-path x-fern-base-path simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {},
+  "rootApiFile": {
+    "base-path": "/v1",
+    "default-environment": "Default",
+    "display-name": "Acme API",
+    "environments": {
+      "Default": "https://api.acme.com",
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-base-path x-fern-base-path simple 2`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "exampleEndpoint": {
+          "auth": false,
+          "display-name": "Example endpoint",
+          "docs": undefined,
+          "examples": [
+            {},
+          ],
+          "method": "GET",
+          "path": "/example",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "base-path": "/v1",
+    "default-environment": "Default",
+    "display-name": "Acme API",
+    "environments": {
+      "Default": "https://api.acme.com",
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

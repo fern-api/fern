@@ -22,6 +22,8 @@ export interface FernDefinitionBuilder {
 
     setDefaultEnvironment(name: string): void;
 
+    setBasePath(basePath: string): void;
+
     getEnvironmentType(): "single" | "multi" | undefined;
 
     addAudience(name: string): void;
@@ -136,6 +138,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setDefaultEnvironment(name: string): void {
         this.rootApiFile["default-environment"] = name;
+    }
+
+    public setBasePath(basePath: string): void {
+        this.rootApiFile["base-path"] = basePath;
     }
 
     public getEnvironmentType(): "single" | "multi" | undefined {

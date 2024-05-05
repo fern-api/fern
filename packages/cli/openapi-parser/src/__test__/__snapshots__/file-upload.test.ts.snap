@@ -2,6 +2,7 @@
 
 exports[`file-upload file-upload parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [

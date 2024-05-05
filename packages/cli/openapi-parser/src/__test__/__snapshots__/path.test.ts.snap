@@ -2,6 +2,7 @@
 
 exports[`path parsing path parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
