@@ -15,7 +15,7 @@ export const FernOpenAPIExtension = {
 
     /**
      * Prepends the configured base path to all of the endpoint paths.
-    *
+     *
      * x-fern-base-path: /v1
      * servers:
      *   - url: https://api.example.com
