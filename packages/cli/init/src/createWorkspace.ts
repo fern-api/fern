@@ -58,7 +58,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
             generators: [
                 {
                     name: "fernapi/fern-typescript-node-sdk",
-                    version: "0.9.5",
+                    version: "0.13.0",
                     output: {
                         location: "local-file-system",
                         path: "../generated/sdks/typescript"
