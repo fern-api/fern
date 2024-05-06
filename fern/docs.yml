@@ -51,6 +51,12 @@ navigation:
           - page: OpenAPI Examples
             path: ./pages/api-definition/openapi/examples.mdx
             slug: examples
+          - section: Server Frameworks
+            slug: frameworks
+            contents:
+              - page: FastAPI
+                path: ./pages/api-definition/openapi/server-frameworks/fastapi.mdx
+                slug: fastapi
       - section: Fern Definition
         slug: fern
         contents:

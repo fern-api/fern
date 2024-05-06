@@ -558,6 +558,32 @@ shown in the third tab.
     ```
 </CodeBlocks>
 
+## Embedding extensions
+
+If instead of overlaying your extensions within an overrides file, as mentioned above. Certain frameworks that generate OpenAPI specs make it easy to embed extensions directly from code.
+
+### FastAPI
+
+FastAPI allows you to add in extra OpenAPI configuration directly within your route, through the use of the `openapi_extra` parameter.
+Below, we've annotated a "good" route within FastAPI that has it's typings as well as Fern extensions to assist in naming.
+
+```python
+@router.post(
+    "/your/post/endpoint",
+    response_model=YourResponseModel,           #  <-- with FastAPI, it is important to specify your response model so that it comes through to the OpenAPI spec
+    summary="Get top URLS for search query",    #  <-- if you'd like to add a description to your endpoint, you can do so here
+    openapi_extra={                             #  <-- finally, you can add in your Fern extensions here, these extensions will produce SDK code that looks something like: `client.endpoints.create(...)` in python
+        "x-fern-sdk-method-name": "create",
+        "x-fern-sdk-group-name": "endpoints",
+        "x-fern-availability": "beta",
+    },
+)
+async def your_post_endpoint(
+    payload: ExecuteUrlRequest,
+    user: UserModel = Depends(authenticate_fern),
+) -> YourResponseModel:
+```
+
 ## Request + response examples
 
 While OpenAPI has several fields for examples, there is no easy way
