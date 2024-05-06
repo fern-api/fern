@@ -687,8 +687,7 @@ function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         (yargs) =>
             yargs.option("api", {
                 string: true,
-                description: "The type of generator to upgrade, ex: `fern-typescript-node-sdk`.",
-                demandOption: true
+                description: "The type of generator to upgrade, ex: `fern-typescript-node-sdk`."
             }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
