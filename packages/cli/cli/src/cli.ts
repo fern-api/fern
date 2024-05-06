@@ -648,7 +648,7 @@ function addUpgradeCommand({
 function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "generator upgrade",
-        `Upgrades the specified generator in ${GENERATORS_CONFIGURATION_FILENAME} to the latest version, or latest if one is not specified.`,
+        `Upgrades the specified generator in ${GENERATORS_CONFIGURATION_FILENAME} to the latest stable version.`,
         (yargs) =>
             yargs
                 .option("generator", {
