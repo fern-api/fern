@@ -16,7 +16,10 @@ export { type APIConfigurationSchema } from "./schemas/APIConfigurationSchema";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {
+    API_ORIGIN_LOCATION_KEY,
+    ASYNC_API_LOCATION_KEY,
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
+    OPENAPI_LOCATION_KEY,
     type GeneratorsConfigurationSchema
 } from "./schemas/GeneratorsConfigurationSchema";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";

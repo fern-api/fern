@@ -63,6 +63,10 @@ export async function upgradeGenerator({
     });
 }
 
+export function upgradeGenerator(): void {
+    // TODO
+}
+
 export function addGenerator({
     generatorName,
     generatorsConfiguration,
