@@ -570,17 +570,16 @@ Below, we've annotated a "good" route within FastAPI that has it's typings as we
 ```python
 @router.post(
     "/your/post/endpoint",
-    response_model=YourResponseModel,           #  <-- with FastAPI, it is important to specify your response model so that it comes through to the OpenAPI spec
-    summary="Get top URLS for search query",    #  <-- if you'd like to add a description to your endpoint, you can do so here
-    openapi_extra={                             #  <-- finally, you can add in your Fern extensions here, these extensions will produce SDK code that looks something like: `client.endpoints.create(...)` in python
+    response_model=YourResponseModel,            #  <-- with FastAPI, it is important to specify your response model so that it comes through to the OpenAPI spec
+    summary="Get some response for your req",    #  <-- if you'd like to add a description to your endpoint, you can do so here
+    openapi_extra={                              #  <-- finally, you can add in your Fern extensions here, these extensions will produce SDK code that looks something like: `client.endpoints.create(...)` in python
         "x-fern-sdk-method-name": "create",
         "x-fern-sdk-group-name": "endpoints",
         "x-fern-availability": "beta",
     },
 )
 async def your_post_endpoint(
-    payload: ExecuteUrlRequest,
-    user: UserModel = Depends(authenticate_fern),
+    payload: YourRequestModel,
 ) -> YourResponseModel:
 ```
 
