@@ -16,7 +16,7 @@ async function fetchAndWriteFile(url: string, path: string, logger: Logger): Pro
         logger.debug("Origin successfully fetched, writing to file");
         // Write file to disk
         const fileStream = fs.createWriteStream(path);
-        await finished(Readable.fromWeb(resp.body as ReadableStream<any>).pipe(fileStream));
+        await finished(Readable.fromWeb(resp.body as ReadableStream).pipe(fileStream));
 
         // Read and format file
         const fileContents = await readFile(path, "utf8");
