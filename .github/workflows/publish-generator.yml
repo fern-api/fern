@@ -690,7 +690,7 @@ jobs:
       - name: Publish fernapi/fern-typescript-express-sdk docker
         run: |
           yarn workspace @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
-          docker push fernapi/fern-typescript-express:"$VERSION" -l version="$VERSION"
+          docker push fernapi/fern-typescript-express:"$VERSION"
 
   ts-browser-sdk:
     runs-on: ubuntu-latest
@@ -738,7 +738,7 @@ jobs:
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
           yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
-          docker push fernapi/fern-typescript-browser-sdk:"$VERSION" -l version="$VERSION"
+          docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
 
   ts-node-sdk:
     runs-on: ubuntu-latest
@@ -786,7 +786,7 @@ jobs:
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
           yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
-          docker push fernapi/fern-typescript-node-sdk:"$VERSION" -l version="$VERSION"
+          docker push fernapi/fern-typescript-node-sdk:"$VERSION"
 
   go-sdk:
     runs-on: ubuntu-latest
