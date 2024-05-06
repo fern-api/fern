@@ -7,7 +7,7 @@ import {
 } from ".";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 
-export function upgradeGenerator() {
+export function upgradeGenerator(): void {
     // TODO
 }
 
