@@ -1,6 +1,6 @@
 {
   "type": "library",
-  "private": false,
+  "private": true,
   "rules": {
     "package-json": {
       "scripts": {
