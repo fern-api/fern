@@ -46,7 +46,24 @@ app = FastAPI(servers=[my_production_server])
 
 ## OpenAPI extensions
 
-Please view our [OpenAPI extensions](../extensions#fastapi) page for more information on how to extend your OpenAPI spec, including with Fern OpenAPI extensions.
+FastAPI allows you to add in extra OpenAPI configuration directly within your route, through the use of the `openapi_extra` parameter.
+Below, we've annotated a "good" route within FastAPI that has it's typings as well as Fern extensions to assist in naming.
+
+```python
+@router.post(
+    "/your/post/endpoint",
+    response_model=YourResponseModel,            #  <-- with FastAPI, it is important to specify your response model so that it comes through to the OpenAPI spec
+    summary="Get some response for your req",    #  <-- if you'd like to add a description to your endpoint, you can do so here
+    openapi_extra={                              #  <-- finally, you can add in your Fern extensions here, these extensions will produce SDK code that looks something like: `client.endpoints.create(...)` in python
+        "x-fern-sdk-method-name": "create",
+        "x-fern-sdk-group-name": "endpoints",
+        "x-fern-availability": "beta",
+    },
+)
+async def your_post_endpoint(
+    payload: YourRequestModel,
+) -> YourResponseModel:
+```
 
 ## Specifying examples
 
