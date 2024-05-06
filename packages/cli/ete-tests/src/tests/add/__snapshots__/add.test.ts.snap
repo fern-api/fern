@@ -102,7 +102,7 @@ groups:
           location: local-file-system
           path: ../generated/sdks/typescript
       - name: fernapi/fern-java-sdk
-        version: 0.5.7
+        version: 0.8.7
       - name: fernapi/fern-postman
         version: 0.0.45
         output:
