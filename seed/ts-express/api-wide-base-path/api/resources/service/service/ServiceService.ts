@@ -54,7 +54,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiWideBasePathError) {
                     console.warn(
                         `Endpoint 'post' unexpectedly threw ${error.constructor.name}.` +

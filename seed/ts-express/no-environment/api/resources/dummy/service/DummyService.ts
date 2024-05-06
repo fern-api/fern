@@ -50,7 +50,6 @@ export class DummyService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedNoEnvironmentError) {
                     console.warn(
                         `Endpoint 'getDummy' unexpectedly threw ${error.constructor.name}.` +

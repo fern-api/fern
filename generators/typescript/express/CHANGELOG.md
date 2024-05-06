@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.12.0-rc1] - 2024-05-06
+
+- Improvement: Remove unnecessary `console.error` statements whenever the server implementation
+  throws an error. The router will now only log the warnings whenever an unrecognized error is
+  thrown like so:
+
+  ```ts
+  try {
+    ...
+  } catch (error) {
+      if (error instanceof errors.AcmeError) {
+          console.warn(
+              `Endpoint 'post' unexpectedly threw ${error.constructor.name}.` +
+                  ` If this was intentional, please add ${error.constructor.name} to` +
+                  " the endpoint's errors list in your Fern Definition."
+          );
+          await error.send(res);
+      } else {
+          res.status(500).json("Internal Server Error");
+      }
+      next(error);
+  }
+  ```
+
 ## [0.12.0-rc0] - 2024-04-12
 
 - Support V38 of the IR

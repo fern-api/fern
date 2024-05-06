@@ -56,7 +56,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExamplesError) {
                     switch (error.errorName) {
                         case "NotFoundError":

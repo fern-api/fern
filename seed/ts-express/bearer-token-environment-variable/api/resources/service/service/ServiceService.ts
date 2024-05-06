@@ -50,7 +50,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedBearerTokenEnvironmentVariableError) {
                     console.warn(
                         `Endpoint 'getWithBearerToken' unexpectedly threw ${error.constructor.name}.` +

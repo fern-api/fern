@@ -58,7 +58,6 @@ export class BasicAuthService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedBasicAuthEnvironmentVariablesError) {
                     switch (error.errorName) {
                         case "UnauthorizedRequest":
@@ -92,7 +91,6 @@ export class BasicAuthService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedBasicAuthEnvironmentVariablesError) {
                     switch (error.errorName) {
                         case "UnauthorizedRequest":

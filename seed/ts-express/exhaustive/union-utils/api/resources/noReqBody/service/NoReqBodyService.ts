@@ -59,7 +59,6 @@ export class NoReqBodyService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'getWithNoRequestBody' unexpectedly threw ${error.constructor.name}.` +
@@ -86,7 +85,6 @@ export class NoReqBodyService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'postWithNoRequestBody' unexpectedly threw ${error.constructor.name}.` +

@@ -80,7 +80,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExamplesError) {
                     console.warn(
                         `Endpoint 'getMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -110,7 +109,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExamplesError) {
                         console.warn(
                             `Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -145,7 +143,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExamplesError) {
                     console.warn(
                         `Endpoint 'getMetadata' unexpectedly threw ${error.constructor.name}.` +

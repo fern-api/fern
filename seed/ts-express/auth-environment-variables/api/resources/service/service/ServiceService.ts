@@ -58,7 +58,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedAuthEnvironmentVariablesError) {
                     console.warn(
                         `Endpoint 'getWithApiKey' unexpectedly threw ${error.constructor.name}.` +
@@ -87,7 +86,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedAuthEnvironmentVariablesError) {
                     console.warn(
                         `Endpoint 'getWithHeader' unexpectedly threw ${error.constructor.name}.` +
