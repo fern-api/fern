@@ -64,7 +64,8 @@ public class HeadersClient {
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            response.body() != null ? response.body().toString() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

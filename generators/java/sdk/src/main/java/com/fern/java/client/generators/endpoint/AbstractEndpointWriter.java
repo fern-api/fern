@@ -315,11 +315,12 @@ public abstract class AbstractEndpointWriter {
         }
         httpResponseBuilder.endControlFlow();
         httpResponseBuilder.addStatement(
-                "throw new $T($L.code(), $T.$L.readValue($L.body().string(), $T.class))",
+                "throw new $T($L.code(), $T.$L.readValue($L.body() != null ? $L.body().toString() : \"{}\", $T.class))",
                 clientGeneratorContext.getPoetClassNameFactory().getApiErrorClassName(),
                 getResponseName(),
                 generatedObjectMapper.getClassName(),
                 generatedObjectMapper.jsonMapperStaticField().name,
+                getResponseName(),
                 getResponseName(),
                 Object.class);
         httpResponseBuilder

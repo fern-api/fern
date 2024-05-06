@@ -61,7 +61,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -99,7 +99,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), int.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -137,7 +137,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), long.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -175,7 +175,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), double.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -213,7 +213,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), boolean.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -252,7 +252,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), OffsetDateTime.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -290,7 +290,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -328,7 +328,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), UUID.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -366,7 +366,7 @@ public class PrimitiveClient {
       if (response.isSuccessful()) {
         return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), byte[].class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
