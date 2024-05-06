@@ -1,4 +1,5 @@
 import { TaskContext } from "@fern-api/task-context";
+import Docker from "dockerode";
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     GeneratorName,
@@ -7,8 +8,70 @@ import {
 } from ".";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 
-export function upgradeGenerator() {
-    // TODO
+function getOrThrowGeneratorName(generatorName: string, context: TaskContext): GeneratorName {
+    const normalizedGeneratorName = normalizeGeneratorName(generatorName);
+    if (normalizedGeneratorName == null) {
+        return context.failAndThrow("Unrecognized generator: " + generatorName);
+    }
+
+    return normalizedGeneratorName;
+}
+
+async function getLatestGeneratorVersion(generatorName: string): Promise<string> {
+    const docker = new Docker();
+    const image = await docker.listImages({
+        filters: JSON.stringify({
+            reference: `${generatorName}:latest`
+        })
+    });
+
+    if (image.length === 0) {
+        throw new Error(`No image found for ${generatorName}`);
+    } else if (image.length > 1) {
+        throw new Error(`Multiple images found at latest tag for ${generatorName}`);
+    }
+
+    // This assumes we have a label of the form version=x.y.z
+    // specifically adding a label to do this to be able to more easily get the version without regex
+    const generatorVersion = image[0]?.Labels["version"];
+    if (generatorVersion == null) {
+        throw new Error(`No version found behind generator ${generatorName} at tag latest`);
+    }
+
+    return generatorVersion;
+}
+
+export function upgradeGenerator({
+    generatorName,
+    generatorsConfiguration,
+    groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
+    context
+}: {
+    generatorName: string;
+    generatorsConfiguration: GeneratorsConfigurationSchema;
+    groupName: string | undefined;
+    context: TaskContext;
+}) {
+    const normalizedGeneratorName = getOrThrowGeneratorName(generatorName, context);
+
+    return updateGeneratorGroup({
+        generatorsConfiguration,
+        groupName,
+        context,
+        update: async (group) => {
+            const genConfig = group.generators.find((generator) => generator.name === normalizedGeneratorName);
+            if (genConfig == null) {
+                addGenerator({ generatorName, generatorsConfiguration, groupName, context });
+            }
+            group.generators
+                .filter((generator) => generator.name !== normalizedGeneratorName)
+                .push({
+                    ...genConfig,
+                    name: normalizedGeneratorName,
+                    version: await getLatestGeneratorVersion(normalizedGeneratorName)
+                });
+        }
+    });
 }
 
 export function addGenerator({
@@ -22,22 +85,21 @@ export function addGenerator({
     groupName: string | undefined;
     context: TaskContext;
 }): GeneratorsConfigurationSchema {
-    const normalizedGeneratorName = normalizeGeneratorName(generatorName);
-    if (normalizedGeneratorName == null) {
-        return context.failAndThrow("Unrecognized generator: " + generatorName);
-    }
+    const normalizedGeneratorName = getOrThrowGeneratorName(generatorName, context);
+
     const invocation = GENERATOR_INVOCATIONS[normalizedGeneratorName];
 
     return updateGeneratorGroup({
         generatorsConfiguration,
         groupName,
         context,
-        update: (group) => {
+        update: async (group) => {
             if (group.generators.some((generator) => generator.name === normalizedGeneratorName)) {
                 context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`);
             }
             group.generators.push({
                 name: normalizedGeneratorName,
+                version: await getLatestGeneratorVersion(normalizedGeneratorName),
                 ...invocation
             });
         }

@@ -3452,11 +3452,13 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.532
+    "@types/dockerode": ^3.3.29
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     "@types/tinycolor2": ^1.4.6
     depcheck: ^1.4.6
+    dockerode: ^4.0.2
     eslint: ^8.56.0
     find-up: ^6.3.0
     immer: ^9.0.15
@@ -6953,6 +6955,17 @@ __metadata:
     "@types/node": "npm:*"
     "@types/ssh2": "npm:*"
   checksum: 1f23db30e6e9bdd4c6d6e43572fb7ac7251d106a1906a9f3faabac393897712a5a9cd5a471baedc0ac8055dab3f48eda331f41a1e2c7c6bbe3c7f433e039151c
+  languageName: node
+  linkType: hard
+
+"@types/dockerode@npm:^3.3.29":
+  version: 3.3.29
+  resolution: "@types/dockerode@npm:3.3.29"
+  dependencies:
+    "@types/docker-modem": "*"
+    "@types/node": "*"
+    "@types/ssh2": "*"
+  checksum: e69dc6f3c70f7a4573e61ea697cb18b89f49198afeda713f8cd862ac0f0d4b6a36b308542933a743269e9936f61ca85809a55d0c5f2ad4933244135cd25643d9
   languageName: node
   linkType: hard
 

@@ -6486,11 +6486,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.532"],\
+            ["@types/dockerode", "npm:3.3.29"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tinycolor2", "npm:1.4.6"],\
             ["depcheck", "npm:1.4.6"],\
+            ["dockerode", "npm:4.0.2"],\
             ["eslint", "npm:8.56.0"],\
             ["find-up", "npm:6.3.0"],\
             ["immer", "npm:9.0.15"],\
@@ -10373,6 +10375,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/dockerode", [\
+        ["npm:3.3.29", {\
+          "packageLocation": "./.yarn/cache/@types-dockerode-npm-3.3.29-598ff02864-e69dc6f3c7.zip/node_modules/@types/dockerode/",\
+          "packageDependencies": [\
+            ["@types/dockerode", "npm:3.3.29"],\
+            ["@types/docker-modem", "npm:3.0.2"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["@types/ssh2", "npm:1.11.4"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
         ["npm:3.3.9", {\
           "packageLocation": "./.yarn/cache/@types-dockerode-npm-3.3.9-3b2c48453a-3d03c68add.zip/node_modules/@types/dockerode/",\
           "packageDependencies": [\
