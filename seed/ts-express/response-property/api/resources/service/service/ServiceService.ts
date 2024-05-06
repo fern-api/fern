@@ -102,7 +102,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedResponsePropertyError) {
                         console.warn(
                             `Endpoint 'getMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -142,7 +141,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedResponsePropertyError) {
                         console.warn(
                             `Endpoint 'getMovieDocs' unexpectedly threw ${error.constructor.name}.` +
@@ -182,7 +180,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedResponsePropertyError) {
                         console.warn(
                             `Endpoint 'getMovieName' unexpectedly threw ${error.constructor.name}.` +
@@ -222,7 +219,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedResponsePropertyError) {
                         console.warn(
                             `Endpoint 'getMovieMetadata' unexpectedly threw ${error.constructor.name}.` +
@@ -262,7 +258,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedResponsePropertyError) {
                         console.warn(
                             `Endpoint 'getOptionalMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -302,7 +297,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedResponsePropertyError) {
                         console.warn(
                             `Endpoint 'getOptionalMovieDocs' unexpectedly threw ${error.constructor.name}.` +
@@ -342,7 +336,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedResponsePropertyError) {
                         console.warn(
                             `Endpoint 'getOptionalMovieName' unexpectedly threw ${error.constructor.name}.` +

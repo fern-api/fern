@@ -53,7 +53,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiError) {
                     console.warn(
                         `Endpoint 'endpoint' unexpectedly threw ${error.constructor.name}.` +
@@ -78,7 +77,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiError) {
                     switch (error.errorName) {
                         case "NotFoundError":

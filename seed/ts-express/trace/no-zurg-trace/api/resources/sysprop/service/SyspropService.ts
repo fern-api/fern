@@ -62,7 +62,6 @@ export class SyspropService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'setNumWarmInstances' unexpectedly threw ${error.constructor.name}.` +
@@ -87,7 +86,6 @@ export class SyspropService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getNumWarmInstances' unexpectedly threw ${error.constructor.name}.` +

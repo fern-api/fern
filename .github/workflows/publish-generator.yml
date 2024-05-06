@@ -144,7 +144,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-pydantic-model:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-pydantic-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-pydantic-model:latest') || '' }}
 
   fastapi:
     runs-on: ubuntu-latest
@@ -197,7 +198,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-fastapi-server:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-fastapi-server:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-fastapi-server:latest') || '' }}
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -250,7 +252,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-python-sdk:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-python-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-python-sdk:latest') || '' }}
 
   openapi:
     runs-on: ubuntu-latest
@@ -308,7 +311,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-openapi:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-openapi:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-openapi:latest') || '' }}
 
   postman:
     runs-on: ubuntu-latest
@@ -366,7 +370,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-postman:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-postman:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-postman:latest') || '' }}
 
   ruby-model:
     runs-on: ubuntu-latest
@@ -424,7 +429,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-ruby-model:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-ruby-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-ruby-model:latest') || '' }}
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -482,7 +488,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-ruby-sdk:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-ruby-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-ruby-sdk:latest') || '' }}
 
   java-sdk:
     runs-on: ubuntu-latest
@@ -532,7 +539,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-java-sdk:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-java-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-java-sdk:latest') || '' }}
 
   java-model:
     runs-on: ubuntu-latest
@@ -582,7 +590,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/java-model:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/java-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/java-model:latest') || '' }}
 
   java-spring:
     runs-on: ubuntu-latest
@@ -632,7 +641,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-java-spring:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-java-spring:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-java-spring:latest') || '' }}
 
   ts-express:
     runs-on: ubuntu-latest
@@ -680,7 +690,7 @@ jobs:
       - name: Publish fernapi/fern-typescript-express-sdk docker
         run: |
           yarn workspace @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
-          docker push fernapi/fern-typescript-express:"$VERSION"
+          docker push fernapi/fern-typescript-express:"$VERSION" -l version="$VERSION"
 
   ts-browser-sdk:
     runs-on: ubuntu-latest
@@ -728,7 +738,7 @@ jobs:
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
           yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
-          docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
+          docker push fernapi/fern-typescript-browser-sdk:"$VERSION" -l version="$VERSION"
 
   ts-node-sdk:
     runs-on: ubuntu-latest
@@ -776,7 +786,7 @@ jobs:
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
           yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
-          docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+          docker push fernapi/fern-typescript-node-sdk:"$VERSION" -l version="$VERSION"
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -824,7 +834,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-go-sdk:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-go-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-sdk:latest') || '' }}
 
   go-model:
     runs-on: ubuntu-latest
@@ -872,7 +883,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-go-model:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-go-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-model:latest') || '' }}
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -920,7 +932,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-go-fiber:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-go-fiber:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-fiber:latest') || '' }}
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -978,7 +991,8 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-csharp-model:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-csharp-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-csharp-model:latest') || '' }}
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -1036,4 +1050,5 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=min
           push: true
-          tags: fernapi/fern-csharp-sdk:${{env.VERSION}}
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-csharp-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-csharp-sdk:latest') || '' }}

@@ -72,7 +72,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedMixedCaseError) {
                     console.warn(
                         `Endpoint 'getResource' unexpectedly threw ${error.constructor.name}.` +
@@ -101,7 +100,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedMixedCaseError) {
                     console.warn(
                         `Endpoint 'listResources' unexpectedly threw ${error.constructor.name}.` +

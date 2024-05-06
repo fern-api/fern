@@ -52,7 +52,6 @@ export class UnionService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedUndiscriminatedUnionsError) {
                         console.warn(
                             `Endpoint 'get' unexpectedly threw ${error.constructor.name}.` +

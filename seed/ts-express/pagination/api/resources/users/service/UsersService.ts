@@ -124,7 +124,6 @@ export class UsersService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedPaginationError) {
                     console.warn(
                         `Endpoint 'listWithCursorPagination' unexpectedly threw ${error.constructor.name}.` +
@@ -153,7 +152,6 @@ export class UsersService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedPaginationError) {
                     console.warn(
                         `Endpoint 'listWithOffsetPagination' unexpectedly threw ${error.constructor.name}.` +
@@ -182,7 +180,6 @@ export class UsersService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedPaginationError) {
                     console.warn(
                         `Endpoint 'listWithExtendedResults' unexpectedly threw ${error.constructor.name}.` +
@@ -211,7 +208,6 @@ export class UsersService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedPaginationError) {
                     console.warn(
                         `Endpoint 'listUsernames' unexpectedly threw ${error.constructor.name}.` +
@@ -240,7 +236,6 @@ export class UsersService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedPaginationError) {
                     console.warn(
                         `Endpoint 'listWithGlobalConfig' unexpectedly threw ${error.constructor.name}.` +

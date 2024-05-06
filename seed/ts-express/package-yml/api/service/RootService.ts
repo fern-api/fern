@@ -53,7 +53,6 @@ export class RootService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedPackageYmlError) {
                         console.warn(
                             `Endpoint 'echo' unexpectedly threw ${error.constructor.name}.` +
