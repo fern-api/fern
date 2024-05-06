@@ -7,6 +7,7 @@ import {
     updateGeneratorGroup
 } from ".";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
+import { upgradeGeneratorVersion } from "./upgradeGeneratorVersion";
 
 function getOrThrowGeneratorName(generatorName: string, context: TaskContext): GeneratorName {
     const normalizedGeneratorName = normalizeGeneratorName(generatorName);
@@ -41,36 +42,24 @@ async function getLatestGeneratorVersion(generatorName: string): Promise<string>
     return generatorVersion;
 }
 
-export function upgradeGenerator({
+export async function upgradeGenerator({
     generatorName,
     generatorsConfiguration,
-    groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
+    groupName,
     context
 }: {
     generatorName: string;
     generatorsConfiguration: GeneratorsConfigurationSchema;
-    groupName: string | undefined;
+    groupName: string;
     context: TaskContext;
 }) {
     const normalizedGeneratorName = getOrThrowGeneratorName(generatorName, context);
-
-    return updateGeneratorGroup({
+    upgradeGeneratorVersion({
         generatorsConfiguration,
         groupName,
         context,
-        update: async (group) => {
-            const genConfig = group.generators.find((generator) => generator.name === normalizedGeneratorName);
-            if (genConfig == null) {
-                addGenerator({ generatorName, generatorsConfiguration, groupName, context });
-            }
-            group.generators
-                .filter((generator) => generator.name !== normalizedGeneratorName)
-                .push({
-                    ...genConfig,
-                    name: normalizedGeneratorName,
-                    version: await getLatestGeneratorVersion(normalizedGeneratorName)
-                });
-        }
+        generatorName: normalizedGeneratorName,
+        version: await getLatestGeneratorVersion(normalizedGeneratorName)
     });
 }
 
