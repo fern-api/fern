@@ -18,7 +18,7 @@ By default, FastAPI will generate an OpenAPI spec for you based on your routes a
 
 If you are not seeing any OpenAPI spec (or the Swagger UI), you may need to review your FastAPI server configuration as the path may have been changed, or completely omitted.
 
-```python
+```python {6-8}
 from fastapi import FastAPI
 
 ...
@@ -34,7 +34,7 @@ FastAPI(
 
 Fern will automatically generate clients that point to the servers you configure within your OpenAPI spec, so it's important to specify the servers that your API will be hosted on.
 
-```python
+```python {5}
 from fastapi import FastAPI, servers
 
 ...
@@ -49,7 +49,7 @@ app = FastAPI(servers=[my_production_server])
 FastAPI allows you to add in extra OpenAPI configuration directly within your route, through the use of the `openapi_extra` parameter.
 Below, we've annotated a "good" route within FastAPI that has it's typings as well as Fern extensions to assist in naming.
 
-```python
+```python {5-9}
 @router.post(
     "/your/post/endpoint",
     response_model=YourResponseModel,            #  <-- with FastAPI, it is important to specify your response model so that it comes through to the OpenAPI spec
@@ -73,7 +73,7 @@ For more information on leveraging examples within Fern, please refer to the [Fe
 
 For more information on this FastAPI functionality, please refer to the [FastAPI documentation](https://fastapi.tiangolo.com/tutorial/schema-extra-example/).
 
-```python
+```python {7-11}
 from pydantic import BaseModel
 
 class MyObject(BaseModel):
