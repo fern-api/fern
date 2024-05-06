@@ -160,7 +160,6 @@ export class AdminService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'updateTestSubmissionStatus' unexpectedly threw ${error.constructor.name}.` +
@@ -185,7 +184,6 @@ export class AdminService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'sendTestSubmissionUpdate' unexpectedly threw ${error.constructor.name}.` +
@@ -210,7 +208,6 @@ export class AdminService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'updateWorkspaceSubmissionStatus' unexpectedly threw ${error.constructor.name}.` +
@@ -235,7 +232,6 @@ export class AdminService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'sendWorkspaceSubmissionUpdate' unexpectedly threw ${error.constructor.name}.` +
@@ -260,7 +256,6 @@ export class AdminService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'storeTracedTestCase' unexpectedly threw ${error.constructor.name}.` +
@@ -287,7 +282,6 @@ export class AdminService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'storeTracedTestCaseV2' unexpectedly threw ${error.constructor.name}.` +
@@ -313,7 +307,6 @@ export class AdminService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'storeTracedWorkspace' unexpectedly threw ${error.constructor.name}.` +
@@ -338,7 +331,6 @@ export class AdminService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'storeTracedWorkspaceV2' unexpectedly threw ${error.constructor.name}.` +

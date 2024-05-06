@@ -118,7 +118,6 @@ export class HttpMethodsService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'testGet' unexpectedly threw ${error.constructor.name}.` +
@@ -152,7 +151,6 @@ export class HttpMethodsService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'testPost' unexpectedly threw ${error.constructor.name}.` +
@@ -194,7 +192,6 @@ export class HttpMethodsService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'testPut' unexpectedly threw ${error.constructor.name}.` +
@@ -236,7 +233,6 @@ export class HttpMethodsService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'testPatch' unexpectedly threw ${error.constructor.name}.` +
@@ -275,7 +271,6 @@ export class HttpMethodsService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'testDelete' unexpectedly threw ${error.constructor.name}.` +

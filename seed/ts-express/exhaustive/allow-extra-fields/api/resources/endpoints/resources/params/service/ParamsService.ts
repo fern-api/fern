@@ -123,7 +123,6 @@ export class ParamsService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'getWithPath' unexpectedly threw ${error.constructor.name}.` +
@@ -148,7 +147,6 @@ export class ParamsService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'getWithQuery' unexpectedly threw ${error.constructor.name}.` +
@@ -173,7 +171,6 @@ export class ParamsService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'getWithAllowMultipleQuery' unexpectedly threw ${error.constructor.name}.` +
@@ -198,7 +195,6 @@ export class ParamsService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     console.warn(
                         `Endpoint 'getWithPathAndQuery' unexpectedly threw ${error.constructor.name}.` +
@@ -232,7 +228,6 @@ export class ParamsService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'modifyWithPath' unexpectedly threw ${error.constructor.name}.` +

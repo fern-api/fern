@@ -696,16 +696,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             ts.factory.createVariableDeclaration(ts.factory.createIdentifier(ERROR_NAME)),
             ts.factory.createBlock(
                 [
-                    ts.factory.createExpressionStatement(
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("console"),
-                                ts.factory.createIdentifier("error")
-                            ),
-                            undefined,
-                            [ts.factory.createIdentifier(ERROR_NAME)]
-                        )
-                    ),
                     ts.factory.createIfStatement(
                         ts.factory.createBinaryExpression(
                             ts.factory.createIdentifier(ERROR_NAME),

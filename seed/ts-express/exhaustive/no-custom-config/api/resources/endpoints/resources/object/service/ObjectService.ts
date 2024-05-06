@@ -124,7 +124,6 @@ export class ObjectService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnWithOptionalField' unexpectedly threw ${error.constructor.name}.` +
@@ -164,7 +163,6 @@ export class ObjectService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnWithRequiredField' unexpectedly threw ${error.constructor.name}.` +
@@ -204,7 +202,6 @@ export class ObjectService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnWithMapOfMap' unexpectedly threw ${error.constructor.name}.` +
@@ -244,7 +241,6 @@ export class ObjectService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnNestedWithOptionalField' unexpectedly threw ${error.constructor.name}.` +
@@ -284,7 +280,6 @@ export class ObjectService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnNestedWithRequiredField' unexpectedly threw ${error.constructor.name}.` +
@@ -326,7 +321,6 @@ export class ObjectService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnNestedWithRequiredFieldAsList' unexpectedly threw ${error.constructor.name}.` +

@@ -45,7 +45,6 @@ export class BService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiError) {
                     console.warn(
                         `Endpoint 'foo' unexpectedly threw ${error.constructor.name}.` +

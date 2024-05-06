@@ -64,7 +64,6 @@ export class UnionService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedUnionsError) {
                     console.warn(
                         `Endpoint 'get' unexpectedly threw ${error.constructor.name}.` +
@@ -96,7 +95,6 @@ export class UnionService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedUnionsError) {
                         console.warn(
                             `Endpoint 'update' unexpectedly threw ${error.constructor.name}.` +

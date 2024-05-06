@@ -54,7 +54,6 @@ export class ServiceService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedCodeSamplesError) {
                         console.warn(
                             `Endpoint 'hello' unexpectedly threw ${error.constructor.name}.` +

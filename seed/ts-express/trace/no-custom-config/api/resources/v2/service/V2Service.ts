@@ -45,7 +45,6 @@ export class V2Service {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'test' unexpectedly threw ${error.constructor.name}.` +

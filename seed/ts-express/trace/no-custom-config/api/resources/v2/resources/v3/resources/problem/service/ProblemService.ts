@@ -90,7 +90,6 @@ export class ProblemService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getLightweightProblems' unexpectedly threw ${error.constructor.name}.` +
@@ -119,7 +118,6 @@ export class ProblemService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getProblems' unexpectedly threw ${error.constructor.name}.` +
@@ -148,7 +146,6 @@ export class ProblemService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getLatestProblem' unexpectedly threw ${error.constructor.name}.` +
@@ -177,7 +174,6 @@ export class ProblemService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getProblemVersion' unexpectedly threw ${error.constructor.name}.` +

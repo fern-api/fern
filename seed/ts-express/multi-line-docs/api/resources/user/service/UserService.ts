@@ -62,7 +62,6 @@ export class UserService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedMultiLineDocsError) {
                     console.warn(
                         `Endpoint 'getUser' unexpectedly threw ${error.constructor.name}.` +
@@ -92,7 +91,6 @@ export class UserService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedMultiLineDocsError) {
                         console.warn(
                             `Endpoint 'createUser' unexpectedly threw ${error.constructor.name}.` +
