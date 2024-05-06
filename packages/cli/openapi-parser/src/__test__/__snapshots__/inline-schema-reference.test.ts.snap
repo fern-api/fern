@@ -2,6 +2,7 @@
 
 exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -69,6 +70,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "notFoundMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "notFoundMessage",
@@ -121,6 +123,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getExampleResponseMessageMessage",
@@ -177,6 +180,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
           "conflict": {},
           "generatedName": "schema1Id",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schema1Id",
@@ -200,6 +204,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
           "conflict": {},
           "generatedName": "schema1Name",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schema1Name",
@@ -236,6 +241,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
           "conflict": {},
           "generatedName": "schema2Email",
           "key": "email",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schema2Email",
@@ -261,6 +267,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
           "conflict": {},
           "generatedName": "schema2Age",
           "key": "age",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schema2Age",

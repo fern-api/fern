@@ -165,8 +165,10 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         return _convert_union_type(type_, object_)
 
     # Cannot do an `issubclass` with a literal type, let's also just confirm we have a class before this call
-    if not pydantic_v1.typing.is_literal_type(type_) and (
-        inspect.isclass(base_type) and issubclass(base_type, pydantic_v1.BaseModel)
+    if (
+        object_ is not None
+        and not pydantic_v1.typing.is_literal_type(type_)
+        and (inspect.isclass(base_type) and issubclass(base_type, pydantic_v1.BaseModel))
     ):
         return type_.construct(**object_)
 

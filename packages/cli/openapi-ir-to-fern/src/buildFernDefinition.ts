@@ -24,6 +24,9 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     buildGlobalHeaders(context);
     buildAuthSchemes(context);
     buildVariables(context);
+    if (context.ir.basePath != null) {
+        context.builder.setBasePath(context.ir.basePath);
+    }
     if (context.ir.hasEndpointsMarkedInternal) {
         context.builder.addAudience(EXTERNAL_AUDIENCE);
     }

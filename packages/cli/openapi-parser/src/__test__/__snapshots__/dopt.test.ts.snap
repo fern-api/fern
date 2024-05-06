@@ -2,6 +2,7 @@
 
 exports[`open api parser dopt parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "The Dopt Blocks API",
   "endpoints": [
@@ -29,6 +30,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "badRequestErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
@@ -68,6 +70,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "badRequestErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "BadRequestErrorBodyDetails",
@@ -103,6 +106,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "unauthorizedErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyCode",
@@ -120,6 +124,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "unauthorizedErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyDetails",
@@ -155,6 +160,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "notFoundErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "NotFoundErrorBodyCode",
@@ -172,6 +178,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "notFoundErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "NotFoundErrorBodyDetails",
@@ -207,6 +214,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "internalServerErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "InternalServerErrorBodyCode",
@@ -224,6 +232,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "internalServerErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "InternalServerErrorBodyDetails",
@@ -485,6 +494,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseKind",
               "key": "kind",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "FindBlocksResponseKind",
@@ -502,6 +512,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseUid",
               "key": "uid",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "FindBlocksResponseUid",
@@ -520,6 +531,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseSid",
               "key": "sid",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "FindBlocksResponseSid",
@@ -538,6 +550,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseVersion",
               "key": "version",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "FindBlocksResponseVersion",
@@ -554,6 +567,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseState",
               "key": "state",
+              "nameOverride": null,
               "schema": {
                 "allOf": [],
                 "allOfPropertyConflicts": [],
@@ -567,6 +581,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "findBlocksResponseStateActive",
                     "key": "active",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "FindBlocksResponseStateActive",
@@ -583,6 +598,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "findBlocksResponseStateEntered",
                     "key": "entered",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "FindBlocksResponseStateEntered",
@@ -599,6 +615,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "findBlocksResponseStateExited",
                     "key": "exited",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "FindBlocksResponseStateExited",
@@ -619,6 +636,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseContainerUid",
               "key": "containerUid",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "findBlocksResponseContainerUid",
@@ -644,6 +662,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseTransitioned",
               "key": "transitioned",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "FindBlocksResponseTransitioned",
@@ -678,6 +697,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseType",
               "key": "type",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "FindBlocksResponseType",
@@ -765,6 +785,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "findBlocksResponseFields",
               "key": "fields",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "FindBlocksResponseFields",
@@ -794,6 +815,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemBooleanSid",
                             "key": "sid",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemBooleanSid",
@@ -812,6 +834,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemBooleanValue",
                             "key": "value",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemBooleanValue",
@@ -846,6 +869,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemNumberSid",
                             "key": "sid",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemNumberSid",
@@ -864,6 +888,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemNumberValue",
                             "key": "value",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemNumberValue",
@@ -898,6 +923,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemStringSid",
                             "key": "sid",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemStringSid",
@@ -916,6 +942,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "conflict": {},
                             "generatedName": "findBlocksResponseFieldsItemStringValue",
                             "key": "value",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemStringValue",
@@ -981,6 +1008,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "badRequestErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
@@ -1020,6 +1048,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "badRequestErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "BadRequestErrorBodyDetails",
@@ -1055,6 +1084,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "unauthorizedErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyCode",
@@ -1072,6 +1102,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "unauthorizedErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyDetails",
@@ -1107,6 +1138,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "notFoundErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "NotFoundErrorBodyCode",
@@ -1124,6 +1156,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "notFoundErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "NotFoundErrorBodyDetails",
@@ -1159,6 +1192,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "internalServerErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "InternalServerErrorBodyCode",
@@ -1176,6 +1210,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "internalServerErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "InternalServerErrorBodyDetails",
@@ -1336,6 +1371,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "badRequestErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
@@ -1375,6 +1411,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "badRequestErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "BadRequestErrorBodyDetails",
@@ -1410,6 +1447,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "unauthorizedErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyCode",
@@ -1427,6 +1465,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "unauthorizedErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyDetails",
@@ -1462,6 +1501,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "notFoundErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "NotFoundErrorBodyCode",
@@ -1479,6 +1519,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "notFoundErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "NotFoundErrorBodyDetails",
@@ -1514,6 +1555,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "internalServerErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "InternalServerErrorBodyCode",
@@ -1531,6 +1573,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "internalServerErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "InternalServerErrorBodyDetails",
@@ -1903,6 +1946,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "getFlowResponseKind",
               "key": "kind",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "GetFlowResponseKind",
@@ -1920,6 +1964,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "getFlowResponseType",
               "key": "type",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "GetFlowResponseType",
@@ -1937,6 +1982,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "getFlowResponseUid",
               "key": "uid",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "GetFlowResponseUid",
@@ -1955,6 +2001,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "getFlowResponseSid",
               "key": "sid",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "GetFlowResponseSid",
@@ -1973,6 +2020,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "getFlowResponseVersion",
               "key": "version",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "GetFlowResponseVersion",
@@ -1989,6 +2037,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "getFlowResponseState",
               "key": "state",
+              "nameOverride": null,
               "schema": {
                 "allOf": [],
                 "allOfPropertyConflicts": [],
@@ -2002,6 +2051,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "getFlowResponseStateStopped",
                     "key": "stopped",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "GetFlowResponseStateStopped",
@@ -2018,6 +2068,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "getFlowResponseStateStarted",
                     "key": "started",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "GetFlowResponseStateStarted",
@@ -2034,6 +2085,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "getFlowResponseStateFinished",
                     "key": "finished",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "GetFlowResponseStateFinished",
@@ -2054,6 +2106,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "conflict": {},
               "generatedName": "getFlowResponseBlocks",
               "key": "blocks",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getFlowResponseBlocks",
@@ -2079,6 +2132,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemKind",
                         "key": "kind",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemKind",
@@ -2096,6 +2150,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemUid",
                         "key": "uid",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemUid",
@@ -2114,6 +2169,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemSid",
                         "key": "sid",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemSid",
@@ -2132,6 +2188,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemVersion",
                         "key": "version",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemVersion",
@@ -2148,6 +2205,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemState",
                         "key": "state",
+                        "nameOverride": null,
                         "schema": {
                           "allOf": [],
                           "allOfPropertyConflicts": [],
@@ -2161,6 +2219,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "conflict": {},
                               "generatedName": "getFlowResponseBlocksItemStateActive",
                               "key": "active",
+                              "nameOverride": null,
                               "schema": {
                                 "description": null,
                                 "generatedName": "GetFlowResponseBlocksItemStateActive",
@@ -2177,6 +2236,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "conflict": {},
                               "generatedName": "getFlowResponseBlocksItemStateEntered",
                               "key": "entered",
+                              "nameOverride": null,
                               "schema": {
                                 "description": null,
                                 "generatedName": "GetFlowResponseBlocksItemStateEntered",
@@ -2193,6 +2253,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "conflict": {},
                               "generatedName": "getFlowResponseBlocksItemStateExited",
                               "key": "exited",
+                              "nameOverride": null,
                               "schema": {
                                 "description": null,
                                 "generatedName": "GetFlowResponseBlocksItemStateExited",
@@ -2213,6 +2274,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemContainerUid",
                         "key": "containerUid",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getFlowResponseBlocksItemContainerUid",
@@ -2238,6 +2300,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemTransitioned",
                         "key": "transitioned",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemTransitioned",
@@ -2272,6 +2335,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemType",
                         "key": "type",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemType",
@@ -2359,6 +2423,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "getFlowResponseBlocksItemFields",
                         "key": "fields",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemFields",
@@ -2388,6 +2453,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemBooleanSid",
                                       "key": "sid",
+                                      "nameOverride": null,
                                       "schema": {
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemBooleanSid",
@@ -2406,6 +2472,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemBooleanValue",
                                       "key": "value",
+                                      "nameOverride": null,
                                       "schema": {
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemBooleanValue",
@@ -2440,6 +2507,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemNumberSid",
                                       "key": "sid",
+                                      "nameOverride": null,
                                       "schema": {
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemNumberSid",
@@ -2458,6 +2526,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemNumberValue",
                                       "key": "value",
+                                      "nameOverride": null,
                                       "schema": {
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemNumberValue",
@@ -2492,6 +2561,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemStringSid",
                                       "key": "sid",
+                                      "nameOverride": null,
                                       "schema": {
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemStringSid",
@@ -2510,6 +2580,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "conflict": {},
                                       "generatedName": "getFlowResponseBlocksItemFieldsItemStringValue",
                                       "key": "value",
+                                      "nameOverride": null,
                                       "schema": {
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemStringValue",
@@ -2581,6 +2652,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "badRequestErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
@@ -2620,6 +2692,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "badRequestErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "BadRequestErrorBodyDetails",
@@ -2655,6 +2728,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "unauthorizedErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyCode",
@@ -2672,6 +2746,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "unauthorizedErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyDetails",
@@ -2707,6 +2782,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "notFoundErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "NotFoundErrorBodyCode",
@@ -2724,6 +2800,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "notFoundErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "NotFoundErrorBodyDetails",
@@ -2759,6 +2836,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "internalServerErrorBodyCode",
                 "key": "code",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "InternalServerErrorBodyCode",
@@ -2776,6 +2854,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "internalServerErrorBodyDetails",
                 "key": "details",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "InternalServerErrorBodyDetails",
@@ -3020,6 +3099,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "badRequestErrorResponseBodyCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BadRequestErrorResponseBodyCode",
@@ -3059,6 +3139,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "badRequestErrorResponseBodyDetails",
           "key": "details",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BadRequestErrorResponseBodyDetails",
@@ -3088,6 +3169,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "blockTransitionQueryStringTransitions",
           "key": "transitions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BlockTransitionQueryStringTransitions",
@@ -3113,6 +3195,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "blockTransitionQueryStringVersion",
           "key": "version",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BlockTransitionQueryStringVersion",
@@ -3129,6 +3212,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "blockTransitionQueryStringUserIdentifier",
           "key": "userIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BlockTransitionQueryStringUserIdentifier",
@@ -3147,6 +3231,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "blockTransitionQueryStringGroupIdentifier",
           "key": "groupIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "blockTransitionQueryStringGroupIdentifier",
@@ -3183,6 +3268,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "blockTransitionRequestParamsUid",
           "key": "uid",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BlockTransitionRequestParamsUid",
@@ -3212,6 +3298,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "flowIntentQueryStringVersion",
           "key": "version",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FlowIntentQueryStringVersion",
@@ -3228,6 +3315,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "flowIntentQueryStringUserIdentifier",
           "key": "userIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FlowIntentQueryStringUserIdentifier",
@@ -3246,6 +3334,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "flowIntentQueryStringGroupIdentifier",
           "key": "groupIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "flowIntentQueryStringGroupIdentifier",
@@ -3282,6 +3371,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "flowIntentRequestParamsUid",
           "key": "uid",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FlowIntentRequestParamsUid",
@@ -3300,6 +3390,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "flowIntentRequestParamsIntent",
           "key": "intent",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FlowIntentRequestParamsIntent",
@@ -3374,6 +3465,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "getBlockQueryStringVersion",
           "key": "version",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GetBlockQueryStringVersion",
@@ -3390,6 +3482,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "getBlockQueryStringUserIdentifier",
           "key": "userIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GetBlockQueryStringUserIdentifier",
@@ -3419,6 +3512,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "getBlockRequestParamsUid",
           "key": "uid",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GetBlockRequestParamsUid",
@@ -3448,6 +3542,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "getFlowQueryStringVersion",
           "key": "version",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GetFlowQueryStringVersion",
@@ -3464,6 +3559,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "getFlowQueryStringInclude",
           "key": "include",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "getFlowQueryStringInclude",
@@ -3488,6 +3584,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "getFlowQueryStringUserIdentifier",
           "key": "userIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GetFlowQueryStringUserIdentifier",
@@ -3506,6 +3603,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "getFlowQueryStringGroupIdentifier",
           "key": "groupIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "getFlowQueryStringGroupIdentifier",
@@ -3542,6 +3640,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "getFlowRequestParamsSid",
           "key": "sid",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "GetFlowRequestParamsSid",
@@ -3571,6 +3670,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "healthCheckResponseBodyApplication",
           "key": "application",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "HealthCheckResponseBodyApplication",
@@ -3589,6 +3689,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "healthCheckResponseBodyStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "HealthCheckResponseBodyStatus",
@@ -3616,6 +3717,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "internalServerErrorResponseBodyCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "InternalServerErrorResponseBodyCode",
@@ -3633,6 +3735,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "internalServerErrorResponseBodyDetails",
           "key": "details",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "InternalServerErrorResponseBodyDetails",
@@ -3662,6 +3765,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "notFoundErrorResponseBodyCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NotFoundErrorResponseBodyCode",
@@ -3679,6 +3783,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "notFoundErrorResponseBodyDetails",
           "key": "details",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "NotFoundErrorResponseBodyDetails",
@@ -3708,6 +3813,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "timeoutErrorResponseBodyCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TimeoutErrorResponseBodyCode",
@@ -3725,6 +3831,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "timeoutErrorResponseBodyDetails",
           "key": "details",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TimeoutErrorResponseBodyDetails",
@@ -3754,6 +3861,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "unauthorizedErrorResponseBodyCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UnauthorizedErrorResponseBodyCode",
@@ -3771,6 +3879,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "conflict": {},
           "generatedName": "unauthorizedErrorResponseBodyDetails",
           "key": "details",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UnauthorizedErrorResponseBodyDetails",

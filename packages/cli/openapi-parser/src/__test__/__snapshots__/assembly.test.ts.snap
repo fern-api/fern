@@ -2,6 +2,7 @@
 
 exports[`open api parser assembly parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [
     {
       "description": null,
@@ -6366,6 +6367,7 @@ The LLM response data, as well as any context provided in the original request w
           "conflict": {},
           "generatedName": "audioDataAudioData",
           "key": "audio_data",
+          "nameOverride": null,
           "schema": {
             "description": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.",
             "generatedName": "AudioDataAudioData",
@@ -6428,6 +6430,7 @@ The LLM response data, as well as any context provided in the original request w
           "conflict": {},
           "generatedName": "autoHighlightResultCount",
           "key": "count",
+          "nameOverride": null,
           "schema": {
             "description": "The total number of times the key phrase appears in the audio file",
             "generatedName": "AutoHighlightResultCount",
@@ -6444,6 +6447,7 @@ The LLM response data, as well as any context provided in the original request w
           "conflict": {},
           "generatedName": "autoHighlightResultRank",
           "key": "rank",
+          "nameOverride": null,
           "schema": {
             "description": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
             "generatedName": "AutoHighlightResultRank",
@@ -6460,6 +6464,7 @@ The LLM response data, as well as any context provided in the original request w
           "conflict": {},
           "generatedName": "autoHighlightResultText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The text itself of the key phrase",
             "generatedName": "AutoHighlightResultText",
@@ -6478,6 +6483,7 @@ The LLM response data, as well as any context provided in the original request w
           "conflict": {},
           "generatedName": "autoHighlightResultTimestamps",
           "key": "timestamps",
+          "nameOverride": null,
           "schema": {
             "description": "The timestamp of the of the key phrase",
             "generatedName": "AutoHighlightResultTimestamps",
@@ -6520,6 +6526,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "conflict": {},
             "generatedName": "autoHighlightsResultResults",
             "key": "results",
+            "nameOverride": null,
             "schema": {
               "description": "A temporally-sequential array of Key Phrases",
               "generatedName": "AutoHighlightsResultResults",
@@ -6553,6 +6560,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "chapterGist",
           "key": "gist",
+          "nameOverride": null,
           "schema": {
             "description": "An ultra-short summary (just a few words) of the content spoken in the chapter",
             "generatedName": "ChapterGist",
@@ -6571,6 +6579,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "chapterHeadline",
           "key": "headline",
+          "nameOverride": null,
           "schema": {
             "description": "A single sentence summary of the content spoken during the chapter",
             "generatedName": "ChapterHeadline",
@@ -6589,6 +6598,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "chapterSummary",
           "key": "summary",
+          "nameOverride": null,
           "schema": {
             "description": "A one paragraph summary of the content spoken during the chapter",
             "generatedName": "ChapterSummary",
@@ -6607,6 +6617,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "chapterStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": "The starting time, in milliseconds, for the chapter",
             "generatedName": "ChapterStart",
@@ -6623,6 +6634,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "chapterEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": "The starting time, in milliseconds, for the chapter",
             "generatedName": "ChapterEnd",
@@ -6650,6 +6662,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "The label of the sensitive topic",
             "generatedName": "ContentSafetyLabelLabel",
@@ -6668,6 +6681,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": "The confidence score for the topic being discussed, from 0 to 1",
             "generatedName": "ContentSafetyLabelConfidence",
@@ -6684,6 +6698,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelSeverity",
           "key": "severity",
+          "nameOverride": null,
           "schema": {
             "description": "How severely the topic is discussed in the section, from 0 to 1",
             "generatedName": "ContentSafetyLabelSeverity",
@@ -6711,6 +6726,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelResultText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The transcript of the section flagged by the Content Moderation model",
             "generatedName": "ContentSafetyLabelResultText",
@@ -6729,6 +6745,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelResultLabels",
           "key": "labels",
+          "nameOverride": null,
           "schema": {
             "description": "An array of objects, one per sensitive topic that was detected in the section",
             "generatedName": "ContentSafetyLabelResultLabels",
@@ -6750,6 +6767,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelResultSentencesIdxStart",
           "key": "sentences_idx_start",
+          "nameOverride": null,
           "schema": {
             "description": "The sentence index at which the section begins",
             "generatedName": "ContentSafetyLabelResultSentencesIdxStart",
@@ -6766,6 +6784,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelResultSentencesIdxEnd",
           "key": "sentences_idx_end",
+          "nameOverride": null,
           "schema": {
             "description": "The sentence index at which the section ends",
             "generatedName": "ContentSafetyLabelResultSentencesIdxEnd",
@@ -6782,6 +6801,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelResultTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp information for the section",
             "generatedName": "ContentSafetyLabelResultTimestamp",
@@ -6796,6 +6816,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelResultSummary",
           "key": "summary",
+          "nameOverride": null,
           "schema": {
             "description": "A summary of the Content Moderation confidence results for the entire audio file",
             "generatedName": "ContentSafetyLabelResultSummary",
@@ -6830,6 +6851,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "contentSafetyLabelResultSeverityScoreSummary",
           "key": "severity_score_summary",
+          "nameOverride": null,
           "schema": {
             "description": "A summary of the Content Moderation severity results for the entire audio file",
             "generatedName": "ContentSafetyLabelResultSeverityScoreSummary",
@@ -6873,6 +6895,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "createRealtimeTemporaryTokenParametersExpiresIn",
           "key": "expires_in",
+          "nameOverride": null,
           "schema": {
             "description": "The amount of time until the token expires in seconds.",
             "generatedName": "CreateRealtimeTemporaryTokenParametersExpiresIn",
@@ -6900,6 +6923,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersLanguageCode",
           "key": "language_code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersLanguageCode",
@@ -6923,6 +6947,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersPunctuate",
           "key": "punctuate",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersPunctuate",
@@ -6946,6 +6971,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersFormatText",
           "key": "format_text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersFormatText",
@@ -6969,6 +6995,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersDualChannel",
           "key": "dual_channel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersDualChannel",
@@ -6992,6 +7019,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersWebhookUrl",
           "key": "webhook_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersWebhookUrl",
@@ -7017,6 +7045,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderName",
           "key": "webhook_auth_header_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderName",
@@ -7049,6 +7078,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderValue",
           "key": "webhook_auth_header_value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersWebhookAuthHeaderValue",
@@ -7081,6 +7111,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersAutoHighlights",
           "key": "auto_highlights",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersAutoHighlights",
@@ -7104,6 +7135,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersAudioStartFrom",
           "key": "audio_start_from",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersAudioStartFrom",
@@ -7127,6 +7159,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersAudioEndAt",
           "key": "audio_end_at",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersAudioEndAt",
@@ -7150,6 +7183,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersWordBoost",
           "key": "word_boost",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersWordBoost",
@@ -7182,6 +7216,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersBoostParam",
           "key": "boost_param",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersBoostParam",
@@ -7203,6 +7238,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersFilterProfanity",
           "key": "filter_profanity",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersFilterProfanity",
@@ -7226,6 +7262,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPii",
           "key": "redact_pii",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersRedactPii",
@@ -7249,6 +7286,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPiiAudio",
           "key": "redact_pii_audio",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersRedactPiiAudio",
@@ -7272,6 +7310,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPiiAudioQuality",
           "key": "redact_pii_audio_quality",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersRedactPiiAudioQuality",
@@ -7297,6 +7336,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPiiPolicies",
           "key": "redact_pii_policies",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersRedactPiiPolicies",
@@ -7325,6 +7365,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersRedactPiiSub",
           "key": "redact_pii_sub",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersRedactPiiSub",
@@ -7346,6 +7387,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSpeakerLabels",
           "key": "speaker_labels",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersSpeakerLabels",
@@ -7369,6 +7411,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSpeakersExpected",
           "key": "speakers_expected",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersSpeakersExpected",
@@ -7399,6 +7442,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersContentSafety",
           "key": "content_safety",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersContentSafety",
@@ -7422,6 +7466,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersIabCategories",
           "key": "iab_categories",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersIabCategories",
@@ -7445,6 +7490,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersLanguageDetection",
           "key": "language_detection",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersLanguageDetection",
@@ -7468,6 +7514,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersCustomSpelling",
           "key": "custom_spelling",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersCustomSpelling",
@@ -7496,6 +7543,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersDisfluencies",
           "key": "disfluencies",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersDisfluencies",
@@ -7519,6 +7567,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSentimentAnalysis",
           "key": "sentiment_analysis",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersSentimentAnalysis",
@@ -7542,6 +7591,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersAutoChapters",
           "key": "auto_chapters",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersAutoChapters",
@@ -7565,6 +7615,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersEntityDetection",
           "key": "entity_detection",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersEntityDetection",
@@ -7588,6 +7639,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSpeechThreshold",
           "key": "speech_threshold",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersSpeechThreshold",
@@ -7622,6 +7674,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSummarization",
           "key": "summarization",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersSummarization",
@@ -7645,6 +7698,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSummaryModel",
           "key": "summary_model",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersSummaryModel",
@@ -7666,6 +7720,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersSummaryType",
           "key": "summary_type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersSummaryType",
@@ -7687,6 +7742,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersCustomTopics",
           "key": "custom_topics",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersCustomTopics",
@@ -7710,6 +7766,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "createTranscriptOptionalParametersTopics",
           "key": "topics",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "createTranscriptOptionalParametersTopics",
@@ -7761,6 +7818,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "createTranscriptParametersAudioUrl",
           "key": "audio_url",
+          "nameOverride": null,
           "schema": {
             "description": "The URL of the audio or video file to transcribe.",
             "generatedName": "CreateTranscriptParametersAudioUrl",
@@ -7790,6 +7848,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "entityEntityType",
           "key": "entity_type",
+          "nameOverride": null,
           "schema": {
             "description": "The type of entity for the detected entity",
             "generatedName": "EntityEntityType",
@@ -7804,6 +7863,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "entityText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The text for the detected entity",
             "generatedName": "EntityText",
@@ -7822,6 +7882,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "entityStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": "The starting time, in milliseconds, at which the detected entity appears in the audio file",
             "generatedName": "EntityStart",
@@ -7838,6 +7899,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "entityEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": "The ending time, in milliseconds, for the detected entity in the audio file",
             "generatedName": "EntityEnd",
@@ -8225,6 +8287,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "errorError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": "Error message",
             "generatedName": "ErrorError",
@@ -8243,6 +8306,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "errorStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "errorStatus",
@@ -8286,6 +8350,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "finalTranscriptMessageType",
           "key": "message_type",
+          "nameOverride": null,
           "schema": {
             "description": "Describes the type of message.",
             "generatedName": "FinalTranscriptMessageType",
@@ -8303,6 +8368,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "finalTranscriptPunctuated",
           "key": "punctuated",
+          "nameOverride": null,
           "schema": {
             "description": "Whether the text has been punctuated and cased.",
             "generatedName": "FinalTranscriptPunctuated",
@@ -8319,6 +8385,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "finalTranscriptTextFormatted",
           "key": "text_formatted",
+          "nameOverride": null,
           "schema": {
             "description": "Whether the text has been formatted (e.g. Dollar -> $)",
             "generatedName": "FinalTranscriptTextFormatted",
@@ -8362,6 +8429,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "lemurActionItemsResponseResponse",
           "key": "response",
+          "nameOverride": null,
           "schema": {
             "description": "The response generated by LeMUR.",
             "generatedName": "LemurActionItemsResponseResponse",
@@ -8391,6 +8459,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "lemurBaseParametersTranscriptIds",
           "key": "transcript_ids",
+          "nameOverride": null,
           "schema": {
             "description": "A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.",
             "generatedName": "LemurBaseParametersTranscriptIds",
@@ -8416,6 +8485,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "lemurBaseParametersContext",
           "key": "context",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lemurBaseParametersContext",
@@ -8476,6 +8546,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "lemurBaseParametersFinalModel",
           "key": "final_model",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lemurBaseParametersFinalModel",
@@ -8497,6 +8568,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "lemurBaseParametersMaxOutputSize",
           "key": "max_output_size",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lemurBaseParametersMaxOutputSize",
@@ -8520,6 +8592,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "lemurBaseParametersTemperature",
           "key": "temperature",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lemurBaseParametersTemperature",
@@ -8557,6 +8630,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurBaseResponseRequestId",
           "key": "request_id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the LeMUR request",
             "generatedName": "LemurBaseResponseRequestId",
@@ -8620,6 +8694,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurQuestionQuestion",
           "key": "question",
+          "nameOverride": null,
           "schema": {
             "description": "The question you wish to ask. For more complex questions use default model.",
             "generatedName": "LemurQuestionQuestion",
@@ -8638,6 +8713,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurQuestionContext",
           "key": "context",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lemurQuestionContext",
@@ -8698,6 +8774,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurQuestionAnswerFormat",
           "key": "answer_format",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lemurQuestionAnswerFormat",
@@ -8724,6 +8801,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurQuestionAnswerOptions",
           "key": "answer_options",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lemurQuestionAnswerOptions",
@@ -8768,6 +8846,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurQuestionAnswerQuestion",
           "key": "question",
+          "nameOverride": null,
           "schema": {
             "description": "The question for LeMUR to answer.",
             "generatedName": "LemurQuestionAnswerQuestion",
@@ -8786,6 +8865,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurQuestionAnswerAnswer",
           "key": "answer",
+          "nameOverride": null,
           "schema": {
             "description": "The answer generated by LeMUR.",
             "generatedName": "LemurQuestionAnswerAnswer",
@@ -8823,6 +8903,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurQuestionAnswerParametersQuestions",
           "key": "questions",
+          "nameOverride": null,
           "schema": {
             "description": "A list of questions to ask.",
             "generatedName": "LemurQuestionAnswerParametersQuestions",
@@ -8863,6 +8944,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurQuestionAnswerResponseResponse",
           "key": "response",
+          "nameOverride": null,
           "schema": {
             "description": "The answers generated by LeMUR and their questions.",
             "generatedName": "LemurQuestionAnswerResponseResponse",
@@ -8903,6 +8985,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurSummaryParametersAnswerFormat",
           "key": "answer_format",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lemurSummaryParametersAnswerFormat",
@@ -8948,6 +9031,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurSummaryResponseResponse",
           "key": "response",
+          "nameOverride": null,
           "schema": {
             "description": "The response generated by LeMUR.",
             "generatedName": "LemurSummaryResponseResponse",
@@ -8985,6 +9069,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurTaskParametersPrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model.",
             "generatedName": "LemurTaskParametersPrompt",
@@ -9022,6 +9107,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "lemurTaskResponseResponse",
           "key": "response",
+          "nameOverride": null,
           "schema": {
             "description": "The response generated by LeMUR.",
             "generatedName": "LemurTaskResponseResponse",
@@ -9108,6 +9194,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "pageDetailsLimit",
           "key": "limit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PageDetailsLimit",
@@ -9124,6 +9211,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "pageDetailsResultCount",
           "key": "result_count",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PageDetailsResultCount",
@@ -9140,6 +9228,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "pageDetailsCurrentUrl",
           "key": "current_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PageDetailsCurrentUrl",
@@ -9158,6 +9247,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "pageDetailsPrevUrl",
           "key": "prev_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PageDetailsPrevUrl",
@@ -9176,6 +9266,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "pageDetailsNextUrl",
           "key": "next_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "pageDetailsNextUrl",
@@ -9219,6 +9310,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "paragraphsResponseId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ParagraphsResponseId",
@@ -9237,6 +9329,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "paragraphsResponseConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ParagraphsResponseConfidence",
@@ -9253,6 +9346,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "paragraphsResponseAudioDuration",
           "key": "audio_duration",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ParagraphsResponseAudioDuration",
@@ -9269,6 +9363,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "paragraphsResponseParagraphs",
           "key": "paragraphs",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ParagraphsResponseParagraphs",
@@ -9309,6 +9404,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "partialTranscriptMessageType",
           "key": "message_type",
+          "nameOverride": null,
           "schema": {
             "description": "Describes the type of message.",
             "generatedName": "PartialTranscriptMessageType",
@@ -9670,6 +9766,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "purgeLemurRequestDataResponseRequestId",
           "key": "request_id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the LeMUR request",
             "generatedName": "PurgeLemurRequestDataResponseRequestId",
@@ -9688,6 +9785,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "purgeLemurRequestDataResponseRequestIdToPurge",
           "key": "request_id_to_purge",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the deletion request of the LeMUR request",
             "generatedName": "PurgeLemurRequestDataResponseRequestIdToPurge",
@@ -9706,6 +9804,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "purgeLemurRequestDataResponseDeleted",
           "key": "deleted",
+          "nameOverride": null,
           "schema": {
             "description": "Whether the request data was deleted.",
             "generatedName": "PurgeLemurRequestDataResponseDeleted",
@@ -9733,6 +9832,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeBaseMessageMessageType",
           "key": "message_type",
+          "nameOverride": null,
           "schema": {
             "description": "Describes the type of the message.",
             "generatedName": "RealtimeBaseMessageMessageType",
@@ -9758,6 +9858,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptAudioStart",
           "key": "audio_start",
+          "nameOverride": null,
           "schema": {
             "description": "Start time of audio sample relative to session start, in milliseconds.",
             "generatedName": "RealtimeBaseTranscriptAudioStart",
@@ -9774,6 +9875,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptAudioEnd",
           "key": "audio_end",
+          "nameOverride": null,
           "schema": {
             "description": "End time of audio sample relative to session start, in milliseconds.",
             "generatedName": "RealtimeBaseTranscriptAudioEnd",
@@ -9790,6 +9892,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": "The confidence score of the entire transcription, between 0 and 1.",
             "generatedName": "RealtimeBaseTranscriptConfidence",
@@ -9806,6 +9909,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The partial transcript for your audio.",
             "generatedName": "RealtimeBaseTranscriptText",
@@ -9824,6 +9928,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptWords",
           "key": "words",
+          "nameOverride": null,
           "schema": {
             "description": "An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).",
             "generatedName": "RealtimeBaseTranscriptWords",
@@ -9845,6 +9950,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeBaseTranscriptCreated",
           "key": "created",
+          "nameOverride": null,
           "schema": {
             "description": "The timestamp for the partial transcript.",
             "generatedName": "RealtimeBaseTranscriptCreated",
@@ -9872,6 +9978,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeErrorError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RealtimeErrorError",
@@ -9953,6 +10060,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "realtimeTemporaryTokenResponseToken",
           "key": "token",
+          "nameOverride": null,
           "schema": {
             "description": "The temporary authentication token for real-time transcription",
             "generatedName": "RealtimeTemporaryTokenResponseToken",
@@ -10043,6 +10151,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "redactedAudioResponseStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": "The status of the redacted audio",
             "generatedName": "RedactedAudioResponseStatus",
@@ -10057,6 +10166,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "redactedAudioResponseRedactedAudioUrl",
           "key": "redacted_audio_url",
+          "nameOverride": null,
           "schema": {
             "description": "The URL of the redacted audio file",
             "generatedName": "RedactedAudioResponseRedactedAudioUrl",
@@ -10097,6 +10207,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentencesResponseId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SentencesResponseId",
@@ -10115,6 +10226,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentencesResponseConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SentencesResponseConfidence",
@@ -10131,6 +10243,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentencesResponseAudioDuration",
           "key": "audio_duration",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SentencesResponseAudioDuration",
@@ -10147,6 +10260,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentencesResponseSentences",
           "key": "sentences",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SentencesResponseSentences",
@@ -10224,6 +10338,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentimentAnalysisResultText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The transcript of the sentence",
             "generatedName": "SentimentAnalysisResultText",
@@ -10242,6 +10357,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentimentAnalysisResultStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": "The starting time, in milliseconds, of the sentence",
             "generatedName": "SentimentAnalysisResultStart",
@@ -10258,6 +10374,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentimentAnalysisResultEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": "The ending time, in milliseconds, of the sentence",
             "generatedName": "SentimentAnalysisResultEnd",
@@ -10274,6 +10391,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentimentAnalysisResultSentiment",
           "key": "sentiment",
+          "nameOverride": null,
           "schema": {
             "description": "The detected sentiment for the sentence, one of POSITIVE, NEUTRAL, NEGATIVE",
             "generatedName": "SentimentAnalysisResultSentiment",
@@ -10288,6 +10406,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentimentAnalysisResultConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": "The confidence score for the detected sentiment of the sentence, from 0 to 1",
             "generatedName": "SentimentAnalysisResultConfidence",
@@ -10304,6 +10423,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sentimentAnalysisResultSpeaker",
           "key": "speaker",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sentimentAnalysisResultSpeaker",
@@ -10359,6 +10479,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
           "generatedName": "sessionBeginsMessageType",
           "key": "message_type",
+          "nameOverride": null,
           "schema": {
             "description": "Describes the type of the message.",
             "generatedName": "SessionBeginsMessageType",
@@ -10376,6 +10497,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sessionBeginsSessionId",
           "key": "session_id",
+          "nameOverride": null,
           "schema": {
             "description": "Unique identifier for the established session.",
             "generatedName": "SessionBeginsSessionId",
@@ -10394,6 +10516,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "sessionBeginsExpiresAt",
           "key": "expires_at",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp when this session will expire.",
             "generatedName": "SessionBeginsExpiresAt",
@@ -10433,6 +10556,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
           "generatedName": "sessionTerminatedMessageType",
           "key": "message_type",
+          "nameOverride": null,
           "schema": {
             "description": "Describes the type of the message.",
             "generatedName": "SessionTerminatedMessageType",
@@ -10461,6 +10585,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "severityScoreSummaryLow",
           "key": "low",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SeverityScoreSummaryLow",
@@ -10477,6 +10602,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "severityScoreSummaryMedium",
           "key": "medium",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SeverityScoreSummaryMedium",
@@ -10493,6 +10619,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "severityScoreSummaryHigh",
           "key": "high",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SeverityScoreSummaryHigh",
@@ -10715,6 +10842,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "terminateSessionTerminateSession",
           "key": "terminate_session",
+          "nameOverride": null,
           "schema": {
             "description": "A boolean value to communicate that you wish to end your real-time session forever.",
             "generatedName": "TerminateSessionTerminateSession",
@@ -10742,6 +10870,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "timestampStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": "The start time in milliseconds",
             "generatedName": "TimestampStart",
@@ -10758,6 +10887,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "timestampEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": "The end time in milliseconds",
             "generatedName": "TimestampEnd",
@@ -10785,6 +10915,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "topicDetectionResultText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The text in the transcript in which a detected topic occurs",
             "generatedName": "TopicDetectionResultText",
@@ -10803,6 +10934,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "topicDetectionResultLabels",
           "key": "labels",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "topicDetectionResultLabels",
@@ -10828,6 +10960,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                     "conflict": {},
                     "generatedName": "topicDetectionResultLabelsItemRelevance",
                     "key": "relevance",
+                    "nameOverride": null,
                     "schema": {
                       "description": "How relevant the detected topic is of a detected topic",
                       "generatedName": "TopicDetectionResultLabelsItemRelevance",
@@ -10844,6 +10977,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                     "conflict": {},
                     "generatedName": "topicDetectionResultLabelsItemLabel",
                     "key": "label",
+                    "nameOverride": null,
                     "schema": {
                       "description": "The IAB taxonomical label for the label of the detected topic, where > denotes supertopic/subtopic relationship",
                       "generatedName": "TopicDetectionResultLabelsItemLabel",
@@ -10868,6 +11002,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "topicDetectionResultTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "topicDetectionResultTimestamp",
@@ -10900,6 +11035,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "transcriptId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The unique identifier of your transcription",
             "generatedName": "TranscriptId",
@@ -10918,6 +11054,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "transcriptLanguageModel",
           "key": "language_model",
+          "nameOverride": null,
           "schema": {
             "description": "The language model that was used for the transcription",
             "generatedName": "TranscriptLanguageModel",
@@ -10936,6 +11073,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "transcriptAcousticModel",
           "key": "acoustic_model",
+          "nameOverride": null,
           "schema": {
             "description": "The acoustic model that was used for the transcription",
             "generatedName": "TranscriptAcousticModel",
@@ -10954,6 +11092,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "transcriptStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": "The status of your transcription. Possible values are queued, processing, completed, or error.",
             "generatedName": "TranscriptStatus",
@@ -10968,6 +11107,7 @@ Can be any value between 0.0 and 1.0 inclusive.
           "conflict": {},
           "generatedName": "transcriptLanguageCode",
           "key": "language_code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptLanguageCode",
@@ -10992,6 +11132,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptAudioUrl",
           "key": "audio_url",
+          "nameOverride": null,
           "schema": {
             "description": "The URL of the media that was transcribed",
             "generatedName": "TranscriptAudioUrl",
@@ -11010,6 +11151,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptText",
@@ -11042,6 +11184,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptWords",
           "key": "words",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptWords",
@@ -11081,6 +11224,7 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
           "conflict": {},
           "generatedName": "transcriptUtterances",
           "key": "utterances",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptUtterances",
@@ -11120,6 +11264,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptConfidence",
@@ -11150,6 +11295,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptAudioDuration",
           "key": "audio_duration",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptAudioDuration",
@@ -11180,6 +11326,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptPunctuate",
           "key": "punctuate",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptPunctuate",
@@ -11210,6 +11357,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptFormatText",
           "key": "format_text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptFormatText",
@@ -11240,6 +11388,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptDualChannel",
           "key": "dual_channel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptDualChannel",
@@ -11270,6 +11419,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptWebhookUrl",
           "key": "webhook_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptWebhookUrl",
@@ -11302,6 +11452,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptWebhookStatusCode",
           "key": "webhook_status_code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptWebhookStatusCode",
@@ -11332,6 +11483,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptWebhookAuth",
           "key": "webhook_auth",
+          "nameOverride": null,
           "schema": {
             "description": "Whether webhook authentication details were provided in the transcription request",
             "generatedName": "TranscriptWebhookAuth",
@@ -11348,6 +11500,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptWebhookAuthHeaderName",
           "key": "webhook_auth_header_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptWebhookAuthHeaderName",
@@ -11380,6 +11533,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptSpeedBoost",
           "key": "speed_boost",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSpeedBoost",
@@ -11410,6 +11564,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptAutoHighlights",
           "key": "auto_highlights",
+          "nameOverride": null,
           "schema": {
             "description": "Whether Key Phrases was enabled in the transcription request, either true or false",
             "generatedName": "TranscriptAutoHighlights",
@@ -11426,6 +11581,7 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
           "conflict": {},
           "generatedName": "transcriptAutoHighlightsResult",
           "key": "auto_highlights_result",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptAutoHighlightsResult",
@@ -11449,6 +11605,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "transcriptAudioStartFrom",
           "key": "audio_start_from",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptAudioStartFrom",
@@ -11479,6 +11636,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "transcriptAudioEndAt",
           "key": "audio_end_at",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptAudioEndAt",
@@ -11509,6 +11667,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "transcriptWordBoost",
           "key": "word_boost",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptWordBoost",
@@ -11541,6 +11700,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "transcriptBoostParam",
           "key": "boost_param",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptBoostParam",
@@ -11573,6 +11733,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "transcriptFilterProfanity",
           "key": "filter_profanity",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptFilterProfanity",
@@ -11603,6 +11764,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "transcriptRedactPii",
           "key": "redact_pii",
+          "nameOverride": null,
           "schema": {
             "description": "Whether [PII Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was enabled in the transcription request, either true or false",
             "generatedName": "TranscriptRedactPii",
@@ -11619,6 +11781,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "conflict": {},
           "generatedName": "transcriptRedactPiiAudio",
           "key": "redact_pii_audio",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptRedactPiiAudio",
@@ -11653,6 +11816,7 @@ either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models
           "conflict": {},
           "generatedName": "transcriptRedactPiiAudioQuality",
           "key": "redact_pii_audio_quality",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptRedactPiiAudioQuality",
@@ -11689,6 +11853,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "conflict": {},
           "generatedName": "transcriptRedactPiiPolicies",
           "key": "redact_pii_policies",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptRedactPiiPolicies",
@@ -11728,6 +11893,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "conflict": {},
           "generatedName": "transcriptRedactPiiSub",
           "key": "redact_pii_sub",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptRedactPiiSub",
@@ -11749,6 +11915,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "conflict": {},
           "generatedName": "transcriptSpeakerLabels",
           "key": "speaker_labels",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSpeakerLabels",
@@ -11779,6 +11946,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "conflict": {},
           "generatedName": "transcriptSpeakersExpected",
           "key": "speakers_expected",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSpeakersExpected",
@@ -11809,6 +11977,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "conflict": {},
           "generatedName": "transcriptContentSafety",
           "key": "content_safety",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptContentSafety",
@@ -11839,6 +12008,7 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
           "conflict": {},
           "generatedName": "transcriptContentSafetyLabels",
           "key": "content_safety_labels",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptContentSafetyLabels",
@@ -11868,6 +12038,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                     "conflict": {},
                     "generatedName": "transcriptContentSafetyLabelsStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": "Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.",
                       "generatedName": "TranscriptContentSafetyLabelsStatus",
@@ -11882,6 +12053,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                     "conflict": {},
                     "generatedName": "transcriptContentSafetyLabelsResults",
                     "key": "results",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "TranscriptContentSafetyLabelsResults",
@@ -11909,6 +12081,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
           "conflict": {},
           "generatedName": "transcriptIabCategories",
           "key": "iab_categories",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptIabCategories",
@@ -11939,6 +12112,7 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
           "conflict": {},
           "generatedName": "transcriptIabCategoriesResult",
           "key": "iab_categories_result",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptIabCategoriesResult",
@@ -11968,6 +12142,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     "conflict": {},
                     "generatedName": "transcriptIabCategoriesResultStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": "Will be either success, or unavailable in the rare case that the Content Moderation model failed.",
                       "generatedName": "TranscriptIabCategoriesResultStatus",
@@ -11982,6 +12157,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     "conflict": {},
                     "generatedName": "transcriptIabCategoriesResultResults",
                     "key": "results",
+                    "nameOverride": null,
                     "schema": {
                       "description": "An array of results for the Topic Detection model.",
                       "generatedName": "TranscriptIabCategoriesResultResults",
@@ -12003,6 +12179,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     "conflict": {},
                     "generatedName": "transcriptIabCategoriesResultSummary",
                     "key": "summary",
+                    "nameOverride": null,
                     "schema": {
                       "description": "The overall relevance of topic to the entire audio file",
                       "generatedName": "TranscriptIabCategoriesResultSummary",
@@ -12043,6 +12220,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "conflict": {},
           "generatedName": "transcriptLanguageDetection",
           "key": "language_detection",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptLanguageDetection",
@@ -12073,6 +12251,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "conflict": {},
           "generatedName": "transcriptCustomSpelling",
           "key": "custom_spelling",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptCustomSpelling",
@@ -12108,6 +12287,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "conflict": {},
           "generatedName": "transcriptAutoChapters",
           "key": "auto_chapters",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptAutoChapters",
@@ -12138,6 +12318,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "conflict": {},
           "generatedName": "transcriptChapters",
           "key": "chapters",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptChapters",
@@ -12173,6 +12354,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "conflict": {},
           "generatedName": "transcriptSummarization",
           "key": "summarization",
+          "nameOverride": null,
           "schema": {
             "description": "Whether [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request, either true or false",
             "generatedName": "TranscriptSummarization",
@@ -12189,6 +12371,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "conflict": {},
           "generatedName": "transcriptSummaryType",
           "key": "summary_type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSummaryType",
@@ -12221,6 +12404,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
           "conflict": {},
           "generatedName": "transcriptSummaryModel",
           "key": "summary_model",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSummaryModel",
@@ -12257,6 +12441,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "conflict": {},
           "generatedName": "transcriptSummary",
           "key": "summary",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSummary",
@@ -12289,6 +12474,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "conflict": {},
           "generatedName": "transcriptCustomTopics",
           "key": "custom_topics",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptCustomTopics",
@@ -12319,6 +12505,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "conflict": {},
           "generatedName": "transcriptTopics",
           "key": "topics",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptTopics",
@@ -12351,6 +12538,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "conflict": {},
           "generatedName": "transcriptDisfluencies",
           "key": "disfluencies",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptDisfluencies",
@@ -12381,6 +12569,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "conflict": {},
           "generatedName": "transcriptSentimentAnalysis",
           "key": "sentiment_analysis",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSentimentAnalysis",
@@ -12411,6 +12600,7 @@ if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was ena
           "conflict": {},
           "generatedName": "transcriptSentimentAnalysisResults",
           "key": "sentiment_analysis_results",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSentimentAnalysisResults",
@@ -12450,6 +12640,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
           "conflict": {},
           "generatedName": "transcriptEntityDetection",
           "key": "entity_detection",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptEntityDetection",
@@ -12480,6 +12671,7 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
           "conflict": {},
           "generatedName": "transcriptEntities",
           "key": "entities",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptEntities",
@@ -12519,6 +12711,7 @@ See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) 
           "conflict": {},
           "generatedName": "transcriptSpeechThreshold",
           "key": "speech_threshold",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptSpeechThreshold",
@@ -12553,6 +12746,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "transcriptThrottled",
           "key": "throttled",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptThrottled",
@@ -12583,6 +12777,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "transcriptError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptError",
@@ -12664,6 +12859,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "transcriptCustomSpellingFrom",
           "key": "from",
+          "nameOverride": null,
           "schema": {
             "description": "Words or phrases to replace",
             "generatedName": "TranscriptCustomSpellingFrom",
@@ -12689,6 +12885,7 @@ Valid values are in the range [0, 1] inclusive.
           "conflict": {},
           "generatedName": "transcriptCustomSpellingTo",
           "key": "to",
+          "nameOverride": null,
           "schema": {
             "description": "Word or phrase to replace with",
             "generatedName": "TranscriptCustomSpellingTo",
@@ -12978,6 +13175,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListPageDetails",
           "key": "page_details",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptListPageDetails",
@@ -12992,6 +13190,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListTranscripts",
           "key": "transcripts",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptListTranscripts",
@@ -13024,6 +13223,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListItemId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptListItemId",
@@ -13042,6 +13242,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListItemResourceUrl",
           "key": "resource_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptListItemResourceUrl",
@@ -13060,6 +13261,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListItemStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptListItemStatus",
@@ -13074,6 +13276,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListItemCreated",
           "key": "created",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptListItemCreated",
@@ -13090,6 +13293,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListItemCompleted",
           "key": "completed",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptListItemCompleted",
@@ -13113,6 +13317,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListItemAudioUrl",
           "key": "audio_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptListItemAudioUrl",
@@ -13142,6 +13347,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListParametersLimit",
           "key": "limit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptListParametersLimit",
@@ -13165,6 +13371,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListParametersStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptListParametersStatus",
@@ -13186,6 +13393,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListParametersCreatedOn",
           "key": "created_on",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptListParametersCreatedOn",
@@ -13211,6 +13419,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListParametersBeforeId",
           "key": "before_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptListParametersBeforeId",
@@ -13236,6 +13445,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListParametersAfterId",
           "key": "after_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptListParametersAfterId",
@@ -13261,6 +13471,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptListParametersThrottledOnly",
           "key": "throttled_only",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptListParametersThrottledOnly",
@@ -13295,6 +13506,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptParagraphText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptParagraphText",
@@ -13313,6 +13525,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptParagraphStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptParagraphStart",
@@ -13329,6 +13542,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptParagraphEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptParagraphEnd",
@@ -13345,6 +13559,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptParagraphConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptParagraphConfidence",
@@ -13361,6 +13576,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptParagraphWords",
           "key": "words",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptParagraphWords",
@@ -13393,6 +13609,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptSentenceText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptSentenceText",
@@ -13411,6 +13628,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptSentenceStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptSentenceStart",
@@ -13427,6 +13645,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptSentenceEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptSentenceEnd",
@@ -13443,6 +13662,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptSentenceConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptSentenceConfidence",
@@ -13459,6 +13679,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptSentenceWords",
           "key": "words",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptSentenceWords",
@@ -13548,6 +13769,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptUtteranceChannel",
           "key": "channel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptUtteranceChannel",
@@ -13566,6 +13788,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptUtteranceConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptUtteranceConfidence",
@@ -13582,6 +13805,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptUtteranceStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptUtteranceStart",
@@ -13598,6 +13822,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptUtteranceEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptUtteranceEnd",
@@ -13614,6 +13839,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptUtteranceText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptUtteranceText",
@@ -13632,6 +13858,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptUtteranceWords",
           "key": "words",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptUtteranceWords",
@@ -13664,6 +13891,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptWordConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptWordConfidence",
@@ -13680,6 +13908,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptWordStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptWordStart",
@@ -13696,6 +13925,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptWordEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptWordEnd",
@@ -13712,6 +13942,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptWordText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TranscriptWordText",
@@ -13730,6 +13961,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "transcriptWordSpeaker",
           "key": "speaker",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transcriptWordSpeaker",
@@ -13773,6 +14005,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "uploadedFileUploadUrl",
           "key": "upload_url",
+          "nameOverride": null,
           "schema": {
             "description": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
             "generatedName": "UploadedFileUploadUrl",
@@ -13802,6 +14035,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": "Start time of the word in milliseconds",
             "generatedName": "WordStart",
@@ -13818,6 +14052,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordEnd",
           "key": "end",
+          "nameOverride": null,
           "schema": {
             "description": "End time of the word in milliseconds",
             "generatedName": "WordEnd",
@@ -13834,6 +14069,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordConfidence",
           "key": "confidence",
+          "nameOverride": null,
           "schema": {
             "description": "Confidence score of the word",
             "generatedName": "WordConfidence",
@@ -13850,6 +14086,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The word itself",
             "generatedName": "WordText",
@@ -13879,6 +14116,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordSearchMatchText",
           "key": "text",
+          "nameOverride": null,
           "schema": {
             "description": "The matched word",
             "generatedName": "WordSearchMatchText",
@@ -13897,6 +14135,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordSearchMatchCount",
           "key": "count",
+          "nameOverride": null,
           "schema": {
             "description": "The total amount of times the word is in the transcript",
             "generatedName": "WordSearchMatchCount",
@@ -13913,6 +14152,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordSearchMatchTimestamps",
           "key": "timestamps",
+          "nameOverride": null,
           "schema": {
             "description": "An array of timestamps",
             "generatedName": "WordSearchMatchTimestamps",
@@ -13934,6 +14174,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordSearchMatchIndexes",
           "key": "indexes",
+          "nameOverride": null,
           "schema": {
             "description": "An array of all index locations for that word within the \`words\` array of the completed transcript",
             "generatedName": "WordSearchMatchIndexes",
@@ -13968,6 +14209,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordSearchResponseId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the transcript",
             "generatedName": "WordSearchResponseId",
@@ -13986,6 +14228,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordSearchResponseTotalCount",
           "key": "total_count",
+          "nameOverride": null,
           "schema": {
             "description": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
             "generatedName": "WordSearchResponseTotalCount",
@@ -14002,6 +14245,7 @@ The default value is 'en_us'.
           "conflict": {},
           "generatedName": "wordSearchResponseMatches",
           "key": "matches",
+          "nameOverride": null,
           "schema": {
             "description": "The matches of the search",
             "generatedName": "WordSearchResponseMatches",

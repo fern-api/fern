@@ -330,6 +330,22 @@ export const ExampleEnvironment = {
 export type ExampleEnvironment = typeof ExampleEnvironment.Production;
 ```
 
+## Base path
+
+The `x-fern-base-path` extension is used to configure the base path prepended to every endpoint.
+
+In the example below, we have configured the `/v1` base path so the full endpoint path is
+`https://api.example.com/v1/users`.
+
+```yaml title="Set the base path in openapi.yml" {1}
+x-fern-base-path: /v1
+servers:
+- url: https://api.example.com
+paths:
+  /users:
+    ...
+```
+
 ## Audiences
 
 The `x-fern-audiences` extension is used to mark endpoints with a particular audience
@@ -541,6 +557,15 @@ shown in the third tab.
               description: Internal Server Error
     ```
 </CodeBlocks>
+
+## Embedding extensions
+
+If instead of overlaying your extensions within an overrides file, as mentioned above. Certain frameworks that generate OpenAPI specs make it easy to embed extensions directly from code.
+
+### FastAPI
+
+Please view our page on [FastAPI](../server-grameworks/fastapi) for more information on how to extend your OpenAPI spec within FastAPI.
+
 
 ## Request + response examples
 

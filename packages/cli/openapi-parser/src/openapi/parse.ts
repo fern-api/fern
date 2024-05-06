@@ -43,6 +43,7 @@ export async function parse({
     let ir: OpenApiIntermediateRepresentation = {
         title: undefined,
         description: undefined,
+        basePath: undefined,
         servers: [],
         tags: {
             tagsById: {},
@@ -117,6 +118,7 @@ function merge(
     return {
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
+        basePath: ir1.basePath ?? ir2.basePath,
         servers: [...ir1.servers, ...ir2.servers],
         tags: {
             tagsById: {
