@@ -4,6 +4,7 @@ import {
     ASYNC_API_LOCATION_KEY,
     OPENAPI_LOCATION_KEY
 } from "@fern-api/configuration/src/generators-yml/schemas/GeneratorsConfigurationSchema";
+import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
 import * as fs from "fs";
 import { readFile, writeFile } from "fs/promises";
@@ -14,10 +15,10 @@ import { finished } from "stream/promises";
 import { ReadableStream } from "stream/web";
 import { CliContext } from "../../cli-context/CliContext";
 
-async function fetchAndWriteFile(url: string, path: string): Promise<void> {
+async function fetchAndWriteFile(url: string, path: string, logger: Logger): Promise<void> {
     const resp = await fetch(url);
     if (resp.ok && resp.body) {
-        console.debug("Origin successfully fetched, writing to file");
+        logger.debug("Origin successfully fetched, writing to file");
         // Write file to disk
         const fileStream = fs.createWriteStream(path);
         await finished(Readable.fromWeb(resp.body as ReadableStream<any>).pipe(fileStream));
@@ -29,7 +30,7 @@ async function fetchAndWriteFile(url: string, path: string): Promise<void> {
         } catch (e) {
             await writeFile(path, yaml.dump(yaml.load(fileContents)), "utf8");
         }
-        console.debug("File written successfully");
+        logger.debug("File written successfully");
     }
 }
 
@@ -66,17 +67,19 @@ export async function updateApiSpec({
                 }
                 for (const api of apis) {
                     if (typeof api !== "string" && api.origin != null) {
-                        console.log("Origin found, fetching spec from ", api.origin);
-                        await fetchAndWriteFile(api.origin, path.join(fernDirectory, api.path));
+                        cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
+                        await fetchAndWriteFile(api.origin, path.join(fernDirectory, api.path), cliContext.logger);
                     }
                 }
             } else if (generatorConfig[ASYNC_API_LOCATION_KEY] != null) {
                 if (generatorConfig[API_ORIGIN_LOCATION_KEY] != null) {
-                    console.log("Origin found, fetching spec from ", generatorConfig[API_ORIGIN_LOCATION_KEY]);
+                    cliContext.logger.info(
+                        `Origin found, fetching spec from ${generatorConfig[API_ORIGIN_LOCATION_KEY]}`
+                    );
                     const origin = generatorConfig[API_ORIGIN_LOCATION_KEY];
                     const location = generatorConfig[ASYNC_API_LOCATION_KEY];
                     if (origin != null && location != null) {
-                        await fetchAndWriteFile(origin, path.join(fernDirectory, location));
+                        await fetchAndWriteFile(origin, path.join(fernDirectory, location), cliContext.logger);
                     }
                 }
             } else if (generatorConfig[OPENAPI_LOCATION_KEY] != null) {
@@ -90,8 +93,8 @@ export async function updateApiSpec({
 
                 if (apiOrigin != null && apiOutput != null) {
                     origin = apiOrigin;
-                    console.log("Origin found, fetching spec from ", apiOrigin);
-                    await fetchAndWriteFile(apiOrigin, path.join(fernDirectory, apiOutput));
+                    cliContext.logger.info(`Origin found, fetching spec from ${apiOrigin}`);
+                    await fetchAndWriteFile(apiOrigin, path.join(fernDirectory, apiOutput), cliContext.logger);
                 }
             }
             return;
