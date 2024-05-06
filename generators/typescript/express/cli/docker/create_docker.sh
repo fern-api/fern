@@ -21,7 +21,7 @@ if [[ $TAG == *"-rc"* ]]; then
   is_not_rc=false
 fi
 
-docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" ${is_not_rc:+'-t fernapi/fern-typescript-express:latest'} "$ROOT_DIR"
+docker build -f "$DOCKER_DIR/Dockerfile" -t "$DOCKER_NAME" ${is_not_rc:+-t "fernapi/fern-typescript-express:latest"} "$ROOT_DIR"
 
 echo
 echo "Built docker: $DOCKER_NAME"
