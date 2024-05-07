@@ -490,8 +490,7 @@ function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
 function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "fdr <path-to-output>",
-        // hide from help message
-        false,
+        false, // hide from help message
         (yargs) =>
             yargs
                 .positional("path-to-output", {
