@@ -12,7 +12,7 @@ describe("fern generator upgrade", () => {
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
 
-        cp(FIXTURES_DIR, directory, { recursive: true });
+        await cp(FIXTURES_DIR, directory, { recursive: true });
 
         const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
 

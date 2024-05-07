@@ -33,7 +33,6 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.532",
-    "@types/dockerode": "^3.3.29",
     "dockerode": "^4.0.2",
     "find-up": "^6.3.0",
     "immer": "^9.0.15",
@@ -42,6 +41,7 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
+    "@types/dockerode": "^3.3.9",
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.8",
     "@types/node": "^18.7.18",
