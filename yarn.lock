@@ -6972,8 +6972,7 @@ __metadata:
   dependencies:
     "@types/docker-modem": "*"
     "@types/node": "*"
-    "@types/ssh2": "*"
-  checksum: e69dc6f3c70f7a4573e61ea697cb18b89f49198afeda713f8cd862ac0f0d4b6a36b308542933a743269e9936f61ca85809a55d0c5f2ad4933244135cd25643d9
+  checksum: 3d03c68addb37c50e9557fff17171d26423aa18e544cb24e4caa81ebcec39ccc1cafed7adbfb8f4220d8ed23028d231717826bb77a786d425885c4f4cc37536d
   languageName: node
   linkType: hard
 
