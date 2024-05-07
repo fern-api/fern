@@ -9,7 +9,7 @@ import (
 )
 
 type SetNameRequest struct {
-	UserName string `json:"userName" url:"userName"`
+	UserName string `json:"userName" url:"-"`
 }
 
 type SetNameRequestV3 struct {
@@ -214,9 +214,9 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 type UpdateRequest struct {
 	Tag            string                   `json:"-" url:"tag"`
 	Extra          *string                  `json:"-" url:"extra,omitempty"`
-	Union          *Union                   `json:"union,omitempty" url:"union,omitempty"`
-	Filter         *Filter                  `json:"filter,omitempty" url:"filter,omitempty"`
-	OptionalUnion  *core.Optional[Union]    `json:"optionalUnion,omitempty" url:"optionalUnion,omitempty"`
-	OptionalFilter *core.Optional[Filter]   `json:"optionalFilter,omitempty" url:"optionalFilter,omitempty"`
-	OptionalTags   *core.Optional[[]string] `json:"optionalTags,omitempty" url:"optionalTags,omitempty"`
+	Union          *Union                   `json:"union,omitempty" url:"-"`
+	Filter         *Filter                  `json:"filter,omitempty" url:"-"`
+	OptionalUnion  *core.Optional[Union]    `json:"optionalUnion,omitempty" url:"-"`
+	OptionalFilter *core.Optional[Filter]   `json:"optionalFilter,omitempty" url:"-"`
+	OptionalTags   *core.Optional[[]string] `json:"optionalTags,omitempty" url:"-"`
 }
