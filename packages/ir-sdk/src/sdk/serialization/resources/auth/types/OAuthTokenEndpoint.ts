@@ -10,15 +10,19 @@ export const OAuthTokenEndpoint: core.serialization.ObjectSchema<
     serializers.OAuthTokenEndpoint.Raw,
     FernIr.OAuthTokenEndpoint
 > = core.serialization.objectWithoutOptionalProperties({
-    endpointReference: core.serialization.lazy(async () => (await import("../../..")).EndpointId),
+    endpointReference: core.serialization.lazyObject(async () => (await import("../../..")).EndpointReference),
+    requestProperties: core.serialization.lazyObject(
+        async () => (await import("../../..")).OAuthAccessTokenRequestProperties
+    ),
     responseProperties: core.serialization.lazyObject(
-        async () => (await import("../../..")).OAuthAccessTokenProperties
+        async () => (await import("../../..")).OAuthAccessTokenResponseProperties
     ),
 });
 
 export declare namespace OAuthTokenEndpoint {
     interface Raw {
-        endpointReference: serializers.EndpointId.Raw;
-        responseProperties: serializers.OAuthAccessTokenProperties.Raw;
+        endpointReference: serializers.EndpointReference.Raw;
+        requestProperties: serializers.OAuthAccessTokenRequestProperties.Raw;
+        responseProperties: serializers.OAuthAccessTokenResponseProperties.Raw;
     }
 }

@@ -21,7 +21,31 @@ export async function convertOAuthTokenEndpoint({
         file
     });
     return {
-        endpointReference: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
+        endpointReference: {
+            endpointId: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
+            subpackageId: IdGenerator.generateSubpackageId(resolvedEndpoint.file.fernFilepath),
+            serviceId: IdGenerator.generateServiceIdFromFernFilepath(resolvedEndpoint.file.fernFilepath)
+        },
+        requestProperties: {
+            clientId: await propertyResolver.resolveRequestPropertyOrThrow({
+                file,
+                endpoint: tokenEndpoint.endpoint,
+                propertyComponents: tokenEndpoint.requestProperties.client_id
+            }),
+            clientSecret: await propertyResolver.resolveRequestPropertyOrThrow({
+                file,
+                endpoint: tokenEndpoint.endpoint,
+                propertyComponents: tokenEndpoint.requestProperties.client_secret
+            }),
+            scopes:
+                tokenEndpoint.requestProperties.scopes != null
+                    ? await propertyResolver.resolveRequestPropertyOrThrow({
+                          file,
+                          endpoint: tokenEndpoint.endpoint,
+                          propertyComponents: tokenEndpoint.requestProperties.scopes
+                      })
+                    : undefined
+        },
         responseProperties: {
             accessToken: await propertyResolver.resolveResponsePropertyOrThrow({
                 file,
