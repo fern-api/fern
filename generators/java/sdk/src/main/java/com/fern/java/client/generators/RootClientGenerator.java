@@ -22,6 +22,7 @@ import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.EnvironmentVariable;
 import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -247,7 +248,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         @Override
         public Void visitBearer(BearerAuthScheme bearer) {
             String fieldName = bearer.getToken().getCamelCase().getSafeName();
-            createSetter(fieldName, bearer.getTokenEnvVar());
+            createSetter(fieldName, bearer.getTokenEnvVar(), Optional.empty());
             if (isMandatory) {
                 this.buildMethod
                         .beginControlFlow("if ($L == null)", fieldName)
@@ -353,51 +354,33 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         @Override
         public Void visitHeader(HeaderAuthScheme header) {
-            String fieldName = header.getName().getName().getCamelCase().getSafeName();
-            createSetter(fieldName, header.getHeaderEnvVar());
-            if (isMandatory) {
-                this.buildMethod
-                        .beginControlFlow("if ($L == null)", fieldName)
-                        .addStatement(
-                                "throw new RuntimeException($S)",
-                                header.getHeaderEnvVar().isEmpty()
-                                        ? getErrorMessage(fieldName)
-                                        : getErrorMessage(
-                                                fieldName,
-                                                header.getHeaderEnvVar().get()))
-                        .endControlFlow();
-            }
-            if (header.getPrefix().isPresent()) {
-                this.buildMethod.addStatement(
-                        "this.$L.addHeader($S, $S + this.$L)",
-                        CLIENT_OPTIONS_BUILDER_NAME,
-                        header.getName().getWireValue(),
-                        header.getPrefix().get(),
-                        fieldName);
-            } else {
-                this.buildMethod.addStatement(
-                        "this.$L.addHeader($S, this.$L)",
-                        CLIENT_OPTIONS_BUILDER_NAME,
-                        header.getName().getWireValue(),
-                        fieldName);
-            }
-            return null;
+            return visitHeaderBase(header, true);
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {
+            return visitHeaderBase(header, false);
+        }
+
+        public Void visitHeaderBase(HeaderAuthScheme header, Boolean respectMandatoryAuth) {
             String fieldName = header.getName().getName().getCamelCase().getSafeName();
-            createSetter(fieldName, header.getHeaderEnvVar());
-            if (!(header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional())) {
-                this.buildMethod
-                        .beginControlFlow("if ($L == null)", fieldName)
-                        .addStatement(
-                                "throw new RuntimeException($S)",
-                                header.getHeaderEnvVar().isEmpty()
-                                        ? getErrorMessage(fieldName)
-                                        : getErrorMessage(
-                                        fieldName,
-                                        header.getHeaderEnvVar().get()))
-                        .endControlFlow();
+            if (respectMandatoryAuth || !(header.getValueType().isContainer() && header.getValueType().getContainer().get().isLiteral())) {
+                createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty());
+                if (!(header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional())) {
+                    this.buildMethod
+                            .beginControlFlow("if ($L == null)", fieldName)
+                            .addStatement(
+                                    "throw new RuntimeException($S)",
+                                    header.getHeaderEnvVar().isEmpty()
+                                            ? getErrorMessage(fieldName)
+                                            : getErrorMessage(
+                                            fieldName,
+                                            header.getHeaderEnvVar().get()))
+                            .endControlFlow();
+                }
+            } else {
+                Literal literal = header.getValueType().getContainer().get().getLiteral().get();
+
+                createSetter(fieldName, header.getHeaderEnvVar(), Optional.of(literal));
             }
             if (header.getPrefix().isPresent()) {
                 this.buildMethod.addStatement(
@@ -416,11 +399,30 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             return null;
         }
 
-        private void createSetter(String fieldName, Optional<EnvironmentVariable> environmentVariable) {
+        private void createSetter(String fieldName, Optional<EnvironmentVariable> environmentVariable, Optional<Literal> literal) {
             FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName).addModifiers(Modifier.PRIVATE);
             if (environmentVariable.isPresent()) {
                 field.initializer(
                         "System.getenv($S)", environmentVariable.get().get());
+            } else if (literal.isPresent()) {
+                literal.get().visit(new Literal.Visitor<Void>() {
+                    @Override
+                    public Void visitString(String string) {
+                        field.initializer("$S", string);
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitBoolean(boolean boolean_) {
+                        field.initializer("$L", boolean_);
+                        return null;
+                    }
+
+                    @Override
+                    public Void _visitUnknown(Object unknownType) {
+                        return null;
+                    }
+                });
             } else {
                 field.initializer("null");
             }
