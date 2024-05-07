@@ -412,9 +412,10 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                         return null;
                     }
 
+                    // Convert bool headers to string
                     @Override
                     public Void visitBoolean(boolean boolean_) {
-                        field.initializer("$L", boolean_);
+                        field.initializer("$S", boolean_);
                         return null;
                     }
 
@@ -427,19 +428,23 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 field.initializer("null");
             }
             clientBuilder.addField(field.build());
-            MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(String.class, fieldName)
-                    .returns(builderName)
-                    .addJavadoc("Sets $L", fieldName)
-                    .addStatement("this.$L = $L", fieldName, fieldName)
-                    .addStatement("return this");
-            if (environmentVariable.isPresent()) {
-                setter.addJavadoc(
-                        ".\nDefaults to the $L environment variable.",
-                        environmentVariable.get().get());
+
+            if (!literal.isPresent()) {
+                MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameter(String.class, fieldName)
+                        .returns(builderName)
+                        .addJavadoc("Sets $L", fieldName)
+                        .addStatement("this.$L = $L", fieldName, fieldName)
+                        .addStatement("return this");
+                if (environmentVariable.isPresent()) {
+                    setter.addJavadoc(
+                            ".\nDefaults to the $L environment variable.",
+                            environmentVariable.get().get());
+                }
+                clientBuilder.addMethod(setter.build());
+
             }
-            clientBuilder.addMethod(setter.build());
         }
 
         private String getErrorMessage(String fieldName) {
