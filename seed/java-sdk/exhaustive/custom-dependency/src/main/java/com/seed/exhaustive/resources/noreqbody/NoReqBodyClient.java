@@ -15,6 +15,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class NoReqBodyClient {
     protected final ClientOptions clientOptions;
@@ -44,13 +45,14 @@ public class NoReqBodyClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ObjectWithOptionalField.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ObjectWithOptionalField.class);
             }
             throw new ApiError(
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(
-                            response.body() != null ? response.body().toString() : "{}", Object.class));
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -77,13 +79,14 @@ public class NoReqBodyClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), String.class);
             }
             throw new ApiError(
                     response.code(),
                     ObjectMappers.JSON_MAPPER.readValue(
-                            response.body() != null ? response.body().toString() : "{}", Object.class));
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

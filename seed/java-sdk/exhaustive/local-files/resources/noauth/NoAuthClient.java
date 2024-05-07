@@ -19,6 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class NoAuthClient {
   protected final ClientOptions clientOptions;
@@ -61,10 +62,11 @@ public class NoAuthClient {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), boolean.class);
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), boolean.class);
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body() != null ? response.body().toString() : "{}", Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
