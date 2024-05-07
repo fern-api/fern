@@ -8,6 +8,7 @@ export interface ExpressCustomConfig {
     includeOtherInUnionTypes: boolean;
     treatUnknownAsAny: boolean;
     noSerdeLayer: boolean;
+    skipRequestValidation: boolean;
     outputEsm: boolean;
     outputSourceFiles: boolean;
     retainOriginalCasing: boolean;

@@ -61,6 +61,7 @@ export declare namespace ExpressGenerator {
         outputEsm: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
+        skipRequestValidation: boolean;
     }
 }
 
@@ -201,7 +202,8 @@ export class ExpressGenerator {
         this.expressServiceGenerator = new ExpressServiceGenerator({
             packageResolver: this.packageResolver,
             doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            skipRequestValidation: config.skipRequestValidation,
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             packageResolver: this.packageResolver,
