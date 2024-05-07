@@ -341,9 +341,9 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
                 availability: undefined,
                 properties: fileUpload.properties
                     .map((property) => {
-                        return property._visit<APIV1Write.FileUploadRequestProperty | undefined>({
+                        return property._visit<APIV1Write.FormDataProperty | undefined>({
                             file: (file) => {
-                                const fileValue = file._visit<APIV1Write.FileProperty | undefined>({
+                                const fileValue = file._visit<APIV1Write.FormDataFileProperty | undefined>({
                                     file: (singleFile) => ({
                                         type: "file",
                                         key: singleFile.key.wireValue,
@@ -562,16 +562,20 @@ function convertHttpEndpointExample(
                     for (const property of fileUploadSchema.properties) {
                         property._visit({
                             file: (file) => {
-                                // TODO: support provided file examples, file arrays
+                                const maybeFile = fullExample[file.key.wireValue];
+                                // TODO: support filename with data in examples
                                 if (file.type === "file") {
                                     value[file.key.wireValue] = {
                                         type: "filename",
-                                        value: "<file1>"
+                                        value: typeof maybeFile === "string" ? maybeFile : "<file1>"
                                     };
                                 } else if (file.type === "fileArray") {
+                                    const filenames = (Array.isArray(maybeFile) ? maybeFile : [maybeFile]).filter(
+                                        (filename) => typeof filename === "string"
+                                    ) as string[];
                                     value[file.key.wireValue] = {
-                                        type: "filename",
-                                        value: "<file1>"
+                                        type: "filenames",
+                                        value: filenames
                                     };
                                 }
                             },
