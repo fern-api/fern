@@ -70,6 +70,11 @@ export interface DefinitionFileAstNodeTypes {
         endpoint: HttpEndpointSchema;
         service: HttpServiceSchema;
     };
+    exampleError: {
+        example: ExampleTypeSchema;
+        declaration: ErrorDeclarationSchema;
+        errorName: string;
+    };
     pathParameter: { pathParameterKey: string; pathParameter: HttpPathParameterSchema };
     queryParameter: { queryParameterKey: string; queryParameter: HttpQueryParameterSchema };
     header: { headerKey: string; header: HttpHeaderSchema };

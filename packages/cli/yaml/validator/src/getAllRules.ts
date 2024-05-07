@@ -29,6 +29,7 @@ import { ValidBasePathRule } from "./rules/valid-base-path";
 import { ValidDefaultEnvironmentRule } from "./rules/valid-default-environment";
 import { ValidEndpointPathRule } from "./rules/valid-endpoint-path";
 import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-call";
+import { ValidExampleErrorRule } from "./rules/valid-example-error";
 import { ValidExampleTypeRule } from "./rules/valid-example-type";
 import { ValidFieldNamesRule } from "./rules/valid-field-names";
 import { ValidNavigationRule } from "./rules/valid-navigation";
@@ -75,7 +76,8 @@ export function getAllRules(): Rule[] {
         NoMaybeStreamingRule,
         NoResponsePropertyRule,
         ValidOauthRule,
-        ValidPaginationRule
+        ValidPaginationRule,
+        ValidExampleErrorRule
     ];
 }
 
