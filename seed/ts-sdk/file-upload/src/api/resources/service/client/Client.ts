@@ -25,20 +25,20 @@ export class Service {
 
     /**
      * @param {File | fs.ReadStream} file
-     * @param {File | fs.ReadStream} fileList
+     * @param {File[] | fs.ReadStream[]} fileList
      * @param {File | fs.ReadStream | undefined} maybeFile
-     * @param {File | fs.ReadStream | undefined} maybeFileList
+     * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
      * @param {SeedFileUpload.MyRequest} request
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.post(fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), fs.createReadStream("/path/to/your/file"), {})
+     *     await seedFileUpload.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
      */
     public async post(
         file: File | fs.ReadStream,
-        fileList: File | fs.ReadStream,
+        fileList: File[] | fs.ReadStream[],
         maybeFile: File | fs.ReadStream | undefined,
-        maybeFileList: File | fs.ReadStream | undefined,
+        maybeFileList: File[] | fs.ReadStream[] | undefined,
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
@@ -49,13 +49,18 @@ export class Service {
 
         _request.append("integer", request.integer.toString());
         _request.append("file", file);
-        _request.append("fileList", fileList);
+        for (const _file of fileList) {
+            _request.append("fileList", _file);
+        }
+
         if (maybeFile != null) {
             _request.append("maybeFile", maybeFile);
         }
 
         if (maybeFileList != null) {
-            _request.append("maybeFileList", maybeFileList);
+            for (const _file of maybeFileList) {
+                _request.append("maybeFileList", _file);
+            }
         }
 
         if (request.maybeInteger != null) {
