@@ -359,11 +359,6 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         }
                     },
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -492,20 +487,6 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         }
                     },
-                    "errors": [
-                        {
-                            "type": {
-                                "type": "primitive",
-                                "value": {
-                                    "type": "string"
-                                }
-                            },
-                            "statusCode": 404
-                        },
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "type": {
@@ -620,11 +601,6 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -675,11 +651,6 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             "isOptional": false
                         }
                     },
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1092,11 +1063,6 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         }
                     },
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1225,20 +1191,6 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         }
                     },
-                    "errors": [
-                        {
-                            "type": {
-                                "type": "primitive",
-                                "value": {
-                                    "type": "string"
-                                }
-                            },
-                            "statusCode": 404
-                        },
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "type": {
@@ -1353,11 +1305,6 @@ exports[`fdr {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1408,11 +1355,6 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "isOptional": false
                         }
                     },
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,

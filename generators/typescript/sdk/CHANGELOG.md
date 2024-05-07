@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.0-rc8] - 2024-05-06
+
+- Improvement: The SDK generator now supports upload endpoints that specify an array of files like so:
+
+  ```ts
+  /**
+    * @param {File[] | fs.ReadStream[]} files
+    * @param {Acme.UploadFileRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    */
+  public async post(
+      files: File[] | fs.ReadStream[],
+      request: Acme.UploadFileRequest,
+      requestOptions?: Service.RequestOptions
+  ): Promise<void> {
+      const _request = new FormData();
+      for (const _file of files) {
+        _request.append("files", _file);
+      }
+      ...
+  }
+  ```
+
 ## [0.16.0-rc7] - 2024-05-02
 
 - Improvement: The SDK generator now supports `@param` JSDoc comments for endpoint parameters.

@@ -13341,6 +13341,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
             },
             "statusCode": 400,
             "type": null,
+            "examples": [],
             "docs": null
         }
     },
@@ -15385,6 +15386,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             },
             "statusCode": 400,
             "type": null,
+            "examples": [],
             "docs": null
         }
     },
@@ -24072,6 +24074,7 @@ exports[`ir {"name":"simple"} 1`] = `
             },
             "statusCode": 400,
             "type": null,
+            "examples": [],
             "docs": null
         },
         "error_imdb:NotFoundError": {
@@ -24167,6 +24170,7 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "primitive",
                 "primitive": "STRING"
             },
+            "examples": [],
             "docs": null
         }
     },

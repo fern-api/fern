@@ -251,7 +251,10 @@ export function buildEndpoint({
                     docs: example.description
                 };
 
-                context.builder.addTypeExample(fileContainingReference, errorTypeReference, convertedExample);
+                context.builder.addErrorExample(ERROR_DECLARATIONS_FILENAME, {
+                    name: errorName,
+                    example: convertedExample
+                });
             });
         }
     });

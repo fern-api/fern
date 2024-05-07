@@ -7,7 +7,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedFileUploadClient } from \"@fern/file-upload\";\nimport * as fs from \"fs\";\n\nconst seedFileUpload = new SeedFileUploadClient;\nawait seedFileUpload.service.post(fs.createReadStream(\"/path/to/your/file\"), fs.createReadStream(\"/path/to/your/file\"), fs.createReadStream(\"/path/to/your/file\"), fs.createReadStream(\"/path/to/your/file\"), {});\n"
+                "client": "import { SeedFileUploadClient } from \"@fern/file-upload\";\nimport * as fs from \"fs\";\n\nconst seedFileUpload = new SeedFileUploadClient;\nawait seedFileUpload.service.post(fs.createReadStream(\"/path/to/your/file\"), [fs.createReadStream(\"/path/to/your/file\")], fs.createReadStream(\"/path/to/your/file\"), [fs.createReadStream(\"/path/to/your/file\")], {});\n"
             }
         },
         {
