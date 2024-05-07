@@ -22,6 +22,7 @@ import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.EnvironmentVariable;
 import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -140,7 +141,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(clientBuilder, buildMethod);
         generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
         generatorContext.getIr().getHeaders().forEach(httpHeader -> {
-            authSchemeHandler.visitHeader(HeaderAuthScheme.builder()
+            authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
                     .name(httpHeader.getName())
                     .valueType(httpHeader.getValueType())
                     .docs(httpHeader.getDocs())
@@ -247,7 +248,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         @Override
         public Void visitBearer(BearerAuthScheme bearer) {
             String fieldName = bearer.getToken().getCamelCase().getSafeName();
-            createSetter(fieldName, bearer.getTokenEnvVar());
+            createSetter(fieldName, bearer.getTokenEnvVar(), Optional.empty());
             if (isMandatory) {
                 this.buildMethod
                         .beginControlFlow("if ($L == null)", fieldName)
@@ -353,19 +354,34 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         @Override
         public Void visitHeader(HeaderAuthScheme header) {
+            return visitHeaderBase(header, true);
+        }
+
+        public Void visitNonAuthHeader(HeaderAuthScheme header) {
+            return visitHeaderBase(header, false);
+        }
+
+        public Void visitHeaderBase(HeaderAuthScheme header, Boolean respectMandatoryAuth) {
             String fieldName = header.getName().getName().getCamelCase().getSafeName();
-            createSetter(fieldName, header.getHeaderEnvVar());
-            if (isMandatory) {
-                this.buildMethod
-                        .beginControlFlow("if ($L == null)", fieldName)
-                        .addStatement(
-                                "throw new RuntimeException($S)",
-                                header.getHeaderEnvVar().isEmpty()
-                                        ? getErrorMessage(fieldName)
-                                        : getErrorMessage(
-                                                fieldName,
-                                                header.getHeaderEnvVar().get()))
-                        .endControlFlow();
+            // Never not create a setter or a null check if it's a literal
+            if ((respectMandatoryAuth && isMandatory) || !(header.getValueType().isContainer() && header.getValueType().getContainer().get().isLiteral())) {
+                createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty());
+                if ((respectMandatoryAuth && isMandatory) || !(header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional())) {
+                    this.buildMethod
+                            .beginControlFlow("if ($L == null)", fieldName)
+                            .addStatement(
+                                    "throw new RuntimeException($S)",
+                                    header.getHeaderEnvVar().isEmpty()
+                                            ? getErrorMessage(fieldName)
+                                            : getErrorMessage(
+                                            fieldName,
+                                            header.getHeaderEnvVar().get()))
+                            .endControlFlow();
+                }
+            } else {
+                Literal literal = header.getValueType().getContainer().get().getLiteral().get();
+
+                createSetter(fieldName, header.getHeaderEnvVar(), Optional.of(literal));
             }
             if (header.getPrefix().isPresent()) {
                 this.buildMethod.addStatement(
@@ -384,28 +400,52 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             return null;
         }
 
-        private void createSetter(String fieldName, Optional<EnvironmentVariable> environmentVariable) {
+        private void createSetter(String fieldName, Optional<EnvironmentVariable> environmentVariable, Optional<Literal> literal) {
             FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName).addModifiers(Modifier.PRIVATE);
             if (environmentVariable.isPresent()) {
                 field.initializer(
                         "System.getenv($S)", environmentVariable.get().get());
+            } else if (literal.isPresent()) {
+                literal.get().visit(new Literal.Visitor<Void>() {
+                    @Override
+                    public Void visitString(String string) {
+                        field.initializer("$S", string);
+                        return null;
+                    }
+
+                    // Convert bool headers to string
+                    @Override
+                    public Void visitBoolean(boolean boolean_) {
+                        field.initializer("$S", boolean_);
+                        return null;
+                    }
+
+                    @Override
+                    public Void _visitUnknown(Object unknownType) {
+                        return null;
+                    }
+                });
             } else {
                 field.initializer("null");
             }
             clientBuilder.addField(field.build());
-            MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(String.class, fieldName)
-                    .returns(builderName)
-                    .addJavadoc("Sets $L", fieldName)
-                    .addStatement("this.$L = $L", fieldName, fieldName)
-                    .addStatement("return this");
-            if (environmentVariable.isPresent()) {
-                setter.addJavadoc(
-                        ".\nDefaults to the $L environment variable.",
-                        environmentVariable.get().get());
+
+            if (!literal.isPresent()) {
+                MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameter(String.class, fieldName)
+                        .returns(builderName)
+                        .addJavadoc("Sets $L", fieldName)
+                        .addStatement("this.$L = $L", fieldName, fieldName)
+                        .addStatement("return this");
+                if (environmentVariable.isPresent()) {
+                    setter.addJavadoc(
+                            ".\nDefaults to the $L environment variable.",
+                            environmentVariable.get().get());
+                }
+                clientBuilder.addMethod(setter.build());
+
             }
-            clientBuilder.addMethod(setter.build());
         }
 
         private String getErrorMessage(String fieldName) {

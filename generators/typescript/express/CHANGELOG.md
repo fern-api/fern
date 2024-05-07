@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.12.0-rc1] - 2024-05-06
+## [0.12.0-rc2] - 2024-05-07
 
 - Improvement: Remove unnecessary `console.error` statements whenever the server implementation
   throws an error. The router will now only log the warnings whenever an unrecognized error is
