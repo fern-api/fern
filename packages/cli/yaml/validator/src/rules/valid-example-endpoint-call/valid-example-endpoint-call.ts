@@ -6,7 +6,7 @@ import {
     TypeResolverImpl,
     VariableResolverImpl
 } from "@fern-api/ir-generator";
-import { Rule } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateExampleEndpointCallParameters } from "./validateExampleEndpointCallParameters";
 import { validateRequest } from "./validateRequest";
@@ -73,30 +73,51 @@ export const ValidExampleEndpointCallRule: Rule = {
                     });
                 },
                 exampleQueryParameters: ({ endpoint, examples }, { relativeFilepath, contents: definitionFile }) => {
-                    return validateExampleEndpointCallParameters({
-                        allDeclarations:
-                            typeof endpoint.request !== "string" ? endpoint.request?.["query-parameters"] : undefined,
-                        examples,
-                        parameterDisplayName: "query parameter",
-                        typeResolver,
-                        exampleResolver,
-                        workspace,
-                        getRawType: (queryParameter) => {
-                            let rawType = typeof queryParameter === "string" ? queryParameter : queryParameter.type;
-                            if (typeof queryParameter !== "string" && queryParameter["allow-multiple"]) {
-                                rawType = `list<${rawType}>`;
+                    const validateQueryParams = (
+                        schema: "single" | "array",
+                        examplesToValidate: Record<string, unknown>
+                    ): RuleViolation[] => {
+                        return validateExampleEndpointCallParameters({
+                            allDeclarations:
+                                typeof endpoint.request !== "string"
+                                    ? endpoint.request?.["query-parameters"]
+                                    : undefined,
+                            examples: examplesToValidate,
+                            parameterDisplayName: "query parameter",
+                            typeResolver,
+                            exampleResolver,
+                            workspace,
+                            getRawType: (queryParameter) => {
+                                let rawType = typeof queryParameter === "string" ? queryParameter : queryParameter.type;
+                                if (
+                                    schema === "array" &&
+                                    typeof queryParameter !== "string" &&
+                                    queryParameter["allow-multiple"] === true
+                                ) {
+                                    rawType = `list<${rawType}>`;
+                                }
+                                return {
+                                    file: constructFernFileContext({
+                                        relativeFilepath,
+                                        definitionFile,
+                                        casingsGenerator: CASINGS_GENERATOR,
+                                        rootApiFile: workspace.definition.rootApiFile.contents
+                                    }),
+                                    rawType
+                                };
                             }
-                            return {
-                                file: constructFernFileContext({
-                                    relativeFilepath,
-                                    definitionFile,
-                                    casingsGenerator: CASINGS_GENERATOR,
-                                    rootApiFile: workspace.definition.rootApiFile.contents
-                                }),
-                                rawType
-                            };
+                        });
+                    };
+
+                    const ruleViolations: RuleViolation[] = [];
+                    for (const [name, example] of Object.entries(examples ?? {})) {
+                        const ruleViolationsAsElement = validateQueryParams("single", { [name]: example });
+                        const ruleViolationsAsArray = validateQueryParams("array", { [name]: example });
+                        if (ruleViolationsAsElement.length > 0 && ruleViolationsAsArray.length > 0) {
+                            ruleViolations.push(...ruleViolationsAsElement);
                         }
-                    });
+                    }
+                    return ruleViolations;
                 },
                 exampleRequest: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
                     return validateRequest({

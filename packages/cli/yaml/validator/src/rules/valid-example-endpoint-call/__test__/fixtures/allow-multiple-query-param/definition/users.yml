@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  base-path: /users
+  auth: true
+  endpoints:
+    get:
+      method: GET
+      path: ""
+      request: 
+        name: GetUsersRequest
+        query-parameters: 
+          userIds: 
+            type: string
+            allow-multiple: true
+      examples:
+        - query-parameters:
+            userIds: "id-one"
+        - query-parameters:
+            userIds: 
+              - "id-one"
+              - "id-two"
+

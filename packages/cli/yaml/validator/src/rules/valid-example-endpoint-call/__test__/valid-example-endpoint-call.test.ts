@@ -177,7 +177,22 @@ describe("valid-example-endpoint-call", () => {
                     "endpoints",
                     "get",
                     {
-                        arrayIndex: 0,
+                        arrayIndex: 2,
+                        key: "examples"
+                    },
+                    "query-parameters"
+                ],
+                relativeFilepath: RelativeFilePath.of("query-parameters.yml"),
+                severity: "error"
+            },
+            {
+                message: 'Example is missing required query parameter "queryParam"',
+                nodePath: [
+                    "service",
+                    "endpoints",
+                    "get",
+                    {
+                        arrayIndex: 3,
                         key: "examples"
                     },
                     "query-parameters"
@@ -475,6 +490,20 @@ describe("valid-example-endpoint-call", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("optional-example-property")
+            )
+        });
+
+        const expectedViolations: ValidationViolation[] = [];
+        expect(violations).toEqual(expectedViolations);
+    });
+
+    it("allow-multiple-query-param", async () => {
+        const violations = await getViolationsForRule({
+            rule: ValidExampleEndpointCallRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("allow-multiple-query-param")
             )
         });
 
