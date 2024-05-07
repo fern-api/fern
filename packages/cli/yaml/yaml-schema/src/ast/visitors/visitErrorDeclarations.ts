@@ -66,7 +66,7 @@ async function visitErrorDeclaration({
                 }
                 for (const example of examples) {
                     const nodePathForErrorExample = [...nodePathForError, "type"];
-                    await visitor.exampleError?.({ errorName, declaration, example: example }, nodePathForErrorExample);
+                    await visitor.exampleError?.({ errorName, declaration, example, }, nodePathForErrorExample);
                 }
             }
         });

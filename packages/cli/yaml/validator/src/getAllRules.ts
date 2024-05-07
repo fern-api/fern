@@ -36,6 +36,7 @@ import { ValidOauthRule } from "./rules/valid-oauth";
 import { ValidPaginationRule } from "./rules/valid-pagination";
 import { ValidServiceUrlsRule } from "./rules/valid-service-urls";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
+import { ValidExampleErrorRule } from "./rules/valid-example-error";
 
 export function getAllRules(): Rule[] {
     return [
