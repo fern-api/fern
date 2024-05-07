@@ -15,6 +15,9 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
         discriminantValue: core.serialization.lazyObject(async () => (await import("../../..")).NameAndWireValue),
         type: core.serialization.lazy(async () => (await import("../../..")).TypeReference).optional(),
         statusCode: core.serialization.number(),
+        examples: core.serialization.list(
+            core.serialization.lazyObject(async () => (await import("../../..")).ExampleError)
+        ),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
 
@@ -24,5 +27,6 @@ export declare namespace ErrorDeclaration {
         discriminantValue: serializers.NameAndWireValue.Raw;
         type?: serializers.TypeReference.Raw | null;
         statusCode: number;
+        examples: serializers.ExampleError.Raw[];
     }
 }

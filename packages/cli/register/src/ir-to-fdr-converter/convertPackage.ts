@@ -91,7 +91,7 @@ function convertService(
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
-            errors: convertResponseErrors(irEndpoint.errors, ir),
+            errors: undefined,
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
             examples: irEndpoint.examples
                 .filter((example) => example.exampleType === "userProvided")
@@ -341,9 +341,9 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
                 availability: undefined,
                 properties: fileUpload.properties
                     .map((property) => {
-                        return property._visit<APIV1Write.FileUploadRequestProperty | undefined>({
+                        return property._visit<APIV1Write.FormDataProperty | undefined>({
                             file: (file) => {
-                                const fileValue = file._visit<APIV1Write.FileProperty | undefined>({
+                                const fileValue = file._visit<APIV1Write.FormDataFileProperty | undefined>({
                                     file: (singleFile) => ({
                                         type: "file",
                                         key: singleFile.key.wireValue,
@@ -433,24 +433,6 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
     }
 }
 
-function convertResponseErrors(
-    irResponseErrors: Ir.http.ResponseErrors,
-    ir: Ir.ir.IntermediateRepresentation
-): APIV1Write.ErrorDeclaration[] {
-    const errors: APIV1Write.ErrorDeclaration[] = [];
-    for (const irResponseError of irResponseErrors) {
-        const errorDeclaration = ir.errors[irResponseError.error.errorId];
-        if (errorDeclaration) {
-            errors.push({
-                type: errorDeclaration.type == null ? undefined : convertTypeReference(errorDeclaration.type),
-                statusCode: errorDeclaration.statusCode,
-                description: errorDeclaration.docs ?? undefined
-            });
-        }
-    }
-    return errors;
-}
-
 function convertResponseErrorsV2(
     irResponseErrors: Ir.http.ResponseErrors,
     ir: Ir.ir.IntermediateRepresentation
@@ -469,7 +451,13 @@ function convertResponseErrorsV2(
                                   value: convertTypeReference(errorDeclaration.type)
                               },
                     statusCode: errorDeclaration.statusCode,
-                    description: errorDeclaration.docs ?? undefined
+                    description: errorDeclaration.docs ?? undefined,
+                    examples: errorDeclaration.examples.map((irExample) => {
+                        return {
+                            name: irExample.name?.originalName,
+                            responseBody: { type: "json", value: irExample.jsonExample }
+                        };
+                    })
                 });
             }
         }

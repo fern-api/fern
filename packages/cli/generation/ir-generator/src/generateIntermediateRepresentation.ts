@@ -206,7 +206,10 @@ export async function generateIntermediateRepresentation({
                     const convertedErrorDeclaration = convertErrorDeclaration({
                         errorName,
                         errorDeclaration,
-                        file
+                        file,
+                        typeResolver,
+                        exampleResolver,
+                        workspace
                     });
 
                     const errorId = IdGenerator.generateErrorId(convertedErrorDeclaration.name);
