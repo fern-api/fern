@@ -441,10 +441,10 @@ types:
         type: string
         docs: |
           A unique name for the property.
-      nameOverride: 
+      nameOverride:
         type: optional<string>
-        docs: | 
-          An optional name override populated via `x-fern-property-name`. 
+        docs: |
+          An optional name override populated via `x-fern-property-name`.
       audiences: list<string>
 
   ObjectPropertyConflictInfo:
@@ -473,6 +473,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithDefaultValue
     properties:
       value: Schema
 
@@ -481,6 +482,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithDefaultValue
     properties:
       value: Schema
 

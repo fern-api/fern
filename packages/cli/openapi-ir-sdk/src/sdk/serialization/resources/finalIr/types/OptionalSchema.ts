@@ -15,10 +15,15 @@ export const OptionalSchema: core.serialization.ObjectSchema<
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDefaultValue));
 
 export declare namespace OptionalSchema {
-    interface Raw extends serializers.WithDescription.Raw, serializers.WithName.Raw, serializers.WithSdkGroupName.Raw {
+    interface Raw
+        extends serializers.WithDescription.Raw,
+            serializers.WithName.Raw,
+            serializers.WithSdkGroupName.Raw,
+            serializers.WithDefaultValue.Raw {
         value: serializers.Schema.Raw;
     }
 }

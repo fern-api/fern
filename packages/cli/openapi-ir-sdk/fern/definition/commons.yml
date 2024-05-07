@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 imports:
   finalIr: finalIr.yml
 
@@ -92,3 +94,9 @@ types:
   WithSdkGroupName:
     properties:
       groupName: optional<SdkGroupName>
+
+  WithDefaultValue:
+    properties:
+      default:
+        docs: Refer to `default` specified in https://spec.openapis.org/oas/v3.0.0#properties
+        type: optional<unknown>
