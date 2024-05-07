@@ -81,15 +81,21 @@ export const ValidExampleEndpointCallRule: Rule = {
                         typeResolver,
                         exampleResolver,
                         workspace,
-                        getRawType: (queryParameter) => ({
-                            file: constructFernFileContext({
-                                relativeFilepath,
-                                definitionFile,
-                                casingsGenerator: CASINGS_GENERATOR,
-                                rootApiFile: workspace.definition.rootApiFile.contents
-                            }),
-                            rawType: typeof queryParameter === "string" ? queryParameter : queryParameter.type
-                        })
+                        getRawType: (queryParameter) => {
+                            let rawType = typeof queryParameter === "string" ? queryParameter : queryParameter.type;
+                            if (typeof queryParameter !== "string" && queryParameter["allow-multiple"]) {
+                                rawType = `list<${rawType}>`;
+                            }
+                            return {
+                                file: constructFernFileContext({
+                                    relativeFilepath,
+                                    definitionFile,
+                                    casingsGenerator: CASINGS_GENERATOR,
+                                    rootApiFile: workspace.definition.rootApiFile.contents
+                                }),
+                                rawType
+                            };
+                        }
                     });
                 },
                 exampleRequest: ({ endpoint, example }, { relativeFilepath, contents: definitionFile }) => {
