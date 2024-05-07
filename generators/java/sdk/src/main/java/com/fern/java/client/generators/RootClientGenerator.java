@@ -140,7 +140,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(clientBuilder, buildMethod);
         generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
         generatorContext.getIr().getHeaders().forEach(httpHeader -> {
-            authSchemeHandler.visitHeader(HeaderAuthScheme.builder()
+            authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
                     .name(httpHeader.getName())
                     .valueType(httpHeader.getValueType())
                     .docs(httpHeader.getDocs())
@@ -365,6 +365,38 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                                         : getErrorMessage(
                                                 fieldName,
                                                 header.getHeaderEnvVar().get()))
+                        .endControlFlow();
+            }
+            if (header.getPrefix().isPresent()) {
+                this.buildMethod.addStatement(
+                        "this.$L.addHeader($S, $S + this.$L)",
+                        CLIENT_OPTIONS_BUILDER_NAME,
+                        header.getName().getWireValue(),
+                        header.getPrefix().get(),
+                        fieldName);
+            } else {
+                this.buildMethod.addStatement(
+                        "this.$L.addHeader($S, this.$L)",
+                        CLIENT_OPTIONS_BUILDER_NAME,
+                        header.getName().getWireValue(),
+                        fieldName);
+            }
+            return null;
+        }
+
+        public Void visitNonAuthHeader(HeaderAuthScheme header) {
+            String fieldName = header.getName().getName().getCamelCase().getSafeName();
+            createSetter(fieldName, header.getHeaderEnvVar());
+            if (!(header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional())) {
+                this.buildMethod
+                        .beginControlFlow("if ($L == null)", fieldName)
+                        .addStatement(
+                                "throw new RuntimeException($S)",
+                                header.getHeaderEnvVar().isEmpty()
+                                        ? getErrorMessage(fieldName)
+                                        : getErrorMessage(
+                                        fieldName,
+                                        header.getHeaderEnvVar().get()))
                         .endControlFlow();
             }
             if (header.getPrefix().isPresent()) {
