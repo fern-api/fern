@@ -6967,8 +6967,8 @@ __metadata:
   linkType: hard
 
 "@types/dockerode@npm:^3.3.9":
-  version: 3.3.29
-  resolution: "@types/dockerode@npm:3.3.29"
+  version: 3.3.9
+  resolution: "@types/dockerode@npm:3.3.9"
   dependencies:
     "@types/docker-modem": "*"
     "@types/node": "*"
