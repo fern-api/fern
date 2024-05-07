@@ -8,7 +8,7 @@ import (
 )
 
 type StreamCompletionRequest struct {
-	Query string `json:"query" url:"query"`
+	Query string `json:"query" url:"-"`
 }
 
 type StreamedCompletion struct {
