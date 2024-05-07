@@ -363,9 +363,10 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         public Void visitHeaderBase(HeaderAuthScheme header, Boolean respectMandatoryAuth) {
             String fieldName = header.getName().getName().getCamelCase().getSafeName();
-            if (respectMandatoryAuth || !(header.getValueType().isContainer() && header.getValueType().getContainer().get().isLiteral())) {
+            // Never not create a setter or a null check if it's a literal
+            if ((respectMandatoryAuth && isMandatory) || !(header.getValueType().isContainer() && header.getValueType().getContainer().get().isLiteral())) {
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty());
-                if (!(header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional())) {
+                if ((respectMandatoryAuth && isMandatory) || !(header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional())) {
                     this.buildMethod
                             .beginControlFlow("if ($L == null)", fieldName)
                             .addStatement(
