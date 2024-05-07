@@ -12,6 +12,7 @@ export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
         service: HttpService;
         endpoint: HttpEndpoint;
         includeSerdeLayer: boolean;
+        skipRequestValidation: boolean;
         allowExtraFields: boolean;
     }
 }
@@ -25,17 +26,20 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
+    private skipRequestValidation: boolean;
 
     constructor({
         packageId,
         service,
         endpoint,
         includeSerdeLayer,
-        allowExtraFields
+        allowExtraFields,
+        skipRequestValidation
     }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
+        this.skipRequestValidation = skipRequestValidation;
 
         if (includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -118,7 +122,18 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         switch (this.endpoint.requestBody.requestBodyType.type) {
             case "unknown":
                 return referenceToRawRequest;
-            case "named":
+            case "named": {
+                if (this.skipRequestValidation) {
+                    return context.typeSchema
+                        .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
+                        .parse(referenceToRawRequest, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedEnumValues: true,
+                            allowUnrecognizedUnionMembers: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: []
+                        });
+                }
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .parse(referenceToRawRequest, {
@@ -128,10 +143,21 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         skipValidation: false,
                         breadcrumbsPrefix: []
                     });
+            }
+
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {
                     throw new Error("No request schema was generated");
+                }
+                if (this.skipRequestValidation) {
+                    return this.generatedRequestSchema.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: []
+                    });
                 }
                 return this.generatedRequestSchema.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
                     unrecognizedObjectKeys: "fail",
