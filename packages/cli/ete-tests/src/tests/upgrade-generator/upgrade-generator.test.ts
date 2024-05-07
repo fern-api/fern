@@ -14,7 +14,7 @@ describe("fern generator upgrade", () => {
 
         cp(FIXTURES_DIR, directory, { recursive: true });
 
-        const outputPath = AbsoluteFilePath.of(path.join(directory, "fern", "generators.yml"));
+        const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
 
         await runFernCli(["generator", "upgrade"], {
             cwd: directory

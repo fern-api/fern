@@ -5,8 +5,8 @@ api:
 groups:
   local:
     generators:
-      - name: fernapi/fern-typescript-node-sdk
+      - name: fernapi/fern-java-sdk
         version: 0.0.0
         output:
           location: local-file-system
-          path: ../generated/sdks/typescript
+          path: ../generated/sdks/java

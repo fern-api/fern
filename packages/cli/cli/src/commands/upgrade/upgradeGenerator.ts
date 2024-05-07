@@ -21,7 +21,7 @@ async function upgradeSpecificGroupGenerator({
     generatorsConfiguration: GeneratorsConfigurationSchema;
     workspace: APIWorkspace;
 }) {
-    const newConfiguration = generatorsYml.upgradeGenerator({
+    const newConfiguration = await generatorsYml.upgradeGenerator({
         generatorName: generator,
         generatorsConfiguration,
         groupName: group,
@@ -72,7 +72,7 @@ export async function upgradeGenerator({
                         for (const [groupName, groupSchema] of Object.entries(generatorsConfiguration.groups)) {
                             for (const generatorSchema of groupSchema.generators) {
                                 // If you've specified a generator, check if it's a match before upgrading
-                                if (generator !== null && generator !== generatorSchema.name) {
+                                if (generator != null && generator !== generatorSchema.name) {
                                     continue;
                                 }
 

@@ -22,7 +22,7 @@ async function getLatestGeneratorVersion(generatorName: string): Promise<string>
     const docker = new Docker();
     const image = await docker.listImages({
         filters: JSON.stringify({
-            reference: `${generatorName}:latest`
+            reference: [`${generatorName}:latest`]
         })
     });
 
@@ -36,7 +36,9 @@ async function getLatestGeneratorVersion(generatorName: string): Promise<string>
     // specifically adding a label to do this to be able to more easily get the version without regex
     const generatorVersion = image[0]?.Labels["version"];
     if (generatorVersion == null) {
-        throw new Error(`No version found behind generator ${generatorName} at tag latest`);
+        throw new Error(
+            `No version found behind generator ${generatorName} at tag latest: ${JSON.stringify(image[0])}`
+        );
     }
 
     return generatorVersion;
@@ -52,9 +54,9 @@ export async function upgradeGenerator({
     generatorsConfiguration: GeneratorsConfigurationSchema;
     groupName: string;
     context: TaskContext;
-}) {
+}): Promise<GeneratorsConfigurationSchema> {
     const normalizedGeneratorName = getOrThrowGeneratorName(generatorName, context);
-    upgradeGeneratorVersion({
+    return upgradeGeneratorVersion({
         generatorsConfiguration,
         groupName,
         context,
