@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.9-rc0] - 2024-05-07
+
+- Fix: The generated SDKs no longer require global headers that are not directly related to auth if auth is mandatory within the SDK. Previously, the generator would require all global headers if auth was mandatory.
+
 ## [0.8.7] - 2024-03-21
 
 - Fix: numerous fixes to Maven Central publishing
