@@ -94,7 +94,9 @@ export const ValidExampleEndpointCallRule: Rule = {
                                     typeof queryParameter !== "string" &&
                                     queryParameter["allow-multiple"] === true
                                 ) {
-                                    rawType = `list<${rawType}>`;
+                                    rawType = rawType.startsWith("optional")
+                                        ? `optional<list<${rawType}>>`
+                                        : `list<${rawType}>`;
                                 }
                                 return {
                                     file: constructFernFileContext({
