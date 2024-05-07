@@ -97,7 +97,6 @@ export class ProblemService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'createProblem' unexpectedly threw ${error.constructor.name}.` +
@@ -137,7 +136,6 @@ export class ProblemService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'updateProblem' unexpectedly threw ${error.constructor.name}.` +
@@ -170,7 +168,6 @@ export class ProblemService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'deleteProblem' unexpectedly threw ${error.constructor.name}.` +
@@ -202,7 +199,6 @@ export class ProblemService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'getDefaultStarterFiles' unexpectedly threw ${error.constructor.name}.` +

@@ -134,7 +134,12 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 
 func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " struct {")
-	objectProperties := t.visitObjectProperties(object, true /* includeTags */, false /* includeOptionals */)
+	objectProperties := t.visitObjectProperties(
+		object,
+		true,  // includeJSONTags
+		true,  // includeURLTags
+		false, // includeOptionals
+	)
 
 	// If the object has a literal, it needs custom [de]serialization logic,
 	// and a getter method to access the field so that it's impossible for
@@ -273,7 +278,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
 	for _, extend := range union.Extends {
-		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */, false /* includeOptionals */)
+		extendedObjectProperties := t.visitObjectProperties(
+			t.writer.types[extend.TypeId].Shape.Object,
+			false, // includeJSONTags
+			false, // includeURLTags
+			false, // includeOptionals
+		)
 		literals = append(literals, extendedObjectProperties.literals...)
 	}
 	for _, property := range union.BaseProperties {
@@ -354,7 +364,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 	var propertyNames []string
 	for _, extend := range union.Extends {
-		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */, false /* includeOptionals */)
+		extendedObjectProperties := t.visitObjectProperties(
+			t.writer.types[extend.TypeId].Shape.Object,
+			true,  // includeJSONTags
+			true,  // includeURLTags
+			false, // includeOptionals
+		)
 		propertyNames = append(propertyNames, extendedObjectProperties.names...)
 	}
 	for _, property := range union.BaseProperties {
@@ -476,7 +491,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
-			_ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */, false /* includeOptionals */)
+			_ = t.visitObjectProperties(
+				t.writer.types[extend.TypeId].Shape.Object,
+				true,  // includeJSONTags
+				true,  // includeURLTags
+				false, // includeOptionals
+			)
 		}
 		for _, property := range union.BaseProperties {
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
@@ -899,14 +919,15 @@ type literal struct {
 }
 
 // visitObjectProperties writes all of this object's properties, and recursively calls itself with
-// the object's extended properties (if any). The 'includeTags' parameter controls whether or not
+// the object's extended properties (if any). The 'includeJSONTags' parameter controls whether or not
 // to generate JSON struct tags, which is only relevant for object types (not unions).
 //
 // A slice of all the transitive property names, as well as a sentinel value that signals whether
 // any of the properties are a literal value, are returned.
 func (t *typeVisitor) visitObjectProperties(
 	object *ir.ObjectTypeDeclaration,
-	includeTags bool,
+	includeJSONTags bool,
+	includeURLTags bool,
 	includeOptionals bool,
 ) *objectProperties {
 	var (
@@ -916,7 +937,7 @@ func (t *typeVisitor) visitObjectProperties(
 	)
 	for _, extend := range object.Extends {
 		// You can only extend other objects.
-		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags, includeOptionals)
+		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeJSONTags, includeURLTags, includeOptionals)
 		names = append(names, extendedObjectProperties.names...)
 		literals = append(literals, extendedObjectProperties.literals...)
 		dates = append(dates, extendedObjectProperties.dates...)
@@ -932,8 +953,14 @@ func (t *typeVisitor) visitObjectProperties(
 		}
 		names = append(names, property.Name.Name.PascalCase.UnsafeName)
 		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, includeOptionals)
-		if includeTags {
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType, fullFieldTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
+		if includeJSONTags {
+			var structTag string
+			if includeURLTags {
+				structTag = fullFieldTagForType(property.Name.WireValue, property.ValueType, t.writer.types)
+			} else {
+				structTag = fullFieldTagForTypeWithIgnoredURL(property.Name.WireValue, property.ValueType, t.writer.types)
+			}
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType, structTag)
 			continue
 		}
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType)
@@ -1378,6 +1405,17 @@ func fullFieldTagForType(wireValue string, valueType *ir.TypeReference, types ma
 		valueType,
 		types,
 		[]string{"json", "url"},
+		nil,
+	)
+}
+
+func fullFieldTagForTypeWithIgnoredURL(wireValue string, valueType *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+	return structTagForType(
+		wireValue,
+		valueType,
+		types,
+		[]string{"json"},
+		[]string{"url"},
 	)
 }
 
@@ -1388,6 +1426,7 @@ func jsonTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.
 		valueType,
 		types,
 		[]string{"json"},
+		nil,
 	)
 }
 
@@ -1413,11 +1452,15 @@ func structTagForType(
 	valueType *ir.TypeReference,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	tags []string,
+	ignoreTags []string,
 ) string {
 	tagFormat := tagFormatForType(valueType, types)
 	var structTags []string
 	for _, tag := range tags {
 		structTags = append(structTags, fmt.Sprintf(tagFormat, tag, wireValue))
+	}
+	for _, tag := range ignoreTags {
+		structTags = append(structTags, fmt.Sprintf(`%s:"-"`, tag))
 	}
 	if formatStructTag := maybeFormatStructTag(valueType); formatStructTag != "" {
 		structTags = append(structTags, formatStructTag)

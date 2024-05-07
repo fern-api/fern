@@ -52,7 +52,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedPackageYmlError) {
                     console.warn(
                         `Endpoint 'nop' unexpectedly threw ${error.constructor.name}.` +

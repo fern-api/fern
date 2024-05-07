@@ -38779,24 +38779,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       "rules": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "strategy": {
-                                "type": "enum",
-                                "value": "linear",
-                              },
-                              "type": {
-                                "type": "literal",
-                                "value": {
-                                  "type": "string",
-                                  "value": "retry",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                       "team_id": {
                         "type": "primitive",
@@ -39942,38 +39925,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "team_id": {
                 "type": "primitive",
@@ -40206,38 +40158,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "team_id": {
                 "type": "primitive",
@@ -40456,38 +40377,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "team_id": {
                 "type": "primitive",
@@ -40668,38 +40558,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "team_id": {
                 "type": "primitive",
@@ -40974,38 +40833,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "team_id": {
                 "type": "primitive",
@@ -41155,38 +40983,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "team_id": {
                 "type": "primitive",
@@ -47180,48 +46977,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "value": "2024-01-15T09:30:00Z",
                         },
                       },
-                      "resolved_rules": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "strategy": {
-                                "type": "enum",
-                                "value": "linear",
-                              },
-                              "type": {
-                                "type": "literal",
-                                "value": {
-                                  "type": "string",
-                                  "value": "retry",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "rules": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "strategy": {
-                                "type": "enum",
-                                "value": "linear",
-                              },
-                              "type": {
-                                "type": "literal",
-                                "value": {
-                                  "type": "string",
-                                  "value": "retry",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
                       "ruleset": {
                         "properties": {
                           "created_at": {
@@ -47254,24 +47009,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           },
                           "rules": {
                             "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "strategy": {
-                                    "type": "enum",
-                                    "value": "linear",
-                                  },
-                                  "type": {
-                                    "type": "literal",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "retry",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
+                            "value": [],
                           },
                           "team_id": {
                             "type": "primitive",
@@ -48622,76 +48360,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "resolved_rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -48731,24 +48399,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "strategy": {
-                            "type": "enum",
-                            "value": "linear",
-                          },
-                          "type": {
-                            "type": "literal",
-                            "value": {
-                              "type": "string",
-                              "value": "retry",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "value": [],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -49608,76 +49259,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "resolved_rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -49717,24 +49298,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "strategy": {
-                            "type": "enum",
-                            "value": "linear",
-                          },
-                          "type": {
-                            "type": "literal",
-                            "value": {
-                              "type": "string",
-                              "value": "retry",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "value": [],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -50580,76 +50144,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "resolved_rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -50689,24 +50183,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "strategy": {
-                            "type": "enum",
-                            "value": "linear",
-                          },
-                          "type": {
-                            "type": "literal",
-                            "value": {
-                              "type": "string",
-                              "value": "retry",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "value": [],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -51074,76 +50551,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "resolved_rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -51183,24 +50590,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "strategy": {
-                            "type": "enum",
-                            "value": "linear",
-                          },
-                          "type": {
-                            "type": "literal",
-                            "value": {
-                              "type": "string",
-                              "value": "retry",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "value": [],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -51737,76 +51127,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "resolved_rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -51846,24 +51166,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "strategy": {
-                            "type": "enum",
-                            "value": "linear",
-                          },
-                          "type": {
-                            "type": "literal",
-                            "value": {
-                              "type": "string",
-                              "value": "retry",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "value": [],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -52200,76 +51503,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "resolved_rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -52309,24 +51542,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "strategy": {
-                            "type": "enum",
-                            "value": "linear",
-                          },
-                          "type": {
-                            "type": "literal",
-                            "value": {
-                              "type": "string",
-                              "value": "retry",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "value": [],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -52663,76 +51879,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "resolved_rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -52772,24 +51918,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "strategy": {
-                            "type": "enum",
-                            "value": "linear",
-                          },
-                          "type": {
-                            "type": "literal",
-                            "value": {
-                              "type": "string",
-                              "value": "retry",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "value": [],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -53126,76 +52255,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "resolved_rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "rules": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "interval": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "strategy": {
-                        "type": "enum",
-                        "value": "linear",
-                      },
-                      "type": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "retry",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -53235,24 +52294,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "strategy": {
-                            "type": "enum",
-                            "value": "linear",
-                          },
-                          "type": {
-                            "type": "literal",
-                            "value": {
-                              "type": "string",
-                              "value": "retry",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "value": [],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -53530,11 +52572,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
     "ConnectionFilterProperty",
     "TransformReference",
     "TransformFull",
-    "RetryRule",
-    "AlertRule",
-    "FilterRule",
-    "TransformRule",
-    "DelayRule",
   ],
   "schemas": {
     "APIErrorResponse": {
@@ -53691,24 +52728,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "alertRuleType",
-          "key": "type",
-          "nameOverride": null,
-          "schema": {
-            "description": "An alert rule must be of type \`alert\`",
-            "generatedName": "AlertRuleType",
-            "groupName": null,
-            "nameOverride": null,
-            "type": "literal",
-            "value": {
-              "type": "string",
-              "value": "alert",
-            },
-          },
-        },
         {
           "audiences": [],
           "conflict": {},
@@ -55795,24 +54814,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "delayRuleType",
-          "key": "type",
-          "nameOverride": null,
-          "schema": {
-            "description": "A delay rule must be of type \`delay\`",
-            "generatedName": "DelayRuleType",
-            "groupName": null,
-            "nameOverride": null,
-            "type": "literal",
-            "value": {
-              "type": "string",
-              "value": "delay",
-            },
-          },
-        },
         {
           "audiences": [],
           "conflict": {},
@@ -58771,24 +57772,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "properties": [
-        {
-          "audiences": [],
-          "conflict": {},
-          "generatedName": "filterRuleType",
-          "key": "type",
-          "nameOverride": null,
-          "schema": {
-            "description": "A filter rule must be of type \`filter\`",
-            "generatedName": "FilterRuleType",
-            "groupName": null,
-            "nameOverride": null,
-            "type": "literal",
-            "value": {
-              "type": "string",
-              "value": "filter",
-            },
-          },
-        },
         {
           "audiences": [],
           "conflict": {},
@@ -62329,24 +61312,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "conflict": {},
-          "generatedName": "retryRuleType",
-          "key": "type",
-          "nameOverride": null,
-          "schema": {
-            "description": "A retry rule must be of type \`retry\`",
-            "generatedName": "RetryRuleType",
-            "groupName": null,
-            "nameOverride": null,
-            "type": "literal",
-            "value": {
-              "type": "string",
-              "value": "retry",
-            },
-          },
-        },
-        {
-          "audiences": [],
-          "conflict": {},
           "generatedName": "retryRuleStrategy",
           "key": "strategy",
           "nameOverride": null,
@@ -62460,53 +61425,55 @@ exports[`open api parser hookdeck parse open api 1`] = `
     "Rule": {
       "type": "oneOf",
       "value": {
+        "commonProperties": [],
         "description": null,
+        "discriminantProperty": "type",
         "generatedName": "Rule",
         "groupName": null,
         "nameOverride": null,
-        "schemas": [
-          {
+        "schemas": {
+          "alert": {
             "description": null,
-            "generatedName": "RuleZero",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "RetryRule",
-            "type": "reference",
-          },
-          {
-            "description": null,
-            "generatedName": "RuleOne",
+            "generatedName": "ComponentsSchemasAlertRule",
             "groupName": null,
             "nameOverride": null,
             "schema": "AlertRule",
             "type": "reference",
           },
-          {
+          "delay": {
             "description": null,
-            "generatedName": "RuleTwo",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "FilterRule",
-            "type": "reference",
-          },
-          {
-            "description": null,
-            "generatedName": "RuleThree",
-            "groupName": null,
-            "nameOverride": null,
-            "schema": "TransformRule",
-            "type": "reference",
-          },
-          {
-            "description": null,
-            "generatedName": "RuleFour",
+            "generatedName": "ComponentsSchemasDelayRule",
             "groupName": null,
             "nameOverride": null,
             "schema": "DelayRule",
             "type": "reference",
           },
-        ],
-        "type": "undisciminated",
+          "filter": {
+            "description": null,
+            "generatedName": "ComponentsSchemasFilterRule",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "FilterRule",
+            "type": "reference",
+          },
+          "retry": {
+            "description": null,
+            "generatedName": "ComponentsSchemasRetryRule",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "RetryRule",
+            "type": "reference",
+          },
+          "transform": {
+            "description": null,
+            "generatedName": "ComponentsSchemasTransformRule",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "TransformRule",
+            "type": "reference",
+          },
+        },
+        "type": "discriminated",
       },
     },
     "Ruleset": {

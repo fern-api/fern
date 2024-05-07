@@ -27,6 +27,9 @@ fixtures:
     - customConfig:
         outputSourceFiles: false
       outputFolder: output-compiled
+    - customConfig: 
+        skipRequestValidation: true
+      outputFolder: skip-request-validation
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config

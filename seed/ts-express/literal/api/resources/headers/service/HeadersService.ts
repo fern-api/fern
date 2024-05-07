@@ -54,7 +54,6 @@ export class HeadersService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedLiteralError) {
                         console.warn(
                             `Endpoint 'send' unexpectedly threw ${error.constructor.name}.` +

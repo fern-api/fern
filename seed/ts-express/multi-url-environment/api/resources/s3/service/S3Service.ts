@@ -54,7 +54,6 @@ export class S3Service {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedMultiUrlEnvironmentError) {
                         console.warn(
                             `Endpoint 'getPresignedUrl' unexpectedly threw ${error.constructor.name}.` +

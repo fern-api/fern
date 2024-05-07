@@ -3,5 +3,5 @@
 package nested
 
 type GetNestedRequest struct {
-	Name string `json:"name" url:"name"`
+	Name string `json:"name" url:"-"`
 }

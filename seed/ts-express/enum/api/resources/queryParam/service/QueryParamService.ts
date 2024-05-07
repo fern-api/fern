@@ -74,7 +74,6 @@ export class QueryParamService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedEnumError) {
                     console.warn(
                         `Endpoint 'send' unexpectedly threw ${error.constructor.name}.` +
@@ -99,7 +98,6 @@ export class QueryParamService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedEnumError) {
                     console.warn(
                         `Endpoint 'sendList' unexpectedly threw ${error.constructor.name}.` +

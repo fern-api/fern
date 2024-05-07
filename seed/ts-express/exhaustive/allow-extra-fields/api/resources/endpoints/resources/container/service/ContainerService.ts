@@ -127,7 +127,6 @@ export class ContainerService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnListOfPrimitives' unexpectedly threw ${error.constructor.name}.` +
@@ -172,7 +171,6 @@ export class ContainerService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnListOfObjects' unexpectedly threw ${error.constructor.name}.` +
@@ -217,7 +215,6 @@ export class ContainerService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnSetOfPrimitives' unexpectedly threw ${error.constructor.name}.` +
@@ -262,7 +259,6 @@ export class ContainerService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnSetOfObjects' unexpectedly threw ${error.constructor.name}.` +
@@ -307,7 +303,6 @@ export class ContainerService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnMapPrimToPrim' unexpectedly threw ${error.constructor.name}.` +
@@ -352,7 +347,6 @@ export class ContainerService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnMapOfPrimToObject' unexpectedly threw ${error.constructor.name}.` +
@@ -397,7 +391,6 @@ export class ContainerService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnOptional' unexpectedly threw ${error.constructor.name}.` +

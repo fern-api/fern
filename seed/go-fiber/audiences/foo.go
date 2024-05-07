@@ -9,8 +9,8 @@ import (
 
 type FindRequest struct {
 	OptionalString  OptionalString `query:"optionalString"`
-	PublicProperty  *string        `json:"publicProperty,omitempty" url:"publicProperty,omitempty"`
-	PrivateProperty *int           `json:"privateProperty,omitempty" url:"privateProperty,omitempty"`
+	PublicProperty  *string        `json:"publicProperty,omitempty" url:"-"`
+	PrivateProperty *int           `json:"privateProperty,omitempty" url:"-"`
 }
 
 type ImportingType struct {

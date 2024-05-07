@@ -118,7 +118,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnString' unexpectedly threw ${error.constructor.name}.` +
@@ -157,7 +156,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnInt' unexpectedly threw ${error.constructor.name}.` +
@@ -196,7 +194,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnLong' unexpectedly threw ${error.constructor.name}.` +
@@ -235,7 +232,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnDouble' unexpectedly threw ${error.constructor.name}.` +
@@ -274,7 +270,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnBool' unexpectedly threw ${error.constructor.name}.` +
@@ -313,7 +308,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnDatetime' unexpectedly threw ${error.constructor.name}.` +
@@ -352,7 +346,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnDate' unexpectedly threw ${error.constructor.name}.` +
@@ -391,7 +384,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnUUID' unexpectedly threw ${error.constructor.name}.` +
@@ -430,7 +422,6 @@ export class PrimitiveService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnBase64' unexpectedly threw ${error.constructor.name}.` +

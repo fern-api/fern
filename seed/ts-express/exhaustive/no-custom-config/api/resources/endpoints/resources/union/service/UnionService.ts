@@ -54,7 +54,6 @@ export class UnionService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnUnion' unexpectedly threw ${error.constructor.name}.` +
