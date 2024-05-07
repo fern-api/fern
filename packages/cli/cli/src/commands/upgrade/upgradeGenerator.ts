@@ -1,5 +1,4 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { GeneratorsConfigurationSchema } from "@fern-api/configuration/src/generators-yml";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
@@ -18,7 +17,7 @@ async function upgradeSpecificGroupGenerator({
     context: TaskContext;
     generator: string;
     group: string;
-    generatorsConfiguration: GeneratorsConfigurationSchema;
+    generatorsConfiguration: generatorsYml.GeneratorsConfigurationSchema;
     workspace: APIWorkspace;
 }) {
     const newConfiguration = await generatorsYml.upgradeGenerator({
