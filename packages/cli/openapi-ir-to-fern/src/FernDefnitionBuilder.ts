@@ -42,6 +42,11 @@ export interface FernDefinitionBuilder {
         { name, schema }: { name: string; schema: RawSchemas.ErrorDeclarationSchema }
     ): void;
 
+    addErrorExample(
+        file: RelativeFilePath,
+        { name, example }: { name: string; example: RawSchemas.ExampleTypeSchema }
+    ): void;
+
     addEndpoint(
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.HttpEndpointSchema }
@@ -262,6 +267,24 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 type: "unknown"
             };
         }
+    }
+
+    public addErrorExample(
+        file: RelativeFilePath,
+        { name, example }: { name: string; example: RawSchemas.ExampleTypeSchema }
+    ): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.errors == null) {
+            return;
+        }
+        const errorDeclaration = fernFile.errors[name];
+        if (errorDeclaration == null) {
+            return;
+        }
+        if (errorDeclaration.examples == null) {
+            errorDeclaration.examples = [];
+        }
+        errorDeclaration.examples?.push(example);
     }
 
     public addEndpoint(
