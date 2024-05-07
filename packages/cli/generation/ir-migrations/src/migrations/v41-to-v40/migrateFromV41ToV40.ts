@@ -50,7 +50,8 @@ export const V41_TO_V40_MIGRATION: IrMigration<
                             name: error.name,
                             discriminantValue: error.discriminantValue,
                             type: error.type,
-                            statusCode: error.statusCode
+                            statusCode: error.statusCode,
+                            docs: error.docs
                         }
                     ];
                 })
