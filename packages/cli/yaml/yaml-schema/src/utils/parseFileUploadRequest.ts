@@ -35,7 +35,8 @@ export function parseFileUploadRequest(request: HttpRequestSchema | string): Raw
         request.body == null ||
         typeof request.body === "string" ||
         !isInlineRequestBody(request.body) ||
-        request.body.properties == null
+        request.body.properties == null ||
+        (request["content-type"] != null && request["content-type"] !== "multipart/form-data")
     ) {
         return undefined;
     }
@@ -62,7 +63,7 @@ export function parseFileUploadRequest(request: HttpRequestSchema | string): Raw
         []
     );
 
-    if (properties.some((property) => property.isFile)) {
+    if (properties.some((property) => property.isFile) || request["content-type"] === "multipart/form-data") {
         return {
             name: request.name,
             extends: request.body.extends,
