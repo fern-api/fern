@@ -21,7 +21,7 @@ export const ValidExampleErrorRule: Rule = {
                     }
                     const violations = ExampleValidators.validateTypeReferenceExample({
                         rawTypeReference: declaration.type,
-                        example,
+                        example: example.value,
                         file: constructFernFileContext({
                             relativeFilepath,
                             definitionFile,

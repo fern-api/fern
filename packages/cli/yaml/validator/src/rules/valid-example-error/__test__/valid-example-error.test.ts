@@ -14,7 +14,14 @@ describe("valid-example-error", () => {
             )
         });
 
-        const expectedViolations: ValidationViolation[] = [];
+        const expectedViolations: ValidationViolation[] = [
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("error.yml"),
+                nodePath: ["errors", "ForbiddenError", "type"],
+                message: 'Expected example to be a string. Example is: {"foo":{"bar":"baz"}}'
+            }
+        ];
 
         expect(violations).toEqual(expectedViolations);
     });

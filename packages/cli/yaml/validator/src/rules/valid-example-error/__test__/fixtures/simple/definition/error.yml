@@ -10,3 +10,7 @@ errors:
       - name: project-public-key-removed-error
         docs: Project <PUB-KEY> is marked as removed.
         value: Project 39e3eb895fdada95e7a9 is marked as removed
+      - name: Incorrect-Example
+        value: 
+          foo: 
+            bar: baz
