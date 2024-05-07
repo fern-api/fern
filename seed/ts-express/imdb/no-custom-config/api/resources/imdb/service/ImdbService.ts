@@ -6,15 +6,13 @@ import * as SeedApi from "../../../index";
 import express from "express";
 import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
+import * as core from "../../../../core/index";
+
 
 export interface ImdbServiceMethods {
     createMovie(
         req: express.Request<never, SeedApi.MovieId, SeedApi.CreateMovieRequest, never>,
-        res: {
-            send: (responseBody: SeedApi.MovieId) => Promise<void>;
-            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
-            locals: any;
-        }
+        res: core.express.Response<SeedApi.MovieId>
     ): void | Promise<void>;
     getMovie(
         req: express.Request<
@@ -25,11 +23,7 @@ export interface ImdbServiceMethods {
             never,
             never
         >,
-        res: {
-            send: (responseBody: SeedApi.Movie) => Promise<void>;
-            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
-            locals: any;
-        }
+        res: core.express.Response<SeedApi.Movie>
     ): void | Promise<void>;
 }
 
@@ -56,15 +50,22 @@ export class ImdbService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.createMovie(req as any, {
+                    let statusCode = 200;
+                    const response = {
+                        status: (status: number): core.express.Response<SeedApi.MovieId> => {
+                            statusCode = status;
+                            return response;
+                        },
                         send: async (responseBody) => {
-                            res.json(
-                                await serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                            res
+                                .status(statusCode)
+                                .json(await serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                             );
                         },
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
-                    });
+                    };
+                    await this.methods.createMovie(req as any, response);
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedApiError) {
@@ -90,15 +91,22 @@ export class ImdbService {
         });
         this.router.get("/:movieId", async (req, res, next) => {
             try {
-                await this.methods.getMovie(req as any, {
+                let statusCode = 200;
+                const response = {
+                    status: (status: number): core.express.Response<SeedApi.Movie> => {
+                        statusCode = status;
+                        return response;
+                    },
                     send: async (responseBody) => {
-                        res.json(
-                            await serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                        res
+                            .status(statusCode)
+                            .json(await serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                         );
                     },
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                };
+                await this.methods.getMovie(req as any, response);
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedApiError) {
