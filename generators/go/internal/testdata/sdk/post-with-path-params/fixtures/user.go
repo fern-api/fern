@@ -10,9 +10,9 @@ import (
 )
 
 type SetNameRequest struct {
-	UserName string    `json:"userName" url:"userName"`
-	Date     time.Time `json:"date" url:"date" format:"date"`
-	Datetime time.Time `json:"datetime" url:"datetime"`
+	UserName string    `json:"userName" url:"-"`
+	Date     time.Time `json:"date" url:"-" format:"date"`
+	Datetime time.Time `json:"datetime" url:"-"`
 }
 
 func (s *SetNameRequest) UnmarshalJSON(data []byte) error {
@@ -241,12 +241,12 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 type UpdateRequest struct {
 	Tag              string     `json:"-" url:"tag"`
 	Extra            *string    `json:"-" url:"extra,omitempty"`
-	Union            *Union     `json:"union,omitempty" url:"union,omitempty"`
-	Filter           *Filter    `json:"filter,omitempty" url:"filter,omitempty"`
-	OptionalUnion    *Union     `json:"optionalUnion,omitempty" url:"optionalUnion,omitempty"`
-	OptionalFilter   *Filter    `json:"optionalFilter,omitempty" url:"optionalFilter,omitempty"`
-	OptionalDate     *time.Time `json:"optionalDate,omitempty" url:"optionalDate,omitempty" format:"date"`
-	OptionalDatetime *time.Time `json:"optionalDatetime,omitempty" url:"optionalDatetime,omitempty"`
+	Union            *Union     `json:"union,omitempty" url:"-"`
+	Filter           *Filter    `json:"filter,omitempty" url:"-"`
+	OptionalUnion    *Union     `json:"optionalUnion,omitempty" url:"-"`
+	OptionalFilter   *Filter    `json:"optionalFilter,omitempty" url:"-"`
+	OptionalDate     *time.Time `json:"optionalDate,omitempty" url:"-" format:"date"`
+	OptionalDatetime *time.Time `json:"optionalDatetime,omitempty" url:"-"`
 }
 
 func (u *UpdateRequest) UnmarshalJSON(data []byte) error {
