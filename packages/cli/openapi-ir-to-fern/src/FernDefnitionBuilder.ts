@@ -2,7 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/confi
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
-import { camelCase } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { basename, extname } from "path";
 
 export interface FernDefinitionBuilder {
@@ -40,6 +40,11 @@ export interface FernDefinitionBuilder {
     addError(
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.ErrorDeclarationSchema }
+    ): void;
+
+    addErrorExample(
+        file: RelativeFilePath,
+        { name, example }: { name: string; example: RawSchemas.ExampleTypeSchema }
     ): void;
 
     addEndpoint(
@@ -261,6 +266,30 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 "status-code": schema["status-code"],
                 type: "unknown"
             };
+        }
+    }
+
+    public addErrorExample(
+        file: RelativeFilePath,
+        { name, example }: { name: string; example: RawSchemas.ExampleTypeSchema }
+    ): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.errors == null) {
+            return;
+        }
+        const errorDeclaration = fernFile.errors[name];
+        if (errorDeclaration == null) {
+            return;
+        }
+        if (errorDeclaration.examples == null) {
+            errorDeclaration.examples = [];
+        }
+        const alreadyAdded =
+            errorDeclaration.examples.some((existingExample) => {
+                return isEqual(existingExample, example);
+            }) ?? false;
+        if (!alreadyAdded) {
+            errorDeclaration.examples?.push(example);
         }
     }
 

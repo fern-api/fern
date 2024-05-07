@@ -53,7 +53,6 @@ export class OptionalService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedObjectsWithImportsError) {
                         console.warn(
                             `Endpoint 'sendOptionalBody' unexpectedly threw ${error.constructor.name}.` +

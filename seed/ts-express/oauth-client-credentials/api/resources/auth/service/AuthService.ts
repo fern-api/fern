@@ -72,7 +72,6 @@ export class AuthService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedOauthClientCredentialsError) {
                         console.warn(
                             `Endpoint 'getTokenWithClientCredentials' unexpectedly threw ${error.constructor.name}.` +
@@ -112,7 +111,6 @@ export class AuthService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedOauthClientCredentialsError) {
                         console.warn(
                             `Endpoint 'refreshToken' unexpectedly threw ${error.constructor.name}.` +

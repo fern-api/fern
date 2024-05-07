@@ -51,7 +51,6 @@ export class MigrationService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getAttemptedMigrations' unexpectedly threw ${error.constructor.name}.` +

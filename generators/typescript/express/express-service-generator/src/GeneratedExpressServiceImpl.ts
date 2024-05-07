@@ -19,6 +19,7 @@ export declare namespace GeneratedExpressServiceImpl {
         serviceClassName: string;
         doNotHandleUnrecognizedErrors: boolean;
         includeSerdeLayer: boolean;
+        skipRequestValidation: boolean;
     }
 }
 
@@ -39,6 +40,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private packageId: PackageId;
     private package_: Package;
     private includeSerdeLayer: boolean;
+    private skipRequestValidation: boolean;
 
     constructor({
         packageId,
@@ -46,7 +48,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         serviceClassName,
         service,
         doNotHandleUnrecognizedErrors,
-        includeSerdeLayer
+        includeSerdeLayer,
+        skipRequestValidation
     }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
@@ -54,6 +57,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         this.packageId = packageId;
         this.package_ = package_;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.skipRequestValidation = skipRequestValidation;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -696,16 +700,6 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             ts.factory.createVariableDeclaration(ts.factory.createIdentifier(ERROR_NAME)),
             ts.factory.createBlock(
                 [
-                    ts.factory.createExpressionStatement(
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                ts.factory.createIdentifier("console"),
-                                ts.factory.createIdentifier("error")
-                            ),
-                            undefined,
-                            [ts.factory.createIdentifier(ERROR_NAME)]
-                        )
-                    ),
                     ts.factory.createIfStatement(
                         ts.factory.createBinaryExpression(
                             ts.factory.createIdentifier(ERROR_NAME),
@@ -879,14 +873,26 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         context: ExpressContext;
     }): ts.Expression {
         return HttpRequestBody._visit(requestBodyType, {
-            inlinedRequestBody: () =>
-                context.expressInlinedRequestBodySchema
+            inlinedRequestBody: () => {
+                if (this.skipRequestValidation) {
+                    return context.expressInlinedRequestBodySchema
+                        .getGeneratedInlinedRequestBodySchema(this.packageId, endpoint.name)
+                        .deserializeRequest(referenceToBody, context);
+                }
+                return context.expressInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.packageId, endpoint.name)
-                    .deserializeRequest(referenceToBody, context),
-            reference: () =>
-                context.expressEndpointTypeSchemas
+                    .deserializeRequest(referenceToBody, context);
+            },
+            reference: () => {
+                if (this.skipRequestValidation) {
+                    return context.expressEndpointTypeSchemas
+                        .getGeneratedEndpointTypeSchemas(this.packageId, endpoint.name)
+                        .deserializeRequest(referenceToBody, context);
+                }
+                return context.expressEndpointTypeSchemas
                     .getGeneratedEndpointTypeSchemas(this.packageId, endpoint.name)
-                    .deserializeRequest(referenceToBody, context),
+                    .deserializeRequest(referenceToBody, context);
+            },
             fileUpload: () => {
                 throw new Error("File upload is not supported");
             },

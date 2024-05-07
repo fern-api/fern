@@ -61,7 +61,6 @@ export class FooService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedAudiencesError) {
                         console.warn(
                             `Endpoint 'find' unexpectedly threw ${error.constructor.name}.` +

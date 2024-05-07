@@ -50,7 +50,6 @@ export class InlinedRequestService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedEnumError) {
                         console.warn(
                             `Endpoint 'send' unexpectedly threw ${error.constructor.name}.` +

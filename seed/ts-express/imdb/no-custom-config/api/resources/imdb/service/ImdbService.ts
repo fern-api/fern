@@ -67,7 +67,6 @@ export class ImdbService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedApiError) {
                         console.warn(
                             `Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -102,7 +101,6 @@ export class ImdbService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiError) {
                     switch (error.errorName) {
                         case "MovieDoesNotExistError":

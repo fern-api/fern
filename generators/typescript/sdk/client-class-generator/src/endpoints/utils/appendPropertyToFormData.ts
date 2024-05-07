@@ -17,6 +17,8 @@ export function appendPropertyToFormData({
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {
+            const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
+
             let statement = context.externalDependencies.formData.append({
                 referencetoFormData: referenceToFormData,
                 key: property.key.wireValue,
@@ -27,6 +29,39 @@ export function appendPropertyToFormData({
                     })
                 )
             });
+
+            if (property.type === "fileArray") {
+                statement = ts.factory.createForOfStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
+                                undefined,
+                                undefined,
+                                undefined
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    ),
+                    ts.factory.createIdentifier(
+                        getParameterNameForFile({
+                            property,
+                            retainOriginalCasing: context.retainOriginalCasing
+                        })
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            context.externalDependencies.formData.append({
+                                referencetoFormData: referenceToFormData,
+                                key: property.key.wireValue,
+                                value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)
+                            })
+                        ],
+                        true
+                    )
+                );
+            }
 
             if (property.isOptional) {
                 statement = ts.factory.createIfStatement(

@@ -59,6 +59,15 @@ async function visitErrorDeclaration({
                         nodePathForType: nodePathForErrorType
                     });
                 }
+            },
+            examples: async (examples) => {
+                if (examples == null) {
+                    return;
+                }
+                for (const example of examples) {
+                    const nodePathForErrorExample = [...nodePathForError, "type"];
+                    await visitor.exampleError?.({ errorName, declaration, example }, nodePathForErrorExample);
+                }
             }
         });
     }

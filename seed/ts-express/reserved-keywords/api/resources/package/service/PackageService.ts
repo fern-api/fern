@@ -52,7 +52,6 @@ export class PackageService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedNurseryApiError) {
                     console.warn(
                         `Endpoint 'test' unexpectedly threw ${error.constructor.name}.` +

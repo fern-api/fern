@@ -69,7 +69,6 @@ export class PaymentService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedIdempotencyHeadersError) {
                         console.warn(
                             `Endpoint 'create' unexpectedly threw ${error.constructor.name}.` +
@@ -102,7 +101,6 @@ export class PaymentService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedIdempotencyHeadersError) {
                     console.warn(
                         `Endpoint 'delete' unexpectedly threw ${error.constructor.name}.` +

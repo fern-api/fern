@@ -50,7 +50,6 @@ export class PropertyBasedErrorService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedErrorPropertyError) {
                     switch (error.errorName) {
                         case "PropertyBasedErrorTest":

@@ -10,10 +10,10 @@ import (
 type CreateUserRequest struct {
 	// The name of the user to create.
 	// This name is unique to each user.
-	Name string `json:"name" url:"name"`
+	Name string `json:"name" url:"-"`
 	// The age of the user.
 	// This propery is not required.
-	Age *int `json:"age,omitempty" url:"age,omitempty"`
+	Age *int `json:"age,omitempty" url:"-"`
 }
 
 // A user object. This type is used throughout the following APIs:

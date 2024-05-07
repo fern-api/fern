@@ -51,7 +51,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedAudiencesError) {
                     console.warn(
                         `Endpoint 'getDirectThread' unexpectedly threw ${error.constructor.name}.` +

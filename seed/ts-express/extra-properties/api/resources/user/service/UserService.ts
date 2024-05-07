@@ -52,7 +52,6 @@ export class UserService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExtraPropertiesError) {
                         console.warn(
                             `Endpoint 'createUser' unexpectedly threw ${error.constructor.name}.` +
