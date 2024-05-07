@@ -9,27 +9,11 @@ import com.seed.literal.core.Environment;
 public final class SeedLiteralClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
-    private String version = null;
+    private String version = "02-02-2024";
 
-    private String auditLogging = null;
+    private String auditLogging = "true";
 
     private Environment environment;
-
-    /**
-     * Sets version
-     */
-    public SeedLiteralClientBuilder version(String version) {
-        this.version = version;
-        return this;
-    }
-
-    /**
-     * Sets auditLogging
-     */
-    public SeedLiteralClientBuilder auditLogging(String auditLogging) {
-        this.auditLogging = auditLogging;
-        return this;
-    }
 
     public SeedLiteralClientBuilder url(String url) {
         this.environment = Environment.custom(url);
