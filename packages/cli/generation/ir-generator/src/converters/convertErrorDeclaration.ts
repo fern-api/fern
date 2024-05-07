@@ -13,16 +13,16 @@ export function convertErrorDeclaration({
     file,
     typeResolver,
     exampleResolver,
-    workspace,
+    workspace
 }: {
     errorName: string;
     errorDeclaration: RawSchemas.ErrorDeclarationSchema;
     file: FernFileContext;
-    typeResolver: TypeResolver,
+    typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
 }): ErrorDeclaration {
-    let examples: FernIr.ExampleError[] = [];
+    const examples: FernIr.ExampleError[] = [];
     if (errorDeclaration.type != null && errorDeclaration.examples != null) {
         for (const example of errorDeclaration.examples) {
             examples.push({
@@ -57,6 +57,6 @@ export function convertErrorDeclaration({
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         statusCode: errorDeclaration["status-code"],
         type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
-        examples,
+        examples
     };
 }

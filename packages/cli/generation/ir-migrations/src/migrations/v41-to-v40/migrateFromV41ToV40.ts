@@ -41,7 +41,20 @@ export const V41_TO_V40_MIGRATION: IrMigration<
         }),
     migrateBackwards: (V41, _context): IrVersions.V40.ir.IntermediateRepresentation => {
         return {
-            ...V41
+            ...V41,
+            errors: Object.fromEntries(
+                Object.entries(V41.errors).map(([id, error]) => {
+                    return [
+                        id,
+                        {
+                            name: error.name,
+                            discriminantValue: error.discriminantValue,
+                            type: error.type,
+                            statusCode: error.statusCode
+                        }
+                    ];
+                })
+            )
         };
     }
 };

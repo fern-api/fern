@@ -456,7 +456,7 @@ function convertResponseErrorsV2(
                         return {
                             name: irExample.name?.originalName,
                             responseBody: { type: "json", value: irExample.jsonExample }
-                        }
+                        };
                     })
                 });
             }
