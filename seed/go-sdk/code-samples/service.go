@@ -9,7 +9,7 @@ import (
 )
 
 type MyRequest struct {
-	NumEvents int `json:"num_events" url:"num_events"`
+	NumEvents int `json:"num_events" url:"-"`
 }
 
 type MyResponse struct {

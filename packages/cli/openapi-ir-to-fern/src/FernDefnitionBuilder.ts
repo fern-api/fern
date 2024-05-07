@@ -2,7 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/confi
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
-import { camelCase } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { basename, extname } from "path";
 
 export interface FernDefinitionBuilder {
@@ -284,7 +284,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (errorDeclaration.examples == null) {
             errorDeclaration.examples = [];
         }
-        errorDeclaration.examples?.push(example);
+        const alreadyAdded =
+            errorDeclaration.examples.some((existingExample) => {
+                return isEqual(existingExample, example);
+            }) ?? false;
+        if (!alreadyAdded) {
+            errorDeclaration.examples?.push(example);
+        }
     }
 
     public addEndpoint(
