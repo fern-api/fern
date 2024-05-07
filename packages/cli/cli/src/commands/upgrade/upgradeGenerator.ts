@@ -57,32 +57,31 @@ export async function upgradeGenerator({
                     })) ?? {};
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {
                     return;
+                }
+                if (generator != null && group != null) {
+                    await upgradeSpecificGroupGenerator({
+                        generator,
+                        generatorsConfiguration,
+                        group,
+                        context,
+                        workspace
+                    });
                 } else {
-                    if (generator != null && group != null) {
-                        await upgradeSpecificGroupGenerator({
-                            generator,
-                            generatorsConfiguration,
-                            group,
-                            context,
-                            workspace
-                        });
-                    } else {
-                        // loop through groups and generators
-                        for (const [groupName, groupSchema] of Object.entries(generatorsConfiguration.groups)) {
-                            for (const generatorSchema of groupSchema.generators) {
-                                // If you've specified a generator, check if it's a match before upgrading
-                                if (generator != null && generator !== generatorSchema.name) {
-                                    continue;
-                                }
-
-                                await upgradeSpecificGroupGenerator({
-                                    generator: generatorSchema.name,
-                                    group: groupName,
-                                    generatorsConfiguration,
-                                    context,
-                                    workspace
-                                });
+                    // loop through groups and generators
+                    for (const [groupName, groupSchema] of Object.entries(generatorsConfiguration.groups)) {
+                        for (const generatorSchema of groupSchema.generators) {
+                            // If you've specified a generator, check if it's a match before upgrading
+                            if (generator != null && generator !== generatorSchema.name) {
+                                continue;
                             }
+
+                            await upgradeSpecificGroupGenerator({
+                                generator: generatorSchema.name,
+                                group: groupName,
+                                generatorsConfiguration,
+                                context,
+                                workspace
+                            });
                         }
                     }
                 }

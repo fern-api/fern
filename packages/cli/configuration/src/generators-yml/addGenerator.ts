@@ -9,7 +9,7 @@ import {
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 import { upgradeGeneratorVersion } from "./upgradeGeneratorVersion";
 
-function getOrThrowGeneratorName(generatorName: string, context: TaskContext): GeneratorName {
+function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): GeneratorName {
     const normalizedGeneratorName = normalizeGeneratorName(generatorName);
     if (normalizedGeneratorName == null) {
         return context.failAndThrow("Unrecognized generator: " + generatorName);
@@ -34,6 +34,7 @@ async function getLatestGeneratorVersion(generatorName: string): Promise<string>
 
     // This assumes we have a label of the form version=x.y.z
     // specifically adding a label to do this to be able to more easily get the version without regex
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const generatorVersion = image[0]?.Labels["version"];
     if (generatorVersion == null) {
         throw new Error(
@@ -55,7 +56,7 @@ export async function upgradeGenerator({
     groupName: string;
     context: TaskContext;
 }): Promise<GeneratorsConfigurationSchema> {
-    const normalizedGeneratorName = getOrThrowGeneratorName(generatorName, context);
+    const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
     return upgradeGeneratorVersion({
         generatorsConfiguration,
         groupName,
@@ -76,7 +77,7 @@ export function addGenerator({
     groupName: string | undefined;
     context: TaskContext;
 }): GeneratorsConfigurationSchema {
-    const normalizedGeneratorName = getOrThrowGeneratorName(generatorName, context);
+    const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
     const invocation = GENERATOR_INVOCATIONS[normalizedGeneratorName];
 
