@@ -33,7 +33,7 @@ export function convertErrorDeclaration({
                     file
                 }).resolvedExample,
                 shape: convertTypeReferenceExample({
-                    example,
+                    example: example.value,
                     rawTypeBeingExemplified: errorDeclaration.type,
                     fileContainingRawTypeReference: file,
                     fileContainingExample: file,
