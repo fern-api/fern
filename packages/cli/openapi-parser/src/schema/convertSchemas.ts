@@ -897,12 +897,11 @@ function getPossibleDiscriminantsForSchemaObject({
     const possibleDiscrimimants: Record<string, string> = {};
     if (schema.anyOf != null) {
         for (const elem of schema.anyOf) {
-            for (const [key, value] of Object.entries(
-                getPossibleDiscriminants({
-                    schema: elem,
-                    context
-                }) ?? {}
-            )) {
+            const possibleDiscriminantsForVariant = getPossibleDiscriminants({
+                schema: elem,
+                context
+            });
+            for (const [key, value] of Object.entries(possibleDiscriminantsForVariant ?? {})) {
                 possibleDiscrimimants[key] = value;
             }
         }
