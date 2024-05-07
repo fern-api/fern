@@ -3,7 +3,6 @@
 imports:
   commons: commons.yml
   types: types.yml
-
 types:
   ErrorDeclaration:
     extends: commons.WithDocs
@@ -12,7 +11,6 @@ types:
       discriminantValue: commons.NameAndWireValue
       type: optional<types.TypeReference>
       statusCode: integer
-      examples: list<ExampleError>
   ErrorDeclarationDiscriminantValue:
     union:
       property: commons.NameAndWireValue
@@ -22,13 +20,3 @@ types:
       errorId: commons.ErrorId
       fernFilepath: commons.FernFilepath
       name: commons.Name
-  
-  # examples 
-
-  ExampleError:
-    extends:
-      - commons.WithJsonExample
-      - commons.WithDocs
-    properties:
-      name: optional<commons.Name>
-      shape: types.ExampleTypeReference
