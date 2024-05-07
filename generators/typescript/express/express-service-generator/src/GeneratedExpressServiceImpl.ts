@@ -49,7 +49,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         service,
         doNotHandleUnrecognizedErrors,
         includeSerdeLayer,
-        skipRequestValidation,
+        skipRequestValidation
     }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
