@@ -9,13 +9,23 @@ excerpt: 'Wrap images in a container with the frame component'
 
 <Aside>
 
-<CodeBlocks>
-  ```jsx title="Markdown"
-    <Frame caption="Beautiful mountains">
-        // Or a relative path to an image in the project
-        <img src="https://images.pexels.com/photos/1867601.jpeg" />
-    </Frame>
-  ```
-</CodeBlocks>
+  <CodeBlocks>
+      <CodeBlock title="Default">
+        ```jsx title="Default"
+          <Frame caption="Beautiful mountains">
+              // Or a relative path to an image in the project
+              <img src="https://images.pexels.com/photos/1867601.jpeg" />
+          </Frame>
+        ```
+      </CodeBlock>
+      <CodeBlock title="Secondary background">
+        ```jsx title="Secondary background"
+          <Frame caption="Beautiful mountains" backgroundVariant="secondary">
+              // Or a relative path to an image in the project
+              <img src="https://images.pexels.com/photos/1867601.jpeg" />
+          </Frame>
+        ```
+      </CodeBlock>
+  </CodeBlocks>
 
 </Aside>
