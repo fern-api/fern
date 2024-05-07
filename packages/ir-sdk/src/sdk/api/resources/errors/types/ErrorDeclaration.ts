@@ -9,4 +9,5 @@ export interface ErrorDeclaration extends FernIr.WithDocs {
     discriminantValue: FernIr.NameAndWireValue;
     type: FernIr.TypeReference | undefined;
     statusCode: number;
+    examples: FernIr.ExampleError[];
 }

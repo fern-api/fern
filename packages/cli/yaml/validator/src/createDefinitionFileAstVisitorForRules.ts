@@ -71,6 +71,7 @@ export function createDefinitionFileAstVisitorForRules({
         ...createAstNodeVisitor("variableReference"),
         ...createAstNodeVisitor("extension"),
         ...createAstNodeVisitor("serviceBaseUrl"),
-        ...createAstNodeVisitor("endpointBaseUrl")
+        ...createAstNodeVisitor("endpointBaseUrl"),
+        ...createAstNodeVisitor("exampleError")
     };
 }
