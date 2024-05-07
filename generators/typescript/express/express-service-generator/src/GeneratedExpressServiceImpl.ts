@@ -885,8 +885,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             },
             reference: () => {
                 if (this.skipRequestValidation) {
-                    return context.expressInlinedRequestBodySchema
-                        .getGeneratedInlinedRequestBodySchema(this.packageId, endpoint.name)
+                    return context.expressEndpointTypeSchemas
+                        .getGeneratedEndpointTypeSchemas(this.packageId, endpoint.name)
                         .deserializeRequest(referenceToBody, context);
                 }
                 return context.expressEndpointTypeSchemas
