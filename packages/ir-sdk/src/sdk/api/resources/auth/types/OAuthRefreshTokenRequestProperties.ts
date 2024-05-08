@@ -5,8 +5,8 @@
 import * as FernIr from "../../..";
 
 /**
- * The properties to map to the corresponding OAuth token primitive.
+ * The properties required to retrieve an OAuth refresh token.
  */
-export interface OAuthRefreshTokenProperties {
+export interface OAuthRefreshTokenRequestProperties {
     refreshToken: FernIr.RequestProperty;
 }

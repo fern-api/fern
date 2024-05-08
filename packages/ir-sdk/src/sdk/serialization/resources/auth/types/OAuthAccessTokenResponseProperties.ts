@@ -6,16 +6,16 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const OAuthAccessTokenProperties: core.serialization.ObjectSchema<
-    serializers.OAuthAccessTokenProperties.Raw,
-    FernIr.OAuthAccessTokenProperties
+export const OAuthAccessTokenResponseProperties: core.serialization.ObjectSchema<
+    serializers.OAuthAccessTokenResponseProperties.Raw,
+    FernIr.OAuthAccessTokenResponseProperties
 > = core.serialization.objectWithoutOptionalProperties({
     accessToken: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty),
     expiresIn: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty).optional(),
     refreshToken: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty).optional(),
 });
 
-export declare namespace OAuthAccessTokenProperties {
+export declare namespace OAuthAccessTokenResponseProperties {
     interface Raw {
         accessToken: serializers.ResponseProperty.Raw;
         expiresIn?: serializers.ResponseProperty.Raw | null;

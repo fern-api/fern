@@ -7,7 +7,7 @@ import * as FernIr from "../../..";
 /**
  * The properties to map to the corresponding OAuth token primitive.
  */
-export interface OAuthAccessTokenProperties {
+export interface OAuthAccessTokenResponseProperties {
     accessToken: FernIr.ResponseProperty;
     expiresIn: FernIr.ResponseProperty | undefined;
     refreshToken: FernIr.ResponseProperty | undefined;
