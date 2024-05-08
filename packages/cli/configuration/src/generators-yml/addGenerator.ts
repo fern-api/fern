@@ -20,11 +20,11 @@ function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): G
 
 async function getLatestGeneratorVersion(generatorName: string): Promise<string> {
     const docker = new Docker();
-    const image = await (await docker.getImage(`${generatorName}:latest`)).inspect();
+    const image = await docker.getImage(`${generatorName}:latest`).inspect();
 
     // This assumes we have a label of the form version=x.y.z
     // specifically adding a label to do this to be able to more easily get the version without regex
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/dot-notation
     const generatorVersion = image.Config.Labels?.["version"];
     if (generatorVersion == null) {
         throw new Error(`No version found behind generator ${generatorName} at tag latest: ${JSON.stringify(image)}`);
