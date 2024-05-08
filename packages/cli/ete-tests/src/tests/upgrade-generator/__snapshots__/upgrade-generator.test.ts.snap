@@ -19,7 +19,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.8.8
+        version: 0.8.11
         output:
           location: local-file-system
           path: ../generated/sdks/java
