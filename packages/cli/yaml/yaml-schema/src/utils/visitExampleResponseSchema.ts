@@ -1,11 +1,9 @@
-import { assertNever } from "@fern-api/core-utils";
 import {
     ExampleBodyResponseSchema,
     ExampleResponseSchema,
     ExampleSseResponseSchema,
     ExampleStreamResponseSchema
 } from "../schemas/ExampleResponseSchema";
-import { HttpEndpointSchema } from "../schemas/HttpEndpointSchema";
 
 export interface ExampleResponseSchemaVisitor<T> {
     body: (example: ExampleBodyResponseSchema) => T;
@@ -13,22 +11,23 @@ export interface ExampleResponseSchemaVisitor<T> {
     events: (example: ExampleSseResponseSchema) => T;
 }
 
-export function visitExampleResponseSchema<T>({
-    endpoint,
-    example,
-    visitor
-}: {
-    endpoint: HttpEndpointSchema;
-    example: ExampleResponseSchema;
-    visitor: ExampleResponseSchemaVisitor<T>;
-}): T {
-    if ("stream" in example) {
+export function visitExampleResponseSchema<T>(
+    example: ExampleResponseSchema,
+    visitor: ExampleResponseSchemaVisitor<T>
+): T {
+    if (isExampleStreamResponseSchema(example)) {
         return visitor.stream(example);
-    } else if ("events" in example) {
+    } else if (isExampleSseResponseSchema(example)) {
         return visitor.events(example);
-    } else if ("batch" in example) {
-        return visitor.body(example);
     } else {
-        assertNever(example as never);
+        return visitor.body(example);
     }
+}
+
+export function isExampleStreamResponseSchema(example: ExampleResponseSchema): example is ExampleStreamResponseSchema {
+    return (example as ExampleStreamResponseSchema).stream !== undefined;
+}
+
+export function isExampleSseResponseSchema(example: ExampleResponseSchema): example is ExampleSseResponseSchema {
+    return (example as ExampleSseResponseSchema).events !== undefined;
 }
