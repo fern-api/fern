@@ -12,17 +12,10 @@ The Fern generated SDKs are designed to be extended with custom code. Your custo
 can be used to add additional functionality to the SDK and will live in harmony with
 the generated code.
 
-### Use Cases
-
-There are several different ways that you can customize the SDK with Fern. See below for 
-specific examples. 
-
-### Custom logic
+## Custom logic
 
 If you want to provide any logic in your SDK that goes beyond hitting the REST API, you can 
-do so by leveraging `.fernignore`. Add any of your custom files to the SDK repository, and 
-list them out in `.fernignore`. `fernignore` functions just like a `gitignore` but it tells
-the generators which files to ignore on successive generations. 
+do so by leveraging `.fernignore`.
 
 Simply add your custom files to the SDK repository and 
 list them out in `.fernignore`. Fern won't override any files that you add in `.fernignore`. 
@@ -50,6 +43,8 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
 
       ### Consume the helper 
 
+      Now your users can consume the helper function by importing it from the SDK: 
+
       ```typescript
       import { myHelper } from "sdk/helper";
 
@@ -76,12 +71,14 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
         ```
       </CodeBlock>
 
-      ### Consume the helper 
+      ### Consume the helper
+      
+      Now your users can consume the helper function by importing it from the SDK: 
 
       ```python
       from package.helper import my_helper
 
-      my_helper(movie);
+      my_helper()
       ```
     </Steps>
   </Tab>
@@ -92,12 +89,13 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
   any language. 
 </Note>
 
-### Custom SDK methods
+## Custom SDK methods
 
-Fern also allows you to add custom methods to the SDK itself (e.g. `client.my_method()` ). While the specifics
-are slightly different for each language, the underlying principle is the same: extension. You can inherit the 
-Fern generated client and add **whatever methods you want**. Fern's generated SDK classes all have protected variables 
-that can be accessed by subclasses for this reason. 
+Fern also allows you to add custom methods to the SDK itself (e.g. `client.my_method()` ). 
+
+While the specifics are slightly different for each language, the underlying 
+principle is the same: **extension**. You can inherit the 
+Fern generated client and add whatever methods you want. 
 
 <Tabs>
   <Tab title="TypeScript">
@@ -140,6 +138,14 @@ that can be accessed by subclasses for this reason.
         + src/index.ts
         ```
       </CodeBlock>
+
+      ### Consume the method
+      
+      Now your users can consume the helper function by importing it from the SDK: 
+
+      ```typescript
+      client.myHelper()
+      ```
     </Steps>
 
     <Note>
@@ -199,6 +205,14 @@ that can be accessed by subclasses for this reason.
         + src/<package>/client.py
         ```
       </CodeBlock>
+
+      ### Consume the method
+      
+      Now your users can consume the helper function by importing it from the SDK: 
+
+      ```typescript
+      client.my_helper()
+      ```
     </Steps>
 
     <Note>
@@ -207,12 +221,12 @@ that can be accessed by subclasses for this reason.
   </Tab>
 </Tabs>
 
-### Adding custom dependencies
+## Custom Dependencies
 
 To add custom dependencies to your generated SDKs, you can update your `generators.yml`. 
 
-<AccordionGroup>
-  <Accordion title="TypeScript">
+<CodeBlocks>
+  <CodeBlock title="TypeScript">
       ```yaml {4-7}
       - name: fernapi/fern-python-sdk
         version: "..."
@@ -222,8 +236,8 @@ To add custom dependencies to your generated SDKs, you can update your `generato
           extraDevDependencies: 
             "@types/lodash-es": '1.0.0'
       ```
-  </Accordion>
-  <Accordion title="Python">
+  </CodeBlock>
+  <CodeBlock title="Python">
       ```yaml {4-5}
       - name: fernapi/fern-python-sdk
         version: "..."
@@ -231,5 +245,5 @@ To add custom dependencies to your generated SDKs, you can update your `generato
           extra_dependencies: 
             numpy: '1.2.0'
       ```
-  </Accordion>
-</AccordionGroup>
+  </CodeBlock>
+</CodeBlocks>
