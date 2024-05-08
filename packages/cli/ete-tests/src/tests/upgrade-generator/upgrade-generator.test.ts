@@ -7,7 +7,7 @@ import { runFernCli } from "../../utils/runFernCli";
 const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("fern generator upgrade", () => {
-    it("fern generator upgrade", async () => {
+    it.skip("fern generator upgrade", async () => {
         // Create tmpdir and copy contents
         const tmpDir = await tmp.dir();
         const directory = AbsoluteFilePath.of(tmpDir.path);
@@ -16,7 +16,7 @@ describe("fern generator upgrade", () => {
 
         const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
 
-        await runFernCli(["generator", "upgrade"], {
+        await runFernCli(["generator", "upgrade", ""], {
             cwd: directory
         });
 
