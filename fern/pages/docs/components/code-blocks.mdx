@@ -58,7 +58,7 @@ You can add a title to your code snippet by adding a title after the language id
 
 ### Using Range Syntax
 
-You can highlight specific lines in your code snippet {/* either by adding a comment `// [!code highlight]` or */} by 
+You can highlight specific lines in your code snippet by adding a comment `[!code highlight]` or by 
 placing a numeric range inside `{}` after the language identifier.
 
 <Tabs>
@@ -71,7 +71,7 @@ placing a numeric range inside `{}` after the language identifier.
         console.log("Line 5");
         ```
     </Tab>
-    {/* <Tab title = "Markdown (Using Comments)">
+    <Tab title = "Markdown (Using Comments)">
         ````markdown
         ```javascript
         console.log("Line 1");
@@ -81,7 +81,7 @@ placing a numeric range inside `{}` after the language identifier.
         console.log("Line 5");
         ```
         ````
-    </Tab> */}
+    </Tab>
     <Tab title = "Markdown (Using Attribute)">
         ````markdown
         ```javascript {2-4}
@@ -103,7 +103,7 @@ placing a numeric range inside `{}` after the language identifier.
 
 ## Line Focusing
 
-Instead of highlighting lines, you can focus on specific lines {/* either by adding a comment `// [!code focus]` or */} by adding a 
+Instead of highlighting lines, you can focus on specific lines by adding a comment `[!code focus]` or by adding a 
 `focus` attribute after the language identifier. The `focus` attribute works the same way as the `highlight` attribute.
 
 <Tabs>
@@ -116,7 +116,7 @@ Instead of highlighting lines, you can focus on specific lines {/* either by add
         console.log("Line 5");
         ```
     </Tab>
-    {/* <Tab title = "Markdown (Using Comments)">
+    <Tab title = "Markdown (Using Comments)">
         ````markdown
         ```javascript
         console.log("Line 1");
@@ -126,7 +126,7 @@ Instead of highlighting lines, you can focus on specific lines {/* either by add
         console.log("Line 5");
         ```
         ````
-    </Tab> */}
+    </Tab>
     <Tab title = "Markdown (Using Attribute)">
         ````markdown
         ```javascript focus={2-4}
