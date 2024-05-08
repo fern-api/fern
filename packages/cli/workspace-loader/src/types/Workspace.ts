@@ -36,6 +36,7 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
+    shouldUseTitleAsName: boolean;
 }
 export interface APIChangelog {
     files: ChangelogFile[];

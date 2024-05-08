@@ -23,15 +23,18 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public authHeaders: Set<string>;
     public refOccurrences: Record<string, number>;
     public DUMMY: SchemaParserContext;
+    public shouldUseTitleAsName: boolean;
 
     constructor({
         document,
         taskContext,
-        authHeaders
+        authHeaders,
+        shouldUseTitleAsName
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
+        shouldUseTitleAsName: boolean;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
@@ -39,6 +42,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
         this.DUMMY = this.getDummy();
+        this.shouldUseTitleAsName = shouldUseTitleAsName;
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
