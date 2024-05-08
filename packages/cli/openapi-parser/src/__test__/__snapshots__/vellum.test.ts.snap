@@ -3453,6 +3453,7 @@ Upload a document to be indexed and used for search.
         "name": "UploadDocumentBodyRequest",
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "add_to_index_names",
             "schema": {
@@ -3493,6 +3494,7 @@ Upload a document to be indexed and used for search.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "external_id",
             "schema": {
@@ -3526,6 +3528,7 @@ Upload a document to be indexed and used for search.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "label",
             "schema": {
@@ -3545,6 +3548,7 @@ Upload a document to be indexed and used for search.
             },
           },
           {
+            "contentType": null,
             "description": "The file contents of the document.",
             "key": "contents",
             "schema": {
@@ -3554,6 +3558,7 @@ Upload a document to be indexed and used for search.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "keywords",
             "schema": {

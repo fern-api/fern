@@ -431,16 +431,19 @@ function getRequest({
     } else {
         // multipart
         const properties = Object.fromEntries(
-            request.properties.map((property) => {
+            request.properties.map((property): [string, RawSchemas.ObjectPropertySchema] => {
                 if (property.schema.type === "file") {
                     const fileType = property.schema.isArray ? "list<file>" : "file";
                     return [property.key, property.schema.isOptional ? `optional<${fileType}>` : fileType];
                 } else {
-                    const propertyTypeReference = buildTypeReference({
-                        schema: property.schema.value,
-                        fileContainingReference: declarationFile,
-                        context
-                    });
+                    const propertyTypeReference = withContentType(
+                        buildTypeReference({
+                            schema: property.schema.value,
+                            fileContainingReference: declarationFile,
+                            context
+                        }),
+                        property.contentType
+                    );
                     return [property.key, propertyTypeReference];
                 }
             })
@@ -458,4 +461,19 @@ function getRequest({
             }
         };
     }
+}
+
+function withContentType(
+    typeReference: RawSchemas.TypeReferenceWithDocsSchema,
+    contentType: string | undefined
+): RawSchemas.ObjectPropertySchema {
+    if (contentType == null) {
+        return typeReference;
+    }
+
+    return {
+        type: getTypeFromTypeReference(typeReference),
+        docs: getDocsFromTypeReference(typeReference),
+        "content-type": contentType
+    };
 }

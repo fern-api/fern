@@ -37053,6 +37053,7 @@ You will be assigned as owner of the new team automatically.",
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {
@@ -38292,6 +38293,7 @@ You will be assigned as owner of the new team automatically.",
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {
@@ -39525,6 +39527,7 @@ You will be assigned as owner of the new team automatically.",
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {
@@ -42877,6 +42880,7 @@ The client secret is auto generated on the server and returned. The client does 
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "file",
             "schema": {

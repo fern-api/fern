@@ -321,6 +321,7 @@ types:
     properties:
       key: string
       schema: MultipartSchema
+      contentType: optional<string>
 
   FileSchema:
     properties:

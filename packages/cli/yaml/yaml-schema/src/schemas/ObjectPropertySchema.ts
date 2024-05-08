@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { TypeReferenceDeclarationWithNameSchema } from "./TypeReferenceSchema";
+import { TypeReferenceDeclarationWithContentType } from "./TypeReferenceSchema";
 
-export const ObjectPropertySchema = TypeReferenceDeclarationWithNameSchema;
+export const ObjectPropertySchema = TypeReferenceDeclarationWithContentType;
 
 export type ObjectPropertySchema = z.infer<typeof ObjectPropertySchema>;

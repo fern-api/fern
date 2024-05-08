@@ -837,6 +837,7 @@ Log.d("TAG", file.toString())
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "UPLOADCARE_PUB_KEY",
             "schema": {
@@ -852,6 +853,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "UPLOADCARE_STORE",
             "schema": {
@@ -874,6 +876,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": "File's content",
             "key": "{filename}",
             "schema": {
@@ -883,6 +886,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "metadata[{key}]",
             "schema": {
@@ -905,6 +909,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "signature",
             "schema": {
@@ -927,6 +932,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "expire",
             "schema": {
@@ -1900,6 +1906,7 @@ Log.d("TAG", file.toString())
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "UPLOADCARE_PUB_KEY",
             "schema": {
@@ -1915,6 +1922,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "UPLOADCARE_STORE",
             "schema": {
@@ -1937,6 +1945,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "filename",
             "schema": {
@@ -1956,6 +1965,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "size",
             "schema": {
@@ -1975,6 +1985,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "part_size",
             "schema": {
@@ -2006,6 +2017,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "content_type",
             "schema": {
@@ -2025,6 +2037,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "metadata[{key}]",
             "schema": {
@@ -2047,6 +2060,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "signature",
             "schema": {
@@ -2069,6 +2083,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "expire",
             "schema": {
@@ -3318,6 +3333,7 @@ Log.d("TAG", file.toString())
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "UPLOADCARE_PUB_KEY",
             "schema": {
@@ -3333,6 +3349,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "uuid",
             "schema": {
@@ -4948,6 +4965,7 @@ Log.d("TAG", file.toString())
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "pub_key",
             "schema": {
@@ -4963,6 +4981,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "source_url",
             "schema": {
@@ -4985,6 +5004,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "store",
             "schema": {
@@ -5007,6 +5027,7 @@ Log.d("TAG", file.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "filename",
             "schema": {
@@ -5039,6 +5060,7 @@ response headers or the \`source_url\`'s path.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "check_URL_duplicates",
             "schema": {
@@ -5089,6 +5111,7 @@ this request will return information about the already uploaded file.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "save_URL_duplicates",
             "schema": {
@@ -5139,6 +5162,7 @@ to the value of the \`check_URL_duplicates\` parameter.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "metadata[{key}]",
             "schema": {
@@ -5161,6 +5185,7 @@ to the value of the \`check_URL_duplicates\` parameter.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "signature",
             "schema": {
@@ -5183,6 +5208,7 @@ to the value of the \`check_URL_duplicates\` parameter.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "expire",
             "schema": {
@@ -8615,6 +8641,7 @@ Log.d("TAG", group.toString())
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": null,
             "key": "pub_key",
             "schema": {
@@ -8630,6 +8657,7 @@ Log.d("TAG", group.toString())
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "files[]",
             "schema": {
@@ -8659,6 +8687,7 @@ processing operations.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "signature",
             "schema": {
@@ -8681,6 +8710,7 @@ processing operations.
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "expire",
             "schema": {

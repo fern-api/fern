@@ -41,6 +41,7 @@ exports[`file-upload file-upload parse open api 1`] = `
         "name": null,
         "properties": [
           {
+            "contentType": null,
             "description": "The file to upload",
             "key": "file",
             "schema": {
@@ -50,6 +51,7 @@ exports[`file-upload file-upload parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "maybe_file",
             "schema": {
@@ -59,6 +61,7 @@ exports[`file-upload file-upload parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": "The list of files to upload",
             "key": "file_list",
             "schema": {
@@ -68,6 +71,7 @@ exports[`file-upload file-upload parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "maybe_file_list",
             "schema": {
@@ -77,6 +81,7 @@ exports[`file-upload file-upload parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "maybe_files_allof_list",
             "schema": {

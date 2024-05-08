@@ -13,6 +13,7 @@ export const MultipartRequestProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         key: core.serialization.string(),
         schema: core.serialization.lazy(async () => (await import("../../..")).MultipartSchema),
+        contentType: core.serialization.string().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -20,5 +21,6 @@ export declare namespace MultipartRequestProperty {
     interface Raw extends serializers.WithDescription.Raw {
         key: string;
         schema: serializers.MultipartSchema.Raw;
+        contentType?: string | null;
     }
 }

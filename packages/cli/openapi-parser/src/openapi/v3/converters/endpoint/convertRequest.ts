@@ -12,10 +12,8 @@ export const MULTIPART_CONTENT = "multipart/form-data";
 
 export const OCTET_STREAM = "application/octet-stream";
 
-function getMultipartFormDataRequest(
-    requestBody: OpenAPIV3.RequestBodyObject
-): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return requestBody.content[MULTIPART_CONTENT]?.schema;
+function getMultipartFormDataRequest(requestBody: OpenAPIV3.RequestBodyObject): OpenAPIV3.MediaTypeObject | undefined {
+    return requestBody.content[MULTIPART_CONTENT];
 }
 
 function isOctetStreamRequest(requestBody: OpenAPIV3.RequestBodyObject): boolean {
@@ -54,7 +52,7 @@ export function convertRequest({
         ? context.resolveRequestBodyReference(requestBody)
         : requestBody;
 
-    const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
+    const multipart = getMultipartFormDataRequest(resolvedRequestBody);
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
     // convert as application/octet-stream
@@ -66,15 +64,16 @@ export function convertRequest({
 
     // convert as multipart request
     if (
-        (multipartSchema != null && jsonMediaObject == null) ||
-        (multipartSchema != null && multipartRequestHasFile(multipartSchema, document))
+        (multipart?.schema != null && jsonMediaObject == null) ||
+        (multipart?.schema != null && multipartRequestHasFile(multipart.schema, document))
     ) {
-        const resolvedMultipartSchema = isReferenceObject(multipartSchema)
-            ? resolveSchema(multipartSchema, document)
+        const resolvedMultipartSchema = isReferenceObject(multipart.schema)
+            ? resolveSchema(multipart.schema, document)
             : {
                   id: undefined,
-                  schema: multipartSchema
+                  schema: multipart.schema
               };
+
         const convertedMultipartSchema = convertSchema(
             resolvedMultipartSchema.schema,
             false,
@@ -92,7 +91,8 @@ export function convertRequest({
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: false, isArray: false }),
-                        description: property.schema.description
+                        description: property.schema.description,
+                        contentType: multipart.encoding?.[property.key]?.contentType
                     });
                     continue;
                 }
@@ -106,7 +106,8 @@ export function convertRequest({
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: true, isArray: false }),
-                        description: property.schema.description
+                        description: property.schema.description,
+                        contentType: multipart.encoding?.[property.key]?.contentType
                     });
                     continue;
                 }
@@ -120,7 +121,8 @@ export function convertRequest({
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: false, isArray: true }),
-                        description: property.schema.description
+                        description: property.schema.description,
+                        contentType: multipart.encoding?.[property.key]?.contentType
                     });
                     continue;
                 }
@@ -135,7 +137,8 @@ export function convertRequest({
                     properties.push({
                         key: property.key,
                         schema: MultipartSchema.file({ isOptional: true, isArray: true }),
-                        description: property.schema.description
+                        description: property.schema.description,
+                        contentType: multipart.encoding?.[property.key]?.contentType
                     });
                     continue;
                 }
@@ -143,14 +146,15 @@ export function convertRequest({
                 properties.push({
                     key: property.key,
                     schema: MultipartSchema.json(property.schema),
-                    description: undefined
+                    description: undefined,
+                    contentType: multipart.encoding?.[property.key]?.contentType
                 });
             }
         }
 
         return RequestWithExample.multipart({
             name:
-                isReferenceObject(multipartSchema) && context.getNumberOfOccurrencesForRef(multipartSchema) === 1
+                isReferenceObject(multipart.schema) && context.getNumberOfOccurrencesForRef(multipart.schema) === 1
                     ? resolvedMultipartSchema.id
                     : undefined,
             description: undefined,

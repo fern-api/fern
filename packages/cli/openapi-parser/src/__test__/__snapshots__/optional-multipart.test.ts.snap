@@ -93,6 +93,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         "name": "SpeechBody",
         "properties": [
           {
+            "contentType": null,
             "description": "The audio file.",
             "key": "audio",
             "schema": {
@@ -102,6 +103,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "model_id",
             "schema": {
@@ -128,6 +130,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "voice_settings",
             "schema": {
@@ -279,6 +282,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         "name": "SpeechBodyStream",
         "properties": [
           {
+            "contentType": null,
             "description": "The audio file.",
             "key": "audio",
             "schema": {
@@ -288,6 +292,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "model_id",
             "schema": {
@@ -314,6 +319,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "voice_settings",
             "schema": {
@@ -340,6 +346,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "my_enum",
             "schema": {
@@ -387,6 +394,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             },
           },
           {
+            "contentType": null,
             "description": null,
             "key": "my_ref",
             "schema": {
