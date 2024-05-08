@@ -9,6 +9,14 @@ import { z } from "zod";
  */
 export const APIDefinitionPathSchema = z.string().describe("Path to the OpenAPI, AsyncAPI or Fern Definition");
 
+export const APIDefinitionSettingsSchema = z.object({
+    "use-title": z
+        .optional(z.boolean())
+        .describe(
+            "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true."
+        )
+});
+
 /**
  * @example
  * api:
@@ -28,7 +36,8 @@ export const APIDefintionWithOverridesSchema = z.object({
         .optional(z.string())
         .describe("The URL of the API definition origin, from which the file should be polled."),
     overrides: z.optional(z.string()).describe("Path to the OpenAPI or AsyncAPI overrides"),
-    audiences: z.optional(z.array(z.string())).describe("Audiences that you would like to filter to")
+    audiences: z.optional(z.array(z.string())).describe("Audiences that you would like to filter to"),
+    settings: z.optional(APIDefinitionSettingsSchema)
 });
 
 /**

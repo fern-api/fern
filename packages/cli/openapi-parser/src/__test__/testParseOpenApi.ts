@@ -7,7 +7,12 @@ import { parse } from "../openapi/parse";
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 // eslint-disable-next-line jest/no-export
-export function testParseOpenAPI(fixtureName: string, openApiFilename: string, asyncApiFilename?: string): void {
+export function testParseOpenAPI(
+    fixtureName: string,
+    openApiFilename: string,
+    asyncApiFilename?: string,
+    useTitle?: boolean
+): void {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
         it("parse open api", async () => {
@@ -20,17 +25,20 @@ export function testParseOpenAPI(fixtureName: string, openApiFilename: string, a
                 asyncApiFilename != null
                     ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
                     : undefined;
+            const settings = useTitle != null ? { shouldUseTitleAsName: useTitle, audiences: [] } : undefined;
             const specs = [];
             if (absolutePathToOpenAPI != null) {
                 specs.push({
                     absoluteFilepath: absolutePathToOpenAPI,
-                    absoluteFilepathToOverrides: undefined
+                    absoluteFilepathToOverrides: undefined,
+                    settings
                 });
             }
             if (absolutePathToAsyncAPI != null) {
                 specs.push({
                     absoluteFilepath: absolutePathToAsyncAPI,
-                    absoluteFilepathToOverrides: undefined
+                    absoluteFilepathToOverrides: undefined,
+                    settings
                 });
             }
 

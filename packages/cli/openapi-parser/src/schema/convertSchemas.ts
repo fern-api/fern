@@ -114,7 +114,10 @@ export function convertSchemaObject(
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false
 ): SchemaWithExample {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? getTitleAsName(schema.title);
+    const nameOverride =
+        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? context.shouldUseTitleAsName
+            ? getTitleAsName(schema.title)
+            : undefined;
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
