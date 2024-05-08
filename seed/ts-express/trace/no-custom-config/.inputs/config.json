@@ -8,9 +8,7 @@
         "publishingMetadata": null
     },
     "publish": null,
-    "customConfig": {
-        "outputSourceFiles": true
-    },
+    "customConfig": null,
     "workspaceName": "trace",
     "organization": "seed",
     "environment": {

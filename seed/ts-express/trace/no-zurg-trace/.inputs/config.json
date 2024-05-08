@@ -9,7 +9,6 @@
     },
     "publish": null,
     "customConfig": {
-        "outputSourceFiles": true,
         "noSerdeLayer": true
     },
     "workspaceName": "trace",

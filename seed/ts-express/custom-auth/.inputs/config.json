@@ -8,9 +8,6 @@
         "publishingMetadata": null
     },
     "publish": null,
-    "customConfig": {
-        "outputSourceFiles": true
-    },
     "workspaceName": "custom-auth",
     "organization": "seed",
     "environment": {

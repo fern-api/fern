@@ -9,7 +9,6 @@
     },
     "publish": null,
     "customConfig": {
-        "outputSourceFiles": true,
         "allowExtraFields": true
     },
     "workspaceName": "exhaustive",

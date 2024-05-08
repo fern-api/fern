@@ -8,9 +8,6 @@
         "publishingMetadata": null
     },
     "publish": null,
-    "customConfig": {
-        "outputSourceFiles": true
-    },
     "workspaceName": "api-wide-base-path",
     "organization": "seed",
     "environment": {
