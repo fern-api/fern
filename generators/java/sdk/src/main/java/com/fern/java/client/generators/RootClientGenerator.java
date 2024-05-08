@@ -383,19 +383,32 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.of(literal));
             }
+
+            Boolean shouldWrapInConditional = header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional();
+            MethodSpec.Builder maybeConditionalAdditionFlow = this.buildMethod;
+            // If the header is optional, wrap the add in a presence check so it does not get added unless it's non-null
+            if (shouldWrapInConditional) {
+                maybeConditionalAdditionFlow = this.buildMethod
+                        .beginControlFlow("if ($L != null)", fieldName);
+            }
+
             if (header.getPrefix().isPresent()) {
-                this.buildMethod.addStatement(
+                maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(
                         "this.$L.addHeader($S, $S + this.$L)",
                         CLIENT_OPTIONS_BUILDER_NAME,
                         header.getName().getWireValue(),
                         header.getPrefix().get(),
                         fieldName);
             } else {
-                this.buildMethod.addStatement(
+                maybeConditionalAdditionFlow = maybeConditionalAdditionFlow.addStatement(
                         "this.$L.addHeader($S, this.$L)",
                         CLIENT_OPTIONS_BUILDER_NAME,
                         header.getName().getWireValue(),
                         fieldName);
+            }
+
+            if (shouldWrapInConditional) {
+                maybeConditionalAdditionFlow.endControlFlow();
             }
             return null;
         }

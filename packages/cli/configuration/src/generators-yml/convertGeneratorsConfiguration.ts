@@ -17,6 +17,7 @@ import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import {
     API_ORIGIN_LOCATION_KEY,
+    API_SETTINGS_KEY,
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
     OPENAPI_LOCATION_KEY,
@@ -69,7 +70,8 @@ async function parseAPIConfiguration(
                 path: apiConfiguration,
                 origin: undefined,
                 overrides: undefined,
-                audiences: []
+                audiences: [],
+                shouldUseTitleAsName: undefined
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -78,14 +80,16 @@ async function parseAPIConfiguration(
                         path: definition,
                         origin: undefined,
                         overrides: undefined,
-                        audiences: []
+                        audiences: [],
+                        shouldUseTitleAsName: undefined
                     });
                 } else {
                     apiDefinitions.push({
                         path: definition.path,
                         origin: definition.origin,
                         overrides: definition.overrides,
-                        audiences: definition.audiences
+                        audiences: definition.audiences,
+                        shouldUseTitleAsName: definition.settings?.["use-title"]
                     });
                 }
             }
@@ -94,7 +98,8 @@ async function parseAPIConfiguration(
                 path: apiConfiguration.path,
                 origin: apiConfiguration.origin,
                 overrides: apiConfiguration.overrides,
-                audiences: apiConfiguration.audiences
+                audiences: apiConfiguration.audiences,
+                shouldUseTitleAsName: apiConfiguration.settings?.["use-title"]
             });
         }
     } else {
@@ -102,20 +107,23 @@ async function parseAPIConfiguration(
         const apiOrigin = rawGeneratorsConfiguration[API_ORIGIN_LOCATION_KEY];
         const openapiOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
         const asyncapi = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
+        const settings = rawGeneratorsConfiguration[API_SETTINGS_KEY];
 
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
                 path: openapi,
                 origin: apiOrigin,
                 overrides: openapiOverrides,
-                audiences: []
+                audiences: [],
+                shouldUseTitleAsName: settings?.["use-title"]
             });
         } else if (openapi != null) {
             apiDefinitions.push({
                 path: openapi.path,
                 origin: openapi.origin,
                 overrides: openapi.overrides,
-                audiences: []
+                audiences: [],
+                shouldUseTitleAsName: openapi.settings?.["use-title"]
             });
         }
 
@@ -124,7 +132,8 @@ async function parseAPIConfiguration(
                 path: asyncapi,
                 origin: apiOrigin,
                 overrides: undefined,
-                audiences: []
+                audiences: [],
+                shouldUseTitleAsName: settings?.["use-title"]
             });
         }
     }

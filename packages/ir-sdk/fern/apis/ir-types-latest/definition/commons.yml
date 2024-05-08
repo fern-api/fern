@@ -73,3 +73,15 @@ types:
       - PRE_RELEASE
       - GENERAL_AVAILABILITY
       - DEPRECATED
+
+  # references
+
+  EndpointReference:
+    properties:
+      endpointId: EndpointId
+      serviceId: ServiceId
+      subpackageId:
+        type: optional<SubpackageId>
+        docs: |
+          The subpackage that defines the endpoint. If empty, the endpoint is
+          defined in the root package.

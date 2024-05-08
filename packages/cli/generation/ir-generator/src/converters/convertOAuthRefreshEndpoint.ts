@@ -21,7 +21,14 @@ export async function convertOAuthRefreshEndpoint({
         file
     });
     return {
-        endpointReference: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
+        endpointReference: {
+            endpointId: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
+            serviceId: IdGenerator.generateServiceIdFromFernFilepath(resolvedEndpoint.file.fernFilepath),
+            subpackageId:
+                resolvedEndpoint.file.fernFilepath.file != null
+                    ? IdGenerator.generateSubpackageId(resolvedEndpoint.file.fernFilepath)
+                    : undefined
+        },
         requestProperties: {
             refreshToken: await propertyResolver.resolveRequestPropertyOrThrow({
                 file,

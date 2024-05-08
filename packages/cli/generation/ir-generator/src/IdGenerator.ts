@@ -14,6 +14,10 @@ export const IdGenerator = {
         const joinedFernFilePath = stringifyFernFilepath(serviceName.fernFilepath);
         return `service_${joinedFernFilePath}`;
     },
+    generateServiceIdFromFernFilepath: (fernFilepath: FernFilepath): FernIr.commons.TypeId => {
+        const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
+        return `service_${joinedFernFilePath}`;
+    },
     generateSubpackageId: (fernFilepath: FernFilepath): FernIr.commons.SubpackageId => {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `subpackage_${joinedFernFilePath}`;

@@ -84,6 +84,7 @@ import javax.lang.model.element.Modifier;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public abstract class AbstractEndpointWriter {
 
@@ -303,6 +304,7 @@ public abstract class AbstractEndpointWriter {
                         getResponseName(),
                         defaultedClientName,
                         getOkhttpRequestName())
+                .addStatement("$T $L = $N.body()", ResponseBody.class, getResponseBodyName(), getResponseName())
                 .beginControlFlow("if ($L.isSuccessful())", getResponseName());
         if (httpEndpoint.getResponse().isPresent()) {
             httpEndpoint
@@ -315,12 +317,13 @@ public abstract class AbstractEndpointWriter {
         }
         httpResponseBuilder.endControlFlow();
         httpResponseBuilder.addStatement(
-                "throw new $T($L.code(), $T.$L.readValue($L.body().string(), $T.class))",
+                "throw new $T($L.code(), $T.$L.readValue($L != null ? $L.string() : \"{}\", $T.class))",
                 clientGeneratorContext.getPoetClassNameFactory().getApiErrorClassName(),
                 getResponseName(),
                 generatedObjectMapper.getClassName(),
                 generatedObjectMapper.jsonMapperStaticField().name,
-                getResponseName(),
+                getResponseBodyName(),
+                getResponseBodyName(),
                 Object.class);
         httpResponseBuilder
                 .endControlFlow()
@@ -346,7 +349,7 @@ public abstract class AbstractEndpointWriter {
     }
 
     public final String getVariableName(String variable) {
-        if (this.endpointParameterNames.contains("body")) {
+        if (this.endpointParameterNames.contains(variable)) {
             return "_" + variable;
         }
         return variable;
@@ -364,6 +367,10 @@ public abstract class AbstractEndpointWriter {
             return "_response";
         }
         return "response";
+    }
+
+    private String getResponseBodyName() {
+        return getVariableName("responseBody");
     }
 
     protected final String getOkhttpRequestName() {
@@ -489,17 +496,17 @@ public abstract class AbstractEndpointWriter {
             endpointMethodBuilder.returns(returnType);
             if (body.getResponseBodyType().isContainer() || isAliasContainer(body.getResponseBodyType())) {
                 httpResponseBuilder.addStatement(
-                        "return $T.$L.readValue($L.body().string(), new $T() {})",
+                        "return $T.$L.readValue($L.string(), new $T() {})",
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseName(),
+                        getResponseBodyName(),
                         ParameterizedTypeName.get(ClassName.get(TypeReference.class), returnType));
             } else {
                 httpResponseBuilder.addStatement(
-                        "return $T.$L.readValue($L.body().string(), $T.class)",
+                        "return $T.$L.readValue($L.string(), $T.class)",
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
-                        getResponseName(),
+                        getResponseBodyName(),
                         returnType);
             }
             return null;
@@ -508,14 +515,14 @@ public abstract class AbstractEndpointWriter {
         @Override
         public Void visitFileDownload(FileDownloadResponse fileDownload) {
             endpointMethodBuilder.returns(InputStream.class);
-            httpResponseBuilder.addStatement("return $L.body().byteStream()", getResponseName());
+            httpResponseBuilder.addStatement("return $L.byteStream()", getResponseBodyName());
             return null;
         }
 
         @Override
         public Void visitText(TextResponse text) {
             endpointMethodBuilder.returns(String.class);
-            httpResponseBuilder.addStatement("return $L.body().string()", getResponseName());
+            httpResponseBuilder.addStatement("return $L.string()", getResponseBodyName());
             return null;
         }
 
@@ -549,11 +556,11 @@ public abstract class AbstractEndpointWriter {
             endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
 
             httpResponseBuilder.addStatement(
-                    "return new $T<$T>($T.class, $L.body().charStream(), $S)",
+                    "return new $T<$T>($T.class, $L.charStream(), $S)",
                     clientGeneratorContext.getPoetClassNameFactory().getStreamClassName(),
                     bodyTypeName,
                     bodyTypeName,
-                    getResponseName(),
+                    getResponseBodyName(),
                     terminator);
 
             return null;

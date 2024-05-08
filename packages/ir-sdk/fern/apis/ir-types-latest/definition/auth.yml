@@ -51,27 +51,28 @@ types:
       refreshEndpoint: optional<OAuthRefreshEndpoint>
   OAuthTokenEndpoint:
     properties:
-      endpointReference:
-        type: commons.EndpointId
-        docs: |
-          The refrence to the access token endpoint (e.g. _endpoint_auth.token).
-      responseProperties: OAuthAccessTokenProperties
+      endpointReference: commons.EndpointReference
+      requestProperties: OAuthAccessTokenRequestProperties
+      responseProperties: OAuthAccessTokenResponseProperties
   OAuthRefreshEndpoint:
     properties:
-      endpointReference:
-        type: commons.EndpointId
-        docs: |
-          The refrence to the refresh token endpoint (e.g. _endpoint_auth.refreshToken).
-      requestProperties: OAuthRefreshTokenProperties
-      responseProperties: OAuthAccessTokenProperties
-  OAuthAccessTokenProperties:
+      endpointReference: commons.EndpointReference
+      requestProperties: OAuthRefreshTokenRequestProperties
+      responseProperties: OAuthAccessTokenResponseProperties
+  OAuthAccessTokenRequestProperties:
+    docs: The properties required to retrieve an OAuth token.
+    properties:
+      clientId: http.RequestProperty
+      clientSecret: http.RequestProperty
+      scopes: optional<http.RequestProperty>
+  OAuthAccessTokenResponseProperties:
     docs: The properties to map to the corresponding OAuth token primitive.
     properties:
       accessToken: http.ResponseProperty
       expiresIn: optional<http.ResponseProperty>
       refreshToken: optional<http.ResponseProperty>
-  OAuthRefreshTokenProperties:
-    docs: The properties to map to the corresponding OAuth token primitive.
+  OAuthRefreshTokenRequestProperties:
+    docs: The properties required to retrieve an OAuth refresh token.
     properties:
       refreshToken: http.RequestProperty
 
