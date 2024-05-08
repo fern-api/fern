@@ -26,6 +26,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ContainerClient {
   protected final ClientOptions clientOptions;
@@ -63,10 +64,11 @@ public class ContainerClient {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), new TypeReference<List<String>>() {});
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<String>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -103,10 +105,11 @@ public class ContainerClient {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), new TypeReference<List<ObjectWithRequiredField>>() {});
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<List<ObjectWithRequiredField>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -142,10 +145,11 @@ public class ContainerClient {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), new TypeReference<Set<String>>() {});
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<String>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -182,10 +186,11 @@ public class ContainerClient {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), new TypeReference<Set<ObjectWithRequiredField>>() {});
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Set<ObjectWithRequiredField>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -221,10 +226,11 @@ public class ContainerClient {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), new TypeReference<Map<String, String>>() {});
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Map<String, String>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -261,10 +267,11 @@ public class ContainerClient {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {});
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);
@@ -308,10 +315,11 @@ public class ContainerClient {
         client = clientOptions.httpClientWithTimeout(requestOptions);
       }
       Response response = client.newCall(okhttpRequest).execute();
+      ResponseBody responseBody = response.body();
       if (response.isSuccessful()) {
-        return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), new TypeReference<Optional<ObjectWithRequiredField>>() {});
+        return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), new TypeReference<Optional<ObjectWithRequiredField>>() {});
       }
-      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+      throw new ApiError(response.code(), ObjectMappers.JSON_MAPPER.readValue(responseBody != null ? responseBody.string() : "{}", Object.class));
     }
     catch (IOException e) {
       throw new RuntimeException(e);

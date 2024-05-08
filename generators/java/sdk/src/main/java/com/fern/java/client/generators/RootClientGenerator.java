@@ -384,7 +384,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.of(literal));
             }
 
-            Boolean shouldWrapInConditional = header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional()
+            Boolean shouldWrapInConditional = header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional();
             MethodSpec.Builder maybeConditionalAdditionFlow = this.buildMethod;
             // If the header is optional, wrap the add in a presence check so it does not get added unless it's non-null
             if (shouldWrapInConditional) {
