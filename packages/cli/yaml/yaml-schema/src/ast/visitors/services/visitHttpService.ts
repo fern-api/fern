@@ -382,7 +382,7 @@ async function visitExampleEndpointCall({
         nodePathForResponse
     );
     if (example.response != null) {
-        await visitExampleResponseSchema(example.response, {
+        await visitExampleResponseSchema(endpoint, example.response, {
             body: async (response) => {
                 if (response.body != null) {
                     await visitAllReferencesInExample({
@@ -405,9 +405,9 @@ async function visitExampleEndpointCall({
                 }
             },
             events: async (response) => {
-                for (const example of response.events) {
+                for (const { data: example } of response.stream) {
                     await visitAllReferencesInExample({
-                        example: example.data,
+                        example,
                         visitor,
                         nodePath: nodePathForResponse
                     });

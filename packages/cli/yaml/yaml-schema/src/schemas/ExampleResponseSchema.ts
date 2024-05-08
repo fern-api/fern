@@ -52,14 +52,14 @@ export type ExampleSseEventSchema = z.infer<typeof ExampleSseEventSchema>;
  *   request:
  *     stream: true
  *   response:
- *     events:
+ *     stream:
  *      - event: chat # event 1
  *        data: {}
  *      - event: chat # event 2
  *        data: {}
  */
 export const ExampleSseResponseSchema = z.strictObject({
-    events: z.array(ExampleSseEventSchema)
+    stream: z.array(ExampleSseEventSchema)
 });
 
 export type ExampleSseResponseSchema = z.infer<typeof ExampleSseResponseSchema>;

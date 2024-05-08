@@ -30,7 +30,7 @@ export function validateResponse({
     if (example == null) {
         return [{ severity: "warning", message: "Response example is missing." }];
     }
-    return visitExampleResponseSchema(example, {
+    return visitExampleResponseSchema(endpoint, example, {
         body: (example) =>
             validateBodyResponse({ example, endpoint, typeResolver, exampleResolver, file, workspace, errorResolver }),
         stream: (example) =>
@@ -205,14 +205,14 @@ function validateSseResponse({
             message: "Unexpected streaming response in example. Endpoint's schema is missing `response-stream` key."
         });
     } else if (typeof endpoint["response-stream"] !== "string" && endpoint["response-stream"].format === "sse") {
-        for (const event of example.events) {
+        for (const event of example.stream) {
             violations.push(
                 ...ExampleValidators.validateTypeReferenceExample({
                     rawTypeReference:
                         typeof endpoint["response-stream"] !== "string"
                             ? endpoint["response-stream"].type
                             : endpoint["response-stream"],
-                    example: event,
+                    example: event.data,
                     typeResolver,
                     exampleResolver,
                     file,

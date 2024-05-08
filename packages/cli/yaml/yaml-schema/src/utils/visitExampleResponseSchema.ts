@@ -1,9 +1,12 @@
+import { HttpEndpointSchema } from "../schemas";
 import {
     ExampleBodyResponseSchema,
     ExampleResponseSchema,
     ExampleSseResponseSchema,
     ExampleStreamResponseSchema
 } from "../schemas/ExampleResponseSchema";
+import { isSimpleStreamResponseSchema } from "./isSimpleStreamResponseSchema";
+import { isSseStsreamResponseSchema } from "./isSseStreamResponseSchema";
 
 export interface ExampleResponseSchemaVisitor<T> {
     body: (example: ExampleBodyResponseSchema) => T;
@@ -12,22 +15,29 @@ export interface ExampleResponseSchemaVisitor<T> {
 }
 
 export function visitExampleResponseSchema<T>(
+    endpoint: HttpEndpointSchema,
     example: ExampleResponseSchema,
     visitor: ExampleResponseSchemaVisitor<T>
 ): T {
-    if (isExampleStreamResponseSchema(example)) {
+    if (isExampleStreamResponseSchema(endpoint, example)) {
         return visitor.stream(example);
-    } else if (isExampleSseResponseSchema(example)) {
+    } else if (isExampleSseResponseSchema(endpoint, example)) {
         return visitor.events(example);
     } else {
         return visitor.body(example);
     }
 }
 
-export function isExampleStreamResponseSchema(example: ExampleResponseSchema): example is ExampleStreamResponseSchema {
-    return (example as ExampleStreamResponseSchema).stream !== undefined;
+export function isExampleStreamResponseSchema(
+    endpoint: HttpEndpointSchema,
+    example: ExampleResponseSchema
+): example is ExampleStreamResponseSchema {
+    return (example as ExampleStreamResponseSchema).stream !== undefined && isSimpleStreamResponseSchema(endpoint);
 }
 
-export function isExampleSseResponseSchema(example: ExampleResponseSchema): example is ExampleSseResponseSchema {
-    return (example as ExampleSseResponseSchema).events !== undefined;
+export function isExampleSseResponseSchema(
+    endpoint: HttpEndpointSchema,
+    example: ExampleResponseSchema
+): example is ExampleSseResponseSchema {
+    return (example as ExampleSseResponseSchema).stream !== undefined && isSseStsreamResponseSchema(endpoint);
 }
