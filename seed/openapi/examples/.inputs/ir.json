@@ -15032,11 +15032,11 @@
                 },
                 "wireValue": "NotFoundError"
             },
-            "statusCode": 404,
             "type": {
                 "_type": "primitive",
                 "primitive": "STRING"
             },
+            "statusCode": 404,
             "docs": null
         }
     },
