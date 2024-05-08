@@ -37,6 +37,7 @@ jobs:
               - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'test-definitions/**'
+              - 'packages/ir-sdk/fern/apis/**'
             ruby: 
               - 'generators/ruby/**'
               - seed/ruby-sdk/seed.yml
