@@ -1,3 +1,4 @@
+/* eslint-disable jest/no-disabled-tests */
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { cp } from "fs/promises";
 import path from "path";
