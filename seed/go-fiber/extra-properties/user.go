@@ -9,7 +9,7 @@ import (
 )
 
 type CreateUserRequest struct {
-	Name    string `json:"name" url:"name"`
+	Name    string `json:"name" url:"-"`
 	type_   string
 	version string
 }

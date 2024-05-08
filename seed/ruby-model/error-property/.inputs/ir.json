@@ -225,7 +225,6 @@
                 },
                 "wireValue": "PropertyBasedErrorTest"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -292,6 +291,7 @@
                 },
                 "typeId": "type_errors:PropertyBasedErrorTestBody"
             },
+            "statusCode": 400,
             "docs": null
         }
     },

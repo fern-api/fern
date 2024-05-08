@@ -7,8 +7,8 @@ import (
 )
 
 type CreatePaymentRequest struct {
-	Amount   int      `json:"amount" url:"amount"`
-	Currency Currency `json:"currency" url:"currency"`
+	Amount   int      `json:"amount" url:"-"`
+	Currency Currency `json:"currency" url:"-"`
 }
 
 type Currency string

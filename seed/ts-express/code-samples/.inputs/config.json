@@ -8,9 +8,6 @@
         "publishingMetadata": null
     },
     "publish": null,
-    "customConfig": {
-        "outputSourceFiles": true
-    },
     "workspaceName": "code-samples",
     "organization": "seed",
     "environment": {

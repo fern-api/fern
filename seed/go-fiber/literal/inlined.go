@@ -7,8 +7,8 @@ import (
 )
 
 type SendLiteralsInlinedRequest struct {
-	Query       string   `json:"query" url:"query"`
-	Temperature *float64 `json:"temperature,omitempty" url:"temperature,omitempty"`
+	Query       string   `json:"query" url:"-"`
+	Temperature *float64 `json:"temperature,omitempty" url:"-"`
 	prompt      string
 	stream      bool
 }

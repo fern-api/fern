@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.10] - 2024-05-08
+
+- Fix: Fixes regression from 0.8.8, headers are no longer added to the header map unless they are non-null.
+
+## [0.8.9] - 2024-05-07
+
+- Fix: Generated SDK clients now handle null response bodies and avoid NPEs when they receive error responses.
+
 ## [0.8.8] - 2024-05-07
 
 - Fix: The generated SDKs no longer require global headers that are not directly related to auth if auth is mandatory within the SDK. Previously, the generator would require all global headers if auth was mandatory.

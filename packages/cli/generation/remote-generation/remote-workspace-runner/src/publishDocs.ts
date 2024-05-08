@@ -1162,10 +1162,10 @@ async function getImageFilepathsToUpload(
     parsedDocsConfig: docsYml.ParsedDocsConfiguration,
     parsedImagePaths: docsYml.ImageReference[]
 ): Promise<[AbsoluteImageFilePath[], AbsoluteFilePath[]]> {
-    const filepaths: AbsoluteFilePath[] = [];
+    const filepaths = new Set<AbsoluteFilePath>();
 
     if (parsedDocsConfig.logo?.dark != null) {
-        filepaths.push(parsedDocsConfig.logo.dark.filepath);
+        filepaths.add(parsedDocsConfig.logo.dark.filepath);
     }
 
     if (
@@ -1173,15 +1173,15 @@ async function getImageFilepathsToUpload(
         // if the light and dark images are the same, we don't need to re-upload the light image
         parsedDocsConfig.logo.dark?.filepath !== parsedDocsConfig.logo.light.filepath
     ) {
-        filepaths.push(parsedDocsConfig.logo.light.filepath);
+        filepaths.add(parsedDocsConfig.logo.light.filepath);
     }
 
     if (parsedDocsConfig.favicon != null) {
-        filepaths.push(parsedDocsConfig.favicon.filepath);
+        filepaths.add(parsedDocsConfig.favicon.filepath);
     }
 
     if (parsedDocsConfig.backgroundImage?.dark != null) {
-        filepaths.push(parsedDocsConfig.backgroundImage.dark.filepath);
+        filepaths.add(parsedDocsConfig.backgroundImage.dark.filepath);
     }
 
     if (
@@ -1189,15 +1189,15 @@ async function getImageFilepathsToUpload(
         // if the light and dark images are the same, we don't need to re-upload the light image
         parsedDocsConfig.backgroundImage.dark?.filepath !== parsedDocsConfig.backgroundImage.light.filepath
     ) {
-        filepaths.push(parsedDocsConfig.backgroundImage.light.filepath);
+        filepaths.add(parsedDocsConfig.backgroundImage.light.filepath);
     }
 
     for (const parsedImagePath of parsedImagePaths) {
-        filepaths.push(parsedImagePath.filepath);
+        filepaths.add(parsedImagePath.filepath);
     }
 
     const imageFilepathsAndSizesToUpload = await Promise.all(
-        filepaths.map(async (filePath): Promise<ImageFile> => {
+        [...filepaths].map(async (filePath): Promise<ImageFile> => {
             try {
                 const size = await sizeOf(filePath);
                 if (size == null || size.height == null || size.width == null) {

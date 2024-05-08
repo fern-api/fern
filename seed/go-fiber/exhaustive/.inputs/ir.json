@@ -2683,7 +2683,6 @@
                 },
                 "wireValue": "BadRequestBody"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -2750,6 +2749,7 @@
                 },
                 "typeId": "type_general-errors:BadObjectRequestInfo"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/enum:ErrorWithEnumBody": {
@@ -2879,7 +2879,6 @@
                 },
                 "wireValue": "ErrorWithEnumBody"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -2985,6 +2984,7 @@
                 },
                 "typeId": "type_types/enum:WeatherReport"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/object:ObjectWithOptionalFieldError": {
@@ -3114,7 +3114,6 @@
                 },
                 "wireValue": "ObjectWithOptionalFieldError"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3220,6 +3219,7 @@
                 },
                 "typeId": "type_types/object:ObjectWithOptionalField"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/object:ObjectWithRequiredFieldError": {
@@ -3349,7 +3349,6 @@
                 },
                 "wireValue": "ObjectWithRequiredFieldError"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3455,6 +3454,7 @@
                 },
                 "typeId": "type_types/object:ObjectWithRequiredField"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/object:NestedObjectWithOptionalFieldError": {
@@ -3584,7 +3584,6 @@
                 },
                 "wireValue": "NestedObjectWithOptionalFieldError"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3690,6 +3689,7 @@
                 },
                 "typeId": "type_types/object:NestedObjectWithOptionalField"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/object:NestedObjectWithRequiredFieldError": {
@@ -3819,7 +3819,6 @@
                 },
                 "wireValue": "NestedObjectWithRequiredFieldError"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3925,6 +3924,7 @@
                 },
                 "typeId": "type_types/object:NestedObjectWithRequiredField"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/union:ErrorWithUnionBody": {
@@ -4054,7 +4054,6 @@
                 },
                 "wireValue": "ErrorWithUnionBody"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -4160,6 +4159,7 @@
                 },
                 "typeId": "type_types/union:Animal"
             },
+            "statusCode": 400,
             "docs": null
         }
     },
