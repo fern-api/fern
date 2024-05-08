@@ -99,7 +99,7 @@ export async function parse({
             const parsedAsyncAPI = parseAsyncAPI({
                 document: asyncAPI,
                 taskContext,
-                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName || true
+                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
