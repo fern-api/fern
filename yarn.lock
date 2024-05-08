@@ -3477,6 +3477,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/ua-parser-js": ^0.7.39
+    "@types/whatwg-mimetype": ^3.0.2
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -3485,6 +3486,7 @@ __metadata:
     strip-ansi: ^7.1.0
     typescript: 4.6.4
     ua-parser-js: ^1.0.37
+    whatwg-mimetype: ^4.0.0
   languageName: unknown
   linkType: soft
 
@@ -7670,6 +7672,13 @@ __metadata:
   version: 4.0.0
   resolution: "@types/validate-npm-package-name@npm:4.0.0"
   checksum: 09efd659f4cce362931a57c7ee6d645855c7ecb346c6496ef31bab638e578472f779c77233adad8502e90a7d7a146a40a5029ff9c4739a38a4187ef1fe7187c3
+  languageName: node
+  linkType: hard
+
+"@types/whatwg-mimetype@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@types/whatwg-mimetype@npm:3.0.2"
+  checksum: 30e2599ae02c539a6dd08b58de255aad24a41cdabeebc0293814884f1301f1328443b9915f2e990e4f484fa7f226ca8718991b63d2d387287f898c36390ef856
   languageName: node
   linkType: hard
 
@@ -24000,6 +24009,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 4.0.2
   resolution: "webidl-conversions@npm:4.0.2"
   checksum: c93d8dfe908a0140a4ae9c0ebc87a33805b416a33ee638a605b551523eec94a9632165e54632f6d57a39c5f948c4bab10e0e066525e9a4b87a79f0d04fbca374
+  languageName: node
+  linkType: hard
+
+"whatwg-mimetype@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "whatwg-mimetype@npm:4.0.0"
+  checksum: f97edd4b4ee7e46a379f3fb0e745de29fe8b839307cc774300fd49059fcdd560d38cb8fe21eae5575b8f39b022f23477cc66e40b0355c2851ce84760339cef30
   languageName: node
   linkType: hard
 

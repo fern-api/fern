@@ -1,4 +1,4 @@
-import { assertNever, isNonNullish, isPlainObject, WithoutQuestionMarks } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, isPlainObject, MediaType, WithoutQuestionMarks } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { ExampleCodeSample, FernIr as Ir } from "@fern-api/ir-sdk";
 import { noop, startCase } from "lodash-es";
@@ -308,7 +308,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
         inlinedRequestBody: (inlinedRequestBody) => {
             return {
                 type: "json",
-                contentType: inlinedRequestBody.contentType ?? "application/json",
+                contentType: inlinedRequestBody.contentType ?? MediaType.APPLICATION_JSON,
                 shape: {
                     type: "object",
                     extends: inlinedRequestBody.extends.map((extension) => extension.typeId),
@@ -325,7 +325,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
         reference: (reference) => {
             return {
                 type: "json",
-                contentType: reference.contentType ?? "application/json",
+                contentType: reference.contentType ?? MediaType.APPLICATION_JSON,
                 shape: {
                     type: "reference",
                     value: convertTypeReference(reference.requestBodyType)

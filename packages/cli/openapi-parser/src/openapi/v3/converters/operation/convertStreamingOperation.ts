@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, MediaType } from "@fern-api/core-utils";
 import { EndpointWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getSchemaIdFromReference } from "../../../../schema/convertSchemas";
@@ -172,7 +172,7 @@ function getRequestBody({
     return {
         requestBody: {
             content: {
-                "application/json": {
+                [MediaType.APPLICATION_JSON]: {
                     schema: requestBodySchemaWithLiteralProperty
                 }
             }
@@ -193,7 +193,7 @@ function getResponses({
         "200": {
             description: "",
             content: {
-                "application/json": {
+                [MediaType.APPLICATION_JSON]: {
                     schema: response
                 }
             }

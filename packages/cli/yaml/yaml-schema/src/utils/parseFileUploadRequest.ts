@@ -1,3 +1,4 @@
+import { MediaType } from "@fern-api/core-utils";
 import { HttpRequestSchema, ObjectPropertySchema } from "../schemas";
 import { isInlineRequestBody } from "./isInlineRequestBody";
 import { parseRawFileType } from "./parseRawFileType";
@@ -29,19 +30,16 @@ export declare namespace RawFileUploadRequest {
 }
 
 export function parseFileUploadRequest(request: HttpRequestSchema | string): RawFileUploadRequest | undefined {
-    if (
-        typeof request === "string" ||
-        request.name == null ||
-        request.body == null ||
-        typeof request.body === "string" ||
-        !isInlineRequestBody(request.body) ||
-        request.body.properties == null ||
-        (request["content-type"] != null && request["content-type"] !== "multipart/form-data")
-    ) {
+    if (typeof request === "string" || !MediaType.parse(request["content-type"])?.isMultiPartFormData()) {
         return undefined;
     }
 
-    const properties = Object.entries(request.body.properties).reduce<RawFileUploadRequest.Property[]>(
+    // We expect request.body to be an inline request body
+    if (request.body == null || typeof request.body === "string" || !isInlineRequestBody(request.body)) {
+        return undefined;
+    }
+
+    const properties = Object.entries(request.body.properties ?? []).reduce<RawFileUploadRequest.Property[]>(
         (acc, [key, propertyType]) => {
             const docs = typeof propertyType !== "string" ? propertyType.docs : undefined;
             const maybeParsedFileType = parseRawFileType(
@@ -63,13 +61,18 @@ export function parseFileUploadRequest(request: HttpRequestSchema | string): Raw
         []
     );
 
-    if (properties.some((property) => property.isFile) || request["content-type"] === "multipart/form-data") {
-        return {
-            name: request.name,
-            extends: request.body.extends,
-            properties
-        };
-    } else {
+    if (request.body["extra-properties"]) {
+        // TODO: handle extra properties
+    }
+
+    // TODO: handle case where request.name is undefined
+    if (request.name == null) {
         return undefined;
     }
+
+    return {
+        name: request.name,
+        extends: request.body.extends,
+        properties
+    };
 }

@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, MediaType } from "@fern-api/core-utils";
 import { FernOpenapiIr, ResponseWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
@@ -10,11 +10,6 @@ import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError";
 import { getApplicationJsonSchemaMediaObject, getSchemaMediaObject } from "./getApplicationJsonSchema";
-
-const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
-const APPLICATION_PDF = "application/pdf";
-const AUDIO_MPEG = "audio/mpeg";
-const TEXT_PLAIN_CONTENT = "text/plain";
 
 // The converter will attempt to get response in priority order
 // (i.e. try for 200, then 201, then 204)
@@ -90,10 +85,6 @@ export function convertResponse({
     };
 }
 
-function isOctetStreamResponse(response: OpenAPIV3.ResponseObject): boolean {
-    return response?.content?.[APPLICATION_OCTET_STREAM_CONTENT] != null;
-}
-
 function convertResolvedResponse({
     operationContext,
     streamFormat,
@@ -154,30 +145,39 @@ function convertResolvedResponse({
         });
     }
 
-    if (resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT] != null) {
-        return ResponseWithExample.file({ description: resolvedResponse.description });
-    }
-
-    if (resolvedResponse.content?.[APPLICATION_PDF] != null) {
-        return ResponseWithExample.file({ description: resolvedResponse.description });
-    }
-
-    if (resolvedResponse.content?.[TEXT_PLAIN_CONTENT] != null) {
-        const textPlainSchema = resolvedResponse.content[TEXT_PLAIN_CONTENT]?.schema;
-        if (textPlainSchema == null) {
-            return ResponseWithExample.text({ description: resolvedResponse.description });
+    for (const [mediaType, mediaObject] of Object.entries(resolvedResponse.content ?? {})) {
+        const mimeType = MediaType.parse(mediaType);
+        if (mimeType == null) {
+            continue;
         }
-        const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
-            ? context.resolveSchemaReference(textPlainSchema)
-            : textPlainSchema;
-        if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
+
+        if (mimeType.isOctetStream()) {
             return ResponseWithExample.file({ description: resolvedResponse.description });
         }
-        return ResponseWithExample.text({ description: resolvedResponse.description });
-    }
 
-    if (resolvedResponse.content?.[AUDIO_MPEG] != null) {
-        return ResponseWithExample.file({ description: resolvedResponse.description });
+        if (
+            mimeType.isOctetStream() ||
+            mimeType.isPDF() ||
+            mimeType.isAudio() ||
+            mimeType.isImage() ||
+            mimeType.isVideo()
+        ) {
+            return ResponseWithExample.file({ description: resolvedResponse.description });
+        }
+
+        if (mimeType.isPlainText()) {
+            const textPlainSchema = mediaObject.schema;
+            if (textPlainSchema == null) {
+                return ResponseWithExample.text({ description: resolvedResponse.description });
+            }
+            const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
+                ? context.resolveSchemaReference(textPlainSchema)
+                : textPlainSchema;
+            if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
+                return ResponseWithExample.file({ description: resolvedResponse.description });
+            }
+            return ResponseWithExample.text({ description: resolvedResponse.description });
+        }
     }
 
     return undefined;
