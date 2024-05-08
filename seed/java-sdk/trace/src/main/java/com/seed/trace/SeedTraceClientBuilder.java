@@ -43,7 +43,7 @@ public final class SeedTraceClientBuilder {
 
     public SeedTraceClient build() {
         this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
-        if (xRandomHeader.isPresent()) {
+        if (xRandomHeader != null) {
             this.clientOptionsBuilder.addHeader("X-Random-Header", this.xRandomHeader);
         }
         clientOptionsBuilder.environment(this.environment);
