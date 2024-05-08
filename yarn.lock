@@ -4170,7 +4170,6 @@ __metadata:
   resolution: "@fern-api/openapi-parser@workspace:packages/cli/openapi-parser"
   dependencies:
     "@apidevtools/swagger-parser": ^10.1.0
-    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
