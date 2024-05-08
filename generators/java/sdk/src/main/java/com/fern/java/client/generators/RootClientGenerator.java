@@ -389,7 +389,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             // If the header is optional, wrap the add in a presence check so it does not get added unless it's non-null
             if (shouldWrapInConditional) {
                 maybeConditionalAdditionFlow = this.buildMethod
-                        .beginControlFlow("if ($L.isPresent())", fieldName);
+                        .beginControlFlow("if ($L != null)", fieldName);
             }
 
             if (header.getPrefix().isPresent()) {
