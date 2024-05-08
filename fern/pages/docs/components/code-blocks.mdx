@@ -254,45 +254,46 @@ and a maximum height.
 
 The `CodeBlocks` component is used to display multiple code snippets in a tabbed view. It does not take any props.
 
-<CodeBlocks>
-```javascript title="helloWorld.js"
-console.log("Hello World");
-```
+<Tabs>
+    <Tab title="Example">
+        <CodeBlocks>
+        ```javascript title="helloWorld.js"
+        console.log("Hello World");
+        ```
 
-```python title="hello_world.py"
-print('Hello World!')
-```
+        ```python title="hello_world.py"
+        print('Hello World!')
+        ```
 
-```java title="HelloWorld.java"
-class HelloWorld {
-    public static void main(String[] args) {
-        System.out.println("Hello, World!");
-    }
-}
-```
-</CodeBlocks>
-
-<Aside>
-<CodeBlock title="Markdown">
-````jsx
-<CodeBlocks>
-```javascript title="helloWorld.js"
-console.log("Hello World");
-```
-
-```python title="hello_world.py"
-print('Hello World!')
-```
-
-```java title="HelloWorld.java"
-    class HelloWorld {
-        public static void main(String[] args) {
-            System.out.println("Hello, World!");
+        ```java title="HelloWorld.java"
+        class HelloWorld {
+            public static void main(String[] args) {
+                System.out.println("Hello, World!");
+            }
         }
-    }
-```
-</CodeBlocks>
-````
-</CodeBlock>
+        ```
+        </CodeBlocks>
+    </Tab>
+    <Tab title = "Markdown">
+        ````markdown maxLines=5
+        ````jsx
+        <CodeBlocks>
+        ```javascript title="helloWorld.js"
+        console.log("Hello World");
+        ```
 
-</Aside>
+        ```python title="hello_world.py"
+        print('Hello World!')
+        ```
+
+        ```java title="HelloWorld.java"
+            class HelloWorld {
+                public static void main(String[] args) {
+                    System.out.println("Hello, World!");
+                }
+            }
+        ```
+        </CodeBlocks>
+````
+    </Tab>
+</Tabs>
