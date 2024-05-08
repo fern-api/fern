@@ -11,12 +11,12 @@ import { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
  *      body: {}
  *
  */
-export const ExampleBatchResponseSchema = z.strictObject({
+export const ExampleBodyResponseSchema = z.strictObject({
     error: z.optional(z.string()),
     body: z.optional(ExampleTypeReferenceSchema)
 });
 
-export type ExampleBatchResponseSchema = z.infer<typeof ExampleBatchResponseSchema>;
+export type ExampleBodyResponseSchema = z.infer<typeof ExampleBodyResponseSchema>;
 
 /**
  * response-stream:
@@ -36,12 +36,12 @@ export const ExampleStreamResponseSchema = z.strictObject({
 
 export type ExampleStreamResponseSchema = z.infer<typeof ExampleStreamResponseSchema>;
 
-export const ExamplSseEventSchema = z.strictObject({
+export const ExampleSseEventSchema = z.strictObject({
     event: z.string(),
     data: z.optional(ExampleTypeReferenceSchema)
 });
 
-export type ExamplSseEventSchema = z.infer<typeof ExamplSseEventSchema>;
+export type ExampleSseEventSchema = z.infer<typeof ExampleSseEventSchema>;
 
 /**
  * response-stream:
@@ -52,20 +52,20 @@ export type ExamplSseEventSchema = z.infer<typeof ExamplSseEventSchema>;
  *   request:
  *     stream: true
  *   response:
- *     stream:
+ *     events:
  *      - event: chat # event 1
  *        data: {}
  *      - event: chat # event 2
  *        data: {}
  */
 export const ExampleSseResponseSchema = z.strictObject({
-    stream: z.array(ExamplSseEventSchema)
+    events: z.array(ExampleSseEventSchema)
 });
 
 export type ExampleSseResponseSchema = z.infer<typeof ExampleSseResponseSchema>;
 
 export const ExampleResponseSchema = z.union([
-    ExampleBatchResponseSchema,
+    ExampleBodyResponseSchema,
     ExampleStreamResponseSchema,
     ExampleSseResponseSchema
 ]);

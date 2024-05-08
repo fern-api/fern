@@ -3,6 +3,7 @@ import { RawSchemas, RootApiFileAstVisitor } from "../../..";
 import { NodePath } from "../../../NodePath";
 import { HttpEndpointSchema, HttpHeaderSchema, HttpPathParameterSchema, HttpServiceSchema } from "../../../schemas";
 import { isInlineRequestBody } from "../../../utils/isInlineRequestBody";
+import { visitExampleResponseSchema } from "../../../utils/visitExampleResponseSchema";
 import { isVariablePathParameter } from "../../../utils/visitRawPathParameter";
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
 import { createDocsVisitor } from "../utils/createDocsVisitor";
@@ -381,16 +382,42 @@ async function visitExampleEndpointCall({
         nodePathForResponse
     );
     if (example.response != null) {
-        if (example.response.body != null) {
-            await visitAllReferencesInExample({
-                example: example.response.body,
-                visitor,
-                nodePath: nodePathForResponse
-            });
-        }
-        if (example.response.error != null) {
-            await visitor.errorReference?.(example.response.error, [...nodePathForResponse, "error"]);
-        }
+        await visitExampleResponseSchema({
+            endpoint,
+            example: example.response,
+            visitor: {
+                body: async (response) => {
+                    if (response.body != null) {
+                        await visitAllReferencesInExample({
+                            example: response.body,
+                            visitor,
+                            nodePath: nodePathForResponse
+                        });
+                    }
+                    if (response.error != null) {
+                        await visitor.errorReference?.(response.error, [...nodePathForResponse, "error"]);
+                    }
+                },
+                stream: async (response) => {
+                    for (const example of response.stream) {
+                        await visitAllReferencesInExample({
+                            example,
+                            visitor,
+                            nodePath: nodePathForResponse
+                        });
+                    }
+                },
+                events: async (response) => {
+                    for (const example of response.events) {
+                        await visitAllReferencesInExample({
+                            example: example.data,
+                            visitor,
+                            nodePath: nodePathForResponse
+                        });
+                    }
+                }
+            }
+        });
     }
 
     if (example["code-samples"] != null) {
