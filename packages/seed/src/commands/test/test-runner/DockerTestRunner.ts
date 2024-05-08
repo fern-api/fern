@@ -17,12 +17,15 @@ export class DockerTestRunner extends TestRunner {
         if (dockerCommands == null) {
             throw new Error(`Failed. No docker command for ${this.generator.workspaceName}`);
         }
-        await runScript({
+        const dockerBuildReturn = await runScript({
             commands: dockerCommands,
             logger: CONSOLE_LOGGER,
             workingDir: path.dirname(path.dirname(this.generator.absolutePathToWorkspace)),
             doNotPipeOutput: false
         });
+        if (dockerBuildReturn.exitCode != 0) {
+            throw new Error(`Failed to build the docker container for ${this.generator.workspaceName}.`);
+        }
     }
 
     async runGenerator({
