@@ -7,7 +7,6 @@ import {
     updateGeneratorGroup
 } from ".";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
-import { upgradeGeneratorVersion } from "./upgradeGeneratorVersion";
 
 function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): GeneratorName {
     const normalizedGeneratorName = normalizeGeneratorName(generatorName);
@@ -22,6 +21,7 @@ async function getLatestGeneratorVersion(generatorName: string, context: TaskCon
     const docker = new Docker();
     let image;
     try {
+        await docker.pull(`${generatorName}`);
         image = await docker.getImage(`${generatorName}:latest`).inspect();
     } catch (e) {
         context.logger.error(`No image found behind generator ${generatorName} at tag latest.`);
@@ -36,7 +36,7 @@ async function getLatestGeneratorVersion(generatorName: string, context: TaskCon
         context.logger.error(`No version found behind generator ${generatorName} at tag latest.`);
         return;
     }
-
+    context.logger.debug(`Found image behind generator ${generatorName} at tag latest: ${generatorVersion}.`);
     return generatorVersion;
 }
 
@@ -52,13 +52,29 @@ export async function upgradeGenerator({
     context: TaskContext;
 }): Promise<GeneratorsConfigurationSchema> {
     const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
-    return upgradeGeneratorVersion({
+    context.logger.info(`${normalizedGeneratorName} ${groupName}`);
+    const conf = await updateGeneratorGroup({
         generatorsConfiguration,
         groupName,
         context,
-        generatorName: normalizedGeneratorName,
-        version: await getLatestGeneratorVersion(normalizedGeneratorName, context)
+        update: async (group) => {
+            const latestVersion = await getLatestGeneratorVersion(normalizedGeneratorName, context);
+            const genConfig = group.generators.find((generator) => generator.name === normalizedGeneratorName);
+            if (genConfig == null) {
+                addGenerator({ generatorName, generatorsConfiguration, groupName, context });
+            }
+            if (latestVersion != null) {
+                group.generators = group.generators.filter((generator) => generator.name !== normalizedGeneratorName);
+                group.generators.push({
+                    ...genConfig,
+                    name: normalizedGeneratorName,
+                    // Fall back to the hardcoded version if a "latest" does not yet exist
+                    version: latestVersion
+                });
+            }
+        }
     });
+    return conf;
 }
 
 export async function addGenerator({
