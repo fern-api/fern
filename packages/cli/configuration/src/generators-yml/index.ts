@@ -1,5 +1,5 @@
 export { DEFAULT_GROUP_NAME } from "../constants";
-export { addGenerator } from "./addGenerator";
+export { addGenerator, upgradeGenerator } from "./addGenerator";
 export { GeneratorName } from "./GeneratorName";
 export {
     GenerationLanguage,
