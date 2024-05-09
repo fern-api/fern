@@ -226,6 +226,8 @@ navigation:
             slug: write-markdown
           - page: Frontmatter
             path: ./pages/fern-docs/content/front-matter.mdx
+          - page: Reusable snippets
+            path: ./pages/fern-docs/content/reusable-snippets.mdx
       - section: API references
         contents:
           - page: Generate API reference
