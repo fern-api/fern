@@ -9,8 +9,8 @@
     },
     "publish": null,
     "customConfig": {
-        "retainOriginalCasing": true,
-        "outputSourceFiles": true
+        "outputSourceFiles": true,
+        "retainOriginalCasing": true
     },
     "workspaceName": "exhaustive",
     "organization": "seed",

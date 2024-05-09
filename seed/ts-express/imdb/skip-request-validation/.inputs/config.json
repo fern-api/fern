@@ -9,8 +9,8 @@
     },
     "publish": null,
     "customConfig": {
-        "skipRequestValidation": true,
-        "outputSourceFiles": true
+        "outputSourceFiles": true,
+        "skipRequestValidation": true
     },
     "workspaceName": "api",
     "organization": "seed",

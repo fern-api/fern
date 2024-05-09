@@ -9,10 +9,10 @@
     },
     "publish": null,
     "customConfig": {
+        "outputSourceFiles": true,
         "doNotHandleUnrecognizedErrors": true,
         "includeUtilsOnUnionMembers": true,
-        "includeOtherInUnionTypes": true,
-        "outputSourceFiles": true
+        "includeOtherInUnionTypes": true
     },
     "workspaceName": "exhaustive",
     "organization": "seed",

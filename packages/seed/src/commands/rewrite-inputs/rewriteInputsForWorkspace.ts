@@ -62,8 +62,8 @@ export async function rewriteInputsForWorkspace({
                         generator.workspaceConfig.defaultCustomConfig != null ||
                         fixtureConfigInstance.customConfig != null
                             ? {
-                                  ...((fixtureConfigInstance.customConfig as any) ?? {}),
-                                  ...(generator.workspaceConfig.defaultCustomConfig ?? {})
+                                  ...(generator.workspaceConfig.defaultCustomConfig ?? {}),
+                                  ...((fixtureConfigInstance.customConfig as Record<string, unknown>) ?? {})
                               }
                             : undefined,
                     publishConfig: fixtureConfigInstance.publishConfig,

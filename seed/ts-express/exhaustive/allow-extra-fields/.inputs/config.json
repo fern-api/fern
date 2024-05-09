@@ -9,8 +9,8 @@
     },
     "publish": null,
     "customConfig": {
-        "allowExtraFields": true,
-        "outputSourceFiles": true
+        "outputSourceFiles": true,
+        "allowExtraFields": true
     },
     "workspaceName": "exhaustive",
     "organization": "seed",

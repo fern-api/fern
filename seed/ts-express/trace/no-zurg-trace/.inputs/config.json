@@ -9,8 +9,8 @@
     },
     "publish": null,
     "customConfig": {
-        "noSerdeLayer": true,
-        "outputSourceFiles": true
+        "outputSourceFiles": true,
+        "noSerdeLayer": true
     },
     "workspaceName": "trace",
     "organization": "seed",
