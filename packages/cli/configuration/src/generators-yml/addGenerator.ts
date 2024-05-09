@@ -18,19 +18,14 @@ function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): G
     return normalizedGeneratorName;
 }
 
-async function getLatestGeneratorVersion(generatorName: string): Promise<string | undefined> {
+async function getLatestGeneratorVersion(generatorName: string, context: TaskContext): Promise<string | undefined> {
     const docker = new Docker();
-    console.log("Testing docker connection...");
     let image;
     try {
-        image = await docker.getImage(`${generatorName}`).inspect();
+        image = await docker.getImage(`${generatorName}:latest`).inspect();
     } catch (e) {
-        try {
-            image = await docker.getImage(`${generatorName}:latest`).inspect();
-        } catch {
-            console.error(`No image found behind generator ${generatorName} at tag latest`);
-            return;
-        }
+        context.logger.error(`No image found behind generator ${generatorName} at tag latest.`);
+        return;
     }
 
     // This assumes we have a label of the form version=x.y.z
@@ -38,7 +33,7 @@ async function getLatestGeneratorVersion(generatorName: string): Promise<string 
     // eslint-disable-next-line @typescript-eslint/dot-notation
     const generatorVersion = image.Config.Labels?.["version"];
     if (generatorVersion == null) {
-        console.error(`No version found behind generator ${generatorName} at tag latest: ${JSON.stringify(image)}`);
+        context.logger.error(`No version found behind generator ${generatorName} at tag latest.`);
         return;
     }
 
@@ -62,7 +57,7 @@ export async function upgradeGenerator({
         groupName,
         context,
         generatorName: normalizedGeneratorName,
-        version: await getLatestGeneratorVersion(normalizedGeneratorName)
+        version: await getLatestGeneratorVersion(normalizedGeneratorName, context.logger)
     });
 }
 
