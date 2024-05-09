@@ -17,14 +17,17 @@ function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): G
     return normalizedGeneratorName;
 }
 
-async function getLatestGeneratorVersion(generatorName: string, context: TaskContext): Promise<string | undefined> {
+export async function getLatestGeneratorVersion(
+    generatorName: string,
+    context?: TaskContext
+): Promise<string | undefined> {
     const docker = new Docker();
     let image;
     try {
         await docker.pull(`${generatorName}`);
         image = await docker.getImage(`${generatorName}:latest`).inspect();
     } catch (e) {
-        context.logger.error(`No image found behind generator ${generatorName} at tag latest.`);
+        context?.logger.error(`No image found behind generator ${generatorName} at tag latest.`);
         return;
     }
 
@@ -33,10 +36,10 @@ async function getLatestGeneratorVersion(generatorName: string, context: TaskCon
     // eslint-disable-next-line @typescript-eslint/dot-notation
     const generatorVersion = image.Config.Labels?.["version"];
     if (generatorVersion == null) {
-        context.logger.error(`No version found behind generator ${generatorName} at tag latest.`);
+        context?.logger.error(`No version found behind generator ${generatorName} at tag latest.`);
         return;
     }
-    context.logger.debug(`Found image behind generator ${generatorName} at tag latest: ${generatorVersion}.`);
+    context?.logger.debug(`Found image behind generator ${generatorName} at tag latest: ${generatorVersion}.`);
     return generatorVersion;
 }
 
