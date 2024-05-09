@@ -9,6 +9,7 @@
     },
     "publish": null,
     "customConfig": {
+        "outputSourceFiles": true,
         "retainOriginalCasing": true
     },
     "workspaceName": "mixed-case",

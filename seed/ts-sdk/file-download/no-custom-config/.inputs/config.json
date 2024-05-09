@@ -17,7 +17,6 @@
         "snippetFilepath": "/fern/snippet.json"
     },
     "publish": null,
-    "customConfig": null,
     "workspaceName": "file-download",
     "organization": "seed",
     "environment": {

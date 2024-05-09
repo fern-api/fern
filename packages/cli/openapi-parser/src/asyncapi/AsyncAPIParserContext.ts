@@ -13,12 +13,22 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
     public document: AsyncAPIV2.Document;
     public taskContext: TaskContext;
     public DUMMY: SchemaParserContext;
+    public shouldUseTitleAsName: boolean;
 
-    constructor({ document, taskContext }: { document: AsyncAPIV2.Document; taskContext: TaskContext }) {
+    constructor({
+        document,
+        taskContext,
+        shouldUseTitleAsName
+    }: {
+        document: AsyncAPIV2.Document;
+        taskContext: TaskContext;
+        shouldUseTitleAsName: boolean;
+    }) {
         this.document = document;
         this.taskContext = taskContext;
         this.logger = taskContext.logger;
         this.DUMMY = this;
+        this.shouldUseTitleAsName = shouldUseTitleAsName;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -102,8 +112,16 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
 }
 
 export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
-    constructor({ document, taskContext }: { document: AsyncAPIV2.Document; taskContext: TaskContext }) {
-        super({ document, taskContext });
+    constructor({
+        document,
+        taskContext,
+        shouldUseTitleAsName
+    }: {
+        document: AsyncAPIV2.Document;
+        taskContext: TaskContext;
+        shouldUseTitleAsName: boolean;
+    }) {
+        super({ document, taskContext, shouldUseTitleAsName });
     }
 
     markSchemaAsReferencedByNonRequest(schemaId: string): void {

@@ -67,8 +67,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 }
             }
 
-            if (endpoint.response?.type === "json") {
-                switch (endpoint.response.value.responseBodyType.type) {
+            if (endpoint.response?.body?.type === "json") {
+                switch (endpoint.response.body.value.responseBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -76,7 +76,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                             service,
                             endpoint,
                             typeName: GeneratedExpressEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                            type: endpoint.response.value.responseBodyType
+                            type: endpoint.response.body.value.responseBodyType
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -86,7 +86,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.value.responseBodyType);
+                        assertNever(endpoint.response.body.value.responseBodyType);
                 }
             }
         }
@@ -172,17 +172,17 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     }
 
     public serializeResponse(referenceToParsedResponse: ts.Expression, context: ExpressContext): ts.Expression {
-        if (this.endpoint.response == null) {
-            throw new Error("Cannot deserialize response because it's not defined");
+        if (this.endpoint.response?.body == null) {
+            throw new Error("Cannot serialize response because it's not defined");
         }
 
-        if (this.endpoint.response.type === "fileDownload") {
+        if (this.endpoint.response.body?.type === "fileDownload") {
             throw new Error("Cannot serialize file");
         }
-        if (this.endpoint.response.type === "streaming") {
+        if (this.endpoint.response.body?.type === "streaming") {
             throw new Error("Streaming response is not supported");
         }
-        if (this.endpoint.response.type === "text") {
+        if (this.endpoint.response.body?.type === "text") {
             throw new Error("Text response is not supported");
         }
 
@@ -190,12 +190,14 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             return referenceToParsedResponse;
         }
 
-        switch (this.endpoint.response.value.responseBodyType.type) {
+        switch (this.endpoint.response.body.value.responseBodyType.type) {
             case "unknown":
                 return referenceToParsedResponse;
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.value.responseBodyType, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.body.value.responseBodyType, {
+                        isGeneratingSchema: false
+                    })
                     .jsonOrThrow(referenceToParsedResponse, {
                         ...getSchemaOptions({
                             allowExtraFields: this.allowExtraFields
@@ -214,7 +216,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         })
                     });
             default:
-                assertNever(this.endpoint.response.value.responseBodyType);
+                assertNever(this.endpoint.response.body?.value.responseBodyType);
         }
     }
 }

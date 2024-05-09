@@ -8,6 +8,9 @@
         "publishingMetadata": null
     },
     "publish": null,
+    "customConfig": {
+        "outputSourceFiles": true
+    },
     "workspaceName": "alias",
     "organization": "seed",
     "environment": {

@@ -128,7 +128,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -675,7 +676,10 @@
                             }
                         }
                     },
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -854,7 +858,10 @@
                             }
                         }
                     },
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -1207,7 +1214,10 @@
                             }
                         }
                     },
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {

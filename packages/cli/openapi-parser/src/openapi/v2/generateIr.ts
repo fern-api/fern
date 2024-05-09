@@ -8,18 +8,21 @@ export async function generateIr({
     openApi,
     taskContext,
     disableExamples,
-    audiences
+    audiences,
+    shouldUseTitleAsName
 }: {
     openApi: OpenAPIV2.Document;
     taskContext: TaskContext;
     disableExamples: boolean | undefined;
     audiences: string[];
+    shouldUseTitleAsName: boolean;
 }): Promise<OpenApiIntermediateRepresentation> {
     const conversionResult = await convertObj(openApi, {});
     return generateIrFromV3({
         openApi: conversionResult.openapi,
         taskContext,
         disableExamples,
-        audiences
+        audiences,
+        shouldUseTitleAsName
     });
 }

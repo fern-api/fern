@@ -19,6 +19,7 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
+    shouldUseTitleAsName: boolean;
 }
 
 export interface RawOpenAPIFile {
@@ -74,7 +75,8 @@ export async function parse({
                     openApi: openApiDocument,
                     taskContext,
                     disableExamples: false,
-                    audiences: spec.settings?.audiences ?? []
+                    audiences: spec.settings?.audiences ?? [],
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
@@ -82,7 +84,8 @@ export async function parse({
                     openApi: openApiDocument,
                     taskContext,
                     disableExamples: false,
-                    audiences: spec.settings?.audiences ?? []
+                    audiences: spec.settings?.audiences ?? [],
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -93,7 +96,11 @@ export async function parse({
                 context: taskContext,
                 absoluteFilePathToAsyncAPIOverrides: spec.absoluteFilepathToOverrides
             });
-            const parsedAsyncAPI = parseAsyncAPI({ document: asyncAPI, taskContext });
+            const parsedAsyncAPI = parseAsyncAPI({
+                document: asyncAPI,
+                taskContext,
+                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+            });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
             }
