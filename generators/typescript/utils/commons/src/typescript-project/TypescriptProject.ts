@@ -49,13 +49,14 @@ export abstract class TypescriptProject {
         // eslint-disable-next-line no-console
         console.log("Persisted typescript project to " + directoryOnDiskToWriteTo);
         await this.writeSrcToVolume();
+        await this.addFilesToVolume();
+
+        await this.writeVolumeToDisk(directoryOnDiskToWriteTo);
 
         for (const [filepath, fileContents] of Object.entries(this.extraFiles)) {
-            await this.writeFileToVolume(RelativeFilePath.of(filepath), fileContents);
+            await mkdir(path.dirname(filepath), { recursive: true });
+            await writeFile(filepath, fileContents);
         }
-
-        await this.addFilesToVolume();
-        await this.writeVolumeToDisk(directoryOnDiskToWriteTo);
 
         return new PersistedTypescriptProject({
             directory: directoryOnDiskToWriteTo,

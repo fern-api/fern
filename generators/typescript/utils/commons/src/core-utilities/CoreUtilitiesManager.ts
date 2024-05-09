@@ -63,9 +63,10 @@ export class CoreUtilitiesManager {
                         ? path.join(__dirname, "../../../../..", utility.repoInfoForTesting.path)
                         : utility.originalPathOnDocker,
                     toPath,
-                    { recursive: true }
+                    {
+                        recursive: true
+                    }
                 );
-
                 if (utility.repoInfoForTesting.ignoreGlob != null && process.env.NODE_ENV === "test") {
                     const filesToDelete = await glob(utility.repoInfoForTesting.ignoreGlob, {
                         cwd: toPath,

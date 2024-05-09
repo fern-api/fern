@@ -7,7 +7,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst seedOauthClientCredentials = new SeedOauthClientCredentialsClient({ token: \"YOUR_TOKEN\" });\nawait seedOauthClientCredentials.auth.getTokenWithClientCredentials({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"client_credentials\",\n    scope: \"string\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst seedOauthClientCredentials = new SeedOauthClientCredentialsClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait seedOauthClientCredentials.auth.getTokenWithClientCredentials({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"client_credentials\",\n    scope: \"string\"\n});\n"
             }
         },
         {
@@ -17,7 +17,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst seedOauthClientCredentials = new SeedOauthClientCredentialsClient({ token: \"YOUR_TOKEN\" });\nawait seedOauthClientCredentials.auth.refreshToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    refreshToken: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"refresh_token\",\n    scope: \"string\"\n});\n"
+                "client": "import { SeedOauthClientCredentialsClient } from \"@fern/oauth-client-credentials\";\n\nconst seedOauthClientCredentials = new SeedOauthClientCredentialsClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait seedOauthClientCredentials.auth.refreshToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    refreshToken: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"refresh_token\",\n    scope: \"string\"\n});\n"
             }
         }
     ],

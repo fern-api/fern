@@ -9,6 +9,7 @@ import {
     HttpHeader,
     HttpResponseBody,
     IntermediateRepresentation,
+    OAuthScheme,
     Package,
     PathParameter,
     VariableDeclaration,
@@ -37,9 +38,11 @@ import { getParameterNameForPathParameter } from "./endpoints/utils/getParameter
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
+import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
+        isRoot: boolean;
         importsManager: ImportsManager;
         intermediateRepresentation: IntermediateRepresentation;
         packageId: PackageId;
@@ -56,6 +59,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
 
@@ -71,7 +75,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
     private static CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
 
+    private isRoot: boolean;
     private intermediateRepresentation: IntermediateRepresentation;
+    private oauthAuthScheme: OAuthScheme | undefined;
     private bearerAuthScheme: BearerAuthScheme | undefined;
     private basicAuthScheme: BasicAuthScheme | undefined;
     private authHeaders: HeaderAuthScheme[];
@@ -87,8 +93,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
     private importsManager: ImportsManager;
+    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
     constructor({
+        isRoot,
         intermediateRepresentation,
         serviceClassName,
         packageId,
@@ -104,11 +112,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
-        importsManager
+        importsManager,
+        oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
-        this.packageId = packageId;
-        this.serviceClassName = serviceClassName;
+        this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
+        this.serviceClassName = serviceClassName;
+        this.packageId = packageId;
         this.allowCustomFetcher = allowCustomFetcher;
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
@@ -116,6 +126,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
         this.importsManager = importsManager;
+        this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -283,9 +294,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 header: (header) => {
                     this.authHeaders.push(header);
                 },
-                oauth: () => {
-                    // default to bearer for now
-                    throw new Error("Oauth scheme is unsupported");
+                oauth: (oauthScheme) => {
+                    this.oauthAuthScheme = oauthScheme;
                 },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);
@@ -364,26 +374,124 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
         maybeAddDocs(serviceClass, this.package_.docs);
 
-        serviceClass.addConstructor({
-            parameters: [
-                {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
-                    isReadonly: true,
-                    scope: Scope.Protected,
-                    type: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode(
-                            ts.factory.createQualifiedName(
-                                ts.factory.createIdentifier(serviceModule.getName()),
-                                ts.factory.createIdentifier(optionsInterface.getName())
+        if (this.isRoot && context.generateOAuthClients) {
+            serviceClass.addProperty({
+                name: OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME,
+                type: getTextOfTsNode(context.coreUtilities.auth.OAuthTokenProvider._getReferenceToType()),
+                scope: Scope.Private,
+                isReadonly: true
+            });
+        }
+
+        if (this.isRoot && context.generateOAuthClients && this.oauthAuthScheme != null) {
+            const authClientTypeName = this.oauthTokenProviderGenerator.getAuthClientTypeName({
+                context,
+                oauthScheme: this.oauthAuthScheme
+            });
+            const properties: ts.PropertyAssignment[] = [
+                ts.factory.createPropertyAssignment(
+                    OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createThis(),
+                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                        ),
+                        OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME
+                    )
+                ),
+                ts.factory.createPropertyAssignment(
+                    OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createThis(),
+                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                        ),
+                        OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME
+                    )
+                ),
+
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier(OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME),
+                    ts.factory.createNewExpression(ts.factory.createIdentifier(authClientTypeName), undefined, [
+                        ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier(
+                                        GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME
+                                    ),
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createThis(),
+                                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
+                                        ),
+                                        ts.factory.createIdentifier(
+                                            GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME
+                                        )
+                                    )
+                                )
+                            ],
+                            true
+                        )
+                    ])
+                )
+            ];
+            serviceClass.addConstructor({
+                parameters: [
+                    {
+                        name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                        isReadonly: true,
+                        scope: Scope.Protected,
+                        type: getTextOfTsNode(
+                            ts.factory.createTypeReferenceNode(
+                                ts.factory.createQualifiedName(
+                                    ts.factory.createIdentifier(serviceModule.getName()),
+                                    ts.factory.createIdentifier(optionsInterface.getName())
+                                )
                             )
                         )
-                    ),
-                    initializer: optionsInterface.getProperties().every((property) => property.hasQuestionToken())
-                        ? "{}"
-                        : undefined
-                }
-            ]
-        });
+                    }
+                ],
+                statements: [
+                    getTextOfTsNode(
+                        ts.factory.createExpressionStatement(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createThis(),
+                                    OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME
+                                ),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                ts.factory.createNewExpression(
+                                    context.coreUtilities.auth.OAuthTokenProvider._getExpression(),
+                                    undefined,
+                                    [ts.factory.createObjectLiteralExpression(properties, true)]
+                                )
+                            )
+                        )
+                    )
+                ]
+            });
+        } else {
+            serviceClass.addConstructor({
+                parameters: [
+                    {
+                        name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                        isReadonly: true,
+                        scope: Scope.Protected,
+                        type: getTextOfTsNode(
+                            ts.factory.createTypeReferenceNode(
+                                ts.factory.createQualifiedName(
+                                    ts.factory.createIdentifier(serviceModule.getName()),
+                                    ts.factory.createIdentifier(optionsInterface.getName())
+                                )
+                            )
+                        ),
+                        initializer: optionsInterface.getProperties().every((property) => property.hasQuestionToken())
+                            ? "{}"
+                            : undefined
+                    }
+                ]
+            });
+        }
 
         let isIdempotent = false;
 
@@ -424,7 +532,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         for (const wrappedService of this.generatedWrappedServices) {
-            wrappedService.addToServiceClass(serviceClass, context);
+            wrappedService.addToServiceClass({
+                isRoot: this.isRoot,
+                class_: serviceClass,
+                context
+            });
         }
 
         if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
@@ -464,7 +576,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (this.generatedEndpointImplementations.length === 0) {
             return false;
         }
-        return this.bearerAuthScheme != null || this.basicAuthScheme != null;
+        return this.oauthAuthScheme != null || this.bearerAuthScheme != null || this.basicAuthScheme != null;
     }
 
     private shouldGenerateCustomAuthorizationHeaderHelperMethod(): boolean {
@@ -650,6 +762,21 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public getOptionsPropertiesForSnippet(context: SdkContext): ts.ObjectLiteralElementLike[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
+        if (this.oauthAuthScheme != null && context.generateOAuthClients) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
+                    ts.factory.createStringLiteral("YOUR_CLIENT_ID")
+                )
+            );
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
+                    ts.factory.createStringLiteral("YOUR_CLIENT_SECRET")
+                )
+            );
+        }
+
         if (this.bearerAuthScheme != null) {
             properties.push(
                 ts.factory.createPropertyAssignment(
@@ -717,6 +844,31 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
+        if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
+            properties.push({
+                name: OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        context.type.getReferenceToType(
+                            this.oauthAuthScheme.configuration.tokenEndpoint.requestProperties.clientId.property
+                                .valueType
+                        ).typeNode
+                    )
+                )
+            });
+            properties.push({
+                name: OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        context.type.getReferenceToType(
+                            this.oauthAuthScheme.configuration.tokenEndpoint.requestProperties.clientSecret.property
+                                .valueType
+                        ).typeNode
+                    )
+                )
+            });
+        }
+
         for (const variable of this.intermediateRepresentation.variables) {
             const variableType = context.type.getReferenceToType(variable.type);
             properties.push({
@@ -753,6 +905,21 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 hasQuestionToken:
                     !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
                     this.bearerAuthScheme.tokenEnvVar != null
+            });
+        } else if (!this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
+            properties.push({
+                name: OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME,
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        this.intermediateRepresentation.sdkConfig.isAuthMandatory
+                            ? context.coreUtilities.auth.BearerToken._getReferenceToType()
+                            : ts.factory.createUnionTypeNode([
+                                  context.coreUtilities.auth.BearerToken._getReferenceToType(),
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                    )
+                ),
+                hasQuestionToken: true
             });
         }
 
@@ -949,6 +1116,21 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getAuthorizationHeaderStatements(context: SdkContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
+        if (this.oauthAuthScheme != null) {
+            statements.push(
+                ts.factory.createReturnStatement(
+                    ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
+                        ts.factory.createTemplateSpan(
+                            context.coreUtilities.fetcher.Supplier.get(
+                                this.getReferenceToOption(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME)
+                            ),
+                            ts.factory.createTemplateTail("", "")
+                        )
+                    ])
+                )
+            );
+            return statements;
+        }
         if (this.bearerAuthScheme != null) {
             if (this.bearerAuthScheme.tokenEnvVar != null) {
                 const BEARER_TOKEN_VARIABLE_NAME = "bearer";
