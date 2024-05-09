@@ -60,8 +60,8 @@ async function getDefaultGeneratorsConfiguration(): Promise<generatorsYml.Genera
             [DEFAULT_GROUP_NAME]: {
                 generators: [
                     {
-                        ...fallbackInvocation,
                         name: defaultGeneratorName,
+                        ...fallbackInvocation,
                         version:
                             (await generatorsYml.getLatestGeneratorVersion(defaultGeneratorName)) ??
                             fallbackInvocation.version
