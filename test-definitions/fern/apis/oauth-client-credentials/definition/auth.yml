@@ -14,7 +14,7 @@ service:
     getTokenWithClientCredentials:
       path: /token
       method: POST
-      request: 
+      request:
         name: GetTokenRequest
         body:
           properties:

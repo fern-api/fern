@@ -1,5 +1,5 @@
 name: valid
-imports: 
+imports:
   auth: auth.yml
 
 auth: OAuthScheme

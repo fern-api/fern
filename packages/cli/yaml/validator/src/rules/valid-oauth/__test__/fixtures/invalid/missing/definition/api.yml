@@ -1,5 +1,5 @@
-name: invalid
-imports: 
+name: missing
+imports:
   auth: auth.yml
 
 auth: OAuthScheme
@@ -7,12 +7,12 @@ auth-schemes:
   OAuthScheme: 
     scheme: oauth
     type: client-credentials
-    get-token: 
+    get-token:
       endpoint: auth.getTokenWithClientCredentials
-      response-properties: 
-        access-token: $response.missing.access_token
-        expires-in: $response.missing.expires_in
-    refresh-token: 
+      response-properties:
+        access-token: $response.accessToken
+        expires-in: $response.expiresIn
+    refresh-token:
       endpoint: auth.refreshToken
       request-properties:
         refresh-token: $request.refreshTokenDoesNotExist
