@@ -92,6 +92,7 @@ export async function addGenerator({
             group.generators.push({
                 name: normalizedGeneratorName,
                 ...invocation,
+                // Fall back to the hardcoded version if a "latest" does not yet exist
                 version: (await getLatestGeneratorVersion(normalizedGeneratorName)) ?? invocation.version
             });
         }
