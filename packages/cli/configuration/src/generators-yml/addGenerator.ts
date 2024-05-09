@@ -20,6 +20,9 @@ function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): G
 
 async function getLatestGeneratorVersion(generatorName: string): Promise<string> {
     const docker = new Docker();
+    console.log("Testing docker connection...");
+    console.log(docker.checkAuth({}));
+    console.log(docker.ping());
     const image = await docker.getImage(`${generatorName}:latest`).inspect();
 
     // This assumes we have a label of the form version=x.y.z
