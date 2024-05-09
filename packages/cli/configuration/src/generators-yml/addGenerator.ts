@@ -57,7 +57,7 @@ export async function upgradeGenerator({
         groupName,
         context,
         generatorName: normalizedGeneratorName,
-        version: await getLatestGeneratorVersion(normalizedGeneratorName, context.logger)
+        version: await getLatestGeneratorVersion(normalizedGeneratorName, context)
     });
 }
 
