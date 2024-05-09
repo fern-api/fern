@@ -1,5 +1,4 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { GeneratorsConfigurationSchema } from "@fern-api/configuration/src/generators-yml";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
@@ -17,7 +16,7 @@ async function upgradeSpecificGroupGenerator({
     generator: string;
     group: string;
     generatorsConfiguration: generatorsYml.GeneratorsConfigurationSchema;
-}): Promise<GeneratorsConfigurationSchema> {
+}): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     const newConfiguration = await generatorsYml.upgradeGenerator({
         generatorName: generator,
         generatorsConfiguration,
@@ -52,7 +51,7 @@ export async function upgradeGenerator({
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {
                     return;
                 }
-                let newConfiguration: GeneratorsConfigurationSchema = generatorsConfiguration;
+                let newConfiguration: generatorsYml.GeneratorsConfigurationSchema = generatorsConfiguration;
                 if (generator != null && group != null) {
                     newConfiguration = await upgradeSpecificGroupGenerator({
                         generator,
