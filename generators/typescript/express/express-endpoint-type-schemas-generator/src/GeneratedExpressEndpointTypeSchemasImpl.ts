@@ -195,7 +195,9 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 return referenceToParsedResponse;
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.body.value.responseBodyType, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.body.value.responseBodyType, {
+                        isGeneratingSchema: false
+                    })
                     .jsonOrThrow(referenceToParsedResponse, {
                         ...getSchemaOptions({
                             allowExtraFields: this.allowExtraFields

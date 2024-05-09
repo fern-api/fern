@@ -283,9 +283,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 header: (header) => {
                     this.authHeaders.push(header);
                 },
-                oauth: (oauth) => {
+                oauth: () => {
                     // default to bearer for now
-                    throw new Error("Oauth scheme is unsupported: " + oauth);
+                    throw new Error("Oauth scheme is unsupported");
                 },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);

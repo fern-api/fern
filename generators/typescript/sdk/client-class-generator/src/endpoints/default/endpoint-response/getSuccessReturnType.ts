@@ -5,7 +5,12 @@ import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export function getSuccessReturnType(
-    response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Streaming | HttpResponseBody.Text | undefined,
+    response:
+        | HttpResponseBody.Json
+        | HttpResponseBody.FileDownload
+        | HttpResponseBody.Streaming
+        | HttpResponseBody.Text
+        | undefined,
     context: SdkContext,
     opts: {
         includeContentHeadersOnResponse: boolean;
