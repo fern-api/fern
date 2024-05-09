@@ -1,7 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -11,29 +10,23 @@ async function upgradeSpecificGroupGenerator({
     context,
     generator,
     group,
-    generatorsConfiguration,
-    workspace
+    generatorsConfiguration
 }: {
     context: TaskContext;
     generator: string;
     group: string;
     generatorsConfiguration: generatorsYml.GeneratorsConfigurationSchema;
-    workspace: APIWorkspace;
-}) {
+}): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     const newConfiguration = await generatorsYml.upgradeGenerator({
         generatorName: generator,
         generatorsConfiguration,
         groupName: group,
         context
     });
-    await writeFile(
-        workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-            generatorsYml.getPathToGeneratorsConfiguration({
-                absolutePathToWorkspace: workspace.absoluteFilepath
-            }),
-        yaml.dump(newConfiguration)
+    context.logger.info(
+        chalk.green(`${generator} has been upgraded to latest in group: ${group}, ${yaml.dump(newConfiguration)}`)
     );
-    context.logger.info(chalk.green(`${generator} has been upgraded to latest in group: ${group}`));
+    return newConfiguration;
 }
 
 export async function upgradeGenerator({
@@ -58,13 +51,13 @@ export async function upgradeGenerator({
                 if (generatorsConfiguration == null || generatorsConfiguration.groups == null) {
                     return;
                 }
+                let newConfiguration: generatorsYml.GeneratorsConfigurationSchema = generatorsConfiguration;
                 if (generator != null && group != null) {
-                    await upgradeSpecificGroupGenerator({
+                    newConfiguration = await upgradeSpecificGroupGenerator({
                         generator,
                         generatorsConfiguration,
                         group,
-                        context,
-                        workspace
+                        context
                     });
                 } else {
                     // loop through groups and generators
@@ -75,16 +68,22 @@ export async function upgradeGenerator({
                                 continue;
                             }
 
-                            await upgradeSpecificGroupGenerator({
+                            newConfiguration = await upgradeSpecificGroupGenerator({
                                 generator: generatorSchema.name,
                                 group: groupName,
-                                generatorsConfiguration,
-                                context,
-                                workspace
+                                generatorsConfiguration: newConfiguration,
+                                context
                             });
                         }
                     }
                 }
+                await writeFile(
+                    workspace.generatorsConfiguration?.absolutePathToConfiguration ??
+                        generatorsYml.getPathToGeneratorsConfiguration({
+                            absolutePathToWorkspace: workspace.absoluteFilepath
+                        }),
+                    yaml.dump(newConfiguration)
+                );
             });
         })
     );
