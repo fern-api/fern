@@ -88,7 +88,7 @@ export async function addGenerator({
                 name: normalizedGeneratorName,
                 ...invocation,
                 // Fall back to the hardcoded version if a "latest" does not yet exist
-                version: (await getLatestGeneratorVersion(normalizedGeneratorName)) ?? invocation.version
+                version: (await getLatestGeneratorVersion(normalizedGeneratorName, context)) ?? invocation.version
             });
         }
     });
