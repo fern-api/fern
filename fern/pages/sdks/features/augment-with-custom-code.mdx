@@ -238,12 +238,14 @@ To add custom dependencies to your generated SDKs, you can update your `generato
       ```
   </CodeBlock>
   <CodeBlock title="Python">
-      ```yaml {4-5}
+      ```yaml {4-7}
       - name: fernapi/fern-python-sdk
         version: "..."
         config:
           extra_dependencies: 
             numpy: '1.2.0'
+          extra_dev_dependencies: 
+            requests_mock: '1.12.1'
       ```
   </CodeBlock>
 </CodeBlocks>

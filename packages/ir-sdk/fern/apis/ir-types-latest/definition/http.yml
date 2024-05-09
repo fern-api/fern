@@ -148,7 +148,12 @@ types:
       wrapperName: commons.Name
       bodyKey: commons.Name
 
-  HttpResponse:
+  HttpResponse: 
+    properties:
+      status-code: optional<integer>
+      body: optional<HttpResponseBody>
+
+  HttpResponseBody:
     union:
       json: JsonResponse
       fileDownload: FileDownloadResponse

@@ -1,12 +1,11 @@
 import { TaskContext } from "@fern-api/task-context";
-import produce from "immer";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     GeneratorsConfigurationSchema
 } from "./schemas/GeneratorsConfigurationSchema";
 
-export function updateGeneratorGroup({
+export async function updateGeneratorGroup({
     generatorsConfiguration,
     groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
     context,
@@ -15,15 +14,16 @@ export function updateGeneratorGroup({
     generatorsConfiguration: GeneratorsConfigurationSchema;
     groupName: string | undefined;
     context: TaskContext;
-    update: (draft: GeneratorGroupSchema, groupName: string) => void;
-}): GeneratorsConfigurationSchema {
+    update: (draft: GeneratorGroupSchema, groupName: string) => Promise<void>;
+}): Promise<GeneratorsConfigurationSchema> {
     if (groupName == null) {
         return context.failAndThrow("No group specified.");
     }
-
-    return produce(generatorsConfiguration, (draft) => {
-        const groups = (draft.groups ??= {});
+    const groups = (generatorsConfiguration.groups ??= {});
+    for (const groupName of Object.keys(groups)) {
         const draftGroup = (groups[groupName] ??= { generators: [] });
-        update(draftGroup, groupName);
-    });
+        await update(draftGroup, groupName);
+    }
+
+    return generatorsConfiguration;
 }

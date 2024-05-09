@@ -506,7 +506,8 @@
                         "properties": {
                           "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                           "type": { "type": "string" },
-                          "property": { "type": "string" }
+                          "property": { "type": "string" },
+                          "status-code": { "type": "number" }
                         },
                         "required": ["type"],
                         "additionalProperties": false
@@ -574,14 +575,52 @@
                           "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                         },
                         "response": {
-                          "type": "object",
-                          "properties": {
-                            "error": { "type": "string" },
-                            "body": {
-                              "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "error": { "type": "string" },
+                                "body": {
+                                  "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                                }
+                              },
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "stream": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                                  }
+                                }
+                              },
+                              "required": ["stream"],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "stream": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "event": { "type": "string" },
+                                      "data": {
+                                        "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                                      }
+                                    },
+                                    "required": ["event"],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": ["stream"],
+                              "additionalProperties": false
                             }
-                          },
-                          "additionalProperties": false
+                          ]
                         },
                         "code-samples": {
                           "type": "array",

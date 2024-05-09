@@ -25,7 +25,7 @@ export async function addGeneratorToWorkspaces({
                         context
                     })) ?? {};
 
-                const newConfiguration = generatorsYml.addGenerator({
+                const newConfiguration = await generatorsYml.addGenerator({
                     generatorName,
                     generatorsConfiguration,
                     groupName,

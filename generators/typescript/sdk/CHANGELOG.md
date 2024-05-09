@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.0] - 2024-05-06
+
+- Internal: Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your 
+  CLI version, please run `fern upgrade`. 
+
 ## [0.16.0-rc8] - 2024-05-06
 
 - Improvement: The SDK generator now supports upload endpoints that specify an array of files like so:
