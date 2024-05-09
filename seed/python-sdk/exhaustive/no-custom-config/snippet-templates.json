@@ -1048,7 +1048,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "long=$FERN_INPUT",
+                            "templateString": "long_=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "BODY",
@@ -1080,7 +1080,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "bool=$FERN_INPUT",
+                            "templateString": "bool_=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "BODY",
@@ -1128,7 +1128,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "uuid=$FERN_INPUT",
+                            "templateString": "uuid_=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "BODY",
@@ -1160,7 +1160,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "list=[\n\t\t$FERN_INPUT\n\t]",
+                            "containerTemplateString": "list_=[\n\t\t$FERN_INPUT\n\t]",
                             "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [],
@@ -1187,7 +1187,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "map={\n\t\t$FERN_INPUT\n\t}",
+                            "containerTemplateString": "map_={\n\t\t$FERN_INPUT\n\t}",
                             "delimiter": ",\n\t\t",
                             "keyTemplate": {
                                 "imports": [],
@@ -1290,7 +1290,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "long=$FERN_INPUT",
+                                "templateString": "long_=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
@@ -1322,7 +1322,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "bool=$FERN_INPUT",
+                                "templateString": "bool_=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
@@ -1370,7 +1370,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "uuid=$FERN_INPUT",
+                                "templateString": "uuid_=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
@@ -1402,7 +1402,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "containerTemplateString": "list=[\n\t\t$FERN_INPUT\n\t]",
+                                "containerTemplateString": "list_=[\n\t\t$FERN_INPUT\n\t]",
                                 "delimiter": ",\n\t\t",
                                 "innerTemplate": {
                                     "imports": [],
@@ -1429,7 +1429,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "containerTemplateString": "map={\n\t\t$FERN_INPUT\n\t}",
+                                "containerTemplateString": "map_={\n\t\t$FERN_INPUT\n\t}",
                                 "delimiter": ",\n\t\t",
                                 "keyTemplate": {
                                     "imports": [],
@@ -1598,7 +1598,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "long=$FERN_INPUT",
+                            "templateString": "long_=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "BODY",
@@ -1630,7 +1630,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "bool=$FERN_INPUT",
+                            "templateString": "bool_=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "BODY",
@@ -1678,7 +1678,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "uuid=$FERN_INPUT",
+                            "templateString": "uuid_=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "BODY",
@@ -1710,7 +1710,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "list=[\n\t\t$FERN_INPUT\n\t]",
+                            "containerTemplateString": "list_=[\n\t\t$FERN_INPUT\n\t]",
                             "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [],
@@ -1737,7 +1737,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "map={\n\t\t$FERN_INPUT\n\t}",
+                            "containerTemplateString": "map_={\n\t\t$FERN_INPUT\n\t}",
                             "delimiter": ",\n\t\t",
                             "keyTemplate": {
                                 "imports": [],
@@ -1824,7 +1824,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "long=$FERN_INPUT",
+                                "templateString": "long_=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
@@ -1856,7 +1856,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "bool=$FERN_INPUT",
+                                "templateString": "bool_=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
@@ -1904,7 +1904,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "uuid=$FERN_INPUT",
+                                "templateString": "uuid_=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
@@ -1936,7 +1936,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "containerTemplateString": "list=[\n\t\t$FERN_INPUT\n\t]",
+                                "containerTemplateString": "list_=[\n\t\t$FERN_INPUT\n\t]",
                                 "delimiter": ",\n\t\t",
                                 "innerTemplate": {
                                     "imports": [],
@@ -1963,7 +1963,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "containerTemplateString": "map={\n\t\t$FERN_INPUT\n\t}",
+                                "containerTemplateString": "map_={\n\t\t$FERN_INPUT\n\t}",
                                 "delimiter": ",\n\t\t",
                                 "keyTemplate": {
                                     "imports": [],
@@ -2100,7 +2100,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "map={\n\t\t$FERN_INPUT\n\t}",
+                            "containerTemplateString": "map_={\n\t\t$FERN_INPUT\n\t}",
                             "delimiter": ",\n\t\t",
                             "keyTemplate": {
                                 "imports": [],
@@ -2180,7 +2180,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "containerTemplateString": "map={\n\t\t$FERN_INPUT\n\t}",
+                                "containerTemplateString": "map_={\n\t\t$FERN_INPUT\n\t}",
                                 "delimiter": ",\n\t\t",
                                 "keyTemplate": {
                                     "imports": [],
