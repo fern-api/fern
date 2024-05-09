@@ -187,13 +187,17 @@ navigation:
       #       icon:
   - tab: docs
     layout:
-      - section: Introduction
+      - section: Getting Started
         contents:
-          - page: Overview
-            path: ./pages/docs/introduction/overview.mdx
           - page: Quickstart
             slug: quickstart
             path: ./pages/docs/introduction/quickstart.mdx
+          - page: Project Structure 
+            slug: project-structure
+            path: ./pages/docs/introduction/project-structure.mdx
+          - page: Showcase 
+            slug: showcase
+            path: ./pages/docs/introduction/showcase.mdx
       - section: Configuration
         slug: config
         contents:
@@ -222,6 +226,10 @@ navigation:
             slug: write-markdown
           - page: Frontmatter
             path: ./pages/fern-docs/content/front-matter.mdx
+          - page: Code snippets
+            path: ./pages/fern-docs/content/code-snippets.mdx
+          - page: Reusable snippets
+            path: ./pages/fern-docs/content/reusable-snippets.mdx
       - section: API references
         contents:
           - page: Generate API reference
