@@ -427,7 +427,7 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "templateString": "from=$FERN_INPUT",
+                            "templateString": "from_=$FERN_INPUT",
                             "templateInputs": [
                                 {
                                     "location": "BODY",
@@ -594,7 +594,7 @@
                             "value": {
                                 "imports": [],
                                 "isOptional": true,
-                                "templateString": "from=$FERN_INPUT",
+                                "templateString": "from_=$FERN_INPUT",
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
