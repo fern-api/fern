@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.6.1] - 2024-05-09
+
+- No changes.
+
 ## [0.6.1-rc0] - 2024-04-23
 
 - Internal: Improve logging within the Ruby generator
