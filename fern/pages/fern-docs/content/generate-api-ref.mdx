@@ -9,9 +9,21 @@ and errors automatically populated from your [OpenAPI specification](/learn/over
 
 Example:
 
-<CodeBlock title='docs.yml'>
-```yml
+```yml docs.yml
 navigation:
   - api: API Reference
 ```
-</CodeBlock>
+
+| Property         | Description                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| `api` (required) | Title of the API Reference Section                                                            |
+| `api-name`       | Name of the API we are referencing, if there are multiple APIs                                |
+| `audiences`      | List of audiences to filter the API reference for                                             |
+| `display-errors` | Displays error schemas in the API references                                                  |
+| `snippets`       | Enable [generated SDK code snippets](../config/sdk-snippets.mdx) in your API reference        |
+| `summary`        | Relative path to the markdown file. This summary is displayed at the top of the API section   |
+| `layout`         | Customize the order that your API endpoints are displayed in the docs site                    |
+| `icon`           | Icon to display next to the API section in the navigation                                     |
+| `slug`           | Customize the slug for the API section (By default, the slug is generated from the API title) |
+| `skip-slug`      | Skip the slug generation for the API section                                                  |
+| `flattened`      | Display all endpoints at the top level (hides the API Reference Section's title)              |
