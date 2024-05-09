@@ -28,7 +28,7 @@ export function validateResponse({
     errorResolver: ErrorResolver;
 }): RuleViolation[] {
     if (example == null) {
-        return [{ severity: "warning", message: "Response example is missing." }];
+        return [];
     }
     return visitExampleResponseSchema(endpoint, example, {
         body: (example) =>
