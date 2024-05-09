@@ -642,7 +642,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                                               GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME
                                                                           ),
                                                                           context
-                                                                      )
+                                                                      ),
+                                                                  status: endpoint.response.statusCode
                                                               })
                                                             : context.externalDependencies.express.Response.sendStatus({
                                                                   referenceToExpressResponse: expressResponse,
