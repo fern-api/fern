@@ -48,7 +48,7 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.
-    inline_request_params: bool = False
+    inline_request_params: bool = True
 
     # deprecated, use client config instead
     client_class_name: Optional[str] = None

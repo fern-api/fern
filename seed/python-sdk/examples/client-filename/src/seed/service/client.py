@@ -4,6 +4,7 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
+from ..commons.types.types.tag import Tag
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
@@ -76,11 +77,38 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create_movie(self, *, request: Movie, request_options: typing.Optional[RequestOptions] = None) -> MovieId:
+    def create_movie(
+        self,
+        *,
+        id: MovieId,
+        title: str,
+        from_: str,
+        rating: float,
+        tag: Tag,
+        metadata: typing.Dict[str, typing.Any],
+        prequel: typing.Optional[MovieId] = OMIT,
+        book: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MovieId:
         """
         Parameters
         ----------
-        request : Movie
+        id : MovieId
+
+        title : str
+
+        from_ : str
+
+        rating : float
+            The rating scale is one to five stars
+
+        tag : Tag
+
+        metadata : typing.Dict[str, typing.Any]
+
+        prequel : typing.Optional[MovieId]
+
+        book : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -91,7 +119,6 @@ class ServiceClient:
 
         Examples
         --------
-        from seed import Movie
         from seed.client import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -100,32 +127,43 @@ class ServiceClient:
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
         client.service.create_movie(
-            request=Movie(
-                id="movie-c06a4ad7",
-                prequel="movie-cv9b914f",
-                title="The Boy and the Heron",
-                from_="Hayao Miyazaki",
-                rating=8.0,
-                type="movie",
-                tag="tag-wf9as23d",
-                metadata={
-                    "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-                    "releaseDate": "2023-12-08",
-                    "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-                },
-            ),
+            id="movie-c06a4ad7",
+            prequel="movie-cv9b914f",
+            title="The Boy and the Heron",
+            from_="Hayao Miyazaki",
+            rating=8.0,
+            type="movie",
+            tag="tag-wf9as23d",
+            metadata={
+                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                "releaseDate": "2023-12-08",
+                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+            },
         )
         """
+        _request: typing.Dict[str, typing.Any] = {
+            "id": id,
+            "title": title,
+            "from": from_,
+            "rating": rating,
+            "type": "movie",
+            "tag": tag,
+            "metadata": metadata,
+        }
+        if prequel is not OMIT:
+            _request["prequel"] = prequel
+        if book is not OMIT:
+            _request["book"] = book
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movie"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -287,11 +325,38 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create_movie(self, *, request: Movie, request_options: typing.Optional[RequestOptions] = None) -> MovieId:
+    async def create_movie(
+        self,
+        *,
+        id: MovieId,
+        title: str,
+        from_: str,
+        rating: float,
+        tag: Tag,
+        metadata: typing.Dict[str, typing.Any],
+        prequel: typing.Optional[MovieId] = OMIT,
+        book: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> MovieId:
         """
         Parameters
         ----------
-        request : Movie
+        id : MovieId
+
+        title : str
+
+        from_ : str
+
+        rating : float
+            The rating scale is one to five stars
+
+        tag : Tag
+
+        metadata : typing.Dict[str, typing.Any]
+
+        prequel : typing.Optional[MovieId]
+
+        book : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -302,7 +367,6 @@ class AsyncServiceClient:
 
         Examples
         --------
-        from seed import Movie
         from seed.client import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
@@ -311,32 +375,43 @@ class AsyncServiceClient:
             environment=SeedExhaustiveEnvironment.PRODUCTION,
         )
         await client.service.create_movie(
-            request=Movie(
-                id="movie-c06a4ad7",
-                prequel="movie-cv9b914f",
-                title="The Boy and the Heron",
-                from_="Hayao Miyazaki",
-                rating=8.0,
-                type="movie",
-                tag="tag-wf9as23d",
-                metadata={
-                    "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
-                    "releaseDate": "2023-12-08",
-                    "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
-                },
-            ),
+            id="movie-c06a4ad7",
+            prequel="movie-cv9b914f",
+            title="The Boy and the Heron",
+            from_="Hayao Miyazaki",
+            rating=8.0,
+            type="movie",
+            tag="tag-wf9as23d",
+            metadata={
+                "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+                "releaseDate": "2023-12-08",
+                "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+            },
         )
         """
+        _request: typing.Dict[str, typing.Any] = {
+            "id": id,
+            "title": title,
+            "from": from_,
+            "rating": rating,
+            "type": "movie",
+            "tag": tag,
+            "metadata": metadata,
+        }
+        if prequel is not OMIT:
+            _request["prequel"] = prequel
+        if book is not OMIT:
+            _request["book"] = book
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movie"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(

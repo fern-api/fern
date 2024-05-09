@@ -82,7 +82,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return parameters
 
     def _get_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
-        return property.name.name.snake_case.unsafe_name
+        return property.name.name.snake_case.safe_name
 
     def _get_all_properties_for_inlined_request_body(self) -> List[ir_types.InlinedRequestBodyProperty]:
         if self._type_id is None:
