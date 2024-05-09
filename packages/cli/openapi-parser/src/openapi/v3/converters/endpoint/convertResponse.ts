@@ -151,10 +151,6 @@ function convertResolvedResponse({
             continue;
         }
 
-        if (mimeType.isOctetStream()) {
-            return ResponseWithExample.file({ description: resolvedResponse.description });
-        }
-
         if (
             mimeType.isOctetStream() ||
             mimeType.isPDF() ||
