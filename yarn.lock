@@ -4726,17 +4726,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/ir-sdk@npm:43.0.0, @fern-fern/ir-sdk@npm:^43.0.0":
+  version: 43.0.0
+  resolution: "@fern-fern/ir-sdk@npm:43.0.0"
+  checksum: c5f09e2f213c72603a4f04728b0b9c5ae8f5a159acf179c6d05c6a98b1764d11fbb4552528fe4b4bf7d62ca38e4c3da0118adeebf20ac48ffa207c83aef99f12
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-sdk@npm:^32":
   version: 32.0.0
   resolution: "@fern-fern/ir-sdk@npm:32.0.0"
   checksum: 6822a030ff7b0a1f2d8965d9b5d8227430c3d4c5e4d4125384c436521b2218fa540f195b7f3f91cd47a80fd4efedd6ba6d67e901f090435416db545086615515
-  languageName: node
-  linkType: hard
-
-"@fern-fern/ir-sdk@npm:^43.0.0":
-  version: 43.0.0
-  resolution: "@fern-fern/ir-sdk@npm:43.0.0"
-  checksum: c5f09e2f213c72603a4f04728b0b9c5ae8f5a159acf179c6d05c6a98b1764d11fbb4552528fe4b4bf7d62ca38e4c3da0118adeebf20ac48ffa207c83aef99f12
   languageName: node
   linkType: hard
 
@@ -5586,7 +5586,7 @@ __metadata:
   resolution: "@fern-typescript/sdk-client-class-generator@workspace:generators/typescript/sdk/client-class-generator"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-sdk": ^43.0.0
+    "@fern-fern/ir-sdk": 43.0.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"

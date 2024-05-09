@@ -8,6 +8,9 @@
         "publishingMetadata": null
     },
     "publish": null,
+    "customConfig": {
+        "outputSourceFiles": true
+    },
     "workspaceName": "multi-url-environment",
     "organization": "seed",
     "environment": {

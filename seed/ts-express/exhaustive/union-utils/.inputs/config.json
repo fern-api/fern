@@ -11,7 +11,8 @@
     "customConfig": {
         "doNotHandleUnrecognizedErrors": true,
         "includeUtilsOnUnionMembers": true,
-        "includeOtherInUnionTypes": true
+        "includeOtherInUnionTypes": true,
+        "outputSourceFiles": true
     },
     "workspaceName": "exhaustive",
     "organization": "seed",

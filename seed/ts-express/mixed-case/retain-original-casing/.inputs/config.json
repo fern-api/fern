@@ -9,7 +9,8 @@
     },
     "publish": null,
     "customConfig": {
-        "retainOriginalCasing": true
+        "retainOriginalCasing": true,
+        "outputSourceFiles": true
     },
     "workspaceName": "mixed-case",
     "organization": "seed",

@@ -128,7 +128,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -225,6 +226,7 @@
                 },
                 "wireValue": "PropertyBasedErrorTest"
             },
+            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -291,7 +293,7 @@
                 },
                 "typeId": "type_errors:PropertyBasedErrorTestBody"
             },
-            "statusCode": 400,
+            "examples": [],
             "docs": null
         }
     },
@@ -392,15 +394,18 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [
                         {

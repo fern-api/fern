@@ -629,7 +629,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                             ts.factory.createBlock(
                                                 [
                                                     ts.factory.createExpressionStatement(
-                                                        endpoint.response != null
+                                                        endpoint.response?.body != null
                                                             ? context.externalDependencies.express.Response.json({
                                                                   referenceToExpressResponse: expressResponse,
                                                                   valueToSend: context.expressEndpointTypeSchemas

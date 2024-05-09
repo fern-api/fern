@@ -471,7 +471,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
-        return this.endpoint.response != null
+        return this.endpoint.response?.body != null
             ? this.getReturnStatementsForOkResponseBody(context)
             : [ts.factory.createReturnStatement(undefined)];
     }

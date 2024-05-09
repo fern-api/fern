@@ -173,7 +173,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
 
     public serializeResponse(referenceToParsedResponse: ts.Expression, context: ExpressContext): ts.Expression {
         if (this.endpoint.response?.body == null) {
-            throw new Error("Cannot deserialize response because it's not defined");
+            throw new Error("Cannot serialize response because it's not defined");
         }
 
         if (this.endpoint.response.body?.type === "fileDownload") {

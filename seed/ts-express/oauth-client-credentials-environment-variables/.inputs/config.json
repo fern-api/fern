@@ -8,6 +8,9 @@
         "publishingMetadata": null
     },
     "publish": null,
+    "customConfig": {
+        "outputSourceFiles": true
+    },
     "workspaceName": "oauth-client-credentials-environment-variables",
     "organization": "seed",
     "environment": {

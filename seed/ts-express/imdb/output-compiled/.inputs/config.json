@@ -9,7 +9,7 @@
     },
     "publish": null,
     "customConfig": {
-        "outputSourceFiles": false
+        "outputSourceFiles": true
     },
     "workspaceName": "api",
     "organization": "seed",

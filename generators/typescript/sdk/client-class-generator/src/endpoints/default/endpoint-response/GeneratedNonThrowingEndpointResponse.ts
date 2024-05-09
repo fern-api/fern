@@ -121,7 +121,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     private getReturnValueForOkResponse(context: SdkContext): ts.Expression | undefined {
         return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
-            this.endpoint.response != null ? this.getOkResponseBody(context) : ts.factory.createIdentifier("undefined")
+            this.endpoint.response?.body != null ? this.getOkResponseBody(context) : ts.factory.createIdentifier("undefined")
         );
     }
 
