@@ -52,7 +52,7 @@ export async function upgradeGenerator({
     context: TaskContext;
 }): Promise<GeneratorsConfigurationSchema> {
     const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
-    context.logger.info(`${normalizedGeneratorName} ${groupName}`);
+
     const conf = await updateGeneratorGroup({
         generatorsConfiguration,
         groupName,

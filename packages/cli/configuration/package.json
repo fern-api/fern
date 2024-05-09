@@ -35,7 +35,6 @@
     "@fern-fern/fiddle-sdk": "^0.0.532",
     "dockerode": "^4.0.2",
     "find-up": "^6.3.0",
-    "immer": "^9.0.15",
     "js-yaml": "^4.1.0",
     "tinycolor2": "^1.6.0",
     "zod": "^3.22.3"
