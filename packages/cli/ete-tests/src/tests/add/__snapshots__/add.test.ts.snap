@@ -101,6 +101,13 @@ groups:
         output:
           location: local-file-system
           path: ../generated/sdks/typescript
+      - name: fernapi/fern-java-sdk
+        version: 0.8.11
+      - name: fernapi/fern-postman
+        version: 0.0.45
+        output:
+          location: local-file-system
+          path: ../postman
 ",
         "name": "generators.yml",
         "type": "file",

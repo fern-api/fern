@@ -18,19 +18,18 @@ function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): G
     return normalizedGeneratorName;
 }
 
-async function getLatestGeneratorVersion(generatorName: string): Promise<string> {
+async function getLatestGeneratorVersion(generatorName: string): Promise<string | undefined> {
     const docker = new Docker();
     console.log("Testing docker connection...");
     let image;
     try {
         image = await docker.getImage(`${generatorName}`).inspect();
     } catch (e) {
-        console.log("pulling image failed", e);
         try {
             image = await docker.getImage(`${generatorName}:latest`).inspect();
         } catch {
-            console.log("pulling image behind tag failed", e);
-            throw new Error(`No image found behind generator ${generatorName} at tag latest`);
+            console.error(`No image found behind generator ${generatorName} at tag latest`);
+            return;
         }
     }
 
@@ -39,7 +38,8 @@ async function getLatestGeneratorVersion(generatorName: string): Promise<string>
     // eslint-disable-next-line @typescript-eslint/dot-notation
     const generatorVersion = image.Config.Labels?.["version"];
     if (generatorVersion == null) {
-        throw new Error(`No version found behind generator ${generatorName} at tag latest: ${JSON.stringify(image)}`);
+        console.error(`No version found behind generator ${generatorName} at tag latest: ${JSON.stringify(image)}`);
+        return;
     }
 
     return generatorVersion;
@@ -66,7 +66,7 @@ export async function upgradeGenerator({
     });
 }
 
-export function addGenerator({
+export async function addGenerator({
     generatorName,
     generatorsConfiguration,
     groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
@@ -76,12 +76,12 @@ export function addGenerator({
     generatorsConfiguration: GeneratorsConfigurationSchema;
     groupName: string | undefined;
     context: TaskContext;
-}): GeneratorsConfigurationSchema {
+}): Promise<GeneratorsConfigurationSchema> {
     const normalizedGeneratorName = getGeneratorNameOrThrow(generatorName, context);
 
     const invocation = GENERATOR_INVOCATIONS[normalizedGeneratorName];
 
-    return updateGeneratorGroup({
+    return await updateGeneratorGroup({
         generatorsConfiguration,
         groupName,
         context,
@@ -91,8 +91,8 @@ export function addGenerator({
             }
             group.generators.push({
                 name: normalizedGeneratorName,
-                version: await getLatestGeneratorVersion(normalizedGeneratorName),
-                ...invocation
+                ...invocation,
+                version: (await getLatestGeneratorVersion(normalizedGeneratorName)) ?? invocation.version
             });
         }
     });

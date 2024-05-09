@@ -13,20 +13,22 @@ export function upgradeGeneratorVersion({
     context: TaskContext;
     groupName: string;
     generatorName: string;
-    version: string;
+    version: string | undefined;
 }): GeneratorsConfigurationSchema {
-    return produce(generatorsConfiguration, (draft) => {
-        const groups = (draft.groups ??= {});
-        const draftGroup = groups[groupName];
-        if (draftGroup == null) {
-            context.failAndThrow(`Group ${groupName} not found.`);
-        } else {
-            const generator = draftGroup.generators.find((generator) => generator.name === generatorName);
-            if (generator == null) {
-                context.failAndThrow(`Generator ${generatorName} not found in group ${groupName}.`);
-            } else {
-                generator.version = version;
-            }
-        }
-    });
+    return version == null
+        ? generatorsConfiguration
+        : produce(generatorsConfiguration, (draft) => {
+              const groups = (draft.groups ??= {});
+              const draftGroup = groups[groupName];
+              if (draftGroup == null) {
+                  context.failAndThrow(`Group ${groupName} not found.`);
+              } else {
+                  const generator = draftGroup.generators.find((generator) => generator.name === generatorName);
+                  if (generator == null) {
+                      context.failAndThrow(`Generator ${generatorName} not found in group ${groupName}.`);
+                  } else {
+                      generator.version = version;
+                  }
+              }
+          });
 }
