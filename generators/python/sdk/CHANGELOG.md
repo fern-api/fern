@@ -16,6 +16,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         inline_request_params: false
   ```
 
+
+## [1.7.0-rc0] - 2024-05-09
+
+- Improvement: you can now declare a new python version range for your `pyproject.toml`, which will declare a new version range for your pip package.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        pyproject_python_version: ^3.8.1
+  ```
+
 ## [1.6.0-rc0] - 2024-05-09
 
 - Improvement: you can now specify dev dependencies from your `generators.yml` file:

@@ -55,5 +55,10 @@ class SDKCustomConfig(pydantic.BaseModel):
     # deprecated, use client config instead
     client_filename: Optional[str] = None
 
+    # WARNING - this changes your declared python dependency, which is not meant to
+    # be done often if at all. This is a last resort if any dependencies force you
+    # to change your version requirements.
+    pyproject_python_version: Optional[str] = "^3.8"
+
     class Config:
         extra = pydantic.Extra.forbid

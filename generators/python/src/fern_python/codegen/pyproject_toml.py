@@ -110,7 +110,7 @@ packages = [
             dev_deps = self.deps_to_string(self.dev_dependencies)
             return f"""
 [tool.poetry.dependencies]
-python = "^{self.python_version}"
+python = "{self.python_version}"
 {deps}
 [tool.poetry.dev-dependencies]
 mypy = "1.9.0"

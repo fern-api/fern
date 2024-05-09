@@ -24,7 +24,7 @@ async function upgradeSpecificGroupGenerator({
         context
     });
     context.logger.info(
-        chalk.green(`${generator} has been upgraded to latest in group: ${group}, ${yaml.dump(newConfiguration)}`)
+        chalk.green(`${generator} has been upgraded to latest in group: ${group}`)
     );
     return newConfiguration;
 }
