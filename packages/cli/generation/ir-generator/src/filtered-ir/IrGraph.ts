@@ -10,6 +10,7 @@ import {
     HttpEndpoint,
     HttpRequestBody,
     HttpResponse,
+    HttpResponseBody,
     HttpService,
     TypeReference
 } from "@fern-api/ir-sdk";
@@ -175,8 +176,8 @@ export class IrGraph {
                 }
             });
         }
-        if (httpEndpoint.response != null) {
-            HttpResponse._visit(httpEndpoint.response, {
+        if (httpEndpoint.response?.body != null) {
+            HttpResponseBody._visit(httpEndpoint.response.body, {
                 fileDownload: noop,
                 json: (jsonResponse) => {
                     populateReferencesFromTypeReference(
@@ -199,7 +200,7 @@ export class IrGraph {
                 },
                 text: noop,
                 _other: () => {
-                    throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.type);
+                    throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.body?.type);
                 }
             });
         }

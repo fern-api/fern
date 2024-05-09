@@ -90,7 +90,7 @@ function convertService(
                 })
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
-            response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
+            response: irEndpoint.response?.body != null ? convertResponse(irEndpoint.response.body) : undefined,
             errors: undefined,
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
             examples: irEndpoint.examples
@@ -388,8 +388,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
     return requestBodyShape != null ? { type: requestBodyShape } : undefined;
 }
 
-function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpResponse | undefined {
-    const type = Ir.http.HttpResponse._visit<APIV1Write.HttpResponseBodyShape | undefined>(irResponse, {
+function convertResponse(irResponse: Ir.http.HttpResponseBody): APIV1Write.HttpResponse | undefined {
+    const type = Ir.http.HttpResponseBody._visit<APIV1Write.HttpResponseBodyShape | undefined>(irResponse, {
         fileDownload: () => {
             return {
                 type: "fileDownload"

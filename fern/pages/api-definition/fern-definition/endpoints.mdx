@@ -275,6 +275,33 @@ types:
 ```
 </CodeBlock>
 
+## Response status codes 
+
+You can also use the `status-code` field to specify a custom status code 
+for a sucess response. 
+
+<CodeBlock title="user.yml">
+```yaml {11}
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    create: :
+      path: ""
+      method: POST
+      request: CreateUserRequest
+      response: 
+        type: User
+        status-code: 201
+
+types:
+  User:
+    properties:
+      userId: string
+      name: string
+```
+</CodeBlock>
+
 ## Error responses
 
 Endpoints can specify error responses, which detail the non-200 responses that

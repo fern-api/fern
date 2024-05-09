@@ -21,7 +21,7 @@ import {
     HttpEndpointExample,
     HttpHeader,
     HttpRequestBody,
-    HttpResponse,
+    HttpResponseBody,
     InlinedRequestBody,
     IntermediateRepresentation,
     JsonResponse,
@@ -262,7 +262,7 @@ export class ExampleGenerator {
             HttpEndpointExample.generated({
                 ...this.getExampleWithoutResponse(endpoint, rootPathParameters, servicePathParameters, serviceHeaders),
                 response: this.generateSuccessResponseExample({
-                    response: endpoint.response,
+                    response: endpoint.response?.body,
                     maybeResponse: endpoint.examples.map((example) => example.response)[0]
                 })
             }),
@@ -354,7 +354,7 @@ export class ExampleGenerator {
         response,
         maybeResponse
     }: {
-        response: HttpResponse | undefined;
+        response: HttpResponseBody | undefined;
         maybeResponse: ExampleResponse | undefined;
     }): ExampleResponse {
         return (
