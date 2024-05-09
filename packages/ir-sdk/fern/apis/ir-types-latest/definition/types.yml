@@ -151,7 +151,38 @@ types:
     properties:
       keyType: TypeReference
       valueType: TypeReference
+
   PrimitiveType:
+    properties:
+      basic: BasicPrimitiveType
+      wrapped: WrappedPrimitiveType
+
+  WrappedPrimitiveType:
+    union:
+      integer: IntegerType
+      string: StringType
+
+  IntegerType:
+    properties:
+      default: optional<integer>
+      validation: optional<IntegerValidation>
+
+  IntegerValidation:
+    properties:
+      min: optional<integer>
+      max: optional<integer>
+
+  StringType:
+    properties:
+      default: optional<string>
+      validation: optional<StringValidation>
+
+  StringValidation:
+    properties:
+      minLength: optional<integer>
+      maxLength: optional<integer>
+  
+  BasicPrimitiveType:
     enum:
       - INTEGER
       - DOUBLE
