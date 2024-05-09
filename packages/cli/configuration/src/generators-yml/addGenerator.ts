@@ -21,9 +21,18 @@ function getGeneratorNameOrThrow(generatorName: string, context: TaskContext): G
 async function getLatestGeneratorVersion(generatorName: string): Promise<string> {
     const docker = new Docker();
     console.log("Testing docker connection...");
-    console.log(await docker.checkAuth({}));
-    console.log(await docker.ping());
-    const image = await docker.getImage(`${generatorName}:latest`).inspect();
+    let image;
+    try {
+        image = await docker.getImage(`${generatorName}`).inspect();
+    } catch (e) {
+        console.log("pulling image failed", e);
+        try {
+            image = await docker.getImage(`${generatorName}:latest`).inspect();
+        } catch {
+            console.log("pulling image behind tag failed", e);
+            throw new Error(`No image found behind generator ${generatorName} at tag latest`);
+        }
+    }
 
     // This assumes we have a label of the form version=x.y.z
     // specifically adding a label to do this to be able to more easily get the version without regex
