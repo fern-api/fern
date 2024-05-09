@@ -434,7 +434,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -3163,7 +3164,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_types:MovieId",
@@ -5425,7 +5427,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -5562,7 +5565,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -5933,7 +5937,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -6112,7 +6117,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_types:Movie",
@@ -7435,7 +7441,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -7884,7 +7891,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -8666,7 +8674,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_types:File",
@@ -10247,7 +10256,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_types:Node",
@@ -12023,7 +12033,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_types:Node",
@@ -13704,7 +13715,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -14490,7 +14502,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_types:MigrationStatus"
@@ -14898,7 +14911,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -15131,7 +15145,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -15736,11 +15751,12 @@
                 },
                 "wireValue": "NotFoundError"
             },
+            "statusCode": 404,
             "type": {
                 "_type": "primitive",
                 "primitive": "STRING"
             },
-            "statusCode": 404,
+            "examples": [],
             "docs": null
         }
     },
@@ -15843,15 +15859,18 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -16185,33 +16204,55 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "Exception",
-                                    "camelCase": {
-                                        "unsafeName": "exception",
-                                        "safeName": "exception"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Exception",
+                                        "camelCase": {
+                                            "unsafeName": "exception",
+                                            "safeName": "exception"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "exception",
+                                            "safeName": "exception"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "EXCEPTION",
+                                            "safeName": "EXCEPTION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Exception",
+                                            "safeName": "Exception"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "exception",
-                                        "safeName": "exception"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "EXCEPTION",
-                                        "safeName": "EXCEPTION"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Exception",
-                                        "safeName": "Exception"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
                                             "originalName": "types",
                                             "camelCase": {
                                                 "unsafeName": "types",
@@ -16230,32 +16271,13 @@
                                                 "safeName": "Types"
                                             }
                                         }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    }
+                                    },
+                                    "typeId": "type_types:Exception"
                                 },
-                                "typeId": "type_types:Exception"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -17536,33 +17558,55 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "File",
-                                    "camelCase": {
-                                        "unsafeName": "file",
-                                        "safeName": "file"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "File",
+                                        "camelCase": {
+                                            "unsafeName": "file",
+                                            "safeName": "file"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "file",
+                                            "safeName": "file"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FILE",
+                                            "safeName": "FILE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "File",
+                                            "safeName": "File_"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "file",
-                                        "safeName": "file"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FILE",
-                                        "safeName": "FILE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "File",
-                                        "safeName": "File_"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
                                             "originalName": "types",
                                             "camelCase": {
                                                 "unsafeName": "types",
@@ -17581,32 +17625,13 @@
                                                 "safeName": "Types"
                                             }
                                         }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    }
+                                    },
+                                    "typeId": "type_types:File"
                                 },
-                                "typeId": "type_types:File"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [
                         {
@@ -18372,7 +18397,10 @@
                     "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -18525,15 +18553,18 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "BOOLEAN"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "BOOLEAN"
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -18886,33 +18917,55 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "Movie",
-                                    "camelCase": {
-                                        "unsafeName": "movie",
-                                        "safeName": "movie"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "movie",
-                                        "safeName": "movie"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "MOVIE",
-                                        "safeName": "MOVIE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Movie",
-                                        "safeName": "Movie"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
                                             "originalName": "types",
                                             "camelCase": {
                                                 "unsafeName": "types",
@@ -18931,32 +18984,13 @@
                                                 "safeName": "Types"
                                             }
                                         }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    }
+                                    },
+                                    "typeId": "type_types:Movie"
                                 },
-                                "typeId": "type_types:Movie"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -21938,33 +21972,55 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "MovieId",
-                                    "camelCase": {
-                                        "unsafeName": "movieId",
-                                        "safeName": "movieId"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "MovieId",
+                                        "camelCase": {
+                                            "unsafeName": "movieId",
+                                            "safeName": "movieId"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie_id",
+                                            "safeName": "movie_id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE_ID",
+                                            "safeName": "MOVIE_ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "MovieId",
+                                            "safeName": "MovieId"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "movie_id",
-                                        "safeName": "movie_id"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "MOVIE_ID",
-                                        "safeName": "MOVIE_ID"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "MovieId",
-                                        "safeName": "MovieId"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
                                             "originalName": "types",
                                             "camelCase": {
                                                 "unsafeName": "types",
@@ -21983,32 +22039,13 @@
                                                 "safeName": "Types"
                                             }
                                         }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    }
+                                    },
+                                    "typeId": "type_types:MovieId"
                                 },
-                                "typeId": "type_types:MovieId"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -24950,33 +24987,55 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "Metadata",
-                                    "camelCase": {
-                                        "unsafeName": "metadata",
-                                        "safeName": "metadata"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Metadata",
+                                        "camelCase": {
+                                            "unsafeName": "metadata",
+                                            "safeName": "metadata"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "metadata",
+                                            "safeName": "metadata"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "METADATA",
+                                            "safeName": "METADATA"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Metadata",
+                                            "safeName": "Metadata"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "metadata",
-                                        "safeName": "metadata"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "METADATA",
-                                        "safeName": "METADATA"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Metadata",
-                                        "safeName": "Metadata"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
                                             "originalName": "types",
                                             "camelCase": {
                                                 "unsafeName": "types",
@@ -24995,32 +25054,13 @@
                                                 "safeName": "Types"
                                             }
                                         }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    }
+                                    },
+                                    "typeId": "type_types:Metadata"
                                 },
-                                "typeId": "type_types:Metadata"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [

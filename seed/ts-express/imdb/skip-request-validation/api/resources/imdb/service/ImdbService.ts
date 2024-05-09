@@ -63,7 +63,7 @@ export class ImdbService {
                 try {
                     await this.methods.createMovie(req as any, {
                         send: async (responseBody) => {
-                            res.json(
+                            res.status(201).json(
                                 await serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                             );
                         },

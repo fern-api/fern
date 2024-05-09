@@ -231,7 +231,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -410,7 +411,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -641,7 +643,8 @@
                                 },
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "extra-properties": false
                     },
                     "sdkRequest": {
                         "shape": {
@@ -706,39 +709,42 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "SendResponse",
-                                    "camelCase": {
-                                        "unsafeName": "sendResponse",
-                                        "safeName": "sendResponse"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "SendResponse",
+                                        "camelCase": {
+                                            "unsafeName": "sendResponse",
+                                            "safeName": "sendResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "send_response",
+                                            "safeName": "send_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SEND_RESPONSE",
+                                            "safeName": "SEND_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SendResponse",
+                                            "safeName": "SendResponse"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "send_response",
-                                        "safeName": "send_response"
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
                                     },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SEND_RESPONSE",
-                                        "safeName": "SEND_RESPONSE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "SendResponse",
-                                        "safeName": "SendResponse"
-                                    }
+                                    "typeId": "type_:SendResponse"
                                 },
-                                "fernFilepath": {
-                                    "allParts": [],
-                                    "packagePath": [],
-                                    "file": null
-                                },
-                                "typeId": "type_:SendResponse"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -1718,7 +1724,8 @@
                                 },
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "extra-properties": false
                     },
                     "sdkRequest": {
                         "shape": {
@@ -1783,39 +1790,42 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "SendResponse",
-                                    "camelCase": {
-                                        "unsafeName": "sendResponse",
-                                        "safeName": "sendResponse"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "SendResponse",
+                                        "camelCase": {
+                                            "unsafeName": "sendResponse",
+                                            "safeName": "sendResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "send_response",
+                                            "safeName": "send_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SEND_RESPONSE",
+                                            "safeName": "SEND_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SendResponse",
+                                            "safeName": "SendResponse"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "send_response",
-                                        "safeName": "send_response"
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
                                     },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SEND_RESPONSE",
-                                        "safeName": "SEND_RESPONSE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "SendResponse",
-                                        "safeName": "SendResponse"
-                                    }
+                                    "typeId": "type_:SendResponse"
                                 },
-                                "fernFilepath": {
-                                    "allParts": [],
-                                    "packagePath": [],
-                                    "file": null
-                                },
-                                "typeId": "type_:SendResponse"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -2816,39 +2826,42 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "SendResponse",
-                                    "camelCase": {
-                                        "unsafeName": "sendResponse",
-                                        "safeName": "sendResponse"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "SendResponse",
+                                        "camelCase": {
+                                            "unsafeName": "sendResponse",
+                                            "safeName": "sendResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "send_response",
+                                            "safeName": "send_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SEND_RESPONSE",
+                                            "safeName": "SEND_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SendResponse",
+                                            "safeName": "SendResponse"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "send_response",
-                                        "safeName": "send_response"
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
                                     },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SEND_RESPONSE",
-                                        "safeName": "SEND_RESPONSE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "SendResponse",
-                                        "safeName": "SendResponse"
-                                    }
+                                    "typeId": "type_:SendResponse"
                                 },
-                                "fernFilepath": {
-                                    "allParts": [],
-                                    "packagePath": [],
-                                    "file": null
-                                },
-                                "typeId": "type_:SendResponse"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -3678,39 +3691,42 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "SendResponse",
-                                    "camelCase": {
-                                        "unsafeName": "sendResponse",
-                                        "safeName": "sendResponse"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "SendResponse",
+                                        "camelCase": {
+                                            "unsafeName": "sendResponse",
+                                            "safeName": "sendResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "send_response",
+                                            "safeName": "send_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SEND_RESPONSE",
+                                            "safeName": "SEND_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SendResponse",
+                                            "safeName": "SendResponse"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "send_response",
-                                        "safeName": "send_response"
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
                                     },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SEND_RESPONSE",
-                                        "safeName": "SEND_RESPONSE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "SendResponse",
-                                        "safeName": "SendResponse"
-                                    }
+                                    "typeId": "type_:SendResponse"
                                 },
-                                "fernFilepath": {
-                                    "allParts": [],
-                                    "packagePath": [],
-                                    "file": null
-                                },
-                                "typeId": "type_:SendResponse"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -4683,39 +4699,42 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "SendResponse",
-                                    "camelCase": {
-                                        "unsafeName": "sendResponse",
-                                        "safeName": "sendResponse"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "SendResponse",
+                                        "camelCase": {
+                                            "unsafeName": "sendResponse",
+                                            "safeName": "sendResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "send_response",
+                                            "safeName": "send_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SEND_RESPONSE",
+                                            "safeName": "SEND_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SendResponse",
+                                            "safeName": "SendResponse"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "send_response",
-                                        "safeName": "send_response"
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
                                     },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SEND_RESPONSE",
-                                        "safeName": "SEND_RESPONSE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "SendResponse",
-                                        "safeName": "SendResponse"
-                                    }
+                                    "typeId": "type_:SendResponse"
                                 },
-                                "fernFilepath": {
-                                    "allParts": [],
-                                    "packagePath": [],
-                                    "file": null
-                                },
-                                "typeId": "type_:SendResponse"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [

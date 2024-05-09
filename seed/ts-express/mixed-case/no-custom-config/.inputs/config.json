@@ -8,7 +8,9 @@
         "publishingMetadata": null
     },
     "publish": null,
-    "customConfig": null,
+    "customConfig": {
+        "outputSourceFiles": true
+    },
     "workspaceName": "mixed-case",
     "organization": "seed",
     "environment": {
