@@ -47,11 +47,27 @@ export class ExpressImpl extends ExternalDependency implements Express {
 
         json: ({
             referenceToExpressResponse,
-            valueToSend
+            valueToSend,
+            status
         }: {
             referenceToExpressResponse: ts.Expression;
             valueToSend: ts.Expression;
+            status?: number;
         }): ts.Expression => {
+            if (status != null) {
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "status"),
+                            undefined,
+                            [ts.factory.createNumericLiteral(status)]
+                        ),
+                        "json"
+                    ),
+                    undefined,
+                    [valueToSend]
+                );
+            }
             return ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "json"),
                 undefined,

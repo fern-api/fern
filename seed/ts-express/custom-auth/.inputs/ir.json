@@ -161,7 +161,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -258,6 +259,7 @@
                 },
                 "wireValue": "UnauthorizedRequest"
             },
+            "statusCode": 401,
             "type": {
                 "_type": "named",
                 "name": {
@@ -324,7 +326,7 @@
                 },
                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
             },
-            "statusCode": 401,
+            "examples": [],
             "docs": null
         },
         "error_errors:BadRequest": {
@@ -415,8 +417,9 @@
                 },
                 "wireValue": "BadRequest"
             },
-            "type": null,
             "statusCode": 400,
+            "type": null,
+            "examples": [],
             "docs": null
         }
     },
@@ -517,15 +520,18 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "BOOLEAN"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "BOOLEAN"
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [
                         {
@@ -792,15 +798,18 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "BOOLEAN"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "BOOLEAN"
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [
                         {

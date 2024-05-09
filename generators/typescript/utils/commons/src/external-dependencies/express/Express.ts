@@ -15,7 +15,11 @@ export interface Express {
         }) => ts.TypeNode;
     };
     Response: {
-        json: (args: { referenceToExpressResponse: ts.Expression; valueToSend: ts.Expression }) => ts.Expression;
+        json: (args: {
+            referenceToExpressResponse: ts.Expression;
+            valueToSend: ts.Expression;
+            status?: number;
+        }) => ts.Expression;
         cookie: {
             _getBoundReference: (args: { referenceToExpressResponse: ts.Expression }) => ts.Expression;
         };

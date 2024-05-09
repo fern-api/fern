@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { APIConfigurationSchema } from "./APIConfigurationSchema";
+import { APIConfigurationSchema, APIDefinitionSettingsSchema } from "./APIConfigurationSchema";
 import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
 import { GeneratorsOpenAPISchema } from "./GeneratorsOpenAPISchema";
 import { WhitelabelConfigurationSchema } from "./WhitelabelConfigurationSchema";
@@ -9,6 +9,7 @@ export const OPENAPI_LOCATION_KEY = "openapi";
 export const OPENAPI_OVERRIDES_LOCATION_KEY = "openapi-overrides";
 export const API_ORIGIN_LOCATION_KEY = "spec-origin";
 export const ASYNC_API_LOCATION_KEY = "async-api";
+export const API_SETTINGS_KEY = "api-settings";
 
 export const GeneratorsConfigurationSchema = z.strictObject({
     api: z.optional(APIConfigurationSchema),
@@ -22,7 +23,8 @@ export const GeneratorsConfigurationSchema = z.strictObject({
     [OPENAPI_LOCATION_KEY]: z.optional(GeneratorsOpenAPISchema),
     [OPENAPI_OVERRIDES_LOCATION_KEY]: z.optional(z.string()),
     [API_ORIGIN_LOCATION_KEY]: z.optional(z.string()),
-    [ASYNC_API_LOCATION_KEY]: z.optional(z.string())
+    [ASYNC_API_LOCATION_KEY]: z.optional(z.string()),
+    [API_SETTINGS_KEY]: z.optional(APIDefinitionSettingsSchema)
 });
 
 export type GeneratorsConfigurationSchema = z.infer<typeof GeneratorsConfigurationSchema>;

@@ -41,12 +41,14 @@ export function generateIr({
     openApi,
     taskContext,
     disableExamples,
-    audiences
+    audiences,
+    shouldUseTitleAsName
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
     disableExamples: boolean | undefined;
     audiences: string[];
+    shouldUseTitleAsName: boolean;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -69,7 +71,7 @@ export function generateIr({
             return null;
         })
     );
-    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders });
+    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders, shouldUseTitleAsName });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
 

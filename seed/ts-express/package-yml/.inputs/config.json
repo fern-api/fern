@@ -8,6 +8,9 @@
         "publishingMetadata": null
     },
     "publish": null,
+    "customConfig": {
+        "outputSourceFiles": true
+    },
     "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {

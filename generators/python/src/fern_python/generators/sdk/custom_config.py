@@ -30,6 +30,7 @@ class ClientConfiguration(pydantic.BaseModel):
 
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, str] = {}
+    extra_dev_dependencies: Dict[str, str] = {}
     skip_formatting: bool = False
     client: ClientConfiguration = ClientConfiguration()
     include_union_utils: bool = False

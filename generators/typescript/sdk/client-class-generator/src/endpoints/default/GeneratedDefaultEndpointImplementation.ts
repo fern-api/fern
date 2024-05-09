@@ -209,7 +209,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
 
-        if (this.endpoint.response?.type === "text") {
+        if (this.endpoint.response?.body?.type === "text") {
             fetcherArgs.responseType = "text";
         }
 

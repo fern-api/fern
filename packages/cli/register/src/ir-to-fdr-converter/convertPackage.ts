@@ -389,7 +389,10 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
 }
 
 function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpResponse | undefined {
-    const type = Ir.http.HttpResponse._visit<APIV1Write.HttpResponseBodyShape | undefined>(irResponse, {
+    if (irResponse.body == null) {
+        return undefined;
+    }
+    const type = Ir.http.HttpResponseBody._visit<APIV1Write.HttpResponseBodyShape | undefined>(irResponse.body, {
         fileDownload: () => {
             return {
                 type: "fileDownload"
@@ -423,11 +426,11 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
             return undefined;
         },
         _other: () => {
-            throw new Error("Unknown HttpResponse: " + irResponse.type);
+            throw new Error("Unknown HttpResponse: " + irResponse.body);
         }
     });
     if (type != null) {
-        return { type };
+        return { type, statusCode: irResponse.statusCode };
     } else {
         return undefined;
     }

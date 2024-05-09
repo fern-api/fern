@@ -24,6 +24,7 @@ export * from "./SdkRequest";
 export * from "./SdkRequestShape";
 export * from "./SdkRequestWrapper";
 export * from "./HttpResponse";
+export * from "./HttpResponseBody";
 export * from "./JsonResponse";
 export * from "./JsonResponseBody";
 export * from "./JsonResponseBodyWithProperty";

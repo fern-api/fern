@@ -495,39 +495,42 @@ exports[`generate IR from OpenAPI 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "type": "json",
-            "value": {
-              "docs": "Successful response",
-              "responseBodyType": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [],
-                  "file": null,
-                  "packagePath": [],
+            "body": {
+              "type": "json",
+              "value": {
+                "docs": "Successful response",
+                "responseBodyType": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "getExampleResponse",
+                      "unsafeName": "getExampleResponse",
+                    },
+                    "originalName": "GetExampleResponse",
+                    "pascalCase": {
+                      "safeName": "GetExampleResponse",
+                      "unsafeName": "GetExampleResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "GET_EXAMPLE_RESPONSE",
+                      "unsafeName": "GET_EXAMPLE_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "get_example_response",
+                      "unsafeName": "get_example_response",
+                    },
+                  },
+                  "typeId": "type_:GetExampleResponse",
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "getExampleResponse",
-                    "unsafeName": "getExampleResponse",
-                  },
-                  "originalName": "GetExampleResponse",
-                  "pascalCase": {
-                    "safeName": "GetExampleResponse",
-                    "unsafeName": "GetExampleResponse",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "GET_EXAMPLE_RESPONSE",
-                    "unsafeName": "GET_EXAMPLE_RESPONSE",
-                  },
-                  "snakeCase": {
-                    "safeName": "get_example_response",
-                    "unsafeName": "get_example_response",
-                  },
-                },
-                "typeId": "type_:GetExampleResponse",
+                "type": "response",
               },
-              "type": "response",
             },
+            "status-code": null,
           },
           "sdkRequest": null,
         },
