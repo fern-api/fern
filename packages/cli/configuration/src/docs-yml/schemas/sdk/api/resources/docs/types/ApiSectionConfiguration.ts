@@ -17,12 +17,13 @@ export interface ApiSectionConfiguration {
     /** Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition. */
     layout?: FernDocsConfig.ApiNavigationItems;
     icon?: string;
+    slug?: string;
     hidden?: boolean;
     skipSlug?: boolean;
     /**
-     * If `flattened` is set to true, the title specified in `api` will be hidden, and nested subpackages will be displayed as top-level sections.
+     * If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.
      *
-     * This setting is useful if the reference is short and you want to display all endpoints at the top level.
+     * This setting is useful if the API reference is short and you want to display all endpoints at the top level.
      */
     flattened?: boolean;
 }

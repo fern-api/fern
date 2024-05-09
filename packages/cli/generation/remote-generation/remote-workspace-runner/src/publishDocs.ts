@@ -1014,6 +1014,7 @@ async function convertNavigationItem({
                 title: item.title,
                 icon: item.icon,
                 api: apiDefinitionId,
+                urlSlugOverride: item.slug,
                 skipUrlSlug: item.skipUrlSlug,
                 showErrors: item.showErrors,
                 changelog:
