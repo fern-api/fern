@@ -17,7 +17,8 @@ import {
     parseBytesRequest,
     parseRawFileType,
     RawSchemas,
-    visitExampleCodeSampleSchema
+    visitExampleCodeSampleSchema,
+    visitExampleResponseSchema
 } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -319,7 +320,7 @@ function convertHeaders({
                     })
                 });
             } else {
-                throw new Error(`Heder ${wireKey} does not exist`);
+                throw new Error(`Header ${wireKey} does not exist`);
             }
         }
     }
@@ -464,30 +465,45 @@ function convertExampleResponse({
     file: FernFileContext;
     workspace: FernWorkspace;
 }): ExampleResponse {
-    if (example.response?.error != null) {
-        const errorDeclaration = errorResolver.getDeclarationOrThrow(example.response.error, file);
-        return ExampleResponse.error({
-            error: parseErrorName({
-                errorName: example.response.error,
-                file
-            }),
-            body:
-                errorDeclaration.declaration.type != null
-                    ? convertTypeReferenceExample({
-                          example: example.response.body,
-                          rawTypeBeingExemplified: errorDeclaration.declaration.type,
-                          typeResolver,
-                          exampleResolver,
-                          fileContainingRawTypeReference: errorDeclaration.file,
-                          fileContainingExample: file,
-                          workspace
-                      })
-                    : undefined
-        });
+    if (example.response == null) {
+        return ExampleResponse.ok({ body: undefined });
     }
+    return visitExampleResponseSchema(endpoint, example.response, {
+        body: (example) => {
+            if (example.error != null) {
+                const errorDeclaration = errorResolver.getDeclarationOrThrow(example.error, file);
+                return ExampleResponse.error({
+                    error: parseErrorName({
+                        errorName: example.error,
+                        file
+                    }),
+                    body:
+                        errorDeclaration.declaration.type != null
+                            ? convertTypeReferenceExample({
+                                  example: example.body,
+                                  rawTypeBeingExemplified: errorDeclaration.declaration.type,
+                                  typeResolver,
+                                  exampleResolver,
+                                  fileContainingRawTypeReference: errorDeclaration.file,
+                                  fileContainingExample: file,
+                                  workspace
+                              })
+                            : undefined
+                });
+            }
 
-    return ExampleResponse.ok({
-        body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+            return ExampleResponse.ok({
+                body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+            });
+        },
+        stream: (_example) => {
+            // TODO(ajiang): add IR support for streams
+            throw new Error("Not implemented");
+        },
+        events: (_example) => {
+            // TODO(ajiang): add IR support for streams
+            throw new Error("Not implemented");
+        }
     });
 }
 
@@ -500,7 +516,7 @@ function convertExampleResponseBody({
     workspace
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
-    example: RawSchemas.ExampleEndpointCallSchema;
+    example: RawSchemas.ExampleBodyResponseSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
@@ -510,11 +526,11 @@ function convertExampleResponseBody({
     if (responseBodyType == null) {
         return undefined;
     }
-    if (example.response?.body == null) {
+    if (example.body == null) {
         return undefined;
     }
     return convertTypeReferenceExample({
-        example: example.response.body,
+        example: example.body,
         rawTypeBeingExemplified: responseBodyType,
         typeResolver,
         exampleResolver,

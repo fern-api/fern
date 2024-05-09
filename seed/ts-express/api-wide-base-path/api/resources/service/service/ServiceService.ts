@@ -46,7 +46,7 @@ export class ServiceService {
         this.router.post("/:endpointParam/:resourceParam", async (req, res, next) => {
             try {
                 await this.methods.post(req as any, {
-                    send: async (responseBody) => {
+                    send: async () => {
                         res.sendStatus(204);
                     },
                     cookie: res.cookie.bind(res),

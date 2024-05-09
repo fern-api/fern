@@ -87,6 +87,9 @@ class SdkGenerator(AbstractGenerator):
         for dep, version in custom_config.extra_dependencies.items():
             project.add_dependency(dependency=AST.Dependency(name=dep, version=version))
 
+        for dep, version in custom_config.extra_dev_dependencies.items():
+            project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=version))
+
         # Export from root init
         if custom_config.additional_init_exports is not None:
             project.add_init_exports(path=(), exports=custom_config.additional_init_exports)
