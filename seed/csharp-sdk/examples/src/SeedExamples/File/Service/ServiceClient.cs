@@ -1,3 +1,4 @@
+using System.Text.Json;
 using SeedExamples;
 
 namespace SeedExamples.File;
@@ -14,5 +15,16 @@ public class ServiceClient
     /// <summary>
     /// This endpoint returns a file by its name.
     /// </summary>
-    public async void GetFileAsync() { }
+    public async File GetFileAsync(string filename)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "//filename" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<File>(responseBody);
+        }
+        throw new Exception();
+    }
 }

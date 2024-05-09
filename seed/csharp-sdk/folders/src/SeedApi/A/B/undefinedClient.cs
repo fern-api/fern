@@ -11,5 +11,10 @@ public class undefinedClient
         _client = client;
     }
 
-    public async void FooAsync() { }
+    public async void FooAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
+        );
+    }
 }

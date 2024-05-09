@@ -1,3 +1,4 @@
+using System.Text.Json;
 using SeedBasicAuthEnvironmentVariables;
 
 namespace SeedBasicAuthEnvironmentVariables;
@@ -14,10 +15,37 @@ public class BasicAuthClient
     /// <summary>
     /// GET request with basic auth scheme
     /// </summary>
-    public async void GetWithBasicAuthAsync() { }
+    public async bool GetWithBasicAuthAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/basic-auth" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<bool>(responseBody);
+        }
+        throw new Exception();
+    }
 
     /// <summary>
     /// POST request with basic auth scheme
     /// </summary>
-    public async void PostWithBasicAuthAsync() { }
+    public async bool PostWithBasicAuthAsync(object request)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/basic-auth",
+                Body = request
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<bool>(responseBody);
+        }
+        throw new Exception();
+    }
 }

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using SeedTrace;
 
 namespace SeedTrace;
@@ -11,5 +12,16 @@ public class MigrationClient
         _client = client;
     }
 
-    public async void GetAttemptedMigrationsAsync() { }
+    public async List<List<Migration>> GetAttemptedMigrationsAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/all" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<List<List<Migration>>>(responseBody);
+        }
+        throw new Exception();
+    }
 }

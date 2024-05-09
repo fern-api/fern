@@ -11,7 +11,17 @@ public class QueryParamClient
         _client = client;
     }
 
-    public async void SendAsync() { }
+    public async void SendAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/query" }
+        );
+    }
 
-    public async void SendListAsync() { }
+    public async void SendListAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/query-list" }
+        );
+    }
 }

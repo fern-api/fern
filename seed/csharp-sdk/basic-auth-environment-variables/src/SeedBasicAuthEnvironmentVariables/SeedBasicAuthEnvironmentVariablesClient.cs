@@ -14,13 +14,13 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
             "PASSWORD",
             "Please pass in password or set the environment variable PASSWORD."
         _client = 
-        new RawClient(
+        new RawClient{
             new Dictionary<string, string> {
                 { "X-Fern-Language", "C#" }, 
-            }, clientOptions ?? new ClientOptions());
+            }, clientOptions ?? new ClientOptions()}
         BasicAuth = 
-        new BasicAuthClient(
-            _client);
+        new BasicAuthClient{
+            _client}
     }
 
     public BasicAuthClient BasicAuth { get; }

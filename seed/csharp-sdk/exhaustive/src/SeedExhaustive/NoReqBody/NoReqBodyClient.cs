@@ -1,4 +1,6 @@
+using System.Text.Json;
 using SeedExhaustive;
+using SeedExhaustive.Types;
 
 namespace SeedExhaustive;
 
@@ -11,7 +13,29 @@ public class NoReqBodyClient
         _client = client;
     }
 
-    public async void GetWithNoRequestBodyAsync() { }
+    public async ObjectWithOptionalField GetWithNoRequestBodyAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
+        }
+        throw new Exception();
+    }
 
-    public async void PostWithNoRequestBodyAsync() { }
+    public async string PostWithNoRequestBodyAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<string>(responseBody);
+        }
+        throw new Exception();
+    }
 }

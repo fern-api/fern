@@ -1,4 +1,6 @@
+using System.Text.Json;
 using SeedExhaustive;
+using SeedExhaustive.Types;
 
 namespace SeedExhaustive;
 
@@ -14,5 +16,16 @@ public class InlinedRequestsClient
     /// <summary>
     /// POST with custom object in request body, response is an object
     /// </summary>
-    public async void PostWithObjectBodyandResponseAsync() { }
+    public async ObjectWithOptionalField PostWithObjectBodyandResponseAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/object" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
+        }
+        throw new Exception();
+    }
 }
