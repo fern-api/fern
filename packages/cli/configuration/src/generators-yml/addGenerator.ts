@@ -61,14 +61,13 @@ export async function upgradeGenerator({
             const latestVersion = await getLatestGeneratorVersion(normalizedGeneratorName, context);
             const genConfig = group.generators.find((generator) => generator.name === normalizedGeneratorName);
             if (genConfig == null) {
-                addGenerator({ generatorName, generatorsConfiguration, groupName, context });
+                return;
             }
             if (latestVersion != null) {
                 group.generators = group.generators.filter((generator) => generator.name !== normalizedGeneratorName);
                 group.generators.push({
                     ...genConfig,
                     name: normalizedGeneratorName,
-                    // Fall back to the hardcoded version if a "latest" does not yet exist
                     version: latestVersion
                 });
             }
