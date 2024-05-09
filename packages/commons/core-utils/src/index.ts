@@ -8,6 +8,7 @@ export * as Examples from "./examples";
 export { getDuplicates } from "./getDuplicates";
 export { identity } from "./identity";
 export { isNonNullish } from "./isNonNullish";
+export { MediaType } from "./mediaType";
 export { noop } from "./noop";
 export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVisitor";
 export { entries, type Entries } from "./objects/entries";
