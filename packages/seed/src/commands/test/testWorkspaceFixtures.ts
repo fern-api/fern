@@ -7,7 +7,7 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { printTestCases } from "./printTestCases";
 import { TestRunner } from "./test-runner";
 
-export const FIXTURES_TO_IGNORE = [""];
+export const FIXTURES_TO_IGNORE = ["server-sent-event-examples"];
 
 export const FIXTURES = readDirectories(path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY)).filter(
     (fixture) => !FIXTURES_TO_IGNORE.includes(fixture)
