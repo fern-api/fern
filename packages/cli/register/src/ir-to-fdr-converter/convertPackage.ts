@@ -90,7 +90,7 @@ function convertService(
                 })
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
-            response: irEndpoint.response?.body != null ? convertResponse(irEndpoint.response.body) : undefined,
+            response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
             errors: undefined,
             errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
             examples: irEndpoint.examples
