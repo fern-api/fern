@@ -614,7 +614,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                         ts.factory.createArrowFunction(
                                             [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                                             undefined,
-                                            endpoint.response != null
+                                            endpoint.response?.body != null
                                                 ? [
                                                       ts.factory.createParameterDeclaration(
                                                           undefined,
