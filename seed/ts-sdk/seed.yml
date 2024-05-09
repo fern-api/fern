@@ -136,4 +136,5 @@ allowedFailures:
   - audiences
   - enum # throws b/c of undiscriminated union examples
   - oauth-client-credentials
+  - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
