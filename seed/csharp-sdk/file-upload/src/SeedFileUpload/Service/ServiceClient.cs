@@ -11,9 +11,28 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void PostAsync() { }
+    public async void PostAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
+        );
+    }
 
-    public async void JustFileAsync() { }
+    public async void JustFileAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/just-file" }
+        );
+    }
 
-    public async void JustFileWithQueryParamsAsync() { }
+    public async void JustFileWithQueryParamsAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/just-file-with-query-params"
+            }
+        );
+    }
 }

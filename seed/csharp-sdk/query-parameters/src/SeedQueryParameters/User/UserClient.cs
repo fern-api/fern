@@ -1,3 +1,4 @@
+using System.Text.Json;
 using SeedQueryParameters;
 
 namespace SeedQueryParameters;
@@ -11,5 +12,16 @@ public class UserClient
         _client = client;
     }
 
-    public async void GetUsernameAsync() { }
+    public async User GetUsernameAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<User>(responseBody);
+        }
+        throw new Exception();
+    }
 }

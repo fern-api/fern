@@ -3,9 +3,15 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { EndpointGenerator } from "./EndpointGenerator";
+import { RawClient } from "./RawClient";
+
+export const CLIENT_MEMBER_NAME = "_client";
 
 export class SubClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private classReference: csharp.ClassReference;
+    private rawClient: RawClient;
+    private endpointGenerator: EndpointGenerator;
 
     constructor(
         context: SdkGeneratorContext,
@@ -14,6 +20,8 @@ export class SubClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfi
     ) {
         super(context);
         this.classReference = this.context.getServiceClassReference(serviceId);
+        this.rawClient = new RawClient(context);
+        this.endpointGenerator = new EndpointGenerator(context, this.rawClient);
     }
 
     public doGenerate(): CSharpFile {
@@ -26,7 +34,7 @@ export class SubClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfi
         class_.addField(
             csharp.field({
                 access: "private",
-                name: "_client",
+                name: CLIENT_MEMBER_NAME,
                 type: csharp.Type.reference(this.context.getRawClientClassReference())
             })
         );
@@ -34,15 +42,8 @@ export class SubClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfi
         class_.addConstructor(this.getConstructorMethod());
 
         for (const endpoint of this.service.endpoints) {
-            class_.addMethod(
-                csharp.method({
-                    name: this.context.getEndpointMethodName(endpoint),
-                    access: "public",
-                    isAsync: true,
-                    parameters: [],
-                    summary: endpoint.docs
-                })
-            );
+            const method = this.endpointGenerator.generate({ endpoint, rawClientReference: CLIENT_MEMBER_NAME });
+            class_.addMethod(method);
         }
 
         return new CSharpFile({

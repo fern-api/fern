@@ -3,7 +3,6 @@ import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
-import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
 
@@ -104,29 +103,5 @@ export class Method extends AstNode {
 
     public getParameters(): Parameter[] {
         return this.parameters;
-    }
-
-    public getInvocation(args: Map<Parameter, CodeBlock>, on?: CodeBlock): MethodInvocation {
-        return new MethodInvocation({
-            method: this,
-            arguments_: args,
-            on
-        });
-    }
-
-    public getInvocationFromExample(example: Map<string, unknown>, on?: CodeBlock): MethodInvocation {
-        const args = new Map<Parameter, CodeBlock>();
-        for (const parameter of this.parameters) {
-            const value = example.get(parameter.name);
-            if (value !== undefined) {
-                // TODO: actually handle these examples
-                // args.set(parameter, new CodeBlock({ value: value as string }));
-            }
-        }
-        return new MethodInvocation({
-            method: this,
-            arguments_: args,
-            on
-        });
     }
 }
