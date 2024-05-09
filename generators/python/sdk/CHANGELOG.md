@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0-rc0] - 2024-05-09
+
+- Improvement: you can now specify dev dependencies from your `generators.yml` file:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        extra_dev_dependencies:
+          requests_mock: 1.12.1
+          boto3: 1.28.57
+  ```
+
+  These will then populare your `pyproject.toml` automatically:
+
+  ```toml
+  ...
+  [tool.poetry.dev-dependencies]
+  requests_mock = "1.12.1"
+  boto3 = "1.28.57"
+  ...
+  ```
+
 ## [1.5.3-rc0] - 2024-05-02
 
 - Fix: the unchecked basemodel no longer tries to dereference an object if it's null.
