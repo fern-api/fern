@@ -67,6 +67,9 @@ class Project:
     def add_dependency(self, dependency: AST.Dependency) -> None:
         self._dependency_manager.add_dependency(dependency)
 
+    def add_dev_dependency(self, dependency: AST.Dependency) -> None:
+        self._dependency_manager.add_dev_dependency(dependency)
+
     def set_generate_readme(self, generate_readme: bool) -> None:
         self._generate_readme = generate_readme
 
