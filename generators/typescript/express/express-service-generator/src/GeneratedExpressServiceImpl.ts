@@ -2,7 +2,7 @@ import {
     HttpEndpoint,
     HttpMethod,
     HttpRequestBody,
-    HttpResponse,
+    HttpResponseBody,
     HttpService,
     Package,
     PathParameter
@@ -221,8 +221,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                       })
                                     : undefined,
                             response:
-                                endpoint.response != null
-                                    ? this.getResponseBodyType(endpoint.response, context)
+                                endpoint.response?.body != null
+                                    ? this.getResponseBodyType(endpoint.response.body, context)
                                     : undefined
                         })
                     )
@@ -237,7 +237,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 undefined,
                                 ts.factory.createFunctionTypeNode(
                                     undefined,
-                                    endpoint.response != null
+                                    endpoint.response?.body != null
                                         ? [
                                               ts.factory.createParameterDeclaration(
                                                   undefined,
@@ -245,7 +245,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                   undefined,
                                                   GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME,
                                                   undefined,
-                                                  this.getResponseBodyType(endpoint.response, context)
+                                                  this.getResponseBodyType(endpoint.response.body, context)
                                               )
                                           ]
                                         : [],
@@ -909,8 +909,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         return `${this.serviceClassName}Methods`;
     }
 
-    private getResponseBodyType(response: HttpResponse, context: ExpressContext): ts.TypeNode {
-        return HttpResponse._visit<ts.TypeNode>(response, {
+    private getResponseBodyType(response: HttpResponseBody, context: ExpressContext): ts.TypeNode {
+        return HttpResponseBody._visit<ts.TypeNode>(response, {
             json: (jsonResponse) => context.type.getReferenceToType(jsonResponse.responseBodyType).typeNode,
             streaming: () => {
                 throw new Error("Streaming is not supported");
@@ -922,7 +922,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 throw new Error("Text response is not supported");
             },
             _other: () => {
-                throw new Error("Unknown HttpResponse: " + response.type);
+                throw new Error("Unknown HttpResponseBody: " + response.type);
             }
         });
     }

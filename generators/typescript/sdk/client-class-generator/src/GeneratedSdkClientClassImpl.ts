@@ -7,7 +7,7 @@ import {
     HeaderAuthScheme,
     HttpEndpoint,
     HttpHeader,
-    HttpResponse,
+    HttpResponseBody,
     IntermediateRepresentation,
     Package,
     PathParameter,
@@ -162,10 +162,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     response
                 }: {
                     response:
-                        | HttpResponse.Json
-                        | HttpResponse.FileDownload
-                        | HttpResponse.Text
-                        | HttpResponse.Streaming
+                        | HttpResponseBody.Json
+                        | HttpResponseBody.FileDownload
+                        | HttpResponseBody.Text
+                        | HttpResponseBody.Streaming
                         | undefined;
                 }) => {
                     if (neverThrowErrors) {
@@ -192,7 +192,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getDefaultEndpointImplementation = ({
                     response
                 }: {
-                    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Text | undefined;
+                    response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Text | undefined;
                 }) => {
                     return new GeneratedDefaultEndpointImplementation({
                         endpoint,
@@ -206,11 +206,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     });
                 };
 
-                if (endpoint.response == null) {
+                if (endpoint.response?.body == null) {
                     return getDefaultEndpointImplementation({ response: undefined });
                 }
 
-                return HttpResponse._visit<GeneratedEndpointImplementation>(endpoint.response, {
+                return HttpResponseBody._visit<GeneratedEndpointImplementation>(endpoint.response.body, {
                     fileDownload: (fileDownload) =>
                         new GeneratedFileDownloadEndpointImplementation({
                             endpoint,
@@ -219,14 +219,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
                             response: getGeneratedEndpointResponse({
-                                response: HttpResponse.fileDownload(fileDownload)
+                                response: HttpResponseBody.fileDownload(fileDownload)
                             }),
                             includeSerdeLayer,
                             retainOriginalCasing
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
-                            response: HttpResponse.json(jsonResponse)
+                            response: HttpResponseBody.json(jsonResponse)
                         }),
                     streaming: (streamingResponse) =>
                         new GeneratedStreamingEndpointImplementation({
@@ -235,7 +235,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
                             response: getGeneratedEndpointResponse({
-                                response: HttpResponse.streaming(streamingResponse)
+                                response: HttpResponseBody.streaming(streamingResponse)
                             }),
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
@@ -244,11 +244,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         }),
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({
-                            response: HttpResponse.text(textResponse)
+                            response: HttpResponseBody.text(textResponse)
                         });
                     },
                     _other: () => {
-                        throw new Error("Unknown Response type: " + endpoint.response?.type);
+                        throw new Error("Unknown Response type: " + endpoint.response?.body?.type);
                     }
                 });
             });
@@ -282,6 +282,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 },
                 header: (header) => {
                     this.authHeaders.push(header);
+                },
+                oauth: (oauth) => {
+                    // default to bearer for now
+                    throw new Error("Oauth scheme is unsupported: " + oauth);
                 },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);

@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpResponse, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpResponseBody, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { JavaScriptRuntime, visitJavaScriptRuntime } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export function getSuccessReturnType(
-    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | HttpResponse.Text | undefined,
+    response: HttpResponseBody.Json | HttpResponseBody.FileDownload | HttpResponseBody.Streaming | HttpResponseBody.Text | undefined,
     context: SdkContext,
     opts: {
         includeContentHeadersOnResponse: boolean;
