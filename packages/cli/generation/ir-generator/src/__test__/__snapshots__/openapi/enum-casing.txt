@@ -861,39 +861,42 @@ exports[`generate IR from OpenAPI 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "type": "json",
-            "value": {
-              "docs": "Successful response",
-              "responseBodyType": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [],
-                  "file": null,
-                  "packagePath": [],
+            "body": {
+              "type": "json",
+              "value": {
+                "docs": "Successful response",
+                "responseBodyType": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "exampleResponse",
+                      "unsafeName": "exampleResponse",
+                    },
+                    "originalName": "ExampleResponse",
+                    "pascalCase": {
+                      "safeName": "ExampleResponse",
+                      "unsafeName": "ExampleResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EXAMPLE_RESPONSE",
+                      "unsafeName": "EXAMPLE_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "example_response",
+                      "unsafeName": "example_response",
+                    },
+                  },
+                  "typeId": "type_:ExampleResponse",
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "exampleResponse",
-                    "unsafeName": "exampleResponse",
-                  },
-                  "originalName": "ExampleResponse",
-                  "pascalCase": {
-                    "safeName": "ExampleResponse",
-                    "unsafeName": "ExampleResponse",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "EXAMPLE_RESPONSE",
-                    "unsafeName": "EXAMPLE_RESPONSE",
-                  },
-                  "snakeCase": {
-                    "safeName": "example_response",
-                    "unsafeName": "example_response",
-                  },
-                },
-                "typeId": "type_:ExampleResponse",
+                "type": "response",
               },
-              "type": "response",
             },
+            "status-code": null,
           },
           "sdkRequest": null,
         },

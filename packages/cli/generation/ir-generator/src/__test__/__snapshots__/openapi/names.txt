@@ -2215,14 +2215,35 @@ exports[`generate IR from OpenAPI 1`] = `
           ],
           "requestBody": null,
           "response": {
-            "type": "json",
-            "value": {
-              "docs": "successful operation",
-              "responseBodyType": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [
-                    {
+            "body": {
+              "type": "json",
+              "value": {
+                "docs": "successful operation",
+                "responseBodyType": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "telemetry",
+                          "unsafeName": "telemetry",
+                        },
+                        "originalName": "telemetry",
+                        "pascalCase": {
+                          "safeName": "Telemetry",
+                          "unsafeName": "Telemetry",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TELEMETRY",
+                          "unsafeName": "TELEMETRY",
+                        },
+                        "snakeCase": {
+                          "safeName": "telemetry",
+                          "unsafeName": "telemetry",
+                        },
+                      },
+                    ],
+                    "file": {
                       "camelCase": {
                         "safeName": "telemetry",
                         "unsafeName": "telemetry",
@@ -2241,51 +2262,33 @@ exports[`generate IR from OpenAPI 1`] = `
                         "unsafeName": "telemetry",
                       },
                     },
-                  ],
-                  "file": {
+                    "packagePath": [],
+                  },
+                  "name": {
                     "camelCase": {
-                      "safeName": "telemetry",
-                      "unsafeName": "telemetry",
+                      "safeName": "telemetryGetTelemetryDataResponse",
+                      "unsafeName": "telemetryGetTelemetryDataResponse",
                     },
-                    "originalName": "telemetry",
+                    "originalName": "TelemetryGetTelemetryDataResponse",
                     "pascalCase": {
-                      "safeName": "Telemetry",
-                      "unsafeName": "Telemetry",
+                      "safeName": "TelemetryGetTelemetryDataResponse",
+                      "unsafeName": "TelemetryGetTelemetryDataResponse",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "TELEMETRY",
-                      "unsafeName": "TELEMETRY",
+                      "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
+                      "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
                     },
                     "snakeCase": {
-                      "safeName": "telemetry",
-                      "unsafeName": "telemetry",
+                      "safeName": "telemetry_get_telemetry_data_response",
+                      "unsafeName": "telemetry_get_telemetry_data_response",
                     },
                   },
-                  "packagePath": [],
+                  "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "telemetryGetTelemetryDataResponse",
-                    "unsafeName": "telemetryGetTelemetryDataResponse",
-                  },
-                  "originalName": "TelemetryGetTelemetryDataResponse",
-                  "pascalCase": {
-                    "safeName": "TelemetryGetTelemetryDataResponse",
-                    "unsafeName": "TelemetryGetTelemetryDataResponse",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                    "unsafeName": "TELEMETRY_GET_TELEMETRY_DATA_RESPONSE",
-                  },
-                  "snakeCase": {
-                    "safeName": "telemetry_get_telemetry_data_response",
-                    "unsafeName": "telemetry_get_telemetry_data_response",
-                  },
-                },
-                "typeId": "type_telemetry:TelemetryGetTelemetryDataResponse",
+                "type": "response",
               },
-              "type": "response",
             },
+            "status-code": null,
           },
           "sdkRequest": {
             "requestParameterName": {
