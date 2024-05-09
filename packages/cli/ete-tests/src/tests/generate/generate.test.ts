@@ -14,7 +14,7 @@ describe("fern generate", () => {
             cwd: pathOfDirectory
         });
 
-        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("generated/sdks/typescript")))).toBe(true);
+        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("sdks/typescript")))).toBe(true);
     }, 180_000);
 
     it("missing docs page", async () => {
