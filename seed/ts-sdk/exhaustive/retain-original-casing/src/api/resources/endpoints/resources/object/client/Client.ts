@@ -23,6 +23,28 @@ export declare namespace Object_ {
 export class Object_ {
     constructor(protected readonly _options: Object_.Options) {}
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.object.getAndReturnWithOptionalField({
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["string"],
+     *         set: new Set(["string"]),
+     *         map: {
+     *             1: "string"
+     *         }
+     *     })
+     */
     public async getAndReturnWithOptionalField(
         request: SeedExhaustive.types.ObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions
@@ -79,6 +101,15 @@ export class Object_ {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.object.getAndReturnWithRequiredField({
+     *         string: "string"
+     *     })
+     */
     public async getAndReturnWithRequiredField(
         request: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions
@@ -135,6 +166,19 @@ export class Object_ {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.object.getAndReturnWithMapOfMap({
+     *         map: {
+     *             "string": {
+     *                 "string": "string"
+     *             }
+     *         }
+     *     })
+     */
     public async getAndReturnWithMapOfMap(
         request: SeedExhaustive.types.ObjectWithMapOfMap,
         requestOptions?: Object_.RequestOptions
@@ -186,6 +230,31 @@ export class Object_ {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField({
+     *         string: "string",
+     *         NestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["string"],
+     *             set: new Set(["string"]),
+     *             map: {
+     *                 1: "string"
+     *             }
+     *         }
+     *     })
+     */
     public async getAndReturnNestedWithOptionalField(
         request: SeedExhaustive.types.NestedObjectWithOptionalField,
         requestOptions?: Object_.RequestOptions
@@ -242,6 +311,31 @@ export class Object_ {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField({
+     *         string: "string",
+     *         NestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["string"],
+     *             set: new Set(["string"]),
+     *             map: {
+     *                 1: "string"
+     *             }
+     *         }
+     *     })
+     */
     public async getAndReturnNestedWithRequiredField(
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions
@@ -298,6 +392,31 @@ export class Object_ {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
+     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
+     *             string: "string",
+     *             NestedObject: {
+     *                 string: "string",
+     *                 integer: 1,
+     *                 long: 1000000,
+     *                 double: 1.1,
+     *                 bool: true,
+     *                 datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *                 date: "2023-01-15",
+     *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 base64: "SGVsbG8gd29ybGQh",
+     *                 list: ["string"],
+     *                 set: new Set(["string"]),
+     *                 map: {
+     *                     1: "string"
+     *                 }
+     *             }
+     *         }])
+     */
     public async getAndReturnNestedWithRequiredFieldAsList(
         request: SeedExhaustive.types.NestedObjectWithRequiredField[],
         requestOptions?: Object_.RequestOptions

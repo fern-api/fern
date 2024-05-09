@@ -31,6 +31,9 @@ export class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      *
+     * @param {SeedTrace.Language} language
+     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.submission.createExecutionSession(SeedTrace.Language.Java)
      */
@@ -41,7 +44,7 @@ export class Submission {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/create-session/${await serializers.Language.jsonOrThrow(language)}`
+                `/sessions/create-session/${encodeURIComponent(await serializers.Language.jsonOrThrow(language))}`
             ),
             method: "POST",
             headers: {
@@ -94,6 +97,9 @@ export class Submission {
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      *
+     * @param {string} sessionId
+     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.submission.getExecutionSession("string")
      */
@@ -104,7 +110,7 @@ export class Submission {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/${sessionId}`
+                `/sessions/${encodeURIComponent(sessionId)}`
             ),
             method: "GET",
             headers: {
@@ -157,6 +163,9 @@ export class Submission {
     /**
      * Stops execution session.
      *
+     * @param {string} sessionId
+     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.submission.stopExecutionSession("string")
      */
@@ -164,7 +173,7 @@ export class Submission {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sessions/stop/${sessionId}`
+                `/sessions/stop/${encodeURIComponent(sessionId)}`
             ),
             method: "DELETE",
             headers: {
@@ -209,6 +218,12 @@ export class Submission {
         }
     }
 
+    /**
+     * @param {Submission.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.submission.getExecutionSessionsState()
+     */
     public async getExecutionSessionsState(
         requestOptions?: Submission.RequestOptions
     ): Promise<SeedTrace.GetExecutionSessionStateResponse> {

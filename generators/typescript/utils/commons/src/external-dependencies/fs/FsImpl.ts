@@ -16,4 +16,14 @@ export class FsImpl extends ExternalDependency implements Fs {
             })
         )
     };
+
+    public readonly createReadStream = this.withNamespaceImport("fs", (withImport, fs) =>
+        withImport((filename: ts.Expression) => {
+            return ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(fs), "createReadStream"),
+                undefined,
+                [filename]
+            );
+        })
+    );
 }

@@ -27,6 +27,9 @@ export class Problem {
     /**
      * Creates a problem
      *
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.problem.createProblem({
      *         problemName: "string",
@@ -109,6 +112,10 @@ export class Problem {
     /**
      * Updates a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.problem.updateProblem(SeedTrace.ProblemId("string"), {
      *         problemName: "string",
@@ -150,7 +157,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problem-crud/update/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "POST",
             headers: {
@@ -192,6 +199,9 @@ export class Problem {
     /**
      * Soft deletes a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.problem.deleteProblem(SeedTrace.ProblemId("string"))
      */
@@ -202,7 +212,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problem-crud/delete/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "DELETE",
             headers: {
@@ -237,6 +247,9 @@ export class Problem {
 
     /**
      * Returns default starter files for problem
+     *
+     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.getDefaultStarterFiles({

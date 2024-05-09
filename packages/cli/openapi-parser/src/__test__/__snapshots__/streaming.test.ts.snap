@@ -2,6 +2,7 @@
 
 exports[`open api parser streaming parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -36,6 +37,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userStreamRequestId",
               "key": "id",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userStreamRequestId",
@@ -61,6 +63,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userStreamRequestStream",
               "key": "stream",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserStreamRequestStream",
@@ -162,6 +165,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userRequestId",
               "key": "id",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userRequestId",
@@ -187,6 +191,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userRequestStream",
               "key": "stream",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserRequestStream",
@@ -254,6 +259,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV2StreamRequestId",
               "key": "id",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV2StreamRequestId",
@@ -279,6 +285,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV2StreamRequestStream",
               "key": "stream",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserV2StreamRequestStream",
@@ -394,6 +401,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV2RequestId",
               "key": "id",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV2RequestId",
@@ -419,6 +427,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV2RequestStream",
               "key": "stream",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserV2RequestStream",
@@ -486,6 +495,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3StreamRequestId",
               "key": "id",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV3StreamRequestId",
@@ -511,6 +521,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3StreamRequestStream",
               "key": "stream",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserV3StreamRequestStream",
@@ -545,6 +556,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3StreamResponseId",
               "key": "id",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV3StreamResponseId",
@@ -570,6 +582,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3StreamResponseInline",
               "key": "inline",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV3StreamResponseInline",
@@ -593,6 +606,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3StreamResponseStreamed",
               "key": "streamed",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV3StreamResponseStreamed",
@@ -693,6 +707,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3RequestId",
               "key": "id",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV3RequestId",
@@ -718,6 +733,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3RequestStream",
               "key": "stream",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserV3RequestStream",
@@ -752,6 +768,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3ResponseId",
               "key": "id",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV3ResponseId",
@@ -777,6 +794,7 @@ exports[`open api parser streaming parse open api 1`] = `
               "conflict": {},
               "generatedName": "userV3ResponseInline",
               "key": "inline",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userV3ResponseInline",
@@ -829,6 +847,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "conflict": {},
           "generatedName": "baseStreamUserId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "baseStreamUserId",
@@ -865,6 +884,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "conflict": {},
           "generatedName": "baseUserId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "baseUserId",
@@ -901,6 +921,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "conflict": {},
           "generatedName": "streamUserId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "streamUserId",
@@ -926,6 +947,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "conflict": {},
           "generatedName": "streamUserName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "streamUserName",
@@ -951,6 +973,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "conflict": {},
           "generatedName": "streamUserStreamed",
           "key": "streamed",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "streamUserStreamed",
@@ -986,6 +1009,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userId",
@@ -1011,6 +1035,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "conflict": {},
           "generatedName": "userName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userName",
@@ -1036,6 +1061,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "conflict": {},
           "generatedName": "userStreamed",
           "key": "streamed",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userStreamed",

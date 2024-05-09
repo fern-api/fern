@@ -25,6 +25,9 @@ export class CustomAuth {
 
     /**
      * GET request with custom auth scheme
+     *
+     * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      *
      * @example
@@ -91,6 +94,10 @@ export class CustomAuth {
 
     /**
      * POST request with custom auth scheme
+     *
+     * @param {unknown} request
+     * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      * @throws {@link SeedCustomAuth.BadRequest}
      *

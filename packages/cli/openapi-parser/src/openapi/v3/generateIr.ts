@@ -29,6 +29,7 @@ import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { ConvertedOperation } from "./converters/operation/convertOperation";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
+import { getFernBasePath } from "./extensions/getFernBasePath";
 import { getFernGroups } from "./extensions/getFernGroups";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
@@ -40,12 +41,14 @@ export function generateIr({
     openApi,
     taskContext,
     disableExamples,
-    audiences
+    audiences,
+    shouldUseTitleAsName
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
     disableExamples: boolean | undefined;
     audiences: string[];
+    shouldUseTitleAsName: boolean;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -68,7 +71,7 @@ export function generateIr({
             return null;
         })
     );
-    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders });
+    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders, shouldUseTitleAsName });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
 
@@ -236,6 +239,7 @@ export function generateIr({
     const groupInfo = getFernGroups({ document: openApi, context });
 
     const ir: OpenApiIntermediateRepresentation = {
+        basePath: getFernBasePath(openApi),
         title: openApi.info.title,
         description: openApi.info.description,
         groups: Object.fromEntries(

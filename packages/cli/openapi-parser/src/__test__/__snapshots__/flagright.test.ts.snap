@@ -2,6 +2,7 @@
 
 exports[`open api parser flagright parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "",
   "endpoints": [
@@ -500,6 +501,7 @@ Here are some of the most used payload fields explained (you can find the full p
               "conflict": {},
               "generatedName": "postConsumerTransactionResponseMessage",
               "key": "message",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "postConsumerTransactionResponseMessage",
@@ -2040,6 +2042,7 @@ Each consumer User entity needs three mandatory fields:
               "conflict": {},
               "generatedName": "postConsumerUserResponseMessage",
               "key": "message",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "postConsumerUserResponseMessage",
@@ -2956,6 +2959,7 @@ Each consumer Business entity needs three mandatory fields:
               "conflict": {},
               "generatedName": "postBusinessUserResponseMessage",
               "key": "message",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "postBusinessUserResponseMessage",
@@ -6571,6 +6575,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "achDetailsRoutingNumber",
           "key": "routingNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "achDetailsRoutingNumber",
@@ -6596,6 +6601,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "achDetailsAccountNumber",
           "key": "accountNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "achDetailsAccountNumber",
@@ -6621,6 +6627,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "achDetailsBankName",
           "key": "bankName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "achDetailsBankName",
@@ -6646,6 +6653,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "achDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "achDetailsName",
@@ -6671,6 +6679,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "achDetailsBankAddress",
           "key": "bankAddress",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "achDetailsBankAddress",
@@ -6692,6 +6701,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "achDetailsBeneficiaryName",
           "key": "beneficiaryName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "achDetailsBeneficiaryName",
@@ -6820,6 +6830,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "addressAddressLines",
           "key": "addressLines",
+          "nameOverride": null,
           "schema": {
             "description": "Address lines of the user's residence address",
             "generatedName": "AddressAddressLines",
@@ -6838,6 +6849,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "addressPostcode",
           "key": "postcode",
+          "nameOverride": null,
           "schema": {
             "description": "Post code of the user's residence address",
             "generatedName": "AddressPostcode",
@@ -6856,6 +6868,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "addressCity",
           "key": "city",
+          "nameOverride": null,
           "schema": {
             "description": "City of the user's residence address",
             "generatedName": "AddressCity",
@@ -6874,6 +6887,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "addressState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "addressState",
@@ -6899,6 +6913,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "addressCountry",
           "key": "country",
+          "nameOverride": null,
           "schema": {
             "description": "User's country of residence",
             "generatedName": "AddressCountry",
@@ -6917,6 +6932,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "addressTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "addressTags",
@@ -6956,6 +6972,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsAlertId",
           "key": "alertId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsAlertId",
@@ -6981,6 +6998,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsStatus",
@@ -7006,6 +7024,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsReasons",
           "key": "reasons",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsReasons",
@@ -7038,6 +7057,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsReasonDescriptionForOther",
           "key": "reasonDescriptionForOther",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsReasonDescriptionForOther",
@@ -7070,6 +7090,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsComment",
           "key": "comment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsComment",
@@ -7095,6 +7116,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsUserId",
@@ -7120,6 +7142,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsTransactionIds",
           "key": "transactionIds",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsTransactionIds",
@@ -7152,6 +7175,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsRuleName",
           "key": "ruleName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsRuleName",
@@ -7177,6 +7201,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsRuleDescription",
           "key": "ruleDescription",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsRuleDescription",
@@ -7202,6 +7227,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsRuleId",
           "key": "ruleId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsRuleId",
@@ -7227,6 +7253,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "alertClosedDetailsRuleInstanceId",
           "key": "ruleInstanceId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "alertClosedDetailsRuleInstanceId",
@@ -7263,6 +7290,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "amountAmountValue",
           "key": "amountValue",
+          "nameOverride": null,
           "schema": {
             "description": "Numerical value of the transaction",
             "generatedName": "AmountAmountValue",
@@ -7279,6 +7307,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "amountAmountCurrency",
           "key": "amountCurrency",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AmountAmountCurrency",
@@ -7329,6 +7358,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessBaseUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": "Unique user ID for the user",
             "generatedName": "BusinessBaseUserId",
@@ -7347,6 +7377,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessBaseCreatedTimestamp",
           "key": "createdTimestamp",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp when the user was created",
             "generatedName": "BusinessBaseCreatedTimestamp",
@@ -7374,6 +7405,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessEntityLinkParentUserId",
           "key": "parentUserId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessEntityLinkParentUserId",
@@ -7399,6 +7431,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessEntityLinkChildUserIds",
           "key": "childUserIds",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessEntityLinkChildUserIds",
@@ -7442,6 +7475,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalUserStateDetails",
           "key": "userStateDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalUserStateDetails",
@@ -7463,6 +7497,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalKycStatusDetails",
           "key": "kycStatusDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalKycStatusDetails",
@@ -7484,6 +7519,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalLegalEntity",
           "key": "legalEntity",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalLegalEntity",
@@ -7505,6 +7541,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalShareHolders",
           "key": "shareHolders",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalShareHolders",
@@ -7533,6 +7570,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalDirectors",
           "key": "directors",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalDirectors",
@@ -7561,6 +7599,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalTransactionLimits",
           "key": "transactionLimits",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalTransactionLimits",
@@ -7582,6 +7621,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalRiskLevel",
           "key": "riskLevel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalRiskLevel",
@@ -7603,6 +7643,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalAllowedPaymentMethods",
           "key": "allowedPaymentMethods",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalAllowedPaymentMethods",
@@ -7631,6 +7672,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalLinkedEntities",
           "key": "linkedEntities",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalLinkedEntities",
@@ -7652,6 +7694,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalAcquisitionChannel",
           "key": "acquisitionChannel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalAcquisitionChannel",
@@ -7673,6 +7716,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalSavedPaymentDetails",
           "key": "savedPaymentDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalSavedPaymentDetails",
@@ -7779,6 +7823,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalMccDetails",
           "key": "mccDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalMccDetails",
@@ -7800,6 +7845,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessOptionalTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessOptionalTags",
@@ -7839,6 +7885,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessUserEventTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp of the event",
             "generatedName": "BusinessUserEventTimestamp",
@@ -7855,6 +7902,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessUserEventUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": "Transaction ID the event pertains to",
             "generatedName": "BusinessUserEventUserId",
@@ -7873,6 +7921,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessUserEventEventId",
           "key": "eventId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessUserEventEventId",
@@ -7898,6 +7947,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessUserEventReason",
           "key": "reason",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessUserEventReason",
@@ -7923,6 +7973,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessUserEventEventDescription",
           "key": "eventDescription",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessUserEventEventDescription",
@@ -7948,6 +7999,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessUserEventUpdatedBusinessUserAttributes",
           "key": "updatedBusinessUserAttributes",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessUserEventUpdatedBusinessUserAttributes",
@@ -7980,6 +8032,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessUsersResponseUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": "user ID the risk score pertains to",
             "generatedName": "BusinessUsersResponseUserId",
@@ -8017,6 +8070,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessWithRulesResultExecutedRules",
           "key": "executedRules",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessWithRulesResultExecutedRules",
@@ -8045,6 +8099,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "businessWithRulesResultHitRules",
           "key": "hitRules",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "businessWithRulesResultHitRules",
@@ -8084,6 +8139,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsCardFingerprint",
           "key": "cardFingerprint",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsCardFingerprint",
@@ -8109,6 +8165,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsCardIssuedCountry",
           "key": "cardIssuedCountry",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsCardIssuedCountry",
@@ -8130,6 +8187,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsTransactionReferenceField",
           "key": "transactionReferenceField",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsTransactionReferenceField",
@@ -8155,6 +8213,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetails3DsDone",
           "key": "3dsDone",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetails3DsDone",
@@ -8178,6 +8237,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsNameOnCard",
           "key": "nameOnCard",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsNameOnCard",
@@ -8199,6 +8259,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsCardExpiry",
           "key": "cardExpiry",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsCardExpiry",
@@ -8220,6 +8281,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsCardLast4Digits",
           "key": "cardLast4Digits",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsCardLast4Digits",
@@ -8245,6 +8307,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsCardBrand",
           "key": "cardBrand",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsCardBrand",
@@ -8351,6 +8414,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsCardFunding",
           "key": "cardFunding",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsCardFunding",
@@ -8409,6 +8473,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsCardAuthenticated",
           "key": "cardAuthenticated",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsCardAuthenticated",
@@ -8432,6 +8497,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsPaymentChannel",
           "key": "paymentChannel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsPaymentChannel",
@@ -8457,6 +8523,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsCardType",
           "key": "cardType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsCardType",
@@ -8503,6 +8570,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardDetailsMerchantDetails",
           "key": "merchantDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardDetailsMerchantDetails",
@@ -8535,6 +8603,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardExpiryMonth",
           "key": "month",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardExpiryMonth",
@@ -8558,6 +8627,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardExpiryYear",
           "key": "year",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardExpiryYear",
@@ -8592,6 +8662,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardMerchantDetailsId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardMerchantDetailsId",
@@ -8617,6 +8688,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardMerchantDetailsCategory",
           "key": "category",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardMerchantDetailsCategory",
@@ -8642,6 +8714,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardMerchantDetailsMcc",
           "key": "MCC",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardMerchantDetailsMcc",
@@ -8667,6 +8740,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardMerchantDetailsCity",
           "key": "city",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardMerchantDetailsCity",
@@ -8692,6 +8766,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardMerchantDetailsCountry",
           "key": "country",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardMerchantDetailsCountry",
@@ -8717,6 +8792,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardMerchantDetailsState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardMerchantDetailsState",
@@ -8742,6 +8818,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "cardMerchantDetailsPostCode",
           "key": "postCode",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cardMerchantDetailsPostCode",
@@ -8790,6 +8867,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseClosedDetailsCaseId",
           "key": "caseId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseClosedDetailsCaseId",
@@ -8815,6 +8893,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseClosedDetailsStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseClosedDetailsStatus",
@@ -8840,6 +8919,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseClosedDetailsReasons",
           "key": "reasons",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseClosedDetailsReasons",
@@ -8872,6 +8952,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseClosedDetailsReasonDescriptionForOther",
           "key": "reasonDescriptionForOther",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseClosedDetailsReasonDescriptionForOther",
@@ -8904,6 +8985,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseClosedDetailsComment",
           "key": "comment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseClosedDetailsComment",
@@ -8929,6 +9011,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseClosedDetailsUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseClosedDetailsUserId",
@@ -8954,6 +9037,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseClosedDetailsTransactionIds",
           "key": "transactionIds",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseClosedDetailsTransactionIds",
@@ -8997,6 +9081,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseManagementEventCaseStatus",
           "key": "caseStatus",
+          "nameOverride": null,
           "schema": {
             "description": "Status of a case. E.g. Open, Closed etc.",
             "generatedName": "CaseManagementEventCaseStatus",
@@ -9036,6 +9121,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseManagementEventTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp of the event",
             "generatedName": "CaseManagementEventTimestamp",
@@ -9052,6 +9138,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseManagementEventCaseStatusReason",
           "key": "caseStatusReason",
+          "nameOverride": null,
           "schema": {
             "description": "Case status reason. E.g. Closed & False Positive, Closed & Investigation Completed etc.",
             "generatedName": "CaseManagementEventCaseStatusReason",
@@ -9115,6 +9202,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseManagementEventTransactionId",
           "key": "transactionId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseManagementEventTransactionId",
@@ -9140,6 +9228,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseManagementEventUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseManagementEventUserId",
@@ -9165,6 +9254,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseManagementEventEventId",
           "key": "eventId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseManagementEventEventId",
@@ -9190,6 +9280,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "caseManagementEventCaseStatusReasonDescription",
           "key": "caseStatusReasonDescription",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "caseManagementEventCaseStatusReasonDescription",
@@ -9226,6 +9317,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "checkDetailsCheckNumber",
           "key": "checkNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "checkDetailsCheckNumber",
@@ -9251,6 +9343,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "checkDetailsCheckIdentifier",
           "key": "checkIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "checkDetailsCheckIdentifier",
@@ -9276,6 +9369,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "checkDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "checkDetailsName",
@@ -9301,6 +9395,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "checkDetailsDeliveryStatus",
           "key": "deliveryStatus",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "checkDetailsDeliveryStatus",
@@ -9395,6 +9490,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "checkDetailsEtaTimestamp",
           "key": "etaTimestamp",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "checkDetailsEtaTimestamp",
@@ -9418,6 +9514,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "checkDetailsShippingAddress",
           "key": "shippingAddress",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "checkDetailsShippingAddress",
@@ -9461,6 +9558,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyFinancialDetailsExpectedTransactionAmountPerMonth",
           "key": "expectedTransactionAmountPerMonth",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyFinancialDetailsExpectedTransactionAmountPerMonth",
@@ -9482,6 +9580,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyFinancialDetailsExpectedTurnoverPerMonth",
           "key": "expectedTurnoverPerMonth",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyFinancialDetailsExpectedTurnoverPerMonth",
@@ -9503,6 +9602,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyFinancialDetailsTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyFinancialDetailsTags",
@@ -9542,6 +9642,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyGeneralDetailsLegalName",
           "key": "legalName",
+          "nameOverride": null,
           "schema": {
             "description": "Legal name of the company",
             "generatedName": "CompanyGeneralDetailsLegalName",
@@ -9560,6 +9661,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyGeneralDetailsBusinessIndustry",
           "key": "businessIndustry",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyGeneralDetailsBusinessIndustry",
@@ -9592,6 +9694,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyGeneralDetailsMainProductsServicesSold",
           "key": "mainProductsServicesSold",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyGeneralDetailsMainProductsServicesSold",
@@ -9624,6 +9727,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyGeneralDetailsUserSegment",
           "key": "userSegment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyGeneralDetailsUserSegment",
@@ -9718,6 +9822,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyGeneralDetailsUserRegistrationStatus",
           "key": "userRegistrationStatus",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyGeneralDetailsUserRegistrationStatus",
@@ -9739,6 +9844,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyGeneralDetailsTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyGeneralDetailsTags",
@@ -9778,6 +9884,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyRegistrationDetailsRegistrationIdentifier",
           "key": "registrationIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": "Commercial registry registration number for the company in its registration country",
             "generatedName": "CompanyRegistrationDetailsRegistrationIdentifier",
@@ -9796,6 +9903,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyRegistrationDetailsRegistrationCountry",
           "key": "registrationCountry",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CompanyRegistrationDetailsRegistrationCountry",
@@ -9810,6 +9918,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyRegistrationDetailsTaxIdentifier",
           "key": "taxIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyRegistrationDetailsTaxIdentifier",
@@ -9835,6 +9944,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyRegistrationDetailsLegalEntityType",
           "key": "legalEntityType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyRegistrationDetailsLegalEntityType",
@@ -9860,6 +9970,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyRegistrationDetailsDateOfRegistration",
           "key": "dateOfRegistration",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyRegistrationDetailsDateOfRegistration",
@@ -9885,6 +9996,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "companyRegistrationDetailsTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "companyRegistrationDetailsTags",
@@ -9924,6 +10036,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerNameFirstName",
           "key": "firstName",
+          "nameOverride": null,
           "schema": {
             "description": "First name of the user",
             "generatedName": "ConsumerNameFirstName",
@@ -9942,6 +10055,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerNameMiddleName",
           "key": "middleName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "consumerNameMiddleName",
@@ -9967,6 +10081,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerNameLastName",
           "key": "lastName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "consumerNameLastName",
@@ -10003,6 +10118,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerUserEventTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp of the event",
             "generatedName": "ConsumerUserEventTimestamp",
@@ -10019,6 +10135,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerUserEventUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": "Transaction ID the event pertains to",
             "generatedName": "ConsumerUserEventUserId",
@@ -10037,6 +10154,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerUserEventEventId",
           "key": "eventId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "consumerUserEventEventId",
@@ -10062,6 +10180,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerUserEventReason",
           "key": "reason",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "consumerUserEventReason",
@@ -10087,6 +10206,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerUserEventEventDescription",
           "key": "eventDescription",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "consumerUserEventEventDescription",
@@ -10112,6 +10232,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerUserEventUpdatedConsumerUserAttributes",
           "key": "updatedConsumerUserAttributes",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "consumerUserEventUpdatedConsumerUserAttributes",
@@ -10144,6 +10265,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "consumerUsersResponseUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": "user ID the risk score pertains to",
             "generatedName": "ConsumerUsersResponseUserId",
@@ -10173,6 +10295,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "contactDetailsEmailIds",
           "key": "emailIds",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "contactDetailsEmailIds",
@@ -10205,6 +10328,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "contactDetailsContactNumbers",
           "key": "contactNumbers",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "contactDetailsContactNumbers",
@@ -10237,6 +10361,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "contactDetailsFaxNumbers",
           "key": "faxNumbers",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "contactDetailsFaxNumbers",
@@ -10269,6 +10394,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "contactDetailsWebsites",
           "key": "websites",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "contactDetailsWebsites",
@@ -10301,6 +10427,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "contactDetailsAddresses",
           "key": "addresses",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "contactDetailsAddresses",
@@ -16598,6 +16725,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "dateDay",
           "key": "day",
+          "nameOverride": null,
           "schema": {
             "description": "Day of date",
             "generatedName": "DateDay",
@@ -16614,6 +16742,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "dateMonth",
           "key": "month",
+          "nameOverride": null,
           "schema": {
             "description": "Month of date",
             "generatedName": "DateMonth",
@@ -16630,6 +16759,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "dateYear",
           "key": "year",
+          "nameOverride": null,
           "schema": {
             "description": "Year of date",
             "generatedName": "DateYear",
@@ -16657,6 +16787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataBatteryLevel",
           "key": "batteryLevel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataBatteryLevel",
@@ -16680,6 +16811,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataDeviceLatitude",
           "key": "deviceLatitude",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataDeviceLatitude",
@@ -16703,6 +16835,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataDeviceLongitude",
           "key": "deviceLongitude",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataDeviceLongitude",
@@ -16726,6 +16859,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataIpAddress",
           "key": "ipAddress",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataIpAddress",
@@ -16751,6 +16885,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataDeviceIdentifier",
           "key": "deviceIdentifier",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataDeviceIdentifier",
@@ -16776,6 +16911,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataVpnUsed",
           "key": "vpnUsed",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataVpnUsed",
@@ -16799,6 +16935,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataOperatingSystem",
           "key": "operatingSystem",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataOperatingSystem",
@@ -16824,6 +16961,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataDeviceMaker",
           "key": "deviceMaker",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataDeviceMaker",
@@ -16849,6 +16987,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataDeviceModel",
           "key": "deviceModel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataDeviceModel",
@@ -16874,6 +17013,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataDeviceYear",
           "key": "deviceYear",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataDeviceYear",
@@ -16899,6 +17039,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "deviceDataAppVersion",
           "key": "appVersion",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "deviceDataAppVersion",
@@ -16935,6 +17076,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultRuleId",
           "key": "ruleId",
+          "nameOverride": null,
           "schema": {
             "description": "Unique rule identifier",
             "generatedName": "ExecutedRulesResultRuleId",
@@ -16953,6 +17095,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultRuleInstanceId",
           "key": "ruleInstanceId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ExecutedRulesResultRuleInstanceId",
@@ -16971,6 +17114,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultRuleName",
           "key": "ruleName",
+          "nameOverride": null,
           "schema": {
             "description": "Name of the rule",
             "generatedName": "ExecutedRulesResultRuleName",
@@ -16989,6 +17133,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultRuleDescription",
           "key": "ruleDescription",
+          "nameOverride": null,
           "schema": {
             "description": "Description of the rule",
             "generatedName": "ExecutedRulesResultRuleDescription",
@@ -17007,6 +17152,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultRuleAction",
           "key": "ruleAction",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ExecutedRulesResultRuleAction",
@@ -17021,6 +17167,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultRuleHit",
           "key": "ruleHit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ExecutedRulesResultRuleHit",
@@ -17037,6 +17184,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultRuleHitMeta",
           "key": "ruleHitMeta",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "executedRulesResultRuleHitMeta",
@@ -17058,6 +17206,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultLabels",
           "key": "labels",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "executedRulesResultLabels",
@@ -17086,6 +17235,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "executedRulesResultNature",
           "key": "nature",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "executedRulesResultNature",
@@ -17118,6 +17268,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "failedRulesResultRuleId",
           "key": "ruleId",
+          "nameOverride": null,
           "schema": {
             "description": "Unique rule identifier",
             "generatedName": "FailedRulesResultRuleId",
@@ -17136,6 +17287,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "failedRulesResultRuleName",
           "key": "ruleName",
+          "nameOverride": null,
           "schema": {
             "description": "Name of the rule",
             "generatedName": "FailedRulesResultRuleName",
@@ -17154,6 +17306,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "failedRulesResultRuleDescription",
           "key": "ruleDescription",
+          "nameOverride": null,
           "schema": {
             "description": "Description of the rule",
             "generatedName": "FailedRulesResultRuleDescription",
@@ -17172,6 +17325,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "failedRulesResultFailureException",
           "key": "failureException",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FailedRulesResultFailureException",
@@ -17197,6 +17351,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "falsePositiveDetailsIsFalsePositive",
           "key": "isFalsePositive",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FalsePositiveDetailsIsFalsePositive",
@@ -17213,6 +17368,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "falsePositiveDetailsConfidenceScore",
           "key": "confidenceScore",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FalsePositiveDetailsConfidenceScore",
@@ -17251,6 +17407,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "genericBankAccountDetailsAccountNumber",
           "key": "accountNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "genericBankAccountDetailsAccountNumber",
@@ -17276,6 +17433,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "genericBankAccountDetailsAccountType",
           "key": "accountType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "genericBankAccountDetailsAccountType",
@@ -17301,6 +17459,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "genericBankAccountDetailsBankName",
           "key": "bankName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "genericBankAccountDetailsBankName",
@@ -17326,6 +17485,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "genericBankAccountDetailsBankCode",
           "key": "bankCode",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "genericBankAccountDetailsBankCode",
@@ -17351,6 +17511,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "genericBankAccountDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "genericBankAccountDetailsName",
@@ -17376,6 +17537,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "genericBankAccountDetailsBankAddress",
           "key": "bankAddress",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "genericBankAccountDetailsBankAddress",
@@ -17397,6 +17559,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "genericBankAccountDetailsSpecialInstructions",
           "key": "specialInstructions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "genericBankAccountDetailsSpecialInstructions",
@@ -17422,6 +17585,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "genericBankAccountDetailsPaymentChannel",
           "key": "paymentChannel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "genericBankAccountDetailsPaymentChannel",
@@ -17458,6 +17622,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleId",
           "key": "ruleId",
+          "nameOverride": null,
           "schema": {
             "description": "Unique rule identifier",
             "generatedName": "HitRulesDetailsRuleId",
@@ -17476,6 +17641,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleInstanceId",
           "key": "ruleInstanceId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "HitRulesDetailsRuleInstanceId",
@@ -17494,6 +17660,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleName",
           "key": "ruleName",
+          "nameOverride": null,
           "schema": {
             "description": "Name of the rule",
             "generatedName": "HitRulesDetailsRuleName",
@@ -17512,6 +17679,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleDescription",
           "key": "ruleDescription",
+          "nameOverride": null,
           "schema": {
             "description": "Description of the rule",
             "generatedName": "HitRulesDetailsRuleDescription",
@@ -17530,6 +17698,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleAction",
           "key": "ruleAction",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "HitRulesDetailsRuleAction",
@@ -17544,6 +17713,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "hitRulesDetailsRuleHitMeta",
           "key": "ruleHitMeta",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "hitRulesDetailsRuleHitMeta",
@@ -17565,6 +17735,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "hitRulesDetailsLabels",
           "key": "labels",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "hitRulesDetailsLabels",
@@ -17593,6 +17764,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "hitRulesDetailsNature",
           "key": "nature",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "hitRulesDetailsNature",
@@ -17625,6 +17797,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsBic",
           "key": "BIC",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsBic",
@@ -17650,6 +17823,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsBankName",
           "key": "bankName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsBankName",
@@ -17675,6 +17849,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsBankAddress",
           "key": "bankAddress",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsBankAddress",
@@ -17696,6 +17871,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsCountry",
           "key": "country",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsCountry",
@@ -17717,6 +17893,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsIban",
           "key": "IBAN",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsIban",
@@ -17742,6 +17919,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsName",
@@ -17767,6 +17945,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsTags",
@@ -17788,6 +17967,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsBankBranchCode",
           "key": "bankBranchCode",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsBankBranchCode",
@@ -17813,6 +17993,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ibanDetailsPaymentChannel",
           "key": "paymentChannel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ibanDetailsPaymentChannel",
@@ -17930,6 +18111,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "kycStatusDetailsReason",
           "key": "reason",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "kycStatusDetailsReason",
@@ -17955,6 +18137,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "kycStatusDetailsStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "kycStatusDetailsStatus",
@@ -17987,6 +18170,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalDocumentDocumentType",
           "key": "documentType",
+          "nameOverride": null,
           "schema": {
             "description": "User's identity document type such as passport, national ID etc.",
             "generatedName": "LegalDocumentDocumentType",
@@ -18005,6 +18189,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalDocumentDocumentNumber",
           "key": "documentNumber",
+          "nameOverride": null,
           "schema": {
             "description": "User's unique identity document number such as passport number",
             "generatedName": "LegalDocumentDocumentNumber",
@@ -18023,6 +18208,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalDocumentDocumentIssuedDate",
           "key": "documentIssuedDate",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "legalDocumentDocumentIssuedDate",
@@ -18046,6 +18232,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalDocumentDocumentExpirationDate",
           "key": "documentExpirationDate",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "legalDocumentDocumentExpirationDate",
@@ -18069,6 +18256,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalDocumentDocumentIssuedCountry",
           "key": "documentIssuedCountry",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LegalDocumentDocumentIssuedCountry",
@@ -18083,6 +18271,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalDocumentTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "legalDocumentTags",
@@ -18111,6 +18300,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalDocumentNameOnDocument",
           "key": "nameOnDocument",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "legalDocumentNameOnDocument",
@@ -18143,6 +18333,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalEntityCompanyGeneralDetails",
           "key": "companyGeneralDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LegalEntityCompanyGeneralDetails",
@@ -18157,6 +18348,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalEntityCompanyFinancialDetails",
           "key": "companyFinancialDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "legalEntityCompanyFinancialDetails",
@@ -18178,6 +18370,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalEntityCompanyRegistrationDetails",
           "key": "companyRegistrationDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "legalEntityCompanyRegistrationDetails",
@@ -18199,6 +18392,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalEntityReasonForAccountOpening",
           "key": "reasonForAccountOpening",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "legalEntityReasonForAccountOpening",
@@ -18231,6 +18425,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "legalEntityContactDetails",
           "key": "contactDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "legalEntityContactDetails",
@@ -18263,6 +18458,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listDataMetadata",
           "key": "metadata",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "listDataMetadata",
@@ -18284,6 +18480,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listDataItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "listDataItems",
@@ -18323,6 +18520,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listExistedListId",
           "key": "listId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ListExistedListId",
@@ -18341,6 +18539,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listExistedHeader",
           "key": "header",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ListExistedHeader",
@@ -18355,6 +18554,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listExistedItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "List items",
             "generatedName": "ListExistedItems",
@@ -18387,6 +18587,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listHeaderListId",
           "key": "listId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ListHeaderListId",
@@ -18405,6 +18606,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listHeaderListType",
           "key": "listType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ListHeaderListType",
@@ -18419,6 +18621,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listHeaderSubtype",
           "key": "subtype",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ListHeaderSubtype",
@@ -18433,6 +18636,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listHeaderMetadata",
           "key": "metadata",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "listHeaderMetadata",
@@ -18454,6 +18658,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listHeaderCreatedTimestamp",
           "key": "createdTimestamp",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ListHeaderCreatedTimestamp",
@@ -18470,6 +18675,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listHeaderSize",
           "key": "size",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ListHeaderSize",
@@ -18497,6 +18703,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listItemKey",
           "key": "key",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ListItemKey",
@@ -18515,6 +18722,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listItemMetadata",
           "key": "metadata",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "listItemMetadata",
@@ -18570,6 +18778,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listMetadataName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "listMetadataName",
@@ -18595,6 +18804,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listMetadataDescription",
           "key": "description",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "listMetadataDescription",
@@ -18620,6 +18830,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listMetadataStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "listMetadataStatus",
@@ -18643,6 +18854,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "listMetadataChecksum",
           "key": "checksum",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "listMetadataChecksum",
@@ -18865,6 +19077,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "mccDetailsCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": "Merchant code",
             "generatedName": "MccDetailsCode",
@@ -18881,6 +19094,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "mccDetailsDescription",
           "key": "description",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "mccDetailsDescription",
@@ -18917,6 +19131,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "mpesaDetailsBusinessShortCode",
           "key": "businessShortCode",
+          "nameOverride": null,
           "schema": {
             "description": "Business code",
             "generatedName": "MpesaDetailsBusinessShortCode",
@@ -18935,6 +19150,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "mpesaDetailsTransactionType",
           "key": "transactionType",
+          "nameOverride": null,
           "schema": {
             "description": "Type of transaction",
             "generatedName": "MpesaDetailsTransactionType",
@@ -19010,6 +19226,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "mpesaDetailsPhoneNumber",
           "key": "phoneNumber",
+          "nameOverride": null,
           "schema": {
             "description": "Contact Number of the account holder",
             "generatedName": "MpesaDetailsPhoneNumber",
@@ -19050,6 +19267,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "pepStatusIsPepHit",
           "key": "isPepHit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PepStatusIsPepHit",
@@ -19066,6 +19284,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "pepStatusPepCountry",
           "key": "pepCountry",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "pepStatusPepCountry",
@@ -19219,6 +19438,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "personGeneralDetails",
           "key": "generalDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PersonGeneralDetails",
@@ -19233,6 +19453,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "personLegalDocuments",
           "key": "legalDocuments",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "personLegalDocuments",
@@ -19261,6 +19482,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "personContactDetails",
           "key": "contactDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "personContactDetails",
@@ -19282,6 +19504,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "personPepStatus",
           "key": "pepStatus",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "personPepStatus",
@@ -19310,6 +19533,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "personTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "personTags",
@@ -19418,6 +19642,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "riskScoringResultKycRiskScore",
           "key": "kycRiskScore",
+          "nameOverride": null,
           "schema": {
             "description": "Quantified KYC risk score",
             "generatedName": "RiskScoringResultKycRiskScore",
@@ -19434,6 +19659,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "riskScoringResultTransactionRiskScore",
           "key": "transactionRiskScore",
+          "nameOverride": null,
           "schema": {
             "description": "Quantified action risk score",
             "generatedName": "RiskScoringResultTransactionRiskScore",
@@ -19450,6 +19676,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "riskScoringResultCustomerRiskAssessment",
           "key": "customerRiskAssessment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "riskScoringResultCustomerRiskAssessment",
@@ -19541,6 +19768,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ruleFailureExceptionExceptionName",
           "key": "exceptionName",
+          "nameOverride": null,
           "schema": {
             "description": "Unique rule identifier",
             "generatedName": "RuleFailureExceptionExceptionName",
@@ -19559,6 +19787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ruleFailureExceptionExceptionDescription",
           "key": "exceptionDescription",
+          "nameOverride": null,
           "schema": {
             "description": "Name of the rule",
             "generatedName": "RuleFailureExceptionExceptionDescription",
@@ -19621,6 +19850,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ruleHitMetaHitDirections",
           "key": "hitDirections",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ruleHitMetaHitDirections",
@@ -19649,6 +19879,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ruleHitMetaFalsePositiveDetails",
           "key": "falsePositiveDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ruleHitMetaFalsePositiveDetails",
@@ -19670,6 +19901,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "ruleHitMetaSanctionsDetails",
           "key": "sanctionsDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ruleHitMetaSanctionsDetails",
@@ -19919,6 +20151,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "rulesResultsExecutedRules",
           "key": "executedRules",
+          "nameOverride": null,
           "schema": {
             "description": "Unique transaction identifier",
             "generatedName": "RulesResultsExecutedRules",
@@ -19940,6 +20173,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "rulesResultsHitRules",
           "key": "hitRules",
+          "nameOverride": null,
           "schema": {
             "description": "Unique transaction identifier",
             "generatedName": "RulesResultsHitRules",
@@ -19972,6 +20206,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "swiftDetailsSwiftCode",
           "key": "swiftCode",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "swiftDetailsSwiftCode",
@@ -19997,6 +20232,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "swiftDetailsAccountNumber",
           "key": "accountNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "swiftDetailsAccountNumber",
@@ -20022,6 +20258,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "swiftDetailsAccountType",
           "key": "accountType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "swiftDetailsAccountType",
@@ -20047,6 +20284,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "swiftDetailsBankName",
           "key": "bankName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "swiftDetailsBankName",
@@ -20072,6 +20310,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "swiftDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "swiftDetailsName",
@@ -20097,6 +20336,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "swiftDetailsBankAddress",
           "key": "bankAddress",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "swiftDetailsBankAddress",
@@ -20118,6 +20358,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "swiftDetailsSpecialInstructions",
           "key": "specialInstructions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "swiftDetailsSpecialInstructions",
@@ -20165,6 +20406,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "sanctionsDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SanctionsDetailsName",
@@ -20183,6 +20425,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "sanctionsDetailsSearchId",
           "key": "searchId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "SanctionsDetailsSearchId",
@@ -20201,6 +20444,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "sanctionsDetailsEntityType",
           "key": "entityType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sanctionsDetailsEntityType",
@@ -20338,6 +20582,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "tagKey",
           "key": "key",
+          "nameOverride": null,
           "schema": {
             "description": "Key value when you are creating a custom variable",
             "generatedName": "TagKey",
@@ -20356,6 +20601,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "tagValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": "Value for a given key when you are creating a custom variable",
             "generatedName": "TagValue",
@@ -20410,6 +20656,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionAmountDetailsTransactionAmount",
           "key": "transactionAmount",
+          "nameOverride": null,
           "schema": {
             "description": "Amount of the transaction",
             "generatedName": "TransactionAmountDetailsTransactionAmount",
@@ -20426,6 +20673,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionAmountDetailsTransactionCurrency",
           "key": "transactionCurrency",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransactionAmountDetailsTransactionCurrency",
@@ -20440,6 +20688,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionAmountDetailsCountry",
           "key": "country",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionAmountDetailsCountry",
@@ -20472,6 +20721,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionAmountLimitDay",
           "key": "day",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionAmountLimitDay",
@@ -20493,6 +20743,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionAmountLimitWeek",
           "key": "week",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionAmountLimitWeek",
@@ -20514,6 +20765,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionAmountLimitMonth",
           "key": "month",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionAmountLimitMonth",
@@ -20535,6 +20787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionAmountLimitYear",
           "key": "year",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionAmountLimitYear",
@@ -20567,6 +20820,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionBaseType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionBaseType",
@@ -20588,6 +20842,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionBaseTransactionId",
           "key": "transactionId",
+          "nameOverride": null,
           "schema": {
             "description": "Unique transaction identifier",
             "generatedName": "TransactionBaseTransactionId",
@@ -20606,6 +20861,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionBaseTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp of when transaction took place",
             "generatedName": "TransactionBaseTimestamp",
@@ -20622,6 +20878,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionBaseOriginUserId",
           "key": "originUserId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionBaseOriginUserId",
@@ -20647,6 +20904,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionBaseDestinationUserId",
           "key": "destinationUserId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionBaseDestinationUserId",
@@ -20683,6 +20941,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionCountLimitDay",
           "key": "day",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionCountLimitDay",
@@ -20706,6 +20965,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionCountLimitWeek",
           "key": "week",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionCountLimitWeek",
@@ -20729,6 +20989,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionCountLimitMonth",
           "key": "month",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionCountLimitMonth",
@@ -20752,6 +21013,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionCountLimitYear",
           "key": "year",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionCountLimitYear",
@@ -20786,6 +21048,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventTransactionState",
           "key": "transactionState",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransactionEventTransactionState",
@@ -20800,6 +21063,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp of the event",
             "generatedName": "TransactionEventTimestamp",
@@ -20816,6 +21080,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventTransactionId",
           "key": "transactionId",
+          "nameOverride": null,
           "schema": {
             "description": "Transaction ID the event pertains to",
             "generatedName": "TransactionEventTransactionId",
@@ -20834,6 +21099,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventEventId",
           "key": "eventId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionEventEventId",
@@ -20859,6 +21125,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventReason",
           "key": "reason",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionEventReason",
@@ -20884,6 +21151,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventEventDescription",
           "key": "eventDescription",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionEventEventDescription",
@@ -20909,6 +21177,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventUpdatedTransactionAttributes",
           "key": "updatedTransactionAttributes",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionEventUpdatedTransactionAttributes",
@@ -20930,6 +21199,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventMetaData",
           "key": "metaData",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionEventMetaData",
@@ -20970,6 +21240,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventMonitoringResultEventId",
           "key": "eventId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransactionEventMonitoringResultEventId",
@@ -20988,6 +21259,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionEventMonitoringResultTransaction",
           "key": "transaction",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransactionEventMonitoringResultTransaction",
@@ -21013,6 +21285,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitTransactionCountLimit",
           "key": "transactionCountLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitTransactionCountLimit",
@@ -21034,6 +21307,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitTransactionAmountLimit",
           "key": "transactionAmountLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitTransactionAmountLimit",
@@ -21055,6 +21329,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitAverageTransactionAmountLimit",
           "key": "averageTransactionAmountLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitAverageTransactionAmountLimit",
@@ -21087,6 +21362,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitsMaximumDailyTransactionLimit",
           "key": "maximumDailyTransactionLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitsMaximumDailyTransactionLimit",
@@ -21108,6 +21384,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitsMaximumWeeklyTransactionLimit",
           "key": "maximumWeeklyTransactionLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitsMaximumWeeklyTransactionLimit",
@@ -21129,6 +21406,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitsMaximumMonthlyTransactionLimit",
           "key": "maximumMonthlyTransactionLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitsMaximumMonthlyTransactionLimit",
@@ -21150,6 +21428,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitsMaximumQuarterlyTransactionLimit",
           "key": "maximumQuarterlyTransactionLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitsMaximumQuarterlyTransactionLimit",
@@ -21171,6 +21450,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitsMaximumTransactionLimit",
           "key": "maximumTransactionLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitsMaximumTransactionLimit",
@@ -21192,6 +21472,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitsMaximumYearlyTransactionLimit",
           "key": "maximumYearlyTransactionLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitsMaximumYearlyTransactionLimit",
@@ -21213,6 +21494,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionLimitsPaymentMethodLimits",
           "key": "paymentMethodLimits",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionLimitsPaymentMethodLimits",
@@ -21232,6 +21514,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsAch",
                   "key": "ACH",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsAch",
@@ -21253,6 +21536,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsCard",
                   "key": "CARD",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsCard",
@@ -21274,6 +21558,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsIban",
                   "key": "IBAN",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsIban",
@@ -21295,6 +21580,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsUpi",
                   "key": "UPI",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsUpi",
@@ -21316,6 +21602,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsGenericBankAccount",
                   "key": "GENERIC_BANK_ACCOUNT",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsGenericBankAccount",
@@ -21337,6 +21624,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsMpesa",
                   "key": "MPESA",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsMpesa",
@@ -21358,6 +21646,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsSwift",
                   "key": "SWIFT",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsSwift",
@@ -21379,6 +21668,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsWallet",
                   "key": "WALLET",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsWallet",
@@ -21400,6 +21690,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "conflict": {},
                   "generatedName": "transactionLimitsPaymentMethodLimitsCheck",
                   "key": "CHECK",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "transactionLimitsPaymentMethodLimitsCheck",
@@ -21445,6 +21736,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionMonitoringResultTransactionId",
           "key": "transactionId",
+          "nameOverride": null,
           "schema": {
             "description": "Transaction ID that the results pertain to",
             "generatedName": "TransactionMonitoringResultTransactionId",
@@ -21660,6 +21952,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableTransactionState",
           "key": "transactionState",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableTransactionState",
@@ -21681,6 +21974,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableOriginAmountDetails",
           "key": "originAmountDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableOriginAmountDetails",
@@ -21702,6 +21996,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableDestinationAmountDetails",
           "key": "destinationAmountDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableDestinationAmountDetails",
@@ -21723,6 +22018,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableOriginPaymentDetails",
           "key": "originPaymentDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableOriginPaymentDetails",
@@ -21822,6 +22118,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableDestinationPaymentDetails",
           "key": "destinationPaymentDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableDestinationPaymentDetails",
@@ -21921,6 +22218,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableRelatedTransactionIds",
           "key": "relatedTransactionIds",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableRelatedTransactionIds",
@@ -21953,6 +22251,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableProductType",
           "key": "productType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableProductType",
@@ -21978,6 +22277,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatablePromotionCodeUsed",
           "key": "promotionCodeUsed",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatablePromotionCodeUsed",
@@ -22001,6 +22301,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableReference",
           "key": "reference",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableReference",
@@ -22026,6 +22327,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableDeviceData",
           "key": "deviceData",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableDeviceData",
@@ -22047,6 +22349,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionUpdatableTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionUpdatableTags",
@@ -22094,6 +22397,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionWithRulesResultExecutedRules",
           "key": "executedRules",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransactionWithRulesResultExecutedRules",
@@ -22115,6 +22419,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "transactionWithRulesResultHitRules",
           "key": "hitRules",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransactionWithRulesResultHitRules",
@@ -22147,6 +22452,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "upiDetailsUpiId",
           "key": "upiID",
+          "nameOverride": null,
           "schema": {
             "description": "UPI Id number",
             "generatedName": "UpiDetailsUpiId",
@@ -22165,6 +22471,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "upiDetailsBankProvider",
           "key": "bankProvider",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "upiDetailsBankProvider",
@@ -22190,6 +22497,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "upiDetailsInterfaceProvider",
           "key": "interfaceProvider",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "upiDetailsInterfaceProvider",
@@ -22215,6 +22523,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "upiDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "upiDetailsName",
@@ -22287,6 +22596,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userBaseUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": "Unique user ID",
             "generatedName": "UserBaseUserId",
@@ -22305,6 +22615,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userBaseUserDetails",
           "key": "userDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userBaseUserDetails",
@@ -22326,6 +22637,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userBaseCreatedTimestamp",
           "key": "createdTimestamp",
+          "nameOverride": null,
           "schema": {
             "description": "Timestamp when userId is created",
             "generatedName": "UserBaseCreatedTimestamp",
@@ -22353,6 +22665,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UserDetailsName",
@@ -22367,6 +22680,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userDetailsDateOfBirth",
           "key": "dateOfBirth",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userDetailsDateOfBirth",
@@ -22392,6 +22706,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userDetailsCountryOfResidence",
           "key": "countryOfResidence",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userDetailsCountryOfResidence",
@@ -22413,6 +22728,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userDetailsCountryOfNationality",
           "key": "countryOfNationality",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userDetailsCountryOfNationality",
@@ -22434,6 +22750,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userDetailsGender",
           "key": "gender",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userDetailsGender",
@@ -22511,6 +22828,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userMonitoringResultUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": "User ID that the results pertain to",
             "generatedName": "UserMonitoringResultUserId",
@@ -22540,6 +22858,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalUserStateDetails",
           "key": "userStateDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalUserStateDetails",
@@ -22561,6 +22880,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalKycStatusDetails",
           "key": "kycStatusDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalKycStatusDetails",
@@ -22582,6 +22902,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalLegalDocuments",
           "key": "legalDocuments",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalLegalDocuments",
@@ -22610,6 +22931,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalContactDetails",
           "key": "contactDetails",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalContactDetails",
@@ -22631,6 +22953,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalTransactionLimits",
           "key": "transactionLimits",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalTransactionLimits",
@@ -22652,6 +22975,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalRiskLevel",
           "key": "riskLevel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalRiskLevel",
@@ -22673,6 +22997,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalAcquisitionChannel",
           "key": "acquisitionChannel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalAcquisitionChannel",
@@ -22694,6 +23019,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalReasonForAccountOpening",
           "key": "reasonForAccountOpening",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalReasonForAccountOpening",
@@ -22726,6 +23052,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalUserSegment",
           "key": "userSegment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalUserSegment",
@@ -22772,6 +23099,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalPepStatus",
           "key": "pepStatus",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalPepStatus",
@@ -22800,6 +23128,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userOptionalTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userOptionalTags",
@@ -23001,6 +23330,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userStateDetailsUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userStateDetailsUserId",
@@ -23026,6 +23356,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userStateDetailsReason",
           "key": "reason",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userStateDetailsReason",
@@ -23051,6 +23382,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userStateDetailsState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "UserStateDetailsState",
@@ -23084,6 +23416,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userWithRulesResultExecutedRules",
           "key": "executedRules",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userWithRulesResultExecutedRules",
@@ -23112,6 +23445,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "userWithRulesResultHitRules",
           "key": "hitRules",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userWithRulesResultHitRules",
@@ -23151,6 +23485,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "walletDetailsWalletType",
           "key": "walletType",
+          "nameOverride": null,
           "schema": {
             "description": "Wallet type if there are various types of wallets belonging to the same user. E.g. Checking, savings, vault, different currency wallets etc.",
             "generatedName": "WalletDetailsWalletType",
@@ -23169,6 +23504,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "walletDetailsWalletId",
           "key": "walletId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "walletDetailsWalletId",
@@ -23194,6 +23530,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "walletDetailsPaymentChannel",
           "key": "paymentChannel",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "walletDetailsPaymentChannel",
@@ -23219,6 +23556,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "walletDetailsName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "walletDetailsName",
@@ -23244,6 +23582,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "walletDetailsTags",
           "key": "tags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "walletDetailsTags",
@@ -23265,6 +23604,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "walletDetailsWalletPhoneNumber",
           "key": "walletPhoneNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "walletDetailsWalletPhoneNumber",
@@ -23312,6 +23652,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "webhookEventId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookEventId",
@@ -23330,6 +23671,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "webhookEventType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookEventType",
@@ -23344,6 +23686,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "webhookEventData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookEventData",
@@ -23358,6 +23701,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "conflict": {},
           "generatedName": "webhookEventCreatedTimestamp",
           "key": "createdTimestamp",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "WebhookEventCreatedTimestamp",

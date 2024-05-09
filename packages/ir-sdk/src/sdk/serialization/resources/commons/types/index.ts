@@ -15,3 +15,4 @@ export * from "./WebSocketChannelId";
 export * from "./Declaration";
 export * from "./Availability";
 export * from "./AvailabilityStatus";
+export * from "./EndpointReference";

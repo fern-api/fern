@@ -5,8 +5,7 @@
 import * as FernIr from "../../..";
 
 export interface OAuthRefreshEndpoint {
-    /** The refrence to the refresh token endpoint (e.g. \_endpoint_auth.refreshToken). */
-    endpointReference: FernIr.EndpointId;
-    requestProperties: FernIr.OAuthRefreshTokenProperties;
-    responseProperties: FernIr.OAuthAccessTokenProperties;
+    endpointReference: FernIr.EndpointReference;
+    requestProperties: FernIr.OAuthRefreshTokenRequestProperties;
+    responseProperties: FernIr.OAuthAccessTokenResponseProperties;
 }

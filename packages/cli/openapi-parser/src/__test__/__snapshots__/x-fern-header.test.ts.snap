@@ -2,6 +2,7 @@
 
 exports[`x-fern-header x-fern-header parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -56,6 +57,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "conflict": {},
               "generatedName": "userGetStreamRequestStream",
               "key": "stream",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserGetStreamRequestStream",
@@ -200,6 +202,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "conflict": {},
               "generatedName": "userGetRequestStream",
               "key": "stream",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserGetRequestStream",
@@ -263,6 +266,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "conflict": {},
           "generatedName": "streamUserId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "streamUserId",
@@ -288,6 +292,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "conflict": {},
           "generatedName": "streamUserStreamed",
           "key": "streamed",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "streamUserStreamed",
@@ -323,6 +328,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userId",
@@ -348,6 +354,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "conflict": {},
           "generatedName": "userStreamed",
           "key": "streamed",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userStreamed",

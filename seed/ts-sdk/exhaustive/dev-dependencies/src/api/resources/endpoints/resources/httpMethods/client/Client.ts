@@ -22,12 +22,19 @@ export declare namespace HttpMethods {
 export class HttpMethods {
     constructor(protected readonly _options: HttpMethods.Options) {}
 
+    /**
+     * @param {string} id
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.httpMethods.testGet("string")
+     */
     public async testGet(
         id: string,
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -59,6 +66,15 @@ export class HttpMethods {
         };
     }
 
+    /**
+     * @param {Fiddle.types.ObjectWithRequiredField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.httpMethods.testPost({
+     *         string: "string"
+     *     })
+     */
     public async testPost(
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions
@@ -99,13 +115,23 @@ export class HttpMethods {
         };
     }
 
+    /**
+     * @param {string} id
+     * @param {Fiddle.types.ObjectWithRequiredField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.httpMethods.testPut("string", {
+     *         string: "string"
+     *     })
+     */
     public async testPut(
         id: string,
         request: Fiddle.types.ObjectWithRequiredField,
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -140,13 +166,36 @@ export class HttpMethods {
         };
     }
 
+    /**
+     * @param {string} id
+     * @param {Fiddle.types.ObjectWithOptionalField} request
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.httpMethods.testPatch("string", {
+     *         string: "string",
+     *         integer: 1,
+     *         long: 1000000,
+     *         double: 1.1,
+     *         bool: true,
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         date: "2023-01-15",
+     *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         base64: "SGVsbG8gd29ybGQh",
+     *         list: ["string"],
+     *         set: new Set(["string"]),
+     *         map: {
+     *             1: "string"
+     *         }
+     *     })
+     */
     public async testPatch(
         id: string,
         request: Fiddle.types.ObjectWithOptionalField,
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -181,12 +230,19 @@ export class HttpMethods {
         };
     }
 
+    /**
+     * @param {string} id
+     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.httpMethods.testDelete("string")
+     */
     public async testDelete(
         id: string,
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

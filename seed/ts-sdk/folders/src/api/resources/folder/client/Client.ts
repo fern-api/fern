@@ -20,6 +20,12 @@ export declare namespace Folder {
 export class Folder {
     constructor(protected readonly _options: Folder.Options) {}
 
+    /**
+     * @param {Folder.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApi.folder.foo()
+     */
     public async foo(requestOptions?: Folder.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

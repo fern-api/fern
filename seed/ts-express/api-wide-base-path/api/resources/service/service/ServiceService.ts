@@ -46,7 +46,7 @@ export class ServiceService {
         this.router.post("/:endpointParam/:resourceParam", async (req, res, next) => {
             try {
                 await this.methods.post(req as any, {
-                    send: async () => {
+                    send: async (responseBody) => {
                         res.sendStatus(204);
                     },
                     cookie: res.cookie.bind(res),
@@ -54,7 +54,6 @@ export class ServiceService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiWideBasePathError) {
                     console.warn(
                         `Endpoint 'post' unexpectedly threw ${error.constructor.name}.` +

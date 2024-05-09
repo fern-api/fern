@@ -10,11 +10,11 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.headers.send(\n\t$FERN_INPUT\n)",
+                "templateString": "client.headers.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -37,6 +37,37 @@
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.headers.send(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "query=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "query",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     },
     {
@@ -50,11 +81,11 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.inlined.send(\n\t$FERN_INPUT\n)",
+                "templateString": "client.inlined.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -93,6 +124,53 @@
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.inlined.send(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "query=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "query",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "temperature=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "temperature",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     },
     {
@@ -106,16 +184,30 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.path.send(\n\t$FERN_INPUT\n)",
+                "templateString": "client.path.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.path.send(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     },
     {
@@ -129,11 +221,11 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.query.send(\n\t$FERN_INPUT\n)",
+                "templateString": "client.query.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -156,6 +248,37 @@
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.query.send(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "query=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "query",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     },
     {
@@ -169,11 +292,11 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.reference.send(\n\t$FERN_INPUT\n)",
+                "templateString": "client.reference.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -210,6 +333,51 @@
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.reference.send(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [
+                                    "from seed import SendRequest"
+                                ],
+                                "isOptional": true,
+                                "templateString": "request=SendRequest(\n\t\t$FERN_INPUT\n\t)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "query=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "query",
+                                                    "type": "payload"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n\t\t",
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     }
 ]

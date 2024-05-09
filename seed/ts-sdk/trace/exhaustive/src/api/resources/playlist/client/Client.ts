@@ -27,6 +27,10 @@ export class Playlist {
     /**
      * Create a new playlist
      *
+     * @param {number} serviceParam
+     * @param {SeedTrace.CreatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.playlist.createPlaylist(1, {
      *         datetime: new Date("2024-01-15T09:30:00.000Z"),
@@ -52,7 +56,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/create`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/create`
             ),
             method: "POST",
             headers: {
@@ -95,6 +99,10 @@ export class Playlist {
     /**
      * Returns the user's playlists
      *
+     * @param {number} serviceParam
+     * @param {SeedTrace.GetPlaylistsRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.playlist.getPlaylists(1, {
      *         limit: 1,
@@ -134,7 +142,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/all`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/all`
             ),
             method: "GET",
             headers: {
@@ -176,6 +184,10 @@ export class Playlist {
     /**
      * Returns a playlist
      *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.playlist.getPlaylist(1, SeedTrace.PlaylistId("string"))
      */
@@ -187,7 +199,9 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${await serializers.PlaylistId.jsonOrThrow(playlistId)}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
+                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                )}`
             ),
             method: "GET",
             headers: {
@@ -247,6 +261,11 @@ export class Playlist {
     /**
      * Updates a playlist
      *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {SeedTrace.UpdatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.playlist.updatePlaylist(1, SeedTrace.PlaylistId("string"), {
      *         name: "string",
@@ -262,7 +281,9 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${await serializers.PlaylistId.jsonOrThrow(playlistId)}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
+                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                )}`
             ),
             method: "PUT",
             headers: {
@@ -327,6 +348,10 @@ export class Playlist {
     /**
      * Deletes a playlist
      *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.playlist.deletePlaylist(1, SeedTrace.PlaylistId("string"))
      */
@@ -338,7 +363,9 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${await serializers.PlaylistId.jsonOrThrow(playlistId)}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
+                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                )}`
             ),
             method: "DELETE",
             headers: {

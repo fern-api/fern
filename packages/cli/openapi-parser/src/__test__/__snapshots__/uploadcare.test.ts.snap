@@ -2,6 +2,7 @@
 
 exports[`open api parser uploadcare parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "### Summary
 Upload API provides several ways of uploading files to Uploadcare servers in a
@@ -969,6 +970,7 @@ the value is the unique ID of the file on our systems.
               "conflict": {},
               "generatedName": "baseUploadResponseFilename",
               "key": "filename",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "baseUploadResponseFilename",
@@ -2108,6 +2110,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
               "conflict": {},
               "generatedName": "multipartFileUploadStartResponseUuid",
               "key": "uuid",
+              "nameOverride": null,
               "schema": {
                 "description": "File's UUID.",
                 "generatedName": "MultipartFileUploadStartResponseUuid",
@@ -2126,6 +2129,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
               "conflict": {},
               "generatedName": "multipartFileUploadStartResponseParts",
               "key": "parts",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "MultipartFileUploadStartResponseParts",
@@ -9848,6 +9852,7 @@ Log.d("TAG", group.toString())
             "conflict": {},
             "generatedName": "contentInfoMime",
             "key": "mime",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "contentInfoMime",
@@ -9867,6 +9872,7 @@ Log.d("TAG", group.toString())
                     "conflict": {},
                     "generatedName": "contentInfoMimeMime",
                     "key": "mime",
+                    "nameOverride": null,
                     "schema": {
                       "description": "Full MIME type.",
                       "generatedName": "ContentInfoMimeMime",
@@ -9885,6 +9891,7 @@ Log.d("TAG", group.toString())
                     "conflict": {},
                     "generatedName": "contentInfoMimeType",
                     "key": "type",
+                    "nameOverride": null,
                     "schema": {
                       "description": "Type of MIME type.",
                       "generatedName": "ContentInfoMimeType",
@@ -9903,6 +9910,7 @@ Log.d("TAG", group.toString())
                     "conflict": {},
                     "generatedName": "contentInfoMimeSubtype",
                     "key": "subtype",
+                    "nameOverride": null,
                     "schema": {
                       "description": "Subtype of MIME type.",
                       "generatedName": "ContentInfoMimeSubtype",
@@ -9926,6 +9934,7 @@ Log.d("TAG", group.toString())
             "conflict": {},
             "generatedName": "contentInfoImage",
             "key": "image",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "contentInfoImage",
@@ -9947,6 +9956,7 @@ Log.d("TAG", group.toString())
             "conflict": {},
             "generatedName": "contentInfoVideo",
             "key": "video",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "contentInfoVideo",
@@ -10161,6 +10171,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoUuid",
           "key": "uuid",
+          "nameOverride": null,
           "schema": {
             "description": "File's unique ID.",
             "generatedName": "FileUploadInfoUuid",
@@ -10179,6 +10190,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoFileId",
           "key": "file_id",
+          "nameOverride": null,
           "schema": {
             "description": "Same as \`uuid\`",
             "generatedName": "FileUploadInfoFileId",
@@ -10197,6 +10209,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoSize",
           "key": "size",
+          "nameOverride": null,
           "schema": {
             "description": "File's size in bytes.",
             "generatedName": "FileUploadInfoSize",
@@ -10213,6 +10226,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoTotal",
           "key": "total",
+          "nameOverride": null,
           "schema": {
             "description": "Same as \`size\`.",
             "generatedName": "FileUploadInfoTotal",
@@ -10229,6 +10243,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoDone",
           "key": "done",
+          "nameOverride": null,
           "schema": {
             "description": "Same as \`size\`.",
             "generatedName": "FileUploadInfoDone",
@@ -10245,6 +10260,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoOriginalFilename",
           "key": "original_filename",
+          "nameOverride": null,
           "schema": {
             "description": "Original file of the uploaded file.",
             "generatedName": "FileUploadInfoOriginalFilename",
@@ -10263,6 +10279,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoFilename",
           "key": "filename",
+          "nameOverride": null,
           "schema": {
             "description": "Sanitized \`original_filename\`.",
             "generatedName": "FileUploadInfoFilename",
@@ -10281,6 +10298,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoMimeType",
           "key": "mime_type",
+          "nameOverride": null,
           "schema": {
             "description": "File's MIME-type.",
             "generatedName": "FileUploadInfoMimeType",
@@ -10299,6 +10317,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoImageInfo",
           "key": "image_info",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FileUploadInfoImageInfo",
@@ -10313,6 +10332,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoVideoInfo",
           "key": "video_info",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FileUploadInfoVideoInfo",
@@ -10327,6 +10347,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoContentInfo",
           "key": "content_info",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FileUploadInfoContentInfo",
@@ -10341,6 +10362,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoMetadata",
           "key": "metadata",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "FileUploadInfoMetadata",
@@ -10355,6 +10377,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoIsImage",
           "key": "is_image",
+          "nameOverride": null,
           "schema": {
             "description": "True if the uploaded file is an image of a supported file format.",
             "generatedName": "FileUploadInfoIsImage",
@@ -10371,6 +10394,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoIsStored",
           "key": "is_stored",
+          "nameOverride": null,
           "schema": {
             "description": "True if the file has been marked as stored.",
             "generatedName": "FileUploadInfoIsStored",
@@ -10387,6 +10411,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoIsReady",
           "key": "is_ready",
+          "nameOverride": null,
           "schema": {
             "description": "True if the file is ready to be fetched from Uploadcare's CDN.",
             "generatedName": "FileUploadInfoIsReady",
@@ -10403,6 +10428,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoS3Bucket",
           "key": "s3_bucket",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoS3Bucket",
@@ -10446,6 +10472,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoErrorStatusStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusStatus",
@@ -10471,6 +10498,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoErrorStatusError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusError",
@@ -10497,6 +10525,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "conflict": {},
           "generatedName": "fileUploadInfoErrorStatusErrorCode",
           "key": "error_code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusErrorCode",
@@ -10545,6 +10574,7 @@ page for a full list of all possible error codes.
           "conflict": {},
           "generatedName": "fileUploadInfoFromUrlType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoFromUrlType",
@@ -10580,6 +10610,7 @@ page for a full list of all possible error codes.
           "conflict": {},
           "generatedName": "fileUploadInfoProgressStatusStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusStatus",
@@ -10605,6 +10636,7 @@ page for a full list of all possible error codes.
           "conflict": {},
           "generatedName": "fileUploadInfoProgressStatusTotal",
           "key": "total",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusTotal",
@@ -10645,6 +10677,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "conflict": {},
           "generatedName": "fileUploadInfoProgressStatusDone",
           "key": "done",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusDone",
@@ -10688,6 +10721,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "conflict": {},
           "generatedName": "fileUploadInfoSuccessStatusStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoSuccessStatusStatus",
@@ -10723,6 +10757,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "conflict": {},
           "generatedName": "fileUploadInfoUnknownStatusStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoUnknownStatusStatus",
@@ -10763,6 +10798,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "fileUploadInfoWaitingStatusStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fileUploadInfoWaitingStatusStatus",
@@ -10811,6 +10847,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "fromUrlUploadResponseSchemaType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fromUrlUploadResponseSchemaType",
@@ -10835,6 +10872,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "fromUrlUploadResponseSchemaToken",
           "key": "token",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "fromUrlUploadResponseSchemaToken",
@@ -10919,6 +10957,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "groupInfoId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "groupInfoId",
@@ -10944,6 +10983,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "groupInfoDatetimeCreated",
           "key": "datetime_created",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "groupInfoDatetimeCreated",
@@ -10967,6 +11007,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "groupInfoDatetimeStored",
           "key": "datetime_stored",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "groupInfoDatetimeStored",
@@ -10997,6 +11038,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "groupInfoFilesCount",
           "key": "files_count",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "groupInfoFilesCount",
@@ -11020,6 +11062,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "groupInfoCdnUrl",
           "key": "cdn_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "groupInfoCdnUrl",
@@ -11045,6 +11088,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "groupInfoUrl",
           "key": "url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "groupInfoUrl",
@@ -11070,6 +11114,7 @@ that are tool old (or that have not been created at all).
           "conflict": {},
           "generatedName": "groupInfoFiles",
           "key": "files",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "groupInfoFiles",
@@ -11145,6 +11190,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoColorMode",
             "key": "color_mode",
+            "nameOverride": null,
             "schema": {
               "description": "Image color mode.",
               "generatedName": "ImageInfoColorMode",
@@ -11316,6 +11362,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoOrientation",
             "key": "orientation",
+            "nameOverride": null,
             "schema": {
               "description": "Image orientation from EXIF.",
               "generatedName": "ImageInfoOrientation",
@@ -11339,6 +11386,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoFormat",
             "key": "format",
+            "nameOverride": null,
             "schema": {
               "description": "Image format.",
               "generatedName": "ImageInfoFormat",
@@ -11357,6 +11405,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoSequence",
             "key": "sequence",
+            "nameOverride": null,
             "schema": {
               "description": "Set to true if a file contains a sequence of images (GIF for example).",
               "generatedName": "ImageInfoSequence",
@@ -11373,6 +11422,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoHeight",
             "key": "height",
+            "nameOverride": null,
             "schema": {
               "description": "Image height in pixels.",
               "generatedName": "ImageInfoHeight",
@@ -11389,6 +11439,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoWidth",
             "key": "width",
+            "nameOverride": null,
             "schema": {
               "description": "Image width in pixels.",
               "generatedName": "ImageInfoWidth",
@@ -11405,6 +11456,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoGeoLocation",
             "key": "geo_location",
+            "nameOverride": null,
             "schema": {
               "description": "Geo-location of image from EXIF.",
               "generatedName": "ImageInfoGeoLocation",
@@ -11424,6 +11476,7 @@ that are tool old (or that have not been created at all).
                     "conflict": {},
                     "generatedName": "imageInfoGeoLocationLatitude",
                     "key": "latitude",
+                    "nameOverride": null,
                     "schema": {
                       "description": "Location latitude.",
                       "generatedName": "ImageInfoGeoLocationLatitude",
@@ -11440,6 +11493,7 @@ that are tool old (or that have not been created at all).
                     "conflict": {},
                     "generatedName": "imageInfoGeoLocationLongitude",
                     "key": "longitude",
+                    "nameOverride": null,
                     "schema": {
                       "description": "Location longitude.",
                       "generatedName": "ImageInfoGeoLocationLongitude",
@@ -11461,6 +11515,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoDatetimeOriginal",
             "key": "datetime_original",
+            "nameOverride": null,
             "schema": {
               "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
               "generatedName": "ImageInfoDatetimeOriginal",
@@ -11484,6 +11539,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "imageInfoDpi",
             "key": "dpi",
+            "nameOverride": null,
             "schema": {
               "description": "Image DPI for two dimensions.",
               "generatedName": "ImageInfoDpi",
@@ -11532,6 +11588,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "legacyVideoInfoDuration",
             "key": "duration",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "legacyVideoInfoDuration",
@@ -11555,6 +11612,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "legacyVideoInfoFormat",
             "key": "format",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "legacyVideoInfoFormat",
@@ -11580,6 +11638,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "legacyVideoInfoBitrate",
             "key": "bitrate",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "legacyVideoInfoBitrate",
@@ -11603,6 +11662,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "legacyVideoInfoAudio",
             "key": "audio",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "legacyVideoInfoAudio",
@@ -11628,6 +11688,7 @@ that are tool old (or that have not been created at all).
                       "conflict": {},
                       "generatedName": "legacyVideoInfoAudioBitrate",
                       "key": "bitrate",
+                      "nameOverride": null,
                       "schema": {
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioBitrate",
@@ -11658,6 +11719,7 @@ that are tool old (or that have not been created at all).
                       "conflict": {},
                       "generatedName": "legacyVideoInfoAudioCodec",
                       "key": "codec",
+                      "nameOverride": null,
                       "schema": {
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioCodec",
@@ -11690,6 +11752,7 @@ that are tool old (or that have not been created at all).
                       "conflict": {},
                       "generatedName": "legacyVideoInfoAudioSampleRate",
                       "key": "sample_rate",
+                      "nameOverride": null,
                       "schema": {
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioSampleRate",
@@ -11720,6 +11783,7 @@ that are tool old (or that have not been created at all).
                       "conflict": {},
                       "generatedName": "legacyVideoInfoAudioChannels",
                       "key": "channels",
+                      "nameOverride": null,
                       "schema": {
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioChannels",
@@ -11758,6 +11822,7 @@ that are tool old (or that have not been created at all).
             "conflict": {},
             "generatedName": "legacyVideoInfoVideo",
             "key": "video",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "legacyVideoInfoVideo",
@@ -11777,6 +11842,7 @@ that are tool old (or that have not been created at all).
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoHeight",
                     "key": "height",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoHeight",
@@ -11800,6 +11866,7 @@ that are tool old (or that have not been created at all).
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoWidth",
                     "key": "width",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoWidth",
@@ -11823,6 +11890,7 @@ that are tool old (or that have not been created at all).
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoFrameRate",
                     "key": "frame_rate",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoFrameRate",
@@ -11846,6 +11914,7 @@ that are tool old (or that have not been created at all).
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoBitrate",
                     "key": "bitrate",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoBitrate",
@@ -11869,6 +11938,7 @@ that are tool old (or that have not been created at all).
                     "conflict": {},
                     "generatedName": "legacyVideoInfoVideoCodec",
                     "key": "codec",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoCodec",
@@ -12183,6 +12253,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoColorMode",
           "key": "color_mode",
+          "nameOverride": null,
           "schema": {
             "description": "Image color mode.",
             "generatedName": "SchemasImageInfoColorMode",
@@ -12354,6 +12425,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoOrientation",
           "key": "orientation",
+          "nameOverride": null,
           "schema": {
             "description": "Image orientation from EXIF.",
             "generatedName": "SchemasImageInfoOrientation",
@@ -12377,6 +12449,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoFormat",
           "key": "format",
+          "nameOverride": null,
           "schema": {
             "description": "Image format.",
             "generatedName": "SchemasImageInfoFormat",
@@ -12395,6 +12468,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoSequence",
           "key": "sequence",
+          "nameOverride": null,
           "schema": {
             "description": "Set to true if a file contains a sequence of images (GIF for example).",
             "generatedName": "SchemasImageInfoSequence",
@@ -12411,6 +12485,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoHeight",
           "key": "height",
+          "nameOverride": null,
           "schema": {
             "description": "Image height in pixels.",
             "generatedName": "SchemasImageInfoHeight",
@@ -12427,6 +12502,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoWidth",
           "key": "width",
+          "nameOverride": null,
           "schema": {
             "description": "Image width in pixels.",
             "generatedName": "SchemasImageInfoWidth",
@@ -12443,6 +12519,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoGeoLocation",
           "key": "geo_location",
+          "nameOverride": null,
           "schema": {
             "description": "Geo-location of image from EXIF.",
             "generatedName": "SchemasImageInfoGeoLocation",
@@ -12462,6 +12539,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                   "conflict": {},
                   "generatedName": "schemasImageInfoGeoLocationLatitude",
                   "key": "latitude",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Location latitude.",
                     "generatedName": "SchemasImageInfoGeoLocationLatitude",
@@ -12478,6 +12556,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                   "conflict": {},
                   "generatedName": "schemasImageInfoGeoLocationLongitude",
                   "key": "longitude",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Location longitude.",
                     "generatedName": "SchemasImageInfoGeoLocationLongitude",
@@ -12499,6 +12578,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoDatetimeOriginal",
           "key": "datetime_original",
+          "nameOverride": null,
           "schema": {
             "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "generatedName": "SchemasImageInfoDatetimeOriginal",
@@ -12522,6 +12602,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "conflict": {},
           "generatedName": "schemasImageInfoDpi",
           "key": "dpi",
+          "nameOverride": null,
           "schema": {
             "description": "Image DPI for two dimensions.",
             "generatedName": "SchemasImageInfoDpi",
@@ -12857,6 +12938,7 @@ change the value to \`auto\`.
           "conflict": {},
           "generatedName": "videoInfoDuration",
           "key": "duration",
+          "nameOverride": null,
           "schema": {
             "description": "Video file's duration in milliseconds.",
             "generatedName": "VideoInfoDuration",
@@ -12880,6 +12962,7 @@ change the value to \`auto\`.
           "conflict": {},
           "generatedName": "videoInfoFormat",
           "key": "format",
+          "nameOverride": null,
           "schema": {
             "description": "Video file's format.",
             "generatedName": "VideoInfoFormat",
@@ -12898,6 +12981,7 @@ change the value to \`auto\`.
           "conflict": {},
           "generatedName": "videoInfoBitrate",
           "key": "bitrate",
+          "nameOverride": null,
           "schema": {
             "description": "Video file's bitrate.",
             "generatedName": "VideoInfoBitrate",
@@ -12921,6 +13005,7 @@ change the value to \`auto\`.
           "conflict": {},
           "generatedName": "videoInfoAudio",
           "key": "audio",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "VideoInfoAudio",
@@ -12940,6 +13025,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoAudioItemBitrate",
                   "key": "bitrate",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Audio stream's bitrate.",
                     "generatedName": "VideoInfoAudioItemBitrate",
@@ -12963,6 +13049,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoAudioItemCodec",
                   "key": "codec",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Audio stream's codec.",
                     "generatedName": "VideoInfoAudioItemCodec",
@@ -12988,6 +13075,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoAudioItemSampleRate",
                   "key": "sample_rate",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Audio stream's sample rate.",
                     "generatedName": "VideoInfoAudioItemSampleRate",
@@ -13011,6 +13099,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoAudioItemChannels",
                   "key": "channels",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Audio stream's number of channels.",
                     "generatedName": "VideoInfoAudioItemChannels",
@@ -13039,6 +13128,7 @@ change the value to \`auto\`.
           "conflict": {},
           "generatedName": "videoInfoVideo",
           "key": "video",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "VideoInfoVideo",
@@ -13058,6 +13148,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemHeight",
                   "key": "height",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Video stream's image height.",
                     "generatedName": "VideoInfoVideoItemHeight",
@@ -13074,6 +13165,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemWidth",
                   "key": "width",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Video stream's image width.",
                     "generatedName": "VideoInfoVideoItemWidth",
@@ -13090,6 +13182,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemFrameRate",
                   "key": "frame_rate",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Video stream's frame rate.",
                     "generatedName": "VideoInfoVideoItemFrameRate",
@@ -13106,6 +13199,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemBitrate",
                   "key": "bitrate",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Video stream's bitrate.",
                     "generatedName": "VideoInfoVideoItemBitrate",
@@ -13129,6 +13223,7 @@ change the value to \`auto\`.
                   "conflict": {},
                   "generatedName": "videoInfoVideoItemCodec",
                   "key": "codec",
+                  "nameOverride": null,
                   "schema": {
                     "description": "Video stream's codec.",
                     "generatedName": "VideoInfoVideoItemCodec",

@@ -22,9 +22,16 @@ export declare namespace Union {
 export class Union {
     constructor(protected readonly _options: Union.Options) {}
 
+    /**
+     * @param {string} id
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedUnions.union.get("string")
+     */
     public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -68,6 +75,17 @@ export class Union {
         }
     }
 
+    /**
+     * @param {SeedUnions.Shape} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedUnions.union.update({
+     *         type: "circle",
+     *         id: "string",
+     *         radius: 1.1
+     *     })
+     */
     public async update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),

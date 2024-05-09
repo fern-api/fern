@@ -5,7 +5,47 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.12.0-rc0] - 2024-04-12
+## [0.13.0] - 2024-05-06
+
+- Feature: Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your 
+  CLI version, please run `fern upgrade`. 
+
+  If you specify custom response status codes, the underlying express implementation will send that back 
+  to the user. 
+
+## [0.12.0] - 2024-05-07
+
+- Improvement: Support a `skipRequestValidation` configuration so that users can disable
+  request validation if they want to. To do so, add the following option to your 
+  `generators.yml`
+
+  ```yaml
+  config: 
+    skipRequestValidation: true
+  ```
+
+
+- Improvement: Remove unnecessary `console.error` statements whenever the server implementation
+  throws an error. The router will now only log the warnings whenever an unrecognized error is
+  thrown like so:
+
+  ```ts
+  try {
+    ...
+  } catch (error) {
+      if (error instanceof errors.AcmeError) {
+          console.warn(
+              `Endpoint 'post' unexpectedly threw ${error.constructor.name}.` +
+                  ` If this was intentional, please add ${error.constructor.name} to` +
+                  " the endpoint's errors list in your Fern Definition."
+          );
+          await error.send(res);
+      } else {
+          res.status(500).json("Internal Server Error");
+      }
+      next(error);
+  }
+  ```
 
 - Support V38 of the IR
 

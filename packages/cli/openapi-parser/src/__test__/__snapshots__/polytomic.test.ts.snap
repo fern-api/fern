@@ -2,6 +2,7 @@
 
 exports[`polytomic polytomic parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -411,6 +412,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "apiErrorMessage",
           "key": "message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiErrorMessage",
@@ -436,6 +438,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "apiErrorMetadata",
           "key": "metadata",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiErrorMetadata",
@@ -454,6 +457,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "apiErrorStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiErrorStatus",
@@ -488,6 +492,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkItemizedScheduleItem",
           "key": "item",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BulkItemizedScheduleItem",
@@ -502,6 +507,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkItemizedScheduleSchedule",
           "key": "schedule",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BulkItemizedScheduleSchedule",
@@ -527,6 +533,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkMultiScheduleConfigurationSchedules",
           "key": "schedules",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BulkMultiScheduleConfigurationSchedules",
@@ -555,6 +562,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkMultiScheduleConfigurationType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BulkMultiScheduleConfigurationType",
@@ -584,6 +592,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkScheduleDayOfMonth",
           "key": "day_of_month",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "bulkScheduleDayOfMonth",
@@ -609,6 +618,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkScheduleDayOfWeek",
           "key": "day_of_week",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "bulkScheduleDayOfWeek",
@@ -634,6 +644,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkScheduleFrequency",
           "key": "frequency",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BulkScheduleFrequency",
@@ -648,6 +659,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkScheduleHour",
           "key": "hour",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "bulkScheduleHour",
@@ -673,6 +685,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkScheduleMinute",
           "key": "minute",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "bulkScheduleMinute",
@@ -698,6 +711,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkScheduleMonth",
           "key": "month",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "bulkScheduleMonth",
@@ -723,6 +737,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "bulkScheduleMulti",
           "key": "multi",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "bulkScheduleMulti",
@@ -800,6 +815,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "restErrResponseCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "restErrResponseCode",
@@ -823,6 +839,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "restErrResponseContext",
           "key": "context",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "restErrResponseContext",
@@ -859,6 +876,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "restErrResponseError",
           "key": "error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "restErrResponseError",
@@ -884,6 +902,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "restErrResponseStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "restErrResponseStatus",
@@ -1049,6 +1068,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2ConnectionTypeSchemaId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2ConnectionTypeSchemaId",
@@ -1074,6 +1094,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2ConnectionTypeSchemaName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2ConnectionTypeSchemaName",
@@ -1099,6 +1120,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2ConnectionTypeSchemaOperations",
           "key": "operations",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2ConnectionTypeSchemaOperations",
@@ -1149,6 +1171,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaConfiguration",
           "key": "configuration",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "V2CreateConnectionRequestSchemaConfiguration",
@@ -1185,6 +1208,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "V2CreateConnectionRequestSchemaName",
@@ -1203,6 +1227,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaOrganizationId",
           "key": "organization_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionRequestSchemaOrganizationId",
@@ -1235,6 +1260,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaPolicies",
           "key": "policies",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionRequestSchemaPolicies",
@@ -1274,6 +1300,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaRedirectUrl",
           "key": "redirect_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionRequestSchemaRedirectUrl",
@@ -1299,6 +1326,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "V2CreateConnectionRequestSchemaType",
@@ -1317,6 +1345,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionRequestSchemaValidate",
           "key": "validate",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionRequestSchemaValidate",
@@ -1351,6 +1380,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseEnvelopeData",
           "key": "data",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseEnvelopeData",
@@ -1383,6 +1413,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaAuthCode",
           "key": "auth_code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaAuthCode",
@@ -1408,6 +1439,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaAuthUrl",
           "key": "auth_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaAuthUrl",
@@ -1433,6 +1465,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaConfiguration",
           "key": "configuration",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaConfiguration",
@@ -1476,6 +1509,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaId",
@@ -1501,6 +1535,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaName",
@@ -1526,6 +1561,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaOrganizationId",
           "key": "organization_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaOrganizationId",
@@ -1551,6 +1587,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaPolicies",
           "key": "policies",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaPolicies",
@@ -1583,6 +1620,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaStatus",
@@ -1608,6 +1646,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaStatusError",
           "key": "status_error",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaStatusError",
@@ -1633,6 +1672,7 @@ exports[`polytomic polytomic parse open api 1`] = `
           "conflict": {},
           "generatedName": "v2CreateConnectionResponseSchemaType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "v2CreateConnectionResponseSchemaType",

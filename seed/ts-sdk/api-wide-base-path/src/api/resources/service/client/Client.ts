@@ -21,6 +21,15 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} serviceParam
+     * @param {string} resourceParam
+     * @param {number} endpointParam
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApiWideBasePath.service.post("string", "string", 1)
+     */
     public async post(
         serviceParam: string,
         resourceParam: string,
@@ -30,7 +39,9 @@ export class Service {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/test/${this._options.pathParam}/${serviceParam}/${endpointParam}/${resourceParam}`
+                `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(
+                    serviceParam
+                )}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`
             ),
             method: "POST",
             headers: {

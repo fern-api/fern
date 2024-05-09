@@ -24,6 +24,12 @@ export declare namespace V2 {
 export class V2 {
     constructor(protected readonly _options: V2.Options = {}) {}
 
+    /**
+     * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.v2.test()
+     */
     public async test(requestOptions?: V2.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,

@@ -22,6 +22,13 @@ export declare namespace Primitive {
 export class Primitive {
     constructor(protected readonly _options: Primitive.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnString("string")
+     */
     public async getAndReturnString(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/string"),
@@ -72,6 +79,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnInt(1)
+     */
     public async getAndReturnInt(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/integer"),
@@ -122,6 +136,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnLong(1000000)
+     */
     public async getAndReturnLong(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/long"),
@@ -172,6 +193,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {number} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnDouble(1.1)
+     */
     public async getAndReturnDouble(request: number, requestOptions?: Primitive.RequestOptions): Promise<number> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/double"),
@@ -222,6 +250,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {boolean} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnBool(true)
+     */
     public async getAndReturnBool(request: boolean, requestOptions?: Primitive.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/boolean"),
@@ -272,6 +307,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {Date} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"))
+     */
     public async getAndReturnDatetime(request: Date, requestOptions?: Primitive.RequestOptions): Promise<Date> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/datetime"),
@@ -322,6 +364,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnDate("2023-01-15")
+     */
     public async getAndReturnDate(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/date"),
@@ -372,6 +421,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     */
     public async getAndReturnUuid(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/uuid"),
@@ -422,6 +478,13 @@ export class Primitive {
         }
     }
 
+    /**
+     * @param {string} request
+     * @param {Primitive.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh")
+     */
     public async getAndReturnBase64(request: string, requestOptions?: Primitive.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/primitive/base64"),

@@ -65,7 +65,6 @@ export class UserService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedQueryParametersError) {
                     console.warn(
                         `Endpoint 'getUsername' unexpectedly threw ${error.constructor.name}.` +

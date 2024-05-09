@@ -27,6 +27,8 @@ export class Problem {
     /**
      * Returns lightweight versions of all problems
      *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.problem.getLightweightProblems()
      */
@@ -84,6 +86,8 @@ export class Problem {
     /**
      * Returns latest versions of all problems
      *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.problem.getProblems()
      */
@@ -139,6 +143,9 @@ export class Problem {
     /**
      * Returns latest version of a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.problem.getLatestProblem("string")
      */
@@ -149,7 +156,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${problemId}`
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}`
             ),
             method: "GET",
             headers: {
@@ -197,6 +204,10 @@ export class Problem {
     /**
      * Returns requested version of a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {number} problemVersion
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.problem.getProblemVersion("string", 1)
      */
@@ -208,7 +219,9 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${problemId}/version/${problemVersion}`
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}/version/${encodeURIComponent(
+                    problemVersion
+                )}`
             ),
             method: "GET",
             headers: {

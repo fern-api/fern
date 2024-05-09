@@ -25,6 +25,9 @@ export class Params {
     /**
      * GET with path param
      *
+     * @param {string} param
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.getWithPath("string")
      */
@@ -33,7 +36,10 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path/${encodeURIComponent(param)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -67,6 +73,9 @@ export class Params {
 
     /**
      * GET with query param
+     *
+     * @param {Fiddle.endpoints.GetWithQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await fiddle.endpoints.params.getWithQuery({
@@ -113,6 +122,9 @@ export class Params {
 
     /**
      * GET with multiple of same query param
+     *
+     * @param {Fiddle.endpoints.GetWithMultipleQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await fiddle.endpoints.params.getWithAllowMultipleQuery({
@@ -170,6 +182,10 @@ export class Params {
     /**
      * GET with path and query params
      *
+     * @param {string} param
+     * @param {Fiddle.endpoints.GetWithPathAndQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.getWithPathAndQuery("string", {
      *         query: "string"
@@ -184,7 +200,10 @@ export class Params {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path-query/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path-query/${encodeURIComponent(param)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -215,6 +234,10 @@ export class Params {
     /**
      * PUT to update with path param
      *
+     * @param {string} param
+     * @param {string} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.modifyWithPath("string", "string")
      */
@@ -224,7 +247,10 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path/${encodeURIComponent(param)}`
+            ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

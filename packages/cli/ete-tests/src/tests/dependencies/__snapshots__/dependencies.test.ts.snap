@@ -418,7 +418,10 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -790,4 +793,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2612323`;
+exports[`dependencies file dependencies 1`] = `2614316`;

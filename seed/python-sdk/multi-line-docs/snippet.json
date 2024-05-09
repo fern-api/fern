@@ -1,0 +1,29 @@
+{
+    "types": {
+        "type_:Operand": "\">\"\n"
+    },
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedMultiLineDocs\n\nclient = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get_user(\n    user_id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedMultiLineDocs\n\nclient = AsyncSeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.user.get_user(\n    user_id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedMultiLineDocs\n\nclient = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.create_user(\n    name=\"string\",\n    age=1,\n)\n",
+                "async_client": "from seed.client import AsyncSeedMultiLineDocs\n\nclient = AsyncSeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.user.create_user(\n    name=\"string\",\n    age=1,\n)\n",
+                "type": "python"
+            }
+        }
+    ]
+}

@@ -2523,7 +2523,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -2630,7 +2631,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -2737,7 +2739,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -3160,7 +3163,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -3267,7 +3271,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -3441,33 +3446,55 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "Shape",
-                                    "camelCase": {
-                                        "unsafeName": "shape",
-                                        "safeName": "shape"
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Shape",
+                                        "camelCase": {
+                                            "unsafeName": "shape",
+                                            "safeName": "shape"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "shape",
+                                            "safeName": "shape"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SHAPE",
+                                            "safeName": "SHAPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Shape",
+                                            "safeName": "Shape"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "shape",
-                                        "safeName": "shape"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SHAPE",
-                                        "safeName": "SHAPE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Shape",
-                                        "safeName": "Shape"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "union",
+                                                "camelCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION",
+                                                    "safeName": "UNION"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Union",
+                                                    "safeName": "Union"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
                                             "originalName": "union",
                                             "camelCase": {
                                                 "unsafeName": "union",
@@ -3486,32 +3513,13 @@
                                                 "safeName": "Union"
                                             }
                                         }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "union",
-                                        "camelCase": {
-                                            "unsafeName": "union",
-                                            "safeName": "union"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "union",
-                                            "safeName": "union"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "UNION",
-                                            "safeName": "UNION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Union",
-                                            "safeName": "Union"
-                                        }
-                                    }
+                                    },
+                                    "typeId": "type_union:Shape"
                                 },
-                                "typeId": "type_union:Shape"
-                            },
-                            "docs": null
-                        }
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -4108,15 +4116,18 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "BOOLEAN"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "BOOLEAN"
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [

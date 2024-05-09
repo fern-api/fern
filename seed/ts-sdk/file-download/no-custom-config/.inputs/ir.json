@@ -126,8 +126,11 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "fileDownload",
-                        "docs": null
+                        "body": {
+                            "type": "fileDownload",
+                            "docs": null
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [

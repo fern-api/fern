@@ -21,9 +21,19 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} nestedId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPackageYml.service.nop("id-219xca8")
+     */
     public async nop(nestedId: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${this._options.id}//${nestedId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

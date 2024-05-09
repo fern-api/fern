@@ -27,6 +27,8 @@ export class Problem {
     /**
      * Returns lightweight versions of all problems
      *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.v3.problem.getLightweightProblems()
      */
@@ -82,6 +84,8 @@ export class Problem {
     /**
      * Returns latest versions of all problems
      *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.v3.problem.getProblems()
      */
@@ -132,6 +136,9 @@ export class Problem {
     /**
      * Returns latest version of a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("string"))
      */
@@ -142,7 +149,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problems-v2/problem-info/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "GET",
             headers: {
@@ -183,6 +190,10 @@ export class Problem {
     /**
      * Returns requested version of a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {number} problemVersion
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1)
      */
@@ -194,9 +205,9 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${await serializers.ProblemId.jsonOrThrow(
-                    problemId
-                )}/version/${problemVersion}`
+                `/problems-v2/problem-info/${encodeURIComponent(
+                    await serializers.ProblemId.jsonOrThrow(problemId)
+                )}/version/${encodeURIComponent(problemVersion)}`
             ),
             method: "GET",
             headers: {

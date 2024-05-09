@@ -21,6 +21,17 @@ export declare namespace Optional {
 export class Optional {
     constructor(protected readonly _options: Optional.Options) {}
 
+    /**
+     * @param {Record<string, unknown>} request
+     * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedObjectsWithImports.optional.sendOptionalBody({
+     *         "string": {
+     *             "key": "value"
+     *         }
+     *     })
+     */
     public async sendOptionalBody(
         request?: Record<string, unknown>,
         requestOptions?: Optional.RequestOptions

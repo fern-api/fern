@@ -19,6 +19,7 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
+    shouldUseTitleAsName: boolean;
 }
 
 export interface RawOpenAPIFile {
@@ -43,6 +44,7 @@ export async function parse({
     let ir: OpenApiIntermediateRepresentation = {
         title: undefined,
         description: undefined,
+        basePath: undefined,
         servers: [],
         tags: {
             tagsById: {},
@@ -73,7 +75,8 @@ export async function parse({
                     openApi: openApiDocument,
                     taskContext,
                     disableExamples: false,
-                    audiences: spec.settings?.audiences ?? []
+                    audiences: spec.settings?.audiences ?? [],
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
@@ -81,7 +84,8 @@ export async function parse({
                     openApi: openApiDocument,
                     taskContext,
                     disableExamples: false,
-                    audiences: spec.settings?.audiences ?? []
+                    audiences: spec.settings?.audiences ?? [],
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -92,7 +96,11 @@ export async function parse({
                 context: taskContext,
                 absoluteFilePathToAsyncAPIOverrides: spec.absoluteFilepathToOverrides
             });
-            const parsedAsyncAPI = parseAsyncAPI({ document: asyncAPI, taskContext });
+            const parsedAsyncAPI = parseAsyncAPI({
+                document: asyncAPI,
+                taskContext,
+                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+            });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
             }
@@ -117,6 +125,7 @@ function merge(
     return {
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
+        basePath: ir1.basePath ?? ir2.basePath,
         servers: [...ir1.servers, ...ir2.servers],
         tags: {
             tagsById: {

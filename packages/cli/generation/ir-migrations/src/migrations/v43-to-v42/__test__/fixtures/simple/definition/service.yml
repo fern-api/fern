@@ -1,0 +1,23 @@
+types:
+  User:
+    properties:
+      name: string
+
+  ListUsersResponse:
+    properties:
+      users: list<User>
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    list:
+      method: GET
+      path: /list
+      request:
+        name: ListRequest
+        query-parameters:
+          pageNum: integer
+      response: 
+        status-code: 201
+        type: User

@@ -1,0 +1,27 @@
+name: simple-api
+
+auth: OAuthScheme
+
+imports: 
+  auth: auth.yml
+
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    scopes:
+      - user:read
+    get-token:
+      endpoint: auth.getToken
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
+    refresh-token:
+      endpoint: auth.refreshToken
+      request-properties:
+        refresh-token: $request.refresh_token
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token

@@ -22,6 +22,17 @@ export declare namespace User {
 export class User {
     constructor(protected readonly _options: User.Options) {}
 
+    /**
+     * @param {SeedExtraProperties.CreateUserRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExtraProperties.user.createUser({
+     *         type: "CreateUserRequest",
+     *         version: "v1",
+     *         name: "string"
+     *     })
+     */
     public async createUser(
         request: SeedExtraProperties.CreateUserRequest,
         requestOptions?: User.RequestOptions

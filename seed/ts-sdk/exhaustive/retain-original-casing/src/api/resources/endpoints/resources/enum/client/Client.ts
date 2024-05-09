@@ -23,6 +23,13 @@ export declare namespace Enum {
 export class Enum {
     constructor(protected readonly _options: Enum.Options) {}
 
+    /**
+     * @param {SeedExhaustive.types.WeatherReport} request
+     * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.enum.getAndReturnEnum(SeedExhaustive.types.WeatherReport.Sunny)
+     */
     public async getAndReturnEnum(
         request: SeedExhaustive.types.WeatherReport,
         requestOptions?: Enum.RequestOptions

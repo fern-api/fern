@@ -17,6 +17,7 @@ export const ObjectPropertyWithExample: core.serialization.ObjectSchema<
         core.serialization.lazy(async () => (await import("../../..")).SchemaId),
         core.serialization.lazyObject(async () => (await import("../../..")).ObjectPropertyConflictInfo)
     ),
+    nameOverride: core.serialization.string().optional(),
     generatedName: core.serialization.string(),
 });
 
@@ -26,6 +27,7 @@ export declare namespace ObjectPropertyWithExample {
         schema: serializers.SchemaWithExample.Raw;
         audiences: string[];
         conflict: Record<serializers.SchemaId.Raw, serializers.ObjectPropertyConflictInfo.Raw>;
+        nameOverride?: string | null;
         generatedName: string;
     }
 }

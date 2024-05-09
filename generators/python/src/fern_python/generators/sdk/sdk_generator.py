@@ -484,7 +484,7 @@ pip install --upgrade {project._project_config.package_name}
             if fdr_client is not None:
                 # API Definition ID doesn't matter right now
                 try:
-                    fdr_client.template.register_batch(
+                    fdr_client.templates.register_batch(
                         org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
                     )
                     generator_exec_wrapper.send_update(

@@ -7,16 +7,6 @@
  *     {
  *         xFileApiVersion: "0.0.2"
  *     }
- *
- * @example
- *     {
- *         xFileApiVersion: "string"
- *     }
- *
- * @example
- *     {
- *         xFileApiVersion: "string"
- *     }
  */
 export interface GetFileRequest {
     xFileApiVersion: string;

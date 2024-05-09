@@ -28,6 +28,16 @@ export declare namespace Payment {
 export class Payment {
     constructor(protected readonly _options: Payment.Options) {}
 
+    /**
+     * @param {SeedIdempotencyHeaders.CreatePaymentRequest} request
+     * @param {Payment.IdempotentRequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedIdempotencyHeaders.payment.create({
+     *         amount: 1,
+     *         currency: SeedIdempotencyHeaders.Currency.Usd
+     *     })
+     */
     public async create(
         request: SeedIdempotencyHeaders.CreatePaymentRequest,
         requestOptions?: Payment.IdempotentRequestOptions
@@ -81,9 +91,19 @@ export class Payment {
         }
     }
 
+    /**
+     * @param {string} paymentId
+     * @param {Payment.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedIdempotencyHeaders.payment.delete("string")
+     */
     public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/payment/${paymentId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/payment/${encodeURIComponent(paymentId)}`
+            ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

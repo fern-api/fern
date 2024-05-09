@@ -10,6 +10,8 @@ export interface ObjectPropertyWithExample {
     audiences: string[];
     /** The schemas that conflict with this property */
     conflict: Record<FernOpenapiIr.SchemaId, FernOpenapiIr.ObjectPropertyConflictInfo>;
+    /** An optional name override populated via `x-fern-property-name`. */
+    nameOverride: string | undefined;
     /** A unique name for the property. */
     generatedName: string;
 }

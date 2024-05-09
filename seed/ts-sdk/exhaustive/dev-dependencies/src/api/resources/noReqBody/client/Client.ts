@@ -22,6 +22,12 @@ export declare namespace NoReqBody {
 export class NoReqBody {
     constructor(protected readonly _options: NoReqBody.Options) {}
 
+    /**
+     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.noReqBody.getWithNoRequestBody()
+     */
     public async getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.noReqBody.getWithNoRequestBody.Error>> {
@@ -58,6 +64,12 @@ export class NoReqBody {
         };
     }
 
+    /**
+     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.noReqBody.postWithNoRequestBody()
+     */
     public async postWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.noReqBody.postWithNoRequestBody.Error>> {

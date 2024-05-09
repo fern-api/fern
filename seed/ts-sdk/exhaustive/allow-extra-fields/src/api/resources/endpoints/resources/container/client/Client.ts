@@ -23,6 +23,13 @@ export declare namespace Container {
 export class Container {
     constructor(protected readonly _options: Container.Options) {}
 
+    /**
+     * @param {string[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnListOfPrimitives(["string"])
+     */
     public async getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions
@@ -81,6 +88,15 @@ export class Container {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnListOfObjects([{
+     *             string: "string"
+     *         }])
+     */
     public async getAndReturnListOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions
@@ -139,6 +155,13 @@ export class Container {
         }
     }
 
+    /**
+     * @param {Set<string>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
         requestOptions?: Container.RequestOptions
@@ -197,6 +220,15 @@ export class Container {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *             string: "string"
+     *         }]))
+     */
     public async getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions
@@ -255,6 +287,15 @@ export class Container {
         }
     }
 
+    /**
+     * @param {Record<string, string>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnMapPrimToPrim({
+     *         "string": "string"
+     *     })
+     */
     public async getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions
@@ -313,6 +354,17 @@ export class Container {
         }
     }
 
+    /**
+     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject({
+     *         "string": {
+     *             string: "string"
+     *         }
+     *     })
+     */
     public async getAndReturnMapOfPrimToObject(
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions
@@ -371,6 +423,15 @@ export class Container {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnOptional({
+     *         string: "string"
+     *     })
+     */
     public async getAndReturnOptional(
         request?: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions

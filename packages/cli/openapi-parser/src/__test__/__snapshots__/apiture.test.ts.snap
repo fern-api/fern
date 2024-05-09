@@ -2,6 +2,7 @@
 
 exports[`open api parser apiture parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "APIs for digital banking client applications.
 
@@ -8446,6 +8447,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "abstractPagedBodyStart",
           "key": "start",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "abstractPagedBodyStart",
@@ -8482,6 +8484,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "abstractPagedBodyFieldsLimit",
           "key": "limit",
+          "nameOverride": null,
           "schema": {
             "description": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
             "generatedName": "AbstractPagedBodyFieldsLimit",
@@ -8498,6 +8501,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "abstractPagedBodyFieldsNextPageUrl",
           "key": "nextPage_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "abstractPagedBodyFieldsNextPageUrl",
@@ -8549,6 +8553,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountAllows",
           "key": "allows",
+          "nameOverride": null,
           "schema": {
             "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
             "generatedName": "AccountAllows",
@@ -8563,6 +8568,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountElectronicStatements",
           "key": "electronicStatements",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer has opted in to receive account statements electronically.",
             "generatedName": "AccountElectronicStatements",
@@ -8723,6 +8729,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountBalanceId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The account ID.",
             "generatedName": "AccountBalanceId",
@@ -8737,6 +8744,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountBalanceAvailable",
           "key": "available",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountBalanceAvailable",
@@ -8758,6 +8766,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountBalanceCurrent",
           "key": "current",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountBalanceCurrent",
@@ -8779,6 +8788,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountBalanceUpdatedAt",
           "key": "updatedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountBalanceUpdatedAt",
@@ -8800,6 +8810,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountBalanceCurrentWithPending",
           "key": "currentWithPending",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountBalanceCurrentWithPending",
@@ -8821,6 +8832,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountBalanceIncomplete",
           "key": "incomplete",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the response is incomplete and the client may retry the operation after the \`Retry-After\` time in order to fetch balances for any incomplete accounts in the \`items\`. The retry operation should only pass in accounts that are \`incomplete\`.",
             "generatedName": "AccountBalanceIncomplete",
@@ -8856,6 +8868,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountBalancesItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
             "generatedName": "AccountBalancesItems",
@@ -8888,6 +8901,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountFieldsId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The unique identifier for this account resource. This is an immutable opaque string.",
             "generatedName": "AccountFieldsId",
@@ -8902,6 +8916,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountFieldsLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "generatedName": "AccountFieldsLabel",
@@ -8920,6 +8935,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountFieldsNickname",
           "key": "nickname",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountFieldsNickname",
@@ -8941,6 +8957,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountFieldsMaskedNumber",
           "key": "maskedNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AccountFieldsMaskedNumber",
@@ -8955,6 +8972,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountFieldsProduct",
           "key": "product",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AccountFieldsProduct",
@@ -8969,6 +8987,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountFieldsLocation",
           "key": "location",
+          "nameOverride": null,
           "schema": {
             "description": "Indicates where an account is held.",
             "generatedName": "AccountFieldsLocation",
@@ -9021,6 +9040,7 @@ This error response may have one of the following \`type\` values:
           },
           "generatedName": "accountItemId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountItemId",
@@ -9046,6 +9066,7 @@ This error response may have one of the following \`type\` values:
           },
           "generatedName": "accountItemLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountItemLabel",
@@ -9075,6 +9096,7 @@ This error response may have one of the following \`type\` values:
           },
           "generatedName": "accountItemNickname",
           "key": "nickname",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountItemNickname",
@@ -9100,6 +9122,7 @@ This error response may have one of the following \`type\` values:
           },
           "generatedName": "accountItemMaskedNumber",
           "key": "maskedNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountItemMaskedNumber",
@@ -9121,6 +9144,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountItemAllows",
           "key": "allows",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AccountItemAllows",
@@ -9139,6 +9163,7 @@ This error response may have one of the following \`type\` values:
           },
           "generatedName": "accountItemProduct",
           "key": "product",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountItemProduct",
@@ -9164,6 +9189,7 @@ This error response may have one of the following \`type\` values:
           },
           "generatedName": "accountItemLocation",
           "key": "location",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountItemLocation",
@@ -9204,6 +9230,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountJointOwnerId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "AccountJointOwnerId",
@@ -9218,6 +9245,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountJointOwnerName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "The full name of the joint owner.",
             "generatedName": "AccountJointOwnerName",
@@ -9247,6 +9275,7 @@ This error response may have one of the following \`type\` values:
           "conflict": {},
           "generatedName": "accountJointOwnersItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "An array containing account joint owner items.",
             "generatedName": "AccountJointOwnersItems",
@@ -9340,6 +9369,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountPermissionsBillPay",
           "key": "billPay",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer may use this account for Bill Pay.",
             "generatedName": "AccountPermissionsBillPay",
@@ -9356,6 +9386,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountPermissionsMobileCheckDeposit",
           "key": "mobileCheckDeposit",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer may use this account for mobile check deposits.",
             "generatedName": "AccountPermissionsMobileCheckDeposit",
@@ -9372,6 +9403,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountPermissionsTransferFrom",
           "key": "transferFrom",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer may use this account as the target (deposit) account for account-to-account transfers.",
             "generatedName": "AccountPermissionsTransferFrom",
@@ -9388,6 +9420,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountPermissionsTransferTo",
           "key": "transferTo",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer may use this account as the source (debit) account for account-to-account transfers.",
             "generatedName": "AccountPermissionsTransferTo",
@@ -9404,6 +9437,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountPermissionsView",
           "key": "view",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer may view the details of this account, including the account balance and transactions.",
             "generatedName": "AccountPermissionsView",
@@ -9420,6 +9454,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountPermissionsViewCards",
           "key": "viewCards",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer may view debit cards associated with this account.",
             "generatedName": "AccountPermissionsViewCards",
@@ -9436,6 +9471,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountPermissionsManageCards",
           "key": "manageCards",
+          "nameOverride": null,
           "schema": {
             "description": "If true, the customer may manage debit cards associated with this account. This includes locking and unlocking cards, changing card controls, ordering cards, or canceling cards.",
             "generatedName": "AccountPermissionsManageCards",
@@ -9483,6 +9519,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountsItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "The array of items in this page of accounts. This array may be empty.",
             "generatedName": "AccountsItems",
@@ -9504,6 +9541,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountsCount",
           "key": "count",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountsCount",
@@ -9527,6 +9565,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "accountsPrimaryAccountId",
           "key": "primaryAccountId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountsPrimaryAccountId",
@@ -9552,6 +9591,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
           "generatedName": "accountsNextPageUrl",
           "key": "nextPage_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "accountsNextPageUrl",
@@ -9852,6 +9892,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "addressRegionName",
           "key": "regionName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "addressRegionName",
@@ -9877,6 +9918,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "addressRegionCode",
           "key": "regionCode",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "addressRegionCode",
@@ -9902,6 +9944,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "addressPostalCode",
           "key": "postalCode",
+          "nameOverride": null,
           "schema": {
             "description": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
             "generatedName": "AddressPostalCode",
@@ -9924,6 +9967,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           },
           "generatedName": "addressCountryCode",
           "key": "countryCode",
+          "nameOverride": null,
           "schema": {
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
             "generatedName": "AddressCountryCode",
@@ -9953,6 +9997,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "addressFieldsAddress1",
           "key": "address1",
+          "nameOverride": null,
           "schema": {
             "description": "The first line of the postal address. In the US, this typically includes the building number and street name.",
             "generatedName": "AddressFieldsAddress1",
@@ -9971,6 +10016,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "addressFieldsAddress2",
           "key": "address2",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "addressFieldsAddress2",
@@ -9996,6 +10042,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "addressFieldsLocality",
           "key": "locality",
+          "nameOverride": null,
           "schema": {
             "description": "The city/town/municipality of the address.",
             "generatedName": "AddressFieldsLocality",
@@ -10014,6 +10061,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "addressFieldsCountryCode",
           "key": "countryCode",
+          "nameOverride": null,
           "schema": {
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
             "generatedName": "AddressFieldsCountryCode",
@@ -10055,6 +10103,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemType",
@@ -10081,6 +10130,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemTitle",
           "key": "title",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemTitle",
@@ -10107,6 +10157,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemStatus",
@@ -10131,6 +10182,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemDetail",
           "key": "detail",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemDetail",
@@ -10157,6 +10209,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemInstance",
           "key": "instance",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemInstance",
@@ -10183,6 +10236,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemId",
@@ -10204,6 +10258,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemOccurredAt",
           "key": "occurredAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemOccurredAt",
@@ -10225,6 +10280,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemProblems",
           "key": "problems",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemProblems",
@@ -10253,6 +10309,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "apiProblemAttributes",
           "key": "attributes",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "apiProblemAttributes",
@@ -10300,6 +10357,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "challengeFactorType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ChallengeFactorType",
@@ -10314,6 +10372,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "challengeFactorLabels",
           "key": "labels",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "challengeFactorLabels",
@@ -10346,6 +10405,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "challengeFactorSecurityQuestions",
           "key": "securityQuestions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "challengeFactorSecurityQuestions",
@@ -10491,6 +10551,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "challengeSecurityQuestionId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The unique ID of security question prompt. This should be included in the [\`challengeVerification\`](#schema-challengeVerification) response as the \`promptId\`.",
             "generatedName": "ChallengeSecurityQuestionId",
@@ -10505,6 +10566,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "challengeSecurityQuestionPrompt",
           "key": "prompt",
+          "nameOverride": null,
           "schema": {
             "description": "The text prompt of this security question.",
             "generatedName": "ChallengeSecurityQuestionPrompt",
@@ -10534,6 +10596,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "challengeSecurityQuestionsQuestions",
           "key": "questions",
+          "nameOverride": null,
           "schema": {
             "description": "The array of security questions.",
             "generatedName": "ChallengeSecurityQuestionsQuestions",
@@ -10598,6 +10661,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "cutoffTimeType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "CutoffTimeType",
@@ -10612,6 +10676,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "cutoffTimeTime",
           "key": "time",
+          "nameOverride": null,
           "schema": {
             "description": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
             "generatedName": "CutoffTimeTime",
@@ -10777,6 +10842,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "conflict": {},
           "generatedName": "cutoffTimesTimeZoneId",
           "key": "timeZoneId",
+          "nameOverride": null,
           "schema": {
             "description": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
 The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
@@ -10792,6 +10858,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "cutoffTimesItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "A list of cutoff times for a financial institution.",
             "generatedName": "CutoffTimesItems",
@@ -10852,6 +10919,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "eligibleOverdraftAccountsItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "generatedName": "EligibleOverdraftAccountsItems",
             "nameOverride": null,
@@ -10863,6 +10931,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
           "key": "maximumOverdraftAccounts",
+          "nameOverride": null,
           "schema": {
             "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "generatedName": "EligibleOverdraftAccountsMaximumOverdraftAccounts",
@@ -10883,6 +10952,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "generatedName": "eligibleOverdraftAccountsNextPageUrl",
           "key": "nextPage_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "eligibleOverdraftAccountsNextPageUrl",
@@ -11008,6 +11078,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "fullAccountPermissionsManageJointOwners",
           "key": "manageJointOwners",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer can list the other joint owners on the account and invite new joint owners.",
             "generatedName": "FullAccountPermissionsManageJointOwners",
@@ -11024,6 +11095,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "fullAccountPermissionsManageOverdraftAccounts",
           "key": "manageOverdraftAccounts",
+          "nameOverride": null,
           "schema": {
             "description": "If \`true\`, the customer can list and manage overdraft account settings.",
             "generatedName": "FullAccountPermissionsManageOverdraftAccounts",
@@ -11059,6 +11131,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "incompleteAccountBalancesItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
             "generatedName": "IncompleteAccountBalancesItems",
@@ -11080,6 +11153,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "incompleteAccountBalancesIncompleteAccounts",
           "key": "incompleteAccounts",
+          "nameOverride": null,
           "schema": {
             "description": "Pass these values as the \`?accounts=\` query parameter on the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation. This value is empty if the client has reached the retry limit.",
             "generatedName": "IncompleteAccountBalancesIncompleteAccounts",
@@ -11094,6 +11168,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "incompleteAccountBalancesRetryCount",
           "key": "retryCount",
+          "nameOverride": null,
           "schema": {
             "description": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
             "generatedName": "IncompleteAccountBalancesRetryCount",
@@ -11129,6 +11204,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "incompleteTransactionsRetryCount",
           "key": "retryCount",
+          "nameOverride": null,
           "schema": {
             "description": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
             "generatedName": "IncompleteTransactionsRetryCount",
@@ -11245,6 +11321,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "institutionLookupResultFound",
           "key": "found",
+          "nameOverride": null,
           "schema": {
             "description": "\`true\` if a financial institution was found matching the requested FI locator, \`false\` if none was found.",
             "generatedName": "InstitutionLookupResultFound",
@@ -11261,6 +11338,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "institutionLookupResultInstitution",
           "key": "institution",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "institutionLookupResultInstitution",
@@ -11282,6 +11360,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "institutionLookupResultIntermediaryInstitutions",
           "key": "intermediaryInstitutions",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "institutionLookupResultIntermediaryInstitutions",
@@ -11336,6 +11415,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "jointOwnerInvitationId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The unique ID of the invitation.",
             "generatedName": "JointOwnerInvitationId",
@@ -11361,6 +11441,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsFirstName",
           "key": "firstName",
+          "nameOverride": null,
           "schema": {
             "description": "The invitee's first name.",
             "generatedName": "JointOwnerInvitationFieldsFirstName",
@@ -11379,6 +11460,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsLastName",
           "key": "lastName",
+          "nameOverride": null,
           "schema": {
             "description": "The invitee's last name name.",
             "generatedName": "JointOwnerInvitationFieldsLastName",
@@ -11397,6 +11479,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsTaxId",
           "key": "taxId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "jointOwnerInvitationFieldsTaxId",
@@ -11422,6 +11505,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsSharedSecret",
           "key": "sharedSecret",
+          "nameOverride": null,
           "schema": {
             "description": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
             "generatedName": "JointOwnerInvitationFieldsSharedSecret",
@@ -11440,6 +11524,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsEmailAddress",
           "key": "emailAddress",
+          "nameOverride": null,
           "schema": {
             "description": "The invitee's email address.",
             "generatedName": "JointOwnerInvitationFieldsEmailAddress",
@@ -11458,6 +11543,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
           "key": "disallowDebitCardAccess",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
@@ -11556,6 +11642,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "newTransferSchedule",
           "key": "schedule",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "newTransferSchedule",
@@ -11588,6 +11675,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "overdraftAccountFieldsId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "overdraftAccountFieldsId",
@@ -11609,6 +11697,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "overdraftAccountFieldsLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "overdraftAccountFieldsLabel",
@@ -11634,6 +11723,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "overdraftAccountFieldsMaskedNumber",
           "key": "maskedNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "overdraftAccountFieldsMaskedNumber",
@@ -11689,6 +11779,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
           "key": "maximumOverdraftAccounts",
+          "nameOverride": null,
           "schema": {
             "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "generatedName": "OverdraftProtectionMaximumOverdraftAccounts",
@@ -11716,6 +11807,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "overdraftProtectionFieldsAccounts",
           "key": "accounts",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "overdraftProtectionFieldsAccounts",
@@ -11807,6 +11899,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "productReferenceType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": "The type of account.",
             "generatedName": "ProductReferenceType",
@@ -11821,6 +11914,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "productReferenceCode",
           "key": "code",
+          "nameOverride": null,
           "schema": {
             "description": "The product's product code. Codes are unique to the financial institution.",
             "generatedName": "ProductReferenceCode",
@@ -11839,6 +11933,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "productReferenceLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": "A human-readable label for this banking product.",
             "generatedName": "ProductReferenceLabel",
@@ -11857,6 +11952,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "productReferenceDescription",
           "key": "description",
+          "nameOverride": null,
           "schema": {
             "description": "A human-readable description of this banking product.",
             "generatedName": "ProductReferenceDescription",
@@ -12021,6 +12117,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "requiredIdentityChallengeXFernSdkMethodName",
           "key": "x-fern-sdk-method-name",
+          "nameOverride": null,
           "schema": {
             "description": "The ID of the API operation for which the user must verify their identity. This is passed when starting a challenge factor or when validating the identity challenge responses.",
             "generatedName": "RequiredIdentityChallengeXFernSdkMethodName",
@@ -12035,6 +12132,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "requiredIdentityChallengeChallengeId",
           "key": "challengeId",
+          "nameOverride": null,
           "schema": {
             "description": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses.",
             "generatedName": "RequiredIdentityChallengeChallengeId",
@@ -12049,6 +12147,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "requiredIdentityChallengeFactors",
           "key": "factors",
+          "nameOverride": null,
           "schema": {
             "description": "A list of challenge factors. The user must complete one of these challenge factors. The \`labels\` in each factor identify one or more channels the user may use, such as a list of email addresses the system may use to send a one-time passcode to the user. ***Note**: The same channel may be used by multiple factors in the array of factors. For example, the user's primary mobile phone number may be used for both an \`sms\` factor and a \`voice\` factor.",
             "generatedName": "RequiredIdentityChallengeFactors",
@@ -12093,6 +12192,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "simpleInstitutionName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": "The financial institution's name.",
             "generatedName": "SimpleInstitutionName",
@@ -12111,6 +12211,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "simpleInstitutionAddress",
           "key": "address",
+          "nameOverride": null,
           "schema": {
             "description": "The financial institution's postal mailing address.",
             "generatedName": "SimpleInstitutionAddress",
@@ -12125,6 +12226,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "simpleInstitutionLocator",
           "key": "locator",
+          "nameOverride": null,
           "schema": {
             "description": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
             "generatedName": "SimpleInstitutionLocator",
@@ -12143,6 +12245,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "simpleInstitutionLocatorType",
           "key": "locatorType",
+          "nameOverride": null,
           "schema": {
             "description": "Indicates the type of this institution's \`locator\`.",
             "generatedName": "SimpleInstitutionLocatorType",
@@ -12180,6 +12283,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "timestampFieldsCreatedAt",
           "key": "createdAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "timestampFieldsCreatedAt",
@@ -12203,6 +12307,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "timestampFieldsUpdatedAt",
           "key": "updatedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "timestampFieldsUpdatedAt",
@@ -12237,6 +12342,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionCategoriesItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "An array containing transaction category items.",
             "generatedName": "TransactionCategoriesItems",
@@ -12269,6 +12375,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionCategorizationLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransactionCategorizationLabel",
@@ -12283,6 +12390,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionCategorizationId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The unique ID of this transaction's category.",
             "generatedName": "TransactionCategorizationId",
@@ -12327,6 +12435,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionCategoryType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransactionCategoryType",
@@ -12417,6 +12526,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionCheckNumber",
           "key": "number",
+          "nameOverride": null,
           "schema": {
             "description": "The check number.",
             "generatedName": "TransactionCheckNumber",
@@ -12433,6 +12543,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionCheckImageFrontUrl",
           "key": "imageFront_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionCheckImageFrontUrl",
@@ -12458,6 +12569,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionCheckImageBackUrl",
           "key": "imageBack_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionCheckImageBackUrl",
@@ -12494,6 +12606,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "This transaction's unique identifier.",
             "generatedName": "TransactionFieldsId",
@@ -12512,6 +12625,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": "The transaction type. If the \`type\` is \`debit\` or \`credit\`, the \`subtype\` conveys further transaction type details.",
             "generatedName": "TransactionFieldsType",
@@ -12526,6 +12640,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsSubtype",
           "key": "subtype",
+          "nameOverride": null,
           "schema": {
             "description": "The transaction's kind of debit or credit.",
             "generatedName": "TransactionFieldsSubtype",
@@ -12540,6 +12655,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsOccurredOn",
           "key": "occurredOn",
+          "nameOverride": null,
           "schema": {
             "description": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "generatedName": "TransactionFieldsOccurredOn",
@@ -12558,6 +12674,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsCreatedOn",
           "key": "createdOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsCreatedOn",
@@ -12583,6 +12700,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsPostedOn",
           "key": "postedOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsPostedOn",
@@ -12608,6 +12726,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsAmount",
           "key": "amount",
+          "nameOverride": null,
           "schema": {
             "description": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
             "generatedName": "TransactionFieldsAmount",
@@ -12622,6 +12741,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsPosted",
           "key": "posted",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsPosted",
@@ -12645,6 +12765,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsBalance",
           "key": "balance",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsBalance",
@@ -12666,6 +12787,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsMemo",
           "key": "memo",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsMemo",
@@ -12691,6 +12813,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsDescription",
           "key": "description",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsDescription",
@@ -12716,6 +12839,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsCategory",
           "key": "category",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsCategory",
@@ -12737,6 +12861,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsMerchant",
           "key": "merchant",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsMerchant",
@@ -12758,6 +12883,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionFieldsCheck",
           "key": "check",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionFieldsCheck",
@@ -12815,6 +12941,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionMerchantName",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionMerchantName",
@@ -12840,6 +12967,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionMerchantWebsiteUrl",
           "key": "website_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionMerchantWebsiteUrl",
@@ -12865,6 +12993,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionMerchantLogoUrl",
           "key": "logo_url",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionMerchantLogoUrl",
@@ -13031,6 +13160,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionsItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionsItems",
@@ -13059,6 +13189,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transactionsCount",
           "key": "count",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transactionsCount",
@@ -13118,6 +13249,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transferAccountReferenceId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The unique ID of a banking account.",
             "generatedName": "TransferAccountReferenceId",
@@ -13132,6 +13264,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transferAccountReferenceLabel",
           "key": "label",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferAccountReferenceLabel",
@@ -13157,6 +13290,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transferAccountReferenceType",
           "key": "type",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferAccountReferenceType",
@@ -13178,6 +13312,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transferAccountReferenceLocation",
           "key": "location",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferAccountReferenceLocation",
@@ -13210,6 +13345,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transferDateRestrictionOccursOn",
           "key": "occursOn",
+          "nameOverride": null,
           "schema": {
             "description": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
             "generatedName": "TransferDateRestrictionOccursOn",
@@ -13228,6 +13364,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transferDateRestrictionReason",
           "key": "reason",
+          "nameOverride": null,
           "schema": {
             "description": "Indicates why this date is restricted.",
             "generatedName": "TransferDateRestrictionReason",
@@ -13242,6 +13379,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transferDateRestrictionCreditOn",
           "key": "creditOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferDateRestrictionCreditOn",
@@ -13267,6 +13405,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "conflict": {},
           "generatedName": "transferDateRestrictionDebitOn",
           "key": "debitOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferDateRestrictionDebitOn",
@@ -13429,6 +13568,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferDateRestrictionsRestrictedDates",
           "key": "restrictedDates",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferDateRestrictionsRestrictedDates",
@@ -13457,6 +13597,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferDateRestrictionsAccuracyEndsOn",
           "key": "accuracyEndsOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferDateRestrictionsAccuracyEndsOn",
@@ -13493,6 +13634,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferFieldsAmount",
           "key": "amount",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferFieldsAmount",
@@ -13514,6 +13656,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferFieldsSourceAccount",
           "key": "sourceAccount",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferFieldsSourceAccount",
@@ -13535,6 +13678,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferFieldsTargetAccount",
           "key": "targetAccount",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferFieldsTargetAccount",
@@ -13556,6 +13700,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferFieldsMemo",
           "key": "memo",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferFieldsMemo",
@@ -13836,6 +13981,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferItemId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": "The unique identifier for this transfer resource. This is an immutable opaque string.",
             "generatedName": "TransferItemId",
@@ -13850,6 +13996,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferItemSchedule",
           "key": "schedule",
+          "nameOverride": null,
           "schema": {
             "description": "When the transfer should occur and any recurrence.",
             "generatedName": "TransferItemSchedule",
@@ -13864,6 +14011,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferItemState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": "The state of this transfer resource.",
             "generatedName": "TransferItemState",
@@ -13878,6 +14026,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferItemProcessedAt",
           "key": "processedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferItemProcessedAt",
@@ -13901,6 +14050,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferItemUpdatedBy",
           "key": "updatedBy",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferItemUpdatedBy",
@@ -13945,6 +14095,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferItemScheduleDebitsOn",
           "key": "debitsOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferItemScheduleDebitsOn",
@@ -13970,6 +14121,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferItemScheduleCreditsOn",
           "key": "creditsOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferItemScheduleCreditsOn",
@@ -14021,6 +14173,7 @@ The response may include dates prior to requested the start date, as that is use
           "conflict": {},
           "generatedName": "transferPatchSchedule",
           "key": "schedule",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferPatchSchedule",
@@ -14108,6 +14261,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferScheduleScheduledOn",
           "key": "scheduledOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferScheduleScheduledOn",
@@ -14133,6 +14287,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferScheduleRecurrenceType",
           "key": "recurrenceType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferScheduleRecurrenceType",
@@ -14154,6 +14309,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferScheduleFrequency",
           "key": "frequency",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "TransferScheduleFrequency",
@@ -14168,6 +14324,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferScheduleEndsOn",
           "key": "endsOn",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferScheduleEndsOn",
@@ -14193,6 +14350,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferScheduleCount",
           "key": "count",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferScheduleCount",
@@ -14216,6 +14374,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferScheduleAmountLimit",
           "key": "amountLimit",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transferScheduleAmountLimit",
@@ -14317,6 +14476,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferScheduleItemScheduledOn",
           "key": "scheduledOn",
+          "nameOverride": null,
           "schema": {
             "description": "The scheduled date of the calculated calendar recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
             "generatedName": "TransferScheduleItemScheduledOn",
@@ -14335,6 +14495,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferScheduleItemEffectiveOn",
           "key": "effectiveOn",
+          "nameOverride": null,
           "schema": {
             "description": "The effective date of the recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is \`credit\` and adjusted to after the scheduled date when the transfer direction is \`debit\`.",
             "generatedName": "TransferScheduleItemEffectiveOn",
@@ -14372,6 +14533,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transferSchedulesItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "An array containing upcoming transfer schedule items.",
             "generatedName": "TransferSchedulesItems",
@@ -14660,6 +14822,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transfersItems",
           "key": "items",
+          "nameOverride": null,
           "schema": {
             "description": "An array containing a page of transfer items.",
             "generatedName": "TransfersItems",
@@ -14681,6 +14844,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "transfersCount",
           "key": "count",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "transfersCount",
@@ -14723,6 +14887,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "conflict": {},
           "generatedName": "wireTransferInstitutionLocalClearingCode",
           "key": "localClearingCode",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "wireTransferInstitutionLocalClearingCode",

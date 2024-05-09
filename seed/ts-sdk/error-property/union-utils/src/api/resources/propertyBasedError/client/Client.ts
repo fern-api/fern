@@ -24,6 +24,9 @@ export class PropertyBasedError {
 
     /**
      * GET request that always throws an error
+     *
+     * @param {PropertyBasedError.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
      *
      * @example

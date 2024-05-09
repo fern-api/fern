@@ -24,6 +24,14 @@ export declare namespace Sysprop {
 export class Sysprop {
     constructor(protected readonly _options: Sysprop.Options = {}) {}
 
+    /**
+     * @param {SeedTrace.Language} language
+     * @param {number} numWarmInstances
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
+     */
     public async setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
@@ -32,7 +40,9 @@ export class Sysprop {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${await serializers.Language.jsonOrThrow(language)}/${numWarmInstances}`
+                `/sysprop/num-warm-instances/${encodeURIComponent(
+                    await serializers.Language.jsonOrThrow(language)
+                )}/${encodeURIComponent(numWarmInstances)}`
             ),
             method: "PUT",
             headers: {
@@ -65,6 +75,12 @@ export class Sysprop {
         };
     }
 
+    /**
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.sysprop.getNumWarmInstances()
+     */
     public async getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions
     ): Promise<

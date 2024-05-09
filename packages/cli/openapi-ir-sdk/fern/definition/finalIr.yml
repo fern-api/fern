@@ -7,6 +7,7 @@ types:
     properties:
       title: optional<string>
       description: optional<string>
+      basePath: optional<string>
       servers: list<commons.Server>
       groups:
         docs: |
@@ -440,6 +441,10 @@ types:
         type: string
         docs: |
           A unique name for the property.
+      nameOverride: 
+        type: optional<string>
+        docs: | 
+          An optional name override populated via `x-fern-property-name`. 
       audiences: list<string>
 
   ObjectPropertyConflictInfo:

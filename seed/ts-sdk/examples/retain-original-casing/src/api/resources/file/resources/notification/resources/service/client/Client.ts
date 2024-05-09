@@ -24,12 +24,22 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} notificationId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExamples.file.notification.service.getException("notification-hsy129x")
+     */
     public async getException(
         notificationId: string,
         requestOptions?: Service.RequestOptions
     ): Promise<SeedExamples.Exception> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/notification/${notificationId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/file/notification/${encodeURIComponent(notificationId)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

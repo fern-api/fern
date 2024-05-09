@@ -110,17 +110,14 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         const result: ts.Expression[] = [];
         for (const property of this.requestBody.properties) {
             if (property.type === "file") {
-                result.push(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("fs"),
-                            ts.factory.createIdentifier("createReadStream")
-                        ),
-                        undefined,
-                        [ts.factory.createStringLiteral("/path/to/your/file")]
-                    )
+                const createReadStream = context.externalDependencies.fs.createReadStream(
+                    ts.factory.createStringLiteral("/path/to/your/file")
                 );
-                context.externalDependencies.fs.ReadStream._getReferenceToType();
+                if (property.value.type === "fileArray") {
+                    result.push(ts.factory.createArrayLiteralExpression([createReadStream]));
+                } else {
+                    result.push(createReadStream);
+                }
             }
         }
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
@@ -181,21 +178,41 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
-        const types: ts.TypeNode[] = [ts.factory.createTypeReferenceNode("File")];
+        const types: ts.TypeNode[] = [
+            this.maybeWrapFileArray({
+                property,
+                value: ts.factory.createTypeReferenceNode("File")
+            })
+        ];
 
         visitJavaScriptRuntime(this.targetRuntime, {
             node: () => {
-                types.push(context.externalDependencies.fs.ReadStream._getReferenceToType());
+                types.push(
+                    this.maybeWrapFileArray({
+                        property,
+                        value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                    })
+                );
             },
             browser: () => {
-                types.push(ts.factory.createTypeReferenceNode("Blob"));
+                types.push(
+                    this.maybeWrapFileArray({
+                        property,
+                        value: ts.factory.createTypeReferenceNode("Blob")
+                    })
+                );
             }
         });
 
         if (property.isOptional) {
             types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
         }
+
         return ts.factory.createUnionTypeNode(types);
+    }
+
+    private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
+        return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
     }
 
     public getBuildRequestStatements(context: SdkContext): ts.Statement[] {

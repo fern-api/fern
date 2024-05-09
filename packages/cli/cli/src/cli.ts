@@ -31,7 +31,9 @@ import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { testOutput } from "./commands/test/testOutput";
 import { generateToken } from "./commands/token/token";
+import { updateApiSpec } from "./commands/upgrade/updateApiSpec";
 import { upgrade } from "./commands/upgrade/upgrade";
+import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
@@ -143,6 +145,8 @@ async function tryRunCli(cliContext: CliContext) {
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
+    addUpdateApiSpecCommand(cli, cliContext);
+    addUpgradeGeneratorCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -637,6 +641,74 @@ function addUpgradeCommand({
                 targetVersion: argv.version
             });
             onRun();
+        }
+    );
+}
+
+function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "generator upgrade",
+        `Upgrades the specified generator in ${GENERATORS_CONFIGURATION_FILENAME} to the latest stable version.`,
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    string: true,
+                    description: "The type of generator to upgrade, ex: `fern-typescript-node-sdk`."
+                })
+                .option("group", {
+                    string: true,
+                    description:
+                        "The group in which the generator is located, if group is not specified, the all generators of the specified type will be upgraded."
+                })
+                .option("api", {
+                    string: true,
+                    description:
+                        "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern generator upgrade",
+                properties: {
+                    generator: argv.generator,
+                    version: argv.version,
+                    api: argv.api,
+                    group: argv.group
+                }
+            });
+            await upgradeGenerator({
+                cliContext,
+                generator: argv.generator,
+                group: argv.group,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true
+                })
+            });
+        }
+    );
+}
+
+function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "api update",
+        `Pulls the latest OpenAPI spec from the specified origin in ${GENERATORS_CONFIGURATION_FILENAME} and updates the local spec.`,
+        (yargs) =>
+            yargs.option("api", {
+                string: true,
+                description:
+                    "The API to update the spec for. If not specified, all APIs with a declared origin will be updated."
+            }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern api update"
+            });
+            await updateApiSpec({
+                cliContext,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true
+                })
+            });
         }
     );
 }

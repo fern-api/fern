@@ -23,6 +23,19 @@ export declare namespace Auth {
 export class Auth {
     constructor(protected readonly _options: Auth.Options) {}
 
+    /**
+     * @param {SeedOauthClientCredentials.GetTokenRequest} request
+     * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedOauthClientCredentials.auth.getTokenWithClientCredentials({
+     *         clientId: "string",
+     *         clientSecret: "string",
+     *         audience: "https://api.example.com",
+     *         grantType: "client_credentials",
+     *         scope: "string"
+     *     })
+     */
     public async getTokenWithClientCredentials(
         request: SeedOauthClientCredentials.GetTokenRequest,
         requestOptions?: Auth.RequestOptions
@@ -78,6 +91,20 @@ export class Auth {
         }
     }
 
+    /**
+     * @param {SeedOauthClientCredentials.RefreshTokenRequest} request
+     * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedOauthClientCredentials.auth.refreshToken({
+     *         clientId: "string",
+     *         clientSecret: "string",
+     *         refreshToken: "string",
+     *         audience: "https://api.example.com",
+     *         grantType: "refresh_token",
+     *         scope: "string"
+     *     })
+     */
     public async refreshToken(
         request: SeedOauthClientCredentials.RefreshTokenRequest,
         requestOptions?: Auth.RequestOptions

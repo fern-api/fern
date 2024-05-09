@@ -1874,6 +1874,21 @@ This error response may have one of the following \`type\` values:
   The named \`accountId\` does not exist or the user is not entitled to access the account.
   Remediation: Pass the \`id\` of an existing account the caller has access to.
 ",
+        "examples": [
+          {
+            "docs": undefined,
+            "name": undefined,
+            "value": {
+              "detail": "No such account exists for the given account ID.",
+              "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+              "instance": "https://production.api.apiture.com/banking/accountBalances?accounts=bb709151-575041fcd617",
+              "occurredAt": "2022-04-25T12:42:21.375Z",
+              "status": 422,
+              "title": "Unprocessable Entity",
+              "type": "https://production.api.apiture.com/errors/invalidAccountId/v1.0.0",
+            },
+          },
+        ],
         "status-code": 422,
         "type": "ProblemResponse",
       },
@@ -7027,6 +7042,21 @@ This error response may have one of the following \`type\` values:
   The syntax of the request entity is correct but was unable to process the contained instructions.
   Remediation: Provide a semantically correct request.
 ",
+        "examples": [
+          {
+            "docs": undefined,
+            "name": undefined,
+            "value": {
+              "detail": "No such account exists for the given account ID.",
+              "id": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+              "instance": "https://production.api.apiture.com/banking/accountBalances?accounts=bb709151-575041fcd617",
+              "occurredAt": "2022-04-25T12:42:21.375Z",
+              "status": 422,
+              "title": "Unprocessable Entity",
+              "type": "https://production.api.apiture.com/errors/invalidAccountId/v1.0.0",
+            },
+          },
+        ],
         "status-code": 422,
         "type": "ProblemResponse",
       },

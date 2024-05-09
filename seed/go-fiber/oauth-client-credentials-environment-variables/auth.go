@@ -9,9 +9,9 @@ import (
 )
 
 type GetTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"client_id"`
-	ClientSecret string  `json:"client_secret" url:"client_secret"`
-	Scope        *string `json:"scope,omitempty" url:"scope,omitempty"`
+	ClientId     string  `json:"client_id" url:"-"`
+	ClientSecret string  `json:"client_secret" url:"-"`
+	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
 	grantType    string
 }
@@ -51,10 +51,10 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 type RefreshTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"client_id"`
-	ClientSecret string  `json:"client_secret" url:"client_secret"`
-	RefreshToken string  `json:"refresh_token" url:"refresh_token"`
-	Scope        *string `json:"scope,omitempty" url:"scope,omitempty"`
+	ClientId     string  `json:"client_id" url:"-"`
+	ClientSecret string  `json:"client_secret" url:"-"`
+	RefreshToken string  `json:"refresh_token" url:"-"`
+	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
 	grantType    string
 }

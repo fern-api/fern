@@ -26,16 +26,16 @@ export class Service {
 
     /**
      * This endpoint returns a file by its name.
+     *
+     * @param {string} filename - This is a filename
+     * @param {SeedExamples.file.GetFileRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedExamples.NotFoundError}
      *
      * @example
      *     await seedExamples.file.service.getFile("file.txt", {
      *         xFileApiVersion: "0.0.2"
-     *     })
-     *
-     * @example
-     *     await seedExamples.file.service.getFile("string", {
-     *         xFileApiVersion: "string"
      *     })
      */
     public async getFile(
@@ -45,7 +45,7 @@ export class Service {
     ): Promise<SeedExamples.File_> {
         const { xFileApiVersion } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/${filename}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/${encodeURIComponent(filename)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

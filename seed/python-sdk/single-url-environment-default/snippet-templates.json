@@ -10,16 +10,30 @@
             "method": "GET"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedSingleUrlEnvironmentDefault\n\nclient = AsyncSeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)",
+            "clientInstantiation": "from seed.client import SeedSingleUrlEnvironmentDefault\n\nclient = SeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.dummy.get_dummy(\n\t$FERN_INPUT\n)",
+                "templateString": "client.dummy.get_dummy(\n\t$FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedSingleUrlEnvironmentDefault\n\nclient = AsyncSeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.dummy.get_dummy(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     }
 ]

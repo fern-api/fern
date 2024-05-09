@@ -141,39 +141,46 @@ export function convertObject({
         }
     }
 
-    const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
-        const isRequired = allRequired.includes(propertyName);
-        const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
-        const propertyBreadcrumbs = [...breadcrumbs, propertyName];
-        const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
-        const schema = isRequired
-            ? convertSchema(propertySchema, false, context, propertyBreadcrumbs)
-            : SchemaWithExample.optional({
-                  nameOverride,
-                  generatedName,
-                  description: undefined,
-                  value: convertSchema(propertySchema, false, context, propertyBreadcrumbs),
-                  groupName
-              });
+    const convertedProperties: ObjectPropertyWithExample[] = Object.entries(propertiesToConvert).map(
+        ([propertyName, propertySchema]) => {
+            const isRequired = allRequired.includes(propertyName);
+            const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
+            const propertyNameOverride = getExtension<string | undefined>(
+                propertySchema,
+                FernOpenAPIExtension.FERN_PROPERTY_NAME
+            );
+            const propertyBreadcrumbs = [...breadcrumbs, propertyName];
+            const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
+            const schema = isRequired
+                ? convertSchema(propertySchema, false, context, propertyBreadcrumbs)
+                : SchemaWithExample.optional({
+                      nameOverride,
+                      generatedName,
+                      description: undefined,
+                      value: convertSchema(propertySchema, false, context, propertyBreadcrumbs),
+                      groupName
+                  });
 
-        const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
-        for (const parent of parents) {
-            const parentPropertySchema = parent.properties[propertyName];
-            if (parentPropertySchema != null && !isSchemaWithExampleEqual(schema, parentPropertySchema)) {
-                conflicts[parent.schemaId] = { differentSchema: true };
-            } else if (parentPropertySchema != null) {
-                conflicts[parent.schemaId] = { differentSchema: false };
+            const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
+            for (const parent of parents) {
+                const parentPropertySchema = parent.properties[propertyName];
+                if (parentPropertySchema != null && !isSchemaWithExampleEqual(schema, parentPropertySchema)) {
+                    conflicts[parent.schemaId] = { differentSchema: true };
+                } else if (parentPropertySchema != null) {
+                    conflicts[parent.schemaId] = { differentSchema: false };
+                }
             }
-        }
 
-        return {
-            key: propertyName,
-            schema,
-            audiences,
-            conflict: conflicts,
-            generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName])
-        };
-    });
+            return {
+                key: propertyName,
+                schema,
+                nameOverride: propertyNameOverride,
+                audiences,
+                conflict: conflicts,
+                generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName])
+            };
+        }
+    );
 
     convertedProperties.push(
         ...inlinedParentProperties.map((property) => {

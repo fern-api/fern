@@ -2,6 +2,7 @@
 
 exports[`open api parser supertokens parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "This is the API exposed by the SuperTokens Core. To be consumed by your backend only.",
   "endpoints": [
@@ -235,6 +236,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "createTotpDeviceRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateTotpDeviceRequestUserId",
@@ -249,6 +251,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "createTotpDeviceRequestDeviceName",
               "key": "deviceName",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateTotpDeviceRequestDeviceName",
@@ -267,6 +270,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "createTotpDeviceRequestSkew",
               "key": "skew",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateTotpDeviceRequestSkew",
@@ -283,6 +287,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "createTotpDeviceRequestPeriod",
               "key": "period",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateTotpDeviceRequestPeriod",
@@ -336,6 +341,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "createTotpDeviceResponseOkSecret",
                     "key": "secret",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "createTotpDeviceResponseOkSecret",
@@ -588,6 +594,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "updateTotpDeviceNameRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UpdateTotpDeviceNameRequestUserId",
@@ -602,6 +609,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "updateTotpDeviceNameRequestExistingDeviceName",
               "key": "existingDeviceName",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UpdateTotpDeviceNameRequestExistingDeviceName",
@@ -620,6 +628,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "updateTotpDeviceNameRequestNewDeviceName",
               "key": "newDeviceName",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UpdateTotpDeviceNameRequestNewDeviceName",
@@ -975,6 +984,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "getTotpDevicesResponseOkDevices",
                     "key": "devices",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getTotpDevicesResponseOkDevices",
@@ -1000,6 +1010,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                               "conflict": {},
                               "generatedName": "getTotpDevicesResponseOkDevicesItemName",
                               "key": "name",
+                              "nameOverride": null,
                               "schema": {
                                 "description": null,
                                 "generatedName": "getTotpDevicesResponseOkDevicesItemName",
@@ -1025,6 +1036,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                               "conflict": {},
                               "generatedName": "getTotpDevicesResponseOkDevicesItemPeriod",
                               "key": "period",
+                              "nameOverride": null,
                               "schema": {
                                 "description": null,
                                 "generatedName": "getTotpDevicesResponseOkDevicesItemPeriod",
@@ -1048,6 +1060,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                               "conflict": {},
                               "generatedName": "getTotpDevicesResponseOkDevicesItemSkew",
                               "key": "skew",
+                              "nameOverride": null,
                               "schema": {
                                 "description": null,
                                 "generatedName": "getTotpDevicesResponseOkDevicesItemSkew",
@@ -1071,6 +1084,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                               "conflict": {},
                               "generatedName": "getTotpDevicesResponseOkDevicesItemVerified",
                               "key": "verified",
+                              "nameOverride": null,
                               "schema": {
                                 "description": null,
                                 "generatedName": "getTotpDevicesResponseOkDevicesItemVerified",
@@ -1337,6 +1351,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "removeTotpDeviceRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "RemoveTotpDeviceRequestUserId",
@@ -1351,6 +1366,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "removeTotpDeviceRequestDeviceName",
               "key": "deviceName",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "RemoveTotpDeviceRequestDeviceName",
@@ -1396,6 +1412,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "removeTotpDeviceResponseOkDidDeviceExist",
                     "key": "didDeviceExist",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "removeTotpDeviceResponseOkDidDeviceExist",
@@ -1656,6 +1673,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "verifyTotpCodeRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "VerifyTotpCodeRequestUserId",
@@ -1670,6 +1688,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "verifyTotpCodeRequestTotp",
               "key": "totp",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "VerifyTotpCodeRequestTotp",
@@ -1688,6 +1707,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "verifyTotpCodeRequestAllowUnverifiedDevices",
               "key": "allowUnverifiedDevices",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "VerifyTotpCodeRequestAllowUnverifiedDevices",
@@ -1741,6 +1761,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "verifyTotpCodeResponseLimitReachedErrorRetryAfterMs",
                     "key": "retryAfterMs",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "verifyTotpCodeResponseLimitReachedErrorRetryAfterMs",
@@ -2018,6 +2039,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "verifyTotpDeviceRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "VerifyTotpDeviceRequestUserId",
@@ -2032,6 +2054,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "verifyTotpDeviceRequestDeviceName",
               "key": "deviceName",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "VerifyTotpDeviceRequestDeviceName",
@@ -2050,6 +2073,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "verifyTotpDeviceRequestTotp",
               "key": "totp",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "VerifyTotpDeviceRequestTotp",
@@ -2105,6 +2129,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "verifyTotpDeviceResponseLimitReachedErrorRetryAfterMs",
                     "key": "retryAfterMs",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "verifyTotpDeviceResponseLimitReachedErrorRetryAfterMs",
@@ -2139,6 +2164,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "verifyTotpDeviceResponseOkWasAlreadyVerified",
                     "key": "wasAlreadyVerified",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "verifyTotpDeviceResponseOkWasAlreadyVerified",
@@ -2503,6 +2529,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "userIdMappingGetMappingResponseOkSuperTokensUserId",
                     "key": "superTokensUserId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "UserIdMappingGetMappingResponseOkSuperTokensUserId",
@@ -2517,6 +2544,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "userIdMappingGetMappingResponseOkExternalUserId",
                     "key": "externalUserId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "UserIdMappingGetMappingResponseOkExternalUserId",
@@ -2535,6 +2563,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "userIdMappingGetMappingResponseOkExternalUserIdInfo",
                     "key": "externalUserIdInfo",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "userIdMappingGetMappingResponseOkExternalUserIdInfo",
@@ -2790,6 +2819,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingCreateMappingRequestSuperTokensUserId",
               "key": "superTokensUserId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserIdMappingCreateMappingRequestSuperTokensUserId",
@@ -2804,6 +2834,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingCreateMappingRequestExternalUserId",
               "key": "externalUserId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserIdMappingCreateMappingRequestExternalUserId",
@@ -2822,6 +2853,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingCreateMappingRequestExternalUserIdInfo",
               "key": "externalUserIdInfo",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userIdMappingCreateMappingRequestExternalUserIdInfo",
@@ -2847,6 +2879,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingCreateMappingRequestForce",
               "key": "force",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userIdMappingCreateMappingRequestForce",
@@ -2917,6 +2950,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "userIdMappingCreateMappingResponseUserIdMappingAlreadyExistsErrorDoesSuperTokensUserIdExist",
                     "key": "doesSuperTokensUserIdExist",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "userIdMappingCreateMappingResponseUserIdMappingAlreadyExistsErrorDoesSuperTokensUserIdExist",
@@ -2940,6 +2974,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "userIdMappingCreateMappingResponseUserIdMappingAlreadyExistsErrorDoesExternalUserIdExist",
                     "key": "doesExternalUserIdExist",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "userIdMappingCreateMappingResponseUserIdMappingAlreadyExistsErrorDoesExternalUserIdExist",
@@ -3180,6 +3215,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserIdMappingRemoveMappingRequestUserId",
@@ -3194,6 +3230,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingRequestUserIdType",
               "key": "userIdType",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userIdMappingRemoveMappingRequestUserIdType",
@@ -3252,6 +3289,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingRequestForce",
               "key": "force",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userIdMappingRemoveMappingRequestForce",
@@ -3292,6 +3330,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userIdMappingRemoveMappingResponseStatus",
@@ -3313,6 +3352,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingRemoveMappingResponseDidMappingExist",
               "key": "didMappingExist",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userIdMappingRemoveMappingResponseDidMappingExist",
@@ -3545,6 +3585,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserIdMappingUpateExternalUserIdInfoRequestUserId",
@@ -3559,6 +3600,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserIdType",
               "key": "userIdType",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserIdType",
@@ -3617,6 +3659,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "conflict": {},
               "generatedName": "userIdMappingUpateExternalUserIdInfoRequestExternalUserIdInfo",
               "key": "externalUserIdInfo",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UserIdMappingUpateExternalUserIdInfoRequestExternalUserIdInfo",
@@ -3943,6 +3986,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyLinkCodePreAuthSessionId",
                     "key": "preAuthSessionId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyLinkCodePreAuthSessionId",
@@ -3957,6 +4001,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyLinkCodeLinkCode",
                     "key": "linkCode",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyLinkCodeLinkCode",
@@ -3982,6 +4027,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdPreAuthSessionId",
                     "key": "preAuthSessionId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdPreAuthSessionId",
@@ -3996,6 +4042,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdDeviceId",
                     "key": "deviceId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdDeviceId",
@@ -4010,6 +4057,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeRequestBodyDeviceIdUserInputCode",
                     "key": "userInputCode",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessTryUseCodeRequestBodyDeviceIdUserInputCode",
@@ -4053,6 +4101,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserStatus",
@@ -4074,6 +4123,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserCreatedNewUser",
                     "key": "createdNewUser",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserCreatedNewUser",
@@ -4097,6 +4147,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserUser",
                     "key": "user",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessTryUseCodeResponseCreatedNewUserUser",
@@ -4129,6 +4180,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountStatus",
@@ -4175,6 +4227,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountFailedCodeInputAttemptCount",
                     "key": "failedCodeInputAttemptCount",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountFailedCodeInputAttemptCount",
@@ -4198,6 +4251,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountMaximumCodeInputAttempts",
                     "key": "maximumCodeInputAttempts",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessTryUseCodeResponseFailedCodeInputAttemptCountMaximumCodeInputAttempts",
@@ -4232,6 +4286,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "passwordlessTryUseCodeResponseStatusStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessTryUseCodeResponseStatusStatus",
@@ -4524,6 +4579,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyEmailEmail",
                     "key": "email",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessStartSignInRequestBodyEmailEmail",
@@ -4538,6 +4594,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyEmailUserInputCode",
                     "key": "userInputCode",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInRequestBodyEmailUserInputCode",
@@ -4570,6 +4627,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyPhoneNumberPhoneNumber",
                     "key": "phoneNumber",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessStartSignInRequestBodyPhoneNumberPhoneNumber",
@@ -4584,6 +4642,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyPhoneNumberUserInputCode",
                     "key": "userInputCode",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInRequestBodyPhoneNumberUserInputCode",
@@ -4616,6 +4675,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyDeviceIdDeviceId",
                     "key": "deviceId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessStartSignInRequestBodyDeviceIdDeviceId",
@@ -4630,6 +4690,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInRequestBodyDeviceIdUserInputCode",
                     "key": "userInputCode",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInRequestBodyDeviceIdUserInputCode",
@@ -4680,6 +4741,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseCodeIdStatus",
@@ -4701,6 +4763,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdPreAuthSessionId",
                     "key": "preAuthSessionId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseCodeIdPreAuthSessionId",
@@ -4722,6 +4785,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdCodeId",
                     "key": "codeId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseCodeIdCodeId",
@@ -4743,6 +4807,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdDeviceId",
                     "key": "deviceId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseCodeIdDeviceId",
@@ -4764,6 +4829,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdUserInputCode",
                     "key": "userInputCode",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseCodeIdUserInputCode",
@@ -4785,6 +4851,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdLinkCode",
                     "key": "linkCode",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseCodeIdLinkCode",
@@ -4806,6 +4873,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdTimeCreated",
                     "key": "timeCreated",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseCodeIdTimeCreated",
@@ -4827,6 +4895,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseCodeIdCodeLifetime",
                     "key": "codeLifetime",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseCodeIdCodeLifetime",
@@ -4859,6 +4928,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessStartSignInResponseOneStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessStartSignInResponseOneStatus",
@@ -5115,6 +5185,7 @@ Passing the optional deviceId signifies a resend code flow.
               "conflict": {},
               "generatedName": "passwordlessRevokeCodeRequestCodeId",
               "key": "codeId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "PasswordlessRevokeCodeRequestCodeId",
@@ -5146,6 +5217,7 @@ Passing the optional deviceId signifies a resend code flow.
               "conflict": {},
               "generatedName": "passwordlessRevokeCodeResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "passwordlessRevokeCodeResponseStatus",
@@ -5549,6 +5621,7 @@ Passing the optional deviceId signifies a resend code flow.
               "conflict": {},
               "generatedName": "passwordlessListCodesResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "passwordlessListCodesResponseStatus",
@@ -5570,6 +5643,7 @@ Passing the optional deviceId signifies a resend code flow.
               "conflict": {},
               "generatedName": "passwordlessListCodesResponseDevices",
               "key": "devices",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "passwordlessListCodesResponseDevices",
@@ -5595,6 +5669,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemPreAuthSessionId",
                         "key": "preAuthSessionId",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "passwordlessListCodesResponseDevicesItemPreAuthSessionId",
@@ -5616,6 +5691,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemFailedCodeInputAttemptCount",
                         "key": "failedCodeInputAttemptCount",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "passwordlessListCodesResponseDevicesItemFailedCodeInputAttemptCount",
@@ -5639,6 +5715,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemEmail",
                         "key": "email",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "passwordlessListCodesResponseDevicesItemEmail",
@@ -5660,6 +5737,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemPhoneNumber",
                         "key": "phoneNumber",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "passwordlessListCodesResponseDevicesItemPhoneNumber",
@@ -5681,6 +5759,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "conflict": {},
                         "generatedName": "passwordlessListCodesResponseDevicesItemCodes",
                         "key": "codes",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "passwordlessListCodesResponseDevicesItemCodes",
@@ -5706,6 +5785,7 @@ Passing the optional deviceId signifies a resend code flow.
                                   "conflict": {},
                                   "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemCodeId",
                                   "key": "codeId",
+                                  "nameOverride": null,
                                   "schema": {
                                     "description": null,
                                     "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemCodeId",
@@ -5727,6 +5807,7 @@ Passing the optional deviceId signifies a resend code flow.
                                   "conflict": {},
                                   "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemTimeCreated",
                                   "key": "timeCreated",
+                                  "nameOverride": null,
                                   "schema": {
                                     "description": null,
                                     "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemTimeCreated",
@@ -5748,6 +5829,7 @@ Passing the optional deviceId signifies a resend code flow.
                                   "conflict": {},
                                   "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemCodeLifetime",
                                   "key": "codeLifetime",
+                                  "nameOverride": null,
                                   "schema": {
                                     "description": null,
                                     "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemCodeLifetime",
@@ -5995,6 +6077,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessRevokeAllCodesOfUserRequestBodyEmailEmail",
                     "key": "email",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyEmailEmail",
@@ -6020,6 +6103,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "conflict": {},
                     "generatedName": "passwordlessRevokeAllCodesOfUserRequestBodyPhoneNumberPhoneNumber",
                     "key": "phoneNumber",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPhoneNumberPhoneNumber",
@@ -6055,6 +6139,7 @@ Passing the optional deviceId signifies a resend code flow.
               "conflict": {},
               "generatedName": "passwordlessRevokeAllCodesOfUserResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "passwordlessRevokeAllCodesOfUserResponseStatus",
@@ -6411,6 +6496,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "passwordlessGetUserResponseUserStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessGetUserResponseUserStatus",
@@ -6432,6 +6518,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "passwordlessGetUserResponseUserUser",
                     "key": "user",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessGetUserResponseUserUser",
@@ -6464,6 +6551,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "passwordlessGetUserResponseOneStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "passwordlessGetUserResponseOneStatus",
@@ -6730,6 +6818,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "passwordlessPutUserRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "PasswordlessPutUserRequestUserId",
@@ -6744,6 +6833,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "passwordlessPutUserRequestEmail",
               "key": "email",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "passwordlessPutUserRequestEmail",
@@ -6765,6 +6855,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "passwordlessPutUserRequestPhoneNumber",
               "key": "phoneNumber",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "passwordlessPutUserRequestPhoneNumber",
@@ -6803,6 +6894,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "passwordlessPutUserResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "passwordlessPutUserResponseStatus",
@@ -7100,6 +7192,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordSigninRequestEmail",
               "key": "email",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordSigninRequestEmail",
@@ -7121,6 +7214,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordSigninRequestPassword",
               "key": "password",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordSigninRequestPassword",
@@ -7169,6 +7263,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "conflict": {},
                     "generatedName": "emailPasswordSigninResponseOkUser",
                     "key": "user",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailPasswordSigninResponseOkUser",
@@ -7429,6 +7524,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordSignupRequestEmail",
               "key": "email",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordSignupRequestEmail",
@@ -7450,6 +7546,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordSignupRequestPassword",
               "key": "password",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordSignupRequestPassword",
@@ -7508,6 +7605,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "conflict": {},
                     "generatedName": "emailPasswordSignupResponseOkUser",
                     "key": "user",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailPasswordSignupResponseOkUser",
@@ -7826,6 +7924,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "conflict": {},
                     "generatedName": "emailPasswordGetUserResponseUserStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailPasswordGetUserResponseUserStatus",
@@ -7847,6 +7946,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "conflict": {},
                     "generatedName": "emailPasswordGetUserResponseUserUser",
                     "key": "user",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailPasswordGetUserResponseUserUser",
@@ -7879,6 +7979,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "conflict": {},
                     "generatedName": "emailPasswordGetUserResponseOneStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailPasswordGetUserResponseOneStatus",
@@ -8124,6 +8225,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordPutUserRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordPutUserRequestUserId",
@@ -8145,6 +8247,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordPutUserRequestEmail",
               "key": "email",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordPutUserRequestEmail",
@@ -8166,6 +8269,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordPutUserRequestPassword",
               "key": "password",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordPutUserRequestPassword",
@@ -8204,6 +8308,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordPutUserResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordPutUserResponseStatus",
@@ -8470,6 +8575,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetPasswordResetTokenRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetPasswordResetTokenRequestUserId",
@@ -8518,6 +8624,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "conflict": {},
                     "generatedName": "emailPasswordGetPasswordResetTokenResponseOkToken",
                     "key": "token",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailPasswordGetPasswordResetTokenResponseOkToken",
@@ -8878,6 +8985,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetUsersResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetUsersResponseStatus",
@@ -8899,6 +9007,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetUsersResponseUsers",
               "key": "users",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetUsersResponseUsers",
@@ -8927,6 +9036,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetUsersResponseNextPaginationToken",
               "key": "nextPaginationToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetUsersResponseNextPaginationToken",
@@ -9156,6 +9266,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetPasswordResetRequestMethod",
               "key": "method",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetPasswordResetRequestMethod",
@@ -9180,6 +9291,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetPasswordResetRequestToken",
               "key": "token",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetPasswordResetRequestToken",
@@ -9201,6 +9313,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetPasswordResetRequestNewPassword",
               "key": "newPassword",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetPasswordResetRequestNewPassword",
@@ -9253,6 +9366,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "conflict": {},
                     "generatedName": "emailPasswordGetPasswordResetResponseOkUserId",
                     "key": "userId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailPasswordGetPasswordResetResponseOkUserId",
@@ -9492,6 +9606,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetUserCountResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetUserCountResponseStatus",
@@ -9513,6 +9628,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "emailPasswordGetUserCountResponseCount",
               "key": "count",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailPasswordGetUserCountResponseCount",
@@ -9767,6 +9883,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "userImportRequestEmail",
               "key": "email",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userImportRequestEmail",
@@ -9788,6 +9905,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "userImportRequestPasswordHash",
               "key": "passwordHash",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userImportRequestPasswordHash",
@@ -9813,6 +9931,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "userImportRequestHashingAlgorithm",
               "key": "hashingAlgorithm",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userImportRequestHashingAlgorithm",
@@ -9888,6 +10007,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "userImportResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userImportResponseStatus",
@@ -9909,6 +10029,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "userImportResponseUser",
               "key": "user",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userImportResponseUser",
@@ -9930,6 +10051,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "userImportResponseDidUserAlreadyExist",
               "key": "didUserAlreadyExist",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userImportResponseDidUserAlreadyExist",
@@ -10203,6 +10325,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "thirdPartySigninupRequestThirdPartyId",
               "key": "thirdPartyId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartySigninupRequestThirdPartyId",
@@ -10224,6 +10347,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "thirdPartySigninupRequestThirdPartyUserId",
               "key": "thirdPartyUserId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartySigninupRequestThirdPartyUserId",
@@ -10245,6 +10369,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "thirdPartySigninupRequestEmail",
               "key": "email",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartySigninupRequestEmail",
@@ -10283,6 +10408,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "thirdPartySigninupResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartySigninupResponseStatus",
@@ -10304,6 +10430,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "thirdPartySigninupResponseCreatedNewUser",
               "key": "createdNewUser",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartySigninupResponseCreatedNewUser",
@@ -10327,6 +10454,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "conflict": {},
               "generatedName": "thirdPartySigninupResponseUser",
               "key": "user",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartySigninupResponseUser",
@@ -10685,6 +10813,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "thirdPartyGetUserResponseUserStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "thirdPartyGetUserResponseUserStatus",
@@ -10706,6 +10835,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "thirdPartyGetUserResponseUserUser",
                     "key": "user",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "thirdPartyGetUserResponseUserUser",
@@ -10738,6 +10868,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "thirdPartyGetUserResponseOneStatus",
                     "key": "status",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "thirdPartyGetUserResponseOneStatus",
@@ -11043,6 +11174,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "thirdPartyGetUsersByEmailResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartyGetUsersByEmailResponseStatus",
@@ -11064,6 +11196,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "thirdPartyGetUsersByEmailResponseUsers",
               "key": "users",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartyGetUsersByEmailResponseUsers",
@@ -11432,6 +11565,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "thirdPartyGetUsersResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartyGetUsersResponseStatus",
@@ -11453,6 +11587,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "thirdPartyGetUsersResponseUser",
               "key": "user",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartyGetUsersResponseUser",
@@ -11481,6 +11616,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "thirdPartyGetUsersResponseNextPaginationToken",
               "key": "nextPaginationToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartyGetUsersResponseNextPaginationToken",
@@ -11707,6 +11843,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "thirdPartyGetUserCountResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartyGetUserCountResponseStatus",
@@ -11728,6 +11865,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "thirdPartyGetUserCountResponseCount",
               "key": "count",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "thirdPartyGetUserCountResponseCount",
@@ -11993,6 +12131,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "emailVerificationVerifyTokenResponseOkToken",
                     "key": "token",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailVerificationVerifyTokenResponseOkToken",
@@ -12230,6 +12369,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "emailVerificationVerifyTokenRemoveResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailVerificationVerifyTokenRemoveResponseStatus",
@@ -12528,6 +12668,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "emailVerificationVerifyGetResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailVerificationVerifyGetResponseStatus",
@@ -12549,6 +12690,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "emailVerificationVerifyGetResponseIsVerified",
               "key": "isVerified",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailVerificationVerifyGetResponseIsVerified",
@@ -12785,6 +12927,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "emailVerificationVerifyRequestMethod",
               "key": "method",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailVerificationVerifyRequestMethod",
@@ -12809,6 +12952,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "emailVerificationVerifyRequestToken",
               "key": "token",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailVerificationVerifyRequestToken",
@@ -12867,6 +13011,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "emailVerificationVerifyResponseOkUserId",
                     "key": "userId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailVerificationVerifyResponseOkUserId",
@@ -12888,6 +13033,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "conflict": {},
                     "generatedName": "emailVerificationVerifyResponseOkEmail",
                     "key": "email",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "emailVerificationVerifyResponseOkEmail",
@@ -13125,6 +13271,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "emailVerificationVerifyRemoveResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "emailVerificationVerifyRemoveResponseStatus",
@@ -13461,6 +13608,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "userMetadataReadResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userMetadataReadResponseStatus",
@@ -13482,6 +13630,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "conflict": {},
               "generatedName": "userMetadataReadResponseMetadata",
               "key": "metadata",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userMetadataReadResponseMetadata",
@@ -13795,6 +13944,7 @@ e.g.:
               "conflict": {},
               "generatedName": "userMetadataUpdateRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userMetadataUpdateRequestUserId",
@@ -13816,6 +13966,7 @@ e.g.:
               "conflict": {},
               "generatedName": "userMetadataUpdateRequestMetadataUpdate",
               "key": "metadataUpdate",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userMetadataUpdateRequestMetadataUpdate",
@@ -13854,6 +14005,7 @@ e.g.:
               "conflict": {},
               "generatedName": "userMetadataUpdateResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userMetadataUpdateResponseStatus",
@@ -13875,6 +14027,7 @@ e.g.:
               "conflict": {},
               "generatedName": "userMetadataUpdateResponseMetadata",
               "key": "metadata",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userMetadataUpdateResponseMetadata",
@@ -14094,6 +14247,7 @@ e.g.:
               "conflict": {},
               "generatedName": "userMetadataDeleteRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userMetadataDeleteRequestUserId",
@@ -14132,6 +14286,7 @@ e.g.:
               "conflict": {},
               "generatedName": "userMetadataDeleteResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "userMetadataDeleteResponseStatus",
@@ -14376,6 +14531,7 @@ e.g.:
               "conflict": {},
               "generatedName": "addUserRoleRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "AddUserRoleRequestUserId",
@@ -14390,6 +14546,7 @@ e.g.:
               "conflict": {},
               "generatedName": "addUserRoleRequestRole",
               "key": "role",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "AddUserRoleRequestRole",
@@ -14431,6 +14588,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "addUserRoleResponseOkDidUserAlreadyHaveRole",
                     "key": "didUserAlreadyHaveRole",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "addUserRoleResponseOkDidUserAlreadyHaveRole",
@@ -14689,6 +14847,7 @@ e.g.:
               "conflict": {},
               "generatedName": "removeUserRoleRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "RemoveUserRoleRequestUserId",
@@ -14703,6 +14862,7 @@ e.g.:
               "conflict": {},
               "generatedName": "removeUserRoleRequestRole",
               "key": "role",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "RemoveUserRoleRequestRole",
@@ -14744,6 +14904,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "removeUserRoleResponseOkDidUserHaveRole",
                     "key": "didUserHaveRole",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "removeUserRoleResponseOkDidUserHaveRole",
@@ -15017,6 +15178,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUserRolesResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUserRolesResponseStatus",
@@ -15038,6 +15200,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUserRolesResponseRoles",
               "key": "roles",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUserRolesResponseRoles",
@@ -15317,6 +15480,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getRoleUsersResponseOkUsers",
                     "key": "users",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getRoleUsersResponseOkUsers",
@@ -15570,6 +15734,7 @@ e.g.:
               "conflict": {},
               "generatedName": "putRoleRequestRole",
               "key": "role",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "PutRoleRequestRole",
@@ -15584,6 +15749,7 @@ e.g.:
               "conflict": {},
               "generatedName": "putRoleRequestPermissions",
               "key": "permissions",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "putRoleRequestPermissions",
@@ -15633,6 +15799,7 @@ e.g.:
               "conflict": {},
               "generatedName": "putRoleResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "putRoleResponseStatus",
@@ -15654,6 +15821,7 @@ e.g.:
               "conflict": {},
               "generatedName": "putRoleResponseCreatedNewRole",
               "key": "createdNewRole",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "putRoleResponseCreatedNewRole",
@@ -15928,6 +16096,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getRolePermissionsResponseOkPermissions",
                     "key": "permissions",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getRolePermissionsResponseOkPermissions",
@@ -16181,6 +16350,7 @@ e.g.:
               "conflict": {},
               "generatedName": "removeRolePermissionsRequestRole",
               "key": "role",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "RemoveRolePermissionsRequestRole",
@@ -16195,6 +16365,7 @@ e.g.:
               "conflict": {},
               "generatedName": "removeRolePermissionsRequestPermissions",
               "key": "permissions",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "removeRolePermissionsRequestPermissions",
@@ -16503,6 +16674,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getPermissionRolesResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getPermissionRolesResponseStatus",
@@ -16524,6 +16696,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getPermissionRolesResponseRoles",
               "key": "roles",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getPermissionRolesResponseRoles",
@@ -16769,6 +16942,7 @@ e.g.:
               "conflict": {},
               "generatedName": "removeRoleRequestRole",
               "key": "role",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "RemoveRoleRequestRole",
@@ -16800,6 +16974,7 @@ e.g.:
               "conflict": {},
               "generatedName": "removeRoleResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "removeRoleResponseStatus",
@@ -16821,6 +16996,7 @@ e.g.:
               "conflict": {},
               "generatedName": "removeRoleResponseDidRoleExist",
               "key": "didRoleExist",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "removeRoleResponseDidRoleExist",
@@ -17053,6 +17229,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getRolesResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getRolesResponseStatus",
@@ -17074,6 +17251,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getRolesResponseRoles",
               "key": "roles",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getRolesResponseRoles",
@@ -17418,6 +17596,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkUserDataInDatabase",
                     "key": "userDataInDatabase",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getSessionInfoResponseOkUserDataInDatabase",
@@ -17439,6 +17618,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkUserDataInJwt",
                     "key": "userDataInJWT",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getSessionInfoResponseOkUserDataInJwt",
@@ -17460,6 +17640,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkUserId",
                     "key": "userId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getSessionInfoResponseOkUserId",
@@ -17481,6 +17662,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkExpiry",
                     "key": "expiry",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getSessionInfoResponseOkExpiry",
@@ -17502,6 +17684,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkTimeCreated",
                     "key": "timeCreated",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getSessionInfoResponseOkTimeCreated",
@@ -17523,6 +17706,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getSessionInfoResponseOkSessionHandle",
                     "key": "sessionHandle",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getSessionInfoResponseOkSessionHandle",
@@ -17853,6 +18037,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionRequestUserId",
@@ -17874,6 +18059,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionRequestUserDataInJwt",
               "key": "userDataInJWT",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionRequestUserDataInJwt",
@@ -17895,6 +18081,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionRequestUserDataInDatabase",
               "key": "userDataInDatabase",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionRequestUserDataInDatabase",
@@ -17916,6 +18103,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionRequestEnableAntiCsrf",
               "key": "enableAntiCsrf",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionRequestEnableAntiCsrf",
@@ -17937,6 +18125,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionRequestUseDynamicSigningKey",
               "key": "useDynamicSigningKey",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionRequestUseDynamicSigningKey",
@@ -17977,6 +18166,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionResponseStatus",
@@ -17998,6 +18188,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionResponseSession",
               "key": "session",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionResponseSession",
@@ -18019,6 +18210,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionResponseAccessToken",
               "key": "accessToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionResponseAccessToken",
@@ -18040,6 +18232,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionResponseRefreshToken",
               "key": "refreshToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionResponseRefreshToken",
@@ -18061,6 +18254,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createNewSessionResponseAntiCsrfToken",
               "key": "antiCsrfToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createNewSessionResponseAntiCsrfToken",
@@ -18300,6 +18494,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "deleteSessionRequestBodySessionHandlesSessionHandles",
                     "key": "sessionHandles",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "deleteSessionRequestBodySessionHandlesSessionHandles",
@@ -18332,6 +18527,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "deleteSessionRequestBodyUserIdUserId",
                     "key": "userId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "deleteSessionRequestBodyUserIdUserId",
@@ -18374,6 +18570,7 @@ e.g.:
               "conflict": {},
               "generatedName": "deleteSessionResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "deleteSessionResponseStatus",
@@ -18395,6 +18592,7 @@ e.g.:
               "conflict": {},
               "generatedName": "deleteSessionResponseSessionHandlesRevoked",
               "key": "sessionHandlesRevoked",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "deleteSessionResponseSessionHandlesRevoked",
@@ -18683,6 +18881,7 @@ e.g.:
               "conflict": {},
               "generatedName": "verifySessionRequestAccessToken",
               "key": "accessToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "verifySessionRequestAccessToken",
@@ -18704,6 +18903,7 @@ e.g.:
               "conflict": {},
               "generatedName": "verifySessionRequestEnableAntiCsrf",
               "key": "enableAntiCsrf",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "verifySessionRequestEnableAntiCsrf",
@@ -18725,6 +18925,7 @@ e.g.:
               "conflict": {},
               "generatedName": "verifySessionRequestDoAntiCsrfCheck",
               "key": "doAntiCsrfCheck",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "verifySessionRequestDoAntiCsrfCheck",
@@ -18748,6 +18949,7 @@ e.g.:
               "conflict": {},
               "generatedName": "verifySessionRequestCheckDatabase",
               "key": "checkDatabase",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "verifySessionRequestCheckDatabase",
@@ -18771,6 +18973,7 @@ e.g.:
               "conflict": {},
               "generatedName": "verifySessionRequestAntiCsrfToken",
               "key": "antiCsrfToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "verifySessionRequestAntiCsrfToken",
@@ -18819,6 +19022,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "verifySessionResponseOkSession",
                     "key": "session",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "verifySessionResponseOkSession",
@@ -18840,6 +19044,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "verifySessionResponseOkAccessToken",
                     "key": "accessToken",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "verifySessionResponseOkAccessToken",
@@ -18872,6 +19077,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "verifySessionResponseTryRefreshTokenMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "verifySessionResponseTryRefreshTokenMessage",
@@ -19220,6 +19426,7 @@ e.g.:
               "conflict": {},
               "generatedName": "refreshSessionRequestRefreshToken",
               "key": "refreshToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "RefreshSessionRequestRefreshToken",
@@ -19234,6 +19441,7 @@ e.g.:
               "conflict": {},
               "generatedName": "refreshSessionRequestEnableAntiCsrf",
               "key": "enableAntiCsrf",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "RefreshSessionRequestEnableAntiCsrf",
@@ -19248,6 +19456,7 @@ e.g.:
               "conflict": {},
               "generatedName": "refreshSessionRequestAntiCsrfToken",
               "key": "antiCsrfToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "refreshSessionRequestAntiCsrfToken",
@@ -19296,6 +19505,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "refreshSessionResponseOkSession",
                     "key": "session",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "refreshSessionResponseOkSession",
@@ -19317,6 +19527,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "refreshSessionResponseOkAccessToken",
                     "key": "accessToken",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "refreshSessionResponseOkAccessToken",
@@ -19338,6 +19549,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "refreshSessionResponseOkRefreshToken",
                     "key": "refreshToken",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "refreshSessionResponseOkRefreshToken",
@@ -19359,6 +19571,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "refreshSessionResponseOkAntiCsrfToken",
                     "key": "antiCsrfToken",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "refreshSessionResponseOkAntiCsrfToken",
@@ -19391,6 +19604,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "refreshSessionResponseTokenTheftDetectedSession",
                     "key": "session",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "refreshSessionResponseTokenTheftDetectedSession",
@@ -19410,6 +19624,7 @@ e.g.:
                             "conflict": {},
                             "generatedName": "refreshSessionResponseTokenTheftDetectedSessionHandle",
                             "key": "handle",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "refreshSessionResponseTokenTheftDetectedSessionHandle",
@@ -19431,6 +19646,7 @@ e.g.:
                             "conflict": {},
                             "generatedName": "refreshSessionResponseTokenTheftDetectedSessionUserId",
                             "key": "userId",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "refreshSessionResponseTokenTheftDetectedSessionUserId",
@@ -19714,6 +19930,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUserSessionHandlesResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUserSessionHandlesResponseStatus",
@@ -19735,6 +19952,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUserSessionHandlesResponseSessionHandles",
               "key": "sessionHandles",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUserSessionHandlesResponseSessionHandles",
@@ -20023,6 +20241,7 @@ e.g.:
               "conflict": {},
               "generatedName": "regenerateSessionRequestAccessToken",
               "key": "accessToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "regenerateSessionRequestAccessToken",
@@ -20044,6 +20263,7 @@ e.g.:
               "conflict": {},
               "generatedName": "regenerateSessionRequestUserDataInJwt",
               "key": "userDataInJWT",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "regenerateSessionRequestUserDataInJwt",
@@ -20092,6 +20312,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "regenerateSessionResponseOkSession",
                     "key": "session",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "regenerateSessionResponseOkSession",
@@ -20113,6 +20334,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "regenerateSessionResponseOkAccessToken",
                     "key": "accessToken",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "regenerateSessionResponseOkAccessToken",
@@ -20409,6 +20631,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getSessionDataResponseOkUserDataInDatabase",
                     "key": "userDataInDatabase",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getSessionDataResponseOkUserDataInDatabase",
@@ -20614,6 +20837,7 @@ e.g.:
               "conflict": {},
               "generatedName": "putSessionDataRequestSessionHandle",
               "key": "sessionHandle",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "putSessionDataRequestSessionHandle",
@@ -20635,6 +20859,7 @@ e.g.:
               "conflict": {},
               "generatedName": "putSessionDataRequestUserDataInDatabase",
               "key": "userDataInDatabase",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "putSessionDataRequestUserDataInDatabase",
@@ -20886,6 +21111,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createSignedJwtRequestPayload",
               "key": "payload",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createSignedJwtRequestPayload",
@@ -20907,6 +21133,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createSignedJwtRequestAlgorithm",
               "key": "algorithm",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createSignedJwtRequestAlgorithm",
@@ -20928,6 +21155,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createSignedJwtRequestJwksDomain",
               "key": "jwksDomain",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createSignedJwtRequestJwksDomain",
@@ -20949,6 +21177,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createSignedJwtRequestValidity",
               "key": "validity",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createSignedJwtRequestValidity",
@@ -20970,6 +21199,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createSignedJwtRequestUseStaticSigningKey",
               "key": "useStaticSigningKey",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createSignedJwtRequestUseStaticSigningKey",
@@ -21020,6 +21250,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "createSignedJwtResponseOkJwt",
                     "key": "jwt",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "createSignedJwtResponseOkJwt",
@@ -21209,6 +21440,7 @@ e.g.:
               "conflict": {},
               "generatedName": "retrieveJwksResponseKeys",
               "key": "keys",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "retrieveJwksResponseKeys",
@@ -21500,6 +21732,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getJwtDataResponseOkUserDataInJwt",
                     "key": "userDataInJWT",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getJwtDataResponseOkUserDataInJwt",
@@ -21705,6 +21938,7 @@ e.g.:
               "conflict": {},
               "generatedName": "putJwtDataRequestSessionHandle",
               "key": "sessionHandle",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "putJwtDataRequestSessionHandle",
@@ -21726,6 +21960,7 @@ e.g.:
               "conflict": {},
               "generatedName": "putJwtDataRequestUserDataInJwt",
               "key": "userDataInJWT",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "putJwtDataRequestUserDataInJwt",
@@ -21843,6 +22078,7 @@ e.g.:
                 "conflict": {},
                 "generatedName": "paymentRequiredErrorBodyStatus",
                 "key": "status",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "paymentRequiredErrorBodyStatus",
@@ -21867,6 +22103,7 @@ e.g.:
                 "conflict": {},
                 "generatedName": "paymentRequiredErrorBodyMessage",
                 "key": "message",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "paymentRequiredErrorBodyMessage",
@@ -22076,6 +22313,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createDashboardUserRequestEmail",
               "key": "email",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createDashboardUserRequestEmail",
@@ -22101,6 +22339,7 @@ e.g.:
               "conflict": {},
               "generatedName": "createDashboardUserRequestPassword",
               "key": "password",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "createDashboardUserRequestPassword",
@@ -22173,6 +22412,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "createDashboardUserResponseOkUser",
                     "key": "user",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "createDashboardUserResponseOkUser",
@@ -22192,6 +22432,7 @@ e.g.:
                             "conflict": {},
                             "generatedName": "createDashboardUserResponseOkUserUserId",
                             "key": "userId",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "createDashboardUserResponseOkUserUserId",
@@ -22217,6 +22458,7 @@ e.g.:
                             "conflict": {},
                             "generatedName": "createDashboardUserResponseOkUserEmail",
                             "key": "email",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "createDashboardUserResponseOkUserEmail",
@@ -22242,6 +22484,7 @@ e.g.:
                             "conflict": {},
                             "generatedName": "createDashboardUserResponseOkUserTimeCreated",
                             "key": "timeCreated",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "createDashboardUserResponseOkUserTimeCreated",
@@ -22281,6 +22524,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "createDashboardUserResponsePasswordWeakErrorMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "createDashboardUserResponsePasswordWeakErrorMessage",
@@ -22545,6 +22789,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyEmailEmail",
                     "key": "email",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateDashboardUserRequestBodyEmailEmail",
@@ -22570,6 +22815,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyEmailNewPassword",
                     "key": "newPassword",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateDashboardUserRequestBodyEmailNewPassword",
@@ -22595,6 +22841,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyEmailNewEmail",
                     "key": "newEmail",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateDashboardUserRequestBodyEmailNewEmail",
@@ -22631,6 +22878,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyUserIdUserId",
                     "key": "userId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateDashboardUserRequestBodyUserIdUserId",
@@ -22656,6 +22904,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyUserIdNewPassword",
                     "key": "newPassword",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateDashboardUserRequestBodyUserIdNewPassword",
@@ -22681,6 +22930,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "updateDashboardUserRequestBodyUserIdNewEmail",
                     "key": "newEmail",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateDashboardUserRequestBodyUserIdNewEmail",
@@ -22757,6 +23007,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "updateDashboardUserResponseOkUser",
                     "key": "user",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateDashboardUserResponseOkUser",
@@ -22776,6 +23027,7 @@ e.g.:
                             "conflict": {},
                             "generatedName": "updateDashboardUserResponseOkUserUserId",
                             "key": "userId",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "updateDashboardUserResponseOkUserUserId",
@@ -22801,6 +23053,7 @@ e.g.:
                             "conflict": {},
                             "generatedName": "updateDashboardUserResponseOkUserEmail",
                             "key": "email",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "updateDashboardUserResponseOkUserEmail",
@@ -22826,6 +23079,7 @@ e.g.:
                             "conflict": {},
                             "generatedName": "updateDashboardUserResponseOkUserTimeCreated",
                             "key": "timeCreated",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "updateDashboardUserResponseOkUserTimeCreated",
@@ -22865,6 +23119,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "updateDashboardUserResponsePasswordWeakErrorMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateDashboardUserResponsePasswordWeakErrorMessage",
@@ -23178,6 +23433,7 @@ e.g.:
               "conflict": {},
               "generatedName": "deleteDashboardUserResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "deleteDashboardUserResponseStatus",
@@ -23199,6 +23455,7 @@ e.g.:
               "conflict": {},
               "generatedName": "deleteDashboardUserResponseDidUserExist",
               "key": "didUserExist",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "deleteDashboardUserResponseDidUserExist",
@@ -23457,6 +23714,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getAllDashboardUsersResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getAllDashboardUsersResponseStatus",
@@ -23481,6 +23739,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getAllDashboardUsersResponseUsers",
               "key": "users",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getAllDashboardUsersResponseUsers",
@@ -23506,6 +23765,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getAllDashboardUsersResponseUsersItemEmail",
                         "key": "email",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getAllDashboardUsersResponseUsersItemEmail",
@@ -23531,6 +23791,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getAllDashboardUsersResponseUsersItemUserId",
                         "key": "userId",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getAllDashboardUsersResponseUsersItemUserId",
@@ -23556,6 +23817,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getAllDashboardUsersResponseUsersItemTimeCreated",
                         "key": "timeCreated",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getAllDashboardUsersResponseUsersItemTimeCreated",
@@ -23579,6 +23841,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getAllDashboardUsersResponseUsersItemIsSuspended",
                         "key": "isSuspended",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getAllDashboardUsersResponseUsersItemIsSuspended",
@@ -23809,6 +24072,7 @@ e.g.:
               "conflict": {},
               "generatedName": "verifyDashboardUserSessionRequestSessionId",
               "key": "sessionId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "verifyDashboardUserSessionRequestSessionId",
@@ -23881,6 +24145,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "verifyDashboardUserSessionResponseUserSuspendedErrorMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "verifyDashboardUserSessionResponseUserSuspendedErrorMessage",
@@ -24143,6 +24408,7 @@ e.g.:
               "conflict": {},
               "generatedName": "revokeDashboardUsersSessionResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "revokeDashboardUsersSessionResponseStatus",
@@ -24372,6 +24638,7 @@ e.g.:
               "conflict": {},
               "generatedName": "signInDashboardUserRequestEmail",
               "key": "email",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "signInDashboardUserRequestEmail",
@@ -24397,6 +24664,7 @@ e.g.:
               "conflict": {},
               "generatedName": "signInDashboardUserRequestPassword",
               "key": "password",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "signInDashboardUserRequestPassword",
@@ -24459,6 +24727,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "signInDashboardUserResponseOkSessionId",
                     "key": "sessionId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "signInDashboardUserResponseOkSessionId",
@@ -24495,6 +24764,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "signInDashboardUserResponseUserSuspendedErrorMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "signInDashboardUserResponseUserSuspendedErrorMessage",
@@ -24788,6 +25058,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getAllSessionsForDashboardUserResponseSessions",
               "key": "sessions",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getAllSessionsForDashboardUserResponseSessions",
@@ -24813,6 +25084,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemUserId",
                         "key": "userId",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemUserId",
@@ -24834,6 +25106,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemSessionId",
                         "key": "sessionId",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemSessionId",
@@ -24859,6 +25132,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemTimeCreated",
                         "key": "timeCreated",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemTimeCreated",
@@ -24882,6 +25156,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemExpiry",
                         "key": "expiry",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemExpiry",
@@ -25063,6 +25338,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getApiVersionResponseVersions",
               "key": "versions",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getApiVersionResponseVersions",
@@ -25322,6 +25598,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getConfigResponseOkPath",
                     "key": "path",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getConfigResponseOkPath",
@@ -25893,6 +26170,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getTelemetryResponseTelemetryIdExists",
                     "key": "exists",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getTelemetryResponseTelemetryIdExists",
@@ -25916,6 +26194,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getTelemetryResponseTelemetryIdTelemetryId",
                     "key": "telemetryId",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getTelemetryResponseTelemetryIdTelemetryId",
@@ -25952,6 +26231,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getTelemetryResponseOneExists",
                     "key": "exists",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getTelemetryResponseOneExists",
@@ -26194,6 +26474,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUsersCountResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUsersCountResponseStatus",
@@ -26215,6 +26496,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUsersCountResponseCount",
               "key": "count",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUsersCountResponseCount",
@@ -26444,6 +26726,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getActiveUsersCountResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getActiveUsersCountResponseStatus",
@@ -26465,6 +26748,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getActiveUsersCountResponseCount",
               "key": "count",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getActiveUsersCountResponseCount",
@@ -26968,6 +27252,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUsersResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUsersResponseStatus",
@@ -26989,6 +27274,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUsersResponseUsers",
               "key": "users",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUsersResponseUsers",
@@ -27014,6 +27300,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getUsersResponseUsersItemRecipeId",
                         "key": "recipeId",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "GetUsersResponseUsersItemRecipeId",
@@ -27065,6 +27352,7 @@ e.g.:
                         "conflict": {},
                         "generatedName": "getUsersResponseUsersItemUser",
                         "key": "user",
+                        "nameOverride": null,
                         "schema": {
                           "type": "oneOf",
                           "value": {
@@ -27113,6 +27401,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getUsersResponseNextPaginationToken",
               "key": "nextPaginationToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getUsersResponseNextPaginationToken",
@@ -27293,6 +27582,7 @@ e.g.:
               "conflict": {},
               "generatedName": "deleteUserRequestUserId",
               "key": "userId",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "deleteUserRequestUserId",
@@ -27331,6 +27621,7 @@ e.g.:
               "conflict": {},
               "generatedName": "deleteUserResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "deleteUserResponseStatus",
@@ -27536,6 +27827,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getSearchTagsResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getSearchTagsResponseStatus",
@@ -27557,6 +27849,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getSearchTagsResponseTags",
               "key": "tags",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getSearchTagsResponseTags",
@@ -27802,6 +28095,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getFeatureFlagResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getFeatureFlagResponseStatus",
@@ -27823,6 +28117,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getFeatureFlagResponseFeatures",
               "key": "features",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getFeatureFlagResponseFeatures",
@@ -27855,6 +28150,7 @@ e.g.:
               "conflict": {},
               "generatedName": "getFeatureFlagResponseUsageStats",
               "key": "usageStats",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "getFeatureFlagResponseUsageStats",
@@ -28079,6 +28375,7 @@ e.g.:
                     "conflict": {},
                     "generatedName": "getLicenseResponseOkLicenseKey",
                     "key": "licenseKey",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getLicenseResponseOkLicenseKey",
@@ -28270,6 +28567,7 @@ e.g.:
               "conflict": {},
               "generatedName": "setLicenseRequestLicenseKey",
               "key": "licenseKey",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "setLicenseRequestLicenseKey",
@@ -28503,6 +28801,7 @@ e.g.:
               "conflict": {},
               "generatedName": "deleteLicenseResponseStatus",
               "key": "status",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "deleteLicenseResponseStatus",
@@ -28621,6 +28920,7 @@ e.g.:
           "conflict": {},
           "generatedName": "cookieInfoToken",
           "key": "token",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cookieInfoToken",
@@ -28642,6 +28942,7 @@ e.g.:
           "conflict": {},
           "generatedName": "cookieInfoExpiry",
           "key": "expiry",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cookieInfoExpiry",
@@ -28663,6 +28964,7 @@ e.g.:
           "conflict": {},
           "generatedName": "cookieInfoCreatedTime",
           "key": "createdTime",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "cookieInfoCreatedTime",
@@ -28753,6 +29055,7 @@ e.g.:
           "conflict": {},
           "generatedName": "emailVerificationVerifyTokenRequestUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "emailVerificationVerifyTokenRequestUserId",
@@ -28774,6 +29077,7 @@ e.g.:
           "conflict": {},
           "generatedName": "emailVerificationVerifyTokenRequestEmail",
           "key": "email",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "emailVerificationVerifyTokenRequestEmail",
@@ -28882,6 +29186,7 @@ e.g.:
           "conflict": {},
           "generatedName": "jwkAlg",
           "key": "alg",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "jwkAlg",
@@ -28903,6 +29208,7 @@ e.g.:
           "conflict": {},
           "generatedName": "jwkKty",
           "key": "kty",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "jwkKty",
@@ -28928,6 +29234,7 @@ e.g.:
           "conflict": {},
           "generatedName": "jwkUse",
           "key": "use",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "jwkUse",
@@ -28953,6 +29260,7 @@ e.g.:
           "conflict": {},
           "generatedName": "jwkKid",
           "key": "kid",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "jwkKid",
@@ -28978,6 +29286,7 @@ e.g.:
           "conflict": {},
           "generatedName": "jwkX5C",
           "key": "x5c",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "jwkX5C",
@@ -29113,6 +29422,7 @@ e.g.:
           "conflict": {},
           "generatedName": "passwordlessUserId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "passwordlessUserId",
@@ -29134,6 +29444,7 @@ e.g.:
           "conflict": {},
           "generatedName": "passwordlessUserEmail",
           "key": "email",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "passwordlessUserEmail",
@@ -29155,6 +29466,7 @@ e.g.:
           "conflict": {},
           "generatedName": "passwordlessUserPhoneNumber",
           "key": "phoneNumber",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "passwordlessUserPhoneNumber",
@@ -29176,6 +29488,7 @@ e.g.:
           "conflict": {},
           "generatedName": "passwordlessUserTimeJoined",
           "key": "timeJoined",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "passwordlessUserTimeJoined",
@@ -29255,6 +29568,7 @@ e.g.:
           "conflict": {},
           "generatedName": "sessionHandle",
           "key": "handle",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sessionHandle",
@@ -29276,6 +29590,7 @@ e.g.:
           "conflict": {},
           "generatedName": "sessionUserId",
           "key": "userId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sessionUserId",
@@ -29297,6 +29612,7 @@ e.g.:
           "conflict": {},
           "generatedName": "sessionUserDataInJwt",
           "key": "userDataInJWT",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "sessionUserDataInJwt",
@@ -29365,6 +29681,7 @@ e.g.:
           "conflict": {},
           "generatedName": "thirdPartyEmailId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "thirdPartyEmailId",
@@ -29409,6 +29726,7 @@ e.g.:
           "conflict": {},
           "generatedName": "thirdPartyUserId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "thirdPartyUserId",
@@ -29430,6 +29748,7 @@ e.g.:
           "conflict": {},
           "generatedName": "thirdPartyUserTimeJoined",
           "key": "timeJoined",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "thirdPartyUserTimeJoined",
@@ -29451,6 +29770,7 @@ e.g.:
           "conflict": {},
           "generatedName": "thirdPartyUserEmail",
           "key": "email",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "thirdPartyUserEmail",
@@ -29472,6 +29792,7 @@ e.g.:
           "conflict": {},
           "generatedName": "thirdPartyUserThirdParty",
           "key": "thirdParty",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "thirdPartyUserThirdParty",
@@ -29491,6 +29812,7 @@ e.g.:
                   "conflict": {},
                   "generatedName": "thirdPartyUserThirdPartyId",
                   "key": "id",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "thirdPartyUserThirdPartyId",
@@ -29512,6 +29834,7 @@ e.g.:
                   "conflict": {},
                   "generatedName": "thirdPartyUserThirdPartyUserId",
                   "key": "userId",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "thirdPartyUserThirdPartyUserId",
@@ -29615,6 +29938,7 @@ e.g.:
           "conflict": {},
           "generatedName": "unauthorisedMessageResponseMessage",
           "key": "message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "unauthorisedMessageResponseMessage",
@@ -29678,6 +30002,7 @@ e.g.:
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userId",
@@ -29699,6 +30024,7 @@ e.g.:
           "conflict": {},
           "generatedName": "userEmail",
           "key": "email",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userEmail",
@@ -29720,6 +30046,7 @@ e.g.:
           "conflict": {},
           "generatedName": "userTimeJoined",
           "key": "timeJoined",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "userTimeJoined",

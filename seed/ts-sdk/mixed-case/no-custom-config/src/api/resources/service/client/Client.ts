@@ -22,12 +22,22 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} resourceId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMixedCase.service.getResource("rsc-xyz")
+     */
     public async getResource(
         resourceId: string,
         requestOptions?: Service.RequestOptions
     ): Promise<SeedMixedCase.Resource> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/resource/${resourceId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/resource/${encodeURIComponent(resourceId)}`
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -71,6 +81,16 @@ export class Service {
         }
     }
 
+    /**
+     * @param {SeedMixedCase.ListResourcesRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMixedCase.service.listResources({
+     *         pageLimit: 10,
+     *         beforeDate: "2023-01-01"
+     *     })
+     */
     public async listResources(
         request: SeedMixedCase.ListResourcesRequest,
         requestOptions?: Service.RequestOptions

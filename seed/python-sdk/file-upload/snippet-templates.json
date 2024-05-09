@@ -10,11 +10,11 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": "from seed.client import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.post(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -223,6 +223,223 @@
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_string=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "maybeString",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "integer=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "integer",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "file=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "file",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "containerTemplateString": "file_list=[\n\t\t$FERN_INPUT\n\t]",
+                                "delimiter": ",\n\t\t",
+                                "innerTemplate": {
+                                    "imports": [],
+                                    "isOptional": true,
+                                    "templateString": "$FERN_INPUT",
+                                    "templateInputs": [
+                                        {
+                                            "location": "RELATIVE",
+                                            "path": null,
+                                            "type": "payload"
+                                        }
+                                    ],
+                                    "type": "generic"
+                                },
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "fileList"
+                                },
+                                "type": "iterable"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_file=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "maybeFile",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "containerTemplateString": "maybe_file_list=[\n\t\t$FERN_INPUT\n\t]",
+                                "delimiter": ",\n\t\t",
+                                "innerTemplate": {
+                                    "imports": [],
+                                    "isOptional": true,
+                                    "templateString": "$FERN_INPUT",
+                                    "templateInputs": [
+                                        {
+                                            "location": "RELATIVE",
+                                            "path": null,
+                                            "type": "payload"
+                                        }
+                                    ],
+                                    "type": "generic"
+                                },
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "maybeFileList"
+                                },
+                                "type": "iterable"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_integer=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "maybeInteger",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "containerTemplateString": "optional_list_of_strings=[\n\t\t$FERN_INPUT\n\t]",
+                                "delimiter": ",\n\t\t",
+                                "innerTemplate": {
+                                    "imports": [],
+                                    "isOptional": true,
+                                    "templateString": "$FERN_INPUT",
+                                    "templateInputs": [
+                                        {
+                                            "location": "RELATIVE",
+                                            "path": null,
+                                            "type": "payload"
+                                        }
+                                    ],
+                                    "type": "generic"
+                                },
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "optionalListOfStrings"
+                                },
+                                "type": "iterable"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "containerTemplateString": "list_of_objects=[\n\t\t$FERN_INPUT\n\t]",
+                                "delimiter": ",\n\t\t",
+                                "innerTemplate": {
+                                    "imports": [
+                                        "from seed import MyObject"
+                                    ],
+                                    "isOptional": true,
+                                    "templateString": "MyObject(\n\t\t\t$FERN_INPUT\n\t\t)",
+                                    "templateInputs": [
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "foo=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "RELATIVE",
+                                                        "path": "foo",
+                                                        "type": "payload"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        }
+                                    ],
+                                    "inputDelimiter": ",\n\t\t\t",
+                                    "type": "generic"
+                                },
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "listOfObjects"
+                                },
+                                "type": "iterable"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     },
     {
@@ -236,11 +453,11 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": "from seed.client import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.just_file(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.just_file(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -263,6 +480,37 @@
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.just_file(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "file=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "file",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     },
     {
@@ -276,11 +524,11 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": "from seed.client import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.just_file_with_query_params(\n\t$FERN_INPUT\n)",
+                "templateString": "client.service.just_file_with_query_params(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -383,6 +631,117 @@
                 "type": "generic"
             },
             "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedFileUpload\n\nclient = AsyncSeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.just_file_with_query_params(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_string=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "maybeString",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "integer=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "integer",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_integer=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "maybeInteger",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "list_of_strings=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "listOfStrings",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "optional_list_of_strings=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": "optionalListOfStrings",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "file=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "file",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
         }
     }
 ]

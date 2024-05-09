@@ -49,7 +49,6 @@ export class ReqWithHeadersService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getWithCustomHeader' unexpectedly threw ${error.constructor.name}.` +

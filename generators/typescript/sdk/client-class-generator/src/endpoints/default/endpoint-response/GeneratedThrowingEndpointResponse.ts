@@ -2,7 +2,7 @@ import {
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
-    HttpResponse,
+    HttpResponseBody,
     ResponseError
 } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
@@ -24,10 +24,10 @@ export declare namespace GeneratedThrowingEndpointResponse {
         packageId: PackageId;
         endpoint: HttpEndpoint;
         response:
-            | HttpResponse.Json
-            | HttpResponse.FileDownload
-            | HttpResponse.Streaming
-            | HttpResponse.Text
+            | HttpResponseBody.Json
+            | HttpResponseBody.FileDownload
+            | HttpResponseBody.Streaming
+            | HttpResponseBody.Text
             | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
@@ -41,10 +41,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
     private response:
-        | HttpResponse.Json
-        | HttpResponse.FileDownload
-        | HttpResponse.Streaming
-        | HttpResponse.Text
+        | HttpResponseBody.Json
+        | HttpResponseBody.FileDownload
+        | HttpResponseBody.Streaming
+        | HttpResponseBody.Text
         | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
@@ -471,7 +471,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
-        return this.endpoint.response != null
+        return this.endpoint.response?.body != null
             ? this.getReturnStatementsForOkResponseBody(context)
             : [ts.factory.createReturnStatement(undefined)];
     }
