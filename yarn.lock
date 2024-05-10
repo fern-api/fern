@@ -5456,6 +5456,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/fetcher@workspace:generators/typescript/utils/core-utilities/fetcher"
   dependencies:
+    "@fern-typescript/runtime": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/node-fetch": 2.6.9
@@ -5463,6 +5464,7 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     form-data: 4.0.0
+    formdata-node: ^6.0.3
     jest: ^29.7.0
     node-fetch: 2.7.0
     organize-imports-cli: ^0.10.0
@@ -5476,11 +5478,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/form-data-utils@workspace:generators/typescript/utils/core-utilities/form-data-utils"
   dependencies:
+    "@fern-typescript/runtime": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
     form-data: 4.0.0
+    form-data-encoder: ^4.0.2
+    formdata-node: ^6.0.3
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -5552,6 +5557,21 @@ __metadata:
   dependencies:
     "@fern-fern/ir-sdk": ^38.0.0
     "@fern-typescript/commons": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-typescript/runtime@workspace:*, @fern-typescript/runtime@workspace:generators/typescript/utils/core-utilities/runtime":
+  version: 0.0.0-use.local
+  resolution: "@fern-typescript/runtime@workspace:generators/typescript/utils/core-utilities/runtime"
+  dependencies:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -12790,6 +12810,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"form-data-encoder@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "form-data-encoder@npm:4.0.2"
+  checksum: 12769f21af2d750c20111f8a626560eaf613c2c62769d5924d9e5a44ba4ef52406f973844129151efd35533eb79ecf8e0b95b0839560e335204d2212efb9a9ef
+  languageName: node
+  linkType: hard
+
 "form-data@npm:4.0.0, form-data@npm:^4.0.0":
   version: 4.0.0
   resolution: "form-data@npm:4.0.0"
@@ -12809,6 +12836,13 @@ env-cmd@toddbluhm/env-cmd:
     combined-stream: ^1.0.6
     mime-types: ^2.1.12
   checksum: 10c1780fa13dbe1ff3100114c2ce1f9307f8be10b14bf16e103815356ff567b6be39d70fc4a40f8990b9660012dc24b0f5e1dde1b6426166eb23a445ba068ca3
+  languageName: node
+  linkType: hard
+
+"formdata-node@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "formdata-node@npm:6.0.3"
+  checksum: 0c404dad51aac1e570bef1c20b702da9f4facac9db889398d333ca92a7ae4ab8c005ad249e2df184870fe388aedfe28fc81e8a0aabda7295a19316c1fbaf7407
   languageName: node
   linkType: hard
 
