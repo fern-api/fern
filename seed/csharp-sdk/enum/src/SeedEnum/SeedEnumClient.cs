@@ -6,10 +6,10 @@ public partial class SeedEnumClient
 {
     private RawClient _client;
 
-    public SeedEnumClient(ClientOptions clientOptions)
+    public SeedEnumClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         InlinedRequest = new InlinedRequestClient(_client);

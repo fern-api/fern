@@ -68,4 +68,16 @@ export function dictionary(args: Dictionary.Args): Dictionary {
 }
 
 export const Types = Type;
-export { Annotation, Class, ClassReference, CodeBlock, Dictionary, Enum, Method, Parameter, Type } from "./ast";
+export {
+    Annotation,
+    Class,
+    ClassReference,
+    ClassInstantiation,
+    CodeBlock,
+    Dictionary,
+    Enum,
+    Method,
+    MethodInvocation,
+    Parameter,
+    Type
+} from "./ast";

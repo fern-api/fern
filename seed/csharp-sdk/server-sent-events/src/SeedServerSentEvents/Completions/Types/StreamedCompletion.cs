@@ -8,5 +8,5 @@ public class StreamedCompletion
     public string Delta { get; init; }
 
     [JsonPropertyName("tokens")]
-    public List<int?> Tokens { get; init; }
+    public int? Tokens { get; init; }
 }

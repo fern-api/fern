@@ -15,5 +15,5 @@ public class LightweightProblemInfoV2
     public int ProblemVersion { get; init; }
 
     [JsonPropertyName("variableTypes")]
-    public List<HashSet<VariableType>> VariableTypes { get; init; }
+    public HashSet<VariableType> VariableTypes { get; init; }
 }
