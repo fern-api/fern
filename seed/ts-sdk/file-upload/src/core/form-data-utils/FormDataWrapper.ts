@@ -61,7 +61,7 @@ export class FormDataWrapper {
         this.fd.append(name, value);
     }
 
-    public async getRequest(): Promise<FormDataRequestBody> {
+    public getRequest(): FormDataRequestBody {
         return new FormDataRequestBody(this.fd);
     }
 }
