@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { EndpointWithExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointExample, EndpointWithExample } from "@fern-api/openapi-ir-sdk";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getSchemaIdFromReference } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
@@ -75,6 +76,9 @@ export function convertStreamingOperation({
                 streamFormat: streamingExtension.format,
                 suffix: STREAM_SUFFIX
             });
+            streamingOperation.examples = streamingOperation.examples.filter(
+                (example) => isStreamingExample(example) !== false
+            );
 
             const nonStreamingRequestBody = getRequestBody({
                 context,
@@ -98,6 +102,9 @@ export function convertStreamingOperation({
                 },
                 context
             });
+            nonStreamingOperation.examples = streamingOperation.examples.filter(
+                (example) => isStreamingExample(example) !== true
+            );
 
             return {
                 streaming: streamingOperation,
@@ -199,4 +206,25 @@ function getResponses({
             }
         } as OpenAPIV3.ResponseObject
     };
+}
+
+// this only checks if the response is a stream.
+// TODO: check if the request passes the stream-condition
+export function isStreamingExample(example: EndpointExample): boolean | undefined {
+    return example._visit({
+        unknown: (unknownExample) => {
+            const maybeFernExample = RawSchemas.ExampleEndpointCallSchema.safeParse(unknownExample);
+            if (!maybeFernExample.success) {
+                return undefined;
+            }
+
+            if (maybeFernExample.data.response == null) {
+                return undefined;
+            }
+
+            return (maybeFernExample.data.response as { stream?: unknown }).stream != null;
+        },
+        full: () => undefined,
+        _other: () => undefined
+    });
 }
