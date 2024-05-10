@@ -45,7 +45,7 @@ public class ProblemClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/update//problemId",
+                Path = $"/update/{problemId}",
                 Body = request
             }
         );
@@ -63,14 +63,16 @@ public class ProblemClient
     public async void DeleteProblemAsync(string problemId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = "/delete//problemId" }
+            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/delete/{problemId}" }
         );
     }
 
     /// <summary>
     /// Returns default starter files for problem
     /// </summary>
-    public async GetDefaultStarterFilesResponse GetDefaultStarterFilesAsync()
+    public async GetDefaultStarterFilesResponse GetDefaultStarterFilesAsync(
+        GetDefaultStarterFilesRequest request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/default-starter-files" }

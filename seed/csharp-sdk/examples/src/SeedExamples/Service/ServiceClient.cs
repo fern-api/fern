@@ -15,7 +15,7 @@ public class ServiceClient
     public async Movie GetMovieAsync(string movieId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/movie//movieId" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/movie/{movieId}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
@@ -43,7 +43,7 @@ public class ServiceClient
         throw new Exception();
     }
 
-    public async Metadata GetMetadataAsync()
+    public async Metadata GetMetadataAsync(GetMetadataRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/metadata" }

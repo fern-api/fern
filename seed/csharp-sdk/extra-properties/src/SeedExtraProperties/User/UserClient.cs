@@ -12,7 +12,7 @@ public class UserClient
         _client = client;
     }
 
-    public async User CreateUserAsync()
+    public async User CreateUserAsync(CreateUserRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/user" }

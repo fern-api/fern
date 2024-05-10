@@ -15,14 +15,14 @@ public class PlaylistClient
     /// <summary>
     /// Create a new playlist
     /// </summary>
-    public async Playlist CreatePlaylistAsync(PlaylistCreateRequest request)
+    public async Playlist CreatePlaylistAsync(CreatePlaylistRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
                 Path = "/create",
-                Body = request
+                Body = createPlaylistRequest.body
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -36,7 +36,7 @@ public class PlaylistClient
     /// <summary>
     /// Returns the user's playlists
     /// </summary>
-    public async List<List<Playlist>> GetPlaylistsAsync()
+    public async List<List<Playlist>> GetPlaylistsAsync(GetPlaylistsRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/all" }
@@ -55,7 +55,7 @@ public class PlaylistClient
     public async Playlist GetPlaylistAsync(string playlistId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "//playlistId" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{playlistId}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
@@ -77,7 +77,7 @@ public class PlaylistClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = "//playlistId",
+                Path = $"/{playlistId}",
                 Body = request
             }
         );
@@ -95,7 +95,7 @@ public class PlaylistClient
     public async void DeletePlaylistAsync(string playlistId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = "//playlist_id" }
+            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/{playlistId}" }
         );
     }
 }

@@ -1,5 +1,6 @@
 using System.Text.Json;
 using SeedExhaustive;
+using SeedExhaustive.Endpoints;
 
 namespace SeedExhaustive.Endpoints;
 
@@ -18,7 +19,7 @@ public class ParamsClient
     public async string GetWithPathAsync(string param)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/path//param" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/path/{param}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
@@ -31,7 +32,7 @@ public class ParamsClient
     /// <summary>
     /// GET with query param
     /// </summary>
-    public async void GetWithQueryAsync()
+    public async void GetWithQueryAsync(GetWithQuery request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
@@ -41,7 +42,7 @@ public class ParamsClient
     /// <summary>
     /// GET with multiple of same query param
     /// </summary>
-    public async void GetWithAllowMultipleQueryAsync()
+    public async void GetWithAllowMultipleQueryAsync(GetWithMultipleQuery request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
@@ -51,10 +52,10 @@ public class ParamsClient
     /// <summary>
     /// GET with path and query params
     /// </summary>
-    public async void GetWithPathAndQueryAsync(string param)
+    public async void GetWithPathAndQueryAsync(string param, GetWithPathAndQuery request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/path-query//param" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/path-query/{param}" }
         );
     }
 
@@ -67,7 +68,7 @@ public class ParamsClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = "/path//param",
+                Path = $"/path/{param}",
                 Body = request
             }
         );

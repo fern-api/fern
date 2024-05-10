@@ -19,7 +19,7 @@ public class UserClient
     public async void GetUserAsync(string userId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/users//userId" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/users/{userId}" }
         );
     }
 
@@ -27,7 +27,7 @@ public class UserClient
     /// Create a new user.
     /// This endpoint is used to create a new user.
     /// </summary>
-    public async User CreateUserAsync()
+    public async User CreateUserAsync(CreateUserRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/users" }

@@ -23,7 +23,7 @@ public class PathParamClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/path//operand//maybeOperand//operandOrColor//maybeOperandOrColor"
+                Path = $"/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}"
             }
         );
     }

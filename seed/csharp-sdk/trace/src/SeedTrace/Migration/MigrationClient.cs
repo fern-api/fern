@@ -12,7 +12,9 @@ public class MigrationClient
         _client = client;
     }
 
-    public async List<List<Migration>> GetAttemptedMigrationsAsync()
+    public async List<List<Migration>> GetAttemptedMigrationsAsync(
+        GetAttemptedMigrationsRequest request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/all" }

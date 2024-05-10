@@ -12,7 +12,7 @@ public class PaymentClient
         _client = client;
     }
 
-    public async Guid CreateAsync()
+    public async Guid CreateAsync(CreatePaymentRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
@@ -28,7 +28,7 @@ public class PaymentClient
     public async void DeleteAsync(string paymentId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = "//paymentId" }
+            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/{paymentId}" }
         );
     }
 }

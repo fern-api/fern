@@ -17,7 +17,7 @@ public class ServiceClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "//endpointParam//resourceParam"
+                Path = $"/{endpointParam}/{resourceParam}"
             }
         );
     }

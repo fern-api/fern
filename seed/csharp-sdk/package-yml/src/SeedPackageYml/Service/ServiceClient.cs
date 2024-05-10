@@ -14,7 +14,7 @@ public class ServiceClient
     public async void NopAsync(string nestedId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "//nestedId" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{nestedId}" }
         );
     }
 }

@@ -11,6 +11,8 @@ export declare namespace RawClient {
         endpoint: HttpEndpoint;
         /** reference to a variable that is the body */
         bodyReference?: string;
+        /** the path parameter id to reference */
+        pathParameterReferences?: Record<string, string>;
     }
 }
 
@@ -30,7 +32,8 @@ export class RawClient {
     public makeRequest({
         endpoint,
         bodyReference,
-        clientReference
+        clientReference,
+        pathParameterReferences
     }: RawClient.MakeRequestArgs): csharp.MethodInvocation {
         const arguments_: csharp.ClassInstantiation.Arguments = [
             {
@@ -39,7 +42,9 @@ export class RawClient {
             },
             {
                 name: "Path",
-                assignment: csharp.codeblock(`"${this.getPath(endpoint)}"`)
+                assignment: csharp.codeblock(
+                    `${this.getPathString({ endpoint, pathParameterReferences: pathParameterReferences ?? {} })}`
+                )
             }
         ];
         if (bodyReference != null) {
@@ -85,11 +90,28 @@ export class RawClient {
         return csharp.codeblock(`HttpMethod.${method}`);
     }
 
-    private getPath(endpoint: HttpEndpoint): string {
+    private getPathString({
+        endpoint,
+        pathParameterReferences
+    }: {
+        endpoint: HttpEndpoint;
+        pathParameterReferences: Record<string, string>;
+    }): string {
         let path = endpoint.path.head;
+        let pathParametersPresent = false;
         for (const part of endpoint.path.parts) {
-            path += `/${part.pathParameter}${part.tail}`;
+            pathParametersPresent = true;
+            const reference = pathParameterReferences[part.pathParameter];
+            if (reference == null) {
+                throw new Error(
+                    `Failed to find request parameter for the endpointt ${endpoint.id} with path parameter ${part.pathParameter}`
+                );
+            }
+            path += `{${reference}}${part.tail}`;
         }
-        return path;
+        if (pathParametersPresent) {
+            return `\$"${path}"`;
+        }
+        return `"${path}"`;
     }
 }

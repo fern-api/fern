@@ -16,7 +16,9 @@ public class InlinedRequestsClient
     /// <summary>
     /// POST with custom object in request body, response is an object
     /// </summary>
-    public async ObjectWithOptionalField PostWithObjectBodyandResponseAsync()
+    public async ObjectWithOptionalField PostWithObjectBodyandResponseAsync(
+        PostWithObjectBody request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/object" }

@@ -12,7 +12,7 @@ public class FooClient
         _client = client;
     }
 
-    public async ImportingType FindAsync()
+    public async ImportingType FindAsync(FindRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }

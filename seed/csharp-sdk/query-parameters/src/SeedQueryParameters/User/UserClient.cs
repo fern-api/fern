@@ -12,7 +12,7 @@ public class UserClient
         _client = client;
     }
 
-    public async User GetUsernameAsync()
+    public async User GetUsernameAsync(GetUsersRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }

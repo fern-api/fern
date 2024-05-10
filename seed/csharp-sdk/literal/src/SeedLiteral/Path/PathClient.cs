@@ -15,7 +15,7 @@ public class PathClient
     public async SendResponse SendAsync(List<string> id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/path//id" }
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = $"/path/{id}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

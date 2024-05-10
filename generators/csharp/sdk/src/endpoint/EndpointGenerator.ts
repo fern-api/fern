@@ -1,7 +1,9 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
+import { EndpointRequest } from "./request/EndpointRequest";
+import { EndpointRequestFactory } from "./request/EndpointRequestFactory";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -14,6 +16,7 @@ export declare namespace EndpointGenerator {
     }
 }
 
+const REQUEST_PARAMETER_NAME = "request";
 const RESPONSE_VARIABLE_NAME = "response";
 const RESPONSE_BODY_VARIABLE_NAME = "responseBody";
 
@@ -27,28 +30,45 @@ export class EndpointGenerator {
     }
 
     public generate({
+        serviceId,
         endpoint,
         rawClientReference
     }: {
+        serviceId: ServiceId;
         endpoint: HttpEndpoint;
         rawClientReference: string;
     }): csharp.Method {
-        const parameters = this.getEndpointParameters({ endpoint });
+        const { parameters: nonEndpointParameters, pathParameterReferences } = this.getNonEndpointParameters({
+            endpoint,
+            serviceId
+        });
+        const parameters = [...nonEndpointParameters];
+        const request = this.getEndpointRequest({ endpoint, serviceId });
+        if (request != null) {
+            parameters.push(
+                csharp.parameter({
+                    type: request.getParameterType(),
+                    name: request.getParameterName()
+                })
+            );
+        }
         const return_ = this.getEndpointReturnType({ endpoint });
         return csharp.method({
             name: this.context.getEndpointMethodName(endpoint),
             access: "public",
             isAsync: true,
-            parameters: parameters.values,
+            parameters,
             summary: endpoint.docs,
             return_,
             body: csharp.codeblock((writer) => {
+                const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
                     this.rawClient.makeRequest({
                         clientReference: rawClientReference,
                         endpoint,
-                        bodyReference: parameters.bodyReference
+                        bodyReference: requestBodyCodeBlock?.requestBodyReference,
+                        pathParameterReferences
                     })
                 );
                 const responseStatements = this.getEndpointResponseStatements({ endpoint });
@@ -59,48 +79,44 @@ export class EndpointGenerator {
         });
     }
 
-    private getEndpointParameters({ endpoint }: { endpoint: HttpEndpoint }): {
-        values: csharp.Parameter[];
-        bodyReference: string | undefined;
+    private getEndpointRequest({
+        endpoint,
+        serviceId
+    }: {
+        endpoint: HttpEndpoint;
+        serviceId: ServiceId;
+    }): EndpointRequest | undefined {
+        if (endpoint.sdkRequest == null) {
+            return undefined;
+        }
+        return EndpointRequestFactory.create({
+            context: this.context,
+            endpoint,
+            serviceId,
+            sdkRequest: endpoint.sdkRequest
+        });
+    }
+
+    private getNonEndpointParameters({ endpoint, serviceId }: { endpoint: HttpEndpoint; serviceId: ServiceId }): {
+        parameters: csharp.Parameter[];
+        pathParameterReferences: Record<string, string>;
     } {
         const parameters: csharp.Parameter[] = [];
+        const pathParameterReferences: Record<string, string> = {};
         for (const pathParam of endpoint.pathParameters) {
+            const parameterName = pathParam.name.camelCase.safeName;
+            pathParameterReferences[pathParam.name.originalName] = parameterName;
             parameters.push(
                 csharp.parameter({
                     docs: pathParam.docs,
-                    name: pathParam.name.camelCase.safeName,
+                    name: parameterName,
                     type: this.context.csharpTypeMapper.convert({ reference: pathParam.valueType })
                 })
             );
         }
-        const bodyParameter = endpoint.requestBody?._visit<csharp.Parameter | undefined>({
-            bytes: () => {
-                return undefined;
-            },
-            fileUpload: () => {
-                return undefined;
-            },
-            inlinedRequestBody: () => {
-                // TODO: Generate and return inlined request bodies
-                return undefined;
-            },
-            reference: (requestReference) => {
-                return csharp.parameter({
-                    docs: requestReference.docs,
-                    name: "request",
-                    type: this.context.csharpTypeMapper.convert({ reference: requestReference.requestBodyType })
-                });
-            },
-            _other: () => {
-                return undefined;
-            }
-        });
-        if (bodyParameter != null) {
-            parameters.push(bodyParameter);
-        }
         return {
-            values: parameters,
-            bodyReference: bodyParameter?.name
+            parameters,
+            pathParameterReferences
         };
     }
 
@@ -136,6 +152,7 @@ export class EndpointGenerator {
                     );
                     writer.writeNewLineIfLastLineNot();
 
+                    // Deserialize the response as json
                     writer.write(`return `);
                     writer.writeNode(
                         csharp.classReference({

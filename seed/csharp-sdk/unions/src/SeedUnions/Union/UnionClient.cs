@@ -15,7 +15,7 @@ public class UnionClient
     public async Shape GetAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "//id" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{id}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

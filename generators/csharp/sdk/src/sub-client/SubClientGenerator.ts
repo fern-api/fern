@@ -1,10 +1,10 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
+import { EndpointGenerator } from "../endpoint/EndpointGenerator";
+import { RawClient } from "../endpoint/RawClient";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { EndpointGenerator } from "./EndpointGenerator";
-import { RawClient } from "./RawClient";
 
 export const CLIENT_MEMBER_NAME = "_client";
 
@@ -42,7 +42,11 @@ export class SubClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfi
         class_.addConstructor(this.getConstructorMethod());
 
         for (const endpoint of this.service.endpoints) {
-            const method = this.endpointGenerator.generate({ endpoint, rawClientReference: CLIENT_MEMBER_NAME });
+            const method = this.endpointGenerator.generate({
+                serviceId: this.serviceId,
+                endpoint,
+                rawClientReference: CLIENT_MEMBER_NAME
+            });
             class_.addMethod(method);
         }
 

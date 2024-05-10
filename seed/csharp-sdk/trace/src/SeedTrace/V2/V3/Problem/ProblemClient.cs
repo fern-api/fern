@@ -51,7 +51,11 @@ public class ProblemClient
     public async ProblemInfoV2 GetLatestProblemAsync(string problemId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/problem-info//problemId" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = $"/problem-info/{problemId}"
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
@@ -70,7 +74,7 @@ public class ProblemClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Get,
-                Path = "/problem-info//problemId/version//problemVersion"
+                Path = $"/problem-info/{problemId}/version/{problemVersion}"
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();

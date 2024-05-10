@@ -31,7 +31,7 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async string GetWithHeaderAsync()
+    public async string GetWithHeaderAsync(HeaderAuthRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/apiKeyInHeader" }

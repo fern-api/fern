@@ -20,7 +20,7 @@ public class AdminClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/store-test-submission-status//submissionId",
+                Path = $"/store-test-submission-status/{submissionId}",
                 Body = request
             }
         );
@@ -32,7 +32,7 @@ public class AdminClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/store-test-submission-status-v2//submissionId",
+                Path = $"/store-test-submission-status-v2/{submissionId}",
                 Body = request
             }
         );
@@ -47,7 +47,7 @@ public class AdminClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/store-workspace-submission-status//submissionId",
+                Path = $"/store-workspace-submission-status/{submissionId}",
                 Body = request
             }
         );
@@ -62,19 +62,23 @@ public class AdminClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/store-workspace-submission-status-v2//submissionId",
+                Path = $"/store-workspace-submission-status-v2/{submissionId}",
                 Body = request
             }
         );
     }
 
-    public async void StoreTracedTestCaseAsync(Guid submissionId, string testCaseId)
+    public async void StoreTracedTestCaseAsync(
+        Guid submissionId,
+        string testCaseId,
+        StoreTracedTestCaseRequest request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/store-test-trace/submission//submissionId/testCase//testCaseId"
+                Path = $"/store-test-trace/submission/{submissionId}/testCase/{testCaseId}"
             }
         );
     }
@@ -89,19 +93,22 @@ public class AdminClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/store-test-trace-v2/submission//submissionId/testCase//testCaseId",
+                Path = $"/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request
             }
         );
     }
 
-    public async void StoreTracedWorkspaceAsync(Guid submissionId)
+    public async void StoreTracedWorkspaceAsync(
+        Guid submissionId,
+        StoreTracedWorkspaceRequest request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/store-workspace-trace/submission//submissionId"
+                Path = $"/store-workspace-trace/submission/{submissionId}"
             }
         );
     }
@@ -115,7 +122,7 @@ public class AdminClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = "/store-workspace-trace-v2/submission//submissionId",
+                Path = $"/store-workspace-trace-v2/submission/{submissionId}",
                 Body = request
             }
         );

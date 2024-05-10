@@ -12,7 +12,7 @@ public class AuthClient
         _client = client;
     }
 
-    public async TokenResponse GetTokenWithClientCredentialsAsync()
+    public async TokenResponse GetTokenWithClientCredentialsAsync(GetTokenRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/token" }
@@ -25,7 +25,7 @@ public class AuthClient
         throw new Exception();
     }
 
-    public async TokenResponse RefreshTokenAsync()
+    public async TokenResponse RefreshTokenAsync(RefreshTokenRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/token" }

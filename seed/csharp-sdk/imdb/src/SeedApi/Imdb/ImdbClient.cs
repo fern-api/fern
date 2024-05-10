@@ -36,7 +36,7 @@ public class ImdbClient
     public async Movie GetMovieAsync(string movieId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "//movieId" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{movieId}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

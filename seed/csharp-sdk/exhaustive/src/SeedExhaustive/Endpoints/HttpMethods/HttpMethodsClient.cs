@@ -16,7 +16,7 @@ public class HttpMethodsClient
     public async string TestGetAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "//id" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{id}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
@@ -50,7 +50,7 @@ public class HttpMethodsClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = "//id",
+                Path = $"/{id}",
                 Body = request
             }
         );
@@ -68,7 +68,7 @@ public class HttpMethodsClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Patch,
-                Path = "//id",
+                Path = $"/{id}",
                 Body = request
             }
         );
@@ -83,7 +83,7 @@ public class HttpMethodsClient
     public async bool TestDeleteAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = "//id" }
+            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/{id}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

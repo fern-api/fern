@@ -15,7 +15,7 @@ public class ServiceClient
     public async Resource GetResourceAsync(string resourceId)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "//ResourceID" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{resourceId}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
@@ -25,7 +25,7 @@ public class ServiceClient
         throw new Exception();
     }
 
-    public async List<List<Resource>> ListResourcesAsync()
+    public async List<List<Resource>> ListResourcesAsync(ListResourcesRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }

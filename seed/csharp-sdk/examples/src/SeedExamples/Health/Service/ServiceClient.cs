@@ -18,7 +18,7 @@ public class ServiceClient
     public async void CheckAsync(string id)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/check//id" }
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/check/{id}" }
         );
     }
 

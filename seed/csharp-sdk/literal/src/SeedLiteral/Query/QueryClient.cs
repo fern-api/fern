@@ -12,7 +12,7 @@ public class QueryClient
         _client = client;
     }
 
-    public async SendResponse SendAsync()
+    public async SendResponse SendAsync(SendLiteralsInQueryRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/query" }

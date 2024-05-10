@@ -11,14 +11,14 @@ public class QueryParamClient
         _client = client;
     }
 
-    public async void SendAsync()
+    public async void SendAsync(SendEnumAsQueryParamRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/query" }
         );
     }
 
-    public async void SendListAsync()
+    public async void SendListAsync(SendEnumListAsQueryParamRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/query-list" }

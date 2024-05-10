@@ -12,7 +12,9 @@ public class UsersClient
         _client = client;
     }
 
-    public async ListUsersPaginationResponse ListWithCursorPaginationAsync()
+    public async ListUsersPaginationResponse ListWithCursorPaginationAsync(
+        ListUsersCursorPaginationRequest request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
@@ -25,7 +27,9 @@ public class UsersClient
         throw new Exception();
     }
 
-    public async ListUsersPaginationResponse ListWithOffsetPaginationAsync()
+    public async ListUsersPaginationResponse ListWithOffsetPaginationAsync(
+        ListUsersOffsetPaginationRequest request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
@@ -38,7 +42,9 @@ public class UsersClient
         throw new Exception();
     }
 
-    public async ListUsersExtendedResponse ListWithExtendedResultsAsync()
+    public async ListUsersExtendedResponse ListWithExtendedResultsAsync(
+        ListUsersExtendedRequest request
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
@@ -51,7 +57,7 @@ public class UsersClient
         throw new Exception();
     }
 
-    public async UsernameCursor ListUsernamesAsync()
+    public async UsernameCursor ListUsernamesAsync(ListUsernamesRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
@@ -64,7 +70,7 @@ public class UsersClient
         throw new Exception();
     }
 
-    public async UsernameContainer ListWithGlobalConfigAsync()
+    public async UsernameContainer ListWithGlobalConfigAsync(ListWithGlobalConfigRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }

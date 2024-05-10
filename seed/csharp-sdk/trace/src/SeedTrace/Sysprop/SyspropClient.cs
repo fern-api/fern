@@ -18,7 +18,7 @@ public class SyspropClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Put,
-                Path = "/num-warm-instances//language//numWarmInstances"
+                Path = $"/num-warm-instances/{language}/{numWarmInstances}"
             }
         );
     }

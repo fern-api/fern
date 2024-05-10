@@ -8,6 +8,7 @@ import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubClientGenerator } from "./sub-client/SubClientGenerator";
+import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -53,6 +54,19 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             const service = context.getHttpServiceOrThrow(subpackage.service);
             const subClient = new SubClientGenerator(context, subpackage.service, service);
             context.project.addSourceFiles(subClient.generate());
+
+            for (const endpoint of service.endpoints) {
+                if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                    const wrappedRequestGenerator = new WrappedRequestGenerator({
+                        wrapper: endpoint.sdkRequest.shape,
+                        context,
+                        endpoint,
+                        serviceId: subpackage.service
+                    });
+                    const wrappedRequest = wrappedRequestGenerator.generate();
+                    context.project.addSourceFiles(wrappedRequest);
+                }
+            }
         }
 
         const clientOptions = new ClientOptionsGenerator(context);

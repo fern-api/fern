@@ -4,6 +4,7 @@ import {
     FernFilepath,
     HttpEndpoint,
     HttpService,
+    Name,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -103,6 +104,15 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return csharp.classReference({
             name: CLIENT_OPTIONS_CLASS_NAME,
             namespace: this.getNamespace()
+        });
+    }
+
+    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
+        const service = this.getHttpServiceOrThrow(serviceId);
+        RelativeFilePath.of([...service.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
+        return csharp.classReference({
+            name: requestName.pascalCase.safeName,
+            namespace: this.getNamespaceForServiceId(serviceId)
         });
     }
 
