@@ -12,14 +12,14 @@ public class TraceResponse
     public int LineNumber { get; init; }
 
     [JsonPropertyName("returnValue")]
-    public List<DebugVariableValue?> ReturnValue { get; init; }
+    public DebugVariableValue? ReturnValue { get; init; }
 
     [JsonPropertyName("expressionLocation")]
-    public List<ExpressionLocation?> ExpressionLocation { get; init; }
+    public ExpressionLocation? ExpressionLocation { get; init; }
 
     [JsonPropertyName("stack")]
     public StackInformation Stack { get; init; }
 
     [JsonPropertyName("stdout")]
-    public List<string?> Stdout { get; init; }
+    public string? Stdout { get; init; }
 }

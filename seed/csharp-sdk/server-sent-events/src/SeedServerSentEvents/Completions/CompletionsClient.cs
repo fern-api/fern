@@ -14,7 +14,12 @@ public class CompletionsClient
     public async void StreamAsync(StreamCompletionRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/stream" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/stream",
+                Body = request
+            }
         );
     }
 }

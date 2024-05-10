@@ -11,8 +11,8 @@ public class DoublyLinkedListNodeValue
     public double Val { get; init; }
 
     [JsonPropertyName("next")]
-    public List<string?> Next { get; init; }
+    public string? Next { get; init; }
 
     [JsonPropertyName("prev")]
-    public List<string?> Prev { get; init; }
+    public string? Prev { get; init; }
 }

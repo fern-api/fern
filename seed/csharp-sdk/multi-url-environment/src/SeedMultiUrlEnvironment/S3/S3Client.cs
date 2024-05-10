@@ -15,7 +15,12 @@ public class S3Client
     public async Task<string> GetPresignedUrlAsync(GetPresignedUrlRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/presigned-url" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/presigned-url",
+                Body = request
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode >= 200 && response.StatusCode < 400)

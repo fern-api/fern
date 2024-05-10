@@ -14,7 +14,12 @@ public class InlinedRequestClient
     public async void SendAsync(SendEnumInlinedRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/inlined" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/inlined",
+                Body = request
+            }
         );
     }
 }
