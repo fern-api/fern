@@ -9,4 +9,4 @@ groups:
         version: 0.9.5
         output:
           location: local-file-system
-          path: ../generated/sdks/typescript
+          path: ../sdks/typescript

@@ -1,4 +1,4 @@
-import { assertNever, isNonNullish, isPlainObject, WithoutQuestionMarks } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, isPlainObject, MediaType, WithoutQuestionMarks } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { ExampleCodeSample, FernIr as Ir } from "@fern-api/ir-sdk";
 import { noop, startCase } from "lodash-es";
@@ -308,7 +308,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
         inlinedRequestBody: (inlinedRequestBody) => {
             return {
                 type: "json",
-                contentType: inlinedRequestBody.contentType ?? "application/json",
+                contentType: inlinedRequestBody.contentType ?? MediaType.APPLICATION_JSON,
                 shape: {
                     type: "object",
                     extends: inlinedRequestBody.extends.map((extension) => extension.typeId),
@@ -325,7 +325,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
         reference: (reference) => {
             return {
                 type: "json",
-                contentType: reference.contentType ?? "application/json",
+                contentType: reference.contentType ?? MediaType.APPLICATION_JSON,
                 shape: {
                     type: "reference",
                     value: convertTypeReference(reference.requestBodyType)
@@ -389,7 +389,10 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
 }
 
 function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpResponse | undefined {
-    const type = Ir.http.HttpResponse._visit<APIV1Write.HttpResponseBodyShape | undefined>(irResponse, {
+    if (irResponse.body == null) {
+        return undefined;
+    }
+    const type = Ir.http.HttpResponseBody._visit<APIV1Write.HttpResponseBodyShape | undefined>(irResponse.body, {
         fileDownload: () => {
             return {
                 type: "fileDownload"
@@ -423,11 +426,11 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
             return undefined;
         },
         _other: () => {
-            throw new Error("Unknown HttpResponse: " + irResponse.type);
+            throw new Error("Unknown HttpResponse: " + irResponse.body);
         }
     });
     if (type != null) {
-        return { type };
+        return { type, statusCode: irResponse.statusCode };
     } else {
         return undefined;
     }
@@ -550,16 +553,20 @@ function convertHttpEndpointExample(
                     for (const property of fileUploadSchema.properties) {
                         property._visit({
                             file: (file) => {
-                                // TODO: support provided file examples, file arrays
+                                const maybeFile = fullExample[file.key.wireValue];
+                                // TODO: support filename with data in examples
                                 if (file.type === "file") {
                                     value[file.key.wireValue] = {
                                         type: "filename",
-                                        value: "<file1>"
+                                        value: typeof maybeFile === "string" ? maybeFile : "<file1>"
                                     };
                                 } else if (file.type === "fileArray") {
+                                    const filenames = (Array.isArray(maybeFile) ? maybeFile : [maybeFile]).filter(
+                                        (filename) => typeof filename === "string"
+                                    ) as string[];
                                     value[file.key.wireValue] = {
-                                        type: "filename",
-                                        value: "<file1>"
+                                        type: "filenames",
+                                        value: filenames
                                     };
                                 }
                             },

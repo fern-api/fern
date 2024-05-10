@@ -202,6 +202,10 @@ describe("test", () => {
                         code`process.env.${schema.passwordEnvVar ?? "TESTS_PASSWORD"} || "test"`
                     ]);
                 },
+                oauth: () => {
+                    // noop
+                    // TODO(amckinney): support oauth in integration tests
+                },
                 _other: () => {
                     // noop
                 }
@@ -238,7 +242,7 @@ describe("test", () => {
     ): Code | undefined {
         const notSupportedResponse =
             !!endpoint.response &&
-            (endpoint.response.type === "streaming" || endpoint.response.type === "fileDownload");
+            (endpoint.response.body?.type === "streaming" || endpoint.response.body?.type === "fileDownload");
         const notSupportedRequest =
             !!endpoint.requestBody &&
             (endpoint.requestBody.type === "bytes" || endpoint.requestBody.type === "fileUpload");

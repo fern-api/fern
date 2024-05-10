@@ -111,11 +111,11 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
         for (const example of endpoint.examples) {
             if (isRequestMatch(req, example)) {
                 if (example.response.body == null) {
-                    res.sendStatus(204); // no content
+                    res.sendStatus(endpoint.response?.statusCode ?? 204); // no content
                     return;
                 }
 
-                if (endpoint.response?.type === "text") {
+                if (endpoint.response?.body?.type === "text") {
                     res.contentType("text/plain");
                     res.send(example.response.body.jsonExample);
                     return;

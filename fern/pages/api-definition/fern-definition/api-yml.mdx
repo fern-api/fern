@@ -72,6 +72,39 @@ auth-schemes:
 ```
 </CodeBlock>
 
+And additionally customize the naming conventions used for standard frameworks such as `Basic`:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+auth: Basic                  # The name here must match the name of the auth-scheme defined below.
+auth-schemes:
+  Basic:                     # The name here must match the name of the auth scheme defined above.
+    scheme: basic
+    username:
+      name: clientId
+      env: MY_CLIENT_ID
+    password:
+      name: clientSecret
+      env: MY_CLIENT_SECRET
+```
+</CodeBlock>
+
+and `Bearer`:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+auth: Bearer                  # The name here must match the name of the auth-scheme defined below.
+auth-schemes:
+  Bearer:                     # The name here must match the name of the auth scheme defined above.
+    scheme: bearer
+    token:
+      name: apiKey
+      env: MY_API_KEY
+```
+</CodeBlock>
+
 Custom authentication schemes include custom `OAuth` integrations, too. Simply hook up
 your OAuth token endpoint and (optionally) configure token refresh like so:
 

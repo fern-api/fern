@@ -61,6 +61,7 @@ export declare namespace ExpressGenerator {
         outputEsm: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
+        skipRequestValidation: boolean;
     }
 }
 
@@ -192,16 +193,19 @@ export class ExpressGenerator {
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            skipRequestValidation: config.skipRequestValidation
         });
         this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
-            allowExtraFields: config.allowExtraFields
+            allowExtraFields: config.allowExtraFields,
+            skipRequestValidation: config.skipRequestValidation
         });
         this.expressServiceGenerator = new ExpressServiceGenerator({
             packageResolver: this.packageResolver,
             doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            skipRequestValidation: config.skipRequestValidation
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             packageResolver: this.packageResolver,

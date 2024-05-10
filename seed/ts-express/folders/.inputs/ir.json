@@ -321,6 +321,7 @@
                 "_type": "primitive",
                 "primitive": "STRING"
             },
+            "examples": [],
             "docs": null
         }
     },
@@ -382,7 +383,10 @@
                     "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -545,7 +549,10 @@
                     "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -708,7 +715,10 @@
                     "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -833,7 +843,10 @@
                     "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -995,7 +1008,10 @@
                     "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -1099,7 +1115,10 @@
                             }
                         }
                     },
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [
                         {
                             "error": {

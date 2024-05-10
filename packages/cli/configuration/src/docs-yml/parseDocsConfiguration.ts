@@ -569,6 +569,7 @@ async function convertNavigationItem({
                       })
                     : undefined,
             hidden: rawConfig.hidden ?? undefined,
+            slug: rawConfig.slug,
             skipUrlSlug: rawConfig.skipSlug ?? false,
             flattened: rawConfig.flattened ?? false
         };

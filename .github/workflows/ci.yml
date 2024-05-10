@@ -11,6 +11,7 @@ on:
       - "generators/postman/**"
       - "generators/ruby/**"
       - "generators/typescript/**"
+      - "generators/csharp/**"
     branches:
       - main
   pull_request:
@@ -23,6 +24,7 @@ on:
       - "generators/postman/**"
       - "generators/ruby/**"
       - "generators/typescript/**"
+      - "generators/csharp/**"
     branches:
       - main
 

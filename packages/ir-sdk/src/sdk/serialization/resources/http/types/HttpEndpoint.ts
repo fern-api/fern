@@ -30,7 +30,7 @@ export const HttpEndpoint: core.serialization.ObjectSchema<serializers.HttpEndpo
             ),
             requestBody: core.serialization.lazy(async () => (await import("../../..")).HttpRequestBody).optional(),
             sdkRequest: core.serialization.lazyObject(async () => (await import("../../..")).SdkRequest).optional(),
-            response: core.serialization.lazy(async () => (await import("../../..")).HttpResponse).optional(),
+            response: core.serialization.lazyObject(async () => (await import("../../..")).HttpResponse).optional(),
             errors: core.serialization.lazy(async () => (await import("../../..")).ResponseErrors),
             auth: core.serialization.boolean(),
             idempotent: core.serialization.boolean(),

@@ -21,5 +21,5 @@ public class User
     /// The user's age.
     /// </summary>
     [JsonPropertyName("age")]
-    public List<int?> Age { get; init; }
+    public int? Age { get; init; }
 }

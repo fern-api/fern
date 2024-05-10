@@ -5,5 +5,5 @@ namespace SeedExtraProperties;
 public class Failure
 {
     [JsonPropertyName("status")]
-    public List<string> Status { get; init; }
+    public string Status { get; init; }
 }

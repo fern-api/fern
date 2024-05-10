@@ -1,0 +1,14 @@
+openapi: 3.0.3
+info:
+  title: Test setting to disable usage of title param
+  version: 1.0.0
+paths: {}
+components:
+  schemas:
+    SchemaWithALongNameIsRightHereAndNotSomewhereElse:
+      title: EnticingTitle
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid

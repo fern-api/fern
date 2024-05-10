@@ -6,10 +6,10 @@ public partial class SeedNoEnvironmentClient
 {
     private RawClient _client;
 
-    public SeedNoEnvironmentClient(string token, ClientOptions clientOptions)
+    public SeedNoEnvironmentClient(string token = null, ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>
+            new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },

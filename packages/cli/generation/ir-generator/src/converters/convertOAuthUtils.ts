@@ -3,32 +3,56 @@ import { getRequestPropertyComponents, getResponsePropertyComponents } from "./s
 
 export interface TokenEndpoint {
     endpoint: string;
-    responseProperties: OAuthAccessTokenPropertyComponents;
+    requestProperties: OAuthAccessTokenRequestPropertyComponents;
+    responseProperties: OAuthAccessTokenResponsePropertyComponents;
 }
 
 export interface RefreshTokenEndpoint {
     endpoint: string;
-    requestProperties: OAuthRefreshTokenPropertyComponents;
-    responseProperties: OAuthAccessTokenPropertyComponents;
+    requestProperties: OAuthRefreshTokenRequestPropertyComponents;
+    responseProperties: OAuthAccessTokenResponsePropertyComponents;
 }
 
-interface OAuthAccessTokenPropertyComponents {
+interface OAuthAccessTokenRequestPropertyComponents {
+    type: "access_token";
+    client_id: string[];
+    client_secret: string[];
+    scopes: string[] | undefined;
+}
+
+interface OAuthAccessTokenResponsePropertyComponents {
     type: "access_token";
     access_token: string[];
     expires_in: string[] | undefined;
     refresh_token: string[] | undefined;
 }
 
-interface OAuthRefreshTokenPropertyComponents {
+interface OAuthRefreshTokenRequestPropertyComponents {
     type: "refresh_token";
     refresh_token: string[];
 }
 
 export function getTokenEndpoint(oauthSchema: RawSchemas.OAuthSchemeSchema): TokenEndpoint {
+    // const maybeScopes = oauthSchema["get-token"]["request-properties"].scopes;
     const maybeExpiresIn = oauthSchema["get-token"]["response-properties"]["expires-in"];
     const maybeRefreshToken = oauthSchema["get-token"]["response-properties"]["refresh-token"];
     return {
         endpoint: oauthSchema["get-token"].endpoint,
+        // TODO: Update the YAML schema and make this configurable with the following:
+        // requestProperties: {
+        //     type: "access_token",
+        //     client_id: getRequestPropertyComponents(oauthSchema["get-token"]["request-properties"]["client-id"]),
+        //     client_secret: getRequestPropertyComponents(
+        //         oauthSchema["get-token"]["request-properties"]["client-secret"]
+        //     ),
+        //     scopes: maybeScopes != null ? getRequestPropertyComponents(maybeScopes) : undefined
+        // },
+        requestProperties: {
+            type: "access_token",
+            client_id: ["client_id"],
+            client_secret: ["client_secret"],
+            scopes: undefined
+        },
         responseProperties: {
             type: "access_token",
             access_token: getResponsePropertyComponents(

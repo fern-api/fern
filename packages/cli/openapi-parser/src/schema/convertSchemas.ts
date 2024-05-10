@@ -114,7 +114,10 @@ export function convertSchemaObject(
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false
 ): SchemaWithExample {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? getTitleAsName(schema.title);
+    const nameOverride =
+        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? context.shouldUseTitleAsName
+            ? getTitleAsName(schema.title)
+            : undefined;
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
@@ -522,7 +525,10 @@ export function convertSchemaObject(
             }
         }
 
-        const maybeDiscriminant = getDiscriminant({ schemas: schema.anyOf, context });
+        const maybeDiscriminant = getDiscriminant({
+            schemas: schema.anyOf,
+            context
+        });
         if (maybeDiscriminant != null) {
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
@@ -850,8 +856,7 @@ function getDiscriminant({
         Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>
     > = {};
     for (const schema of schemas) {
-        const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
-        const possibleDiscriminants = getPossibleDiscriminants({ schema: resolvedSchema, context });
+        const possibleDiscriminants = getPossibleDiscriminants({ schema, context });
         for (const [property, value] of Object.entries(possibleDiscriminants)) {
             const variants = discriminantToVariants[property];
             if (variants != null) {
@@ -878,10 +883,33 @@ function getPossibleDiscriminants({
     schema,
     context
 }: {
+    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    context: SchemaParserContext;
+}): Record<string, string> {
+    const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+    return getPossibleDiscriminantsForSchemaObject({ schema: resolvedSchema, context });
+}
+
+function getPossibleDiscriminantsForSchemaObject({
+    schema,
+    context
+}: {
     schema: OpenAPIV3.SchemaObject;
     context: SchemaParserContext;
 }): Record<string, string> {
     const possibleDiscrimimants: Record<string, string> = {};
+    if (schema.anyOf != null) {
+        for (const elem of schema.anyOf) {
+            const possibleDiscriminantsForVariant = getPossibleDiscriminants({
+                schema: elem,
+                context
+            });
+            for (const [key, value] of Object.entries(possibleDiscriminantsForVariant ?? {})) {
+                possibleDiscrimimants[key] = value;
+            }
+        }
+        return possibleDiscrimimants;
+    }
     for (const [propertyName, propertySchema] of Object.entries(schema.properties ?? {})) {
         const resolvedPropertySchema = isReferenceObject(propertySchema)
             ? context.resolveSchemaReference(propertySchema)

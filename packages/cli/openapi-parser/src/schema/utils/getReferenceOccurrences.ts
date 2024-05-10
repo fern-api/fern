@@ -1,5 +1,5 @@
+import { MediaType } from "@fern-api/core-utils";
 import { OpenAPIV3 } from "openapi-types";
-import { APPLICATION_JSON_CONTENT, MULTIPART_CONTENT } from "../../openapi/v3/converters/endpoint/convertRequest";
 import { isReferenceObject } from "./isReferenceObject";
 
 export function getReferenceOccurrences(document: OpenAPIV3.Document): Record<string, number> {
@@ -109,13 +109,24 @@ function removeApplicationJsonAndMultipartConflictsFromOperationObject(
 function removeApplicationJsonAndMultipartConflictsFromRequestBody(
     requestBody: OpenAPIV3.RequestBodyObject
 ): OpenAPIV3.RequestBodyObject {
-    const jsonContent = requestBody.content[APPLICATION_JSON_CONTENT];
-    const multipartContent = requestBody.content[MULTIPART_CONTENT];
+    let jsonContent: OpenAPIV3.MediaTypeObject | undefined;
+    let multipartContent: OpenAPIV3.MediaTypeObject | undefined;
+    for (const mediatype in requestBody.content) {
+        const mimetype = MediaType.parse(mediatype);
+        if (mimetype == null) {
+            continue;
+        }
+        if (mimetype.isJSON()) {
+            jsonContent = requestBody.content[mediatype];
+        } else if (mimetype.isMultipart()) {
+            multipartContent = requestBody.content[mediatype];
+        }
+    }
     if (multipartContent != null && jsonContent != null) {
         return {
             ...requestBody,
             content: {
-                MULTIPART_CONTENT: multipartContent
+                [MediaType.MULTIPART_FORM_DATA]: multipartContent
             }
         };
     }

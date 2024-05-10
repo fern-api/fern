@@ -166,6 +166,7 @@ export declare namespace DocsNavigationItem {
         summaryAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiNavigationItem[];
         hidden: boolean | undefined;
+        slug: string | undefined;
         skipUrlSlug: boolean | undefined;
         flattened: boolean | undefined;
     }

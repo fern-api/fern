@@ -6,10 +6,10 @@ public partial class SeedServerSentEventsClient
 {
     private RawClient _client;
 
-    public SeedServerSentEventsClient(ClientOptions clientOptions)
+    public SeedServerSentEventsClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Completions = new CompletionsClient(_client);

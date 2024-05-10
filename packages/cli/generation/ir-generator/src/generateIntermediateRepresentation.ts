@@ -368,11 +368,11 @@ export async function generateIntermediateRepresentation({
         });
 
     const hasStreamingEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
-        return service.endpoints.some((endpoint) => endpoint.response?.type === "streaming");
+        return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "streaming");
     });
 
     const hasFileDownloadEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
-        return service.endpoints.some((endpoint) => endpoint.response?.type === "fileDownload");
+        return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
 
     return {

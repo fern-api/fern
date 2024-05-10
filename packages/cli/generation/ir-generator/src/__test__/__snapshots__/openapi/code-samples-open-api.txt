@@ -1339,39 +1339,42 @@ axios.request(options).then(function (response) {
           ],
           "requestBody": null,
           "response": {
-            "type": "json",
-            "value": {
-              "docs": "successful operation",
-              "responseBodyType": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [],
-                  "file": null,
-                  "packagePath": [],
+            "body": {
+              "type": "json",
+              "value": {
+                "docs": "successful operation",
+                "responseBodyType": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "telemetryResponse",
+                      "unsafeName": "telemetryResponse",
+                    },
+                    "originalName": "TelemetryResponse",
+                    "pascalCase": {
+                      "safeName": "TelemetryResponse",
+                      "unsafeName": "TelemetryResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TELEMETRY_RESPONSE",
+                      "unsafeName": "TELEMETRY_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "telemetry_response",
+                      "unsafeName": "telemetry_response",
+                    },
+                  },
+                  "typeId": "type_:TelemetryResponse",
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "telemetryResponse",
-                    "unsafeName": "telemetryResponse",
-                  },
-                  "originalName": "TelemetryResponse",
-                  "pascalCase": {
-                    "safeName": "TelemetryResponse",
-                    "unsafeName": "TelemetryResponse",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TELEMETRY_RESPONSE",
-                    "unsafeName": "TELEMETRY_RESPONSE",
-                  },
-                  "snakeCase": {
-                    "safeName": "telemetry_response",
-                    "unsafeName": "telemetry_response",
-                  },
-                },
-                "typeId": "type_:TelemetryResponse",
+                "type": "response",
               },
-              "type": "response",
             },
+            "status-code": null,
           },
           "sdkRequest": {
             "requestParameterName": {

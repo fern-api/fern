@@ -13,8 +13,8 @@ public class TestCaseV2
     public TestCaseImplementationReference Implementation { get; init; }
 
     [JsonPropertyName("arguments")]
-    public List<Dictionary<string, VariableValue>> Arguments { get; init; }
+    public Dictionary<string, VariableValue> Arguments { get; init; }
 
     [JsonPropertyName("expects")]
-    public List<TestCaseExpects?> Expects { get; init; }
+    public TestCaseExpects? Expects { get; init; }
 }

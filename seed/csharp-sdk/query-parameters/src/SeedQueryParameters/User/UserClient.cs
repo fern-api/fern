@@ -1,3 +1,4 @@
+using System.Text.Json;
 using SeedQueryParameters;
 
 namespace SeedQueryParameters;
@@ -11,5 +12,42 @@ public class UserClient
         _client = client;
     }
 
-    public async void GetUsernameAsync() { }
+    public async Task<User> GetUsernameAsync(GetUsersRequest request)
+    {
+        var _query = new Dictionary<string, object>()
+        {
+            { "limit", request.Limit.ToString() },
+            { "id", request.Id.ToString() },
+            { "date", request.Date.ToString() },
+            { "deadline", request.Deadline.ToString() },
+            { "bytes", request.Bytes.ToString() },
+            { "user", request.User.ToString() },
+            { "keyValue", request.KeyValue.ToString() },
+            { "nestedUser", request.NestedUser.ToString() },
+            { "excludeUser", request.ExcludeUser.ToString() },
+            { "filter", request.Filter },
+        };
+        if (request.OptionalString != null)
+        {
+            _query["optionalString"] = request.OptionalString;
+        }
+        if (request.OptionalUser != null)
+        {
+            _query["optionalUser"] = request.OptionalUser;
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "",
+                Query = _query
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<User>(responseBody);
+        }
+        throw new Exception();
+    }
 }

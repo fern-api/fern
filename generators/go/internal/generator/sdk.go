@@ -2821,7 +2821,12 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 		writer:         r.writer,
 	}
 	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
-	objectProperties := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, r.includeGenericOptionals)
+	objectProperties := typeVisitor.visitObjectProperties(
+		objectTypeDeclaration,
+		true,  // includeJSONTags
+		false, // includeURLTags
+		r.includeGenericOptionals,
+	)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals
 	r.extraProperties = objectTypeDeclaration.ExtraProperties
@@ -2859,7 +2864,12 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 		writer:         r.writer,
 	}
 	objectTypeDeclaration := inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties)
-	objectProperties := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, r.includeGenericOptionals)
+	objectProperties := typeVisitor.visitObjectProperties(
+		objectTypeDeclaration,
+		true,  // includeJSONTags
+		false, // includeURLTags
+		r.includeGenericOptionals,
+	)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals
 	return nil
