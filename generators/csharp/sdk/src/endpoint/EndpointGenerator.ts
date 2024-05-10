@@ -3,7 +3,7 @@ import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
 import { EndpointRequest } from "./request/EndpointRequest";
-import { createEndpointRequest, EndpointRequestFactory } from "./request/EndpointRequestFactory";
+import { createEndpointRequest } from "./request/EndpointRequestFactory";
 
 export declare namespace EndpointGenerator {
     export interface Args {
