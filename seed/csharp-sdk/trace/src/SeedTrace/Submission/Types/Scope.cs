@@ -6,5 +6,5 @@ namespace SeedTrace;
 public class Scope
 {
     [JsonPropertyName("variables")]
-    public List<Dictionary<string, DebugVariableValue>> Variables { get; init; }
+    public Dictionary<string, DebugVariableValue> Variables { get; init; }
 }

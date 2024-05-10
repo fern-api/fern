@@ -4,10 +4,12 @@ import {
     FernFilepath,
     HttpEndpoint,
     HttpService,
+    Name,
     ServiceId,
     Subpackage,
     SubpackageId,
-    TypeId
+    TypeId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./client-options/ClientOptionsGenerator";
@@ -70,6 +72,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.getNamespaceFromFernFilepath(service.name.fernFilepath);
     }
 
+    public getDirectoryForSubpackage(subpackage: Subpackage): string {
+        return RelativeFilePath.of(
+            [...subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
+        );
+    }
+
     public getDirectoryForServiceId(serviceId: ServiceId): string {
         const service = this.getHttpServiceOrThrow(serviceId);
         return RelativeFilePath.of(
@@ -77,11 +85,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         );
     }
 
-    public getServiceClassReference(serviceId: ServiceId): csharp.ClassReference {
-        const service = this.getHttpServiceOrThrow(serviceId);
+    public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
         return csharp.classReference({
-            name: `${service.name.fernFilepath.file?.pascalCase.unsafeName}Client`,
-            namespace: this.getNamespaceForServiceId(serviceId)
+            name: `${subpackage.name.pascalCase.unsafeName}Client`,
+            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath)
         });
     }
 
@@ -106,11 +113,38 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
+        const service = this.getHttpServiceOrThrow(serviceId);
+        RelativeFilePath.of([...service.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/"));
+        return csharp.classReference({
+            name: requestName.pascalCase.safeName,
+            namespace: this.getNamespaceForServiceId(serviceId)
+        });
+    }
+
     public getEndpointMethodName(endpoint: HttpEndpoint): string {
         return `${endpoint.name.pascalCase.safeName}Async`;
     }
 
     private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
         return [this.getNamespace(), ...fernFilepath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
+    }
+
+    public isOptional(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "optional";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isOptional(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return true;
+            case "primitive":
+                return false;
+        }
     }
 }

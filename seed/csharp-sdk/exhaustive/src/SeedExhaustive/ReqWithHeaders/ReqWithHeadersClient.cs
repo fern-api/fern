@@ -11,5 +11,20 @@ public class ReqWithHeadersClient
         _client = client;
     }
 
-    public async void GetWithCustomHeaderAsync() { }
+    public async void GetWithCustomHeaderAsync(ReqWithHeaders request)
+    {
+        var _headers = new Dictionary<string, string>()
+        {
+            { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
+        };
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/custom-header",
+                Body = request.Body,
+                Headers = _headers
+            }
+        );
+    }
 }

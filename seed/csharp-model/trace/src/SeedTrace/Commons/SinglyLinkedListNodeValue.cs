@@ -11,5 +11,5 @@ public class SinglyLinkedListNodeValue
     public double Val { get; init; }
 
     [JsonPropertyName("next")]
-    public List<string?> Next { get; init; }
+    public string? Next { get; init; }
 }

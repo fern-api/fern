@@ -6,10 +6,10 @@ public partial class SeedExtraPropertiesClient
 {
     private RawClient _client;
 
-    public SeedExtraPropertiesClient(ClientOptions clientOptions)
+    public SeedExtraPropertiesClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         User = new UserClient(_client);

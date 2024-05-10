@@ -6,10 +6,10 @@ public partial class SeedMultiLineDocsClient
 {
     private RawClient _client;
 
-    public SeedMultiLineDocsClient(ClientOptions clientOptions)
+    public SeedMultiLineDocsClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         User = new UserClient(_client);

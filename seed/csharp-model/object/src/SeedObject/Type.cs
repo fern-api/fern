@@ -33,31 +33,31 @@ public class Type
     public string Nine { get; init; }
 
     [JsonPropertyName("ten")]
-    public List<List<int>> Ten { get; init; }
+    public List<int> Ten { get; init; }
 
     [JsonPropertyName("eleven")]
-    public List<HashSet<double>> Eleven { get; init; }
+    public HashSet<double> Eleven { get; init; }
 
     [JsonPropertyName("twelve")]
-    public List<Dictionary<string, bool>> Twelve { get; init; }
+    public Dictionary<string, bool> Twelve { get; init; }
 
     [JsonPropertyName("thirteen")]
-    public List<long?> Thirteen { get; init; }
+    public long? Thirteen { get; init; }
 
     [JsonPropertyName("fourteen")]
     public object Fourteen { get; init; }
 
     [JsonPropertyName("fifteen")]
-    public List<List<List<List<int>>>> Fifteen { get; init; }
+    public List<List<int>> Fifteen { get; init; }
 
     [JsonPropertyName("sixteen")]
-    public List<List<List<Dictionary<string, int>>>> Sixteen { get; init; }
+    public List<Dictionary<string, int>> Sixteen { get; init; }
 
     [JsonPropertyName("seventeen")]
-    public List<List<List<Guid?>>> Seventeen { get; init; }
+    public List<Guid?> Seventeen { get; init; }
 
     [JsonPropertyName("eighteen")]
-    public List<string> Eighteen { get; init; }
+    public string Eighteen { get; init; }
 
     [JsonPropertyName("nineteen")]
     public Name Nineteen { get; init; }

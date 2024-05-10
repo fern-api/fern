@@ -5,13 +5,13 @@ namespace SeedExamples;
 public class ExtendedMovie
 {
     [JsonPropertyName("cast")]
-    public List<List<string>> Cast { get; init; }
+    public List<string> Cast { get; init; }
 
     [JsonPropertyName("id")]
     public string Id { get; init; }
 
     [JsonPropertyName("prequel")]
-    public List<string?> Prequel { get; init; }
+    public string? Prequel { get; init; }
 
     [JsonPropertyName("title")]
     public string Title { get; init; }
@@ -26,14 +26,14 @@ public class ExtendedMovie
     public double Rating { get; init; }
 
     [JsonPropertyName("type")]
-    public List<string> Type { get; init; }
+    public string Type { get; init; }
 
     [JsonPropertyName("tag")]
     public string Tag { get; init; }
 
     [JsonPropertyName("book")]
-    public List<string?> Book { get; init; }
+    public string? Book { get; init; }
 
     [JsonPropertyName("metadata")]
-    public List<Dictionary<string, object>> Metadata { get; init; }
+    public Dictionary<string, object> Metadata { get; init; }
 }
