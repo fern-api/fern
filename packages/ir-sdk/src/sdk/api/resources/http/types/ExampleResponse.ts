@@ -7,8 +7,9 @@ import * as FernIr from "../../..";
 export type ExampleResponse = FernIr.ExampleResponse.Ok | FernIr.ExampleResponse.Error_;
 
 export declare namespace ExampleResponse {
-    interface Ok extends FernIr.ExampleEndpointSuccessResponse, _Utils {
+    interface Ok extends _Utils {
         type: "ok";
+        value: FernIr.ExampleEndpointSuccessResponse;
     }
 
     interface Error_ extends FernIr.ExampleEndpointErrorResponse, _Utils {
@@ -29,7 +30,7 @@ export declare namespace ExampleResponse {
 export const ExampleResponse = {
     ok: (value: FernIr.ExampleEndpointSuccessResponse): FernIr.ExampleResponse.Ok => {
         return {
-            ...value,
+            value: value,
             type: "ok",
             _visit: function <_Result>(
                 this: FernIr.ExampleResponse.Ok,
@@ -56,7 +57,7 @@ export const ExampleResponse = {
     _visit: <_Result>(value: FernIr.ExampleResponse, visitor: FernIr.ExampleResponse._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "ok":
-                return visitor.ok(value);
+                return visitor.ok(value.value);
             case "error":
                 return visitor.error(value);
             default:

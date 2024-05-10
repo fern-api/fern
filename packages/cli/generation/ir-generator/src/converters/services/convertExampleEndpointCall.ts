@@ -1,7 +1,8 @@
-import { isPlainObject } from "@fern-api/core-utils";
+import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
     ExampleCodeSample,
     ExampleEndpointCall,
+    ExampleEndpointSuccessResponse,
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
@@ -466,7 +467,7 @@ function convertExampleResponse({
     workspace: FernWorkspace;
 }): ExampleResponse {
     if (example.response == null) {
-        return ExampleResponse.ok({ body: undefined });
+        return ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined));
     }
     return visitExampleResponseSchema(endpoint, example.response, {
         body: (example) => {
@@ -492,17 +493,67 @@ function convertExampleResponse({
                 });
             }
 
-            return ExampleResponse.ok({
-                body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
-            });
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.body(
+                    convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+                )
+            );
         },
-        stream: (_example) => {
-            // TODO(ajiang): add IR support for streams
-            throw new Error("Not implemented");
+        stream: (example) => {
+            const rawTypeBeingExemplified =
+                typeof endpoint["response-stream"] === "string"
+                    ? endpoint["response-stream"]
+                    : endpoint["response-stream"]?.type;
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.stream(
+                    example.stream
+                        .map((data) => {
+                            if (rawTypeBeingExemplified == null) {
+                                return undefined;
+                            }
+
+                            return convertTypeReferenceExample({
+                                example: data,
+                                rawTypeBeingExemplified,
+                                typeResolver,
+                                exampleResolver,
+                                fileContainingRawTypeReference: file,
+                                fileContainingExample: file,
+                                workspace
+                            });
+                        })
+                        .filter(isNonNullish)
+                )
+            );
         },
-        events: (_example) => {
-            // TODO(ajiang): add IR support for streams
-            throw new Error("Not implemented");
+        events: (example) => {
+            const rawTypeBeingExemplified =
+                typeof endpoint["response-stream"] === "string"
+                    ? endpoint["response-stream"]
+                    : endpoint["response-stream"]?.type;
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.sse(
+                    example.stream
+                        .map(({ event, data }) => {
+                            if (rawTypeBeingExemplified == null) {
+                                return undefined;
+                            }
+
+                            const convertedExample = convertTypeReferenceExample({
+                                example: data,
+                                rawTypeBeingExemplified,
+                                typeResolver,
+                                exampleResolver,
+                                fileContainingRawTypeReference: file,
+                                fileContainingExample: file,
+                                workspace
+                            });
+
+                            return { event, data: convertedExample };
+                        })
+                        .filter(isNonNullish)
+                )
+            );
         }
     });
 }
