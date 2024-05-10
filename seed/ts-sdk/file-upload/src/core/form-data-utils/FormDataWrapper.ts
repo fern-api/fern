@@ -21,8 +21,7 @@ class FormDataRequestBody {
             if (this.encoder == null) {
                 await this.setup();
             }
-            const Readable = (await import("node:stream")).Readable;
-            return Readable.from(this.encoder);
+            return (await import("node:stream")).Readable.from(this.encoder);
         }
     }
 
@@ -34,7 +33,6 @@ class FormDataRequestBody {
                 await this.setup();
             }
             return {
-                ...this.encoder.headers,
                 "Content-Length": this.encoder.length,
             };
         }
@@ -59,6 +57,7 @@ export class FormDataWrapper {
     public async append(name: string, value: any): Promise<void> {
         await this.setup();
         this.fd.append(name, value);
+        // throw new Error(JSON.stringify(this.fd.get("data")));
     }
 
     public getRequest(): FormDataRequestBody {
