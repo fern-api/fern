@@ -34,10 +34,15 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         value: ts.Expression;
     }): ts.Statement => {
         return ts.factory.createExpressionStatement(
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("append")),
-                undefined,
-                [ts.factory.createStringLiteral(key), value]
+            ts.factory.createAwaitExpression(
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        referencetoFormData,
+                        ts.factory.createIdentifier("append")
+                    ),
+                    undefined,
+                    [ts.factory.createStringLiteral(key), value]
+                )
             )
         );
     };
