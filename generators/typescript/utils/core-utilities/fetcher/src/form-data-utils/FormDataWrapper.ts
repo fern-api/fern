@@ -57,7 +57,6 @@ export class FormDataWrapper {
     public async append(name: string, value: any): Promise<void> {
         await this.setup();
         this.fd.append(name, value);
-        // throw new Error(JSON.stringify(this.fd.get("data")));
     }
 
     public getRequest(): FormDataRequestBody {
