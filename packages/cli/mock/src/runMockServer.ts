@@ -145,25 +145,15 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
                         });
                     },
                     error: (error) => {
+                        res.status(endpoint.response?.statusCode ?? 500);
                         if (error.body == null) {
-                            res.sendStatus(endpoint.response?.statusCode ?? 500);
+                            res.end();
                         } else {
                             res.json(error.body.jsonExample);
                         }
                     },
                     _other: noop
                 });
-                // if (example.response.body == null) {
-                //     res.sendStatus(endpoint.response?.statusCode ?? 204); // no content
-                //     return;
-                // }
-
-                // if (endpoint.response?.body?.type === "text") {
-                //     res.contentType("text/plain");
-                //     res.send(example.response.body.jsonExample);
-                //     return;
-                // }
-                // res.json(example.response.body.jsonExample);
                 return;
             }
         }
