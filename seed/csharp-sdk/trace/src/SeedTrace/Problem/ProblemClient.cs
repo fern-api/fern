@@ -15,7 +15,7 @@ public class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    public async CreateProblemResponse CreateProblemAsync(CreateProblemRequest request)
+    public async Task<CreateProblemResponse> CreateProblemAsync(CreateProblemRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -26,7 +26,7 @@ public class ProblemClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<CreateProblemResponse>(responseBody);
         }
@@ -36,7 +36,7 @@ public class ProblemClient
     /// <summary>
     /// Updates a problem
     /// </summary>
-    public async UpdateProblemResponse UpdateProblemAsync(
+    public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request
     )
@@ -50,7 +50,7 @@ public class ProblemClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<UpdateProblemResponse>(responseBody);
         }
@@ -70,7 +70,7 @@ public class ProblemClient
     /// <summary>
     /// Returns default starter files for problem
     /// </summary>
-    public async GetDefaultStarterFilesResponse GetDefaultStarterFilesAsync(
+    public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request
     )
     {
@@ -78,7 +78,7 @@ public class ProblemClient
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/default-starter-files" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<GetDefaultStarterFilesResponse>(responseBody);
         }

@@ -22,7 +22,7 @@ public class ReqWithHeadersClient
             {
                 Method = HttpMethod.Post,
                 Path = "/custom-header",
-                Body = reqWithHeaders.body,
+                Body = request.Body,
                 Headers = _headers
             }
         );

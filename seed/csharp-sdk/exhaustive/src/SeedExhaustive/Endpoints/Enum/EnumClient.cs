@@ -13,7 +13,7 @@ public class EnumClient
         _client = client;
     }
 
-    public async WeatherReport GetAndReturnEnumAsync(WeatherReport request)
+    public async Task<WeatherReport> GetAndReturnEnumAsync(WeatherReport request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -24,7 +24,7 @@ public class EnumClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<WeatherReport>(responseBody);
         }

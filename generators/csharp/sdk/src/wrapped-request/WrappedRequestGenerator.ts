@@ -62,31 +62,35 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
-                csharp.field({
-                    name: this.wrapper.bodyKey.pascalCase.safeName,
-                    type: this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType }),
-                    access: "public",
-                    get: true,
-                    init: true,
-                    summary: reference.docs
-                })
+                class_.addField(
+                    csharp.field({
+                        name: this.wrapper.bodyKey.pascalCase.safeName,
+                        type: this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType }),
+                        access: "public",
+                        get: true,
+                        init: true,
+                        summary: reference.docs
+                    })
+                );
             },
             inlinedRequestBody: (request) => {
                 // TODO(dsinghvi): handle extends of inlined request bodies
                 for (const property of request.properties) {
-                    csharp.field({
-                        name: property.name.name.pascalCase.safeName,
-                        type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
-                        access: "public",
-                        get: true,
-                        init: true,
-                        summary: property.docs
-                    })
+                    class_.addField(
+                        csharp.field({
+                            name: property.name.name.pascalCase.safeName,
+                            type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
+                            access: "public",
+                            get: true,
+                            init: true,
+                            summary: property.docs
+                        })
+                    );
                 }
             },
             fileUpload: () => undefined,
             bytes: () => undefined,
-            _other: () => undefined,
+            _other: () => undefined
         });
 
         return new CSharpFile({

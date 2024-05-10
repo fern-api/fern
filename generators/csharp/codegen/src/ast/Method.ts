@@ -81,7 +81,13 @@ export class Method extends AstNode {
         if (this.return == null) {
             writer.write("void ");
         } else {
-            this.return.write(writer);
+            if (this.isAsync) {
+                writer.write("Task<");
+                this.return.write(writer);
+                writer.write(">");
+            } else {
+                this.return.write(writer);
+            }
             writer.write(" ");
         }
         writer.write(`${this.name}(`);

@@ -5,7 +5,7 @@ namespace SeedTrace;
 public class GenericValue
 {
     [JsonPropertyName("stringifiedType")]
-    public List<string?> StringifiedType { get; init; }
+    public string? StringifiedType { get; init; }
 
     [JsonPropertyName("stringifiedValue")]
     public string StringifiedValue { get; init; }

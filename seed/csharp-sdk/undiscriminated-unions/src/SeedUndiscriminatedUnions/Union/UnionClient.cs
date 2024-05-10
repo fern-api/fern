@@ -13,14 +13,8 @@ public class UnionClient
         _client = client;
     }
 
-    public async OneOf<
-        string,
-        List<List<string>>,
-        int,
-        List<List<int>>,
-        List<List<List<List<int>>>>
-    > GetAsync(
-        OneOf<string, List<List<string>>, int, List<List<int>>, List<List<List<List<int>>>>> request
+    public async Task<OneOf<string, List<string>, int, List<int>, List<List<int>>>> GetAsync(
+        OneOf<string, List<string>, int, List<int>, List<List<int>>> request
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -32,10 +26,10 @@ public class UnionClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<
-                OneOf<string, List<List<string>>, int, List<List<int>>, List<List<List<List<int>>>>>
+                OneOf<string, List<string>, int, List<int>, List<List<int>>>
             >(responseBody);
         }
         throw new Exception();

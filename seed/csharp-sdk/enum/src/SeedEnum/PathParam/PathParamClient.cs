@@ -14,9 +14,9 @@ public class PathParamClient
 
     public async void SendAsync(
         Operand operand,
-        List<Operand?> maybeOperand,
+        Operand? maybeOperand,
         OneOf<Color, Operand> operandOrColor,
-        List<OneOf<Color, Operand>?> maybeOperandOrColor
+        OneOf<Color, Operand>? maybeOperandOrColor
     )
     {
         var response = await _client.MakeRequestAsync(

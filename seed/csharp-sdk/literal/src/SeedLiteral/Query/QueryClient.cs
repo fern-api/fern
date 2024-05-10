@@ -12,9 +12,9 @@ public class QueryClient
         _client = client;
     }
 
-    public async SendResponse SendAsync(SendLiteralsInQueryRequest request)
+    public async Task<SendResponse> SendAsync(SendLiteralsInQueryRequest request)
     {
-        var _query = new Dictionary<string, string>()
+        var _query = new Dictionary<string, object>()
         {
             { "prompt", request.Prompt.ToString() },
             { "query", request.Query },
@@ -29,7 +29,7 @@ public class QueryClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }

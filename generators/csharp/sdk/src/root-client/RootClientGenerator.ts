@@ -164,7 +164,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 }
                 writer.writeLine("_client = ");
-                writer.writeNode(
+                writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: this.context.getRawClientClassReference(),
                         arguments_: [
@@ -180,7 +180,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         continue;
                     }
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
-                    writer.writeNode(
+                    writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: this.context.getServiceClassReference(subpackage.service),
                             arguments_: [csharp.codeblock("_client")]
@@ -285,6 +285,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         const name = header.name.name.camelCase.safeName;
         return {
             name,
+            header: {
+                name: header.name.wireValue
+            },
             docs: header.docs,
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
             typeReference: header.valueType

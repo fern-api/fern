@@ -15,13 +15,13 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async string GetWithApiKeyAsync()
+    public async Task<string> GetWithApiKeyAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/apiKey" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
@@ -31,7 +31,7 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async string GetWithHeaderAsync(HeaderAuthRequest request)
+    public async Task<string> GetWithHeaderAsync(HeaderAuthRequest request)
     {
         var _headers = new Dictionary<string, string>()
         {
@@ -46,7 +46,7 @@ public class ServiceClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }

@@ -12,5 +12,5 @@ public class StackFrame
     public int LineNumber { get; init; }
 
     [JsonPropertyName("scopes")]
-    public List<List<Scope>> Scopes { get; init; }
+    public List<Scope> Scopes { get; init; }
 }

@@ -12,7 +12,7 @@ public class OptionalClient
         _client = client;
     }
 
-    public async string SendOptionalBodyAsync(List<List<Dictionary<string, object>>?> request)
+    public async Task<string> SendOptionalBodyAsync(Dictionary<string, object>? request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -23,7 +23,7 @@ public class OptionalClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }

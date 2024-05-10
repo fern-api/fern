@@ -15,7 +15,7 @@ public class NoAuthClient
     /// <summary>
     /// POST request with no auth
     /// </summary>
-    public async bool PostWithNoAuthAsync(object request)
+    public async Task<bool> PostWithNoAuthAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -26,7 +26,7 @@ public class NoAuthClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }

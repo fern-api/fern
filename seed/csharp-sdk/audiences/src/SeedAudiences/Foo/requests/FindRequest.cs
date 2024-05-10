@@ -2,5 +2,9 @@ namespace SeedAudiences;
 
 public class FindRequest
 {
-    public List<string?> OptionalString { get; init; }
+    public string? OptionalString { get; init; }
+
+    public string? PublicProperty { get; init; }
+
+    public int? PrivateProperty { get; init; }
 }

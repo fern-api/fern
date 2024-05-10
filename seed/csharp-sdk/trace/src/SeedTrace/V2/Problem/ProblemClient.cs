@@ -16,15 +16,15 @@ public class ProblemClient
     /// <summary>
     /// Returns lightweight versions of all problems
     /// </summary>
-    public async List<List<LightweightProblemInfoV2>> GetLightweightProblemsAsync()
+    public async Task<List<LightweightProblemInfoV2>> GetLightweightProblemsAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/lightweight-problem-info" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<List<LightweightProblemInfoV2>>>(responseBody);
+            return JsonSerializer.Deserialize<List<LightweightProblemInfoV2>>(responseBody);
         }
         throw new Exception();
     }
@@ -32,15 +32,15 @@ public class ProblemClient
     /// <summary>
     /// Returns latest versions of all problems
     /// </summary>
-    public async List<List<ProblemInfoV2>> GetProblemsAsync()
+    public async Task<List<ProblemInfoV2>> GetProblemsAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/problem-info" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<List<ProblemInfoV2>>>(responseBody);
+            return JsonSerializer.Deserialize<List<ProblemInfoV2>>(responseBody);
         }
         throw new Exception();
     }
@@ -48,7 +48,7 @@ public class ProblemClient
     /// <summary>
     /// Returns latest version of a problem
     /// </summary>
-    public async ProblemInfoV2 GetLatestProblemAsync(string problemId)
+    public async Task<ProblemInfoV2> GetLatestProblemAsync(string problemId)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -58,7 +58,7 @@ public class ProblemClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody);
         }
@@ -68,7 +68,7 @@ public class ProblemClient
     /// <summary>
     /// Returns requested version of a problem
     /// </summary>
-    public async ProblemInfoV2 GetProblemVersionAsync(string problemId, int problemVersion)
+    public async Task<ProblemInfoV2> GetProblemVersionAsync(string problemId, int problemVersion)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -78,7 +78,7 @@ public class ProblemClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody);
         }

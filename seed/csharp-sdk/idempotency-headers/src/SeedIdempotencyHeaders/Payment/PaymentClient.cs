@@ -12,13 +12,13 @@ public class PaymentClient
         _client = client;
     }
 
-    public async Guid CreateAsync(CreatePaymentRequest request)
+    public async Task<Guid> CreateAsync(CreatePaymentRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<Guid>(responseBody);
         }

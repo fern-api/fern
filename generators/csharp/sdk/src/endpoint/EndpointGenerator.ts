@@ -158,7 +158,7 @@ export class EndpointGenerator {
                         `string ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
                     );
                     writer.writeLine(
-                        `if (${RESPONSE_BODY_VARIABLE_NAME}.StatusCode >= 200 && ${RESPONSE_BODY_VARIABLE_NAME}.StatusCode < 400) {`
+                        `if (${RESPONSE_VARIABLE_NAME}.StatusCode >= 200 && ${RESPONSE_VARIABLE_NAME}.StatusCode < 400) {`
                     );
                     writer.writeNewLineIfLastLineNot();
 

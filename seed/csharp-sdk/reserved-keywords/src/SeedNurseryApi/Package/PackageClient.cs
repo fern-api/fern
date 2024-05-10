@@ -13,7 +13,7 @@ public class PackageClient
 
     public async void TestAsync(TestRequest request)
     {
-        var _query = new Dictionary<string, string>() { { "for", request.For }, };
+        var _query = new Dictionary<string, object>() { { "for", request.For }, };
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
             {

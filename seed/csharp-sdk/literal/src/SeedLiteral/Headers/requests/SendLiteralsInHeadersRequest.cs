@@ -2,7 +2,9 @@ namespace SeedLiteral;
 
 public class SendLiteralsInHeadersRequest
 {
-    public List<string> EndpointVersion { get; init; }
+    public string EndpointVersion { get; init; }
 
-    public List<bool> Async { get; init; }
+    public bool Async { get; init; }
+
+    public string Query { get; init; }
 }

@@ -27,13 +27,13 @@ public class UserClient
     /// Create a new user.
     /// This endpoint is used to create a new user.
     /// </summary>
-    public async User CreateUserAsync(CreateUserRequest request)
+    public async Task<User> CreateUserAsync(CreateUserRequest request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/users" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<User>(responseBody);
         }

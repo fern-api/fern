@@ -13,7 +13,7 @@ public class ContainerClient
         _client = client;
     }
 
-    public async List<List<string>> GetAndReturnListOfPrimitivesAsync(List<List<string>> request)
+    public async Task<List<string>> GetAndReturnListOfPrimitivesAsync(List<string> request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -24,15 +24,15 @@ public class ContainerClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<List<string>>>(responseBody);
+            return JsonSerializer.Deserialize<List<string>>(responseBody);
         }
         throw new Exception();
     }
 
-    public async List<List<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
-        List<List<ObjectWithRequiredField>> request
+    public async Task<List<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
+        List<ObjectWithRequiredField> request
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -44,16 +44,14 @@ public class ContainerClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<List<ObjectWithRequiredField>>>(responseBody);
+            return JsonSerializer.Deserialize<List<ObjectWithRequiredField>>(responseBody);
         }
         throw new Exception();
     }
 
-    public async List<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
-        List<HashSet<string>> request
-    )
+    public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(HashSet<string> request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -64,15 +62,15 @@ public class ContainerClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<HashSet<string>>>(responseBody);
+            return JsonSerializer.Deserialize<HashSet<string>>(responseBody);
         }
         throw new Exception();
     }
 
-    public async List<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
-        List<HashSet<ObjectWithRequiredField>> request
+    public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
+        HashSet<ObjectWithRequiredField> request
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -84,15 +82,15 @@ public class ContainerClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<HashSet<ObjectWithRequiredField>>>(responseBody);
+            return JsonSerializer.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody);
         }
         throw new Exception();
     }
 
-    public async List<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
-        List<Dictionary<string, string>> request
+    public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
+        Dictionary<string, string> request
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -104,16 +102,16 @@ public class ContainerClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<Dictionary<string, string>>>(responseBody);
+            return JsonSerializer.Deserialize<Dictionary<string, string>>(responseBody);
         }
         throw new Exception();
     }
 
-    public async List<
+    public async Task<
         Dictionary<string, ObjectWithRequiredField>
-    > GetAndReturnMapOfPrimToObjectAsync(List<Dictionary<string, ObjectWithRequiredField>> request)
+    > GetAndReturnMapOfPrimToObjectAsync(Dictionary<string, ObjectWithRequiredField> request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -124,17 +122,17 @@ public class ContainerClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<Dictionary<string, ObjectWithRequiredField>>>(
+            return JsonSerializer.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
                 responseBody
             );
         }
         throw new Exception();
     }
 
-    public async List<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
-        List<ObjectWithRequiredField?> request
+    public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
+        ObjectWithRequiredField? request
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -146,9 +144,9 @@ public class ContainerClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<ObjectWithRequiredField?>>(responseBody);
+            return JsonSerializer.Deserialize<ObjectWithRequiredField?>(responseBody);
         }
         throw new Exception();
     }

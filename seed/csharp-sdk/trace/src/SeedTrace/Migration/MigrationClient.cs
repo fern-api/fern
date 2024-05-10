@@ -12,7 +12,7 @@ public class MigrationClient
         _client = client;
     }
 
-    public async List<List<Migration>> GetAttemptedMigrationsAsync(
+    public async Task<List<Migration>> GetAttemptedMigrationsAsync(
         GetAttemptedMigrationsRequest request
     )
     {
@@ -29,9 +29,9 @@ public class MigrationClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<List<Migration>>>(responseBody);
+            return JsonSerializer.Deserialize<List<Migration>>(responseBody);
         }
         throw new Exception();
     }

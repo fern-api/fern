@@ -1,8 +1,12 @@
+using SeedTrace;
+
 namespace SeedTrace;
 
 public class CreatePlaylistRequest
 {
     public DateTime Datetime { get; init; }
 
-    public List<DateTime?> OptionalDatetime { get; init; }
+    public DateTime? OptionalDatetime { get; init; }
+
+    public PlaylistCreateRequest Body { get; init; }
 }

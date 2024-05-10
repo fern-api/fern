@@ -2,7 +2,7 @@ namespace SeedTrace;
 
 public class GetPlaylistsRequest
 {
-    public List<int?> Limit { get; init; }
+    public int? Limit { get; init; }
 
     /// <summary>
     /// i'm another field
@@ -15,7 +15,7 @@ public class GetPlaylistsRequest
     /// </summary>
     public string MultiLineDocs { get; init; }
 
-    public List<string?> OptionalMultipleField { get; init; }
+    public string? OptionalMultipleField { get; init; }
 
     public string MultipleField { get; init; }
 }

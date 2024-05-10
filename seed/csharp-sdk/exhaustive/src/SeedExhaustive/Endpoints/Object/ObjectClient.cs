@@ -13,7 +13,7 @@ public class ObjectClient
         _client = client;
     }
 
-    public async ObjectWithOptionalField GetAndReturnWithOptionalFieldAsync(
+    public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
         ObjectWithOptionalField request
     )
     {
@@ -26,14 +26,14 @@ public class ObjectClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }
         throw new Exception();
     }
 
-    public async ObjectWithRequiredField GetAndReturnWithRequiredFieldAsync(
+    public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
         ObjectWithRequiredField request
     )
     {
@@ -46,14 +46,14 @@ public class ObjectClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<ObjectWithRequiredField>(responseBody);
         }
         throw new Exception();
     }
 
-    public async ObjectWithMapOfMap GetAndReturnWithMapOfMapAsync(ObjectWithMapOfMap request)
+    public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(ObjectWithMapOfMap request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -64,14 +64,14 @@ public class ObjectClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<ObjectWithMapOfMap>(responseBody);
         }
         throw new Exception();
     }
 
-    public async NestedObjectWithOptionalField GetAndReturnNestedWithOptionalFieldAsync(
+    public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
         NestedObjectWithOptionalField request
     )
     {
@@ -84,14 +84,14 @@ public class ObjectClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<NestedObjectWithOptionalField>(responseBody);
         }
         throw new Exception();
     }
 
-    public async NestedObjectWithRequiredField GetAndReturnNestedWithRequiredFieldAsync(
+    public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
         NestedObjectWithRequiredField request
     )
     {
@@ -104,15 +104,15 @@ public class ObjectClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody);
         }
         throw new Exception();
     }
 
-    public async NestedObjectWithRequiredField GetAndReturnNestedWithRequiredFieldAsListAsync(
-        List<List<NestedObjectWithRequiredField>> request
+    public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
+        List<NestedObjectWithRequiredField> request
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -124,7 +124,7 @@ public class ObjectClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody);
         }

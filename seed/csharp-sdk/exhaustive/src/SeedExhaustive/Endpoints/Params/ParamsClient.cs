@@ -16,13 +16,13 @@ public class ParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    public async string GetWithPathAsync(string param)
+    public async Task<string> GetWithPathAsync(string param)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/path/{param}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
@@ -34,7 +34,7 @@ public class ParamsClient
     /// </summary>
     public async void GetWithQueryAsync(GetWithQuery request)
     {
-        var _query = new Dictionary<string, string>()
+        var _query = new Dictionary<string, object>()
         {
             { "query", request.Query },
             { "number", request.Number.ToString() },
@@ -54,7 +54,7 @@ public class ParamsClient
     /// </summary>
     public async void GetWithAllowMultipleQueryAsync(GetWithMultipleQuery request)
     {
-        var _query = new Dictionary<string, string>()
+        var _query = new Dictionary<string, object>()
         {
             { "query", request.Query },
             { "numer", request.Numer.ToString() },
@@ -74,7 +74,7 @@ public class ParamsClient
     /// </summary>
     public async void GetWithPathAndQueryAsync(string param, GetWithPathAndQuery request)
     {
-        var _query = new Dictionary<string, string>() { { "query", request.Query }, };
+        var _query = new Dictionary<string, object>() { { "query", request.Query }, };
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
             {
@@ -88,7 +88,7 @@ public class ParamsClient
     /// <summary>
     /// PUT to update with path param
     /// </summary>
-    public async string ModifyWithPathAsync(string param, string request)
+    public async Task<string> ModifyWithPathAsync(string param, string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -99,7 +99,7 @@ public class ParamsClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }

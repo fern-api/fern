@@ -15,7 +15,7 @@ public class SubmissionClient
     /// <summary>
     /// Returns sessionId and execution server URL for session. Spins up server.
     /// </summary>
-    public async ExecutionSessionResponse CreateExecutionSessionAsync(Language language)
+    public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(Language language)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -25,7 +25,7 @@ public class SubmissionClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<ExecutionSessionResponse>(responseBody);
         }
@@ -35,15 +35,15 @@ public class SubmissionClient
     /// <summary>
     /// Returns execution server URL for session. Returns empty if session isn't registered.
     /// </summary>
-    public async List<ExecutionSessionResponse?> GetExecutionSessionAsync(string sessionId)
+    public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(string sessionId)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{sessionId}" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<ExecutionSessionResponse?>>(responseBody);
+            return JsonSerializer.Deserialize<ExecutionSessionResponse?>(responseBody);
         }
         throw new Exception();
     }
@@ -58,13 +58,13 @@ public class SubmissionClient
         );
     }
 
-    public async GetExecutionSessionStateResponse GetExecutionSessionsStateAsync()
+    public async Task<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/execution-sessions-state" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<GetExecutionSessionStateResponse>(responseBody);
         }

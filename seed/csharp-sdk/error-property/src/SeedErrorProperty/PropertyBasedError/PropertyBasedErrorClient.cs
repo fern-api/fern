@@ -15,13 +15,13 @@ public class PropertyBasedErrorClient
     /// <summary>
     /// GET request that always throws an error
     /// </summary>
-    public async string ThrowErrorAsync()
+    public async Task<string> ThrowErrorAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/property-based-error" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }

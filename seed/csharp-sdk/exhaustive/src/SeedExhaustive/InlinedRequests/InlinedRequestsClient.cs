@@ -16,7 +16,7 @@ public class InlinedRequestsClient
     /// <summary>
     /// POST with custom object in request body, response is an object
     /// </summary>
-    public async ObjectWithOptionalField PostWithObjectBodyandResponseAsync(
+    public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
         PostWithObjectBody request
     )
     {
@@ -24,7 +24,7 @@ public class InlinedRequestsClient
             new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/object" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody);
         }

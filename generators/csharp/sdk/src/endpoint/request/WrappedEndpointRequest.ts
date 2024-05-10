@@ -63,7 +63,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.writeNodeStatement(
                     csharp.dictionary({
                         keyType: csharp.Type.string(),
-                        valueType: csharp.Type.string(),
+                        valueType: csharp.Type.object(),
                         entries: requiredQueryParameters.map((queryParameter) => {
                             if (this.isString(queryParameter.valueType)) {
                                 return {
@@ -88,7 +88,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", `${queryParameterReference} != null`);
-                    writer.writeLine(
+                    writer.writeTextStatement(
                         `${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = ${queryParameterReference}`
                     );
                     writer.endControlFlow();
@@ -141,7 +141,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 for (const header of optionalHeaders) {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", `${headerReference} != null`);
-                    writer.writeLine(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = ${headerReference}`);
+                    writer.writeTextStatement(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = ${headerReference}`);
                     writer.endControlFlow();
                 }
             }),
@@ -156,7 +156,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return this.endpoint.requestBody._visit({
             reference: () => {
                 return {
-                    requestBodyReference: `${this.wrapper.wrapperName.camelCase.safeName}.${this.wrapper.bodyKey.camelCase.safeName}`
+                    requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
                 };
             },
             inlinedRequestBody: () => undefined,

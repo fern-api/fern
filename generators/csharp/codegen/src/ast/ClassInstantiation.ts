@@ -31,7 +31,16 @@ export class ClassInstantiation extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.write(`new ${this.classReference.name}{`);
+        const hasNamedArguments =
+            this.arguments_.length > 0 && this.arguments_[0] != null && isNamedArgument(this.arguments_[0]);
+
+        writer.write(`new ${this.classReference.name}`);
+
+        if (hasNamedArguments) {
+            writer.write(`{`);
+        } else {
+            writer.write(`(`);
+        }
 
         writer.newLine();
         writer.indent();
@@ -48,7 +57,11 @@ export class ClassInstantiation extends AstNode {
         });
         writer.dedent();
 
-        writer.writeLine("}");
+        if (hasNamedArguments) {
+            writer.write(`}`);
+        } else {
+            writer.write(`)`);
+        }
     }
 }
 

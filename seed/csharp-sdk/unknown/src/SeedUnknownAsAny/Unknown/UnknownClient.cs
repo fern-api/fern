@@ -12,7 +12,7 @@ public class UnknownClient
         _client = client;
     }
 
-    public async List<List<object>> PostAsync(object request)
+    public async Task<List<object>> PostAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -23,9 +23,9 @@ public class UnknownClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<List<object>>>(responseBody);
+            return JsonSerializer.Deserialize<List<object>>(responseBody);
         }
         throw new Exception();
     }

@@ -2,5 +2,5 @@ namespace SeedPagination;
 
 public class ListUsersExtendedRequest
 {
-    public List<Guid?> Cursor { get; init; }
+    public Guid? Cursor { get; init; }
 }

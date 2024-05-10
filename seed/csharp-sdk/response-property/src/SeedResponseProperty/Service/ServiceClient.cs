@@ -12,7 +12,7 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Response GetMovieAsync(string request)
+    public async Task<Response> GetMovieAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -23,14 +23,14 @@ public class ServiceClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
         throw new Exception();
     }
 
-    public async Response GetMovieDocsAsync(string request)
+    public async Task<Response> GetMovieDocsAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -41,14 +41,14 @@ public class ServiceClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
         throw new Exception();
     }
 
-    public async StringResponse GetMovieNameAsync(string request)
+    public async Task<StringResponse> GetMovieNameAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -59,14 +59,14 @@ public class ServiceClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<StringResponse>(responseBody);
         }
         throw new Exception();
     }
 
-    public async Response GetMovieMetadataAsync(string request)
+    public async Task<Response> GetMovieMetadataAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -77,14 +77,14 @@ public class ServiceClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
         throw new Exception();
     }
 
-    public async List<Response?> GetOptionalMovieAsync(string request)
+    public async Task<Response?> GetOptionalMovieAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -95,14 +95,14 @@ public class ServiceClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<Response?>>(responseBody);
+            return JsonSerializer.Deserialize<Response?>(responseBody);
         }
         throw new Exception();
     }
 
-    public async List<WithDocs?> GetOptionalMovieDocsAsync(string request)
+    public async Task<WithDocs?> GetOptionalMovieDocsAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -113,14 +113,14 @@ public class ServiceClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<WithDocs?>>(responseBody);
+            return JsonSerializer.Deserialize<WithDocs?>(responseBody);
         }
         throw new Exception();
     }
 
-    public async List<StringResponse?> GetOptionalMovieNameAsync(string request)
+    public async Task<StringResponse?> GetOptionalMovieNameAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -131,9 +131,9 @@ public class ServiceClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
-            return JsonSerializer.Deserialize<List<StringResponse?>>(responseBody);
+            return JsonSerializer.Deserialize<StringResponse?>(responseBody);
         }
         throw new Exception();
     }

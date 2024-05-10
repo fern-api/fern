@@ -12,7 +12,7 @@ public class HeadersClient
         _client = client;
     }
 
-    public async SendResponse SendAsync(SendLiteralsInHeadersRequest request)
+    public async Task<SendResponse> SendAsync(SendLiteralsInHeadersRequest request)
     {
         var _headers = new Dictionary<string, string>()
         {
@@ -28,7 +28,7 @@ public class HeadersClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<SendResponse>(responseBody);
         }

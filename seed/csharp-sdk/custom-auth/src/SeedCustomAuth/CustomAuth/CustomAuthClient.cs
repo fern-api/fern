@@ -15,13 +15,13 @@ public class CustomAuthClient
     /// <summary>
     /// GET request with custom auth scheme
     /// </summary>
-    public async bool GetWithCustomAuthAsync()
+    public async Task<bool> GetWithCustomAuthAsync()
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/custom-auth" }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
@@ -31,7 +31,7 @@ public class CustomAuthClient
     /// <summary>
     /// POST request with custom auth scheme
     /// </summary>
-    public async bool PostWithCustomAuthAsync(object request)
+    public async Task<bool> PostWithCustomAuthAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -42,7 +42,7 @@ public class CustomAuthClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }

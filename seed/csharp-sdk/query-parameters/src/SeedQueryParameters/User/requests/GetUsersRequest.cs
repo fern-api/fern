@@ -16,13 +16,13 @@ public class GetUsersRequest
 
     public User User { get; init; }
 
-    public List<Dictionary<string, string>> KeyValue { get; init; }
+    public Dictionary<string, string> KeyValue { get; init; }
 
-    public List<string?> OptionalString { get; init; }
+    public string? OptionalString { get; init; }
 
     public NestedUser NestedUser { get; init; }
 
-    public List<User?> OptionalUser { get; init; }
+    public User? OptionalUser { get; init; }
 
     public User ExcludeUser { get; init; }
 

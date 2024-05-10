@@ -9,10 +9,10 @@ public class TestSubmissionState
     public string ProblemId { get; init; }
 
     [JsonPropertyName("defaultTestCases")]
-    public List<List<TestCase>> DefaultTestCases { get; init; }
+    public List<TestCase> DefaultTestCases { get; init; }
 
     [JsonPropertyName("customTestCases")]
-    public List<List<TestCase>> CustomTestCases { get; init; }
+    public List<TestCase> CustomTestCases { get; init; }
 
     [JsonPropertyName("status")]
     public TestSubmissionStatus Status { get; init; }

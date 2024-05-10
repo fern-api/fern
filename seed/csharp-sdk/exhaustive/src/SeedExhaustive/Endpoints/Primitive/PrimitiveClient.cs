@@ -12,7 +12,7 @@ public class PrimitiveClient
         _client = client;
     }
 
-    public async string GetAndReturnStringAsync(string request)
+    public async Task<string> GetAndReturnStringAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -23,14 +23,14 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
         throw new Exception();
     }
 
-    public async int GetAndReturnIntAsync(int request)
+    public async Task<int> GetAndReturnIntAsync(int request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -41,14 +41,14 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<int>(responseBody);
         }
         throw new Exception();
     }
 
-    public async long GetAndReturnLongAsync(long request)
+    public async Task<long> GetAndReturnLongAsync(long request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -59,14 +59,14 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<long>(responseBody);
         }
         throw new Exception();
     }
 
-    public async double GetAndReturnDoubleAsync(double request)
+    public async Task<double> GetAndReturnDoubleAsync(double request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -77,14 +77,14 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<double>(responseBody);
         }
         throw new Exception();
     }
 
-    public async bool GetAndReturnBoolAsync(bool request)
+    public async Task<bool> GetAndReturnBoolAsync(bool request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -95,14 +95,14 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<bool>(responseBody);
         }
         throw new Exception();
     }
 
-    public async DateTime GetAndReturnDatetimeAsync(DateTime request)
+    public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -113,14 +113,14 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<DateTime>(responseBody);
         }
         throw new Exception();
     }
 
-    public async DateOnly GetAndReturnDateAsync(DateOnly request)
+    public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -131,14 +131,14 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<DateOnly>(responseBody);
         }
         throw new Exception();
     }
 
-    public async Guid GetAndReturnUuidAsync(Guid request)
+    public async Task<Guid> GetAndReturnUuidAsync(Guid request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -149,14 +149,14 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<Guid>(responseBody);
         }
         throw new Exception();
     }
 
-    public async string GetAndReturnBase64Async(string request)
+    public async Task<string> GetAndReturnBase64Async(string request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -167,7 +167,7 @@ public class PrimitiveClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }

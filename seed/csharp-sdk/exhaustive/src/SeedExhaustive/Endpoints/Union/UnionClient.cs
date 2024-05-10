@@ -13,7 +13,7 @@ public class UnionClient
         _client = client;
     }
 
-    public async Animal GetAndReturnUnionAsync(Animal request)
+    public async Task<Animal> GetAndReturnUnionAsync(Animal request)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.ApiRequest
@@ -24,7 +24,7 @@ public class UnionClient
             }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
         {
             return JsonSerializer.Deserialize<Animal>(responseBody);
         }
