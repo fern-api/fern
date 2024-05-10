@@ -32,7 +32,6 @@
     "@fern-api/logging-execa": "workspace:*",
     "@fern-typescript/fetcher": "workspace:*",
     "execa": "^5.1.1",
-    "fs": "^0.0.1-security",
     "js-yaml": "^4.1.0",
     "node-fetch": "2.7.0",
     "strip-ansi": "^7.1.0",

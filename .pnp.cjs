@@ -6665,7 +6665,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.56.0"],\
             ["execa", "npm:5.1.1"],\
             ["form-data", "npm:4.0.0"],\
-            ["fs", "npm:0.0.1-security"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["jest-environment-jsdom", "virtual:7821aed0ab825bb97e7a83aa73ddcebc48c1addb4c7bb8e48165cd794ef4ddc38ad472a5bac8abbb90dba18a13c26ad6f8d9d0fa2f6f070b336f2e4c36dd4a33#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
@@ -17327,15 +17326,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["from2", "npm:2.3.0"],\
             ["inherits", "npm:2.0.4"],\
             ["readable-stream", "npm:2.3.8"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["fs", [\
-        ["npm:0.0.1-security", {\
-          "packageLocation": "./.yarn/cache/fs-npm-0.0.1-security-5060b47e87-53c6230e1f.zip/node_modules/fs/",\
-          "packageDependencies": [\
-            ["fs", "npm:0.0.1-security"]\
           ],\
           "linkType": "HARD"\
         }]\
