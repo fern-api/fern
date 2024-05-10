@@ -12,7 +12,13 @@ public partial class SeedApiClient
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
+        A = new AClient(_client);
+        Ast = new AstClient(_client);
     }
+
+    public AClient A { get; }
+
+    public AstClient Ast { get; }
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {

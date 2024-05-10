@@ -12,7 +12,10 @@ public partial class SeedWebsocketClient
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
+        Realtime = new RealtimeClient(_client);
     }
+
+    public RealtimeClient Realtime { get; }
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {

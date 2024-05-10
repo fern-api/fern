@@ -12,8 +12,11 @@ public partial class SeedErrorPropertyClient
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
+        Errors = new ErrorsClient(_client);
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
+
+    public ErrorsClient Errors { get; }
 
     public PropertyBasedErrorClient PropertyBasedError { get; }
 

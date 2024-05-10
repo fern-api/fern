@@ -17,9 +17,12 @@ public partial class SeedBasicAuthClient
             clientOptions ?? new ClientOptions()
         );
         BasicAuth = new BasicAuthClient(_client);
+        Errors = new ErrorsClient(_client);
     }
 
     public BasicAuthClient BasicAuth { get; }
+
+    public ErrorsClient Errors { get; }
 
     private string GetFromEnvironmentOrThrow(string env, string message)
     {

@@ -72,6 +72,12 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.getNamespaceFromFernFilepath(service.name.fernFilepath);
     }
 
+    public getDirectoryForSubpackage(subpackage: Subpackage): string {
+        return RelativeFilePath.of(
+            [...subpackage.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
+        );
+    }
+
     public getDirectoryForServiceId(serviceId: ServiceId): string {
         const service = this.getHttpServiceOrThrow(serviceId);
         return RelativeFilePath.of(
@@ -79,11 +85,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         );
     }
 
-    public getServiceClassReference(serviceId: ServiceId): csharp.ClassReference {
-        const service = this.getHttpServiceOrThrow(serviceId);
+    public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
         return csharp.classReference({
-            name: `${service.name.fernFilepath.file?.pascalCase.unsafeName}Client`,
-            namespace: this.getNamespaceForServiceId(serviceId)
+            name: `${subpackage.name.pascalCase.unsafeName}Client`,
+            namespace: this.getNamespaceFromFernFilepath(subpackage.fernFilepath)
         });
     }
 

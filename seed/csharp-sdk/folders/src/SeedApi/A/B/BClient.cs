@@ -1,12 +1,12 @@
 using SeedApi;
 
-namespace SeedApi.A.C;
+namespace SeedApi.A.B;
 
-public class undefinedClient
+public class BClient
 {
     private RawClient _client;
 
-    public undefinedClient(RawClient client)
+    public BClient(RawClient client)
     {
         _client = client;
     }

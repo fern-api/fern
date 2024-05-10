@@ -12,8 +12,11 @@ public partial class SeedUnionsClient
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
+        Types = new TypesClient(_client);
         Union = new UnionClient(_client);
     }
+
+    public TypesClient Types { get; }
 
     public UnionClient Union { get; }
 

@@ -48,15 +48,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         class_.addConstructor(this.getConstructorMethod());
 
         for (const subpackage of this.getSubpackages()) {
-            if (subpackage.service == null) {
-                continue;
-            }
             class_.addField(
                 csharp.field({
                     access: "public",
                     get: true,
                     name: subpackage.name.pascalCase.safeName,
-                    type: csharp.Type.reference(this.context.getServiceClassReference(subpackage.service))
+                    type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
             );
         }
@@ -176,13 +173,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     })
                 );
                 for (const subpackage of this.getSubpackages()) {
-                    if (subpackage.service == null) {
-                        continue;
-                    }
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
-                            classReference: this.context.getServiceClassReference(subpackage.service),
+                            classReference: this.context.getSubpackageClassReference(subpackage),
                             arguments_: [csharp.codeblock("_client")]
                         })
                     );

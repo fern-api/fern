@@ -7,7 +7,7 @@ import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator"
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
-import { SubClientGenerator } from "./sub-client/SubClientGenerator";
+import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -48,23 +48,27 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             context.project.addSourceFiles(file);
         }
         for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
-            if (subpackage.service == null) {
-                continue;
-            }
-            const service = context.getHttpServiceOrThrow(subpackage.service);
-            const subClient = new SubClientGenerator(context, subpackage.service, service);
+            const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
+            const subClient = new SubPackageClientGenerator({
+                context,
+                subpackage,
+                serviceId: subpackage.service,
+                service: subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined
+            });
             context.project.addSourceFiles(subClient.generate());
 
-            for (const endpoint of service.endpoints) {
-                if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
-                    const wrappedRequestGenerator = new WrappedRequestGenerator({
-                        wrapper: endpoint.sdkRequest.shape,
-                        context,
-                        endpoint,
-                        serviceId: subpackage.service
-                    });
-                    const wrappedRequest = wrappedRequestGenerator.generate();
-                    context.project.addSourceFiles(wrappedRequest);
+            if (subpackage.service != null && service != null) {
+                for (const endpoint of service.endpoints) {
+                    if (endpoint.sdkRequest != null && endpoint.sdkRequest.shape.type === "wrapper") {
+                        const wrappedRequestGenerator = new WrappedRequestGenerator({
+                            wrapper: endpoint.sdkRequest.shape,
+                            context,
+                            endpoint,
+                            serviceId: subpackage.service
+                        });
+                        const wrappedRequest = wrappedRequestGenerator.generate();
+                        context.project.addSourceFiles(wrappedRequest);
+                    }
                 }
             }
         }

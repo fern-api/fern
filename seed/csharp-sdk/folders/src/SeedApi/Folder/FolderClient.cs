@@ -1,15 +1,19 @@
 using SeedApi;
+using SeedApi.Folder;
 
 namespace SeedApi.Folder;
 
-public class undefinedClient
+public class FolderClient
 {
     private RawClient _client;
 
-    public undefinedClient(RawClient client)
+    public FolderClient(RawClient client)
     {
         _client = client;
+        Service = new ServiceClient(_client);
     }
+
+    public ServiceClient Service { get; }
 
     public async void FooAsync()
     {

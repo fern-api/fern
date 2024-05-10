@@ -1,4 +1,5 @@
 using SeedApi;
+using SeedApi.A;
 using SeedApi.Folder;
 
 namespace SeedApi;
@@ -13,10 +14,13 @@ public partial class SeedApiClient
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
-        Folder = new undefinedClient(_client);
+        A = new AClient(_client);
+        Folder = new FolderClient(_client);
     }
 
-    public undefinedClient Folder { get; }
+    public AClient A { get; }
+
+    public FolderClient Folder { get; }
 
     public async void FooAsync() { }
 
