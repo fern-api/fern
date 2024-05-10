@@ -15,7 +15,7 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
             "Please pass in password or set the environment variable PASSWORD."
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}
         BasicAuth = 

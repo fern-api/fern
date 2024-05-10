@@ -72,6 +72,29 @@ export class Writer {
         this.writeNewLineIfLastLineNot();
     }
 
+    /**
+     * Writes text but then suffixes with a `;`
+     * @param node
+     */
+    public controlFlow(prefix: string, statement: string): void {
+        const codeBlock = csharp.codeblock(prefix);
+        codeBlock.write(this);
+        this.write(` (`);
+        this.write(statement);
+        this.write(") {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
+    }
+
+    /**
+     * Writes text but then suffixes with a `;`
+     * @param node
+     */
+    public endControlFlow(): void {
+        this.dedent();
+        this.writeLine("}");
+    }
+
     /* Only writes a newline if last line in the buffer is not a newline */
     public writeLine(text = ""): void {
         this.write(text);

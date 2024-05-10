@@ -14,8 +14,19 @@ public class QueryClient
 
     public async SendResponse SendAsync(SendLiteralsInQueryRequest request)
     {
+        var _query = new Dictionary<string, string>()
+        {
+            { "prompt", request.Prompt.ToString() },
+            { "query", request.Query },
+            { "stream", request.Stream.ToString() },
+        };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/query" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/query",
+                Query = _query
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

@@ -8,7 +8,8 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId,
-    TypeId
+    TypeId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./client-options/ClientOptionsGenerator";
@@ -122,5 +123,23 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
         return [this.getNamespace(), ...fernFilepath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
+    }
+
+    public isOptional(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "optional";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isOptional(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return true;
+            case "primitive":
+                return false;
+        }
     }
 }

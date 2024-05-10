@@ -12,7 +12,7 @@ public partial class SeedBearerTokenEnvironmentVariableClient
             "Please pass in apiKey or set the environment variable COURIER_API_KEY."
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "Authorization", $"Bearer {apiKey}" }, 
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}

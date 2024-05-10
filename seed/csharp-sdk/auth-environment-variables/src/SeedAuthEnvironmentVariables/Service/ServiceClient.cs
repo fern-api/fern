@@ -33,8 +33,17 @@ public class ServiceClient
     /// </summary>
     public async string GetWithHeaderAsync(HeaderAuthRequest request)
     {
+        var _headers = new Dictionary<string, string>()
+        {
+            { "X-Endpoint-Header", request.XEndpointHeader },
+        };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/apiKeyInHeader" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "/apiKeyInHeader",
+                Headers = _headers
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

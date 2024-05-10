@@ -12,7 +12,7 @@ public partial class SeedAuthEnvironmentVariablesClient
             "Please pass in apiKey or set the environment variable FERN_API_KEY."
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "X-FERN-API-KEY", apiKey }, 
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}

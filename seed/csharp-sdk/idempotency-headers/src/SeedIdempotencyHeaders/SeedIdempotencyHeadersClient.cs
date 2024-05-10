@@ -9,7 +9,7 @@ public partial class SeedIdempotencyHeadersClient
     public SeedIdempotencyHeadersClient (string token, ClientOptions clientOptions) {
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "Authorization", $"Bearer {token}" }, 
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}

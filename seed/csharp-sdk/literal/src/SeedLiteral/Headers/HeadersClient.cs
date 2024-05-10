@@ -14,8 +14,18 @@ public class HeadersClient
 
     public async SendResponse SendAsync(SendLiteralsInHeadersRequest request)
     {
+        var _headers = new Dictionary<string, string>()
+        {
+            { "X-Endpoint-Version", request.EndpointVersion.ToString() },
+            { "X-Async", request.Async.ToString() },
+        };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/headers" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/headers",
+                Headers = _headers
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

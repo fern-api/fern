@@ -9,7 +9,7 @@ public partial class SeedCustomAuthClient
     public SeedCustomAuthClient (string customAuthScheme, ClientOptions clientOptions) {
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "X-API-KEY", customAuthScheme }, 
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}

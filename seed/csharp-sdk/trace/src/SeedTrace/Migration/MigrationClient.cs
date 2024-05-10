@@ -16,8 +16,17 @@ public class MigrationClient
         GetAttemptedMigrationsRequest request
     )
     {
+        var _headers = new Dictionary<string, string>()
+        {
+            { "admin-key-header", request.AdminKeyHeader },
+        };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/all" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "/all",
+                Headers = _headers
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

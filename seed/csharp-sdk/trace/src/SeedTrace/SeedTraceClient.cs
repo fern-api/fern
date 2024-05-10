@@ -10,7 +10,7 @@ public partial class SeedTraceClient
     public SeedTraceClient (string token, List<string?> xRandomHeader, ClientOptions clientOptions) {
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}
         V2 = 

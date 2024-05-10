@@ -13,6 +13,10 @@ export declare namespace RawClient {
         bodyReference?: string;
         /** the path parameter id to reference */
         pathParameterReferences?: Record<string, string>;
+        /** the headers to pass to the endpoint */
+        headerBagReference?: string;
+        /** the query parameters to pass to the endpoint */
+        queryBagReference?: string;
     }
 }
 
@@ -33,7 +37,9 @@ export class RawClient {
         endpoint,
         bodyReference,
         clientReference,
-        pathParameterReferences
+        pathParameterReferences,
+        headerBagReference,
+        queryBagReference
     }: RawClient.MakeRequestArgs): csharp.MethodInvocation {
         const arguments_: csharp.ClassInstantiation.Arguments = [
             {
@@ -51,6 +57,18 @@ export class RawClient {
             arguments_.push({
                 name: "Body",
                 assignment: csharp.codeblock(bodyReference)
+            });
+        }
+        if (queryBagReference != null) {
+            arguments_.push({
+                name: "Query",
+                assignment: csharp.codeblock(queryBagReference)
+            });
+        }
+        if (headerBagReference != null) {
+            arguments_.push({
+                name: "Headers",
+                assignment: csharp.codeblock(headerBagReference)
             });
         }
         const apiRequest = csharp.instantiateClass({

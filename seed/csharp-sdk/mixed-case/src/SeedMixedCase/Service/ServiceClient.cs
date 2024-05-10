@@ -27,8 +27,18 @@ public class ServiceClient
 
     public async List<List<Resource>> ListResourcesAsync(ListResourcesRequest request)
     {
+        var _query = new Dictionary<string, string>()
+        {
+            { "page_limit", request.PageLimit.ToString() },
+            { "beforeDate", request.BeforeDate.ToString() },
+        };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "",
+                Query = _query
+            }
         );
         string responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (responseBody.StatusCode >= 200 && responseBody.StatusCode < 400)

@@ -9,7 +9,7 @@ public partial class SeedApiClient
     public SeedApiClient (string token, ClientOptions clientOptions) {
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}
         Imdb = 

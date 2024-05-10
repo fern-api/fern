@@ -61,6 +61,14 @@ export class EndpointGenerator {
             summary: endpoint.docs,
             return_,
             body: csharp.codeblock((writer) => {
+                const queryParameterCodeBlock = request?.getQueryParameterCodeBlock();
+                if (queryParameterCodeBlock != null) {
+                    queryParameterCodeBlock.code.write(writer);
+                }
+                const headerParameterCodeBlock = request?.getHeaderParameterCodeBlock();
+                if (headerParameterCodeBlock != null) {
+                    headerParameterCodeBlock.code.write(writer);
+                }
                 const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
@@ -68,7 +76,9 @@ export class EndpointGenerator {
                         clientReference: rawClientReference,
                         endpoint,
                         bodyReference: requestBodyCodeBlock?.requestBodyReference,
-                        pathParameterReferences
+                        pathParameterReferences,
+                        headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+                        queryBagReference: queryParameterCodeBlock?.queryParameterBagReference
                     })
                 );
                 const responseStatements = this.getEndpointResponseStatements({ endpoint });

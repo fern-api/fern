@@ -34,8 +34,18 @@ public class ParamsClient
     /// </summary>
     public async void GetWithQueryAsync(GetWithQuery request)
     {
+        var _query = new Dictionary<string, string>()
+        {
+            { "query", request.Query },
+            { "number", request.Number.ToString() },
+        };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "",
+                Query = _query
+            }
         );
     }
 
@@ -44,8 +54,18 @@ public class ParamsClient
     /// </summary>
     public async void GetWithAllowMultipleQueryAsync(GetWithMultipleQuery request)
     {
+        var _query = new Dictionary<string, string>()
+        {
+            { "query", request.Query },
+            { "numer", request.Numer.ToString() },
+        };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "",
+                Query = _query
+            }
         );
     }
 
@@ -54,8 +74,14 @@ public class ParamsClient
     /// </summary>
     public async void GetWithPathAndQueryAsync(string param, GetWithPathAndQuery request)
     {
+        var _query = new Dictionary<string, string>() { { "query", request.Query }, };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/path-query/{param}" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = $"/path-query/{param}",
+                Query = _query
+            }
         );
     }
 

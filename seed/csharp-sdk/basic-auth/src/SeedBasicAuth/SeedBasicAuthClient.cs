@@ -9,7 +9,7 @@ public partial class SeedBasicAuthClient
     public SeedBasicAuthClient (string username, string password, ClientOptions clientOptions) {
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}
         BasicAuth = 

@@ -8,7 +8,7 @@ public partial class SeedExtendsClient
     public SeedExtendsClient (ClientOptions clientOptions) {
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}
     }

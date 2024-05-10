@@ -9,7 +9,7 @@ public partial class SeedFileUploadClient
     public SeedFileUploadClient (ClientOptions clientOptions) {
         _client = 
         new RawClient{
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions()}
         Service = 
