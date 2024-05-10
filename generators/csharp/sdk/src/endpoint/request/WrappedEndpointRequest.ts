@@ -159,7 +159,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     requestBodyReference: `${this.getParameterName()}.${this.wrapper.bodyKey.pascalCase.safeName}`
                 };
             },
-            inlinedRequestBody: () => undefined,
+            inlinedRequestBody: () => {
+                if (this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0) {
+                    return {
+                        requestBodyReference: `${this.getParameterName()}`
+                    };
+                }
+                return undefined;
+            },
             fileUpload: () => undefined,
             bytes: () => undefined,
             _other: () => undefined

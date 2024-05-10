@@ -14,7 +14,12 @@ public class DummyClient
     public async void GenerateStreamAsync(GenerateStreamRequestzs request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/generate-stream" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/generate-stream",
+                Body = request
+            }
         );
     }
 }

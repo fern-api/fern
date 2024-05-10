@@ -14,7 +14,12 @@ public class Ec2Client
     public async void BootInstanceAsync(BootInstanceRequest request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/boot" }
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/boot",
+                Body = request
+            }
         );
     }
 }

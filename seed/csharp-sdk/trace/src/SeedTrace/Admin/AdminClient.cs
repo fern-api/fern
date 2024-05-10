@@ -78,7 +78,8 @@ public class AdminClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-test-trace/submission/{submissionId}/testCase/{testCaseId}"
+                Path = $"/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                Body = request
             }
         );
     }
@@ -108,7 +109,8 @@ public class AdminClient
             new RawClient.ApiRequest
             {
                 Method = HttpMethod.Post,
-                Path = $"/store-workspace-trace/submission/{submissionId}"
+                Path = $"/store-workspace-trace/submission/{submissionId}",
+                Body = request
             }
         );
     }
