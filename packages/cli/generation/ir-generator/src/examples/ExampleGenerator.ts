@@ -255,26 +255,42 @@ export class ExampleGenerator {
         // but there's no corralation between request and response really.
 
         // TODO: if there's a complete example, we should probably just return that, though that's just duplicative of the provided examples.
-        return [
+        const exampleWithoutResponse = this.getExampleWithoutResponse(
+            endpoint,
+            rootPathParameters,
+            servicePathParameters,
+            serviceHeaders
+        );
+        const successExamples = endpoint.examples.map(({ response }) =>
             HttpEndpointExample.generated({
-                ...this.getExampleWithoutResponse(endpoint, rootPathParameters, servicePathParameters, serviceHeaders),
+                ...exampleWithoutResponse,
                 response: this.generateSuccessResponseExample({
                     response: endpoint.response?.body,
-                    maybeResponse: endpoint.examples.map((example) => example.response)[0]
+                    maybeResponse: response
                 })
-            }),
-            ...endpoint.errors.map((e) =>
+            })
+        );
+
+        // If there are no examples, we should generate a default success example
+        if (successExamples.length === 0) {
+            successExamples.push(
                 HttpEndpointExample.generated({
-                    ...this.getExampleWithoutResponse(
-                        endpoint,
-                        rootPathParameters,
-                        servicePathParameters,
-                        serviceHeaders
-                    ),
-                    response: this.generateErrorResponseExample(e)
+                    ...exampleWithoutResponse,
+                    response: this.generateSuccessResponseExample({
+                        response: endpoint.response?.body,
+                        maybeResponse: undefined
+                    })
                 })
-            )
-        ];
+            );
+        }
+
+        const errorExamples = endpoint.errors.map((e) =>
+            HttpEndpointExample.generated({
+                ...exampleWithoutResponse,
+                response: this.generateErrorResponseExample(e)
+            })
+        );
+        return [...successExamples, ...errorExamples];
     }
 
     private generatePathParameterExample({
@@ -359,7 +375,7 @@ export class ExampleGenerator {
         }
 
         if (response == null) {
-            return ExampleResponse.ok(ExampleEndpointSuccessResponse.body(this.generateExampleUnknown({})));
+            return ExampleResponse.ok(ExampleEndpointSuccessResponse.body());
         }
 
         return ExampleResponse.ok(
