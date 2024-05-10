@@ -19,7 +19,7 @@ export function appendPropertyToFormData({
         file: (property) => {
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
 
-            let statement = context.externalDependencies.formData.append({
+            let statement = context.coreUtilities.formDataUtils.append({
                 referencetoFormData: referenceToFormData,
                 key: property.key.wireValue,
                 value: ts.factory.createIdentifier(
@@ -52,7 +52,7 @@ export function appendPropertyToFormData({
                     ),
                     ts.factory.createBlock(
                         [
-                            context.externalDependencies.formData.append({
+                            context.coreUtilities.formDataUtils.append({
                                 referencetoFormData: referenceToFormData,
                                 key: property.key.wireValue,
                                 value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)
@@ -108,7 +108,7 @@ export function appendPropertyToFormData({
                     referenceToBodyProperty,
                     ts.factory.createBlock(
                         [
-                            context.externalDependencies.formData.append({
+                            context.coreUtilities.formDataUtils.append({
                                 referencetoFormData: referenceToFormData,
                                 key: property.name.wireValue,
                                 value: stringifyIterableItemType(
@@ -151,7 +151,7 @@ export function appendPropertyToFormData({
                     statement = ts.factory.createIfStatement(condition, statement);
                 }
             } else {
-                statement = context.externalDependencies.formData.append({
+                statement = context.coreUtilities.formDataUtils.append({
                     referencetoFormData: referenceToFormData,
                     key: property.name.wireValue,
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {

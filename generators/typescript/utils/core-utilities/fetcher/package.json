@@ -25,8 +25,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-typescript/runtime": "workspace:*",
     "form-data": "4.0.0",
+    "form-data-encoder": "^4.0.2",
     "formdata-node": "^6.0.3",
     "node-fetch": "2.7.0",
     "qs": "6.11.2"

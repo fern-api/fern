@@ -8,32 +8,84 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
     public readonly MANIFEST = {
         name: "form-data-utils",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/form-data-utils/src")
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/form-data-utils")
         },
-        originalPathOnDocker: AbsoluteFilePath.of("/assets/form-data-utils"),
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/form-data-utils"),
         pathInCoreUtilities: [{ nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("form-data", "4.0.0");
+            dependencyManager.addDependency("form-data-encoder", "^4.0.2");
+            dependencyManager.addDependency("formdata-node", "^6.0.3");
         }
     };
 
-    public readonly getFormDataContentLength = this.withExportedName(
-        "getFormDataContentLength",
-        (getFormDataContentLength) =>
-            ({ referenceToFormData }: { referenceToFormData: ts.Expression }) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createParenthesizedExpression(
-                            ts.factory.createAwaitExpression(
-                                ts.factory.createCallExpression(getFormDataContentLength.getExpression(), undefined, [
-                                    referenceToFormData
-                                ])
-                            )
-                        ),
-                        ts.factory.createIdentifier("toString")
-                    ),
-                    undefined,
-                    []
-                )
+    public readonly _instantiate = this.withExportedName(
+        "FormDataWrapper",
+        () => () => ts.factory.createNewExpression(ts.factory.createIdentifier("FormDataWrapper"), undefined, [])
     );
+
+    public readonly append = ({
+        referencetoFormData,
+        key,
+        value
+    }: {
+        referencetoFormData: ts.Expression;
+        key: string;
+        value: ts.Expression;
+    }): ts.Statement => {
+        return ts.factory.createExpressionStatement(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("append")),
+                undefined,
+                [ts.factory.createStringLiteral(key), value]
+            )
+        );
+    };
+
+    public readonly getRequest = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Statement => {
+        return ts.factory.createExpressionStatement(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    referencetoFormData,
+                    ts.factory.createIdentifier("getRequest")
+                ),
+                undefined,
+                []
+            )
+        );
+    };
+
+    public readonly getBody = ({
+        referencetoFormDataRequest
+    }: {
+        referencetoFormDataRequest: ts.Expression;
+    }): ts.Statement => {
+        return ts.factory.createExpressionStatement(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    referencetoFormDataRequest,
+                    ts.factory.createIdentifier("getBody")
+                ),
+                undefined,
+                []
+            )
+        );
+    };
+
+    public readonly getHeaders = ({
+        referencetoFormDataRequest
+    }: {
+        referencetoFormDataRequest: ts.Expression;
+    }): ts.Statement => {
+        return ts.factory.createExpressionStatement(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    referencetoFormDataRequest,
+                    ts.factory.createIdentifier("getHeaders")
+                ),
+                undefined,
+                []
+            )
+        );
+    };
 }
