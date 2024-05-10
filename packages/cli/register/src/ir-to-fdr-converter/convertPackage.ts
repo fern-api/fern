@@ -588,7 +588,15 @@ function convertHttpEndpointExample(
             _other: () => undefined
         }),
         responseStatusCode: Ir.http.ExampleResponse._visit(irExample.response, {
-            ok: ({ body }) => (body != null ? 200 : 204),
+            ok: (ok) =>
+                ok._visit({
+                    body: (body) => (body != null ? 200 : 204),
+                    stream: (stream) => (stream.length > 0 ? 200 : 204),
+                    sse: (stream) => (stream.length > 0 ? 200 : 204),
+                    _other: () => {
+                        throw new Error("Unknown ExampleResponseBody: " + ok.type);
+                    }
+                }),
             error: ({ error: errorName }) => {
                 const error = ir.errors[errorName.errorId];
                 if (error == null) {
@@ -600,9 +608,36 @@ function convertHttpEndpointExample(
                 throw new Error("Unknown ExampleResponse: " + irExample.response.type);
             }
         }),
-        responseBody: irExample.response.body?.jsonExample,
-        responseBodyV3:
-            irExample.response.body != null ? { type: "json", value: irExample.response.body.jsonExample } : undefined,
+        responseBody: irExample.response._visit({
+            ok: (ok) =>
+                ok._visit({
+                    body: (body) => body?.jsonExample,
+                    stream: () => undefined,
+                    sse: () => undefined,
+                    _other: () => undefined
+                }),
+            error: (error) => error.body?.jsonExample,
+            _other: () => undefined
+        }),
+        responseBodyV3: irExample.response._visit<APIV1Write.ExampleEndpointResponse | undefined>({
+            ok: (ok) =>
+                ok._visit<APIV1Write.ExampleEndpointResponse | undefined>({
+                    body: (body) => (body != null ? { type: "json", value: body.jsonExample } : undefined),
+                    stream: (stream) => ({ type: "stream", value: stream.map((stream) => stream.jsonExample) }),
+                    sse: (sse) => ({
+                        type: "sse",
+                        value: sse.map(({ event, data }) => ({ event, data: data.jsonExample }))
+                    }),
+                    _other: () => {
+                        throw new Error("Unknown ExampleResponseBody: " + ok.type);
+                    }
+                }),
+            error: (error) => (error.body != null ? { type: "json", value: error.body.jsonExample } : undefined),
+            _other: () => {
+                throw new Error("Unknown ExampleResponse: " + irExample.response.type);
+            }
+        }),
+        // irExample.response.body != null ? { type: "json", value: irExample.response.body.jsonExample } : undefined,
         codeSamples: irExample.codeSamples
             ?.map((codeSample) =>
                 ExampleCodeSample._visit<WithoutQuestionMarks<APIV1Write.CustomCodeSample> | undefined>(codeSample, {

@@ -148,7 +148,7 @@ types:
       wrapperName: commons.Name
       bodyKey: commons.Name
 
-  HttpResponse: 
+  HttpResponse:
     properties:
       status-code: optional<integer>
       body: optional<HttpResponseBody>
@@ -190,21 +190,21 @@ types:
     extends: commons.WithDocs
 
   StreamingResponse:
-    union: 
+    union:
       json: JsonStreamChunk
       text: TextStreamChunk
       sse: SseStreamChunk
-    
-  TextStreamChunk: 
+
+  TextStreamChunk:
     extends: commons.WithDocs
     properties: {}
-    
+
   JsonStreamChunk:
     extends: commons.WithDocs
     properties:
       payload: types.TypeReference
       terminator: optional<string>
-  
+
   SseStreamChunk:
     extends: commons.WithDocs
     properties:
@@ -390,8 +390,15 @@ types:
       error: ExampleEndpointErrorResponse
 
   ExampleEndpointSuccessResponse:
-    properties:
+    union:
       body: optional<types.ExampleTypeReference>
+      stream: list<types.ExampleTypeReference>
+      sse: list<ExampleServerSideEvent>
+
+  ExampleServerSideEvent:
+    properties:
+      event: string
+      data: types.ExampleTypeReference
 
   ExampleEndpointErrorResponse:
     properties:

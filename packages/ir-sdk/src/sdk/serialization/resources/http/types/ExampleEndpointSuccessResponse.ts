@@ -6,15 +6,61 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const ExampleEndpointSuccessResponse: core.serialization.ObjectSchema<
+export const ExampleEndpointSuccessResponse: core.serialization.Schema<
     serializers.ExampleEndpointSuccessResponse.Raw,
     FernIr.ExampleEndpointSuccessResponse
-> = core.serialization.objectWithoutOptionalProperties({
-    body: core.serialization.lazyObject(async () => (await import("../../..")).ExampleTypeReference).optional(),
-});
+> = core.serialization
+    .union("type", {
+        body: core.serialization.object({
+            value: core.serialization
+                .lazyObject(async () => (await import("../../..")).ExampleTypeReference)
+                .optional(),
+        }),
+        stream: core.serialization.object({
+            value: core.serialization.list(
+                core.serialization.lazyObject(async () => (await import("../../..")).ExampleTypeReference)
+            ),
+        }),
+        sse: core.serialization.object({
+            value: core.serialization.list(
+                core.serialization.lazyObject(async () => (await import("../../..")).ExampleServerSideEvent)
+            ),
+        }),
+    })
+    .transform<FernIr.ExampleEndpointSuccessResponse>({
+        transform: (value) => {
+            switch (value.type) {
+                case "body":
+                    return FernIr.ExampleEndpointSuccessResponse.body(value.value);
+                case "stream":
+                    return FernIr.ExampleEndpointSuccessResponse.stream(value.value);
+                case "sse":
+                    return FernIr.ExampleEndpointSuccessResponse.sse(value.value);
+                default:
+                    return value as FernIr.ExampleEndpointSuccessResponse;
+            }
+        },
+        untransform: ({ _visit, ...value }) => value as any,
+    });
 
 export declare namespace ExampleEndpointSuccessResponse {
-    interface Raw {
-        body?: serializers.ExampleTypeReference.Raw | null;
+    type Raw =
+        | ExampleEndpointSuccessResponse.Body
+        | ExampleEndpointSuccessResponse.Stream
+        | ExampleEndpointSuccessResponse.Sse;
+
+    interface Body {
+        type: "body";
+        value?: serializers.ExampleTypeReference.Raw | null;
+    }
+
+    interface Stream {
+        type: "stream";
+        value: serializers.ExampleTypeReference.Raw[];
+    }
+
+    interface Sse {
+        type: "sse";
+        value: serializers.ExampleServerSideEvent.Raw[];
     }
 }
