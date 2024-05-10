@@ -1,5 +1,4 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { CodeBlock } from "@fern-api/csharp-codegen/src/ast";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -80,13 +79,13 @@ export class RawClient {
         });
         return csharp.invokeMethod({
             arguments_: [apiRequest],
-            method: `MakeRequestAsync`,
+            method: "MakeRequestAsync",
             on: csharp.codeblock(clientReference),
             async: true
         });
     }
 
-    private getCsharpHttpMethod(irMethod: HttpMethod): CodeBlock {
+    private getCsharpHttpMethod(irMethod: HttpMethod): csharp.CodeBlock {
         let method: string;
         switch (irMethod) {
             case "POST":

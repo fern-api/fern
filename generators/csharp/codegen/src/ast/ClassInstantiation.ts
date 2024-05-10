@@ -37,9 +37,9 @@ export class ClassInstantiation extends AstNode {
         writer.write(`new ${this.classReference.name}`);
 
         if (hasNamedArguments) {
-            writer.write(`{`);
+            writer.write("{");
         } else {
-            writer.write(`(`);
+            writer.write("(");
         }
 
         writer.newLine();
@@ -58,9 +58,9 @@ export class ClassInstantiation extends AstNode {
         writer.dedent();
 
         if (hasNamedArguments) {
-            writer.write(`}`);
+            writer.write("}");
         } else {
-            writer.write(`)`);
+            writer.write(")");
         }
     }
 }

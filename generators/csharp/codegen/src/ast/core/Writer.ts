@@ -57,7 +57,7 @@ export class Writer {
      */
     public writeNodeStatement(node: AstNode): void {
         node.write(this);
-        this.write(`;`);
+        this.write(";");
         this.writeNewLineIfLastLineNot();
     }
 
@@ -68,7 +68,7 @@ export class Writer {
     public writeTextStatement(text: string): void {
         const codeBlock = csharp.codeblock(text);
         codeBlock.write(this);
-        this.write(`;`);
+        this.write(";");
         this.writeNewLineIfLastLineNot();
     }
 
@@ -79,7 +79,7 @@ export class Writer {
     public controlFlow(prefix: string, statement: string): void {
         const codeBlock = csharp.codeblock(prefix);
         codeBlock.write(this);
-        this.write(` (`);
+        this.write(" (");
         this.write(statement);
         this.write(") {");
         this.writeNewLineIfLastLineNot();

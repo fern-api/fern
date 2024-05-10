@@ -4,7 +4,7 @@ import { EndpointRequest } from "./EndpointRequest";
 import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest";
 import { WrappedEndpointRequest } from "./WrappedEndpointRequest";
 
-export declare namespace EndpointRequestFactory {
+export declare namespace CreateEndpointRequest {
     interface Args {
         context: SdkGeneratorContext;
         sdkRequest: SdkRequest;
@@ -13,33 +13,31 @@ export declare namespace EndpointRequestFactory {
     }
 }
 
-export class EndpointRequestFactory {
-    public static create({
-        context,
-        sdkRequest,
-        endpoint,
-        serviceId
-    }: EndpointRequestFactory.Args): EndpointRequest | undefined {
-        return sdkRequest.shape._visit<EndpointRequest | undefined>({
-            wrapper: (wrapper) => {
-                return new WrappedEndpointRequest({
-                    context,
-                    serviceId,
-                    sdkRequest,
-                    wrapper,
-                    endpoint
-                });
-            },
-            justRequestBody: (value) => {
-                if (value.type === "bytes") {
-                    return undefined;
-                } else {
-                    return new ReferencedEndpointRequest(context, sdkRequest, endpoint, value.requestBodyType);
-                }
-            },
-            _other: () => {
-                throw new Error("");
+export function createEndpointRequest({
+    context,
+    sdkRequest,
+    endpoint,
+    serviceId
+}: CreateEndpointRequest.Args): EndpointRequest | undefined {
+    return sdkRequest.shape._visit<EndpointRequest | undefined>({
+        wrapper: (wrapper) => {
+            return new WrappedEndpointRequest({
+                context,
+                serviceId,
+                sdkRequest,
+                wrapper,
+                endpoint
+            });
+        },
+        justRequestBody: (value) => {
+            if (value.type === "bytes") {
+                return undefined;
+            } else {
+                return new ReferencedEndpointRequest(context, sdkRequest, endpoint, value.requestBodyType);
             }
-        });
-    }
+        },
+        _other: () => {
+            throw new Error("");
+        }
+    });
 }

@@ -1,5 +1,4 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { ClassReference } from "@fern-api/csharp-codegen/src/ast";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpService, ServiceId, Subpackage } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "../endpoint/EndpointGenerator";
@@ -19,7 +18,7 @@ export declare namespace SubClientGenerator {
 }
 
 export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
-    private classReference: ClassReference;
+    private classReference: csharp.ClassReference;
     private subpackage: Subpackage;
     private serviceId?: ServiceId;
     private service?: HttpService;

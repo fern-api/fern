@@ -3,7 +3,7 @@ import { HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { RawClient } from "./RawClient";
 import { EndpointRequest } from "./request/EndpointRequest";
-import { EndpointRequestFactory } from "./request/EndpointRequestFactory";
+import { createEndpointRequest, EndpointRequestFactory } from "./request/EndpointRequestFactory";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -99,7 +99,7 @@ export class EndpointGenerator {
         if (endpoint.sdkRequest == null) {
             return undefined;
         }
-        return EndpointRequestFactory.create({
+        return createEndpointRequest({
             context: this.context,
             endpoint,
             serviceId,
@@ -163,14 +163,14 @@ export class EndpointGenerator {
                     writer.writeNewLineIfLastLineNot();
 
                     // Deserialize the response as json
-                    writer.write(`return `);
+                    writer.write("return ");
                     writer.writeNode(
                         csharp.classReference({
                             name: "JsonSerializer",
                             namespace: "System.Text.Json"
                         })
                     );
-                    writer.write(`.Deserialize<`);
+                    writer.write(".Deserialize<");
                     writer.writeNode(astType);
                     writer.writeLine(`>(${RESPONSE_BODY_VARIABLE_NAME});`);
 
@@ -178,7 +178,7 @@ export class EndpointGenerator {
                     writer.writeLine("}");
                     writer.dedent();
 
-                    writer.writeLine(`throw new Exception();`);
+                    writer.writeLine("throw new Exception();");
                 });
             },
             streaming: () => undefined,
