@@ -21,7 +21,12 @@ class FormDataRequestBody {
             if (this.encoder == null) {
                 await this.setup();
             }
+<<<<<<< HEAD
             return (await import("node:stream")).Readable.from(this.encoder);
+=======
+            const Readable = (await import("node:stream")).Readable;
+            return Readable.from(this.encoder);
+>>>>>>> c592ccbe7 (move back under fetcher)
         }
     }
 
@@ -33,6 +38,10 @@ class FormDataRequestBody {
                 await this.setup();
             }
             return {
+<<<<<<< HEAD
+=======
+                ...this.encoder.headers,
+>>>>>>> c592ccbe7 (move back under fetcher)
                 "Content-Length": this.encoder.length,
             };
         }
@@ -59,7 +68,11 @@ export class FormDataWrapper {
         this.fd.append(name, value);
     }
 
+<<<<<<< HEAD
     public getRequest(): FormDataRequestBody {
+=======
+    public async getRequest(): Promise<FormDataRequestBody> {
+>>>>>>> c592ccbe7 (move back under fetcher)
         return new FormDataRequestBody(this.fd);
     }
 }

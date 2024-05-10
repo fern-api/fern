@@ -41,7 +41,11 @@ export class Service {
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
+<<<<<<< HEAD
         const _request = new core.FormDataWrapper();
+=======
+        const _request = new FormDataWrapper();
+>>>>>>> c592ccbe7 (move back under fetcher)
         if (request.maybeString != null) {
             await _request.append("maybeString", request.maybeString);
         }
@@ -88,7 +92,11 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await _maybeEncodedRequest.getHeaders()),
             },
+<<<<<<< HEAD
             body: await _maybeEncodedRequest.getBody(),
+=======
+            body: _request,
+>>>>>>> c592ccbe7 (move back under fetcher)
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -126,9 +134,14 @@ export class Service {
      *     await seedFileUpload.service.justFile(fs.createReadStream("/path/to/your/file"))
      */
     public async justFile(file: File | fs.ReadStream, requestOptions?: Service.RequestOptions): Promise<void> {
+<<<<<<< HEAD
         const _request = new core.FormDataWrapper();
         await _request.append("file", file);
         const _maybeEncodedRequest = _request.getRequest();
+=======
+        const _request = new FormDataWrapper();
+        _request.append("file", file);
+>>>>>>> c592ccbe7 (move back under fetcher)
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
             method: "POST",
@@ -140,7 +153,11 @@ export class Service {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await _maybeEncodedRequest.getHeaders()),
             },
+<<<<<<< HEAD
             body: await _maybeEncodedRequest.getBody(),
+=======
+            body: _request,
+>>>>>>> c592ccbe7 (move back under fetcher)
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -213,9 +230,14 @@ export class Service {
             }
         }
 
+<<<<<<< HEAD
         const _request = new core.FormDataWrapper();
         await _request.append("file", file);
         const _maybeEncodedRequest = _request.getRequest();
+=======
+        const _request = new FormDataWrapper();
+        _request.append("file", file);
+>>>>>>> c592ccbe7 (move back under fetcher)
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
             method: "POST",

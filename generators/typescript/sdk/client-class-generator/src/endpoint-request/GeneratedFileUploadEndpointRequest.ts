@@ -286,11 +286,15 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
+<<<<<<< HEAD
             body: context.coreUtilities.formDataUtils.getBody({
                 referencetoFormDataRequest: ts.factory.createIdentifier(
                     GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
                 )
             })
+=======
+            body: ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME)
+>>>>>>> c592ccbe7 (move back under fetcher)
         };
     }
 

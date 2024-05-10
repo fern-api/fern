@@ -21,7 +21,11 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
 
     public readonly _instantiate = this.withExportedName(
         "FormDataWrapper",
+<<<<<<< HEAD
         (fdw) => () => ts.factory.createNewExpression(fdw.getExpression(), undefined, [])
+=======
+        () => () => ts.factory.createNewExpression(ts.factory.createIdentifier("FormDataWrapper"), undefined, [])
+>>>>>>> c592ccbe7 (move back under fetcher)
     );
 
     public readonly append = ({
@@ -34,6 +38,7 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         value: ts.Expression;
     }): ts.Statement => {
         return ts.factory.createExpressionStatement(
+<<<<<<< HEAD
             ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
@@ -43,15 +48,34 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
                     undefined,
                     [ts.factory.createStringLiteral(key), value]
                 )
+=======
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("append")),
+                undefined,
+                [ts.factory.createStringLiteral(key), value]
+>>>>>>> c592ccbe7 (move back under fetcher)
             )
         );
     };
 
+<<<<<<< HEAD
     public readonly getRequest = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Expression => {
         return ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(referencetoFormData, ts.factory.createIdentifier("getRequest")),
             undefined,
             []
+=======
+    public readonly getRequest = ({ referencetoFormData }: { referencetoFormData: ts.Expression }): ts.Statement => {
+        return ts.factory.createExpressionStatement(
+            ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(
+                    referencetoFormData,
+                    ts.factory.createIdentifier("getRequest")
+                ),
+                undefined,
+                []
+            )
+>>>>>>> c592ccbe7 (move back under fetcher)
         );
     };
 
@@ -59,8 +83,13 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         referencetoFormDataRequest
     }: {
         referencetoFormDataRequest: ts.Expression;
+<<<<<<< HEAD
     }): ts.Expression => {
         return ts.factory.createAwaitExpression(
+=======
+    }): ts.Statement => {
+        return ts.factory.createExpressionStatement(
+>>>>>>> c592ccbe7 (move back under fetcher)
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     referencetoFormDataRequest,
@@ -76,8 +105,13 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         referencetoFormDataRequest
     }: {
         referencetoFormDataRequest: ts.Expression;
+<<<<<<< HEAD
     }): ts.Expression => {
         return ts.factory.createAwaitExpression(
+=======
+    }): ts.Statement => {
+        return ts.factory.createExpressionStatement(
+>>>>>>> c592ccbe7 (move back under fetcher)
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     referencetoFormDataRequest,

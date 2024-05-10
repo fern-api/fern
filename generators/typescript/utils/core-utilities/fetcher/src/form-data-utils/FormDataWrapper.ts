@@ -59,7 +59,11 @@ export class FormDataWrapper {
         this.fd.append(name, value);
     }
 
+<<<<<<< HEAD
     public getRequest(): FormDataRequestBody {
+=======
+    public async getRequest(): Promise<FormDataRequestBody> {
+>>>>>>> c592ccbe7 (move back under fetcher)
         return new FormDataRequestBody(this.fd);
     }
 }
