@@ -3621,7 +3621,7 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     execa: ^5.1.1
-    form-data: ^4.0.0
+    form-data: 4.0.0
     fs: ^0.0.1-security
     jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
