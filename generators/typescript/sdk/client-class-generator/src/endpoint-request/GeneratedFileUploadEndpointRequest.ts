@@ -43,6 +43,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
     private static FORM_DATA_VARIABLE_NAME = "_request";
+    private static FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME = "_maybeEncodedRequest";
 
     private importsManager: ImportsManager;
     private ir: IntermediateRepresentation;
@@ -255,6 +256,27 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             );
         }
 
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME,
+                            undefined,
+                            undefined,
+                            context.coreUtilities.formDataUtils.getRequest({
+                                referencetoFormData: ts.factory.createIdentifier(
+                                    GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
+                                )
+                            })
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
+        );
+
         return statements;
     }
 
@@ -264,7 +286,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
-            body: ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME)
+            body: context.coreUtilities.formDataUtils.getBody({
+                referencetoFormDataRequest: ts.factory.createIdentifier(
+                    GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
+                )
+            })
         };
     }
 
@@ -275,7 +301,14 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             idempotencyHeaders: this.ir.idempotencyHeaders,
             generatedSdkClientClass: this.generatedSdkClientClass,
             service: this.service,
-            endpoint: this.endpoint
+            endpoint: this.endpoint,
+            additionalSpreadHeaders: [
+                context.coreUtilities.formDataUtils.getHeaders({
+                    referencetoFormDataRequest: ts.factory.createIdentifier(
+                        GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
+                    )
+                })
+            ]
         });
     }
 
