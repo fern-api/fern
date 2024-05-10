@@ -796,152 +796,38 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
       "errors": {},
       "examples": [
         {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "messages": {
-                "type": "array",
-                "value": [
+          "type": "unknown",
+          "value": {
+            "name": "Chat Completion Batch",
+            "request": {
+              "messages": [
+                {
+                  "content": "Once upon a time, there was a",
+                  "role": "user",
+                },
+              ],
+              "model": "llama-2-13b-chat",
+              "stream": false,
+            },
+            "response": {
+              "body": {
+                "choices": [
                   {
-                    "properties": {
-                      "role": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "role",
-                        },
-                      },
-                    },
-                    "type": "object",
+                    "index": 0,
+                    "message": " llama that was a llama.",
                   },
                 ],
-              },
-              "model": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "model",
-                },
-              },
-              "stream": {
-                "type": "literal",
-                "value": {
-                  "type": "boolean",
-                  "value": false,
+                "created": 1631616000,
+                "id": "chat-completion-1",
+                "model": "llama-2-13b-chat",
+                "usage": {
+                  "completion_tokens": 1,
+                  "prompt_tokens": 8,
+                  "total_tokens": 9,
                 },
               },
             },
-            "type": "object",
           },
-          "response": {
-            "properties": {
-              "choices": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "finish_reason": {
-                        "type": "enum",
-                        "value": "stop",
-                      },
-                      "index": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "message": {
-                        "properties": {
-                          "role": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "role",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "created": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 1,
-                },
-              },
-              "id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-              "model": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "model",
-                },
-              },
-              "object": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "key",
-                    },
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "value",
-                      },
-                    },
-                  },
-                ],
-              },
-              "usage": {
-                "properties": {
-                  "completion_tokens": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
-                    },
-                  },
-                  "prompt_tokens": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
-                    },
-                  },
-                  "total_tokens": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
-                    },
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
-          "type": "full",
         },
       ],
       "generatedRequestName": "CreateChatCompletionRequest",

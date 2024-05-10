@@ -77,7 +77,7 @@ export function convertStreamingOperation({
                 suffix: STREAM_SUFFIX
             });
             streamingOperation.examples = streamingOperation.examples.filter(
-                (example) => isStreamingExample(example) !== false
+                (example) => isStreamingExample(example, context) !== false
             );
 
             const nonStreamingRequestBody = getRequestBody({
@@ -102,8 +102,8 @@ export function convertStreamingOperation({
                 },
                 context
             });
-            nonStreamingOperation.examples = streamingOperation.examples.filter(
-                (example) => isStreamingExample(example) !== true
+            nonStreamingOperation.examples = nonStreamingOperation.examples.filter(
+                (example) => isStreamingExample(example, context) !== true
             );
 
             return {
@@ -210,11 +210,15 @@ function getResponses({
 
 // this only checks if the response is a stream.
 // TODO: check if the request passes the stream-condition
-export function isStreamingExample(example: EndpointExample): boolean | undefined {
+export function isStreamingExample(
+    example: EndpointExample,
+    context: AbstractOpenAPIV3ParserContext
+): boolean | undefined {
     return example._visit({
         unknown: (unknownExample) => {
             const maybeFernExample = RawSchemas.ExampleEndpointCallSchema.safeParse(unknownExample);
             if (!maybeFernExample.success) {
+                context.logger.error("Failed to parse example", maybeFernExample.error.toString());
                 return undefined;
             }
 
