@@ -127,7 +127,7 @@ export class RawClient {
             path += `{${reference}}${part.tail}`;
         }
         if (pathParametersPresent) {
-            return `\$"${path}"`;
+            return `$"${path}"`;
         }
         return `"${path}"`;
     }
