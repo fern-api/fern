@@ -4,7 +4,7 @@ import { V44_TO_V43_MIGRATION } from "../migrateFromV44ToV43";
 
 const runMigration = createMigrationTester(V44_TO_V43_MIGRATION);
 
-describe("migrateFromV43ToV42", () => {
+describe("migrateFromV44ToV43", () => {
     it("snapshot", async () => {
         const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"));
         const migrated = await runMigration({

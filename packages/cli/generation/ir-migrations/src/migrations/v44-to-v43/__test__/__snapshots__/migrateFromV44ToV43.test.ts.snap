@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`migrateFromV43ToV42 snapshot 1`] = `
+exports[`migrateFromV44ToV43 snapshot 1`] = `
 {
   "apiDisplayName": undefined,
   "apiDocs": undefined,
@@ -455,16 +455,37 @@ exports[`migrateFromV43ToV42 snapshot 1`] = `
           ],
           "requestBody": undefined,
           "response": {
-            "_visit": [Function],
-            "type": "json",
-            "value": {
+            "body": {
               "_visit": [Function],
-              "docs": undefined,
-              "responseBodyType": {
+              "type": "json",
+              "value": {
                 "_visit": [Function],
-                "fernFilepath": {
-                  "allParts": [
-                    {
+                "docs": undefined,
+                "responseBodyType": {
+                  "_visit": [Function],
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "service",
+                          "unsafeName": "service",
+                        },
+                        "originalName": "service",
+                        "pascalCase": {
+                          "safeName": "Service",
+                          "unsafeName": "Service",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SERVICE",
+                          "unsafeName": "SERVICE",
+                        },
+                        "snakeCase": {
+                          "safeName": "service",
+                          "unsafeName": "service",
+                        },
+                      },
+                    ],
+                    "file": {
                       "camelCase": {
                         "safeName": "service",
                         "unsafeName": "service",
@@ -483,52 +504,34 @@ exports[`migrateFromV43ToV42 snapshot 1`] = `
                         "unsafeName": "service",
                       },
                     },
-                  ],
-                  "file": {
+                    "packagePath": [],
+                  },
+                  "name": {
                     "camelCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
+                      "safeName": "user",
+                      "unsafeName": "user",
                     },
-                    "originalName": "service",
+                    "originalName": "User",
                     "pascalCase": {
-                      "safeName": "Service",
-                      "unsafeName": "Service",
+                      "safeName": "User",
+                      "unsafeName": "User",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "SERVICE",
-                      "unsafeName": "SERVICE",
+                      "safeName": "USER",
+                      "unsafeName": "USER",
                     },
                     "snakeCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
+                      "safeName": "user",
+                      "unsafeName": "user",
                     },
                   },
-                  "packagePath": [],
+                  "type": "named",
+                  "typeId": "type_service:User",
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "user",
-                    "unsafeName": "user",
-                  },
-                  "originalName": "User",
-                  "pascalCase": {
-                    "safeName": "User",
-                    "unsafeName": "User",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "USER",
-                    "unsafeName": "USER",
-                  },
-                  "snakeCase": {
-                    "safeName": "user",
-                    "unsafeName": "user",
-                  },
-                },
-                "type": "named",
-                "typeId": "type_service:User",
+                "type": "response",
               },
-              "type": "response",
             },
+            "statusCode": 201,
           },
           "sdkRequest": {
             "requestParameterName": {
