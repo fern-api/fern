@@ -12,13 +12,13 @@ const client = new SeedCustomAuthClient({
 describe("CustomAuth", () => {
     test("getWithCustomAuth", async () => {
         const response = await client.customAuth.getWithCustomAuth();
-        expect(response).toEqual(true);
+        expect(response).toEqual(undefined);
     });
 
     test("postWithCustomAuth", async () => {
         const response = await client.customAuth.postWithCustomAuth({
             key: "value",
         });
-        expect(response).toEqual(true);
+        expect(response).toEqual(undefined);
     });
 });

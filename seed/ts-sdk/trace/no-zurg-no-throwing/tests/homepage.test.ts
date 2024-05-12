@@ -13,7 +13,7 @@ const client = new SeedTraceClient({
 describe("Homepage", () => {
     test("getHomepageProblems", async () => {
         const response = await client.homepage.getHomepageProblems();
-        expect(response).toEqual(["string"]);
+        expect(response).toEqual(undefined);
     });
 
     test("setHomepageProblems", async () => {

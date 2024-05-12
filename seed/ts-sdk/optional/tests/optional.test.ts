@@ -13,6 +13,6 @@ describe("Optional", () => {
                 key: "value",
             },
         });
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 });

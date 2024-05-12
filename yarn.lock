@@ -4448,7 +4448,6 @@ __metadata:
     chalk: ^5.0.1
     console-table-printer: ^2.12.0
     depcheck: ^1.4.6
-    encoding: ^0.1.13
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
     eslint: ^8.56.0

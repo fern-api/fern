@@ -9,36 +9,36 @@ const client = new SeedResponsePropertyClient({ environment: process.env.TESTS_B
 describe("Service", () => {
     test("getMovie", async () => {
         const response = await client.service.getMovie("string");
-        expect(response).toEqual({ id: "string", name: "string" });
+        expect(response).toEqual(undefined);
     });
 
     test("getMovieDocs", async () => {
         const response = await client.service.getMovieDocs("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 
     test("getMovieName", async () => {
         const response = await client.service.getMovieName("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 
     test("getMovieMetadata", async () => {
         const response = await client.service.getMovieMetadata("string");
-        expect(response).toEqual({ string: "string" });
+        expect(response).toEqual(undefined);
     });
 
     test("getOptionalMovie", async () => {
         const response = await client.service.getOptionalMovie("string");
-        expect(response).toEqual({ id: "string", name: "string" });
+        expect(response).toEqual(undefined);
     });
 
     test("getOptionalMovieDocs", async () => {
         const response = await client.service.getOptionalMovieDocs("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 
     test("getOptionalMovieName", async () => {
         const response = await client.service.getOptionalMovieName("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 });
