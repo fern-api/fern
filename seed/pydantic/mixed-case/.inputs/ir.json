@@ -3552,7 +3552,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -5025,7 +5025,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

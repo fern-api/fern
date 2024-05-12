@@ -1255,6 +1255,71 @@
                                 "body": null
                             },
                             "docs": null
+                        },
+                        {
+                            "url": "/inlined",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "inlinedRequestBody",
+                                "properties": [
+                                    {
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:Operand",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": {
+                                                        "originalName": "Operand",
+                                                        "camelCase": {
+                                                            "unsafeName": "operand",
+                                                            "safeName": "operand"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "operand",
+                                                            "safeName": "operand"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "OPERAND",
+                                                            "safeName": "OPERAND"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Operand",
+                                                            "safeName": "Operand"
+                                                        }
+                                                    }
+                                                },
+                                                "shape": {
+                                                    "type": "enum",
+                                                    "wireValue": ">"
+                                                }
+                                            },
+                                            "jsonExample": ">"
+                                        },
+                                        "originalTypeDeclaration": null,
+                                        "wireKey": "operand"
+                                    }
+                                ],
+                                "jsonExample": {
+                                    "operand": ">",
+                                    "operandOrColor": "red"
+                                }
+                            },
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
                         }
                     ],
                     "availability": {
@@ -1958,6 +2023,103 @@
                                 "body": null
                             },
                             "docs": null
+                        },
+                        {
+                            "url": "/path/",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [
+                                {
+                                    "key": "operand",
+                                    "value": {
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "wireValue": ">"
+                                            }
+                                        },
+                                        "jsonExample": ">"
+                                    }
+                                },
+                                {
+                                    "key": "maybeOperand",
+                                    "value": {
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "wireValue": ">"
+                                            }
+                                        },
+                                        "jsonExample": ">"
+                                    }
+                                }
+                            ],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
                         }
                     ],
                     "availability": {
@@ -2387,6 +2549,103 @@
                                 "body": null
                             },
                             "docs": null
+                        },
+                        {
+                            "url": "/query",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [
+                                {
+                                    "wireKey": "operand",
+                                    "value": {
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "wireValue": ">"
+                                            }
+                                        },
+                                        "jsonExample": ">"
+                                    }
+                                },
+                                {
+                                    "wireKey": "maybeOperand",
+                                    "value": {
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "wireValue": ">"
+                                            }
+                                        },
+                                        "jsonExample": ">"
+                                    }
+                                }
+                            ],
+                            "request": null,
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
                         }
                     ],
                     "availability": {
@@ -2699,7 +2958,105 @@
                     "response": null,
                     "errors": [],
                     "auth": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/query-list",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [
+                                {
+                                    "wireKey": "operand",
+                                    "value": {
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "wireValue": ">"
+                                            }
+                                        },
+                                        "jsonExample": ">"
+                                    }
+                                },
+                                {
+                                    "wireKey": "maybeOperand",
+                                    "value": {
+                                        "shape": {
+                                            "type": "named",
+                                            "typeName": {
+                                                "name": {
+                                                    "originalName": "Operand",
+                                                    "camelCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "operand",
+                                                        "safeName": "operand"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "OPERAND",
+                                                        "safeName": "OPERAND"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Operand",
+                                                        "safeName": "Operand"
+                                                    }
+                                                },
+                                                "fernFilepath": {
+                                                    "allParts": [],
+                                                    "packagePath": [],
+                                                    "file": null
+                                                },
+                                                "typeId": "type_:Operand"
+                                            },
+                                            "shape": {
+                                                "type": "enum",
+                                                "wireValue": ">"
+                                            }
+                                        },
+                                        "jsonExample": ">"
+                                    }
+                                }
+                            ],
+                            "request": null,
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

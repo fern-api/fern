@@ -606,7 +606,45 @@
                     },
                     "errors": [],
                     "auth": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/generate-stream",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "inlinedRequestBody",
+                                "properties": [
+                                    {
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "integer",
+                                                    "integer": 1
+                                                }
+                                            },
+                                            "jsonExample": 1
+                                        },
+                                        "originalTypeDeclaration": null,
+                                        "wireKey": "num_events"
+                                    }
+                                ],
+                                "jsonExample": {
+                                    "num_events": 1
+                                }
+                            },
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

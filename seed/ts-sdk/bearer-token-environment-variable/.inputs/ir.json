@@ -167,7 +167,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/apiKey",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

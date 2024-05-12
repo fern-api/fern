@@ -475,7 +475,61 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "for",
+                                            "camelCase": {
+                                                "unsafeName": "for",
+                                                "safeName": "for_"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "for",
+                                                "safeName": "for_"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FOR",
+                                                "safeName": "FOR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "For",
+                                                "safeName": "For"
+                                            }
+                                        },
+                                        "wireValue": "for"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "request": null,
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": null,
                     "docs": null
                 }

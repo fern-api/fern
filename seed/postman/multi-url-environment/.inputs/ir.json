@@ -577,7 +577,45 @@
                     "response": null,
                     "errors": [],
                     "auth": true,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/boot",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "inlinedRequestBody",
+                                "properties": [
+                                    {
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": "string"
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        },
+                                        "originalTypeDeclaration": null,
+                                        "wireKey": "size"
+                                    }
+                                ],
+                                "jsonExample": {
+                                    "size": "string"
+                                }
+                            },
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null
@@ -806,7 +844,54 @@
                     },
                     "errors": [],
                     "auth": true,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/presigned-url",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "inlinedRequestBody",
+                                "properties": [
+                                    {
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": "string"
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        },
+                                        "originalTypeDeclaration": null,
+                                        "wireKey": "s3Key"
+                                    }
+                                ],
+                                "jsonExample": {
+                                    "s3Key": "string"
+                                }
+                            },
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": "string"
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

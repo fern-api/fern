@@ -600,7 +600,7 @@
                     ],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/custom-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -627,7 +627,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/custom-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -943,7 +943,7 @@
                     ],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/custom-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -981,7 +981,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/custom-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -1075,7 +1075,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/custom-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

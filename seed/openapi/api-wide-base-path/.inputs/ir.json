@@ -497,7 +497,79 @@
                     "response": null,
                     "errors": [],
                     "auth": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/",
+                            "rootPathParameters": [
+                                {
+                                    "key": "pathParam",
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": "string"
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "servicePathParameters": [
+                                {
+                                    "key": "serviceParam",
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": "string"
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "endpointPathParameters": [
+                                {
+                                    "key": "resourceParam",
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": "string"
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                },
+                                {
+                                    "key": "endpointParam",
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "integer",
+                                                "integer": 1
+                                            }
+                                        },
+                                        "jsonExample": 1
+                                    }
+                                }
+                            ],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

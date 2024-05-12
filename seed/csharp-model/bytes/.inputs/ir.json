@@ -159,7 +159,25 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/upload-content",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": null,
                     "docs": null
                 }

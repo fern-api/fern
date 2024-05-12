@@ -1427,7 +1427,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -2230,7 +2230,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

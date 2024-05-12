@@ -1318,7 +1318,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -1818,7 +1818,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -2011,7 +2011,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -2252,7 +2252,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -2578,7 +2578,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -3078,7 +3078,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -3271,7 +3271,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

@@ -999,7 +999,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/create-movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -1762,7 +1762,7 @@
                     ],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -2342,7 +2342,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

@@ -475,7 +475,7 @@
                     ],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/property-based-error",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -504,7 +504,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/property-based-error",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

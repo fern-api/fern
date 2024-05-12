@@ -345,7 +345,33 @@
                     },
                     "errors": [],
                     "auth": true,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/dummy",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": "string"
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

@@ -3514,7 +3514,390 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "id",
+                                        "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "name": {
+                                                "originalName": "Shape",
+                                                "camelCase": {
+                                                    "unsafeName": "shape",
+                                                    "safeName": "shape"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "shape",
+                                                    "safeName": "shape"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SHAPE",
+                                                    "safeName": "SHAPE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Shape",
+                                                    "safeName": "Shape"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "union",
+                                                        "camelCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION",
+                                                            "safeName": "UNION"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Union",
+                                                            "safeName": "Union"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "union",
+                                                    "camelCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UNION",
+                                                        "safeName": "UNION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Union",
+                                                        "safeName": "Union"
+                                                    }
+                                                }
+                                            },
+                                            "typeId": "type_union:Shape"
+                                        },
+                                        "shape": {
+                                            "type": "union",
+                                            "discriminant": {
+                                                "name": {
+                                                    "originalName": "type",
+                                                    "camelCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPE",
+                                                        "safeName": "TYPE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Type",
+                                                        "safeName": "Type"
+                                                    }
+                                                },
+                                                "wireValue": "type"
+                                            },
+                                            "singleUnionType": {
+                                                "wireDiscriminantValue": {
+                                                    "name": {
+                                                        "originalName": "circle",
+                                                        "camelCase": {
+                                                            "unsafeName": "circle",
+                                                            "safeName": "circle"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "circle",
+                                                            "safeName": "circle"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "CIRCLE",
+                                                            "safeName": "CIRCLE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Circle",
+                                                            "safeName": "Circle"
+                                                        }
+                                                    },
+                                                    "wireValue": "circle"
+                                                },
+                                                "shape": {
+                                                    "type": "samePropertiesAsObject",
+                                                    "typeId": "type_union:Circle",
+                                                    "object": {
+                                                        "properties": [
+                                                            {
+                                                                "name": {
+                                                                    "name": {
+                                                                        "originalName": "id",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "id",
+                                                                            "safeName": "id"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "id",
+                                                                            "safeName": "id"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "ID",
+                                                                            "safeName": "ID"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Id",
+                                                                            "safeName": "Id"
+                                                                        }
+                                                                    },
+                                                                    "wireValue": "id"
+                                                                },
+                                                                "value": {
+                                                                    "shape": {
+                                                                        "type": "primitive",
+                                                                        "primitive": {
+                                                                            "type": "string",
+                                                                            "string": {
+                                                                                "original": "string"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": "string"
+                                                                },
+                                                                "originalTypeDeclaration": {
+                                                                    "name": {
+                                                                        "originalName": "Shape",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "shape",
+                                                                            "safeName": "shape"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "shape",
+                                                                            "safeName": "shape"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SHAPE",
+                                                                            "safeName": "SHAPE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Shape",
+                                                                            "safeName": "Shape"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [
+                                                                            {
+                                                                                "originalName": "union",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "union",
+                                                                                    "safeName": "union"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "union",
+                                                                                    "safeName": "union"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "UNION",
+                                                                                    "safeName": "UNION"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Union",
+                                                                                    "safeName": "Union"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "packagePath": [],
+                                                                        "file": {
+                                                                            "originalName": "union",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "UNION",
+                                                                                "safeName": "UNION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Union",
+                                                                                "safeName": "Union"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "typeId": "type_union:Shape"
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": {
+                                                                    "name": {
+                                                                        "originalName": "radius",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "radius",
+                                                                            "safeName": "radius"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "radius",
+                                                                            "safeName": "radius"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "RADIUS",
+                                                                            "safeName": "RADIUS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Radius",
+                                                                            "safeName": "Radius"
+                                                                        }
+                                                                    },
+                                                                    "wireValue": "radius"
+                                                                },
+                                                                "value": {
+                                                                    "shape": {
+                                                                        "type": "primitive",
+                                                                        "primitive": {
+                                                                            "type": "double",
+                                                                            "double": 1.1
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": 1.1
+                                                                },
+                                                                "originalTypeDeclaration": {
+                                                                    "name": {
+                                                                        "originalName": "Circle",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "circle",
+                                                                            "safeName": "circle"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "circle",
+                                                                            "safeName": "circle"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "CIRCLE",
+                                                                            "safeName": "CIRCLE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Circle",
+                                                                            "safeName": "Circle"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [
+                                                                            {
+                                                                                "originalName": "union",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "union",
+                                                                                    "safeName": "union"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "union",
+                                                                                    "safeName": "union"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "UNION",
+                                                                                    "safeName": "UNION"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Union",
+                                                                                    "safeName": "Union"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "packagePath": [],
+                                                                        "file": {
+                                                                            "originalName": "union",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "UNION",
+                                                                                "safeName": "UNION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Union",
+                                                                                "safeName": "Union"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "typeId": "type_union:Circle"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "type": "circle",
+                                        "id": "string",
+                                        "radius": 1.1
+                                    }
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": null,
                     "docs": null
                 },
@@ -3734,7 +4117,366 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "named",
+                                    "typeName": {
+                                        "name": {
+                                            "originalName": "Shape",
+                                            "camelCase": {
+                                                "unsafeName": "shape",
+                                                "safeName": "shape"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "shape",
+                                                "safeName": "shape"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SHAPE",
+                                                "safeName": "SHAPE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Shape",
+                                                "safeName": "Shape"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "union",
+                                                    "camelCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UNION",
+                                                        "safeName": "UNION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Union",
+                                                        "safeName": "Union"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "union",
+                                                "camelCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union",
+                                                    "safeName": "union"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION",
+                                                    "safeName": "UNION"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Union",
+                                                    "safeName": "Union"
+                                                }
+                                            }
+                                        },
+                                        "typeId": "type_union:Shape"
+                                    },
+                                    "shape": {
+                                        "type": "union",
+                                        "discriminant": {
+                                            "name": {
+                                                "originalName": "type",
+                                                "camelCase": {
+                                                    "unsafeName": "type",
+                                                    "safeName": "type"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "type",
+                                                    "safeName": "type"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPE",
+                                                    "safeName": "TYPE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Type",
+                                                    "safeName": "Type"
+                                                }
+                                            },
+                                            "wireValue": "type"
+                                        },
+                                        "singleUnionType": {
+                                            "wireDiscriminantValue": {
+                                                "name": {
+                                                    "originalName": "circle",
+                                                    "camelCase": {
+                                                        "unsafeName": "circle",
+                                                        "safeName": "circle"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "circle",
+                                                        "safeName": "circle"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "CIRCLE",
+                                                        "safeName": "CIRCLE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Circle",
+                                                        "safeName": "Circle"
+                                                    }
+                                                },
+                                                "wireValue": "circle"
+                                            },
+                                            "shape": {
+                                                "type": "samePropertiesAsObject",
+                                                "typeId": "type_union:Circle",
+                                                "object": {
+                                                    "properties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "id",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "id",
+                                                                        "safeName": "id"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "id",
+                                                                        "safeName": "id"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "ID",
+                                                                        "safeName": "ID"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Id",
+                                                                        "safeName": "Id"
+                                                                    }
+                                                                },
+                                                                "wireValue": "id"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "string"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "string"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": {
+                                                                    "originalName": "Shape",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "shape",
+                                                                        "safeName": "shape"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "shape",
+                                                                        "safeName": "shape"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SHAPE",
+                                                                        "safeName": "SHAPE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Shape",
+                                                                        "safeName": "Shape"
+                                                                    }
+                                                                },
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "union",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "UNION",
+                                                                                "safeName": "UNION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Union",
+                                                                                "safeName": "Union"
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "packagePath": [],
+                                                                    "file": {
+                                                                        "originalName": "union",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "union",
+                                                                            "safeName": "union"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "union",
+                                                                            "safeName": "union"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "UNION",
+                                                                            "safeName": "UNION"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Union",
+                                                                            "safeName": "Union"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "typeId": "type_union:Shape"
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "radius",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "radius",
+                                                                        "safeName": "radius"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "radius",
+                                                                        "safeName": "radius"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RADIUS",
+                                                                        "safeName": "RADIUS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Radius",
+                                                                        "safeName": "Radius"
+                                                                    }
+                                                                },
+                                                                "wireValue": "radius"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "double",
+                                                                        "double": 1.1
+                                                                    }
+                                                                },
+                                                                "jsonExample": 1.1
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": {
+                                                                    "originalName": "Circle",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "circle",
+                                                                        "safeName": "circle"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "circle",
+                                                                        "safeName": "circle"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "CIRCLE",
+                                                                        "safeName": "CIRCLE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Circle",
+                                                                        "safeName": "Circle"
+                                                                    }
+                                                                },
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "union",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "UNION",
+                                                                                "safeName": "UNION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Union",
+                                                                                "safeName": "Union"
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "packagePath": [],
+                                                                    "file": {
+                                                                        "originalName": "union",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "union",
+                                                                            "safeName": "union"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "union",
+                                                                            "safeName": "union"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "UNION",
+                                                                            "safeName": "UNION"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Union",
+                                                                            "safeName": "Union"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "typeId": "type_union:Circle"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "jsonExample": {
+                                    "type": "circle",
+                                    "id": "string",
+                                    "radius": 1.1
+                                }
+                            },
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "boolean",
+                                            "boolean": true
+                                        }
+                                    },
+                                    "jsonExample": true
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": null,
                     "docs": null
                 }

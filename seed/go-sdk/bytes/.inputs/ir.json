@@ -161,7 +161,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/upload-content",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

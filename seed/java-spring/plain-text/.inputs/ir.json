@@ -130,7 +130,35 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "url": "/text",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
                     "availability": null,
                     "docs": null
                 }

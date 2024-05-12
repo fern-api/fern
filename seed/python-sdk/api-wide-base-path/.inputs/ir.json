@@ -359,7 +359,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/",
                             "rootPathParameters": [
                                 {

@@ -463,7 +463,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/stream",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

@@ -862,7 +862,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "generated",
+                            "exampleType": "userProvided",
                             "url": "/hello",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
