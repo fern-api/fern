@@ -12,7 +12,7 @@ const client = new SeedExhaustiveClient({
 describe("Container", () => {
     test("getAndReturnListOfPrimitives", async () => {
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
-        expect(response).toEqual(["string"]);
+        expect(response).toEqual(undefined);
     });
 
     test("getAndReturnListOfObjects", async () => {
@@ -21,12 +21,12 @@ describe("Container", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([{ string: "string" }]);
+        expect(response).toEqual(undefined);
     });
 
     test("getAndReturnSetOfPrimitives", async () => {
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
-        expect(response).toEqual(["string"]);
+        expect(response).toEqual(undefined);
     });
 
     test("getAndReturnSetOfObjects", async () => {
@@ -37,14 +37,14 @@ describe("Container", () => {
                 },
             ])
         );
-        expect(response).toEqual([{ string: "string" }]);
+        expect(response).toEqual(undefined);
     });
 
     test("getAndReturnMapPrimToPrim", async () => {
         const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
             string: "string",
         });
-        expect(response).toEqual({ string: "string" });
+        expect(response).toEqual(undefined);
     });
 
     test("getAndReturnMapOfPrimToObject", async () => {
@@ -53,13 +53,13 @@ describe("Container", () => {
                 string: "string",
             },
         });
-        expect(response).toEqual({ string: { string: "string" } });
+        expect(response).toEqual(undefined);
     });
 
     test("getAndReturnOptional", async () => {
         const response = await client.endpoints.container.getAndReturnOptional({
             string: "string",
         });
-        expect(response).toEqual({ string: "string" });
+        expect(response).toEqual(undefined);
     });
 });

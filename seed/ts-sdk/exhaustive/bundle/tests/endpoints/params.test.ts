@@ -12,7 +12,7 @@ const client = new FiddleClient({
 describe("Params", () => {
     test("getWithPath", async () => {
         const response = await client.endpoints.params.getWithPath("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 
     test("getWithQuery", async () => {
@@ -40,6 +40,6 @@ describe("Params", () => {
 
     test("modifyWithPath", async () => {
         const response = await client.endpoints.params.modifyWithPath("string", "string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 });

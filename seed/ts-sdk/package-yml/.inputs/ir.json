@@ -235,19 +235,7 @@
                                 "jsonExample": "Hello world!"
                             },
                             "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "Hello world!"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "Hello world!"
-                                }
+                                "type": "ok"
                             },
                             "codeSamples": null,
                             "docs": null
@@ -311,19 +299,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "Hello world!"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "Hello world!"
-                                }
+                                "type": "ok"
                             },
                             "docs": null
                         }
@@ -615,8 +591,7 @@
                             "queryParameters": [],
                             "request": null,
                             "response": {
-                                "type": "ok",
-                                "body": null
+                                "type": "ok"
                             },
                             "codeSamples": null,
                             "docs": null
@@ -702,8 +677,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": null
+                                "type": "ok"
                             },
                             "docs": null
                         }
