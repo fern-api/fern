@@ -16,23 +16,23 @@ Each webhook defines:
 
 <CodeBlock title='webhooks.yml'>
   ```yaml {2-10}
-    webhooks: 
-      paymentNotification: 
-        display-name: Payment Notification
-        docs: Receive a notification when a payment changes status
-        method: POST 
-        headers: 
-          X-Signature-Primary: 
-            type: string 
-            docs: An HMAC signature of the payload
-        payload: PaymentNotificationPayload
-    
-    types: 
-      PaymentNotificationPayload: 
-        discriminant: notificationType
-        union: 
-          queued: QueuedPaymentNotification
-          processing: ProcessingPaymentNotification
-          completed: CompletedPaymentNotification
+  webhooks: 
+    paymentNotification: 
+      display-name: Payment Notification
+      docs: Receive a notification when a payment changes status
+      method: POST 
+      headers: 
+        X-Signature-Primary: 
+          type: string 
+          docs: An HMAC signature of the payload
+      payload: PaymentNotificationPayload
+  
+  types: 
+    PaymentNotificationPayload: 
+      discriminant: notificationType
+      union: 
+        queued: QueuedPaymentNotification
+        processing: ProcessingPaymentNotification
+        completed: CompletedPaymentNotification
   ```
 </CodeBlock>
