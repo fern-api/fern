@@ -11,6 +11,6 @@ describe("Service", () => {
         const response = await client.service.hello({
             numEvents: 5,
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ id: "123", name: "hello" });
     });
 });

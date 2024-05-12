@@ -17,6 +17,6 @@ describe("Service", () => {
 
     test("ping", async () => {
         const response = await client.health.service.ping();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual(true);
     });
 });

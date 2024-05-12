@@ -12,6 +12,11 @@ const client = new SeedExamplesClient({
 describe("Service", () => {
     test("getException", async () => {
         const response = await client.file.notification.service.getException("notification-hsy129x");
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            type: "generic",
+            exceptionType: "Unavailable",
+            exceptionMessage: "This component is unavailable!",
+            exceptionStacktrace: "<logs>",
+        });
     });
 });

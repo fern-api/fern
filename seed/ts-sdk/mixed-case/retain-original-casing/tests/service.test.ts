@@ -9,7 +9,12 @@ const client = new SeedMixedCaseClient({ environment: process.env.TESTS_BASE_URL
 describe("Service", () => {
     test("getResource", async () => {
         const response = await client.service.getResource("rsc-xyz");
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            resource_type: "user",
+            userName: "username",
+            metadata_tags: ["tag1", "tag2"],
+            EXTRA_PROPERTIES: { foo: "bar", baz: "qux" },
+        });
     });
 
     test("listResources", async () => {
@@ -17,6 +22,13 @@ describe("Service", () => {
             page_limit: 10,
             beforeDate: "2023-01-01",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual([
+            {
+                resource_type: "user",
+                userName: "username",
+                metadata_tags: ["tag1", "tag2"],
+                EXTRA_PROPERTIES: { foo: "bar", baz: "qux" },
+            },
+        ]);
     });
 });

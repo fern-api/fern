@@ -13,13 +13,13 @@ const client = new SeedBasicAuthClient({
 describe("BasicAuth", () => {
     test("getWithBasicAuth", async () => {
         const response = await client.basicAuth.getWithBasicAuth();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual(true);
     });
 
     test("postWithBasicAuth", async () => {
         const response = await client.basicAuth.postWithBasicAuth({
             key: "value",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual(true);
     });
 });

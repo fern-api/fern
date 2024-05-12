@@ -14,6 +14,6 @@ describe("S3", () => {
         const response = await client.s3.getPresignedUrl({
             s3Key: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("string");
     });
 });

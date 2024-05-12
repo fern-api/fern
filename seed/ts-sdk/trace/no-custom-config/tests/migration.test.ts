@@ -15,6 +15,6 @@ describe("Migration", () => {
         const response = await client.migration.getAttemptedMigrations({
             adminKeyHeader: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual([{ name: "string", status: "RUNNING" }]);
     });
 });

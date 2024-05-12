@@ -14,21 +14,64 @@ const client = new SeedTraceClient({
 describe("Problem", () => {
     test("getLightweightProblems", async () => {
         const response = await client.v2.problem.getLightweightProblems();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual([
+            { problemId: "string", problemName: "string", problemVersion: 1, variableTypes: [{ type: "integerType" }] },
+        ]);
     });
 
     test("getProblems", async () => {
         const response = await client.v2.problem.getProblems();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual([
+            {
+                problemId: "string",
+                problemDescription: {
+                    boards: [{ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "html" }],
+                },
+                problemName: "string",
+                problemVersion: 1,
+                supportedLanguages: ["JAVA"],
+                customFiles: { type: "basic" },
+                generatedFiles: {},
+                customTestCaseTemplates: [{}],
+                testcases: [{}],
+                isPublic: true,
+            },
+        ]);
     });
 
     test("getLatestProblem", async () => {
         const response = await client.v2.problem.getLatestProblem(SeedTrace.ProblemId("string"));
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            problemId: "string",
+            problemDescription: {
+                boards: [{ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "html" }],
+            },
+            problemName: "string",
+            problemVersion: 1,
+            supportedLanguages: ["JAVA"],
+            customFiles: { type: "basic" },
+            generatedFiles: {},
+            customTestCaseTemplates: [{}],
+            testcases: [{}],
+            isPublic: true,
+        });
     });
 
     test("getProblemVersion", async () => {
         const response = await client.v2.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1);
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            problemId: "string",
+            problemDescription: {
+                boards: [{ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "html" }],
+            },
+            problemName: "string",
+            problemVersion: 1,
+            supportedLanguages: ["JAVA"],
+            customFiles: { type: "basic" },
+            generatedFiles: {},
+            customTestCaseTemplates: [{}],
+            testcases: [{}],
+            isPublic: true,
+        });
     });
 });

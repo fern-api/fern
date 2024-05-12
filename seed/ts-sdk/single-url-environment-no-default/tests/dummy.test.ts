@@ -12,6 +12,6 @@ const client = new SeedSingleUrlEnvironmentNoDefaultClient({
 describe("Dummy", () => {
     test("getDummy", async () => {
         const response = await client.dummy.getDummy();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("string");
     });
 });

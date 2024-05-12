@@ -67,7 +67,7 @@ describe("Problem", () => {
             ],
             methodName: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "success" });
     });
 
     test("updateProblem", async () => {
@@ -125,7 +125,7 @@ describe("Problem", () => {
             ],
             methodName: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ problemVersion: 1 });
     });
 
     test("deleteProblem", async () => {
@@ -148,6 +148,13 @@ describe("Problem", () => {
             },
             methodName: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({
+            files: {
+                JAVA: {
+                    solutionFile: { filename: "string", contents: "string" },
+                    readOnlyFiles: [{ filename: "string", contents: "string" }],
+                },
+            },
+        });
     });
 });

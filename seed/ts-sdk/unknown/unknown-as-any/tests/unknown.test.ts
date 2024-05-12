@@ -11,6 +11,6 @@ describe("Unknown", () => {
         const response = await client.unknown.post({
             key: "value",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual([{ key: "value" }]);
     });
 });

@@ -13,6 +13,6 @@ describe("Headers", () => {
             async: true,
             query: "What is the weather today",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ message: "The weather is sunny", status: 200, success: true });
     });
 });

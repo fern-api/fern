@@ -20,7 +20,7 @@ describe("Playlist", () => {
                 problems: ["string"],
             },
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ playlistId: "string", ownerId: "string", name: "string", problems: ["string"] });
     });
 
     test("getPlaylists", async () => {
@@ -31,12 +31,12 @@ describe("Playlist", () => {
             optionalMultipleField: "string",
             multipleField: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual([{ playlistId: "string", ownerId: "string", name: "string", problems: ["string"] }]);
     });
 
     test("getPlaylist", async () => {
         const response = await client.playlist.getPlaylist(1, "string");
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ playlistId: "string", ownerId: "string", name: "string", problems: ["string"] });
     });
 
     test("updatePlaylist", async () => {
@@ -44,7 +44,7 @@ describe("Playlist", () => {
             name: "string",
             problems: ["string"],
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ playlistId: "string", ownerId: "string", name: "string", problems: ["string"] });
     });
 
     test("deletePlaylist", async () => {
