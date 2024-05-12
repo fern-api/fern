@@ -6482,7 +6482,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.93.1-abf6adb7b"],\
+            ["@fern-api/fdr-sdk", "npm:0.93.0-b213e2a90"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.532"],\
@@ -6511,7 +6511,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/core/",\
           "packageDependencies": [\
             ["@fern-api/core", "workspace:packages/core"],\
-            ["@fern-api/fdr-sdk", "npm:0.93.1-abf6adb7b"],\
+            ["@fern-api/fdr-sdk", "npm:0.93.0-b213e2a90"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.38"],\
             ["@fern-fern/fdr-test-sdk", "npm:0.0.5297"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.532"],\
@@ -6602,7 +6602,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.93.1-abf6adb7b"],\
+            ["@fern-api/fdr-sdk", "npm:0.93.0-b213e2a90"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/register", "workspace:packages/cli/register"],\
@@ -6682,10 +6682,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.93.1-abf6adb7b", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.93.1-abf6adb7b-c1e4f0aa9c-41f958fd71.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.93.0-b213e2a90", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.93.0-b213e2a90-23ee040b64-0a7d87db46.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.93.1-abf6adb7b"],\
+            ["@fern-api/fdr-sdk", "npm:0.93.0-b213e2a90"],\
             ["form-data", "npm:4.0.0"],\
             ["js-base64", "npm:3.7.7"],\
             ["lodash", "npm:4.17.21"],\
@@ -6973,7 +6973,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/ir-v40-sdk", "npm:0.0.2"],\
             ["@fern-fern/ir-v41-sdk", "npm:0.0.1"],\
             ["@fern-fern/ir-v42-sdk", "npm:0.0.1"],\
-            ["@fern-fern/ir-v43-sdk", "npm:0.0.1"],\
             ["@fern-fern/ir-v5-model", "npm:0.0.3"],\
             ["@fern-fern/ir-v6-model", "npm:0.0.33"],\
             ["@fern-fern/ir-v7-model", "npm:0.0.2"],\
@@ -7369,7 +7368,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.93.1-abf6adb7b"],\
+            ["@fern-api/fdr-sdk", "npm:0.93.0-b213e2a90"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
@@ -7398,7 +7397,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
-            ["@fern-api/fdr-sdk", "npm:0.93.1-abf6adb7b"],\
+            ["@fern-api/fdr-sdk", "npm:0.93.0-b213e2a90"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/ir-migrations", "workspace:packages/cli/generation/ir-migrations"],\
@@ -8186,15 +8185,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-ir-v42-sdk-npm-0.0.1-568eeec952-4ceaeab9e2.zip/node_modules/@fern-fern/ir-v42-sdk/",\
           "packageDependencies": [\
             ["@fern-fern/ir-v42-sdk", "npm:0.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fern-fern/ir-v43-sdk", [\
-        ["npm:0.0.1", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-v43-sdk-npm-0.0.1-dc3dbd0587-b4cfdfcc5e.zip/node_modules/@fern-fern/ir-v43-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/ir-v43-sdk", "npm:0.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

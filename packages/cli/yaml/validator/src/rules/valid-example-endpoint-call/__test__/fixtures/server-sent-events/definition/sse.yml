@@ -1,5 +1,8 @@
-imports:
-  streaming: ./streaming.yml
+types:
+  StreamedCompletion:
+    properties:
+      delta: string
+      tokens: optional<integer>
 
 service:
   auth: false
@@ -9,12 +12,12 @@ service:
       method: POST
       path: /stream
       request:
-        name: streaming.StreamCompletionRequest
+        name: StreamCompletionRequest
         body:
           properties:
             query: string
       response-stream:
-        type: streaming.StreamedCompletion
+        type: StreamedCompletion
         format: sse
         terminator: "[[DONE]]"
       examples:
@@ -31,3 +34,12 @@ service:
                 data:
                   delta: "bar"
                   tokens: 2
+        - name: "Stream completions"
+          request:
+            query: "foo"
+          response:
+            stream:
+              - foo: discriminant-1
+                bar:
+                  delta: "foo"
+                  tokens: 1

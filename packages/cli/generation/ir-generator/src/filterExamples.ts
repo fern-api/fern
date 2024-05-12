@@ -1,7 +1,5 @@
-import { isNonNullish } from "@fern-api/core-utils";
 import {
     ExampleContainer,
-    ExampleEndpointSuccessResponse,
     ExampleInlinedRequestBodyProperty,
     ExampleKeyValuePair,
     ExampleNamedType,
@@ -311,54 +309,13 @@ function filterExampleResponse({
     filteredIr: FilteredIr;
     response: ExampleResponse;
 }): ExampleResponse {
-    return response._visit<ExampleResponse>({
-        ok: (ok) =>
-            ok._visit<ExampleResponse>({
-                body: (exampleTypeReference) =>
-                    ExampleResponse.ok(
-                        ExampleEndpointSuccessResponse.body(
-                            exampleTypeReference != null
-                                ? filterExampleTypeReference({ filteredIr, exampleTypeReference })
-                                : undefined
-                        )
-                    ),
-                stream: (stream) =>
-                    ExampleResponse.ok(
-                        ExampleEndpointSuccessResponse.stream(
-                            stream
-                                .map((exampleTypeReference) =>
-                                    filterExampleTypeReference({ filteredIr, exampleTypeReference })
-                                )
-                                .filter(isNonNullish)
-                        )
-                    ),
-                sse: (events) =>
-                    ExampleResponse.ok(
-                        ExampleEndpointSuccessResponse.sse(
-                            events
-                                .map(({ event, data }) => {
-                                    const filteredData = filterExampleTypeReference({
-                                        filteredIr,
-                                        exampleTypeReference: data
-                                    });
-                                    return filteredData !== undefined ? { event, data: filteredData } : undefined;
-                                })
-                                .filter(isNonNullish)
-                        )
-                    ),
-                _other: ({ type }) => {
-                    throw new Error(`Received unknown type for OK example: ${type}`);
-                }
-            }),
-        error: ({ error, body }) =>
-            ExampleResponse.error({
-                error,
-                body: body != null ? filterExampleTypeReference({ filteredIr, exampleTypeReference: body }) : undefined
-            }),
-        _other: ({ type }) => {
-            throw new Error(`Received unknown type for example: ${type}`);
-        }
-    });
+    return {
+        ...response,
+        body:
+            response.body !== undefined
+                ? filterExampleTypeReference({ filteredIr, exampleTypeReference: response.body })
+                : undefined
+    };
 }
 
 export function filterEndpointExample({

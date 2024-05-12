@@ -11,7 +11,7 @@ import { TaskContext } from "@fern-api/task-context";
 import express, { Request, Response } from "express";
 import getPort from "get-port";
 import { IncomingHttpHeaders, Server } from "http";
-import { isEqual, noop } from "lodash-es";
+import { isEqual } from "lodash-es";
 import urlJoin from "url-join";
 
 type RequestHandler = (req: Request, res: Response) => void;
@@ -110,50 +110,17 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
         }
         for (const example of endpoint.examples) {
             if (isRequestMatch(req, example)) {
-                example.response?._visit({
-                    ok: (ok) => {
-                        ok._visit({
-                            body: (body) => {
-                                if (body == null) {
-                                    res.sendStatus(endpoint.response?.statusCode ?? 204);
-                                    return;
-                                }
+                if (example.response.body == null) {
+                    res.sendStatus(endpoint.response?.statusCode ?? 204); // no content
+                    return;
+                }
 
-                                if (endpoint.response?.body?.type === "text") {
-                                    res.contentType("text/plain");
-                                    res.send(body.jsonExample);
-                                    return;
-                                }
-
-                                res.json(body.jsonExample);
-                            },
-                            stream: (stream) => {
-                                stream.forEach((chunk) => {
-                                    res.write(chunk.jsonExample);
-                                });
-                                res.end();
-                            },
-                            sse: (sse) => {
-                                res.setHeader("Content-Type", "text/event-stream");
-                                sse.forEach((event) => {
-                                    res.write(`event: ${event.event}\n`);
-                                    res.write(`data: ${JSON.stringify(event.data.jsonExample)}\n\n`);
-                                });
-                                res.end();
-                            },
-                            _other: noop
-                        });
-                    },
-                    error: (error) => {
-                        res.status(endpoint.response?.statusCode ?? 500);
-                        if (error.body == null) {
-                            res.end();
-                        } else {
-                            res.json(error.body.jsonExample);
-                        }
-                    },
-                    _other: noop
-                });
+                if (endpoint.response?.body?.type === "text") {
+                    res.contentType("text/plain");
+                    res.send(example.response.body.jsonExample);
+                    return;
+                }
+                res.json(example.response.body.jsonExample);
                 return;
             }
         }

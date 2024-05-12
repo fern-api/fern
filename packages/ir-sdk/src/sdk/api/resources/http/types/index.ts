@@ -56,5 +56,4 @@ export * from "./ExampleInlinedRequestBody";
 export * from "./ExampleInlinedRequestBodyProperty";
 export * from "./ExampleResponse";
 export * from "./ExampleEndpointSuccessResponse";
-export * from "./ExampleServerSideEvent";
 export * from "./ExampleEndpointErrorResponse";

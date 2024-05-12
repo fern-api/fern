@@ -132,161 +132,158 @@ exports[`generate IR from OpenAPI 1`] = `
               "queryParameters": [],
               "request": null,
               "response": {
-                "type": "ok",
-                "value": {
-                  "type": "body",
-                  "value": {
-                    "jsonExample": {
-                      "message": "message",
-                    },
+                "body": {
+                  "jsonExample": {
+                    "message": "message",
+                  },
+                  "shape": {
                     "shape": {
-                      "shape": {
-                        "index": 0,
-                        "singleUnionType": {
-                          "jsonExample": {
-                            "message": "message",
-                          },
+                      "index": 0,
+                      "singleUnionType": {
+                        "jsonExample": {
+                          "message": "message",
+                        },
+                        "shape": {
                           "shape": {
-                            "shape": {
-                              "properties": [
-                                {
+                            "properties": [
+                              {
+                                "name": {
                                   "name": {
-                                    "name": {
-                                      "camelCase": {
-                                        "safeName": "message",
-                                        "unsafeName": "message",
-                                      },
-                                      "originalName": "message",
-                                      "pascalCase": {
-                                        "safeName": "Message",
-                                        "unsafeName": "Message",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "MESSAGE",
-                                        "unsafeName": "MESSAGE",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "message",
-                                        "unsafeName": "message",
-                                      },
+                                    "camelCase": {
+                                      "safeName": "message",
+                                      "unsafeName": "message",
                                     },
-                                    "wireValue": "message",
+                                    "originalName": "message",
+                                    "pascalCase": {
+                                      "safeName": "Message",
+                                      "unsafeName": "Message",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "MESSAGE",
+                                      "unsafeName": "MESSAGE",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "message",
+                                      "unsafeName": "message",
+                                    },
                                   },
-                                  "originalTypeDeclaration": {
-                                    "fernFilepath": {
-                                      "allParts": [],
-                                      "file": null,
-                                      "packagePath": [],
-                                    },
-                                    "name": {
-                                      "camelCase": {
-                                        "safeName": "notFound",
-                                        "unsafeName": "notFound",
-                                      },
-                                      "originalName": "NotFound",
-                                      "pascalCase": {
-                                        "safeName": "NotFound",
-                                        "unsafeName": "NotFound",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "NOT_FOUND",
-                                        "unsafeName": "NOT_FOUND",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "not_found",
-                                        "unsafeName": "not_found",
-                                      },
-                                    },
-                                    "typeId": "type_:NotFound",
+                                  "wireValue": "message",
+                                },
+                                "originalTypeDeclaration": {
+                                  "fernFilepath": {
+                                    "allParts": [],
+                                    "file": null,
+                                    "packagePath": [],
                                   },
-                                  "value": {
-                                    "jsonExample": "message",
-                                    "shape": {
-                                      "container": {
-                                        "optional": {
-                                          "jsonExample": "message",
-                                          "shape": {
-                                            "primitive": {
-                                              "string": {
-                                                "original": "message",
-                                              },
-                                              "type": "string",
+                                  "name": {
+                                    "camelCase": {
+                                      "safeName": "notFound",
+                                      "unsafeName": "notFound",
+                                    },
+                                    "originalName": "NotFound",
+                                    "pascalCase": {
+                                      "safeName": "NotFound",
+                                      "unsafeName": "NotFound",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "NOT_FOUND",
+                                      "unsafeName": "NOT_FOUND",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "not_found",
+                                      "unsafeName": "not_found",
+                                    },
+                                  },
+                                  "typeId": "type_:NotFound",
+                                },
+                                "value": {
+                                  "jsonExample": "message",
+                                  "shape": {
+                                    "container": {
+                                      "optional": {
+                                        "jsonExample": "message",
+                                        "shape": {
+                                          "primitive": {
+                                            "string": {
+                                              "original": "message",
                                             },
-                                            "type": "primitive",
+                                            "type": "string",
                                           },
+                                          "type": "primitive",
                                         },
-                                        "type": "optional",
                                       },
-                                      "type": "container",
+                                      "type": "optional",
                                     },
+                                    "type": "container",
                                   },
                                 },
-                              ],
-                              "type": "object",
-                            },
-                            "type": "named",
-                            "typeName": {
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": null,
-                                "packagePath": [],
                               },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "notFound",
-                                  "unsafeName": "notFound",
-                                },
-                                "originalName": "NotFound",
-                                "pascalCase": {
-                                  "safeName": "NotFound",
-                                  "unsafeName": "NotFound",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "NOT_FOUND",
-                                  "unsafeName": "NOT_FOUND",
-                                },
-                                "snakeCase": {
-                                  "safeName": "not_found",
-                                  "unsafeName": "not_found",
-                                },
-                              },
-                              "typeId": "type_:NotFound",
+                            ],
+                            "type": "object",
+                          },
+                          "type": "named",
+                          "typeName": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
                             },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "notFound",
+                                "unsafeName": "notFound",
+                              },
+                              "originalName": "NotFound",
+                              "pascalCase": {
+                                "safeName": "NotFound",
+                                "unsafeName": "NotFound",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "NOT_FOUND",
+                                "unsafeName": "NOT_FOUND",
+                              },
+                              "snakeCase": {
+                                "safeName": "not_found",
+                                "unsafeName": "not_found",
+                              },
+                            },
+                            "typeId": "type_:NotFound",
                           },
                         },
-                        "type": "undiscriminatedUnion",
                       },
-                      "type": "named",
-                      "typeName": {
-                        "fernFilepath": {
-                          "allParts": [],
-                          "file": null,
-                          "packagePath": [],
-                        },
-                        "name": {
-                          "camelCase": {
-                            "safeName": "getExampleResponse",
-                            "unsafeName": "getExampleResponse",
-                          },
-                          "originalName": "GetExampleResponse",
-                          "pascalCase": {
-                            "safeName": "GetExampleResponse",
-                            "unsafeName": "GetExampleResponse",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "GET_EXAMPLE_RESPONSE",
-                            "unsafeName": "GET_EXAMPLE_RESPONSE",
-                          },
-                          "snakeCase": {
-                            "safeName": "get_example_response",
-                            "unsafeName": "get_example_response",
-                          },
-                        },
-                        "typeId": "type_:GetExampleResponse",
+                      "type": "undiscriminatedUnion",
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": null,
+                        "packagePath": [],
                       },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "getExampleResponse",
+                          "unsafeName": "getExampleResponse",
+                        },
+                        "originalName": "GetExampleResponse",
+                        "pascalCase": {
+                          "safeName": "GetExampleResponse",
+                          "unsafeName": "GetExampleResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "GET_EXAMPLE_RESPONSE",
+                          "unsafeName": "GET_EXAMPLE_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "get_example_response",
+                          "unsafeName": "get_example_response",
+                        },
+                      },
+                      "typeId": "type_:GetExampleResponse",
                     },
                   },
                 },
+                "type": "ok",
               },
               "rootPathParameters": [],
               "serviceHeaders": [],
@@ -303,161 +300,158 @@ exports[`generate IR from OpenAPI 1`] = `
               "queryParameters": [],
               "request": null,
               "response": {
-                "type": "ok",
-                "value": {
-                  "type": "body",
-                  "value": {
-                    "jsonExample": {
-                      "message": "message",
-                    },
+                "body": {
+                  "jsonExample": {
+                    "message": "message",
+                  },
+                  "shape": {
                     "shape": {
-                      "shape": {
-                        "index": 0,
-                        "singleUnionType": {
-                          "jsonExample": {
-                            "message": "message",
-                          },
+                      "index": 0,
+                      "singleUnionType": {
+                        "jsonExample": {
+                          "message": "message",
+                        },
+                        "shape": {
                           "shape": {
-                            "shape": {
-                              "properties": [
-                                {
+                            "properties": [
+                              {
+                                "name": {
                                   "name": {
-                                    "name": {
-                                      "camelCase": {
-                                        "safeName": "message",
-                                        "unsafeName": "message",
-                                      },
-                                      "originalName": "message",
-                                      "pascalCase": {
-                                        "safeName": "Message",
-                                        "unsafeName": "Message",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "MESSAGE",
-                                        "unsafeName": "MESSAGE",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "message",
-                                        "unsafeName": "message",
-                                      },
+                                    "camelCase": {
+                                      "safeName": "message",
+                                      "unsafeName": "message",
                                     },
-                                    "wireValue": "message",
+                                    "originalName": "message",
+                                    "pascalCase": {
+                                      "safeName": "Message",
+                                      "unsafeName": "Message",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "MESSAGE",
+                                      "unsafeName": "MESSAGE",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "message",
+                                      "unsafeName": "message",
+                                    },
                                   },
-                                  "originalTypeDeclaration": {
-                                    "fernFilepath": {
-                                      "allParts": [],
-                                      "file": null,
-                                      "packagePath": [],
-                                    },
-                                    "name": {
-                                      "camelCase": {
-                                        "safeName": "notFound",
-                                        "unsafeName": "notFound",
-                                      },
-                                      "originalName": "NotFound",
-                                      "pascalCase": {
-                                        "safeName": "NotFound",
-                                        "unsafeName": "NotFound",
-                                      },
-                                      "screamingSnakeCase": {
-                                        "safeName": "NOT_FOUND",
-                                        "unsafeName": "NOT_FOUND",
-                                      },
-                                      "snakeCase": {
-                                        "safeName": "not_found",
-                                        "unsafeName": "not_found",
-                                      },
-                                    },
-                                    "typeId": "type_:NotFound",
+                                  "wireValue": "message",
+                                },
+                                "originalTypeDeclaration": {
+                                  "fernFilepath": {
+                                    "allParts": [],
+                                    "file": null,
+                                    "packagePath": [],
                                   },
-                                  "value": {
-                                    "jsonExample": "message",
-                                    "shape": {
-                                      "container": {
-                                        "optional": {
-                                          "jsonExample": "message",
-                                          "shape": {
-                                            "primitive": {
-                                              "string": {
-                                                "original": "message",
-                                              },
-                                              "type": "string",
+                                  "name": {
+                                    "camelCase": {
+                                      "safeName": "notFound",
+                                      "unsafeName": "notFound",
+                                    },
+                                    "originalName": "NotFound",
+                                    "pascalCase": {
+                                      "safeName": "NotFound",
+                                      "unsafeName": "NotFound",
+                                    },
+                                    "screamingSnakeCase": {
+                                      "safeName": "NOT_FOUND",
+                                      "unsafeName": "NOT_FOUND",
+                                    },
+                                    "snakeCase": {
+                                      "safeName": "not_found",
+                                      "unsafeName": "not_found",
+                                    },
+                                  },
+                                  "typeId": "type_:NotFound",
+                                },
+                                "value": {
+                                  "jsonExample": "message",
+                                  "shape": {
+                                    "container": {
+                                      "optional": {
+                                        "jsonExample": "message",
+                                        "shape": {
+                                          "primitive": {
+                                            "string": {
+                                              "original": "message",
                                             },
-                                            "type": "primitive",
+                                            "type": "string",
                                           },
+                                          "type": "primitive",
                                         },
-                                        "type": "optional",
                                       },
-                                      "type": "container",
+                                      "type": "optional",
                                     },
+                                    "type": "container",
                                   },
                                 },
-                              ],
-                              "type": "object",
-                            },
-                            "type": "named",
-                            "typeName": {
-                              "fernFilepath": {
-                                "allParts": [],
-                                "file": null,
-                                "packagePath": [],
                               },
-                              "name": {
-                                "camelCase": {
-                                  "safeName": "notFound",
-                                  "unsafeName": "notFound",
-                                },
-                                "originalName": "NotFound",
-                                "pascalCase": {
-                                  "safeName": "NotFound",
-                                  "unsafeName": "NotFound",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "NOT_FOUND",
-                                  "unsafeName": "NOT_FOUND",
-                                },
-                                "snakeCase": {
-                                  "safeName": "not_found",
-                                  "unsafeName": "not_found",
-                                },
-                              },
-                              "typeId": "type_:NotFound",
+                            ],
+                            "type": "object",
+                          },
+                          "type": "named",
+                          "typeName": {
+                            "fernFilepath": {
+                              "allParts": [],
+                              "file": null,
+                              "packagePath": [],
                             },
+                            "name": {
+                              "camelCase": {
+                                "safeName": "notFound",
+                                "unsafeName": "notFound",
+                              },
+                              "originalName": "NotFound",
+                              "pascalCase": {
+                                "safeName": "NotFound",
+                                "unsafeName": "NotFound",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "NOT_FOUND",
+                                "unsafeName": "NOT_FOUND",
+                              },
+                              "snakeCase": {
+                                "safeName": "not_found",
+                                "unsafeName": "not_found",
+                              },
+                            },
+                            "typeId": "type_:NotFound",
                           },
                         },
-                        "type": "undiscriminatedUnion",
                       },
-                      "type": "named",
-                      "typeName": {
-                        "fernFilepath": {
-                          "allParts": [],
-                          "file": null,
-                          "packagePath": [],
-                        },
-                        "name": {
-                          "camelCase": {
-                            "safeName": "getExampleResponse",
-                            "unsafeName": "getExampleResponse",
-                          },
-                          "originalName": "GetExampleResponse",
-                          "pascalCase": {
-                            "safeName": "GetExampleResponse",
-                            "unsafeName": "GetExampleResponse",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "GET_EXAMPLE_RESPONSE",
-                            "unsafeName": "GET_EXAMPLE_RESPONSE",
-                          },
-                          "snakeCase": {
-                            "safeName": "get_example_response",
-                            "unsafeName": "get_example_response",
-                          },
-                        },
-                        "typeId": "type_:GetExampleResponse",
+                      "type": "undiscriminatedUnion",
+                    },
+                    "type": "named",
+                    "typeName": {
+                      "fernFilepath": {
+                        "allParts": [],
+                        "file": null,
+                        "packagePath": [],
                       },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "getExampleResponse",
+                          "unsafeName": "getExampleResponse",
+                        },
+                        "originalName": "GetExampleResponse",
+                        "pascalCase": {
+                          "safeName": "GetExampleResponse",
+                          "unsafeName": "GetExampleResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "GET_EXAMPLE_RESPONSE",
+                          "unsafeName": "GET_EXAMPLE_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "get_example_response",
+                          "unsafeName": "get_example_response",
+                        },
+                      },
+                      "typeId": "type_:GetExampleResponse",
                     },
                   },
                 },
+                "type": "ok",
               },
               "rootPathParameters": [],
               "serviceHeaders": [],

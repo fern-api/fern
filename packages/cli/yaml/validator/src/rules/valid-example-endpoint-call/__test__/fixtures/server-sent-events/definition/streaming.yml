@@ -28,3 +28,10 @@ service:
                 tokens: 1
               - delta: "bar"
                 tokens: 2
+        - name: "Stream completions"
+          request:
+            query: "foo"
+          response:
+            stream:
+              - foo: discriminant-1
+                bar: {}
