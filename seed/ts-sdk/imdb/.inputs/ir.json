@@ -595,6 +595,7 @@
                 },
                 "wireValue": "MovieDoesNotExistError"
             },
+            "statusCode": 404,
             "type": {
                 "_type": "named",
                 "name": {
@@ -661,11 +662,7 @@
                 },
                 "typeId": "type_imdb:MovieId"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 404,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         }
     },

@@ -316,15 +316,12 @@
                 },
                 "wireValue": "NotFoundError"
             },
+            "statusCode": 404,
             "type": {
                 "_type": "primitive",
                 "primitive": "STRING"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 404,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         }
     },

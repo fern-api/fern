@@ -2683,6 +2683,7 @@
                 },
                 "wireValue": "BadRequestBody"
             },
+            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -2749,11 +2750,7 @@
                 },
                 "typeId": "type_general-errors:BadObjectRequestInfo"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 400,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         },
         "error_types/enum:ErrorWithEnumBody": {
@@ -2883,6 +2880,7 @@
                 },
                 "wireValue": "ErrorWithEnumBody"
             },
+            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -2988,11 +2986,7 @@
                 },
                 "typeId": "type_types/enum:WeatherReport"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 400,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         },
         "error_types/object:ObjectWithOptionalFieldError": {
@@ -3122,6 +3116,7 @@
                 },
                 "wireValue": "ObjectWithOptionalFieldError"
             },
+            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3227,11 +3222,7 @@
                 },
                 "typeId": "type_types/object:ObjectWithOptionalField"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 400,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         },
         "error_types/object:ObjectWithRequiredFieldError": {
@@ -3361,6 +3352,7 @@
                 },
                 "wireValue": "ObjectWithRequiredFieldError"
             },
+            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3466,11 +3458,7 @@
                 },
                 "typeId": "type_types/object:ObjectWithRequiredField"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 400,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         },
         "error_types/object:NestedObjectWithOptionalFieldError": {
@@ -3600,6 +3588,7 @@
                 },
                 "wireValue": "NestedObjectWithOptionalFieldError"
             },
+            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3705,11 +3694,7 @@
                 },
                 "typeId": "type_types/object:NestedObjectWithOptionalField"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 400,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         },
         "error_types/object:NestedObjectWithRequiredFieldError": {
@@ -3839,6 +3824,7 @@
                 },
                 "wireValue": "NestedObjectWithRequiredFieldError"
             },
+            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3944,11 +3930,7 @@
                 },
                 "typeId": "type_types/object:NestedObjectWithRequiredField"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 400,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         },
         "error_types/union:ErrorWithUnionBody": {
@@ -4078,6 +4060,7 @@
                 },
                 "wireValue": "ErrorWithUnionBody"
             },
+            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -4183,11 +4166,7 @@
                 },
                 "typeId": "type_types/union:Animal"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 400,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         }
     },
