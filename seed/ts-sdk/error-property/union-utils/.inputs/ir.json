@@ -226,7 +226,6 @@
                 },
                 "wireValue": "PropertyBasedErrorTest"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -293,7 +292,11 @@
                 },
                 "typeId": "type_errors:PropertyBasedErrorTestBody"
             },
+<<<<<<< HEAD
             "examples": [],
+=======
+            "statusCode": 400,
+>>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         }
     },

@@ -86,14 +86,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     )
                 );
             }
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    this.Fetcher.Args.properties.contentType,
-                    typeof args.contentType === "string"
-                        ? ts.factory.createStringLiteral(args.contentType)
-                        : args.contentType
-                )
-            );
+            if (args.contentType != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.contentType,
+                        typeof args.contentType === "string"
+                            ? ts.factory.createStringLiteral(args.contentType)
+                            : args.contentType
+                    )
+                );
+            }
             if (args.queryParameters != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(

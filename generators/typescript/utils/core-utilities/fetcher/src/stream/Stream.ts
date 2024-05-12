@@ -1,5 +1,5 @@
-import { RUNTIME } from "@fern-typescript/runtime";
 import { Readable } from "stream";
+import { RUNTIME } from "../runtime";
 
 export declare namespace Stream {
     interface Args {

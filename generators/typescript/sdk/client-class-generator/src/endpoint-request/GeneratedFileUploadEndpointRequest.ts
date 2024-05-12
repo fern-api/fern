@@ -235,7 +235,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                             GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME,
                             undefined,
                             undefined,
-                            context.externalDependencies.formData._instantiate()
+                            context.coreUtilities.formDataUtils._instantiate()
                         )
                     ],
                     ts.NodeFlags.Const
@@ -264,16 +264,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
-            body: ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME),
-            contentType: ts.factory.createBinaryExpression(
-                ts.factory.createStringLiteral("multipart/form-data; boundary="),
-                ts.factory.createToken(ts.SyntaxKind.PlusToken),
-                context.externalDependencies.formData.getBoundary({
-                    referencetoFormData: ts.factory.createIdentifier(
-                        GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
-                    )
-                })
-            )
+            body: ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME)
         };
     }
 

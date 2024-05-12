@@ -5,7 +5,6 @@
 import * as core from "../../../../core";
 import * as fs from "fs";
 import * as SeedFileUpload from "../../../index";
-import { default as FormData } from "form-data";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
@@ -42,7 +41,7 @@ export class Service {
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
-        const _request = new FormData();
+        const _request = new FormDataWrapper();
         if (request.maybeString != null) {
             _request.append("maybeString", request.maybeString);
         }
@@ -87,7 +86,6 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
-            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             body: _request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -126,7 +124,7 @@ export class Service {
      *     await seedFileUpload.service.justFile(fs.createReadStream("/path/to/your/file"))
      */
     public async justFile(file: File | fs.ReadStream, requestOptions?: Service.RequestOptions): Promise<void> {
-        const _request = new FormData();
+        const _request = new FormDataWrapper();
         _request.append("file", file);
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
@@ -138,7 +136,6 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
-            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             body: _request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
@@ -212,7 +209,7 @@ export class Service {
             }
         }
 
-        const _request = new FormData();
+        const _request = new FormDataWrapper();
         _request.append("file", file);
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
@@ -224,7 +221,6 @@ export class Service {
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
-            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             queryParameters: _queryParams,
             body: _request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,

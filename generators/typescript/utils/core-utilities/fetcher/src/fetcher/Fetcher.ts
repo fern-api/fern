@@ -1,5 +1,5 @@
-import { RUNTIME } from "@fern-typescript/runtime";
 import qs from "qs";
+import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
