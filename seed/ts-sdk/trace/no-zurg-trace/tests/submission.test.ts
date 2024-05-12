@@ -14,22 +14,12 @@ const client = new SeedTraceClient({
 describe("Submission", () => {
     test("createExecutionSession", async () => {
         const response = await client.submission.createExecutionSession(SeedTrace.Language.Java);
-        expect(response).toEqual({
-            sessionId: "string",
-            executionSessionUrl: "string",
-            language: "JAVA",
-            status: "CREATING_CONTAINER",
-        });
+        expect(response).toEqual(undefined);
     });
 
     test("getExecutionSession", async () => {
         const response = await client.submission.getExecutionSession("string");
-        expect(response).toEqual({
-            sessionId: "string",
-            executionSessionUrl: "string",
-            language: "JAVA",
-            status: "CREATING_CONTAINER",
-        });
+        expect(response).toEqual(undefined);
     });
 
     test("stopExecutionSession", async () => {
@@ -39,19 +29,6 @@ describe("Submission", () => {
 
     test("getExecutionSessionsState", async () => {
         const response = await client.submission.getExecutionSessionsState();
-        expect(response).toEqual({
-            states: {
-                string: {
-                    lastTimeContacted: "string",
-                    sessionId: "string",
-                    isWarmInstance: true,
-                    awsTaskId: "string",
-                    language: "JAVA",
-                    status: "CREATING_CONTAINER",
-                },
-            },
-            numWarmingInstances: 1,
-            warmingSessionIds: ["string"],
-        });
+        expect(response).toEqual(undefined);
     });
 });

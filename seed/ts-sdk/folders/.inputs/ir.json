@@ -402,8 +402,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": null
+                                "type": "ok"
                             },
                             "docs": null
                         }
@@ -568,8 +567,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": null
+                                "type": "ok"
                             },
                             "docs": null
                         }
@@ -734,8 +732,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": null
+                                "type": "ok"
                             },
                             "docs": null
                         }
@@ -862,8 +859,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": null
+                                "type": "ok"
                             },
                             "docs": null
                         }
@@ -1027,8 +1023,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": null
+                                "type": "ok"
                             },
                             "docs": null
                         }
@@ -1253,8 +1248,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": null
+                                "type": "ok"
                             },
                             "docs": null
                         },

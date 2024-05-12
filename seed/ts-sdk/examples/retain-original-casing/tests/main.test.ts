@@ -12,6 +12,6 @@ const client = new SeedExamplesClient({
 describe("SeedExamplesClient", () => {
     test("echo", async () => {
         const response = await client.echo("Hello world!\\n\\nwith\\n\\tnewlines");
-        expect(response).toEqual("Hello world!\\n\\nwith\\n\\tnewlines");
+        expect(response).toEqual(undefined);
     });
 });

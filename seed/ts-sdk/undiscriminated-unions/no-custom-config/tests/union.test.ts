@@ -9,6 +9,6 @@ const client = new SeedUndiscriminatedUnionsClient({ environment: process.env.TE
 describe("Union", () => {
     test("get", async () => {
         const response = await client.union.get("string");
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 });

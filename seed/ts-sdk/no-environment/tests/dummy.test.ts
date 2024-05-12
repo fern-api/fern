@@ -12,6 +12,6 @@ const client = new SeedNoEnvironmentClient({
 describe("Dummy", () => {
     test("getDummy", async () => {
         const response = await client.dummy.getDummy();
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 });

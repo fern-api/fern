@@ -9,6 +9,6 @@ const client = new SeedErrorPropertyClient({ environment: process.env.TESTS_BASE
 describe("PropertyBasedError", () => {
     test("throwError", async () => {
         const response = await client.propertyBasedError.throwError();
-        expect(response).toEqual("string");
+        expect(response).toEqual(undefined);
     });
 });

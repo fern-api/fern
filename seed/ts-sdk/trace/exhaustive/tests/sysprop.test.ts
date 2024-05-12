@@ -19,6 +19,6 @@ describe("Sysprop", () => {
 
     test("getNumWarmInstances", async () => {
         const response = await client.sysprop.getNumWarmInstances();
-        expect(response).toEqual({ JAVA: 1 });
+        expect(response).toEqual(undefined);
     });
 });
