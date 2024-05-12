@@ -12,6 +12,6 @@ const client = new SeedBearerTokenEnvironmentVariableClient({
 describe("Service", () => {
     test("getWithBearerToken", async () => {
         const response = await client.service.getWithBearerToken();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("string");
     });
 });

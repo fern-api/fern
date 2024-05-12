@@ -13,6 +13,6 @@ const client = new FiddleClient({
 describe("Enum", () => {
     test("getAndReturnEnum", async () => {
         const response = await client.endpoints.enum.getAndReturnEnum(Fiddle.types.WeatherReport.Sunny);
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("SUNNY");
     });
 });

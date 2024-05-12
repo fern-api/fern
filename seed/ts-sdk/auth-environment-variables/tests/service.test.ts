@@ -13,13 +13,13 @@ const client = new SeedAuthEnvironmentVariablesClient({
 describe("Service", () => {
     test("getWithApiKey", async () => {
         const response = await client.service.getWithApiKey();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("string");
     });
 
     test("getWithHeader", async () => {
         const response = await client.service.getWithHeader({
             xEndpointHeader: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("string");
     });
 });

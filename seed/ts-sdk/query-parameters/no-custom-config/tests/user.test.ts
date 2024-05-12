@@ -39,6 +39,6 @@ describe("User", () => {
             },
             filter: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ name: "string", tags: ["string"] });
     });
 });

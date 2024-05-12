@@ -13,6 +13,6 @@ describe("Foo", () => {
             publicProperty: "string",
             privateProperty: 1,
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ imported: "string" });
     });
 });

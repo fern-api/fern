@@ -9,6 +9,6 @@ const client = new SeedPlainTextClient({ environment: process.env.TESTS_BASE_URL
 describe("Service", () => {
     test("getText", async () => {
         const response = await client.service.getText();
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("string");
     });
 });

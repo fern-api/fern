@@ -522,7 +522,8 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": null
                             },
                             "docs": null
                         }

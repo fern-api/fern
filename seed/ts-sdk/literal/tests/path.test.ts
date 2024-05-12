@@ -9,6 +9,6 @@ const client = new SeedLiteralClient({ environment: process.env.TESTS_BASE_URL |
 describe("Path", () => {
     test("send", async () => {
         const response = await client.path.send("123");
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ message: "The weather is sunny", status: 200, success: true });
     });
 });

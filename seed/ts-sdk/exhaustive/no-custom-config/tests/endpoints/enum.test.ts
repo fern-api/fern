@@ -13,6 +13,6 @@ const client = new SeedExhaustiveClient({
 describe("Enum", () => {
     test("getAndReturnEnum", async () => {
         const response = await client.endpoints.enum.getAndReturnEnum(SeedExhaustive.types.WeatherReport.Sunny);
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("SUNNY");
     });
 });

@@ -14,6 +14,6 @@ describe("NoAuth", () => {
         const response = await client.noAuth.postWithNoAuth({
             key: "value",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual(true);
     });
 });

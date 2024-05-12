@@ -15,11 +15,11 @@ describe("Imdb", () => {
             title: "string",
             rating: 1.1,
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("string");
     });
 
     test("getMovie", async () => {
         const response = await client.imdb.getMovie("string");
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ id: "string", title: "string", rating: 1.1 });
     });
 });

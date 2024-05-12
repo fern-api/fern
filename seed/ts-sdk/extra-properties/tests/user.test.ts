@@ -13,6 +13,6 @@ describe("User", () => {
             version: "v1",
             name: "string",
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ name: "string" });
     });
 });

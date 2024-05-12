@@ -9,6 +9,6 @@ const client = new SeedPackageYmlClient({ environment: process.env.TESTS_BASE_UR
 describe("SeedPackageYmlClient", () => {
     test("echo", async () => {
         const response = await client.echo("Hello world!");
-        expect(response).toEqual(undefined);
+        expect(response).toEqual("Hello world!");
     });
 });

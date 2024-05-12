@@ -17,6 +17,6 @@ describe("User", () => {
             name: "string",
             age: 1,
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ id: "string", name: "string", age: 1 });
     });
 });

@@ -16,6 +16,6 @@ describe("Union", () => {
             name: "string",
             likesToWoof: true,
         });
-        expect(response).toEqual(undefined);
+        expect(response).toEqual({ animal: "dog", name: "string", likesToWoof: true });
     });
 });
