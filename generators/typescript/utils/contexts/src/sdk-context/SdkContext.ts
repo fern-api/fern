@@ -1,4 +1,4 @@
-import { JavaScriptRuntime } from "@fern-typescript/commons";
+import { ExternalDependencies, JavaScriptRuntime } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { ModelContext } from "../model-context/ModelContext";
 import { EndpointErrorUnionContext } from "./endpoint-error-union";
@@ -28,4 +28,5 @@ export interface SdkContext extends ModelContext {
     targetRuntime: JavaScriptRuntime;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
+    externalDependencies: ExternalDependencies;
 }

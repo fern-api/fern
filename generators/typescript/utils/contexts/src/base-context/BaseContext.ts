@@ -5,7 +5,6 @@ import { SourceFile } from "ts-morph";
 
 export interface BaseContext {
     sourceFile: SourceFile;
-    externalDependencies: ExternalDependencies;
     coreUtilities: CoreUtilities;
     fernConstants: Constants;
 }

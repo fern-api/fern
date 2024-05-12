@@ -1,3 +1,4 @@
+import { ExternalDependencies } from "@fern-typescript/commons";
 import { ModelContext } from "../model-context/ModelContext";
 import { ExpressEndpointTypeSchemasContext } from "./express-endpoint-type-schemas";
 import { ExpressErrorContext } from "./express-error";
@@ -17,4 +18,5 @@ export interface ExpressContext extends ModelContext {
     expressRegister: ExpressRegisterContext;
     expressService: ExpressServiceContext;
     genericAPIExpressError: GenericAPIExpressErrorContext;
+    externalDependencies: ExternalDependencies;
 }
