@@ -271,6 +271,7 @@
                 },
                 "wireValue": "UnauthorizedRequest"
             },
+            "statusCode": 401,
             "type": {
                 "_type": "named",
                 "name": {
@@ -337,11 +338,7 @@
                 },
                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
             },
-<<<<<<< HEAD
             "examples": [],
-=======
-            "statusCode": 401,
->>>>>>> 31d629600 (move back under fetcher)
             "docs": null
         },
         "error_errors:BadRequest": {
@@ -432,12 +429,9 @@
                 },
                 "wireValue": "BadRequest"
             },
-            "type": null,
-<<<<<<< HEAD
-            "examples": [],
-=======
             "statusCode": 400,
->>>>>>> 31d629600 (move back under fetcher)
+            "type": null,
+            "examples": [],
             "docs": null
         }
     },
