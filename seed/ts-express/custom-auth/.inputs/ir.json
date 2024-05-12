@@ -617,17 +617,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "boolean",
-                                            "boolean": true
-                                        }
-                                    },
-                                    "jsonExample": true
-                                }
+                                "type": "ok"
                             },
                             "docs": null
                         },
@@ -974,17 +964,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "boolean",
-                                            "boolean": true
-                                        }
-                                    },
-                                    "jsonExample": true
-                                }
+                                "type": "ok"
                             },
                             "docs": null
                         },
