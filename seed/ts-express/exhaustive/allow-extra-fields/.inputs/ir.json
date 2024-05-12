@@ -4380,7 +4380,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/list-of-primitives",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -4844,7 +4844,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/list-of-objects",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -5252,7 +5252,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/set-of-primitives",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -5716,7 +5716,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/set-of-objects",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -6136,7 +6136,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/map-prim-to-prim",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -6626,7 +6626,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/map-prim-to-object",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -7351,7 +7351,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/opt-objects",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8125,7 +8125,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8502,7 +8502,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -8957,7 +8957,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -9703,7 +9703,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -10483,7 +10483,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -12514,7 +12514,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -13065,7 +13065,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/get-and-return-with-optional-field",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -15337,7 +15337,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/get-and-return-with-required-field",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -16015,7 +16015,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/get-and-return-with-map-of-map",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -16753,7 +16753,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/get-and-return-nested-with-optional-field",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -19430,7 +19430,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/get-and-return-nested-with-required-field",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -22119,7 +22119,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/get-and-return-nested-with-required-field-list",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -24652,7 +24652,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/path/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -24878,7 +24878,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -25141,7 +25141,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -25441,7 +25441,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/path-query/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -25698,7 +25698,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/path/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -25958,7 +25958,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/string",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -26088,7 +26088,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/integer",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -26216,7 +26216,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/long",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -26344,7 +26344,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/double",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -26472,7 +26472,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/boolean",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -26600,7 +26600,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/datetime",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -26728,7 +26728,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/date",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -26856,7 +26856,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/uuid",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -26984,7 +26984,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/base64",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -27513,7 +27513,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -28542,7 +28542,7 @@
                     ],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/object",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -30535,7 +30535,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/object",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -32819,7 +32819,7 @@
                     ],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -32847,7 +32847,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -33160,7 +33160,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -33238,7 +33238,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -33496,7 +33496,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/custom-header",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

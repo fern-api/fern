@@ -809,24 +809,7 @@
                     "response": null,
                     "errors": [],
                     "auth": false,
-                    "examples": [
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null
@@ -983,24 +966,7 @@
                     "response": null,
                     "errors": [],
                     "auth": false,
-                    "examples": [
-                        {
-                            "url": "/just-file",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null
@@ -1346,90 +1312,7 @@
                     "response": null,
                     "errors": [],
                     "auth": false,
-                    "examples": [
-                        {
-                            "url": "/just-file-with-query-params",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [
-                                {
-                                    "wireKey": "maybeString",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": "string"
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                },
-                                {
-                                    "wireKey": "integer",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "integer",
-                                                "integer": 1
-                                            }
-                                        },
-                                        "jsonExample": 1
-                                    }
-                                },
-                                {
-                                    "wireKey": "maybeInteger",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "integer",
-                                                "integer": 1
-                                            }
-                                        },
-                                        "jsonExample": 1
-                                    }
-                                },
-                                {
-                                    "wireKey": "listOfStrings",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": "string"
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                },
-                                {
-                                    "wireKey": "optionalListOfStrings",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": "string"
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                }
-                            ],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

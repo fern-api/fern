@@ -508,66 +508,7 @@
                     },
                     "errors": [],
                     "auth": false,
-                    "examples": [
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "unknown",
-                                    "unknown": {
-                                        "unknown": {
-                                            "key": "value"
-                                        },
-                                        "type": "unknown"
-                                    }
-                                },
-                                "jsonExample": {
-                                    "key": "value"
-                                }
-                            },
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "container",
-                                        "container": {
-                                            "type": "list",
-                                            "list": [
-                                                {
-                                                    "shape": {
-                                                        "type": "unknown",
-                                                        "unknown": {
-                                                            "unknown": {
-                                                                "key": "value"
-                                                            },
-                                                            "type": "unknown"
-                                                        }
-                                                    },
-                                                    "jsonExample": {
-                                                        "key": "value"
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "jsonExample": [
-                                        {
-                                            "key": "value"
-                                        }
-                                    ]
-                                }
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

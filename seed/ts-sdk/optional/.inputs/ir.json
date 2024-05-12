@@ -212,7 +212,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/send-optional-body",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

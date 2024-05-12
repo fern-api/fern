@@ -269,7 +269,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/boot",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -561,7 +561,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/presigned-url",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

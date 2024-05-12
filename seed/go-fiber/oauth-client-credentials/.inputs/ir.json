@@ -711,7 +711,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/token",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -1704,7 +1704,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/token",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

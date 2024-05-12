@@ -373,7 +373,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

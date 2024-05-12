@@ -241,7 +241,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [
                                 {
@@ -597,7 +597,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/",
                             "rootPathParameters": [
                                 {

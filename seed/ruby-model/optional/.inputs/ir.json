@@ -207,76 +207,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "/send-optional-body",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "container",
-                                    "container": {
-                                        "type": "map",
-                                        "map": [
-                                            {
-                                                "key": {
-                                                    "shape": {
-                                                        "type": "primitive",
-                                                        "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "string"
-                                                            }
-                                                        }
-                                                    },
-                                                    "jsonExample": "string"
-                                                },
-                                                "value": {
-                                                    "shape": {
-                                                        "type": "unknown",
-                                                        "unknown": {
-                                                            "key": "value"
-                                                        }
-                                                    },
-                                                    "jsonExample": {
-                                                        "key": "value"
-                                                    }
-                                                }
-                                            }
-                                        ]
-                                    }
-                                },
-                                "jsonExample": {
-                                    "string": {
-                                        "key": "value"
-                                    }
-                                }
-                            },
-                            "name": null,
-                            "codeSamples": null,
-                            "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "string"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "string"
-                                }
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 }

@@ -572,7 +572,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/user",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

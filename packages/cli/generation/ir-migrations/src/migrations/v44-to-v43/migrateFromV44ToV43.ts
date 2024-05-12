@@ -72,7 +72,7 @@ function convertHttpExample({
 }: {
     example: IrVersions.V44.HttpEndpointExample;
 }): IrVersions.V43.HttpEndpointExample | undefined {
-    return example._visit({
+    return example._visit<IrVersions.V43.HttpEndpointExample | undefined>({
         userProvided: (example) => {
             return IrVersions.V43.HttpEndpointExample.userProvided(convertExampleEndpoint({ example }));
         },

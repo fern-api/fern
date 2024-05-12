@@ -195,58 +195,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "/",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [
-                                {
-                                    "name": {
-                                        "originalName": "endpointParam",
-                                        "camelCase": {
-                                            "unsafeName": "endpointParam",
-                                            "safeName": "endpointParam"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "endpoint_param",
-                                            "safeName": "endpoint_param"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ENDPOINT_PARAM",
-                                            "safeName": "ENDPOINT_PARAM"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "EndpointParam",
-                                            "safeName": "EndpointParam"
-                                        }
-                                    },
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": {
-                                                    "original": "string"
-                                                }
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                }
-                            ],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 }

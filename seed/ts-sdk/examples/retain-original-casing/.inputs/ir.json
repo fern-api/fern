@@ -15904,7 +15904,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -16309,7 +16309,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [
@@ -16974,7 +16974,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -17139,7 +17139,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -17559,7 +17559,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/check/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -17688,7 +17688,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/ping",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -18202,7 +18202,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/movie/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -19890,7 +19890,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/movie",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -21600,7 +21600,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/metadata",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

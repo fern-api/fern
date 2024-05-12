@@ -679,7 +679,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -858,7 +858,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/just-file",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -1211,7 +1211,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/just-file-with-query-params",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

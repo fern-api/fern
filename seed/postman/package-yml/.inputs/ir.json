@@ -385,55 +385,6 @@
                                 }
                             },
                             "docs": null
-                        },
-                        {
-                            "url": "",
-                            "rootPathParameters": [
-                                {
-                                    "key": "id",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": "string"
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                }
-                            ],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "primitive",
-                                    "primitive": {
-                                        "type": "string",
-                                        "string": "Hello world!"
-                                    }
-                                },
-                                "jsonExample": "Hello world!"
-                            },
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": "Hello world!"
-                                        }
-                                    },
-                                    "jsonExample": "Hello world!"
-                                }
-                            },
-                            "docs": null
                         }
                     ],
                     "availability": {
@@ -681,50 +632,6 @@
                             "serviceHeaders": [],
                             "queryParameters": [],
                             "request": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        },
-                        {
-                            "url": "/",
-                            "rootPathParameters": [
-                                {
-                                    "key": "id",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": "string"
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                }
-                            ],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [
-                                {
-                                    "key": "nestedId",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": "string"
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                }
-                            ],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
                             "response": {
                                 "type": "ok",
                                 "body": null

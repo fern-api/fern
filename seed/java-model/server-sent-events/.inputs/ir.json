@@ -386,68 +386,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "/stream",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": {
-                                "type": "inlinedRequestBody",
-                                "properties": [
-                                    {
-                                        "name": {
-                                            "name": {
-                                                "originalName": "query",
-                                                "camelCase": {
-                                                    "unsafeName": "query",
-                                                    "safeName": "query"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "query",
-                                                    "safeName": "query"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "QUERY",
-                                                    "safeName": "QUERY"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Query",
-                                                    "safeName": "Query"
-                                                }
-                                            },
-                                            "wireValue": "query"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "string"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "string"
-                                        },
-                                        "originalTypeDeclaration": null
-                                    }
-                                ],
-                                "jsonExample": {
-                                    "query": "string"
-                                }
-                            },
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 }

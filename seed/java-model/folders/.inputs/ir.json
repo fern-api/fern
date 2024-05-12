@@ -384,24 +384,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 }
@@ -544,24 +527,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 }
@@ -704,24 +670,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 }
@@ -826,24 +775,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 }
@@ -985,24 +917,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 },
@@ -1194,166 +1109,7 @@
                     ],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "unknown",
-                                    "unknown": {
-                                        "key": "value"
-                                    }
-                                },
-                                "jsonExample": {
-                                    "key": "value"
-                                }
-                            },
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        },
-                        {
-                            "url": "",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": {
-                                "type": "reference",
-                                "shape": {
-                                    "type": "unknown",
-                                    "unknown": {
-                                        "key": "value"
-                                    }
-                                },
-                                "jsonExample": {
-                                    "key": "value"
-                                }
-                            },
-                            "name": null,
-                            "response": {
-                                "type": "error",
-                                "error": {
-                                    "name": {
-                                        "originalName": "NotFoundError",
-                                        "camelCase": {
-                                            "unsafeName": "notFoundError",
-                                            "safeName": "notFoundError"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "not_found_error",
-                                            "safeName": "not_found_error"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NOT_FOUND_ERROR",
-                                            "safeName": "NOT_FOUND_ERROR"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "NotFoundError",
-                                            "safeName": "NotFoundError"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "folder",
-                                                "camelCase": {
-                                                    "unsafeName": "folder",
-                                                    "safeName": "folder"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "folder",
-                                                    "safeName": "folder"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "FOLDER",
-                                                    "safeName": "FOLDER"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Folder",
-                                                    "safeName": "Folder"
-                                                }
-                                            },
-                                            {
-                                                "originalName": "service",
-                                                "camelCase": {
-                                                    "unsafeName": "service",
-                                                    "safeName": "service"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "service",
-                                                    "safeName": "service"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "SERVICE",
-                                                    "safeName": "SERVICE"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Service",
-                                                    "safeName": "Service"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [
-                                            {
-                                                "originalName": "folder",
-                                                "camelCase": {
-                                                    "unsafeName": "folder",
-                                                    "safeName": "folder"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "folder",
-                                                    "safeName": "folder"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "FOLDER",
-                                                    "safeName": "FOLDER"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Folder",
-                                                    "safeName": "Folder"
-                                                }
-                                            }
-                                        ],
-                                        "file": {
-                                            "originalName": "service",
-                                            "camelCase": {
-                                                "unsafeName": "service",
-                                                "safeName": "service"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "service",
-                                                "safeName": "service"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "SERVICE",
-                                                "safeName": "SERVICE"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Service",
-                                                "safeName": "Service"
-                                            }
-                                        }
-                                    },
-                                    "errorId": "error_folder/service:NotFoundError"
-                                },
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": null
                 }

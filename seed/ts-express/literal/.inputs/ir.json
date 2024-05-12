@@ -881,7 +881,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/headers",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -1556,7 +1556,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/inlined",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -2009,7 +2009,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/path/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -2493,7 +2493,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/query",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -3321,7 +3321,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/reference",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

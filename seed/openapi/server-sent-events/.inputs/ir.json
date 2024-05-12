@@ -533,45 +533,7 @@
                     "response": null,
                     "errors": [],
                     "auth": false,
-                    "examples": [
-                        {
-                            "url": "/stream",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": {
-                                "type": "inlinedRequestBody",
-                                "properties": [
-                                    {
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": "string"
-                                                }
-                                            },
-                                            "jsonExample": "string"
-                                        },
-                                        "originalTypeDeclaration": null,
-                                        "wireKey": "query"
-                                    }
-                                ],
-                                "jsonExample": {
-                                    "query": "string"
-                                }
-                            },
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

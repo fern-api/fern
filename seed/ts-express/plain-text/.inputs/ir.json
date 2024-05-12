@@ -135,7 +135,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/text",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

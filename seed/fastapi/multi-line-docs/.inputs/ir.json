@@ -584,7 +584,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/users/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -906,7 +906,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/users",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

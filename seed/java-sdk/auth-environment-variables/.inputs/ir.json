@@ -201,35 +201,7 @@
                     "errors": [],
                     "auth": true,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "/apiKey",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "string"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "string"
-                                }
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": "GET request with custom api key"
                 },
@@ -377,72 +349,7 @@
                     "errors": [],
                     "auth": false,
                     "idempotent": false,
-                    "examples": [
-                        {
-                            "url": "/apiKeyInHeader",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [
-                                {
-                                    "name": {
-                                        "name": {
-                                            "originalName": "X-Endpoint-Header",
-                                            "camelCase": {
-                                                "unsafeName": "xEndpointHeader",
-                                                "safeName": "xEndpointHeader"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "x_endpoint_header",
-                                                "safeName": "x_endpoint_header"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "X_ENDPOINT_HEADER",
-                                                "safeName": "X_ENDPOINT_HEADER"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "XEndpointHeader",
-                                                "safeName": "XEndpointHeader"
-                                            }
-                                        },
-                                        "wireValue": "X-Endpoint-Header"
-                                    },
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": {
-                                                    "original": "string"
-                                                }
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                }
-                            ],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "string"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "string"
-                                }
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": null,
                     "docs": "GET request with custom api key"
                 }

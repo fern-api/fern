@@ -164,7 +164,7 @@
                     "errors": [],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/dummy",
                             "rootPathParameters": [],
                             "servicePathParameters": [],

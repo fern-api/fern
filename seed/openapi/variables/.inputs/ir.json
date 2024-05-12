@@ -355,38 +355,7 @@
                     "response": null,
                     "errors": [],
                     "auth": false,
-                    "examples": [
-                        {
-                            "url": "/",
-                            "rootPathParameters": [],
-                            "servicePathParameters": [],
-                            "endpointPathParameters": [
-                                {
-                                    "key": "endpointParam",
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": "string"
-                                            }
-                                        },
-                                        "jsonExample": "string"
-                                    }
-                                }
-                            ],
-                            "serviceHeaders": [],
-                            "endpointHeaders": [],
-                            "queryParameters": [],
-                            "request": null,
-                            "name": null,
-                            "response": {
-                                "type": "ok",
-                                "body": null
-                            },
-                            "docs": null
-                        }
-                    ],
+                    "examples": [],
                     "availability": {
                         "status": "GENERAL_AVAILABILITY",
                         "message": null

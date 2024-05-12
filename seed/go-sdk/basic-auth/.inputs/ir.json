@@ -612,7 +612,7 @@
                     ],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/basic-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -639,7 +639,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/basic-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -955,7 +955,7 @@
                     ],
                     "examples": [
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/basic-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -993,7 +993,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/basic-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
@@ -1087,7 +1087,7 @@
                             "docs": null
                         },
                         {
-                            "exampleType": "userProvided",
+                            "exampleType": "generated",
                             "url": "/basic-auth",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
