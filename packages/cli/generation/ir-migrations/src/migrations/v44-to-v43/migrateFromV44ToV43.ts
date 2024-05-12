@@ -1,5 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration";
-import { isNonNullish } from "@fern-api/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
@@ -115,5 +115,7 @@ function convertExampleResponse({
             }
         case "error":
             return IrVersions.V43.ExampleResponse.error(example);
+        default:
+            assertNever(example);
     }
 }
