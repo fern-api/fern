@@ -32,7 +32,7 @@ import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.generator.exec.model.logging.SuccessfulStatusUpdate;
-import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.irV42.model.ir.IntermediateRepresentation;
 import com.fern.java.MavenCoordinateParser.MavenArtifactAndGroup;
 import com.fern.java.generators.GithubWorkflowGenerator;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;

@@ -16,8 +16,8 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.model.commons.TypeId;
-import com.fern.ir.model.ir.Subpackage;
+import com.fern.irV42.model.commons.TypeId;
+import com.fern.irV42.model.ir.Subpackage;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClient;

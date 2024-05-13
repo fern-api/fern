@@ -16,13 +16,14 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.model.auth.AuthScheme;
-import com.fern.ir.model.auth.BasicAuthScheme;
-import com.fern.ir.model.auth.BearerAuthScheme;
-import com.fern.ir.model.auth.EnvironmentVariable;
-import com.fern.ir.model.auth.HeaderAuthScheme;
-import com.fern.ir.model.commons.TypeId;
-import com.fern.ir.model.types.Literal;
+import com.fern.irV42.model.auth.AuthScheme;
+import com.fern.irV42.model.auth.BasicAuthScheme;
+import com.fern.irV42.model.auth.BearerAuthScheme;
+import com.fern.irV42.model.auth.EnvironmentVariable;
+import com.fern.irV42.model.auth.HeaderAuthScheme;
+import com.fern.irV42.model.auth.OAuthScheme;
+import com.fern.irV42.model.commons.TypeId;
+import com.fern.irV42.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -355,6 +356,12 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         @Override
         public Void visitHeader(HeaderAuthScheme header) {
             return visitHeaderBase(header, true);
+        }
+
+        @Override
+        public Void visitOauth(OAuthScheme oauth) {
+            // todo: figure out what to put here
+            return null;
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {
