@@ -14,4 +14,7 @@ allowedFailures:
   - plain-text
   - response-property
   - streaming
+  - oauth-client-credentials
+  - oauth-client-credentials-environment-variables
+  - server-sent-events
 

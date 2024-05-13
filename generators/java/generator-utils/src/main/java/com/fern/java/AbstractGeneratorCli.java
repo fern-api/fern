@@ -1,5 +1,6 @@
 package com.fern.java;
 
+import com.fern.irV42.core.ObjectMappers;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -64,7 +65,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     private static GeneratorConfig getGeneratorConfig(String pluginPath) {
         try {
-            return ClientObjectMappers.JSON_MAPPER.readValue(new File(pluginPath), GeneratorConfig.class);
+            return ObjectMappers.JSON_MAPPER.readValue(new File(pluginPath), GeneratorConfig.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read plugin configuration", e);
         }
@@ -72,7 +73,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
     private static IntermediateRepresentation getIr(GeneratorConfig generatorConfig) {
         try {
-            return ClientObjectMappers.JSON_MAPPER.readValue(
+            return ObjectMappers.JSON_MAPPER.readValue(
                     new File(generatorConfig.getIrFilepath()), IntermediateRepresentation.class);
         } catch (IOException e) {
             throw new RuntimeException("Failed to read ir", e);

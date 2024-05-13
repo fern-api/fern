@@ -207,7 +207,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -294,9 +295,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "",
                         "parts": []
@@ -308,6 +310,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -365,9 +368,63 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "unknown",
+                                    "unknown": {
+                                        "key": "value"
+                                    }
+                                },
+                                "jsonExample": {
+                                    "key": "value"
+                                }
+                            },
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "list",
+                                            "list": [
+                                                {
+                                                    "shape": {
+                                                        "type": "unknown",
+                                                        "unknown": {
+                                                            "key": "value"
+                                                        }
+                                                    },
+                                                    "jsonExample": {
+                                                        "key": "value"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "jsonExample": [
+                                        {
+                                            "key": "value"
+                                        }
+                                    ]
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -413,6 +470,7 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_unknown": {
             "name": {
@@ -486,6 +544,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -496,6 +555,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
