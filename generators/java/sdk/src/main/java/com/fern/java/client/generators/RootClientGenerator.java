@@ -360,8 +360,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
-            // todo: figure out what to put here
-            return null;
+            throw new RuntimeException("OAuth not supported");
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {

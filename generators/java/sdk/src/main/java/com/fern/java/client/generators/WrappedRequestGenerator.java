@@ -110,8 +110,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 .map(httpRequestBody -> httpRequestBody.visit(requestBodyPropertiesComputer))
                 .orElseGet(Collections::emptyList);
         ObjectTypeDeclaration objectTypeDeclaration = ObjectTypeDeclaration.builder()
-            // todo: figure out what to put for extra properties here
-                .extraProperties(true)
+                .extraProperties(false)
                 .addAllExtends(extendedInterfaces)
                 .addAllProperties(headerObjectProperties)
                 .addAllProperties(queryParameterObjectProperties)

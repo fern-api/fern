@@ -308,8 +308,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
 
         @Override
         public RequestOption visitOauth(OAuthScheme oauth) {
-            // TODO: Implement
-            return null;
+            throw new RuntimeException("OAuth not supported");
         }
 
         @Override

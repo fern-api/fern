@@ -59,7 +59,6 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
     @Override
     public AbstractGeneratedJavaFile generateFile() {
         ObjectTypeDeclaration objectTypeDeclaration = ObjectTypeDeclaration.builder()
-                // todo: figure out what to put here
                 .extraProperties(false)
                 .addAllExtends(inlinedRequestBody.getExtends())
                 .addAllProperties(RequestBodyUtils.convertToObjectProperties(inlinedRequestBody))

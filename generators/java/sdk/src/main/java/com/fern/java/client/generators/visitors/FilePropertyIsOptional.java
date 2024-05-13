@@ -19,7 +19,6 @@ public class FilePropertyIsOptional implements FileProperty.Visitor<Boolean> {
 
     @Override
     public Boolean _visitUnknown(Object unknownType) {
-        // todo: is this right? other visitors return false but feels maybe dangerous to me to not throw
         return false;
     }
 }

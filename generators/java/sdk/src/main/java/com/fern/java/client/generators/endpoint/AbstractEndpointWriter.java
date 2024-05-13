@@ -535,7 +535,6 @@ public abstract class AbstractEndpointWriter {
                     .visit(new StreamingResponse.Visitor<>() {
                         @Override
                         public com.fern.irV42.model.types.TypeReference visitJson(JsonStreamChunk json) {
-                            // todo: check if this is right
                             return json.getPayload();
                         }
 
@@ -546,8 +545,7 @@ public abstract class AbstractEndpointWriter {
 
                         @Override
                         public com.fern.irV42.model.types.TypeReference visitSse(SseStreamChunk sse) {
-                            // todo: check if this is right
-                            throw new RuntimeException("SSE streams is not supported.");
+                            return sse.getPayload();
                         }
 
                         @Override
