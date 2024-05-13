@@ -112,6 +112,8 @@ function convertExampleResponse({
                     return IrVersions.V43.ExampleResponse.ok({
                         body: undefined
                     });
+                default:
+                    assertNever(example.value);
             }
         case "error":
             return IrVersions.V43.ExampleResponse.error(example);
