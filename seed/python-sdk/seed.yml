@@ -90,15 +90,13 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
 scripts:
-  # Tests now run a mock server, you can always run seed with --skip-scripts to save time
   - docker: fernapi/python-seed
     commands:
       # The global python version is 3.8
       - poetry install
-      # Remove mypy for now given the issue where it falsely flags the use of field aliases.
       - poetry run mypy .
-      # TODO(FER-1142): Add back soon
-      # - fern test --command "poetry run pytest -rP ."
+      # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+      - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   - response-property
   - websocket
