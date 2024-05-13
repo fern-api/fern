@@ -205,7 +205,7 @@ export async function publishDocs({
         uploadUrls,
         version,
         editThisPage,
-        absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
+        absolutePathToFernFolder: docsWorkspace.absoluteFilepath
     });
     context.logger.debug("Calling registerDocs... ", JSON.stringify(registerDocsRequest, undefined, 4));
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, registerDocsRequest);
@@ -238,7 +238,7 @@ async function constructRegisterDocsRequest({
     uploadUrls,
     version,
     editThisPage,
-    absoluteFilepathToDocsConfig
+    absolutePathToFernFolder
 }: {
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
@@ -248,7 +248,7 @@ async function constructRegisterDocsRequest({
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
     editThisPage: docsYml.RawSchemas.EditThisPageConfig | undefined;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<DocsV2Write.RegisterDocsRequest> {
     const fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }> = Object.fromEntries(
         Object.entries(parsedDocsConfig.pages).map(([pageId, pageContent]) => {
@@ -273,10 +273,10 @@ async function constructRegisterDocsRequest({
         uploadUrls,
         version,
         fullSlugs,
-        absoluteFilepathToDocsConfig: absoluteFilepathToDocsConfig
+        absolutePathToFernFolder: absolutePathToFernFolder
     });
     let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {
-        ...entries(parsedDocsConfig.pages).reduce(
+        ...entries({ ...parsedDocsConfig.pages }).reduce(
             (pages, [pageFilepath, pageContents]) => ({
                 ...pages,
                 [pageFilepath]: {
@@ -344,7 +344,7 @@ async function convertDocsConfiguration({
     uploadUrls,
     version,
     fullSlugs,
-    absoluteFilepathToDocsConfig
+    absolutePathToFernFolder
 }: {
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
     organization: string;
@@ -354,7 +354,7 @@ async function convertDocsConfiguration({
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
     fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedDocsConfiguration> {
     const convertedNavigation = await convertNavigationConfig({
         navigationConfig: parsedDocsConfig.navigation,
@@ -366,7 +366,7 @@ async function convertDocsConfiguration({
         token,
         version,
         fullSlugs,
-        absoluteFilepathToDocsConfig
+        absolutePathToFernFolder
     });
     const config: ConvertedDocsConfiguration["config"] = {
         title: parsedDocsConfig.title,
@@ -398,9 +398,7 @@ async function convertDocsConfiguration({
     };
     return {
         config,
-        pages: {
-            ...convertedNavigation.pages
-        }
+        pages: convertedNavigation.pages
     };
 }
 
@@ -419,7 +417,7 @@ async function convertNavigationConfig({
     token,
     version,
     fullSlugs,
-    absoluteFilepathToDocsConfig
+    absolutePathToFernFolder
 }: {
     navigationConfig: docsYml.DocsNavigationConfiguration;
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
@@ -430,7 +428,7 @@ async function convertNavigationConfig({
     token: FernToken;
     version: string | undefined;
     fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedNavigationConfig> {
     let config: DocsV1Write.NavigationConfig;
     let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
@@ -447,7 +445,7 @@ async function convertNavigationConfig({
                         token,
                         version,
                         fullSlugs,
-                        absoluteFilepathToDocsConfig
+                        absolutePathToFernFolder
                     })
                 )
             );
@@ -463,18 +461,20 @@ async function convertNavigationConfig({
             break;
         }
         case "tabbed":
+            const tabbedItem = await convertTabbedNavigation(navigationConfig.items, tabs, {
+                parsedDocsConfig,
+                organization,
+                fernWorkspaces,
+                context,
+                token,
+                version,
+                fullSlugs,
+                absolutePathToFernFolder
+            });
             config = {
-                tabs: await convertTabbedNavigation(navigationConfig.items, tabs, {
-                    parsedDocsConfig,
-                    organization,
-                    fernWorkspaces,
-                    context,
-                    token,
-                    version,
-                    fullSlugs,
-                    absoluteFilepathToDocsConfig
-                })
+                tabs: tabbedItem.tabs
             };
+            pages = { ...pages, ...tabbedItem.pages };
             break;
         case "versioned":
             config = {
@@ -491,7 +491,7 @@ async function convertNavigationConfig({
                                 token,
                                 version: version.version,
                                 fullSlugs,
-                                absoluteFilepathToDocsConfig
+                                absolutePathToFernFolder
                             });
                             pages = {
                                 ...pages,
@@ -550,7 +550,7 @@ async function convertUnversionedNavigationConfig({
     token,
     version,
     fullSlugs,
-    absoluteFilepathToDocsConfig
+    absolutePathToFernFolder
 }: {
     navigationConfig: docsYml.UnversionedNavigationConfiguration;
     tabs?: Record<string, docsYml.RawSchemas.TabConfig>;
@@ -561,7 +561,7 @@ async function convertUnversionedNavigationConfig({
     token: FernToken;
     version: string | undefined;
     fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedUnversionedNavigationConfig> {
     let config: DocsV1Write.UnversionedNavigationConfig;
     let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
@@ -578,8 +578,7 @@ async function convertUnversionedNavigationConfig({
                         token,
                         version,
                         fullSlugs,
-
-                        absoluteFilepathToDocsConfig
+                        absolutePathToFernFolder
                     })
                 )
             );
@@ -595,18 +594,20 @@ async function convertUnversionedNavigationConfig({
             break;
         }
         case "tabbed": {
+            const tabbedItem = await convertTabbedNavigation(navigationConfig.items, tabs, {
+                parsedDocsConfig,
+                organization,
+                fernWorkspaces,
+                context,
+                token,
+                version,
+                fullSlugs,
+                absolutePathToFernFolder
+            });
             config = {
-                tabs: await convertTabbedNavigation(navigationConfig.items, tabs, {
-                    parsedDocsConfig,
-                    organization,
-                    fernWorkspaces,
-                    context,
-                    token,
-                    version,
-                    fullSlugs,
-                    absoluteFilepathToDocsConfig
-                })
+                tabs: tabbedItem.tabs
             };
+            pages = { ...pages, ...tabbedItem.pages };
             break;
         }
         default:
@@ -618,7 +619,7 @@ async function convertUnversionedNavigationConfig({
     };
 }
 
-function convertTabbedNavigation(
+async function convertTabbedNavigation(
     items: docsYml.TabbedNavigation[],
     tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined,
     {
@@ -629,7 +630,7 @@ function convertTabbedNavigation(
         token,
         version,
         fullSlugs,
-        absoluteFilepathToDocsConfig
+        absolutePathToFernFolder
     }: {
         parsedDocsConfig: docsYml.ParsedDocsConfiguration;
         organization: string;
@@ -638,10 +639,14 @@ function convertTabbedNavigation(
         token: FernToken;
         version: string | undefined;
         fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
-        absoluteFilepathToDocsConfig: AbsoluteFilePath;
+        absolutePathToFernFolder: AbsoluteFilePath;
     }
-): Promise<DocsV1Write.NavigationTab[]> {
-    return Promise.all(
+): Promise<{
+    tabs: DocsV1Write.NavigationTab[];
+    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
+}> {
+    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
+    const convertedTabs = await Promise.all(
         items.map(async (tabbedItem) => {
             const tabConfig = tabs?.[tabbedItem.tab];
             if (tabConfig == null) {
@@ -679,10 +684,17 @@ function convertTabbedNavigation(
                         token,
                         version,
                         fullSlugs,
-                        absoluteFilepathToDocsConfig
+                        absolutePathToFernFolder
                     })
                 )
             );
+
+            tabbedItems.forEach((tabbedItem) => {
+                pages = {
+                    ...pages,
+                    ...tabbedItem.pages
+                };
+            });
 
             return {
                 title: tabConfig.displayName,
@@ -692,6 +704,10 @@ function convertTabbedNavigation(
             };
         })
     );
+    return {
+        tabs: convertedTabs,
+        pages
+    };
 }
 
 function convertDocsTypographyConfiguration({
@@ -933,7 +949,7 @@ async function convertNavigationItem({
     token,
     version,
     fullSlugs,
-    absoluteFilepathToDocsConfig
+    absolutePathToFernFolder
 }: {
     item: docsYml.DocsNavigationItem;
     parsedDocsConfig: docsYml.ParsedDocsConfiguration;
@@ -943,7 +959,7 @@ async function convertNavigationItem({
     token: FernToken;
     version: string | undefined;
     fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedNavigationItem> {
     let convertedItem: DocsV1Write.NavigationItem;
     let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
@@ -972,7 +988,7 @@ async function convertNavigationItem({
                         token,
                         version,
                         fullSlugs,
-                        absoluteFilepathToDocsConfig
+                        absolutePathToFernFolder
                     })
                 )
             );
@@ -1023,7 +1039,7 @@ async function convertNavigationItem({
                     if (changelogDate == null) {
                         continue;
                     }
-                    const relativePath = relative(dirname(absoluteFilepathToDocsConfig), file.absoluteFilepath);
+                    const relativePath = relative(absolutePathToFernFolder, file.absoluteFilepath);
                     pages[relativePath] = {
                         markdown: file.contents
                     };
