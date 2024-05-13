@@ -918,7 +918,7 @@ function getPossibleDiscriminantsForSchemaObject({
             resolvedPropertySchema.type === "string" &&
             resolvedPropertySchema.enum != null &&
             isListOfStrings(resolvedPropertySchema.enum) &&
-            resolvedPropertySchema.enum.length === 1 &&
+            getEnumSet(resolvedPropertySchema.enum).length === 1 &&
             resolvedPropertySchema.enum[0] != null
         ) {
             possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0];
@@ -935,6 +935,32 @@ function getPossibleDiscriminantsForSchemaObject({
         }
     }
     return possibleDiscrimimants;
+}
+
+// getEnumSet reduces the list of enums values into a set and
+// removes duplicate variants (e.g. "foo" and "FOO"). This helps
+// to generate a discriminated union, where an undiscriminated
+// union would otherwise be required.
+//
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getEnumSet(enums: any[] | undefined): any[] {
+    if (!enums) {
+        return [];
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const set = new Set<any>();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    enums.forEach((item: any) => {
+        if (typeof item === "string") {
+            set.add(item.toLowerCase());
+        } else {
+            set.add(item);
+        }
+    });
+
+    return Array.from(set);
 }
 
 export function getProperty<T>(object: object, property: string): T | undefined {
