@@ -26,6 +26,7 @@ import {
 import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
+import { code } from "ts-poet";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
 import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
@@ -435,41 +436,75 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ])
                 )
             ];
-            serviceClass.addConstructor({
-                parameters: [
-                    {
-                        name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
-                        isReadonly: true,
-                        scope: Scope.Protected,
-                        type: getTextOfTsNode(
-                            ts.factory.createTypeReferenceNode(
-                                ts.factory.createQualifiedName(
-                                    ts.factory.createIdentifier(serviceModule.getName()),
-                                    ts.factory.createIdentifier(optionsInterface.getName())
-                                )
-                            )
-                        )
-                    }
-                ],
-                statements: [
-                    getTextOfTsNode(
-                        ts.factory.createExpressionStatement(
-                            ts.factory.createBinaryExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createThis(),
-                                    OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                ts.factory.createNewExpression(
-                                    context.coreUtilities.auth.OAuthTokenProvider._getExpression(),
-                                    undefined,
-                                    [ts.factory.createObjectLiteralExpression(properties, true)]
-                                )
+            const parameters = [
+                {
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    isReadonly: true,
+                    scope: Scope.Protected,
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode(
+                            ts.factory.createQualifiedName(
+                                ts.factory.createIdentifier(serviceModule.getName()),
+                                ts.factory.createIdentifier(optionsInterface.getName())
                             )
                         )
                     )
-                ]
-            });
+                }
+            ];
+            if (
+                this.oauthAuthScheme.configuration.clientIdEnvVar != null &&
+                this.oauthAuthScheme.configuration.clientSecretEnvVar != null
+            ) {
+                const clientIdEnvVar = this.oauthAuthScheme.configuration.clientIdEnvVar;
+                const clientSecretEnvVar = this.oauthAuthScheme.configuration.clientSecretEnvVar;
+                const statements = code`
+                    const ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} = this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} ?? process.env["${clientIdEnvVar}"];
+                    if (${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} == null) {
+                        throw new Error(
+                            "${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} is required; either pass it as an argument or set the ${clientIdEnvVar} environment variable"
+                        );
+                    }
+                    const ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} = this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} ?? process.env["${clientSecretEnvVar}"];
+                    if (${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} == null) {
+                        throw new Error(
+                            "${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} is required; either pass it as an argument or set the ${clientSecretEnvVar} environment variable"
+                        );
+                    }
+                    this.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME} = new core.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME}({
+                        ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME},
+                        ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME},
+                        ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
+                            environment: this._options.environment,
+                        }),
+                    });
+                `;
+                serviceClass.addConstructor({
+                    parameters,
+                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+                });
+            } else {
+                serviceClass.addConstructor({
+                    parameters,
+                    statements: [
+                        getTextOfTsNode(
+                            ts.factory.createExpressionStatement(
+                                ts.factory.createBinaryExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createThis(),
+                                        OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME
+                                    ),
+                                    ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                    ts.factory.createNewExpression(
+                                        context.coreUtilities.auth.OAuthTokenProvider._getExpression(),
+                                        undefined,
+                                        [ts.factory.createObjectLiteralExpression(properties, true)]
+                                    )
+                                )
+                            )
+                        )
+                    ]
+                });
+            }
         } else {
             serviceClass.addConstructor({
                 parameters: [

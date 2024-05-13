@@ -10,7 +10,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedOauthClientCredentialsEnvironmentVariables.auth.getTokenWithClientCredentials(\n\t$FERN_INPUT\n)",
@@ -94,7 +94,7 @@
             "method": "POST"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": "const seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\n",
             "functionInvocation": {
                 "imports": [],
                 "templateString": "await seedOauthClientCredentialsEnvironmentVariables.auth.refreshToken(\n\t$FERN_INPUT\n)",

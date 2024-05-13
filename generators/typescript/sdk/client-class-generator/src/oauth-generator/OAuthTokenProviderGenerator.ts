@@ -39,22 +39,6 @@ export class OAuthTokenProviderGenerator {
         };
     }
 
-    public getCoreAuthIndexExportedFilePath(): ExportedFilePath {
-        return {
-            directories: [
-                {
-                    nameOnDisk: "core"
-                },
-                {
-                    nameOnDisk: "auth"
-                }
-            ],
-            file: {
-                nameOnDisk: "index.ts"
-            }
-        };
-    }
-
     public buildIndexFile(): Code {
         return code`
             export { BasicAuth } from "./BasicAuth";

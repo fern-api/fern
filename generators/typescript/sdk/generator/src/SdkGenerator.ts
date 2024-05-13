@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import {
@@ -631,7 +631,10 @@ export class SdkGenerator {
                 sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
             }
         });
-        this.extraFiles["src/core/auth/index.ts"] = this.oauthTokenProviderGenerator.buildIndexFile().toString();
+        this.coreUtilitiesManager.addAuthOverride({
+            filepath: RelativeFilePath.of("index.ts"),
+            content: this.oauthTokenProviderGenerator.buildIndexFile().toString()
+        });
     }
 
     private generateTestFiles() {
