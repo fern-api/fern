@@ -97,7 +97,10 @@ export class AuthImpl extends CoreUtility implements Auth {
     };
 
     public readonly OAuthTokenProvider = {
-        _getExpression: this.withExportedName("OAuthTokenProvider", (OAuthTokenProvider) => () => OAuthTokenProvider.getExpression()),
+        _getExpression: this.withExportedName(
+            "OAuthTokenProvider",
+            (OAuthTokenProvider) => () => OAuthTokenProvider.getExpression()
+        ),
         _getReferenceToType: this.withExportedName(
             "OAuthTokenProvider",
             (OAuthTokenProvider) => () => OAuthTokenProvider.getTypeNode()
