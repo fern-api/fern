@@ -115,6 +115,10 @@ export class OAuthTokenProviderGenerator {
         return code`
             ${this.getImportStatements()}
 
+            /**
+             * The OAuthTokenProvider retrieves an OAuth access token, refreshing it as needed.
+             * The access token is then used as the bearer token in every authenticated request.
+             */
             export class ${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME} {
                 ${this.getProperties({
                     authClientType,
