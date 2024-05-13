@@ -101,20 +101,30 @@ function convertExampleResponse({
 }): IrVersions.V43.ExampleResponse {
     switch (example.type) {
         case "ok":
-            switch (example.value.type) {
-                case "body":
-                    return IrVersions.V43.ExampleResponse.ok({ body: example.value.value });
-                case "sse":
-                    return IrVersions.V43.ExampleResponse.ok({
-                        body: undefined
-                    });
-                case "stream":
-                    return IrVersions.V43.ExampleResponse.ok({
-                        body: undefined
-                    });
-            }
+            return convertExampleSuccessResponse({ example: example.value });
         case "error":
             return IrVersions.V43.ExampleResponse.error(example);
+        default:
+            assertNever(example);
+    }
+}
+
+function convertExampleSuccessResponse({
+    example
+}: {
+    example: IrVersions.V44.ExampleEndpointSuccessResponse;
+}): IrVersions.V43.ExampleResponse {
+    switch (example.type) {
+        case "body":
+            return IrVersions.V43.ExampleResponse.ok({ body: example.value });
+        case "sse":
+            return IrVersions.V43.ExampleResponse.ok({
+                body: undefined
+            });
+        case "stream":
+            return IrVersions.V43.ExampleResponse.ok({
+                body: undefined
+            });
         default:
             assertNever(example);
     }
