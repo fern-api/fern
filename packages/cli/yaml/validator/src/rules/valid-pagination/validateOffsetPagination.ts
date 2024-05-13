@@ -103,7 +103,7 @@ function isValidOffsetProperty({
     });
 }
 
-function isValidOffsetType(resolvedType: ResolvedType | undefined): boolean {
+function isValidOffsetType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
     const primitiveType = maybePrimitiveType(resolvedType);
     if (primitiveType == null) {
         return false;
