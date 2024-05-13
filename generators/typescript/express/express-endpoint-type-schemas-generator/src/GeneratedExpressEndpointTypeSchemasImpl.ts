@@ -13,6 +13,7 @@ export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
         endpoint: HttpEndpoint;
         includeSerdeLayer: boolean;
         skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
         allowExtraFields: boolean;
     }
 }
@@ -27,6 +28,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
     private skipRequestValidation: boolean;
+    private skipResponseValidation: boolean;
 
     constructor({
         packageId,
@@ -34,12 +36,14 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         endpoint,
         includeSerdeLayer,
         allowExtraFields,
-        skipRequestValidation
+        skipRequestValidation,
+        skipResponseValidation
     }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
         this.skipRequestValidation = skipRequestValidation;
+        this.skipResponseValidation = skipResponseValidation;
 
         if (includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -200,7 +204,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     })
                     .jsonOrThrow(referenceToParsedResponse, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields
+                            allowExtraFields: this.allowExtraFields,
+                            skipValidation: this.skipResponseValidation
                         })
                     });
             case "primitive":
@@ -212,7 +217,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     .getReferenceToZurgSchema(context)
                     .jsonOrThrow(referenceToParsedResponse, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields
+                            allowExtraFields: this.allowExtraFields,
+                            skipValidation: this.skipResponseValidation
                         })
                     });
             default:
