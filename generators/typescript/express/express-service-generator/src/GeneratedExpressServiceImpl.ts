@@ -20,6 +20,7 @@ export declare namespace GeneratedExpressServiceImpl {
         doNotHandleUnrecognizedErrors: boolean;
         includeSerdeLayer: boolean;
         skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
     }
 }
 
@@ -41,6 +42,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private package_: Package;
     private includeSerdeLayer: boolean;
     private skipRequestValidation: boolean;
+    private skipResponseValidation: boolean;
 
     constructor({
         packageId,
@@ -49,7 +51,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         service,
         doNotHandleUnrecognizedErrors,
         includeSerdeLayer,
-        skipRequestValidation
+        skipRequestValidation,
+        skipResponseValidation,
     }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
@@ -58,6 +61,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         this.package_ = package_;
         this.includeSerdeLayer = includeSerdeLayer;
         this.skipRequestValidation = skipRequestValidation;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public writeToFile(context: ExpressContext): void {
