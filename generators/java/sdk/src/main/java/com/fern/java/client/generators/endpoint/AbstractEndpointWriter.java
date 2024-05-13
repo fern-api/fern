@@ -600,7 +600,6 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Optional<String> visitText(TextStreamChunk text) {
-            // todo: check if this is right
             throw new RuntimeException("Returning streamed text is not supported.");
         }
 
