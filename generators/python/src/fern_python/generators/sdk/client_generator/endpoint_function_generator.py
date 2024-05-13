@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import re
 from typing import Dict, List, Optional, Set, Tuple
 
 import fern.ir.resources as ir_types
@@ -8,6 +9,7 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX, UrlLibParse
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
+    EndpointDummySnippetConfig,
     EndpointResponseCodeWriter,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
@@ -71,6 +73,9 @@ class EndpointFunctionGenerator:
         self._generated_root_client = generated_root_client
         self.snippet_writer = snippet_writer
 
+        self.is_paginated = self._endpoint.pagination is not None
+        self.pagination = self._endpoint.pagination
+
     def generate(self) -> GeneratedEndpointFunction:
         is_primitive: bool = (
             self._endpoint.request_body.visit(
@@ -121,6 +126,7 @@ class EndpointFunctionGenerator:
             snippet_writer=self.snippet_writer,
             is_async=self._is_async,
         )
+        unnamed_parameters = self._get_endpoint_path_parameters()
         function_declaration = AST.FunctionDeclaration(
             name=get_endpoint_name(self._endpoint),
             is_async=self._is_async,
@@ -131,13 +137,9 @@ class EndpointFunctionGenerator:
                 snippet=endpoint_snippet,
             ),
             signature=AST.FunctionSignature(
-                parameters=self._get_endpoint_path_parameters(),
+                parameters=unnamed_parameters,
                 named_parameters=named_parameters,
-                return_type=(
-                    self._get_response_body_type(self._endpoint.response, self._is_async)
-                    if self._endpoint.response is not None
-                    else AST.TypeHint.none()
-                ),
+                return_type=self._get_endpoint_return_type(),
             ),
             body=self._create_endpoint_body_writer(
                 service=self._service,
@@ -146,6 +148,8 @@ class EndpointFunctionGenerator:
                 request_body_parameters=request_body_parameters,
                 is_async=self._is_async,
                 is_primitive=is_primitive,
+                parameters=unnamed_parameters,
+                named_parameters=named_parameters,
             ),
         )
         return GeneratedEndpointFunction(
@@ -153,6 +157,12 @@ class EndpointFunctionGenerator:
             is_default_body_parameter_used=request_body_parameters is not None,
             snippet=endpoint_snippet,
         )
+
+    def _get_endpoint_return_type(self) -> AST.TypeHint:
+        return_type = (self._get_response_body_type(self._endpoint.response, self._is_async)
+            if self._endpoint.response is not None
+            else AST.TypeHint.none())
+        return return_type if not self.is_paginated else self._context.core_utilities.get_paginator_type(return_type, is_async=self._is_async)
 
     def _get_endpoint_path_parameters(
         self,
@@ -262,6 +272,8 @@ class EndpointFunctionGenerator:
         request_body_parameters: Optional[AbstractRequestBodyParameters],
         is_async: bool,
         is_primitive: bool,
+        named_parameters: List[AST.NamedFunctionParameter],
+        parameters: List[AST.FunctionParameter],
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             request_pre_fetch_statements = (
@@ -329,7 +341,15 @@ class EndpointFunctionGenerator:
                 else False
             )
             response_code_writer = EndpointResponseCodeWriter(
-                context=self._context, endpoint=endpoint, is_async=is_async
+                context=self._context,
+                endpoint=endpoint,
+                is_async=is_async,
+                pagination=self.pagination,
+                dummy_snippet_config=EndpointDummySnippetConfig(
+                    endpoint_name=get_endpoint_name(self._endpoint),
+                    parameters=parameters,
+                    named_parameters=named_parameters,
+                )
             )
 
             timeout = AST.Expression(
@@ -420,11 +440,7 @@ class EndpointFunctionGenerator:
             self._write_response_body_type(
                 writer,
                 self._endpoint.response,
-                (
-                    self._get_response_body_type(self._endpoint.response, self._is_async)
-                    if self._endpoint.response is not None
-                    else AST.TypeHint.none()
-                ),
+                self._get_endpoint_return_type()
             )
 
             if snippet is not None:
@@ -565,8 +581,31 @@ class EndpointFunctionGenerator:
                 return path_parameter
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
+    def _get_property_type_off_object(self) -> AST.TypeHint:
+        return AST.TypeHint.any()
+
+    def _get_pagination_results_type(self, fallback_typehint: AST.TypeHint) -> AST.TypeHint:
+        if self.pagination is not None:
+            results_response_property = self.pagination.get_as_union().results.property
+            
+            # TODO: The IR should really have the inner type baked in so we don't have to unwrap it here
+            unwrapped_type = results_response_property.value_type
+            maybe_wrapped_type = results_response_property.value_type
+            if maybe_wrapped_type.get_as_union().type == "container":
+                unwrapped_type = maybe_wrapped_type.get_as_union().container.visit(
+                    list_=lambda item_type: item_type,
+                    set_=lambda item_type: item_type,
+                    optional=lambda item_type: item_type,
+                    map_=lambda _: None,
+                    literal=lambda _: None,
+                )
+            if unwrapped_type is not None:
+                return self._context.pydantic_generator_context.get_type_hint_for_type_reference(unwrapped_type)
+
+        return fallback_typehint
+
     def _get_response_body_type(self, response: ir_types.HttpResponse, is_async: bool) -> AST.TypeHint:
-        return response.visit(
+        response_type = response.visit(
             file_download=lambda _: (
                 AST.TypeHint.async_iterator(AST.TypeHint.bytes())
                 if self._is_async
@@ -578,6 +617,8 @@ class EndpointFunctionGenerator:
             ),
             text=lambda _: AST.TypeHint.str_(),
         )
+
+        return response_type if not self.is_paginated else self._get_pagination_results_type(response_type)
 
     def _write_yielding_return(self, writer: NodeWriter, response_hint: AST.TypeHint, docs: Optional[str]) -> None:
         writer.write_line("Yields")

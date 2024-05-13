@@ -99,6 +99,16 @@ class CoreUtilities:
             exports={"pydantic_v1"},
         )
 
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="pagination.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="pagination"),
+            ),
+            exports={"SyncPaginator", "AsyncPaginator"},
+        )
+
         if self._allow_skipping_validation:
             self._copy_file_to_project(
                 project=project,
@@ -340,4 +350,31 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="pydantic_v1"
             ),
+        )
+
+    def get_paginator_reference(self, is_async: bool) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pagination"), named_import="AsyncPaginator" if is_async else "SyncPaginator"
+            ),
+        )
+
+    def get_paginator_type(self, inner_type: AST.TypeHint, is_async: bool) -> AST.TypeHint:
+        return AST.TypeHint(
+            type=self.get_paginator_reference(is_async),
+            type_parameters=[AST.TypeParameter(inner_type)],
+        )
+
+    def instantiate_paginator(self, is_async: bool, has_next: AST.Expression, items: AST.Expression, get_next: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self.get_paginator_reference(is_async),
+                args=[],
+                kwargs=[
+                    ("has_next", has_next),
+                    ("items", items),
+                    ("get_next", get_next),
+                ],
+            )
         )

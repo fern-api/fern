@@ -21,9 +21,10 @@ from .expressions import (
     FunctionInvocation,
 )
 from .reference_node import ReferenceNode
-from .type_hint import TypeHint
+from .type_hint import TypeHint, TypeParameter
 
 __all__ = [
+    "TypeParameter",
     "ClassConstructor",
     "ClassDeclaration",
     "FunctionDeclaration",
