@@ -129,7 +129,8 @@ export function convertHttpOperation({
         availability,
         method,
         path,
-        examples
+        examples,
+        pagination: operationContext.pagination
     };
 }
 
