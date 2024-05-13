@@ -1207,7 +1207,8 @@
                                 }
                             },
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": null
                             },
                             "codeSamples": null,
                             "docs": null
@@ -1436,7 +1437,8 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": null
                             },
                             "docs": null
                         }
@@ -2445,7 +2447,8 @@
                             "queryParameters": [],
                             "request": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": null
                             },
                             "codeSamples": null,
                             "docs": null
@@ -2854,7 +2857,8 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": null
                             },
                             "docs": null
                         }
@@ -3474,7 +3478,8 @@
                             ],
                             "request": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": null
                             },
                             "codeSamples": null,
                             "docs": null
@@ -3895,7 +3900,8 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": null
                             },
                             "docs": null
                         }
@@ -4660,7 +4666,8 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": null
                             },
                             "docs": null
                         }
@@ -4961,7 +4968,6 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
-        "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",

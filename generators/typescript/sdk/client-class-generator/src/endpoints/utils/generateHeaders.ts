@@ -14,7 +14,8 @@ export function generateHeaders({
     service,
     endpoint,
     idempotencyHeaders,
-    additionalHeaders = []
+    additionalHeaders = [],
+    additionalSpreadHeaders = []
 }: {
     context: SdkContext;
     generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -23,6 +24,7 @@ export function generateHeaders({
     endpoint: HttpEndpoint;
     idempotencyHeaders: HttpHeader[];
     additionalHeaders?: GeneratedHeader[];
+    additionalSpreadHeaders?: ts.Expression[];
 }): ts.ObjectLiteralElementLike[] {
     const elements: GeneratedHeader[] = [];
 
@@ -61,6 +63,12 @@ export function generateHeaders({
     const customAuthorizationHeaderValue = generatedSdkClientClass.getCustomAuthorizationHeadersValue();
     if (customAuthorizationHeaderValue != null) {
         objectToReturn.push(ts.factory.createSpreadAssignment(customAuthorizationHeaderValue));
+    }
+
+    for (const additionalSpreadHeader of additionalSpreadHeaders) {
+        objectToReturn.push(
+            ts.factory.createSpreadAssignment(ts.factory.createParenthesizedExpression(additionalSpreadHeader))
+        );
     }
 
     return objectToReturn;

@@ -20,10 +20,13 @@ export async function updateGeneratorGroup({
         return context.failAndThrow("No group specified.");
     }
     const groups = (generatorsConfiguration.groups ??= {});
-    for (const groupName of Object.keys(groups)) {
+
+    const group = groups[groupName];
+    if (group == null) {
         const draftGroup = (groups[groupName] ??= { generators: [] });
         await update(draftGroup, groupName);
+    } else {
+        await update(group, groupName);
     }
-
     return generatorsConfiguration;
 }

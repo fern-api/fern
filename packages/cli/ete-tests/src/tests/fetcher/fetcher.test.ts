@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jest/no-disabled-tests */
-import { fetcher, Stream } from "@fern-typescript/fetcher";
+import { fetcher, FormDataWrapper, Stream } from "@fern-typescript/fetcher";
+import * as fs from "fs";
+import path from "path";
 import * as stream from "stream";
 
 describe("Fetcher Tests", () => {
@@ -9,6 +11,32 @@ describe("Fetcher Tests", () => {
             url: "https://google.com",
             method: "GET"
         });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expect((response as any)?.error?.statusCode).toEqual(200);
+    }, 90_000);
+
+    it.skip("Formdata request", async () => {
+        const file = fs.createReadStream(path.join(__dirname, "addresses.csv"));
+
+        const formData = new FormDataWrapper();
+        await formData.append("data", file);
+
+        const formDataRequest = formData.getRequest();
+        const headers = await formDataRequest.getHeaders();
+        const response = await fetcher({
+            url: "https://api.cohere.ai/v1/datasets",
+            method: "POST",
+            headers: {
+                Authorization: "Bearer <>",
+                ...headers
+            },
+            queryParameters: {
+                name: "my-dataset",
+                type: "embed-input"
+            },
+            body: await formDataRequest.getBody()
+        });
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect((response as any)?.error?.statusCode).toEqual(200);
     }, 90_000);

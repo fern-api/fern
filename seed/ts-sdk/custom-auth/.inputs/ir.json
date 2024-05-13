@@ -617,7 +617,17 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "boolean",
+                                            "boolean": true
+                                        }
+                                    },
+                                    "jsonExample": true
+                                }
                             },
                             "docs": null
                         },
@@ -964,7 +974,17 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "boolean",
+                                            "boolean": true
+                                        }
+                                    },
+                                    "jsonExample": true
+                                }
                             },
                             "docs": null
                         },
@@ -1378,7 +1398,6 @@
     "sdkConfig": {
         "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
-        "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",

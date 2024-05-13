@@ -396,7 +396,33 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok"
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "list",
+                                            "list": [
+                                                {
+                                                    "shape": {
+                                                        "type": "unknown",
+                                                        "unknown": {
+                                                            "key": "value"
+                                                        }
+                                                    },
+                                                    "jsonExample": {
+                                                        "key": "value"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "jsonExample": [
+                                        {
+                                            "key": "value"
+                                        }
+                                    ]
+                                }
                             },
                             "docs": null
                         }
@@ -547,7 +573,6 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
-        "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
