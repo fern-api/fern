@@ -1,4 +1,4 @@
-irVersion: v31
+irVersion: v42
 docker: fernapi/fern-java-model:latest
 dockerCommand: 
   - cd generators/java
