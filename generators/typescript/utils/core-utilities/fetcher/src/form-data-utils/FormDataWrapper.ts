@@ -1,5 +1,9 @@
 import { RUNTIME } from "../runtime";
 
+interface CrossPlatformFormData {
+    append(key: string, value: any): void;
+}
+
 class FormDataRequestBody {
     private fd: any;
     private encoder: any;
@@ -14,6 +18,9 @@ class FormDataRequestBody {
         }
     }
 
+    /**
+     * @returns the multipart form data request
+     */
     public async getBody(): Promise<any> {
         if (RUNTIME.type !== "node") {
             return this.fd;
@@ -25,6 +32,9 @@ class FormDataRequestBody {
         }
     }
 
+    /**
+     * @returns headers that need to be added to the multipart form data request
+     */
     public async getHeaders(): Promise<Record<string, string>> {
         if (RUNTIME.type !== "node") {
             return {};
@@ -39,12 +49,14 @@ class FormDataRequestBody {
     }
 }
 
+/**
+ * FormDataWrapper is a utility to make form data
+ * requests across both Browser and Node.js runtimes.
+ */
 export class FormDataWrapper {
-    private fd: any;
+    private fd: CrossPlatformFormData | undefined;
 
-    constructor() {}
-
-    async setup(): Promise<void> {
+    public async append(name: string, value: any): Promise<void> {
         if (this.fd == null) {
             if (RUNTIME.type === "node") {
                 this.fd = new (await import("formdata-node")).FormData();
@@ -52,10 +64,6 @@ export class FormDataWrapper {
                 this.fd = new (await import("form-data")).default();
             }
         }
-    }
-
-    public async append(name: string, value: any): Promise<void> {
-        await this.setup();
         this.fd.append(name, value);
     }
 
