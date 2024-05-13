@@ -8,7 +8,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPaginator, SyncPaginator
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import pydantic_v1
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
@@ -32,7 +32,7 @@ class UsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPaginator[User]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -53,7 +53,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPaginator[User]
+        SyncPager[User]
 
         Examples
         --------
@@ -117,7 +117,7 @@ class UsersClient:
                     request_options=request_options,
                 )
             _items = _parsed_response.data
-            return SyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -132,7 +132,7 @@ class UsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPaginator[User]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -153,7 +153,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPaginator[User]
+        SyncPager[User]
 
         Examples
         --------
@@ -213,7 +213,7 @@ class UsersClient:
                 request_options=request_options,
             )
             _items = _parsed_response.data
-            return SyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -222,7 +222,7 @@ class UsersClient:
 
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPaginator[User]:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -233,7 +233,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPaginator[User]
+        SyncPager[User]
 
         Examples
         --------
@@ -288,7 +288,7 @@ class UsersClient:
             _items = []
             if _parsed_response.data is not None:
                 _items = _parsed_response.data.users
-            return SyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -297,7 +297,7 @@ class UsersClient:
 
     def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPaginator[str]:
+    ) -> SyncPager[str]:
         """
         Parameters
         ----------
@@ -310,7 +310,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPaginator[str]
+        SyncPager[str]
 
         Examples
         --------
@@ -364,7 +364,7 @@ class UsersClient:
             _items = []
             if _parsed_response.cursor is not None:
                 _items = _parsed_response.cursor.data
-            return SyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -373,7 +373,7 @@ class UsersClient:
 
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SyncPaginator[str]:
+    ) -> SyncPager[str]:
         """
         Parameters
         ----------
@@ -384,7 +384,7 @@ class UsersClient:
 
         Returns
         -------
-        SyncPaginator[str]
+        SyncPager[str]
 
         Examples
         --------
@@ -434,7 +434,7 @@ class UsersClient:
                 offset=offset + 1 if offset is not None else 1, request_options=request_options
             )
             _items = _parsed_response.results
-            return SyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -454,7 +454,7 @@ class AsyncUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPaginator[User]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -475,7 +475,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPaginator[User]
+        AsyncPager[User]
 
         Examples
         --------
@@ -539,7 +539,7 @@ class AsyncUsersClient:
                     request_options=request_options,
                 )
             _items = _parsed_response.data
-            return AsyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -554,7 +554,7 @@ class AsyncUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPaginator[User]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -575,7 +575,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPaginator[User]
+        AsyncPager[User]
 
         Examples
         --------
@@ -635,7 +635,7 @@ class AsyncUsersClient:
                 request_options=request_options,
             )
             _items = _parsed_response.data
-            return AsyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -644,7 +644,7 @@ class AsyncUsersClient:
 
     async def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPaginator[User]:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -655,7 +655,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPaginator[User]
+        AsyncPager[User]
 
         Examples
         --------
@@ -710,7 +710,7 @@ class AsyncUsersClient:
             _items = []
             if _parsed_response.data is not None:
                 _items = _parsed_response.data.users
-            return AsyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -719,7 +719,7 @@ class AsyncUsersClient:
 
     async def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPaginator[str]:
+    ) -> AsyncPager[str]:
         """
         Parameters
         ----------
@@ -732,7 +732,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPaginator[str]
+        AsyncPager[str]
 
         Examples
         --------
@@ -786,7 +786,7 @@ class AsyncUsersClient:
             _items = []
             if _parsed_response.cursor is not None:
                 _items = _parsed_response.cursor.data
-            return AsyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -795,7 +795,7 @@ class AsyncUsersClient:
 
     async def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncPaginator[str]:
+    ) -> AsyncPager[str]:
         """
         Parameters
         ----------
@@ -806,7 +806,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        AsyncPaginator[str]
+        AsyncPager[str]
 
         Examples
         --------
@@ -856,7 +856,7 @@ class AsyncUsersClient:
                 offset=offset + 1 if offset is not None else 1, request_options=request_options
             )
             _items = _parsed_response.results
-            return AsyncPaginator(has_next=_has_next, items=_items, get_next=_get_next)
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:

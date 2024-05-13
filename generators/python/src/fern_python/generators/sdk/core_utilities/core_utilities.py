@@ -17,12 +17,13 @@ class CoreUtilities:
     ASYNC_CLIENT_WRAPPER_CLASS_NAME = "AsyncClientWrapper"
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
-    def __init__(self, allow_skipping_validation: bool) -> None:
+    def __init__(self, allow_skipping_validation: bool, has_paginated_endpoints: bool) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
         self._allow_skipping_validation = allow_skipping_validation
+        self._has_paginated_endpoints = has_paginated_endpoints
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -99,15 +100,16 @@ class CoreUtilities:
             exports={"pydantic_v1"},
         )
 
-        self._copy_file_to_project(
-            project=project,
-            relative_filepath_on_disk="pagination.py",
-            filepath_in_project=Filepath(
-                directories=self.filepath,
-                file=Filepath.FilepathPart(module_name="pagination"),
-            ),
-            exports={"SyncPaginator", "AsyncPaginator"},
-        )
+        if self._has_paginated_endpoints:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="pagination.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="pagination"),
+                ),
+                exports={"SyncPager", "AsyncPager"},
+            )
 
         if self._allow_skipping_validation:
             self._copy_file_to_project(
@@ -356,7 +358,7 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pagination"), named_import="AsyncPaginator" if is_async else "SyncPaginator"
+                module=AST.Module.local(*self._module_path, "pagination"), named_import="AsyncPager" if is_async else "SyncPager"
             ),
         )
 

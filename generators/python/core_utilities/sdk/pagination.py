@@ -1,20 +1,17 @@
 import typing
 from typing_extensions import Self
 from .pydantic_utilities import pydantic_v1
-import asyncio
-
-EMPTY_PROMISE = asyncio.sleep(0)
 
 # Generic to represent the underlying type of the results within a page
 T = typing.TypeVar("T")
 
-# SDKs implement a Page ABC per-pagination request, the endpoint then retuns a paginator that wraps this type
-# for example, an endpoint will return SyncPaginator[UserPage] where UserPage implements the Page ABC. ex:
+# SDKs implement a Page ABC per-pagination request, the endpoint then retuns a pager that wraps this type
+# for example, an endpoint will return SyncPager[UserPage] where UserPage implements the Page ABC. ex:
 # 
-# SyncPaginator<InnerListType>(
+# SyncPager<InnerListType>(
 #     has_next=response.list_metadata.after is not None,
 #     items=response.data,
-#     # This should be the outer function that returns the SyncPaginator again
+#     # This should be the outer function that returns the SyncPager again
 #     get_next=lambda: list(..., cursor: response.cursor) (or list(..., offset: offset + 1))
 # )
 class BasePage(pydantic_v1.BaseModel, typing.Generic[T]):
@@ -29,7 +26,7 @@ class AsyncPage(BasePage, typing.Generic[T]):
 
 # ----------------------------
 
-class SyncPaginator(SyncPage[T], typing.Generic[T]):
+class SyncPager(SyncPage[T], typing.Generic[T]):
     def __iter__(self) -> typing.Iterator[T]:
         for page in self.iter_pages():
             for item in page.items:
@@ -50,7 +47,7 @@ class SyncPaginator(SyncPage[T], typing.Generic[T]):
         return self.get_next() if self.get_next is not None else None
 
 
-class AsyncPaginator(AsyncPage[T], typing.Generic[T]):
+class AsyncPager(AsyncPage[T], typing.Generic[T]):
     async def __aiter__(self) -> typing.AsyncIterator[T]:
         async for page in self.iter_pages():
             for item in page.items:
