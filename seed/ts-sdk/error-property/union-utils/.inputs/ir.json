@@ -491,19 +491,7 @@
                             "name": null,
                             "codeSamples": null,
                             "response": {
-                                "type": "ok",
-                                "body": {
-                                    "shape": {
-                                        "type": "primitive",
-                                        "primitive": {
-                                            "type": "string",
-                                            "string": {
-                                                "original": "string"
-                                            }
-                                        }
-                                    },
-                                    "jsonExample": "string"
-                                }
+                                "type": "ok"
                             },
                             "docs": null
                         },
@@ -855,6 +843,7 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",

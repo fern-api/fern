@@ -671,6 +671,7 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": true,
+        "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
