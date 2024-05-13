@@ -5,6 +5,66 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1] - 2024-05-13
+
+- Feature: Add support for cursor and offset pagination.
+
+  For example, consider the following endpoint `/users` endpoint:
+
+  ```yaml
+  types:
+    User:
+      properties:
+        name: string
+
+    ListUserResponse:
+      properties:
+        next: optional<string>
+        data: list<User>
+
+  service:
+    auth: false
+    base-path: /users
+    endpoints:
+      list:
+        path: ""
+        method: GET
+        pagination:
+          cursor: $request.starting_after
+          next_cursor: $response.next
+          results: $response.data
+        request:
+          name: ListUsersRequest
+          query-parameters:
+            starting_after: optional<string>
+        response: ListUsersResponse
+  ```
+
+  The generated `client.Users.List` can then be used as a `User` generator (effectively the "default"):
+
+  ```python
+  for user in client.users.list(...):
+    print user
+  ```
+
+  a page-by-page generator:
+
+  ```python
+  for page in client.users.list(...).iter_pages():
+    print(page.items)
+  ```
+
+  or statically calling `next_page` to perform the pagination manually:
+
+  ```python
+  pager = client.users.list(...)
+  # First page
+  print(pager.items)
+  # Second page
+  pager = pager.next_page()
+  print(pager.items)
+  ```
+
 ## [2.0.0] - 2024-05-09
 
 - Break: the python SDK is now on major version 2, there are no substantial logic changes, however default configuration has changed. To take this upgrade without any breaks, please add the below configuration to your `generators.yml` file:
@@ -15,7 +75,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       config:
         inline_request_params: false
   ```
-
 
 ## [1.7.0-rc0] - 2024-05-09
 
