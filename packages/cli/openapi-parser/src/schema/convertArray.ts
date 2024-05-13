@@ -11,7 +11,8 @@ export function convertArray({
     description,
     wrapAsNullable,
     context,
-    groupName
+    groupName,
+    example
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -21,6 +22,7 @@ export function convertArray({
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
+    example: unknown[] | undefined;
 }): SchemaWithExample {
     const itemSchema =
         item == null
@@ -38,7 +40,8 @@ export function convertArray({
         groupName,
         itemSchema,
         wrapAsNullable,
-        description
+        description,
+        example: example
     });
 }
 
@@ -48,7 +51,8 @@ export function wrapArray({
     itemSchema,
     wrapAsNullable,
     description,
-    groupName
+    groupName,
+    example
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -56,6 +60,7 @@ export function wrapArray({
     wrapAsNullable: boolean;
     description: string | undefined;
     groupName: SdkGroupName | undefined;
+    example: unknown[] | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -66,7 +71,8 @@ export function wrapArray({
                 generatedName,
                 value: itemSchema,
                 description,
-                groupName
+                groupName,
+                example
             }),
             description,
             groupName
@@ -77,6 +83,7 @@ export function wrapArray({
         generatedName,
         value: itemSchema,
         description,
-        groupName
+        groupName,
+        example
     });
 }

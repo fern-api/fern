@@ -18,13 +18,6 @@ exports[`open api parser buzzshot docs 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "hidden": true,
-                        "id": 1,
-                        "name": "name",
-                      },
-                    ],
                   },
                 },
               },
@@ -55,33 +48,6 @@ exports[`open api parser buzzshot docs 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "complete": {
-                          "completed_at": "2024-01-15T09:30:00Z",
-                        },
-                        "date": "date",
-                        "extra_fields": [
-                          {
-                            "key": "key",
-                            "present": true,
-                          },
-                        ],
-                        "group": "group",
-                        "id": 1,
-                        "name": "name",
-                        "photos": [
-                          {
-                            "photo": "photo",
-                          },
-                        ],
-                        "room": "room",
-                        "start_at": "2024-01-15T09:30:00Z",
-                        "time": "time",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                   },
                 },
               },
@@ -128,50 +94,6 @@ exports[`open api parser buzzshot docs 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "date": "date",
-                        "games": [
-                          {
-                            "complete": {
-                              "completed_at": "2024-01-15T09:30:00Z",
-                            },
-                            "date": "date",
-                            "extra_fields": [
-                              {
-                                "key": "key",
-                                "present": true,
-                              },
-                            ],
-                            "time": "time",
-                          },
-                        ],
-                        "id": 1,
-                        "is_event": true,
-                        "name": "name",
-                        "photos": [
-                          {
-                            "photo": "photo",
-                          },
-                        ],
-                        "players": [
-                          {
-                            "email": "email",
-                            "extra_fields": [
-                              {
-                                "key": "key",
-                                "present": true,
-                              },
-                            ],
-                            "phone": "phone",
-                          },
-                        ],
-                        "start_at": "2024-01-15T09:30:00Z",
-                        "time": "time",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                   },
                 },
               },
@@ -210,13 +132,6 @@ exports[`open api parser buzzshot docs 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "hidden": true,
-                        "id": 1,
-                        "name": "name",
-                      },
-                    ],
                   },
                 },
               },
@@ -247,18 +162,6 @@ exports[`open api parser buzzshot docs 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "original_image": "original_image",
-                        "processed": [
-                          {
-                            "photo": "photo",
-                          },
-                        ],
-                      },
-                    ],
                   },
                 },
               },
@@ -289,24 +192,6 @@ exports[`open api parser buzzshot docs 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "email": "email",
-                        "extra_fields": [
-                          {
-                            "key": "key",
-                            "present": true,
-                          },
-                        ],
-                        "first_name": "first_name",
-                        "id": 1,
-                        "last_name": "last_name",
-                        "marketing_email_allowed": true,
-                        "phone": "phone",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                   },
                 },
               },
@@ -376,24 +261,10 @@ exports[`open api parser buzzshot docs 1`] = `
                       "score": 1,
                     },
                     "date": "date",
-                    "extra_fields": [
-                      {
-                        "key": "key",
-                        "label": "label",
-                        "present": true,
-                      },
-                    ],
+                    "extra_fields": [],
                     "group": "group",
                     "id": 1,
                     "name": "name",
-                    "photos": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "photo": "photo",
-                        "processed_image": "processed_image",
-                        "ready": "ready",
-                      },
-                    ],
                     "room": "room",
                     "start_at": "2024-01-15T09:30:00Z",
                     "time": "time",
@@ -448,57 +319,10 @@ exports[`open api parser buzzshot docs 1`] = `
                   "body": {
                     "added_at": "2024-01-15T09:30:00Z",
                     "date": "date",
-                    "games": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "complete": {
-                          "completed_at": "2024-01-15T09:30:00Z",
-                        },
-                        "date": "date",
-                        "extra_fields": [
-                          {
-                            "key": "key",
-                            "present": true,
-                          },
-                        ],
-                        "id": 1,
-                        "name": "name",
-                        "room": "room",
-                        "start_at": "2024-01-15T09:30:00Z",
-                        "time": "time",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "id": 1,
                     "is_event": true,
                     "name": "name",
-                    "photos": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "game": "game",
-                        "photo": "photo",
-                        "processed_image": "processed_image",
-                        "ready": "ready",
-                      },
-                    ],
-                    "players": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "email": "email",
-                        "extra_fields": [
-                          {
-                            "key": "key",
-                            "present": true,
-                          },
-                        ],
-                        "first_name": "first_name",
-                        "last_name": "last_name",
-                        "phone": "phone",
-                        "player": "player",
-                        "signature": "signature",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "players": [],
                     "start_at": "2024-01-15T09:30:00Z",
                     "time": "time",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -575,16 +399,7 @@ exports[`open api parser buzzshot docs 1`] = `
                     "added_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "original_image": "original_image",
-                    "processed": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "game": "game",
-                        "group": "group",
-                        "photo": "photo",
-                        "processed_image": "processed_image",
-                        "ready": "ready",
-                      },
-                    ],
+                    "processed": [],
                   },
                 },
               },
@@ -614,13 +429,7 @@ exports[`open api parser buzzshot docs 1`] = `
                   "body": {
                     "added_at": "2024-01-15T09:30:00Z",
                     "email": "email",
-                    "extra_fields": [
-                      {
-                        "key": "key",
-                        "label": "label",
-                        "present": true,
-                      },
-                    ],
+                    "extra_fields": [],
                     "first_name": "first_name",
                     "id": 1,
                     "last_name": "last_name",
@@ -924,13 +733,6 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "hidden": true,
-                        "id": 1,
-                        "name": "name",
-                      },
-                    ],
                   },
                 },
               },
@@ -961,33 +763,6 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "complete": {
-                          "completed_at": "2024-01-15T09:30:00Z",
-                        },
-                        "date": "date",
-                        "extra_fields": [
-                          {
-                            "key": "key",
-                            "present": true,
-                          },
-                        ],
-                        "group": "group",
-                        "id": 1,
-                        "name": "name",
-                        "photos": [
-                          {
-                            "photo": "photo",
-                          },
-                        ],
-                        "room": "room",
-                        "start_at": "2024-01-15T09:30:00Z",
-                        "time": "time",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                   },
                 },
               },
@@ -1034,50 +809,6 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "date": "date",
-                        "games": [
-                          {
-                            "complete": {
-                              "completed_at": "2024-01-15T09:30:00Z",
-                            },
-                            "date": "date",
-                            "extra_fields": [
-                              {
-                                "key": "key",
-                                "present": true,
-                              },
-                            ],
-                            "time": "time",
-                          },
-                        ],
-                        "id": 1,
-                        "is_event": true,
-                        "name": "name",
-                        "photos": [
-                          {
-                            "photo": "photo",
-                          },
-                        ],
-                        "players": [
-                          {
-                            "email": "email",
-                            "extra_fields": [
-                              {
-                                "key": "key",
-                                "present": true,
-                              },
-                            ],
-                            "phone": "phone",
-                          },
-                        ],
-                        "start_at": "2024-01-15T09:30:00Z",
-                        "time": "time",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                   },
                 },
               },
@@ -1116,13 +847,6 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "hidden": true,
-                        "id": 1,
-                        "name": "name",
-                      },
-                    ],
                   },
                 },
               },
@@ -1153,18 +877,6 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "original_image": "original_image",
-                        "processed": [
-                          {
-                            "photo": "photo",
-                          },
-                        ],
-                      },
-                    ],
                   },
                 },
               },
@@ -1195,24 +907,6 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 123,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "email": "email",
-                        "extra_fields": [
-                          {
-                            "key": "key",
-                            "present": true,
-                          },
-                        ],
-                        "first_name": "first_name",
-                        "id": 1,
-                        "last_name": "last_name",
-                        "marketing_email_allowed": true,
-                        "phone": "phone",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                   },
                 },
               },
@@ -1282,24 +976,10 @@ exports[`open api parser buzzshot simple 1`] = `
                       "score": 1,
                     },
                     "date": "date",
-                    "extra_fields": [
-                      {
-                        "key": "key",
-                        "label": "label",
-                        "present": true,
-                      },
-                    ],
+                    "extra_fields": [],
                     "group": "group",
                     "id": 1,
                     "name": "name",
-                    "photos": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "photo": "photo",
-                        "processed_image": "processed_image",
-                        "ready": "ready",
-                      },
-                    ],
                     "room": "room",
                     "start_at": "2024-01-15T09:30:00Z",
                     "time": "time",
@@ -1354,57 +1034,10 @@ exports[`open api parser buzzshot simple 1`] = `
                   "body": {
                     "added_at": "2024-01-15T09:30:00Z",
                     "date": "date",
-                    "games": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "complete": {
-                          "completed_at": "2024-01-15T09:30:00Z",
-                        },
-                        "date": "date",
-                        "extra_fields": [
-                          {
-                            "key": "key",
-                            "present": true,
-                          },
-                        ],
-                        "id": 1,
-                        "name": "name",
-                        "room": "room",
-                        "start_at": "2024-01-15T09:30:00Z",
-                        "time": "time",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "id": 1,
                     "is_event": true,
                     "name": "name",
-                    "photos": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "game": "game",
-                        "photo": "photo",
-                        "processed_image": "processed_image",
-                        "ready": "ready",
-                      },
-                    ],
-                    "players": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "email": "email",
-                        "extra_fields": [
-                          {
-                            "key": "key",
-                            "present": true,
-                          },
-                        ],
-                        "first_name": "first_name",
-                        "last_name": "last_name",
-                        "phone": "phone",
-                        "player": "player",
-                        "signature": "signature",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "players": [],
                     "start_at": "2024-01-15T09:30:00Z",
                     "time": "time",
                     "updated_at": "2024-01-15T09:30:00Z",
@@ -1481,16 +1114,7 @@ exports[`open api parser buzzshot simple 1`] = `
                     "added_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "original_image": "original_image",
-                    "processed": [
-                      {
-                        "added_at": "2024-01-15T09:30:00Z",
-                        "game": "game",
-                        "group": "group",
-                        "photo": "photo",
-                        "processed_image": "processed_image",
-                        "ready": "ready",
-                      },
-                    ],
+                    "processed": [],
                   },
                 },
               },
@@ -1520,13 +1144,7 @@ exports[`open api parser buzzshot simple 1`] = `
                   "body": {
                     "added_at": "2024-01-15T09:30:00Z",
                     "email": "email",
-                    "extra_fields": [
-                      {
-                        "key": "key",
-                        "label": "label",
-                        "present": true,
-                      },
-                    ],
+                    "extra_fields": [],
                     "first_name": "first_name",
                     "id": 1,
                     "last_name": "last_name",

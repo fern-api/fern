@@ -2882,41 +2882,7 @@ Log.d("TAG", file.toString())
                     "properties": {
                       "audio": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 78,
-                                },
-                              },
-                              "channels": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 2,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "aac",
-                                },
-                              },
-                              "sample_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 44100,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                       "bitrate": {
                         "type": "primitive",
@@ -2941,48 +2907,7 @@ Log.d("TAG", file.toString())
                       },
                       "video": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 315,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "h264",
-                                },
-                              },
-                              "frame_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 30,
-                                },
-                              },
-                              "height": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 360,
-                                },
-                              },
-                              "width": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 640,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                     },
                     "type": "object",
@@ -4505,41 +4430,7 @@ Log.d("TAG", file.toString())
                     "properties": {
                       "audio": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 78,
-                                },
-                              },
-                              "channels": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 2,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "aac",
-                                },
-                              },
-                              "sample_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 44100,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                       "bitrate": {
                         "type": "primitive",
@@ -4564,48 +4455,7 @@ Log.d("TAG", file.toString())
                       },
                       "video": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 315,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "h264",
-                                },
-                              },
-                              "frame_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 30,
-                                },
-                              },
-                              "height": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 360,
-                                },
-                              },
-                              "width": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 640,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                     },
                     "type": "object",
@@ -5769,41 +5619,7 @@ Log.d("TAG", status.toString())
                     "properties": {
                       "audio": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 78,
-                                },
-                              },
-                              "channels": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 2,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "aac",
-                                },
-                              },
-                              "sample_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 44100,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                       "bitrate": {
                         "type": "primitive",
@@ -5828,48 +5644,7 @@ Log.d("TAG", status.toString())
                       },
                       "video": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 315,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "h264",
-                                },
-                              },
-                              "frame_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 30,
-                                },
-                              },
-                              "height": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 360,
-                                },
-                              },
-                              "width": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 640,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                     },
                     "type": "object",
@@ -6950,41 +6725,7 @@ Log.d("TAG", file.toString())
                     "properties": {
                       "audio": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 78,
-                                },
-                              },
-                              "channels": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 2,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "aac",
-                                },
-                              },
-                              "sample_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 44100,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                       "bitrate": {
                         "type": "primitive",
@@ -7009,48 +6750,7 @@ Log.d("TAG", file.toString())
                       },
                       "video": {
                         "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 315,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "h264",
-                                },
-                              },
-                              "frame_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 30,
-                                },
-                              },
-                              "height": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 360,
-                                },
-                              },
-                              "width": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 640,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "value": [],
                       },
                     },
                     "type": "object",

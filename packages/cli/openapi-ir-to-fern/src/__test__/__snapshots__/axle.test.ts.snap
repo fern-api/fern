@@ -32,9 +32,7 @@ exports[`open api parser axle docs 1`] = `
                       "lastName": "lastName",
                       "modifiedAt": "modifiedAt",
                       "phone": "phone",
-                      "policies": [
-                        "policies",
-                      ],
+                      "policies": [],
                       "refreshedAt": "refreshedAt",
                     },
                     "success": true,
@@ -193,17 +191,6 @@ exports[`open api parser axle docs 1`] = `
                 "headers": {},
                 "response": {
                   "body": {
-                    "data": [
-                      {
-                        "address": {},
-                        "domain": "domain",
-                        "id": "id",
-                        "logoUrl": "logoUrl",
-                        "modifiedAt": "modifiedAt",
-                        "name": "name",
-                        "phone": "phone",
-                      },
-                    ],
                     "success": true,
                   },
                 },
@@ -351,58 +338,18 @@ exports[`open api parser axle docs 1`] = `
                         "state": "state",
                       },
                       "carrier": "carrier",
-                      "coverages": [
-                        {
-                          "code": "BI",
-                          "label": "Bodily Injury Liability",
-                          "limitPerAccident": 500000,
-                          "limitPerPerson": 250000,
-                        },
-                      ],
+                      "coverages": [],
                       "createdAt": "createdAt",
                       "effectiveDate": "effectiveDate",
                       "expirationDate": "expirationDate",
                       "id": "id",
-                      "insureds": [
-                        {
-                          "dateOfBirth": "",
-                          "dateOfBirthYear": "1993",
-                          "firstName": "Armaan",
-                          "lastName": "Sikand",
-                          "licenseNo": "•••••7259",
-                          "licenseState": "GA",
-                          "licenseStatus": "Valid",
-                          "type": "Primary named insured",
-                        },
-                      ],
+                      "insureds": [],
                       "isActive": true,
                       "modifiedAt": "modifiedAt",
                       "policyNumber": "policyNumber",
-                      "properties": [
-                        {
-                          "data": {
-                            "make": "TRIUMPH",
-                            "model": "STREET SCRAMBLER",
-                            "vin": "SMTD44GN3HT812287",
-                            "year": "2017",
-                          },
-                          "id": "prp_uSdzLVpi8c76H7kl6AQ-F",
-                          "type": "vehicle",
-                        },
-                      ],
+                      "properties": [],
                       "refreshedAt": "refreshedAt",
-                      "thirdParties": [
-                        {
-                          "address": {
-                            "addressLine1": "Po Box 105205",
-                            "city": "Atlanta",
-                            "postalCode": "30348-5205",
-                            "state": "GA",
-                          },
-                          "name": "Georgias Own Credit Union",
-                          "type": "lienholder",
-                        },
-                      ],
+                      "thirdParties": [],
                       "type": "auto",
                     },
                     "success": true,
@@ -469,11 +416,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                     "data": {
                       "accessToken": "accessToken",
                       "account": "account",
-                      "policies": [
-                        {
-                          "key": "value",
-                        },
-                      ],
+                      "policies": [],
                     },
                     "success": true,
                   },
@@ -734,9 +677,7 @@ exports[`open api parser axle simple 1`] = `
                       "lastName": "lastName",
                       "modifiedAt": "modifiedAt",
                       "phone": "phone",
-                      "policies": [
-                        "policies",
-                      ],
+                      "policies": [],
                       "refreshedAt": "refreshedAt",
                     },
                     "success": true,
@@ -895,17 +836,6 @@ exports[`open api parser axle simple 1`] = `
                 "headers": {},
                 "response": {
                   "body": {
-                    "data": [
-                      {
-                        "address": {},
-                        "domain": "domain",
-                        "id": "id",
-                        "logoUrl": "logoUrl",
-                        "modifiedAt": "modifiedAt",
-                        "name": "name",
-                        "phone": "phone",
-                      },
-                    ],
                     "success": true,
                   },
                 },
@@ -1053,58 +983,18 @@ exports[`open api parser axle simple 1`] = `
                         "state": "state",
                       },
                       "carrier": "carrier",
-                      "coverages": [
-                        {
-                          "code": "BI",
-                          "label": "Bodily Injury Liability",
-                          "limitPerAccident": 500000,
-                          "limitPerPerson": 250000,
-                        },
-                      ],
+                      "coverages": [],
                       "createdAt": "createdAt",
                       "effectiveDate": "effectiveDate",
                       "expirationDate": "expirationDate",
                       "id": "id",
-                      "insureds": [
-                        {
-                          "dateOfBirth": "",
-                          "dateOfBirthYear": "1993",
-                          "firstName": "Armaan",
-                          "lastName": "Sikand",
-                          "licenseNo": "•••••7259",
-                          "licenseState": "GA",
-                          "licenseStatus": "Valid",
-                          "type": "Primary named insured",
-                        },
-                      ],
+                      "insureds": [],
                       "isActive": true,
                       "modifiedAt": "modifiedAt",
                       "policyNumber": "policyNumber",
-                      "properties": [
-                        {
-                          "data": {
-                            "make": "TRIUMPH",
-                            "model": "STREET SCRAMBLER",
-                            "vin": "SMTD44GN3HT812287",
-                            "year": "2017",
-                          },
-                          "id": "prp_uSdzLVpi8c76H7kl6AQ-F",
-                          "type": "vehicle",
-                        },
-                      ],
+                      "properties": [],
                       "refreshedAt": "refreshedAt",
-                      "thirdParties": [
-                        {
-                          "address": {
-                            "addressLine1": "Po Box 105205",
-                            "city": "Atlanta",
-                            "postalCode": "30348-5205",
-                            "state": "GA",
-                          },
-                          "name": "Georgias Own Credit Union",
-                          "type": "lienholder",
-                        },
-                      ],
+                      "thirdParties": [],
                       "type": "auto",
                     },
                     "success": true,
@@ -1171,11 +1061,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                     "data": {
                       "accessToken": "accessToken",
                       "account": "account",
-                      "policies": [
-                        {
-                          "key": "value",
-                        },
-                      ],
+                      "policies": [],
                     },
                     "success": true,
                   },

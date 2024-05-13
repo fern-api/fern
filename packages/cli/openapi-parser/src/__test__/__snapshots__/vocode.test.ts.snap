@@ -57,55 +57,7 @@ exports[`open api parser vocode parse open api 1`] = `
               },
               "items": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "active": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "inbound_agent": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "inbound_agent",
-                        },
-                      },
-                      "label": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "label",
-                        },
-                      },
-                      "number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "number",
-                        },
-                      },
-                      "user_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "user_id",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "page": {
                 "type": "primitive",
@@ -502,94 +454,7 @@ exports[`open api parser vocode parse open api 1`] = `
               },
               "items": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "agent": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "agent",
-                        },
-                      },
-                      "agent_phone_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "agent_phone_number",
-                        },
-                      },
-                      "end_time": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2024-01-15T09:30:00Z",
-                        },
-                      },
-                      "error_message": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "error_message",
-                        },
-                      },
-                      "from_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "from_number",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "recording_available": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "start_time": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2024-01-15T09:30:00Z",
-                        },
-                      },
-                      "status": {
-                        "type": "enum",
-                        "value": "not_started",
-                      },
-                      "to_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "to_number",
-                        },
-                      },
-                      "transcript": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "transcript",
-                        },
-                      },
-                      "user_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "user_id",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "page": {
                 "type": "primitive",
@@ -1630,82 +1495,7 @@ exports[`open api parser vocode parse open api 1`] = `
               },
               "items": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "actions": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "actions",
-                            },
-                          },
-                        ],
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "initial_message": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "initial_message",
-                        },
-                      },
-                      "interrupt_sensitivity": {
-                        "type": "enum",
-                        "value": "low",
-                      },
-                      "language": {
-                        "type": "enum",
-                        "value": "en",
-                      },
-                      "prompt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "prompt",
-                        },
-                      },
-                      "user_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "user_id",
-                        },
-                      },
-                      "vector_database": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "vector_database",
-                        },
-                      },
-                      "voice": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "voice",
-                        },
-                      },
-                      "webhook": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "webhook",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "page": {
                 "type": "primitive",
@@ -2472,12 +2262,7 @@ exports[`open api parser vocode parse open api 1`] = `
               },
               "subscriptions": {
                 "type": "array",
-                "value": [
-                  {
-                    "type": "enum",
-                    "value": "event_message",
-                  },
-                ],
+                "value": [],
               },
               "url": {
                 "type": "primitive",
@@ -2588,47 +2373,7 @@ exports[`open api parser vocode parse open api 1`] = `
               },
               "items": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "method": {
-                        "type": "enum",
-                        "value": "GET",
-                      },
-                      "subscriptions": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "enum",
-                            "value": "event_message",
-                          },
-                        ],
-                      },
-                      "url": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "url",
-                        },
-                      },
-                      "user_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "user_id",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "page": {
                 "type": "primitive",
@@ -2758,12 +2503,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "properties": {
               "subscriptions": {
                 "type": "array",
-                "value": [
-                  {
-                    "type": "enum",
-                    "value": "event_message",
-                  },
-                ],
+                "value": [],
               },
               "url": {
                 "type": "primitive",
@@ -2790,12 +2530,7 @@ exports[`open api parser vocode parse open api 1`] = `
               },
               "subscriptions": {
                 "type": "array",
-                "value": [
-                  {
-                    "type": "enum",
-                    "value": "event_message",
-                  },
-                ],
+                "value": [],
               },
               "url": {
                 "type": "primitive",
@@ -2918,12 +2653,7 @@ exports[`open api parser vocode parse open api 1`] = `
               },
               "subscriptions": {
                 "type": "array",
-                "value": [
-                  {
-                    "type": "enum",
-                    "value": "event_message",
-                  },
-                ],
+                "value": [],
               },
               "url": {
                 "type": "primitive",

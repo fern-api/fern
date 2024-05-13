@@ -707,26 +707,11 @@ Log.d("TAG", file.toString())
                         "type": "image",
                       },
                       "video": {
-                        "audio": [
-                          {
-                            "bitrate": 78,
-                            "channels": 2,
-                            "codec": "aac",
-                            "sample_rate": 44100,
-                          },
-                        ],
+                        "audio": [],
                         "bitrate": 393,
                         "duration": 261827,
                         "format": "mp4",
-                        "video": [
-                          {
-                            "bitrate": 315,
-                            "codec": "h264",
-                            "frame_rate": 30,
-                            "height": 360,
-                            "width": 640,
-                          },
-                        ],
+                        "video": [],
                       },
                     },
                     "done": 2667636,
@@ -1077,26 +1062,11 @@ Log.d("TAG", file.toString())
                         "type": "image",
                       },
                       "video": {
-                        "audio": [
-                          {
-                            "bitrate": 78,
-                            "channels": 2,
-                            "codec": "aac",
-                            "sample_rate": 44100,
-                          },
-                        ],
+                        "audio": [],
                         "bitrate": 393,
                         "duration": 261827,
                         "format": "mp4",
-                        "video": [
-                          {
-                            "bitrate": 315,
-                            "codec": "h264",
-                            "frame_rate": 30,
-                            "height": 360,
-                            "width": 640,
-                          },
-                        ],
+                        "video": [],
                       },
                     },
                     "done": 2667636,
@@ -1521,26 +1491,11 @@ Log.d("TAG", status.toString())
                         "type": "image",
                       },
                       "video": {
-                        "audio": [
-                          {
-                            "bitrate": 78,
-                            "channels": 2,
-                            "codec": "aac",
-                            "sample_rate": 44100,
-                          },
-                        ],
+                        "audio": [],
                         "bitrate": 393,
                         "duration": 261827,
                         "format": "mp4",
-                        "video": [
-                          {
-                            "bitrate": 315,
-                            "codec": "h264",
-                            "frame_rate": 30,
-                            "height": 360,
-                            "width": 640,
-                          },
-                        ],
+                        "video": [],
                       },
                     },
                     "done": 2667636,
@@ -1947,26 +1902,11 @@ Log.d("TAG", file.toString())
                         "type": "image",
                       },
                       "video": {
-                        "audio": [
-                          {
-                            "bitrate": 78,
-                            "channels": 2,
-                            "codec": "aac",
-                            "sample_rate": 44100,
-                          },
-                        ],
+                        "audio": [],
                         "bitrate": 393,
                         "duration": 261827,
                         "format": "mp4",
-                        "video": [
-                          {
-                            "bitrate": 315,
-                            "codec": "h264",
-                            "frame_rate": 30,
-                            "height": 360,
-                            "width": 640,
-                          },
-                        ],
+                        "video": [],
                       },
                     },
                     "done": 2667636,
@@ -4857,26 +4797,11 @@ Log.d("TAG", file.toString())
                         "type": "image",
                       },
                       "video": {
-                        "audio": [
-                          {
-                            "bitrate": 78,
-                            "channels": 2,
-                            "codec": "aac",
-                            "sample_rate": 44100,
-                          },
-                        ],
+                        "audio": [],
                         "bitrate": 393,
                         "duration": 261827,
                         "format": "mp4",
-                        "video": [
-                          {
-                            "bitrate": 315,
-                            "codec": "h264",
-                            "frame_rate": 30,
-                            "height": 360,
-                            "width": 640,
-                          },
-                        ],
+                        "video": [],
                       },
                     },
                     "done": 2667636,
@@ -5227,26 +5152,11 @@ Log.d("TAG", file.toString())
                         "type": "image",
                       },
                       "video": {
-                        "audio": [
-                          {
-                            "bitrate": 78,
-                            "channels": 2,
-                            "codec": "aac",
-                            "sample_rate": 44100,
-                          },
-                        ],
+                        "audio": [],
                         "bitrate": 393,
                         "duration": 261827,
                         "format": "mp4",
-                        "video": [
-                          {
-                            "bitrate": 315,
-                            "codec": "h264",
-                            "frame_rate": 30,
-                            "height": 360,
-                            "width": 640,
-                          },
-                        ],
+                        "video": [],
                       },
                     },
                     "done": 2667636,
@@ -5671,26 +5581,11 @@ Log.d("TAG", status.toString())
                         "type": "image",
                       },
                       "video": {
-                        "audio": [
-                          {
-                            "bitrate": 78,
-                            "channels": 2,
-                            "codec": "aac",
-                            "sample_rate": 44100,
-                          },
-                        ],
+                        "audio": [],
                         "bitrate": 393,
                         "duration": 261827,
                         "format": "mp4",
-                        "video": [
-                          {
-                            "bitrate": 315,
-                            "codec": "h264",
-                            "frame_rate": 30,
-                            "height": 360,
-                            "width": 640,
-                          },
-                        ],
+                        "video": [],
                       },
                     },
                     "done": 2667636,
@@ -6097,26 +5992,11 @@ Log.d("TAG", file.toString())
                         "type": "image",
                       },
                       "video": {
-                        "audio": [
-                          {
-                            "bitrate": 78,
-                            "channels": 2,
-                            "codec": "aac",
-                            "sample_rate": 44100,
-                          },
-                        ],
+                        "audio": [],
                         "bitrate": 393,
                         "duration": 261827,
                         "format": "mp4",
-                        "video": [
-                          {
-                            "bitrate": 315,
-                            "codec": "h264",
-                            "frame_rate": 30,
-                            "height": 360,
-                            "width": 640,
-                          },
-                        ],
+                        "video": [],
                       },
                     },
                     "done": 2667636,

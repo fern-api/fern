@@ -440,15 +440,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                 },
                 "type": "object",
               },
-              "new_metadata": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
-              },
               "new_name": {
                 "type": "primitive",
                 "value": {
@@ -1153,37 +1144,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       },
                     },
                     "type": "object",
-                  },
-                  "new_product_descriptions": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/booking_amendment_product_description",
-                            },
-                          },
-                          "description": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Wristwatches",
-                            },
-                          },
-                          "description_for_export_customs": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "手表",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
                   },
                   "new_wants_bco": {
                     "type": "primitive",
@@ -5601,15 +5561,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": "my-albany-ref",
                 },
               },
-              "metadata": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
-              },
               "name": {
                 "type": "primitive",
                 "value": {
@@ -5817,44 +5768,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                         },
                         "type": "object",
-                      },
-                      "product_descriptions": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "_object": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "/bookings/product_descriptions",
-                                },
-                              },
-                              "description": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Wristwatches",
-                                },
-                              },
-                              "description_for_export_customs": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "手表",
-                                },
-                              },
-                              "description_for_export_customs_locale": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "zh_CN",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
                       },
                       "wants_delivery_service": {
                         "type": "primitive",
@@ -7618,44 +7531,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                         },
                         "type": "object",
                       },
-                      "product_descriptions": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "_object": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "/bookings/product_descriptions",
-                                },
-                              },
-                              "description": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Wristwatches",
-                                },
-                              },
-                              "description_for_export_customs": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "手表",
-                                },
-                              },
-                              "description_for_export_customs_locale": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "zh_CN",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
                       "wants_delivery_service": {
                         "type": "primitive",
                         "value": {
@@ -8590,44 +8465,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                         },
                         "type": "object",
-                      },
-                      "product_descriptions": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "_object": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "/bookings/product_descriptions",
-                                },
-                              },
-                              "description": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Wristwatches",
-                                },
-                              },
-                              "description_for_export_customs": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "手表",
-                                },
-                              },
-                              "description_for_export_customs_locale": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "zh_CN",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
                       },
                       "wants_delivery_service": {
                         "type": "primitive",
@@ -10805,44 +10642,7 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
               "line_items": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "price_per_unit": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "product_sku": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "PRODUCT-123",
-                        },
-                      },
-                      "quantity": {
-                        "properties": {
-                          "unit": {
-                            "type": "enum",
-                            "value": "pcs",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1.1,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "value": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "proration_amount": {
                 "properties": {},
@@ -10900,37 +10700,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "type": "string",
                       "value": "ABCDEFGHIJKLMNOP",
                     },
-                  },
-                  "involved_parties": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/customs/involved_party",
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "The West Coast Company",
-                            },
-                          },
-                          "type": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "consignee",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
                   },
                   "is_related_parties": {
                     "type": "primitive",
@@ -11851,37 +11620,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "type": "string",
                       "value": "ABCDEFGHIJKLMNOP",
                     },
-                  },
-                  "involved_parties": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/customs/involved_party",
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "The West Coast Company",
-                            },
-                          },
-                          "type": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "consignee",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
                   },
                   "is_related_parties": {
                     "type": "primitive",
@@ -12810,37 +12548,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "type": "string",
                       "value": "ABCDEFGHIJKLMNOP",
                     },
-                  },
-                  "involved_parties": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/customs/involved_party",
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "The West Coast Company",
-                            },
-                          },
-                          "type": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "consignee",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
                   },
                   "is_related_parties": {
                     "type": "primitive",
@@ -16752,58 +16459,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "/api/collections/paginated",
                     },
                   },
-                  "data": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/event",
-                            },
-                          },
-                          "created_at": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2019-04-16T18:05:10.964Z",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 354987,
-                            },
-                          },
-                          "occurred_at": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2019-04-16T18:05:10.964Z",
-                            },
-                          },
-                          "type": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/shipment_leg#departed",
-                            },
-                          },
-                          "version": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 2,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "next": {
                     "type": "primitive",
                     "value": {
@@ -17497,96 +17152,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           "value": "/shipment_event_data",
                         },
                       },
-                      "containers": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "_object": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "/ocean/shipment_container",
-                                },
-                              },
-                              "container_number": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "BWSE3982156",
-                                },
-                              },
-                              "id": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 283910,
-                                },
-                              },
-                              "metadata": {
-                                "type": "map",
-                                "value": [
-                                  {
-                                    "key": {
-                                      "type": "string",
-                                      "value": "purchase_order",
-                                    },
-                                    "value": {
-                                      "type": "unknown",
-                                      "value": {
-                                        "type": "map",
-                                        "value": [
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "0",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "string",
-                                                "value": "12345",
-                                              },
-                                            },
-                                          },
-                                        ],
-                                      },
-                                    },
-                                  },
-                                  {
-                                    "key": {
-                                      "type": "string",
-                                      "value": "sku",
-                                    },
-                                    "value": {
-                                      "type": "unknown",
-                                      "value": {
-                                        "type": "map",
-                                        "value": [
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "0",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "string",
-                                                "value": "abc123",
-                                              },
-                                            },
-                                          },
-                                        ],
-                                      },
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
                       "exception": {
                         "properties": {
                           "message": {
@@ -17614,18 +17179,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                               "type": "string",
                               "value": "/shipment_node",
                             },
-                          },
-                          "tags": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "port_of_loading",
-                                },
-                              },
-                            ],
                           },
                         },
                         "type": "object",
@@ -23050,37 +22603,6 @@ Other details about this invoice",
                               "value": "id-123456",
                             },
                           },
-                          "vat_numbers": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/company_entity/vat_number",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "GB",
-                                    },
-                                  },
-                                  "number": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "GB 123456789",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
                         },
                         "type": "object",
                       },
@@ -24181,37 +23703,6 @@ Other details about this invoice",
                               "type": "string",
                               "value": "id-123456",
                             },
-                          },
-                          "vat_numbers": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/company_entity/vat_number",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "GB",
-                                    },
-                                  },
-                                  "number": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "GB 123456789",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
                           },
                         },
                         "type": "object",
@@ -31919,37 +31410,6 @@ Other details about this invoice",
                               "type": "string",
                               "value": "zoomit_ref",
                             },
-                          },
-                          "vat_numbers": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/company_entity/vat_number",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "GB",
-                                    },
-                                  },
-                                  "number": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "GB 123456789",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
                           },
                         },
                         "type": "object",
@@ -40105,51 +39565,6 @@ Other details about this invoice",
                         },
                         "type": "object",
                       },
-                      "details": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "_object": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "/air/port",
-                                },
-                              },
-                              "country_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "US",
-                                },
-                              },
-                              "iata_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "LAX",
-                                },
-                              },
-                              "icao_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "KLAX",
-                                },
-                              },
-                              "port_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3901",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
                       "name": {
                         "type": "primitive",
                         "value": {
@@ -40431,51 +39846,6 @@ Other details about this invoice",
                           },
                         },
                         "type": "object",
-                      },
-                      "details": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "_object": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "/air/port",
-                                },
-                              },
-                              "country_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "US",
-                                },
-                              },
-                              "iata_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "LAX",
-                                },
-                              },
-                              "icao_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "KLAX",
-                                },
-                              },
-                              "port_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3901",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
                       },
                       "name": {
                         "type": "primitive",
@@ -41747,84 +41117,8 @@ Other details about this invoice",
                                           "value": "id-754619",
                                         },
                                       },
-                                      "vat_numbers": {
-                                        "type": "array",
-                                        "value": [
-                                          {
-                                            "properties": {
-                                              "_object": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "/company_entity/vat_number",
-                                                },
-                                              },
-                                              "country_code": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "GB",
-                                                },
-                                              },
-                                              "number": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "GB 123456789",
-                                                },
-                                              },
-                                            },
-                                            "type": "object",
-                                          },
-                                        ],
-                                      },
                                     },
                                     "type": "object",
-                                  },
-                                  "contacts": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "properties": {
-                                          "department": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "marketing",
-                                            },
-                                          },
-                                          "email": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "John.Doe@example.com",
-                                            },
-                                          },
-                                          "fax": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "1 323 555 1234",
-                                            },
-                                          },
-                                          "name": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "John Doe",
-                                            },
-                                          },
-                                          "phone": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "767 878 8888",
-                                            },
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    ],
                                   },
                                   "role": {
                                     "type": "enum",
@@ -41864,37 +41158,6 @@ Other details about this invoice",
                                           "type": "string",
                                           "value": "id-677939",
                                         },
-                                      },
-                                      "vat_numbers": {
-                                        "type": "array",
-                                        "value": [
-                                          {
-                                            "properties": {
-                                              "_object": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "/company_entity/vat_number",
-                                                },
-                                              },
-                                              "country_code": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "GB",
-                                                },
-                                              },
-                                              "number": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "GB 123456789",
-                                                },
-                                              },
-                                            },
-                                            "type": "object",
-                                          },
-                                        ],
                                       },
                                     },
                                     "type": "object",
@@ -42043,37 +41306,6 @@ Other details about this invoice",
                                           "type": "string",
                                           "value": "id-754619",
                                         },
-                                      },
-                                      "vat_numbers": {
-                                        "type": "array",
-                                        "value": [
-                                          {
-                                            "properties": {
-                                              "_object": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "/company_entity/vat_number",
-                                                },
-                                              },
-                                              "country_code": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "GB",
-                                                },
-                                              },
-                                              "number": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "GB 123456789",
-                                                },
-                                              },
-                                            },
-                                            "type": "object",
-                                          },
-                                        ],
                                       },
                                     },
                                     "type": "object",
@@ -43350,15 +42582,6 @@ Other details about this invoice",
                           },
                         ],
                       },
-                      "metadata": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        ],
-                      },
                       "must_arrive_date": {
                         "type": "primitive",
                         "value": {
@@ -43754,93 +42977,6 @@ Other details about this invoice",
                   "value": "created_at",
                 },
               },
-              "destination_addresses": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "_object": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "/address",
-                        },
-                      },
-                      "city": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Albany",
-                        },
-                      },
-                      "country": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "United States of America",
-                        },
-                      },
-                      "country_code": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                      "ref": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "address_ref_x",
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "MN",
-                        },
-                      },
-                      "street_address": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1641 Settlers Lane",
-                        },
-                      },
-                      "street_address2": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "STE 2918",
-                        },
-                      },
-                      "timezone": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "America/Los_Angeles",
-                        },
-                      },
-                      "unlocode": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US AL2",
-                        },
-                      },
-                      "zip": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "56307",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "destination_port": {
                 "properties": {
                   "_object": {
@@ -43931,51 +43067,6 @@ Other details about this invoice",
                       },
                     },
                     "type": "object",
-                  },
-                  "details": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/air/port",
-                            },
-                          },
-                          "country_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "iata_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "LAX",
-                            },
-                          },
-                          "icao_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "KLAX",
-                            },
-                          },
-                          "port_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3901",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
                   },
                   "name": {
                     "type": "primitive",
@@ -44299,51 +43390,6 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
-                  "details": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/air/port",
-                            },
-                          },
-                          "country_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "iata_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "LAX",
-                            },
-                          },
-                          "icao_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "KLAX",
-                            },
-                          },
-                          "port_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3901",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "name": {
                     "type": "primitive",
                     "value": {
@@ -44353,152 +43399,6 @@ Other details about this invoice",
                   },
                 },
                 "type": "object",
-              },
-              "parties": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "company_entity": {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/company_entity",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 9281,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Zoomit",
-                            },
-                          },
-                          "ref": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "zoomit_ref",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "contacts": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "department": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "marketing",
-                                },
-                              },
-                              "email": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "John.Doe@example.com",
-                                },
-                              },
-                              "fax": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "1 323 555 1234",
-                                },
-                              },
-                              "name": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "John Doe",
-                                },
-                              },
-                              "phone": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "767 878 8888",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "location": {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/address",
-                            },
-                          },
-                          "city": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Albany",
-                            },
-                          },
-                          "country": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "United States of America",
-                            },
-                          },
-                          "country_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "ref": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "address_ref_x",
-                            },
-                          },
-                          "street_address": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "1641 Settlers Lane",
-                            },
-                          },
-                          "timezone": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "America/Los_Angeles",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "role": {
-                        "type": "enum",
-                        "value": "buyer",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
               "priority": {
                 "type": "enum",
@@ -44786,65 +43686,6 @@ Other details about this invoice",
                       "value": "created_at",
                     },
                   },
-                  "destination_addresses": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/address",
-                            },
-                          },
-                          "city": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Albany",
-                            },
-                          },
-                          "country": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "United States of America",
-                            },
-                          },
-                          "country_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "ref": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "address_ref_x",
-                            },
-                          },
-                          "street_address": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "1641 Settlers Lane",
-                            },
-                          },
-                          "timezone": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "America/Los_Angeles",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "destination_port": {
                     "properties": {
                       "_object": {
@@ -44907,51 +43748,6 @@ Other details about this invoice",
                           },
                         },
                         "type": "object",
-                      },
-                      "details": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "_object": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "/air/port",
-                                },
-                              },
-                              "country_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "US",
-                                },
-                              },
-                              "iata_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "LAX",
-                                },
-                              },
-                              "icao_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "KLAX",
-                                },
-                              },
-                              "port_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3901",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
                       },
                       "name": {
                         "type": "primitive",
@@ -45247,51 +44043,6 @@ Other details about this invoice",
                         },
                         "type": "object",
                       },
-                      "details": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "_object": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "/air/port",
-                                },
-                              },
-                              "country_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "US",
-                                },
-                              },
-                              "iata_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "LAX",
-                                },
-                              },
-                              "icao_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "KLAX",
-                                },
-                              },
-                              "port_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3901",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
                       "name": {
                         "type": "primitive",
                         "value": {
@@ -45301,15 +44052,6 @@ Other details about this invoice",
                       },
                     },
                     "type": "object",
-                  },
-                  "parties": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    ],
                   },
                   "priority": {
                     "type": "enum",
@@ -45769,39 +44511,7 @@ Other details about this invoice",
               },
               "line_items": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "item_key": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "item_key_1",
-                        },
-                      },
-                      "product": {
-                        "properties": {
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "AC Adapter 12",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "units": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 100,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "memo": {
                 "type": "primitive",
@@ -45954,93 +44664,6 @@ Other details about this invoice",
                   "value": "created_at",
                 },
               },
-              "destination_addresses": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "_object": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "/address",
-                        },
-                      },
-                      "city": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Albany",
-                        },
-                      },
-                      "country": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "United States of America",
-                        },
-                      },
-                      "country_code": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                      "ref": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "address_ref_x",
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "MN",
-                        },
-                      },
-                      "street_address": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1641 Settlers Lane",
-                        },
-                      },
-                      "street_address2": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "STE 2918",
-                        },
-                      },
-                      "timezone": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "America/Los_Angeles",
-                        },
-                      },
-                      "unlocode": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US AL2",
-                        },
-                      },
-                      "zip": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "56307",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "destination_port": {
                 "properties": {
                   "_object": {
@@ -46131,51 +44754,6 @@ Other details about this invoice",
                       },
                     },
                     "type": "object",
-                  },
-                  "details": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/air/port",
-                            },
-                          },
-                          "country_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "iata_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "LAX",
-                            },
-                          },
-                          "icao_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "KLAX",
-                            },
-                          },
-                          "port_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3901",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
                   },
                   "name": {
                     "type": "primitive",
@@ -46499,51 +45077,6 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
-                  "details": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/air/port",
-                            },
-                          },
-                          "country_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "iata_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "LAX",
-                            },
-                          },
-                          "icao_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "KLAX",
-                            },
-                          },
-                          "port_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3901",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "name": {
                     "type": "primitive",
                     "value": {
@@ -46553,152 +45086,6 @@ Other details about this invoice",
                   },
                 },
                 "type": "object",
-              },
-              "parties": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "company_entity": {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/company_entity",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 9281,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Zoomit",
-                            },
-                          },
-                          "ref": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "zoomit_ref",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "contacts": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "department": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "marketing",
-                                },
-                              },
-                              "email": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "John.Doe@example.com",
-                                },
-                              },
-                              "fax": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "1 323 555 1234",
-                                },
-                              },
-                              "name": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "John Doe",
-                                },
-                              },
-                              "phone": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "767 878 8888",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "location": {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/address",
-                            },
-                          },
-                          "city": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Albany",
-                            },
-                          },
-                          "country": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "United States of America",
-                            },
-                          },
-                          "country_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "ref": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "address_ref_x",
-                            },
-                          },
-                          "street_address": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "1641 Settlers Lane",
-                            },
-                          },
-                          "timezone": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "America/Los_Angeles",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "role": {
-                        "type": "enum",
-                        "value": "buyer",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
               "priority": {
                 "type": "enum",
@@ -50072,7 +48459,14 @@ Other details about this invoice",
                                     "type": "primitive",
                                     "value": {
                                       "type": "string",
-                                      "value": "classifications",
+                                      "value": "1.2",
+                                    },
+                                  },
+                                  {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "2",
                                     },
                                   },
                                 ],
@@ -52605,44 +50999,6 @@ Other details about this invoice",
                       "value": "2019-02-06",
                     },
                   },
-                  "child_shipments": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/api/refs/object",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 123,
-                            },
-                          },
-                          "link": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "https://api.flexport.com/shipments/123",
-                            },
-                          },
-                          "ref_type": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/shipment",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "commercial_invoices": {
                     "properties": {
                       "_object": {
@@ -52869,7 +51225,14 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "classifications",
+                              "value": "1.2",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "2",
                             },
                           },
                         ],
@@ -54562,44 +52925,6 @@ Other details about this invoice",
                       "value": "2019-02-06",
                     },
                   },
-                  "child_shipments": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "_object": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/api/refs/object",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 123,
-                            },
-                          },
-                          "link": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "https://api.flexport.com/shipments/123",
-                            },
-                          },
-                          "ref_type": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/shipment",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "commercial_invoices": {
                     "properties": {
                       "_object": {
@@ -54826,7 +53151,14 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "classifications",
+                              "value": "1.2",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "2",
                             },
                           },
                         ],

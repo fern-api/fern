@@ -803,44 +803,6 @@ exports[`open api parser supertokens parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
-                "devices": {
-                  "type": "array",
-                  "value": [
-                    {
-                      "properties": {
-                        "name": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string",
-                            "value": "name",
-                          },
-                        },
-                        "period": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "double",
-                            "value": 1.1,
-                          },
-                        },
-                        "skew": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "double",
-                            "value": 1.1,
-                          },
-                        },
-                        "verified": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean",
-                            "value": true,
-                          },
-                        },
-                      },
-                      "type": "object",
-                    },
-                  ],
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
@@ -5352,75 +5314,6 @@ Passing the optional deviceId signifies a resend code flow.
           "request": null,
           "response": {
             "properties": {
-              "devices": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "codes": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "codeId": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=",
-                                },
-                              },
-                              "codeLifetime": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 900000,
-                                },
-                              },
-                              "timeCreated": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 1637262633029,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "johndoe@gmail.com",
-                        },
-                      },
-                      "failedCodeInputAttemptCount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "phoneNumber": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "+14155552671",
-                        },
-                      },
-                      "preAuthSessionId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "status": {
                 "type": "literal",
                 "value": {
@@ -8754,37 +8647,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "value": "OK",
                 },
               },
-              "users": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "johndoe@gmail.com",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                        },
-                      },
-                      "timeJoined": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1623918032231,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
             },
             "type": "object",
           },
@@ -11005,49 +10867,6 @@ Note that there is an invisible character at the end of the path, this was to av
                   "value": "OK",
                 },
               },
-              "users": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "johndoe@gmail.com",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                        },
-                      },
-                      "thirdParty": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "google",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "timeJoined": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1623918032231,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
             },
             "type": "object",
           },
@@ -11321,49 +11140,6 @@ Note that there is an invisible character at the end of the path, this was to av
                   "type": "string",
                   "value": "OK",
                 },
-              },
-              "user": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "johndoe@gmail.com",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                        },
-                      },
-                      "thirdParty": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "google",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "timeJoined": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1623918032231,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -15033,18 +14809,6 @@ e.g.:
           "request": null,
           "response": {
             "properties": {
-              "roles": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "admin",
-                    },
-                  },
-                ],
-              },
               "status": {
                 "type": "literal",
                 "value": {
@@ -15331,18 +15095,6 @@ e.g.:
                     "type": "string",
                     "value": "OK",
                   },
-                },
-                "users": {
-                  "type": "array",
-                  "value": [
-                    {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                  ],
                 },
               },
             },
@@ -15941,18 +15693,6 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "permissions": {
-                  "type": "array",
-                  "value": [
-                    {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "permission",
-                      },
-                    },
-                  ],
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
@@ -16529,18 +16269,6 @@ e.g.:
           "request": null,
           "response": {
             "properties": {
-              "roles": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "admin",
-                    },
-                  },
-                ],
-              },
               "status": {
                 "type": "literal",
                 "value": {
@@ -17102,18 +16830,6 @@ e.g.:
           "request": null,
           "response": {
             "properties": {
-              "roles": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "admin",
-                    },
-                  },
-                ],
-              },
               "status": {
                 "type": "literal",
                 "value": {
@@ -18361,18 +18077,6 @@ e.g.:
           },
           "response": {
             "properties": {
-              "sessionHandlesRevoked": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                    },
-                  },
-                ],
-              },
               "status": {
                 "type": "literal",
                 "value": {
@@ -19778,18 +19482,6 @@ e.g.:
           "request": null,
           "response": {
             "properties": {
-              "sessionHandles": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                    },
-                  },
-                ],
-              },
               "status": {
                 "type": "literal",
                 "value": {
@@ -21357,58 +21049,7 @@ e.g.:
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "keys": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "alg": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "RS256",
-                        },
-                      },
-                      "kid": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "kid",
-                        },
-                      },
-                      "kty": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "RSA",
-                        },
-                      },
-                      "use": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "sig",
-                        },
-                      },
-                      "x5c": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "x5c",
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -23568,44 +23209,6 @@ e.g.:
                   "value": "OK",
                 },
               },
-              "users": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "test@example.com",
-                        },
-                      },
-                      "isSuspended": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": false,
-                        },
-                      },
-                      "timeCreated": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 16382348324,
-                        },
-                      },
-                      "userId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "uf2323-f223r233-f23-f23-f2f32",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
             },
             "type": "object",
           },
@@ -24886,46 +24489,7 @@ e.g.:
           ],
           "request": null,
           "response": {
-            "properties": {
-              "sessions": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "expiry": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 16382348324,
-                        },
-                      },
-                      "sessionId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fni29f-f23f23-f2fq32qt-h35evf",
-                        },
-                      },
-                      "timeCreated": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 16382348324,
-                        },
-                      },
-                      "userId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -25267,20 +24831,7 @@ e.g.:
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "versions": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "versions",
-                    },
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -26919,46 +26470,6 @@ e.g.:
                   "value": "OK",
                 },
               },
-              "users": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "recipeId": {
-                        "type": "enum",
-                        "value": "emailpassword",
-                      },
-                      "user": {
-                        "properties": {
-                          "email": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "johndoe@gmail.com",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                            },
-                          },
-                          "timeJoined": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1623918032231,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
             },
             "type": "object",
           },
@@ -27732,18 +27243,6 @@ e.g.:
                   "value": "OK",
                 },
               },
-              "tags": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "tags",
-                    },
-                  },
-                ],
-              },
             },
             "type": "object",
           },
@@ -27971,7 +27470,14 @@ e.g.:
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "features",
+                      "value": "feature_1",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "feature_2",
                     },
                   },
                 ],

@@ -21,7 +21,7 @@ import { convertLiteral } from "./convertLiteral";
 import { convertNumber } from "./convertNumber";
 import { convertObject } from "./convertObject";
 import { convertUndiscriminatedOneOf } from "./convertUndiscriminatedOneOf";
-import { getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
+import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
@@ -376,7 +376,8 @@ export function convertSchemaObject(
             description,
             wrapAsNullable,
             context,
-            groupName
+            groupName,
+            example: getExampleAsArray(schema)
         });
     }
 

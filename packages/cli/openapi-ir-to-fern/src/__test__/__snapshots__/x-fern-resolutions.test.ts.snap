@@ -36,11 +36,7 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": [
-                    {
-                      "id": "id",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -111,11 +107,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": [
-                    {
-                      "id": "id",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],

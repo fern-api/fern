@@ -74,30 +74,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "archived_at",
-                        "attempt_number": 1,
-                        "bulk_retry_id": "bulk_retry_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "delivered_at": "2024-01-15T09:30:00Z",
-                        "delivery_latency": 1,
-                        "destination_id": "destination_id",
-                        "error_code": "TIMEOUT",
-                        "event_id": "event_id",
-                        "id": "id",
-                        "requested_url": "requested_url",
-                        "responded_at": "2024-01-15T09:30:00Z",
-                        "response_latency": 1,
-                        "response_status": 1,
-                        "state": "DELIVERING",
-                        "status": "QUEUED",
-                        "successful_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "trigger": "INITIAL",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -310,22 +286,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "alias": "alias",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "data": {
-                          "path": "path",
-                        },
-                        "event_data_id": "event_data_id",
-                        "id": "id",
-                        "label": "label",
-                        "last_used_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -376,36 +336,7 @@ exports[`open api parser hookdeck docs 1`] = `
                 },
                 "request": {},
                 "response": {
-                  "body": [
-                    {
-                      "attempts": 1,
-                      "cli_id": "cli_id",
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "created_at_id": "created_at_id",
-                      "data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
-                      "destination_id": "destination_id",
-                      "event_data_id": "event_data_id",
-                      "id": "id",
-                      "last_attempt_at": "2024-01-15T09:30:00Z",
-                      "last_attempt_at_id": "last_attempt_at_id",
-                      "next_attempt_at": "2024-01-15T09:30:00Z",
-                      "request_id": "request_id",
-                      "response_status": 1,
-                      "source_id": "source_id",
-                      "status": "SCHEDULED",
-                      "successful_at": "2024-01-15T09:30:00Z",
-                      "team_id": "team_id",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                      "webhook_id": "webhook_id",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -680,24 +611,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cancelled_at": "2024-01-15T09:30:00Z",
-                        "completed_at": "2024-01-15T09:30:00Z",
-                        "completed_count": 1,
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "estimated_batch": 1,
-                        "estimated_count": 1,
-                        "failed_count": 1,
-                        "id": "id",
-                        "in_progress": true,
-                        "number": 1.1,
-                        "processed_batch": 1,
-                        "progress": 1.1,
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -1253,24 +1166,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cancelled_at": "2024-01-15T09:30:00Z",
-                        "completed_at": "2024-01-15T09:30:00Z",
-                        "completed_count": 1,
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "estimated_batch": 1,
-                        "estimated_count": 1,
-                        "failed_count": 1,
-                        "id": "id",
-                        "in_progress": true,
-                        "number": 1.1,
-                        "processed_batch": 1,
-                        "progress": 1.1,
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -1553,24 +1448,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cancelled_at": "2024-01-15T09:30:00Z",
-                        "completed_at": "2024-01-15T09:30:00Z",
-                        "completed_count": 1,
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "estimated_batch": 1,
-                        "estimated_count": 1,
-                        "failed_count": 1,
-                        "id": "id",
-                        "in_progress": true,
-                        "number": 1.1,
-                        "processed_batch": 1,
-                        "progress": 1.1,
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -1936,9 +1813,7 @@ exports[`open api parser hookdeck docs 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -2013,9 +1888,7 @@ exports[`open api parser hookdeck docs 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -2127,9 +2000,7 @@ exports[`open api parser hookdeck docs 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -2169,41 +2040,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "destination": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                        "id": "id",
-                        "name": "name",
-                        "paused_at": "2024-01-15T09:30:00Z",
-                        "ruleset": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "is_team_default": true,
-                          "name": "name",
-                          "rules": [],
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                        "source": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "url": "url",
-                        },
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -2287,9 +2123,7 @@ exports[`open api parser hookdeck docs 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -2363,9 +2197,7 @@ exports[`open api parser hookdeck docs 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -2439,9 +2271,7 @@ exports[`open api parser hookdeck docs 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -2518,9 +2348,7 @@ exports[`open api parser hookdeck docs 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -2620,9 +2448,7 @@ exports[`open api parser hookdeck docs 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -2999,21 +2825,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -3349,31 +3160,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "attempts": 1,
-                        "cli_id": "cli_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "created_at_id": "created_at_id",
-                        "data": {
-                          "path": "path",
-                        },
-                        "destination_id": "destination_id",
-                        "event_data_id": "event_data_id",
-                        "id": "id",
-                        "last_attempt_at": "2024-01-15T09:30:00Z",
-                        "last_attempt_at_id": "last_attempt_at_id",
-                        "next_attempt_at": "2024-01-15T09:30:00Z",
-                        "request_id": "request_id",
-                        "response_status": 1,
-                        "source_id": "source_id",
-                        "status": "SCHEDULED",
-                        "successful_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -3661,9 +3447,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "header_key": "header_key",
                     "webhook_secret_key": "webhook_secret_key",
                   },
-                  "features": [
-                    "VERIFICATION",
-                  ],
+                  "features": [],
                   "label": "label",
                   "provider": "twitter",
                 },
@@ -3676,15 +3460,11 @@ exports[`open api parser hookdeck docs 1`] = `
                       "webhook_secret_key": "webhook_secret_key",
                     },
                     "created_at": "2024-01-15T09:30:00Z",
-                    "features": [
-                      "VERIFICATION",
-                    ],
+                    "features": [],
                     "id": "id",
                     "label": "label",
                     "provider": "twitter",
-                    "sources": [
-                      "sources",
-                    ],
+                    "sources": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -3800,15 +3580,11 @@ exports[`open api parser hookdeck docs 1`] = `
                       "webhook_secret_key": "webhook_secret_key",
                     },
                     "created_at": "2024-01-15T09:30:00Z",
-                    "features": [
-                      "VERIFICATION",
-                    ],
+                    "features": [],
                     "id": "id",
                     "label": "label",
                     "provider": "twitter",
-                    "sources": [
-                      "sources",
-                    ],
+                    "sources": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -3838,28 +3614,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "configs": {
-                          "algorithm": "md5",
-                          "encoding": "base64",
-                          "header_key": "header_key",
-                          "webhook_secret_key": "webhook_secret_key",
-                        },
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "features": [
-                          "VERIFICATION",
-                        ],
-                        "id": "id",
-                        "label": "label",
-                        "provider": "twitter",
-                        "sources": [
-                          "sources",
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -3909,15 +3663,11 @@ exports[`open api parser hookdeck docs 1`] = `
                       "webhook_secret_key": "webhook_secret_key",
                     },
                     "created_at": "2024-01-15T09:30:00Z",
-                    "features": [
-                      "VERIFICATION",
-                    ],
+                    "features": [],
                     "id": "id",
                     "label": "label",
                     "provider": "twitter",
-                    "sources": [
-                      "sources",
-                    ],
+                    "sources": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -4232,22 +3982,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "configs": {
-                          "connections": "connections",
-                          "strategy": "first_attempt",
-                        },
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "deleted_at": "2024-01-15T09:30:00Z",
-                        "disabled_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "name": "name",
-                        "team_id": "team_id",
-                        "type": "delivery",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -4727,9 +4461,6 @@ exports[`open api parser hookdeck docs 1`] = `
                   "body": {
                     "enabled": true,
                     "source_id": "source_id",
-                    "topics": [
-                      "issue.opened",
-                    ],
                   },
                 },
               },
@@ -4844,31 +4575,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "attempts": 1,
-                        "cli_id": "cli_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "created_at_id": "created_at_id",
-                        "data": {
-                          "path": "path",
-                        },
-                        "destination_id": "destination_id",
-                        "event_data_id": "event_data_id",
-                        "id": "id",
-                        "last_attempt_at": "2024-01-15T09:30:00Z",
-                        "last_attempt_at_id": "last_attempt_at_id",
-                        "next_attempt_at": "2024-01-15T09:30:00Z",
-                        "request_id": "request_id",
-                        "response_status": 1,
-                        "source_id": "source_id",
-                        "status": "SCHEDULED",
-                        "successful_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -4938,18 +4644,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cause": "ARCHIVED",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "meta": "body",
-                        "request_id": "request_id",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -5024,29 +4718,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cli_events_count": 1,
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "data": {
-                          "path": "path",
-                        },
-                        "duplicate_hash": "duplicate_hash",
-                        "duplicate_hits": 1,
-                        "events_count": 1,
-                        "id": "id",
-                        "ignored_count": 1,
-                        "ingest_priority": "NORMAL",
-                        "ingested_at": "2024-01-15T09:30:00Z",
-                        "ingested_at_id": "ingested_at_id",
-                        "original_event_data_id": "original_event_data_id",
-                        "rejection_cause": "SOURCE_ARCHIVED",
-                        "source_id": "source_id",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "verified": true,
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -5105,37 +4776,10 @@ exports[`open api parser hookdeck docs 1`] = `
                   "id": "id",
                 },
                 "request": {
-                  "webhook_ids": [
-                    "webhook_ids",
-                  ],
+                  "webhook_ids": [],
                 },
                 "response": {
                   "body": {
-                    "events": [
-                      {
-                        "attempts": 1,
-                        "cli_id": "cli_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "created_at_id": "created_at_id",
-                        "data": {
-                          "path": "path",
-                        },
-                        "destination_id": "destination_id",
-                        "event_data_id": "event_data_id",
-                        "id": "id",
-                        "last_attempt_at": "2024-01-15T09:30:00Z",
-                        "last_attempt_at_id": "last_attempt_at_id",
-                        "next_attempt_at": "2024-01-15T09:30:00Z",
-                        "request_id": "request_id",
-                        "response_status": 1,
-                        "source_id": "source_id",
-                        "status": "SCHEDULED",
-                        "successful_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "request": {
                       "cli_events_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
@@ -5383,18 +5027,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -5620,9 +5252,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -5665,9 +5295,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -5719,9 +5347,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -5758,26 +5384,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
-                        "name": "name",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -5829,9 +5435,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -5876,9 +5480,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -5938,9 +5540,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -6117,12 +5717,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "issue_id": "issue_id",
                     "log_level": "debug",
-                    "logs": [
-                      {
-                        "message": "message",
-                        "type": "error",
-                      },
-                    ],
+                    "logs": [],
                     "original_event_data": {
                       "body": "body",
                       "headers": "headers",
@@ -6176,32 +5771,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "issue_id": "issue_id",
-                        "log_level": "debug",
-                        "logs": [
-                          {
-                            "message": "message",
-                            "type": "error",
-                          },
-                        ],
-                        "original_event_data": {
-                          "path": "path",
-                        },
-                        "original_event_data_id": "original_event_data_id",
-                        "team_id": "team_id",
-                        "transformation_id": "transformation_id",
-                        "transformed_event_data": {
-                          "path": "path",
-                        },
-                        "transformed_event_data_id": "transformed_event_data_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -6250,18 +5819,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "code": "code",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "encrypted_env": "encrypted_env",
-                        "id": "id",
-                        "iv": "iv",
-                        "name": "name",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -6305,12 +5862,6 @@ exports[`open api parser hookdeck docs 1`] = `
                 "request": {},
                 "response": {
                   "body": {
-                    "console": [
-                      {
-                        "message": "message",
-                        "type": "error",
-                      },
-                    ],
                     "execution_id": "execution_id",
                     "log_level": "debug",
                     "request": {
@@ -9337,30 +8888,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "archived_at",
-                        "attempt_number": 1,
-                        "bulk_retry_id": "bulk_retry_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "delivered_at": "2024-01-15T09:30:00Z",
-                        "delivery_latency": 1,
-                        "destination_id": "destination_id",
-                        "error_code": "TIMEOUT",
-                        "event_id": "event_id",
-                        "id": "id",
-                        "requested_url": "requested_url",
-                        "responded_at": "2024-01-15T09:30:00Z",
-                        "response_latency": 1,
-                        "response_status": 1,
-                        "state": "DELIVERING",
-                        "status": "QUEUED",
-                        "successful_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "trigger": "INITIAL",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -9573,22 +9100,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "alias": "alias",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "data": {
-                          "path": "path",
-                        },
-                        "event_data_id": "event_data_id",
-                        "id": "id",
-                        "label": "label",
-                        "last_used_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -9639,36 +9150,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 },
                 "request": {},
                 "response": {
-                  "body": [
-                    {
-                      "attempts": 1,
-                      "cli_id": "cli_id",
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "created_at_id": "created_at_id",
-                      "data": {
-                        "body": "body",
-                        "headers": "headers",
-                        "is_large_payload": true,
-                        "parsed_query": "parsed_query",
-                        "path": "path",
-                        "query": "query",
-                      },
-                      "destination_id": "destination_id",
-                      "event_data_id": "event_data_id",
-                      "id": "id",
-                      "last_attempt_at": "2024-01-15T09:30:00Z",
-                      "last_attempt_at_id": "last_attempt_at_id",
-                      "next_attempt_at": "2024-01-15T09:30:00Z",
-                      "request_id": "request_id",
-                      "response_status": 1,
-                      "source_id": "source_id",
-                      "status": "SCHEDULED",
-                      "successful_at": "2024-01-15T09:30:00Z",
-                      "team_id": "team_id",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                      "webhook_id": "webhook_id",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -9943,24 +9425,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cancelled_at": "2024-01-15T09:30:00Z",
-                        "completed_at": "2024-01-15T09:30:00Z",
-                        "completed_count": 1,
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "estimated_batch": 1,
-                        "estimated_count": 1,
-                        "failed_count": 1,
-                        "id": "id",
-                        "in_progress": true,
-                        "number": 1.1,
-                        "processed_batch": 1,
-                        "progress": 1.1,
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -10516,24 +9980,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cancelled_at": "2024-01-15T09:30:00Z",
-                        "completed_at": "2024-01-15T09:30:00Z",
-                        "completed_count": 1,
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "estimated_batch": 1,
-                        "estimated_count": 1,
-                        "failed_count": 1,
-                        "id": "id",
-                        "in_progress": true,
-                        "number": 1.1,
-                        "processed_batch": 1,
-                        "progress": 1.1,
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -10816,24 +10262,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cancelled_at": "2024-01-15T09:30:00Z",
-                        "completed_at": "2024-01-15T09:30:00Z",
-                        "completed_count": 1,
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "estimated_batch": 1,
-                        "estimated_count": 1,
-                        "failed_count": 1,
-                        "id": "id",
-                        "in_progress": true,
-                        "number": 1.1,
-                        "processed_batch": 1,
-                        "progress": 1.1,
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -11199,9 +10627,7 @@ exports[`open api parser hookdeck simple 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -11276,9 +10702,7 @@ exports[`open api parser hookdeck simple 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -11390,9 +10814,7 @@ exports[`open api parser hookdeck simple 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -11432,41 +10854,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "destination": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                        "id": "id",
-                        "name": "name",
-                        "paused_at": "2024-01-15T09:30:00Z",
-                        "ruleset": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "is_team_default": true,
-                          "name": "name",
-                          "rules": [],
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                        "source": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "id": "id",
-                          "name": "name",
-                          "team_id": "team_id",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                          "url": "url",
-                        },
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -11550,9 +10937,7 @@ exports[`open api parser hookdeck simple 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -11626,9 +11011,7 @@ exports[`open api parser hookdeck simple 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -11702,9 +11085,7 @@ exports[`open api parser hookdeck simple 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -11781,9 +11162,7 @@ exports[`open api parser hookdeck simple 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -11883,9 +11262,7 @@ exports[`open api parser hookdeck simple 1`] = `
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "integration": {
-                        "features": [
-                          "VERIFICATION",
-                        ],
+                        "features": [],
                         "id": "id",
                         "label": "label",
                         "provider": "twitter",
@@ -12262,21 +11639,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "cli_path": "cli_path",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "name": "name",
-                        "path_forwarding_disabled": true,
-                        "rate_limit": 1,
-                        "rate_limit_period": "second",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -12612,31 +11974,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "attempts": 1,
-                        "cli_id": "cli_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "created_at_id": "created_at_id",
-                        "data": {
-                          "path": "path",
-                        },
-                        "destination_id": "destination_id",
-                        "event_data_id": "event_data_id",
-                        "id": "id",
-                        "last_attempt_at": "2024-01-15T09:30:00Z",
-                        "last_attempt_at_id": "last_attempt_at_id",
-                        "next_attempt_at": "2024-01-15T09:30:00Z",
-                        "request_id": "request_id",
-                        "response_status": 1,
-                        "source_id": "source_id",
-                        "status": "SCHEDULED",
-                        "successful_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -12924,9 +12261,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "header_key": "header_key",
                     "webhook_secret_key": "webhook_secret_key",
                   },
-                  "features": [
-                    "VERIFICATION",
-                  ],
+                  "features": [],
                   "label": "label",
                   "provider": "twitter",
                 },
@@ -12939,15 +12274,11 @@ exports[`open api parser hookdeck simple 1`] = `
                       "webhook_secret_key": "webhook_secret_key",
                     },
                     "created_at": "2024-01-15T09:30:00Z",
-                    "features": [
-                      "VERIFICATION",
-                    ],
+                    "features": [],
                     "id": "id",
                     "label": "label",
                     "provider": "twitter",
-                    "sources": [
-                      "sources",
-                    ],
+                    "sources": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -13063,15 +12394,11 @@ exports[`open api parser hookdeck simple 1`] = `
                       "webhook_secret_key": "webhook_secret_key",
                     },
                     "created_at": "2024-01-15T09:30:00Z",
-                    "features": [
-                      "VERIFICATION",
-                    ],
+                    "features": [],
                     "id": "id",
                     "label": "label",
                     "provider": "twitter",
-                    "sources": [
-                      "sources",
-                    ],
+                    "sources": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -13101,28 +12428,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "configs": {
-                          "algorithm": "md5",
-                          "encoding": "base64",
-                          "header_key": "header_key",
-                          "webhook_secret_key": "webhook_secret_key",
-                        },
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "features": [
-                          "VERIFICATION",
-                        ],
-                        "id": "id",
-                        "label": "label",
-                        "provider": "twitter",
-                        "sources": [
-                          "sources",
-                        ],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -13172,15 +12477,11 @@ exports[`open api parser hookdeck simple 1`] = `
                       "webhook_secret_key": "webhook_secret_key",
                     },
                     "created_at": "2024-01-15T09:30:00Z",
-                    "features": [
-                      "VERIFICATION",
-                    ],
+                    "features": [],
                     "id": "id",
                     "label": "label",
                     "provider": "twitter",
-                    "sources": [
-                      "sources",
-                    ],
+                    "sources": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -13495,22 +12796,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "configs": {
-                          "connections": "connections",
-                          "strategy": "first_attempt",
-                        },
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "deleted_at": "2024-01-15T09:30:00Z",
-                        "disabled_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "name": "name",
-                        "team_id": "team_id",
-                        "type": "delivery",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -13990,9 +13275,6 @@ exports[`open api parser hookdeck simple 1`] = `
                   "body": {
                     "enabled": true,
                     "source_id": "source_id",
-                    "topics": [
-                      "issue.opened",
-                    ],
                   },
                 },
               },
@@ -14107,31 +13389,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "attempts": 1,
-                        "cli_id": "cli_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "created_at_id": "created_at_id",
-                        "data": {
-                          "path": "path",
-                        },
-                        "destination_id": "destination_id",
-                        "event_data_id": "event_data_id",
-                        "id": "id",
-                        "last_attempt_at": "2024-01-15T09:30:00Z",
-                        "last_attempt_at_id": "last_attempt_at_id",
-                        "next_attempt_at": "2024-01-15T09:30:00Z",
-                        "request_id": "request_id",
-                        "response_status": 1,
-                        "source_id": "source_id",
-                        "status": "SCHEDULED",
-                        "successful_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -14201,18 +13458,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cause": "ARCHIVED",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "meta": "body",
-                        "request_id": "request_id",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -14287,29 +13532,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "cli_events_count": 1,
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "data": {
-                          "path": "path",
-                        },
-                        "duplicate_hash": "duplicate_hash",
-                        "duplicate_hits": 1,
-                        "events_count": 1,
-                        "id": "id",
-                        "ignored_count": 1,
-                        "ingest_priority": "NORMAL",
-                        "ingested_at": "2024-01-15T09:30:00Z",
-                        "ingested_at_id": "ingested_at_id",
-                        "original_event_data_id": "original_event_data_id",
-                        "rejection_cause": "SOURCE_ARCHIVED",
-                        "source_id": "source_id",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "verified": true,
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -14368,37 +13590,10 @@ exports[`open api parser hookdeck simple 1`] = `
                   "id": "id",
                 },
                 "request": {
-                  "webhook_ids": [
-                    "webhook_ids",
-                  ],
+                  "webhook_ids": [],
                 },
                 "response": {
                   "body": {
-                    "events": [
-                      {
-                        "attempts": 1,
-                        "cli_id": "cli_id",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "created_at_id": "created_at_id",
-                        "data": {
-                          "path": "path",
-                        },
-                        "destination_id": "destination_id",
-                        "event_data_id": "event_data_id",
-                        "id": "id",
-                        "last_attempt_at": "2024-01-15T09:30:00Z",
-                        "last_attempt_at_id": "last_attempt_at_id",
-                        "next_attempt_at": "2024-01-15T09:30:00Z",
-                        "request_id": "request_id",
-                        "response_status": 1,
-                        "source_id": "source_id",
-                        "status": "SCHEDULED",
-                        "successful_at": "2024-01-15T09:30:00Z",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "request": {
                       "cli_events_count": 1,
                       "created_at": "2024-01-15T09:30:00Z",
@@ -14646,18 +13841,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "is_team_default": true,
-                        "name": "name",
-                        "rules": [],
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -14883,9 +14066,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -14928,9 +14109,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -14982,9 +14161,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -15021,26 +14198,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "archived_at": "2024-01-15T09:30:00Z",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "integration": {
-                          "features": [
-                            "VERIFICATION",
-                          ],
-                          "id": "id",
-                          "label": "label",
-                          "provider": "twitter",
-                        },
-                        "integration_id": "integration_id",
-                        "name": "name",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "url": "url",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -15092,9 +14249,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -15139,9 +14294,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -15201,9 +14354,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "integration": {
-                      "features": [
-                        "VERIFICATION",
-                      ],
+                      "features": [],
                       "id": "id",
                       "label": "label",
                       "provider": "twitter",
@@ -15380,12 +14531,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "issue_id": "issue_id",
                     "log_level": "debug",
-                    "logs": [
-                      {
-                        "message": "message",
-                        "type": "error",
-                      },
-                    ],
+                    "logs": [],
                     "original_event_data": {
                       "body": "body",
                       "headers": "headers",
@@ -15439,32 +14585,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "issue_id": "issue_id",
-                        "log_level": "debug",
-                        "logs": [
-                          {
-                            "message": "message",
-                            "type": "error",
-                          },
-                        ],
-                        "original_event_data": {
-                          "path": "path",
-                        },
-                        "original_event_data_id": "original_event_data_id",
-                        "team_id": "team_id",
-                        "transformation_id": "transformation_id",
-                        "transformed_event_data": {
-                          "path": "path",
-                        },
-                        "transformed_event_data_id": "transformed_event_data_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                        "webhook_id": "webhook_id",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -15513,18 +14633,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "response": {
                   "body": {
                     "count": 1,
-                    "models": [
-                      {
-                        "code": "code",
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "encrypted_env": "encrypted_env",
-                        "id": "id",
-                        "iv": "iv",
-                        "name": "name",
-                        "team_id": "team_id",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
                     "pagination": {
                       "dir": "asc",
                       "limit": 1,
@@ -15568,12 +14676,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "request": {},
                 "response": {
                   "body": {
-                    "console": [
-                      {
-                        "message": "message",
-                        "type": "error",
-                      },
-                    ],
                     "execution_id": "execution_id",
                     "log_level": "debug",
                     "request": {

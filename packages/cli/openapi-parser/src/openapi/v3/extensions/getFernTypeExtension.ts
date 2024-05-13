@@ -162,7 +162,8 @@ export function getSchemaFromFernType({
                       generatedName,
                       value: itemType,
                       description,
-                      groupName
+                      groupName,
+                      example: undefined
                   })
                 : undefined,
         optional: (itemType) =>
@@ -182,7 +183,8 @@ export function getSchemaFromFernType({
                       generatedName,
                       value: itemType,
                       description,
-                      groupName
+                      groupName,
+                      example: undefined
                   })
                 : undefined,
         literal: (literal) =>

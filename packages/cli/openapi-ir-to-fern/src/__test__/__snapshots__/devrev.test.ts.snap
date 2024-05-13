@@ -73,12 +73,7 @@ exports[`open api parser devrev docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "form_data": [
-                      {
-                        "key": "key",
-                        "value": "value",
-                      },
-                    ],
+                    "form_data": [],
                     "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
                     "url": "url",
                   },
@@ -468,9 +463,6 @@ given Dev organization.
                       "issued_at": "2024-01-15T09:30:00Z",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [
-                        "scopes",
-                      ],
                       "status": "active",
                       "subject": "subject",
                       "token_hint": "token_hint",
@@ -514,24 +506,7 @@ token type issued for a given subject.
               {
                 "response": {
                   "body": {
-                    "tokens": [
-                      {
-                        "client_id": "client_id",
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "expires_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "issued_at": "2024-01-15T09:30:00Z",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                        "scopes": [
-                          "scopes",
-                        ],
-                        "status": "active",
-                        "subject": "subject",
-                        "token_hint": "token_hint",
-                      },
-                    ],
+                    "tokens": [],
                   },
                 },
               },
@@ -630,9 +605,6 @@ organization.
                       "issued_at": "2024-01-15T09:30:00Z",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [
-                        "scopes",
-                      ],
                       "status": "active",
                       "subject": "subject",
                       "token_hint": "token_hint",
@@ -694,27 +666,7 @@ organization.
               {
                 "response": {
                   "body": {
-                    "dev_users": [
-                      {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "display_picture": {
-                          "id": "id",
-                        },
-                        "email": "email",
-                        "external_identities": [
-                          {},
-                        ],
-                        "full_name": "full_name",
-                        "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "phone_numbers": [
-                          "phone_numbers",
-                        ],
-                        "state": "active",
-                      },
-                    ],
+                    "dev_users": [],
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
                   },
@@ -790,15 +742,9 @@ used.
                         "id": "id",
                       },
                       "email": "email",
-                      "external_identities": [
-                        {},
-                      ],
                       "full_name": "full_name",
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
-                      "phone_numbers": [
-                        "phone_numbers",
-                      ],
                       "state": "active",
                     },
                   },
@@ -1219,18 +1165,7 @@ to access.
                   "body": {
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
-                    "rev_orgs": [
-                      {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "domain": "domain",
-                        "external_ref": "external_ref",
-                        "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "rev_orgs": [],
                   },
                 },
               },
@@ -1414,9 +1349,6 @@ and a logical concept denoted by the tag's name.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1525,9 +1457,6 @@ permitted.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1572,19 +1501,7 @@ permitted.
                   "body": {
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
-                    "tags": [
-                      {
-                        "allowed_values": [
-                          "allowed_values",
-                        ],
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
-                        "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "name": "name",
-                      },
-                    ],
+                    "tags": [],
                   },
                 },
               },
@@ -1637,9 +1554,6 @@ used.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1859,9 +1773,6 @@ used.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -1972,9 +1883,6 @@ response.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -2016,20 +1924,7 @@ response.
               {
                 "response": {
                   "body": {
-                    "webhooks": [
-                      {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "event_types": [
-                          "part_created",
-                        ],
-                        "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "secret": "secret",
-                        "status": "active",
-                        "url": "url",
-                      },
-                    ],
+                    "webhooks": [],
                   },
                 },
               },
@@ -2063,9 +1958,6 @@ response.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -6178,12 +6070,7 @@ exports[`open api parser devrev simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "form_data": [
-                      {
-                        "key": "key",
-                        "value": "value",
-                      },
-                    ],
+                    "form_data": [],
                     "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
                     "url": "url",
                   },
@@ -6573,9 +6460,6 @@ given Dev organization.
                       "issued_at": "2024-01-15T09:30:00Z",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [
-                        "scopes",
-                      ],
                       "status": "active",
                       "subject": "subject",
                       "token_hint": "token_hint",
@@ -6619,24 +6503,7 @@ token type issued for a given subject.
               {
                 "response": {
                   "body": {
-                    "tokens": [
-                      {
-                        "client_id": "client_id",
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "expires_at": "2024-01-15T09:30:00Z",
-                        "id": "id",
-                        "issued_at": "2024-01-15T09:30:00Z",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                        "scopes": [
-                          "scopes",
-                        ],
-                        "status": "active",
-                        "subject": "subject",
-                        "token_hint": "token_hint",
-                      },
-                    ],
+                    "tokens": [],
                   },
                 },
               },
@@ -6735,9 +6602,6 @@ organization.
                       "issued_at": "2024-01-15T09:30:00Z",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [
-                        "scopes",
-                      ],
                       "status": "active",
                       "subject": "subject",
                       "token_hint": "token_hint",
@@ -6799,27 +6663,7 @@ organization.
               {
                 "response": {
                   "body": {
-                    "dev_users": [
-                      {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "display_picture": {
-                          "id": "id",
-                        },
-                        "email": "email",
-                        "external_identities": [
-                          {},
-                        ],
-                        "full_name": "full_name",
-                        "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "phone_numbers": [
-                          "phone_numbers",
-                        ],
-                        "state": "active",
-                      },
-                    ],
+                    "dev_users": [],
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
                   },
@@ -6895,15 +6739,9 @@ used.
                         "id": "id",
                       },
                       "email": "email",
-                      "external_identities": [
-                        {},
-                      ],
                       "full_name": "full_name",
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
-                      "phone_numbers": [
-                        "phone_numbers",
-                      ],
                       "state": "active",
                     },
                   },
@@ -7324,18 +7162,7 @@ to access.
                   "body": {
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
-                    "rev_orgs": [
-                      {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "domain": "domain",
-                        "external_ref": "external_ref",
-                        "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "rev_orgs": [],
                   },
                 },
               },
@@ -7519,9 +7346,6 @@ and a logical concept denoted by the tag's name.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -7630,9 +7454,6 @@ permitted.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -7677,19 +7498,7 @@ permitted.
                   "body": {
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
-                    "tags": [
-                      {
-                        "allowed_values": [
-                          "allowed_values",
-                        ],
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
-                        "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "name": "name",
-                      },
-                    ],
+                    "tags": [],
                   },
                 },
               },
@@ -7742,9 +7551,6 @@ used.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -7964,9 +7770,6 @@ used.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -8077,9 +7880,6 @@ response.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -8121,20 +7921,7 @@ response.
               {
                 "response": {
                   "body": {
-                    "webhooks": [
-                      {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "event_types": [
-                          "part_created",
-                        ],
-                        "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "secret": "secret",
-                        "status": "active",
-                        "url": "url",
-                      },
-                    ],
+                    "webhooks": [],
                   },
                 },
               },
@@ -8168,9 +7955,6 @@ response.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",

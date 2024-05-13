@@ -245,18 +245,6 @@ exports[`polytomic polytomic parse open api 1`] = `
                       "value": "248df4b7-aa70-47b8-a036-33ac447e668d",
                     },
                   },
-                  "policies": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "248df4b7-aa70-47b8-a036-33ac447e668d",
-                        },
-                      },
-                    ],
-                  },
                   "status": {
                     "type": "primitive",
                     "value": {
@@ -286,18 +274,6 @@ exports[`polytomic polytomic parse open api 1`] = `
                           "type": "string",
                           "value": "PostgreSQL",
                         },
-                      },
-                      "operations": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "operations",
-                            },
-                          },
-                        ],
                       },
                     },
                     "type": "object",
