@@ -6,5 +6,5 @@ namespace SeedTrace.V2.V3;
 public class TestCaseImplementationDescription
 {
     [JsonPropertyName("boards")]
-    public List<List<TestCaseImplementationDescriptionBoard>> Boards { get; init; }
+    public List<TestCaseImplementationDescriptionBoard> Boards { get; init; }
 }

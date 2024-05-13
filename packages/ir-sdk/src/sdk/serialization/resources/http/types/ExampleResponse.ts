@@ -9,14 +9,16 @@ import * as core from "../../../../core";
 export const ExampleResponse: core.serialization.Schema<serializers.ExampleResponse.Raw, FernIr.ExampleResponse> =
     core.serialization
         .union("type", {
-            ok: core.serialization.lazyObject(async () => (await import("../../..")).ExampleEndpointSuccessResponse),
+            ok: core.serialization.object({
+                value: core.serialization.lazy(async () => (await import("../../..")).ExampleEndpointSuccessResponse),
+            }),
             error: core.serialization.lazyObject(async () => (await import("../../..")).ExampleEndpointErrorResponse),
         })
         .transform<FernIr.ExampleResponse>({
             transform: (value) => {
                 switch (value.type) {
                     case "ok":
-                        return FernIr.ExampleResponse.ok(value);
+                        return FernIr.ExampleResponse.ok(value.value);
                     case "error":
                         return FernIr.ExampleResponse.error(value);
                     default:
@@ -29,8 +31,9 @@ export const ExampleResponse: core.serialization.Schema<serializers.ExampleRespo
 export declare namespace ExampleResponse {
     type Raw = ExampleResponse.Ok | ExampleResponse.Error;
 
-    interface Ok extends serializers.ExampleEndpointSuccessResponse.Raw {
+    interface Ok {
         type: "ok";
+        value: serializers.ExampleEndpointSuccessResponse.Raw;
     }
 
     interface Error extends serializers.ExampleEndpointErrorResponse.Raw {

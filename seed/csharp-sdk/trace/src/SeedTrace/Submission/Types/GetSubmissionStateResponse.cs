@@ -6,7 +6,7 @@ namespace SeedTrace;
 public class GetSubmissionStateResponse
 {
     [JsonPropertyName("timeSubmitted")]
-    public List<DateTime?> TimeSubmitted { get; init; }
+    public DateTime? TimeSubmitted { get; init; }
 
     [JsonPropertyName("submission")]
     public string Submission { get; init; }

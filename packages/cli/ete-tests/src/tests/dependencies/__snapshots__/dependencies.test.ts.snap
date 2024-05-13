@@ -438,7 +438,10 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                             "codeSamples": null,
                             "response": {
                                 "type": "ok",
-                                "body": null
+                                "value": {
+                                    "type": "body",
+                                    "value": null
+                                }
                             },
                             "docs": null
                         }
@@ -793,4 +796,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2614316`;
+exports[`dependencies file dependencies 1`] = `2657122`;

@@ -1,4 +1,5 @@
 import { ClassReference } from "..";
+import { csharp } from "../..";
 import { AstNode } from "./AstNode";
 
 type Namespace = string;
@@ -48,6 +49,50 @@ export class Writer {
 
     public writeNode(node: AstNode): void {
         node.write(this);
+    }
+
+    /**
+     * Writes a node but then suffixes with a `;` and new line
+     * @param node
+     */
+    public writeNodeStatement(node: AstNode): void {
+        node.write(this);
+        this.write(";");
+        this.writeNewLineIfLastLineNot();
+    }
+
+    /**
+     * Writes text but then suffixes with a `;`
+     * @param node
+     */
+    public writeTextStatement(text: string): void {
+        const codeBlock = csharp.codeblock(text);
+        codeBlock.write(this);
+        this.write(";");
+        this.writeNewLineIfLastLineNot();
+    }
+
+    /**
+     * Writes text but then suffixes with a `;`
+     * @param node
+     */
+    public controlFlow(prefix: string, statement: string): void {
+        const codeBlock = csharp.codeblock(prefix);
+        codeBlock.write(this);
+        this.write(" (");
+        this.write(statement);
+        this.write(") {");
+        this.writeNewLineIfLastLineNot();
+        this.indent();
+    }
+
+    /**
+     * Writes text but then suffixes with a `;`
+     * @param node
+     */
+    public endControlFlow(): void {
+        this.dedent();
+        this.writeLine("}");
     }
 
     /* Only writes a newline if last line in the buffer is not a newline */

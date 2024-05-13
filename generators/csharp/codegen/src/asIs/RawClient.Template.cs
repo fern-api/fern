@@ -26,9 +26,9 @@ public class RawClient
     _headers = headers;
   }
 
-  public async Task<ApiResponse> MakeRequestAsync(HttpMethod method, string path, ApiRequest request)
+  public async Task<ApiResponse> MakeRequestAsync(ApiRequest request)
   {
-    var httpRequest = new HttpRequestMessage(method, this.BuildUrl(path, request.Query));
+    var httpRequest = new HttpRequestMessage(request.Method, this.BuildUrl(request.Path, request.Query));
     if (request.ContentType != null)
     {
       request.Headers.Add("Content-Type", request.ContentType);
@@ -54,7 +54,7 @@ public class RawClient
     return new ApiResponse
     {
       StatusCode = (int)response.StatusCode,
-      Body = response
+      Raw = response
     };
   }
 
@@ -63,6 +63,10 @@ public class RawClient
   /// </summary>
   public class ApiRequest
   {
+    public HttpMethod Method; 
+    
+    public string Path; 
+
     public string? ContentType = null;
 
     public object? Body { get; init; } = null;
@@ -81,7 +85,7 @@ public class RawClient
   {
     public int StatusCode;
 
-    public HttpResponseMessage Body;
+    public HttpResponseMessage Raw;
   }
 
   private Dictionary<string, string> GetHeaders(ApiRequest request)

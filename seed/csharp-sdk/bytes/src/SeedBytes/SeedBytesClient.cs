@@ -6,10 +6,10 @@ public partial class SeedBytesClient
 {
     private RawClient _client;
 
-    public SeedBytesClient(ClientOptions clientOptions)
+    public SeedBytesClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

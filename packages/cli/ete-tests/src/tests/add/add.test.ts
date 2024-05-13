@@ -17,4 +17,18 @@ describe("fern add", () => {
 
         expect(await getDirectoryContents(pathOfDirectory)).not.toBeNull();
     }, 60_000);
+
+    it("fern add <generator> --group sdk", async () => {
+        const pathOfDirectory = await init();
+
+        const add = async (generator: string, groupName: string) => {
+            await runFernCli(["add", generator, "--group", groupName], {
+                cwd: pathOfDirectory
+            });
+        };
+
+        await add("fern-typescript", "typescript");
+
+        expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+    }, 60_000);
 });

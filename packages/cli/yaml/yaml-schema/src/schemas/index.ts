@@ -20,7 +20,12 @@ export { ErrorDiscriminationSchema } from "./ErrorDiscriminationSchema";
 export { ErrorReferenceSchema } from "./ErrorReferenceSchema";
 export { ExampleCodeSampleSchema, SupportedSdkLanguageSchema } from "./ExampleCodeSampleSchema";
 export { ExampleEndpointCallArraySchema, ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
-export { ExampleResponseSchema } from "./ExampleResponseSchema";
+export {
+    ExampleBodyResponseSchema,
+    ExampleResponseSchema,
+    ExampleSseResponseSchema,
+    ExampleStreamResponseSchema
+} from "./ExampleResponseSchema";
 export { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 export { ExampleTypeSchema } from "./ExampleTypeSchema";
 export { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";

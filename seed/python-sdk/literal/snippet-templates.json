@@ -301,30 +301,16 @@
                     {
                         "type": "template",
                         "value": {
-                            "imports": [
-                                "from seed import SendRequest"
-                            ],
+                            "imports": [],
                             "isOptional": true,
-                            "templateString": "request=SendRequest(\n\t\t$FERN_INPUT\n\t)",
+                            "templateString": "query=$FERN_INPUT",
                             "templateInputs": [
                                 {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "query=$FERN_INPUT",
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "query",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    }
+                                    "location": "BODY",
+                                    "path": "query",
+                                    "type": "payload"
                                 }
                             ],
-                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
                     }
@@ -345,30 +331,16 @@
                         {
                             "type": "template",
                             "value": {
-                                "imports": [
-                                    "from seed import SendRequest"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "request=SendRequest(\n\t\t$FERN_INPUT\n\t)",
+                                "templateString": "query=$FERN_INPUT",
                                 "templateInputs": [
                                     {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "query=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "BODY",
-                                                    "path": "query",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
+                                        "location": "BODY",
+                                        "path": "query",
+                                        "type": "payload"
                                     }
                                 ],
-                                "inputDelimiter": ",\n\t\t",
                                 "type": "generic"
                             }
                         }

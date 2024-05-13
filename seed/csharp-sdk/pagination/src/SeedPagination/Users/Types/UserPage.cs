@@ -9,5 +9,5 @@ public class UserPage
     public UserListContainer Data { get; init; }
 
     [JsonPropertyName("next")]
-    public List<Guid?> Next { get; init; }
+    public Guid? Next { get; init; }
 }

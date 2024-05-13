@@ -7,7 +7,7 @@ namespace SeedTrace.V2;
 public class VoidFunctionSignatureThatTakesActualResult
 {
     [JsonPropertyName("parameters")]
-    public List<List<Parameter>> Parameters { get; init; }
+    public List<Parameter> Parameters { get; init; }
 
     [JsonPropertyName("actualResultType")]
     public VariableType ActualResultType { get; init; }

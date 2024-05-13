@@ -1,4 +1,4 @@
-import { assertNever, isNonNullish, isPlainObject, WithoutQuestionMarks } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, isPlainObject, MediaType, WithoutQuestionMarks } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { ExampleCodeSample, FernIr as Ir } from "@fern-api/ir-sdk";
 import { noop, startCase } from "lodash-es";
@@ -308,7 +308,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
         inlinedRequestBody: (inlinedRequestBody) => {
             return {
                 type: "json",
-                contentType: inlinedRequestBody.contentType ?? "application/json",
+                contentType: inlinedRequestBody.contentType ?? MediaType.APPLICATION_JSON,
                 shape: {
                     type: "object",
                     extends: inlinedRequestBody.extends.map((extension) => extension.typeId),
@@ -325,7 +325,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
         reference: (reference) => {
             return {
                 type: "json",
-                contentType: reference.contentType ?? "application/json",
+                contentType: reference.contentType ?? MediaType.APPLICATION_JSON,
                 shape: {
                     type: "reference",
                     value: convertTypeReference(reference.requestBodyType)
@@ -553,16 +553,20 @@ function convertHttpEndpointExample(
                     for (const property of fileUploadSchema.properties) {
                         property._visit({
                             file: (file) => {
-                                // TODO: support provided file examples, file arrays
+                                const maybeFile = fullExample[file.key.wireValue];
+                                // TODO: support filename with data in examples
                                 if (file.type === "file") {
                                     value[file.key.wireValue] = {
                                         type: "filename",
-                                        value: "<file1>"
+                                        value: typeof maybeFile === "string" ? maybeFile : "<file1>"
                                     };
                                 } else if (file.type === "fileArray") {
+                                    const filenames = (Array.isArray(maybeFile) ? maybeFile : [maybeFile]).filter(
+                                        (filename) => typeof filename === "string"
+                                    ) as string[];
                                     value[file.key.wireValue] = {
-                                        type: "filename",
-                                        value: "<file1>"
+                                        type: "filenames",
+                                        value: filenames
                                     };
                                 }
                             },
@@ -584,7 +588,15 @@ function convertHttpEndpointExample(
             _other: () => undefined
         }),
         responseStatusCode: Ir.http.ExampleResponse._visit(irExample.response, {
-            ok: ({ body }) => (body != null ? 200 : 204),
+            ok: (ok) =>
+                ok._visit({
+                    body: (body) => (body != null ? 200 : 204),
+                    stream: (stream) => (stream.length > 0 ? 200 : 204),
+                    sse: (stream) => (stream.length > 0 ? 200 : 204),
+                    _other: () => {
+                        throw new Error("Unknown ExampleResponseBody: " + ok.type);
+                    }
+                }),
             error: ({ error: errorName }) => {
                 const error = ir.errors[errorName.errorId];
                 if (error == null) {
@@ -596,9 +608,36 @@ function convertHttpEndpointExample(
                 throw new Error("Unknown ExampleResponse: " + irExample.response.type);
             }
         }),
-        responseBody: irExample.response.body?.jsonExample,
-        responseBodyV3:
-            irExample.response.body != null ? { type: "json", value: irExample.response.body.jsonExample } : undefined,
+        responseBody: irExample.response._visit({
+            ok: (ok) =>
+                ok._visit({
+                    body: (body) => body?.jsonExample,
+                    stream: () => undefined,
+                    sse: () => undefined,
+                    _other: () => undefined
+                }),
+            error: (error) => error.body?.jsonExample,
+            _other: () => undefined
+        }),
+        responseBodyV3: irExample.response._visit<APIV1Write.ExampleEndpointResponse | undefined>({
+            ok: (ok) =>
+                ok._visit<APIV1Write.ExampleEndpointResponse | undefined>({
+                    body: (body) => (body != null ? { type: "json", value: body.jsonExample } : undefined),
+                    stream: (stream) => ({ type: "stream", value: stream.map((stream) => stream.jsonExample) }),
+                    sse: (sse) => ({
+                        type: "sse",
+                        value: sse.map(({ event, data }) => ({ event, data: data.jsonExample }))
+                    }),
+                    _other: () => {
+                        throw new Error("Unknown ExampleResponseBody: " + ok.type);
+                    }
+                }),
+            error: (error) => (error.body != null ? { type: "json", value: error.body.jsonExample } : undefined),
+            _other: () => {
+                throw new Error("Unknown ExampleResponse: " + irExample.response.type);
+            }
+        }),
+        // irExample.response.body != null ? { type: "json", value: irExample.response.body.jsonExample } : undefined,
         codeSamples: irExample.codeSamples
             ?.map((codeSample) =>
                 ExampleCodeSample._visit<WithoutQuestionMarks<APIV1Write.CustomCodeSample> | undefined>(codeSample, {

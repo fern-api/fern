@@ -9,5 +9,5 @@ public class GradedResponseV2
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("testCases")]
-    public List<Dictionary<string, TestCaseGrade>> TestCases { get; init; }
+    public Dictionary<string, TestCaseGrade> TestCases { get; init; }
 }

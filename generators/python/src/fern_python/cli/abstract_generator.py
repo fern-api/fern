@@ -35,6 +35,9 @@ class AbstractGenerator(ABC):
             ),
             github=lambda github_output_mode: self._get_github_publish_config(generator_config, github_output_mode),
         )
+        python_version = "^3.8"
+        if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
+            python_version = generator_config.custom_config.get("pyproject_python_version")
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -50,6 +53,7 @@ class AbstractGenerator(ABC):
             sorted_modules=self.get_sorted_modules(),
             flat_layout=self.is_flat_layout(generator_config=generator_config),
             whitelabel=generator_config.whitelabel,
+            python_version=python_version,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=generator_config, project=project

@@ -1,4 +1,3 @@
-import { default as FormData } from "form-data";
 import qs from "qs";
 import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
@@ -67,13 +66,28 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             : args.url;
 
     let body: BodyInit | undefined = undefined;
-    if (args.body instanceof FormData) {
-        // @ts-expect-error
-        body = args.body;
-    } else if (args.body instanceof Uint8Array) {
-        body = args.body;
+    const maybeStringifyBody = (body: any) => {
+        if (body instanceof Uint8Array) {
+            return body;
+        } else {
+            return JSON.stringify(body);
+        }
+    };
+
+    if (RUNTIME.type === "node") {
+        if (args.body instanceof (await import("formdata-node")).FormData) {
+            // @ts-expect-error
+            body = args.body;
+        } else {
+            body = maybeStringifyBody(args.body);
+        }
     } else {
-        body = JSON.stringify(args.body);
+        if (args.body instanceof (await import("form-data")).default) {
+            // @ts-expect-error
+            body = args.body;
+        } else {
+            body = maybeStringifyBody(args.body);
+        }
     }
 
     // In Node.js environments, the SDK always uses`node-fetch`.

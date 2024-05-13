@@ -13,7 +13,7 @@ public class BasicCustomFiles
     public NonVoidFunctionSignature Signature { get; init; }
 
     [JsonPropertyName("additionalFiles")]
-    public List<Dictionary<Language, Files>> AdditionalFiles { get; init; }
+    public Dictionary<Language, Files> AdditionalFiles { get; init; }
 
     [JsonPropertyName("basicTestCaseTemplate")]
     public BasicTestCaseTemplate BasicTestCaseTemplate { get; init; }

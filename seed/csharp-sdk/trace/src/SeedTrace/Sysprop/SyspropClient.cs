@@ -1,3 +1,4 @@
+using System.Text.Json;
 using SeedTrace;
 
 namespace SeedTrace;
@@ -11,7 +12,27 @@ public class SyspropClient
         _client = client;
     }
 
-    public async void SetNumWarmInstancesAsync() { }
+    public async void SetNumWarmInstancesAsync(Language language, int numWarmInstances)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Put,
+                Path = $"/num-warm-instances/{language}/{numWarmInstances}"
+            }
+        );
+    }
 
-    public async void GetNumWarmInstancesAsync() { }
+    public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/num-warm-instances" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<Dictionary<Language, int>>(responseBody);
+        }
+        throw new Exception();
+    }
 }
