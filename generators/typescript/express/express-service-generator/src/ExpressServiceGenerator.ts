@@ -34,7 +34,7 @@ export class ExpressServiceGenerator {
         doNotHandleUnrecognizedErrors,
         includeSerdeLayer,
         skipRequestValidation,
-        skipResponseValidation,
+        skipResponseValidation
     }: ExpressServiceGenerator.Init) {
         this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
         this.packageResolver = packageResolver;
@@ -57,7 +57,7 @@ export class ExpressServiceGenerator {
             doNotHandleUnrecognizedErrors: this.doNotHandleUnrecognizedErrors,
             includeSerdeLayer: this.includeSerdeLayer,
             skipRequestValidation: this.skipRequestValidation,
-            skipResponseValidation: this.skipResponseValidation,
+            skipResponseValidation: this.skipResponseValidation
         });
     }
 }
