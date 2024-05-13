@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0] - 2024-05-13
+
+- Feature: Support a `skipResponseValidation` configuration so that users can disable
+  response validation. Note that this will still keep the serialization layer. To enable 
+  this configuration, add the following option to your `generators.yml`: 
+
+  ```yaml
+  config: 
+    skipResponseValidation: true
+  ```
+
 ## [0.13.0] - 2024-05-06
 
 - Feature: Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your 

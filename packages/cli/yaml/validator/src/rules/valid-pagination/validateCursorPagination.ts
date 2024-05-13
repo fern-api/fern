@@ -139,7 +139,7 @@ function isValidCursorProperty({
     });
 }
 
-function isValidCursorType(resolvedType: ResolvedType | undefined): boolean {
+function isValidCursorType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
     const primitiveType = maybePrimitiveType(resolvedType);
     if (primitiveType == null) {
         return false;
