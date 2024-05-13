@@ -99,6 +99,7 @@ function convertExampleResponse({
 }: {
     example: IrVersions.V44.ExampleResponse;
 }): IrVersions.V43.ExampleResponse {
+    /* eslint-disable no-fallthrough */
     switch (example.type) {
         case "ok":
             return convertExampleSuccessResponse({ example: example.value });
@@ -107,6 +108,7 @@ function convertExampleResponse({
         default:
             assertNever(example);
     }
+    /* eslint-enable no-fallthrough */
 }
 
 function convertExampleSuccessResponse({

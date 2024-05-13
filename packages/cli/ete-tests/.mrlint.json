@@ -3,10 +3,20 @@
   "private": true,
   "rules": {
     "ts-config": {
-      "exclude": ["./src/**/__test__/**/generated"]
+      "exclude": [
+        "./src/**/__test__/**/generated"
+      ]
     },
     "jest": {
-      "testMatch": ["**/*.test.ts"]
+      "testMatch": [
+        "**/*.test.ts"
+      ]
+    },
+    "depcheck": {
+      "ignores": [
+        "form-data",
+        "jest-environment-jsdom"
+      ]
     }
   }
 }
