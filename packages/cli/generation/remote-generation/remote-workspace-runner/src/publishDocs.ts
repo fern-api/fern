@@ -273,7 +273,7 @@ async function constructRegisterDocsRequest({
         uploadUrls,
         version,
         fullSlugs,
-        absolutePathToFernFolder: absolutePathToFernFolder
+        absolutePathToFernFolder
     });
     let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {
         ...entries({ ...parsedDocsConfig.pages }).reduce(
@@ -460,7 +460,7 @@ async function convertNavigationConfig({
             };
             break;
         }
-        case "tabbed":
+        case "tabbed": {
             const tabbedItem = await convertTabbedNavigation(navigationConfig.items, tabs, {
                 parsedDocsConfig,
                 organization,
@@ -476,6 +476,7 @@ async function convertNavigationConfig({
             };
             pages = { ...pages, ...tabbedItem.pages };
             break;
+        }
         case "versioned":
             config = {
                 versions: await Promise.all(
