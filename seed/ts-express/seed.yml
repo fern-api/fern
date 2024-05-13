@@ -30,6 +30,9 @@ fixtures:
     - customConfig: 
         skipRequestValidation: true
       outputFolder: skip-request-validation
+    - customConfig: 
+        skipResponseValidation: true
+      outputFolder: skip-response-validation
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
