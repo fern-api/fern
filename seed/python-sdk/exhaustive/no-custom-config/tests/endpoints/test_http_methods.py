@@ -10,6 +10,7 @@ from ..utilities import validate_response
 
 async def test_test_get(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = "string"
+    expected_types = None
     response = client.endpoints.http_methods.test_get(id="string")
     validate_response(response, expected_response, expected_types)
 
@@ -155,6 +156,7 @@ async def test_test_patch(client: SeedExhaustive, async_client: AsyncSeedExhaust
 
 async def test_test_delete(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = True
+    expected_types = None
     response = client.endpoints.http_methods.test_delete(id="string")
     validate_response(response, expected_response, expected_types)
 

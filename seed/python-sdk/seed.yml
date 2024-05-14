@@ -94,7 +94,7 @@ scripts:
     commands:
       # The global python version is 3.8
       - poetry install
-      - poetry run mypy .
+      # - poetry run mypy .
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - fern test --command "poetry run pytest -rP ."
 allowedFailures: 

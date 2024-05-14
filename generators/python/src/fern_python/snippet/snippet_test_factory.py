@@ -318,9 +318,8 @@ class SnippetTestFactory:
                     if response_body is not None
                     else None
                 )
-                if expectations is not None:
-                    maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
-                    writer.write_line(f"{type_expectation_name} = {maybe_stringify_expectations}")
+                maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
+                writer.write_line(f"{type_expectation_name} = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:
                     writer.write(f"{response_name} = ")
