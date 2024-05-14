@@ -41,7 +41,7 @@
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.538",
+    "@fern-fern/fiddle-sdk": "^0.0.542",
     "axios": "^0.28.0",
     "chalk": "^5.0.1",
     "decompress": "^4.2.1",

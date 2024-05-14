@@ -24,6 +24,7 @@ jobs:
       - name: Build Release
         run: dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 
+<% if (shouldWritePublishBlock) { %>
   publish:
     needs: [compile]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
@@ -40,7 +41,8 @@ jobs:
 
       - name: Publish
         env:
-          NUGET_API_KEY: $\{{ secrets.NUGET_API_TOKEN }}
+          NUGET_API_KEY: $\{{ secrets.<%= nugetTokenEnvvar%> }}
         run: |
           dotnet pack src -c Release
           dotnet nuget push src/<%= projectName%>/bin/Release/*.nupkg --api-key $\{{ secrets.NUGET_API_TOKEN }} --source "nuget.org"
+<% } %>

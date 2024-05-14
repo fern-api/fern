@@ -73,7 +73,9 @@ export class CsharpProject {
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
         const githubWorkflow = template(githubWorkflowTemplate)({
-            projectName: this.name
+            projectName: this.name,
+            shouldWritePublishBlock: this.context.publishConfig != null,
+            nugetTokenEnvvar: this.context.publishConfig?.apiKeyEnvironmentVariable ?? "NUGET_API_TOKEN"
         }).replaceAll("\\{", "{");
         const ghDir = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".github/workflows"));
         await mkdir(ghDir, { recursive: true });
