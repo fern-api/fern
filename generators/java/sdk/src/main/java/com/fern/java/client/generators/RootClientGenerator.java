@@ -25,7 +25,6 @@ import com.fern.irV42.model.auth.OAuthClientCredentials;
 import com.fern.irV42.model.auth.OAuthConfiguration;
 import com.fern.irV42.model.auth.OAuthScheme;
 import com.fern.irV42.model.commons.EndpointReference;
-import com.fern.irV42.model.commons.FernFilepath;
 import com.fern.irV42.model.commons.TypeId;
 import com.fern.irV42.model.http.HttpEndpoint;
 import com.fern.irV42.model.http.HttpService;
@@ -39,7 +38,6 @@ import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.ClientGeneratorUtils.Result;
 import com.fern.java.generators.AbstractFileGenerator;
-import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -63,6 +61,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final ClientGeneratorContext clientGeneratorContext;
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final Optional<GeneratedJavaFile> generatedOAuthTokenSupplier;
     private final GeneratedJavaFile generatedSuppliersFile;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName builderName;
@@ -76,7 +75,8 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             GeneratedJavaFile generatedSuppliersFile,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedJavaFile requestOptionsFile,
-            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
+            Optional<GeneratedJavaFile> generatedOAuthTokenSupplier) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
@@ -91,6 +91,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.generatedSuppliersFile = generatedSuppliersFile;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
+        this.generatedOAuthTokenSupplier = generatedOAuthTokenSupplier;
         this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
         this.requestOptionsFile = requestOptionsFile;
     }
@@ -368,8 +369,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
-            oauth.getConfiguration().visit(new OAuthSchemeHandler());
-            throw new RuntimeException("OAuth not supported");
+            return oauth.getConfiguration().visit(new OAuthSchemeHandler());
         }
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
@@ -377,11 +377,6 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             @Override
             public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
                 EndpointReference tokenEndpointReference = clientCredentials.getTokenEndpoint().getEndpointReference();
-                HttpService service = clientGeneratorContext.getIr().getServices()
-                    .get(tokenEndpointReference.getServiceId());
-                HttpEndpoint endpoint = service.getEndpoints().stream()
-                    .filter(it -> it.getId() == tokenEndpointReference.getEndpointId())
-                    .findFirst().orElseThrow();
 
                 createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                 createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
@@ -390,14 +385,15 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                     .get(tokenEndpointReference.getSubpackageId().get());
                 ClassName authClientClassName = clientGeneratorContext.getPoetClassNameFactory()
                     .getClientClassName(subpackage);
-
-                clientBuilder.addMethod(MethodSpec.methodBuilder("build")
-                    .addModifiers(Modifier.PUBLIC)
-                    .addStatement("$T authClient = new $T().builder().environment(this.$L).build()", authClientClassName, authClientClassName, ENVIRONMENT_FIELD_NAME)
-                    .addStatement("$T authClient = new $T().builder().environment(this.environment).build()")
-                    .build());
-                // todo: finish
-
+                ClassName oauthTokenSupplierClassName = generatedOAuthTokenSupplier.get().getClassName();
+                buildMethod
+                    .addStatement("$T authClient = new $T($T.builder().environment(this.$L).build())",
+                        authClientClassName, authClientClassName, generatedClientOptions.getClassName(),
+                        ENVIRONMENT_FIELD_NAME)
+                    .addStatement("$T oAuthTokenSupplier = new $T(clientId, clientSecret, authClient)",
+                        oauthTokenSupplierClassName, oauthTokenSupplierClassName)
+                    .addStatement("this.$L.addHeader($S, oAuthTokenSupplier)", CLIENT_OPTIONS_BUILDER_NAME, "Authorization");
+                return null;
             }
 
             @Override

@@ -2,6 +2,7 @@ package com.fern.java.client.generators;
 
 import com.fern.irV42.model.auth.OAuthAccessTokenRequestProperties;
 import com.fern.irV42.model.auth.OAuthClientCredentials;
+import com.fern.irV42.model.commons.EndpointId;
 import com.fern.irV42.model.commons.EndpointReference;
 import com.fern.irV42.model.http.HttpEndpoint;
 import com.fern.irV42.model.http.HttpService;
@@ -19,8 +20,10 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
 public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
@@ -39,7 +42,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
     public OAuthTokenSupplierGenerator(ClientGeneratorContext clientGeneratorContext,
         OAuthClientCredentials clientCredentials) {
-        super(clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("OAuth"), clientGeneratorContext);
+        super(clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("OAuthTokenSupplier"), clientGeneratorContext);
         this.clientCredentials = clientCredentials;
         this.clientGeneratorContext = clientGeneratorContext;
     }
@@ -49,8 +52,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         EndpointReference tokenEndpointReference = clientCredentials.getTokenEndpoint().getEndpointReference();
         HttpService httpService = generatorContext.getIr().getServices()
             .get(tokenEndpointReference.getServiceId());
+        EndpointId endpointId = tokenEndpointReference.getEndpointId();
         HttpEndpoint httpEndpoint = httpService.getEndpoints().stream()
-            .filter(it -> it.getId() == tokenEndpointReference.getEndpointId())
+            .filter(it -> it.getId().equals(endpointId))
             .findFirst().orElseThrow();
         Subpackage subpackage = generatorContext.getIr().getSubpackages()
             .get(tokenEndpointReference.getSubpackageId().get());
@@ -91,19 +95,21 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         String accessTokenResponsePropertyName = clientCredentials.getTokenEndpoint().getResponseProperties()
             .getAccessToken().getProperty()
             .getName().getName()
-            .getCamelCase().getUnsafeName();
+            .getPascalCase().getUnsafeName();
+        ParameterizedTypeName supplierOfString = ParameterizedTypeName.get(ClassName.get(Supplier.class), ClassName.get(String.class));
         TypeSpec oAuthTypeSpec = TypeSpec.classBuilder(className)
+            .addSuperinterface(supplierOfString)
             .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
             .addField(FieldSpec.builder(String.class, CLIENT_ID_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                 .build())
             .addField(FieldSpec.builder(String.class, CLIENT_SECRET_FIELD_NAME, Modifier.PRIVATE, Modifier.FINAL)
                 .build())
-            .addField(FieldSpec.builder(String.class, AUTH_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
+            .addField(FieldSpec.builder(authClientClassName, AUTH_CLIENT_NAME, Modifier.PRIVATE, Modifier.FINAL)
                 .build())
             .addField(FieldSpec.builder(String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE)
                 .build())
             .addMethod(MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PRIVATE)
+                .addModifiers(Modifier.PUBLIC)
                 .addParameter(String.class, CLIENT_ID_FIELD_NAME)
                 .addParameter(String.class, CLIENT_SECRET_FIELD_NAME)
                 .addParameter(authClientClassName, AUTH_CLIENT_NAME)
@@ -117,17 +123,16 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement("$T $L = $T.builder().$L($L).$L($L).build()", fetchTokenRequestType,
                     GET_TOKEN_REQUEST_NAME, fetchTokenRequestType, clientIdPropertyName, CLIENT_ID_FIELD_NAME,
                     clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME)
-                .addStatement("return $L.$L($L),", AUTH_CLIENT_NAME,
+                .addStatement("return $L.$L($L)", AUTH_CLIENT_NAME,
                     httpEndpoint.getName().get().getCamelCase().getUnsafeName(), GET_TOKEN_REQUEST_NAME)
                 .build())
-            // todo: this
             .addMethod(MethodSpec.methodBuilder(GET_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .returns(String.class)
                 .beginControlFlow("if ($L == null)", ACCESS_TOKEN_FIELD_NAME)
-                .addStatement("$N authResponse = $N", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME)
-                .addStatement("this.$L = authResponse.$L()", ACCESS_TOKEN_FIELD_NAME, accessTokenResponsePropertyName)
+                .addStatement("$T authResponse = $L()", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME)
+                .addStatement("this.$L = authResponse.$L()", ACCESS_TOKEN_FIELD_NAME, "get" + accessTokenResponsePropertyName)
                 .endControlFlow()
                 .addStatement("return $S + ($L != null ? $L : $L())", "Bearer ", ACCESS_TOKEN_FIELD_NAME,
                     ACCESS_TOKEN_FIELD_NAME, FETCH_TOKEN_METHOD_NAME)
