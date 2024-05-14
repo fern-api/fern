@@ -82,6 +82,7 @@ exports[`migrateFromV38ToV37 snapshot 1`] = `
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": true,
     "isAuthMandatory": false,
     "platformHeaders": {

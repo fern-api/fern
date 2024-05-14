@@ -7,6 +7,7 @@ import * as FernIr from "../../..";
 export interface SdkConfig {
     isAuthMandatory: boolean;
     hasStreamingEndpoints: boolean;
+    hasPaginatedEndpoints: boolean;
     hasFileDownloadEndpoints: boolean;
     platformHeaders: FernIr.PlatformHeaders;
 }

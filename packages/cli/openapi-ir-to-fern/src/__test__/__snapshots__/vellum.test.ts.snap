@@ -41,6 +41,7 @@ Used to retrieve a deployment given its ID or name.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v1/deployments/{id}",
             "path-parameters": {
               "id": {
@@ -184,6 +185,7 @@ Creates a new document index.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/document-indexes",
             "request": {
               "body": {
@@ -281,6 +283,7 @@ Used to list documents. Optionally filter on supported fields.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v1/documents",
             "request": {
               "name": "DocumentsListRequest",
@@ -334,6 +337,7 @@ Upload a document to be indexed and used for search.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/upload-document",
             "request": {
               "body": {
@@ -403,6 +407,7 @@ Compiles the prompt backing the model version using the provided input values.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/model-versions/{id}/compile-prompt",
             "path-parameters": {
               "id": {
@@ -494,6 +499,7 @@ Used to retrieve a model version given its ID.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v1/model-versions/{id}",
             "path-parameters": {
               "id": {
@@ -588,6 +594,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/registered-prompts/register",
             "request": {
               "body": {
@@ -666,6 +673,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
             "path-parameters": {
               "id": {
@@ -787,6 +795,7 @@ or overwritten with default values.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/sandboxes/{id}/scenarios",
             "path-parameters": {
               "id": {
@@ -844,6 +853,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
             "path-parameters": {
               "id": {
@@ -894,6 +904,7 @@ or overwritten with default values.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/test-suites/{id}/test-cases",
             "path-parameters": {
               "id": {
@@ -1039,6 +1050,7 @@ or overwritten with default values.",
 
 Executes a deployed Workflow and streams back its results.",
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/execute-workflow-stream",
           "request": {
             "body": {
@@ -1118,6 +1130,7 @@ Generate a completion using a previously defined deployment.
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/generate",
           "request": {
             "body": {
@@ -1164,6 +1177,7 @@ Generate a stream of completions using a previously defined deployment.
             "GenerateStreamRequestInternalServerError",
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/generate-stream",
           "request": {
             "body": {
@@ -1234,6 +1248,7 @@ Perform a search against a document index.
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/search",
           "request": {
             "body": {
@@ -1288,6 +1303,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/submit-completion-actuals",
           "request": {
             "body": {
@@ -2729,6 +2745,7 @@ Used to retrieve a deployment given its ID or name.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v1/deployments/{id}",
             "path-parameters": {
               "id": {
@@ -2872,6 +2889,7 @@ Creates a new document index.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/document-indexes",
             "request": {
               "body": {
@@ -2969,6 +2987,7 @@ Used to list documents. Optionally filter on supported fields.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v1/documents",
             "request": {
               "name": "DocumentsListRequest",
@@ -3022,6 +3041,7 @@ Upload a document to be indexed and used for search.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/upload-document",
             "request": {
               "body": {
@@ -3091,6 +3111,7 @@ Compiles the prompt backing the model version using the provided input values.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/model-versions/{id}/compile-prompt",
             "path-parameters": {
               "id": {
@@ -3182,6 +3203,7 @@ Used to retrieve a model version given its ID.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v1/model-versions/{id}",
             "path-parameters": {
               "id": {
@@ -3276,6 +3298,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/registered-prompts/register",
             "request": {
               "body": {
@@ -3354,6 +3377,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
             "path-parameters": {
               "id": {
@@ -3475,6 +3499,7 @@ or overwritten with default values.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/sandboxes/{id}/scenarios",
             "path-parameters": {
               "id": {
@@ -3532,6 +3557,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
             "path-parameters": {
               "id": {
@@ -3582,6 +3608,7 @@ or overwritten with default values.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v1/test-suites/{id}/test-cases",
             "path-parameters": {
               "id": {
@@ -3659,6 +3686,7 @@ or overwritten with default values.",
 
 Executes a deployed Workflow and streams back its results.",
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/execute-workflow-stream",
           "request": {
             "body": {
@@ -3738,6 +3766,7 @@ Generate a completion using a previously defined deployment.
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/generate",
           "request": {
             "body": {
@@ -3784,6 +3813,7 @@ Generate a stream of completions using a previously defined deployment.
             "InternalServerError",
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/generate-stream",
           "request": {
             "body": {
@@ -3854,6 +3884,7 @@ Perform a search against a document index.
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/search",
           "request": {
             "body": {
@@ -3908,6 +3939,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/submit-completion-actuals",
           "request": {
             "body": {

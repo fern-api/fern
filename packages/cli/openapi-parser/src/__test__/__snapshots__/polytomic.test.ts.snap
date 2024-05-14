@@ -334,6 +334,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "api/v2.CreateConnection",
+      "pagination": null,
       "path": "/api/connections",
       "pathParameters": [],
       "queryParameters": [],

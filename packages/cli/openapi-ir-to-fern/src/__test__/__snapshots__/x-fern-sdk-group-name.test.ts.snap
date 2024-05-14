@@ -29,6 +29,7 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/auth/user",
             "response": {
               "docs": "Success",
@@ -112,6 +113,7 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/auth/user",
             "response": {
               "docs": "Success",

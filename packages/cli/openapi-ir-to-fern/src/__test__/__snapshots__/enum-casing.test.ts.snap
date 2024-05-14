@@ -26,6 +26,7 @@ exports[`open api parser enum-casing docs 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/example",
           "response": {
             "docs": "Successful response",
@@ -99,6 +100,7 @@ exports[`open api parser enum-casing simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/example",
           "response": {
             "docs": "Successful response",

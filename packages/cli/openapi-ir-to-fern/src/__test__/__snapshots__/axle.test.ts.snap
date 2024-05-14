@@ -43,6 +43,7 @@ exports[`open api parser axle docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{id}",
             "path-parameters": {
               "id": {
@@ -172,6 +173,7 @@ exports[`open api parser axle docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/carriers/{id}",
             "path-parameters": {
               "id": {
@@ -210,6 +212,7 @@ exports[`open api parser axle docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/carriers",
             "response": {
               "docs": "",
@@ -266,6 +269,7 @@ exports[`open api parser axle docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/ignition",
             "request": {
               "body": {
@@ -411,6 +415,7 @@ exports[`open api parser axle docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/policies/{id}",
             "path-parameters": {
               "id": {
@@ -481,6 +486,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/token/exchange",
             "request": {
               "body": {
@@ -745,6 +751,7 @@ exports[`open api parser axle simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{id}",
             "path-parameters": {
               "id": {
@@ -874,6 +881,7 @@ exports[`open api parser axle simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/carriers/{id}",
             "path-parameters": {
               "id": {
@@ -912,6 +920,7 @@ exports[`open api parser axle simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/carriers",
             "response": {
               "docs": "",
@@ -968,6 +977,7 @@ exports[`open api parser axle simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/ignition",
             "request": {
               "body": {
@@ -1113,6 +1123,7 @@ exports[`open api parser axle simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/policies/{id}",
             "path-parameters": {
               "id": {
@@ -1183,6 +1194,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/token/exchange",
             "request": {
               "body": {

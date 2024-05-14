@@ -23,6 +23,7 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/user",
           "request": {
             "name": "GetUserRequest",
@@ -80,6 +81,7 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/user",
           "request": {
             "name": "GetUserRequest",

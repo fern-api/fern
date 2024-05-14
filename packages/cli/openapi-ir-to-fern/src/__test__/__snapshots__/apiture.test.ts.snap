@@ -41,6 +41,7 @@ exports[`open api parser apiture docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/jointOwners",
             "path-parameters": {
               "accountId": {
@@ -110,6 +111,7 @@ exports[`open api parser apiture docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}",
             "path-parameters": {
               "accountId": {
@@ -162,6 +164,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accountBalances",
             "request": {
               "name": "AccountsListAccountBalancesRequest",
@@ -230,6 +233,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts",
             "request": {
               "name": "AccountsListAccountsRequest",
@@ -276,6 +280,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.AccountsListEligibleAchAccountsRequestUnprocessableEntityError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/achEligibleAccounts",
             "request": {
               "name": "AccountsListEligibleAchAccountsRequest",
@@ -374,6 +379,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/institutions/{institutionId}/cutoffTimes",
             "path-parameters": {
               "institutionId": {
@@ -530,6 +536,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/institutions/{institutionId}/transferDateRestrictions",
             "path-parameters": {
               "institutionId": {
@@ -618,6 +625,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/institutions/{institutionId}/transferSchedule",
             "path-parameters": {
               "institutionId": {
@@ -709,6 +717,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/institutionByLocator",
             "request": {
               "name": "InstitutionsLookUpInstitutionByLocatorRequest",
@@ -786,6 +795,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/jointOwnerInvitations",
             "path-parameters": {
               "accountId": {
@@ -848,6 +858,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
@@ -903,6 +914,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
             "path-parameters": {
               "accountId": {
@@ -958,6 +970,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
@@ -1023,6 +1036,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transactionCategories",
             "request": {
               "headers": {
@@ -1134,6 +1148,7 @@ The default response lists only recent transactions. Normally, this is transacti
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/transactions",
             "path-parameters": {
               "accountId": {
@@ -1282,6 +1297,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transfers",
             "request": {
               "body": {
@@ -1329,6 +1345,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
@@ -1388,6 +1405,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
@@ -1484,6 +1502,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transfers",
             "request": {
               "name": "TransfersListTransfersRequest",
@@ -1584,6 +1603,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
@@ -5319,6 +5339,7 @@ exports[`open api parser apiture simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/jointOwners",
             "path-parameters": {
               "accountId": {
@@ -5388,6 +5409,7 @@ exports[`open api parser apiture simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}",
             "path-parameters": {
               "accountId": {
@@ -5440,6 +5462,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accountBalances",
             "request": {
               "name": "AccountsListAccountBalancesRequest",
@@ -5508,6 +5531,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts",
             "request": {
               "name": "AccountsListAccountsRequest",
@@ -5554,6 +5578,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.UnprocessableEntityError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/achEligibleAccounts",
             "request": {
               "name": "AccountsListEligibleAchAccountsRequest",
@@ -5652,6 +5677,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/institutions/{institutionId}/cutoffTimes",
             "path-parameters": {
               "institutionId": {
@@ -5808,6 +5834,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/institutions/{institutionId}/transferDateRestrictions",
             "path-parameters": {
               "institutionId": {
@@ -5896,6 +5923,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/institutions/{institutionId}/transferSchedule",
             "path-parameters": {
               "institutionId": {
@@ -5987,6 +6015,7 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/institutionByLocator",
             "request": {
               "name": "InstitutionsLookUpInstitutionByLocatorRequest",
@@ -6064,6 +6093,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/jointOwnerInvitations",
             "path-parameters": {
               "accountId": {
@@ -6126,6 +6156,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
@@ -6181,6 +6212,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
             "path-parameters": {
               "accountId": {
@@ -6236,6 +6268,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
               "accountId": {
@@ -6301,6 +6334,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transactionCategories",
             "request": {
               "headers": {
@@ -6412,6 +6446,7 @@ The default response lists only recent transactions. Normally, this is transacti
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/accounts/{accountId}/transactions",
             "path-parameters": {
               "accountId": {
@@ -6560,6 +6595,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transfers",
             "request": {
               "body": {
@@ -6607,6 +6643,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
@@ -6666,6 +6703,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {
@@ -6762,6 +6800,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transfers",
             "request": {
               "name": "TransfersListTransfersRequest",
@@ -6862,6 +6901,7 @@ Note: This operation requires an identity challenge if the financial institution
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/transfers/{transferId}",
             "path-parameters": {
               "transferId": {

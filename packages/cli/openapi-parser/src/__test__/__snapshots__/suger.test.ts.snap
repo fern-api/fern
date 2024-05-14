@@ -141,6 +141,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListBuyersByOrganization",
+      "pagination": null,
       "path": "/org/{orgId}/buyer",
       "pathParameters": [
         {
@@ -455,6 +456,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetBuyer",
+      "pagination": null,
       "path": "/org/{orgId}/buyer/{buyerId}",
       "pathParameters": [
         {
@@ -782,6 +784,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "UpdateBuyerNameDescription",
+      "pagination": null,
       "path": "/org/{orgId}/buyer/{buyerId}",
       "pathParameters": [
         {
@@ -1182,6 +1185,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListEntitlementsByBuyer",
+      "pagination": null,
       "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
       "pathParameters": [
         {
@@ -1867,6 +1871,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateOrUpdateDraftOffer",
+      "pagination": null,
       "path": "/org/{orgId}/draftOffer",
       "pathParameters": [
         {
@@ -2240,6 +2245,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListEntitlements",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement",
       "pathParameters": [
         {
@@ -2613,6 +2619,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetEntitlement",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}",
       "pathParameters": [
         {
@@ -2819,6 +2826,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "AddEntitlementCredit",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
       "pathParameters": [
         {
@@ -3217,6 +3225,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "UpdateEntitlementName",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
       "pathParameters": [
         {
@@ -3608,6 +3617,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListEntitlementTerms",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
       "pathParameters": [
         {
@@ -3999,6 +4009,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetEntitlementTerm",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
       "pathParameters": [
         {
@@ -4239,6 +4250,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListUsageRecordGroupsByEntitlement",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
       "pathParameters": [
         {
@@ -4629,6 +4641,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "ReportUsageRecordGroup",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
       "pathParameters": [
         {
@@ -4832,6 +4845,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListUsageRecordReportsByEntitlement",
+      "pagination": null,
       "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
       "pathParameters": [
         {
@@ -5115,6 +5129,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListIntegrationsByOrganization",
+      "pagination": null,
       "path": "/org/{orgId}/integration",
       "pathParameters": [
         {
@@ -5677,6 +5692,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateIntegration",
+      "pagination": null,
       "path": "/org/{orgId}/integration",
       "pathParameters": [
         {
@@ -6225,6 +6241,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetIntegration",
+      "pagination": null,
       "path": "/org/{orgId}/integration/{partner}/{service}",
       "pathParameters": [
         {
@@ -6423,6 +6440,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "DeleteIntegration",
+      "pagination": null,
       "path": "/org/{orgId}/integration/{partner}/{service}",
       "pathParameters": [
         {
@@ -7084,6 +7102,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "UpdateIntegration",
+      "pagination": null,
       "path": "/org/{orgId}/integration/{partner}/{service}",
       "pathParameters": [
         {
@@ -7294,6 +7313,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "VerifyIntegration",
+      "pagination": null,
       "path": "/org/{orgId}/integration/{partner}/{service}/verify",
       "pathParameters": [
         {
@@ -7744,6 +7764,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListOffersByOrganization",
+      "pagination": null,
       "path": "/org/{orgId}/offer",
       "pathParameters": [
         {
@@ -8412,6 +8433,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateOffer",
+      "pagination": null,
       "path": "/org/{orgId}/offer",
       "pathParameters": [
         {
@@ -9081,6 +9103,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetOffer",
+      "pagination": null,
       "path": "/org/{orgId}/offer/{offerId}",
       "pathParameters": [
         {
@@ -9204,6 +9227,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "DeleteOffer",
+      "pagination": null,
       "path": "/org/{orgId}/offer/{offerId}",
       "pathParameters": [
         {
@@ -9342,6 +9366,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CancelOffer",
+      "pagination": null,
       "path": "/org/{orgId}/offer/{offerId}/cancel",
       "pathParameters": [
         {
@@ -9734,6 +9759,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListEntitlementsByOffer",
+      "pagination": null,
       "path": "/org/{orgId}/offer/{offerId}/entitlement",
       "pathParameters": [
         {
@@ -9906,6 +9932,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListOperations",
+      "pagination": null,
       "path": "/org/{orgId}/operation",
       "pathParameters": [
         {
@@ -10378,6 +10405,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListEntitlementsByPartner",
+      "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/entitlement",
       "pathParameters": [
         {
@@ -10832,6 +10860,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListOffersByPartner",
+      "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/offer",
       "pathParameters": [
         {
@@ -11158,6 +11187,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListProductsByPartner",
+      "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/product",
       "pathParameters": [
         {
@@ -11498,6 +11528,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListRevenueRecords",
+      "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/revenueRecord",
       "pathParameters": [
         {
@@ -11855,6 +11886,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListRevenueRecordDetails",
+      "pagination": null,
       "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
       "pathParameters": [
         {
@@ -12332,6 +12364,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListProductsByOrganization",
+      "pagination": null,
       "path": "/org/{orgId}/product",
       "pathParameters": [
         {
@@ -12788,6 +12821,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetProduct",
+      "pagination": null,
       "path": "/org/{orgId}/product/{productId}",
       "pathParameters": [
         {
@@ -12911,6 +12945,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "DeleteProduct",
+      "pagination": null,
       "path": "/org/{orgId}/product/{productId}",
       "pathParameters": [
         {
@@ -13406,6 +13441,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "UpdateProduct",
+      "pagination": null,
       "path": "/org/{orgId}/product/{productId}",
       "pathParameters": [
         {
@@ -13584,6 +13620,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListProductMeteringDimensions",
+      "pagination": null,
       "path": "/org/{orgId}/product/{productId}/dimension",
       "pathParameters": [
         {
@@ -13979,6 +14016,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListEntitlementsByProduct",
+      "pagination": null,
       "path": "/org/{orgId}/product/{productId}/entitlement",
       "pathParameters": [
         {
@@ -14373,6 +14411,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListOffersByProduct",
+      "pagination": null,
       "path": "/org/{orgId}/product/{productId}/offer",
       "pathParameters": [
         {
@@ -14603,6 +14642,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListUsageRecordGroupsByProduct",
+      "pagination": null,
       "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
       "pathParameters": [
         {
@@ -14887,6 +14927,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListUsageRecordReportsByProduct",
+      "pagination": null,
       "path": "/org/{orgId}/product/{productId}/usageRecordReport",
       "pathParameters": [
         {
@@ -15345,6 +15386,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "GetRevenueReport",
+      "pagination": null,
       "path": "/org/{orgId}/revenueReport",
       "pathParameters": [
         {
@@ -15553,6 +15595,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListUsageRecordGroupsByOrganization",
+      "pagination": null,
       "path": "/org/{orgId}/usageRecordGroup",
       "pathParameters": [
         {
@@ -15847,6 +15890,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetUsageRecordGroup",
+      "pagination": null,
       "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
       "pathParameters": [
         {
@@ -16028,6 +16072,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListUsageRecordReportsByOrganization",
+      "pagination": null,
       "path": "/org/{orgId}/usageRecordReport",
       "pathParameters": [
         {
@@ -16484,6 +16529,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetUsageRecordReport",
+      "pagination": null,
       "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
       "pathParameters": [
         {
@@ -16712,6 +16758,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "GetUsageReport",
+      "pagination": null,
       "path": "/org/{orgId}/usageReport",
       "pathParameters": [
         {
@@ -16853,6 +16900,7 @@ exports[`open api parser suger parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "GetApiClientAccessToken",
+      "pagination": null,
       "path": "/public/apiClient/accessToken",
       "pathParameters": [],
       "queryParameters": [],

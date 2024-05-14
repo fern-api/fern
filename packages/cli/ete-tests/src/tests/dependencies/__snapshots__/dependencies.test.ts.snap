@@ -786,6 +786,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -796,4 +797,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2657122`;
+exports[`dependencies file dependencies 1`] = `2657162`;

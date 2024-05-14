@@ -186,6 +186,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIssueTriggers",
+      "pagination": null,
       "path": "/issue-triggers",
       "pathParameters": [],
       "queryParameters": [
@@ -849,6 +850,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createIssueTrigger",
+      "pagination": null,
       "path": "/issue-triggers",
       "pathParameters": [],
       "queryParameters": [],
@@ -1153,6 +1155,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "upsertIssueTrigger",
+      "pagination": null,
       "path": "/issue-triggers",
       "pathParameters": [],
       "queryParameters": [],
@@ -1432,6 +1435,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIssueTrigger",
+      "pagination": null,
       "path": "/issue-triggers/{id}",
       "pathParameters": [
         {
@@ -1632,6 +1636,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateIssueTrigger",
+      "pagination": null,
       "path": "/issue-triggers/{id}",
       "pathParameters": [
         {
@@ -1880,6 +1885,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteIssueTrigger",
+      "pagination": null,
       "path": "/issue-triggers/{id}",
       "pathParameters": [
         {
@@ -2063,6 +2069,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "disableIssueTrigger",
+      "pagination": null,
       "path": "/issue-triggers/{id}/disable",
       "pathParameters": [
         {
@@ -2246,6 +2253,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "enableIssueTrigger",
+      "pagination": null,
       "path": "/issue-triggers/{id}/enable",
       "pathParameters": [
         {
@@ -2528,6 +2536,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getAttempts",
+      "pagination": null,
       "path": "/attempts",
       "pathParameters": [],
       "queryParameters": [
@@ -3000,6 +3009,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getAttempt",
+      "pagination": null,
       "path": "/attempts/{id}",
       "pathParameters": [
         {
@@ -3229,6 +3239,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getBookmarks",
+      "pagination": null,
       "path": "/bookmarks",
       "pathParameters": [],
       "queryParameters": [
@@ -4131,6 +4142,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createBookmark",
+      "pagination": null,
       "path": "/bookmarks",
       "pathParameters": [],
       "queryParameters": [],
@@ -4418,6 +4430,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getBookmark",
+      "pagination": null,
       "path": "/bookmarks/{id}",
       "pathParameters": [
         {
@@ -4656,6 +4669,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateBookmark",
+      "pagination": null,
       "path": "/bookmarks/{id}",
       "pathParameters": [
         {
@@ -4879,6 +4893,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteBookmark",
+      "pagination": null,
       "path": "/bookmarks/{id}",
       "pathParameters": [
         {
@@ -5182,6 +5197,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "triggerBookmark",
+      "pagination": null,
       "path": "/bookmarks/{id}/trigger",
       "pathParameters": [
         {
@@ -5472,6 +5488,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getDestinations",
+      "pagination": null,
       "path": "/destinations",
       "pathParameters": [],
       "queryParameters": [
@@ -6472,6 +6489,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createDestination",
+      "pagination": null,
       "path": "/destinations",
       "pathParameters": [],
       "queryParameters": [],
@@ -6853,6 +6871,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "upsertDestination",
+      "pagination": null,
       "path": "/destinations",
       "pathParameters": [],
       "queryParameters": [],
@@ -7220,6 +7239,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getDestination",
+      "pagination": null,
       "path": "/destinations/{id}",
       "pathParameters": [
         {
@@ -7430,6 +7450,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateDestination",
+      "pagination": null,
       "path": "/destinations/{id}",
       "pathParameters": [
         {
@@ -7846,6 +7867,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "archiveDestination",
+      "pagination": null,
       "path": "/destinations/{id}/archive",
       "pathParameters": [
         {
@@ -8017,6 +8039,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "unarchiveDestination",
+      "pagination": null,
       "path": "/destinations/{id}/unarchive",
       "pathParameters": [
         {
@@ -8306,6 +8329,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEvents",
+      "pagination": null,
       "path": "/events",
       "pathParameters": [],
       "queryParameters": [
@@ -10528,6 +10552,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEvent",
+      "pagination": null,
       "path": "/events/{id}",
       "pathParameters": [
         {
@@ -10632,6 +10657,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRequestRawBody",
+      "pagination": null,
       "path": "/events/{id}/raw_body",
       "pathParameters": [
         {
@@ -11037,6 +11063,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "retryEvent",
+      "pagination": null,
       "path": "/events/{id}/retry",
       "pathParameters": [
         {
@@ -11304,6 +11331,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "muteEvent",
+      "pagination": null,
       "path": "/events/{id}/mute",
       "pathParameters": [
         {
@@ -11556,6 +11584,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEventBulkRetries",
+      "pagination": null,
       "path": "/bulk/events/retry",
       "pathParameters": [],
       "queryParameters": [
@@ -14759,6 +14788,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createEventBulkRetry",
+      "pagination": null,
       "path": "/bulk/events/retry",
       "pathParameters": [],
       "queryParameters": [],
@@ -16661,6 +16691,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "generateEventBulkRetryPlan",
+      "pagination": null,
       "path": "/bulk/events/retry/plan",
       "pathParameters": [],
       "queryParameters": [
@@ -18650,6 +18681,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEventBulkRetry",
+      "pagination": null,
       "path": "/bulk/events/retry/{id}",
       "pathParameters": [
         {
@@ -18874,6 +18906,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "cancelEventBulkRetry",
+      "pagination": null,
       "path": "/bulk/events/retry/{id}/cancel",
       "pathParameters": [
         {
@@ -19126,6 +19159,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIgnoredEventBulkRetries",
+      "pagination": null,
       "path": "/bulk/ignored-events/retry",
       "pathParameters": [],
       "queryParameters": [
@@ -20410,6 +20444,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createIgnoredEventBulkRetry",
+      "pagination": null,
       "path": "/bulk/ignored-events/retry",
       "pathParameters": [],
       "queryParameters": [],
@@ -20693,6 +20728,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "generateIgnoredEventBulkRetryPlan",
+      "pagination": null,
       "path": "/bulk/ignored-events/retry/plan",
       "pathParameters": [],
       "queryParameters": [
@@ -21063,6 +21099,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIgnoredEventBulkRetry",
+      "pagination": null,
       "path": "/bulk/ignored-events/retry/{id}",
       "pathParameters": [
         {
@@ -21287,6 +21324,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "cancelIgnoredEventBulkRetry",
+      "pagination": null,
       "path": "/bulk/ignored-events/retry/{id}/cancel",
       "pathParameters": [
         {
@@ -21528,6 +21566,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIntegrations",
+      "pagination": null,
       "path": "/integrations",
       "pathParameters": [],
       "queryParameters": [
@@ -21793,6 +21832,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createIntegration",
+      "pagination": null,
       "path": "/integrations",
       "pathParameters": [],
       "queryParameters": [],
@@ -22089,6 +22129,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIntegration",
+      "pagination": null,
       "path": "/integrations/{id}",
       "pathParameters": [
         {
@@ -22304,6 +22345,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateIntegration",
+      "pagination": null,
       "path": "/integrations/{id}",
       "pathParameters": [
         {
@@ -22566,6 +22608,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteIntegration",
+      "pagination": null,
       "path": "/integrations/{id}",
       "pathParameters": [
         {
@@ -22694,6 +22737,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "attachIntegrationToSource",
+      "pagination": null,
       "path": "/integrations/{id}/attach/{source_id}",
       "pathParameters": [
         {
@@ -22831,6 +22875,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "detachIntegrationToSource",
+      "pagination": null,
       "path": "/integrations/{id}/detach/{source_id}",
       "pathParameters": [
         {
@@ -23023,6 +23068,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIssues",
+      "pagination": null,
       "path": "/issues",
       "pathParameters": [],
       "queryParameters": [
@@ -24829,6 +24875,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIssueCount",
+      "pagination": null,
       "path": "/issues/count",
       "pathParameters": [],
       "queryParameters": [
@@ -26581,6 +26628,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getIssue",
+      "pagination": null,
       "path": "/issues/{id}",
       "pathParameters": [
         {
@@ -26665,6 +26713,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateIssue",
+      "pagination": null,
       "path": "/issues/{id}",
       "pathParameters": [
         {
@@ -26814,6 +26863,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "dismissIssue",
+      "pagination": null,
       "path": "/issues/{id}",
       "pathParameters": [
         {
@@ -27086,6 +27136,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRequests",
+      "pagination": null,
       "path": "/requests",
       "pathParameters": [],
       "queryParameters": [
@@ -28912,6 +28963,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRequest",
+      "pagination": null,
       "path": "/requests/{id}",
       "pathParameters": [
         {
@@ -29016,6 +29068,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRequestRawBody",
+      "pagination": null,
       "path": "/requests/{id}/raw_body",
       "pathParameters": [
         {
@@ -29460,6 +29513,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "retryRequest",
+      "pagination": null,
       "path": "/requests/{id}/retry",
       "pathParameters": [
         {
@@ -29815,6 +29869,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRequestEvents",
+      "pagination": null,
       "path": "/requests/{id}/events",
       "pathParameters": [
         {
@@ -32017,6 +32072,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRequestIgnoredEvents",
+      "pagination": null,
       "path": "/requests/{id}/ignored_events",
       "pathParameters": [
         {
@@ -32534,6 +32590,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRequestBulkRetries",
+      "pagination": null,
       "path": "/bulk/requests/retry",
       "pathParameters": [],
       "queryParameters": [
@@ -35318,6 +35375,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createRequestBulkRetry",
+      "pagination": null,
       "path": "/bulk/requests/retry",
       "pathParameters": [],
       "queryParameters": [],
@@ -36824,6 +36882,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "generateRequestBulkRetryPlan",
+      "pagination": null,
       "path": "/bulk/requests/retry/plan",
       "pathParameters": [],
       "queryParameters": [
@@ -38417,6 +38476,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRequestBulkRetry",
+      "pagination": null,
       "path": "/bulk/requests/retry/{id}",
       "pathParameters": [
         {
@@ -38641,6 +38701,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "cancelRequestBulkRetry",
+      "pagination": null,
       "path": "/bulk/requests/retry/{id}/cancel",
       "pathParameters": [
         {
@@ -38848,6 +38909,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRulesets",
+      "pagination": null,
       "path": "/rulesets",
       "pathParameters": [],
       "queryParameters": [
@@ -39952,6 +40014,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createRuleset",
+      "pagination": null,
       "path": "/rulesets",
       "pathParameters": [],
       "queryParameters": [],
@@ -40185,6 +40248,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "upsertRuleset",
+      "pagination": null,
       "path": "/rulesets",
       "pathParameters": [],
       "queryParameters": [],
@@ -40404,6 +40468,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getRuleset",
+      "pagination": null,
       "path": "/rulesets/{id}",
       "pathParameters": [
         {
@@ -40585,6 +40650,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateRuleset",
+      "pagination": null,
       "path": "/rulesets/{id}",
       "pathParameters": [
         {
@@ -40860,6 +40926,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "archiveRuleset",
+      "pagination": null,
       "path": "/rulesets/{id}/archive",
       "pathParameters": [
         {
@@ -41010,6 +41077,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "unarchiveRuleset",
+      "pagination": null,
       "path": "/rulesets/{id}/unarchive",
       "pathParameters": [
         {
@@ -41252,6 +41320,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getSources",
+      "pagination": null,
       "path": "/sources",
       "pathParameters": [],
       "queryParameters": [
@@ -42199,6 +42268,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createSource",
+      "pagination": null,
       "path": "/sources",
       "pathParameters": [],
       "queryParameters": [],
@@ -42414,6 +42484,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "upsertSource",
+      "pagination": null,
       "path": "/sources",
       "pathParameters": [],
       "queryParameters": [],
@@ -42615,6 +42686,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getSource",
+      "pagination": null,
       "path": "/sources/{id}",
       "pathParameters": [
         {
@@ -42831,6 +42903,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateSource",
+      "pagination": null,
       "path": "/sources/{id}",
       "pathParameters": [
         {
@@ -43088,6 +43161,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "archiveSource",
+      "pagination": null,
       "path": "/sources/{id}/archive",
       "pathParameters": [
         {
@@ -43273,6 +43347,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "unarchiveSource",
+      "pagination": null,
       "path": "/sources/{id}/unarchive",
       "pathParameters": [
         {
@@ -43370,6 +43445,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "toggleWebhookNotifications",
+      "pagination": null,
       "path": "/notifications/webhooks",
       "pathParameters": [],
       "queryParameters": [],
@@ -43656,6 +43732,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTransformations",
+      "pagination": null,
       "path": "/transformations",
       "pathParameters": [],
       "queryParameters": [
@@ -44164,6 +44241,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createTransformation",
+      "pagination": null,
       "path": "/transformations",
       "pathParameters": [],
       "queryParameters": [],
@@ -44457,6 +44535,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "upsertTransformation",
+      "pagination": null,
       "path": "/transformations",
       "pathParameters": [],
       "queryParameters": [],
@@ -44729,6 +44808,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTransformation",
+      "pagination": null,
       "path": "/transformations/{id}",
       "pathParameters": [
         {
@@ -44931,6 +45011,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateTransformation",
+      "pagination": null,
       "path": "/transformations/{id}",
       "pathParameters": [
         {
@@ -45246,6 +45327,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "testTransformation",
+      "pagination": null,
       "path": "/transformations/run",
       "pathParameters": [],
       "queryParameters": [],
@@ -45848,6 +45930,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTransformationExecutions",
+      "pagination": null,
       "path": "/transformations/{id}/executions",
       "pathParameters": [
         {
@@ -46784,6 +46867,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTransformationExecution",
+      "pagination": null,
       "path": "/transformations/{id}/executions/{execution_id}",
       "pathParameters": [
         {
@@ -47142,6 +47226,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getConnections",
+      "pagination": null,
       "path": "/webhooks",
       "pathParameters": [],
       "queryParameters": [
@@ -48536,6 +48621,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createConnection",
+      "pagination": null,
       "path": "/webhooks",
       "pathParameters": [],
       "queryParameters": [],
@@ -49435,6 +49521,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "upsertConnection",
+      "pagination": null,
       "path": "/webhooks",
       "pathParameters": [],
       "queryParameters": [],
@@ -50320,6 +50407,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getConnection",
+      "pagination": null,
       "path": "/webhooks/{id}",
       "pathParameters": [
         {
@@ -50727,6 +50815,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "updateConnection",
+      "pagination": null,
       "path": "/webhooks/{id}",
       "pathParameters": [
         {
@@ -51303,6 +51392,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "archiveConnection",
+      "pagination": null,
       "path": "/webhooks/{id}/archive",
       "pathParameters": [
         {
@@ -51679,6 +51769,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "unarchiveConnection",
+      "pagination": null,
       "path": "/webhooks/{id}/unarchive",
       "pathParameters": [
         {
@@ -52055,6 +52146,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "pauseConnection",
+      "pagination": null,
       "path": "/webhooks/{id}/pause",
       "pathParameters": [
         {
@@ -52431,6 +52523,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "unpauseConnection",
+      "pagination": null,
       "path": "/webhooks/{id}/unpause",
       "pathParameters": [
         {

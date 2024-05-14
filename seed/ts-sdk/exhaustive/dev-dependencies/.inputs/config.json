@@ -39,5 +39,6 @@
     "dryRun": false,
     "whitelabel": false,
     "writeUnitTests": true,
-    "generateOauthClients": true
+    "generateOauthClients": true,
+    "generatePaginatedClients": true
 }

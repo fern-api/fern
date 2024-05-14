@@ -33,6 +33,7 @@ exports[`file-upload file-upload parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "upload-file",
+      "pagination": null,
       "path": "/upload",
       "pathParameters": [],
       "queryParameters": [],

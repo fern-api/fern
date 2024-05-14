@@ -28,6 +28,7 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/completions/chat",
             "request": {
               "body": {
@@ -49,6 +50,7 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
             "auth": false,
             "docs": undefined,
             "method": "POST",
+            "pagination": undefined,
             "path": "/completions/chat",
             "request": {
               "body": {
@@ -125,6 +127,7 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/completions/chat",
             "request": {
               "body": {
@@ -146,6 +149,7 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
             "auth": false,
             "docs": undefined,
             "method": "POST",
+            "pagination": undefined,
             "path": "/completions/chat",
             "request": {
               "body": {

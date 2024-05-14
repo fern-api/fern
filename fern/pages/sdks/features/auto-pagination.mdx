@@ -46,6 +46,39 @@ simply loop through all the results.
   }
   ```
 </Tab>
+<Tab title="Python">
+
+  When pagination for an endpoint is configured, the Python SDK method 
+  will return a `Pager[T]` (specifically a `SyncPager[T]` or an `AsyncPager[T]`) where `T` is the underlying data type. The `Pager[T]`
+  will implement the `Generator` interface, allowing you to use it in a
+  `for ... in` loop.
+
+  Below is an example method signature for a list endpoint: 
+  ```python client.py {3-9}
+  class UsersClient:
+
+    def list_with_cursor_pagination(
+        self,
+        *,
+        page: typing.Optional[int] = None,
+        page_size: typing.Optional[int] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SyncPager[User]:
+      ...
+  ```
+
+  And here is an example of how a user would use the `list` method:
+  ```python
+  for user in client.users.list(page=1, page_size=10):
+    print(user)
+  ```
+
+  or if the user is leveraging the asynchronous client:
+  ```python
+  async for user in await client.users.list(page=1, page_size=10):
+    print(user)
+  ```
+</Tab>
 </Tabs>
 
 ### Supported Pagination Types

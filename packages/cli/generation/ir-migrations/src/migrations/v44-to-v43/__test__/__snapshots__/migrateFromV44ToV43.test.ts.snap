@@ -108,6 +108,7 @@ exports[`migrateFromV44ToV43 snapshot 1`] = `
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": true,
     "isAuthMandatory": false,
     "platformHeaders": {
