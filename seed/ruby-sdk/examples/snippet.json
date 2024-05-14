@@ -1,0 +1,265 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.notification.get_exception(notification_id: \"notification-hsy129x\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.notification.get_exception(notification_id: \"notification-hsy129x\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.get_file(filename: \"file.txt\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.get_file(filename: \"file.txt\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.notification.get_exception(notification_id: \"notification-hsy129x\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.notification.get_exception(notification_id: \"notification-hsy129x\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.get_file(filename: \"file.txt\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.get_file(filename: \"file.txt\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.check(id: \"id-2sdx82h\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.ping",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.check(id: \"id-2sdx82h\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.ping",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.check(id: \"id-2sdx82h\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.ping",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.check(id: \"id-2sdx82h\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.ping",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_movie(movie_id: \"movie-c06a4ad7\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie",
+                "method": "POST"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_metadata(\n  x_api_version: \"0.0.1\",\n  shallow: false,\n  tag: \"development\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/response",
+                "method": "POST"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_response",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_movie(movie_id: \"movie-c06a4ad7\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie",
+                "method": "POST"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_metadata(\n  x_api_version: \"0.0.1\",\n  shallow: false,\n  tag: \"development\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/response",
+                "method": "POST"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_response",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.echo(request: \"Hello world!\\n\\nwith\\n\\tnewlines\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.echo(request: \"Hello world!\\n\\nwith\\n\\tnewlines\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}
