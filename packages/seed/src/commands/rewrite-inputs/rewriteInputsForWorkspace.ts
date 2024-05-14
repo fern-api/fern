@@ -163,6 +163,7 @@ export async function writeInputs({
         absolutePathToSnippetTemplates: undefined,
         writeUnitTests: true,
         generateOauthClients: true,
+        generatePaginatedClients: true,
         absolutePathToSnippet: AbsoluteFilePath.of(
             join(absolutePathToOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
         )

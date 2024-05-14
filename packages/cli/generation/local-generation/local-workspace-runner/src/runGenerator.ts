@@ -4,7 +4,7 @@ import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-import { cp, mkdir, writeFile } from "fs/promises";
+import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
@@ -33,7 +33,8 @@ export async function writeFilesToDiskAndRunGenerator({
     irVersionOverride,
     outputVersionOverride,
     writeUnitTests,
-    generateOauthClients
+    generateOauthClients,
+    generatePaginatedClients
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -50,6 +51,7 @@ export async function writeFilesToDiskAndRunGenerator({
     outputVersionOverride: string | undefined;
     writeUnitTests: boolean;
     generateOauthClients: boolean;
+    generatePaginatedClients: boolean;
 }): Promise<GeneratorRunResponse> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -106,7 +108,8 @@ export async function writeFilesToDiskAndRunGenerator({
         generatorInvocation,
         context,
         writeUnitTests,
-        generateOauthClients
+        generateOauthClients,
+        generatePaginatedClients
     });
 
     const taskHandler = new LocalTaskHandler({
@@ -174,6 +177,7 @@ export declare namespace runGenerator {
         generatorInvocation: generatorsYml.GeneratorInvocation;
         writeUnitTests: boolean;
         generateOauthClients: boolean;
+        generatePaginatedClients: boolean;
     }
 }
 
@@ -189,7 +193,8 @@ export async function runGenerator({
     keepDocker,
     generatorInvocation,
     writeUnitTests,
-    generateOauthClients
+    generateOauthClients,
+    generatePaginatedClients
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -208,7 +213,8 @@ export async function runGenerator({
         absolutePathToSnippet,
         absolutePathToSnippetTemplates,
         writeUnitTests,
-        generateOauthClients
+        generateOauthClients,
+        generatePaginatedClients
     });
     binds.push(...bindsForGenerators);
 
