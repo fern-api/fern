@@ -21,8 +21,9 @@
         "type_types:MigrationStatus": "\"RUNNING\"\n",
         "type_types:Migration": "from seed import Migration\n\nMigration(\n    name=\"001_init\",\n    status=\"RUNNING\",\n)\n",
         "type_types:Request": "from seed import Request\n\nRequest(\n    request={},\n)\n",
-        "type_types:Response": "from seed import Response\n\nResponse(\n    response=\"Initializing...\",\n)\n",
-        "type_types:Test": "from seed import Test_And\n\nTest_And(value=True)\n"
+        "type_types:Response": "from seed import Identifier, Response\n\nResponse(\n    response=\"Initializing...\",\n    identifiers=[\n        Identifier(\n            type=\"primitive\",\n            value=\"example\",\n            label=\"Primitive\",\n        ),\n        Identifier(\n            type=\"unknown\",\n            value=\"{}\",\n            label=\"Unknown\",\n        ),\n    ],\n)\n",
+        "type_types:Test": "from seed import Test_And\n\nTest_And(value=True)\n",
+        "type_types:Entity": "from seed import Entity\n\nEntity(\n    type=\"unknown\",\n    name=\"unknown\",\n)\n"
     },
     "endpoints": [
         {
@@ -110,6 +111,17 @@
             "snippet": {
                 "sync_client": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nclient.service.get_metadata(\n    x_api_version=\"0.0.1\",\n    shallow=False,\n    tag=\"development\",\n)\n",
                 "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nawait client.service.get_metadata(\n    x_api_version=\"0.0.1\",\n    shallow=False,\n    tag=\"development\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/response",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nclient.service.get_response()\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)\nawait client.service.get_response()\n",
                 "type": "python"
             }
         }

@@ -5,6 +5,7 @@ from .types import (
     Actress,
     CastMember,
     Directory,
+    Entity,
     Exception,
     ExceptionInfo,
     Exception_Generic,
@@ -21,6 +22,7 @@ from .types import (
     Node,
     Request,
     Response,
+    ResponseType,
     StuntDouble,
     Test,
     Test_And,
@@ -28,17 +30,25 @@ from .types import (
     Tree,
 )
 from .errors import NotFoundError
+from .basic_type import BasicType
+from .complex_type import ComplexType
+from .identifier import Identifier
+from .type import Type
 
 __all__ = [
     "Actor",
     "Actress",
+    "BasicType",
     "CastMember",
+    "ComplexType",
     "Directory",
+    "Entity",
     "Exception",
     "ExceptionInfo",
     "Exception_Generic",
     "ExtendedMovie",
     "File",
+    "Identifier",
     "Metadata",
     "Metadata_Html",
     "Metadata_Markdown",
@@ -51,9 +61,11 @@ __all__ = [
     "NotFoundError",
     "Request",
     "Response",
+    "ResponseType",
     "StuntDouble",
     "Test",
     "Test_And",
     "Test_Or",
     "Tree",
+    "Type",
 ]

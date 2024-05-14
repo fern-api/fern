@@ -1,5 +1,6 @@
 imports:
   commons: commons/types.yml
+  root: __package__.yml
 
 errors:
   NotFoundError:
@@ -252,10 +253,22 @@ types:
   Response:
     properties:
       response: unknown
+      identifiers: list<root.Identifier>
     examples:
       - name: String
         value:
           response: "Initializing..."
+          identifiers:
+            - type: primitive
+              value: 'example'
+              label: Primitive
+            - type: unknown
+              value: '{}'
+              label: Unknown
+
+  ResponseType:
+    properties:
+      type: root.Type
 
   Test:
     union:
@@ -270,3 +283,13 @@ types:
         value:
           type: or
           value: true
+
+  Entity:
+    properties:
+      type: root.Type
+      name: string
+    examples:
+      - name: One
+        value:
+          type: unknown
+          name: unknown

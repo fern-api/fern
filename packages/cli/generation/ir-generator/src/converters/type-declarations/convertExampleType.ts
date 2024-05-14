@@ -139,7 +139,7 @@ export function convertTypeExample({
                     example,
                     typeResolver,
                     exampleResolver,
-                    file: fileContainingExample,
+                    file: fileContainingType,
                     workspace
                 });
                 if (violationsForMember.length === 0) {
