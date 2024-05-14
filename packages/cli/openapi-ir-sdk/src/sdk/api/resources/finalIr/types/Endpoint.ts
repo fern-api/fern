@@ -35,4 +35,5 @@ export interface Endpoint extends FernOpenapiIr.WithDescription {
     errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpError>;
     server: FernOpenapiIr.Server[];
     examples: FernOpenapiIr.EndpointExample[];
+    pagination: FernOpenapiIr.Pagination | undefined;
 }

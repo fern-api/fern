@@ -39,4 +39,5 @@ export interface EndpointWithExample extends FernOpenapiIr.WithDescription {
      * Also migrated from `x-readme.code-samples` if present.
      */
     examples: FernOpenapiIr.EndpointExample[];
+    pagination: FernOpenapiIr.Pagination | undefined;
 }

@@ -75,7 +75,7 @@ simply loop through all the results.
 
   or if the user is leveraging the asynchronous client:
   ```python
-  async for user in client.users.list(page=1, page_size=10):
+  async for user in await client.users.list(page=1, page_size=10):
     print(user)
   ```
 </Tab>
