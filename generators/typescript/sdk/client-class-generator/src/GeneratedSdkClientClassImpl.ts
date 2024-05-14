@@ -880,6 +880,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
+            const hasQuestionToken =
+                this.oauthAuthScheme.configuration.clientIdEnvVar != null &&
+                this.oauthAuthScheme.configuration.clientSecretEnvVar != null;
             properties.push({
                 name: OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
                 type: getTextOfTsNode(
@@ -889,7 +892,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 .valueType
                         ).typeNode
                     )
-                )
+                ),
+                hasQuestionToken
             });
             properties.push({
                 name: OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
@@ -900,7 +904,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 .valueType
                         ).typeNode
                     )
-                )
+                ),
+                hasQuestionToken
             });
         }
 

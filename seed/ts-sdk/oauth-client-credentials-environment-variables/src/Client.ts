@@ -8,8 +8,8 @@ import { Auth } from "./api/resources/auth/client/Client";
 export declare namespace SeedOauthClientCredentialsEnvironmentVariablesClient {
     interface Options {
         environment: core.Supplier<string>;
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
+        clientId?: core.Supplier<string>;
+        clientSecret?: core.Supplier<string>;
     }
 
     interface RequestOptions {
