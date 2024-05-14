@@ -5,7 +5,12 @@
             "type": "github",
             "repoUrl": "https://github.com/bearer-token-environment-variable/fern",
             "version": "0.0.1",
-            "publishInfo": null
+            "publishInfo": {
+                "type": "nuget",
+                "registryUrl": "",
+                "packageName": "Fernbearer-token-environment-variable",
+                "apiKeyEnvironmentVariable": ""
+            }
         },
         "path": "/fern/output",
         "publishingMetadata": null,
