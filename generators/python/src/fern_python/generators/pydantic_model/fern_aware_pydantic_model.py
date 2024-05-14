@@ -310,7 +310,6 @@ class FernAwarePydanticModel:
             )
             writer.write("return ")
             writer.write_node(AST.Expression(function_invocation))
-            # writer.write_line("return deep_union_pydantic_dicts(super().dict(**kwargs_with_defaults_unset), super().dict(**kwargs_with_defaults_none))")
 
         self._pydantic_model.add_method(
             AST.FunctionDeclaration(
