@@ -1,15 +1,15 @@
-import enum
-from lib2to3.fixes.fix_next import is_assign_target
-import re
-from tkinter import END
-from typing import List, Literal, Optional, Callable
+from typing import List, Literal, Optional
+
 import fern.ir.resources as ir_types
-from fern_python.codegen.ast.nodes.declarations.function.function_parameter import FunctionParameter
-from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import NamedFunctionParameter
-from pydantic import BaseModel
 from typing_extensions import Never
 
 from fern_python.codegen import AST
+from fern_python.codegen.ast.nodes.declarations.function.function_parameter import (
+    FunctionParameter,
+)
+from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
+    NamedFunctionParameter,
+)
 from fern_python.external_dependencies.httpx_sse import HttpxSSE
 from fern_python.external_dependencies.json import Json
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
@@ -27,6 +27,7 @@ class EndpointDummySnippetConfig:
         self.endpoint_name = endpoint_name
         self.parameters = parameters
         self.named_parameters = named_parameters
+
 
 class EndpointResponseCodeWriter:
     RESPONSE_VARIABLE = "_response"
@@ -123,7 +124,7 @@ class EndpointResponseCodeWriter:
             return "aiter_sse"
         else:
             return "iter_sse"
-        
+
     def _get_none_safe_property_condition(self, response_property: ir_types.ResponseProperty) -> Optional[str]:
         if response_property.property_path is None or len(response_property.property_path) == 0:
             return None
@@ -139,13 +140,15 @@ class EndpointResponseCodeWriter:
         return f"if {condition}:"
 
     # Need to do null-safe dereferencing here, with some fallback value
-    def _response_property_to_dot_access(self, response_property: ir_types.ResponseProperty) -> str: 
+    def _response_property_to_dot_access(self, response_property: ir_types.ResponseProperty) -> str:
         property_path = (response_property.property_path or []).copy()
         property_path.append(response_property.property.name.name)
         path_name = list(map(lambda name: name.snake_case.safe_name, property_path))
         return ".".join(path_name)
 
-    def _write_dummy_snippet_to_paginate(self, *, writer: AST.NodeWriter, page_parameter: ir_types.QueryParameter, type: Literal["cursor", "offset"]) -> None:
+    def _write_dummy_snippet_to_paginate(
+        self, *, writer: AST.NodeWriter, page_parameter: ir_types.QueryParameter, type: Literal["cursor", "offset"]
+    ) -> None:
         writer.write(f"self.{self._dummy_snippet_config.endpoint_name}(")
         for parameter in self._dummy_snippet_config.parameters:
             # We currently assume the paging mechanism is a direct parameter (e.g. not nested)
@@ -175,13 +178,13 @@ class EndpointResponseCodeWriter:
         self, *, writer: AST.NodeWriter, json_response: ir_types.JsonResponse, use_response_json: bool
     ) -> None:
         pydantic_parse_expression = self._context.core_utilities.get_construct(
-                    self._get_json_response_body_type(json_response),
-                    AST.Expression(
-                        f"{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}"
-                        if use_response_json
-                        else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"
-                    ),
-                )
+            self._get_json_response_body_type(json_response),
+            AST.Expression(
+                f"{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}"
+                if use_response_json
+                else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"
+            ),
+        )
         if self._pagination is not None:
             writer.write(f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} = ")
             writer.write_node(pydantic_parse_expression)
@@ -200,28 +203,36 @@ class EndpointResponseCodeWriter:
 
                     writer.write_line(none_safe_condition)
                     with writer.indent():
-                      writer.write_line(f"{EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} = {property_path_next_access}")
+                        writer.write_line(
+                            f"{EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} = {property_path_next_access}"
+                        )
 
-                      writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = {EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} is not None")  
+                        writer.write_line(
+                            f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = {EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} is not None"
+                        )
 
-                      writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
-                      self._write_dummy_snippet_to_paginate(
+                        writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
+                        self._write_dummy_snippet_to_paginate(
                             writer=writer,
                             page_parameter=self._pagination.get_as_union().page,
                             type="cursor",
                         )
                 else:
-                    writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = {property_path_next_access} is not None")
-                    writer.write_line(f"{EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} = {property_path_next_access}")
+                    writer.write_line(
+                        f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = {property_path_next_access} is not None"
+                    )
+                    writer.write_line(
+                        f"{EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} = {property_path_next_access}"
+                    )
                     writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
                     self._write_dummy_snippet_to_paginate(
-                            writer=writer,
-                            page_parameter=self._pagination.get_as_union().page,
-                            type="cursor",
-                        )
+                        writer=writer,
+                        page_parameter=self._pagination.get_as_union().page,
+                        type="cursor",
+                    )
             else:
                 writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = True")
-                
+
                 # Get next, only for offset, since cursor is handled in the above if statement
                 writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
                 pagination_type = self._pagination.get_as_union().type
@@ -238,17 +249,23 @@ class EndpointResponseCodeWriter:
                 writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE} = []")
                 writer.write_line(none_safe_condition)
                 with writer.indent():
-                    writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE} = {property_path_results_access}")
+                    writer.write_line(
+                        f"{EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE} = {property_path_results_access}"
+                    )
             else:
-                writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE} = {property_path_results_access}")
+                writer.write_line(
+                    f"{EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE} = {property_path_results_access}"
+                )
 
             writer.write("return ")
-            writer.write_node(self._context.core_utilities.instantiate_paginator(
-                items=AST.Expression(EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE),
-                has_next=AST.Expression(EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE),
-                get_next=AST.Expression(EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE),
-                is_async=self._is_async,
-            ))
+            writer.write_node(
+                self._context.core_utilities.instantiate_paginator(
+                    items=AST.Expression(EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE),
+                    has_next=AST.Expression(EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE),
+                    get_next=AST.Expression(EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE),
+                    is_async=self._is_async,
+                )
+            )
         else:
             writer.write("return ")
             writer.write_node(pydantic_parse_expression)

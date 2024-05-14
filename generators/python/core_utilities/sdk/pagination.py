@@ -1,5 +1,7 @@
 import typing
+
 from typing_extensions import Self
+
 from .pydantic_utilities import pydantic_v1
 
 # Generic to represent the underlying type of the results within a page
@@ -7,7 +9,7 @@ T = typing.TypeVar("T")
 
 # SDKs implement a Page ABC per-pagination request, the endpoint then retuns a pager that wraps this type
 # for example, an endpoint will return SyncPager[UserPage] where UserPage implements the Page ABC. ex:
-# 
+#
 # SyncPager<InnerListType>(
 #     has_next=response.list_metadata.after is not None,
 #     items=response.data,
@@ -18,20 +20,24 @@ class BasePage(pydantic_v1.BaseModel, typing.Generic[T]):
     has_next: bool
     items: typing.List[T]
 
+
 class SyncPage(BasePage, typing.Generic[T]):
     get_next: typing.Optional[typing.Callable[[], typing.Optional[Self]]]
+
 
 class AsyncPage(BasePage, typing.Generic[T]):
     get_next: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Optional[Self]]]]
 
+
 # ----------------------------
+
 
 class SyncPager(SyncPage[T], typing.Generic[T]):
     def __iter__(self) -> typing.Iterator[T]:
         for page in self.iter_pages():
             for item in page.items:
                 yield item
-    
+
     def iter_pages(self) -> typing.Iterator[SyncPage[T]]:
         page = self
         while True:

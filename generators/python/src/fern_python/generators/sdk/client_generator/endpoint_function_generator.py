@@ -72,8 +72,12 @@ class EndpointFunctionGenerator:
         self._generated_root_client = generated_root_client
         self.snippet_writer = snippet_writer
 
-        self.is_paginated = self._endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients
-        self.pagination = self._endpoint.pagination if self._context.generator_config.generate_paginated_clients else None
+        self.is_paginated = (
+            self._endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients
+        )
+        self.pagination = (
+            self._endpoint.pagination if self._context.generator_config.generate_paginated_clients else None
+        )
 
     def generate(self) -> GeneratedEndpointFunction:
         is_primitive: bool = (
@@ -158,10 +162,16 @@ class EndpointFunctionGenerator:
         )
 
     def _get_endpoint_return_type(self) -> AST.TypeHint:
-        return_type = (self._get_response_body_type(self._endpoint.response, self._is_async)
+        return_type = (
+            self._get_response_body_type(self._endpoint.response, self._is_async)
             if self._endpoint.response is not None
-            else AST.TypeHint.none())
-        return return_type if not self.is_paginated else self._context.core_utilities.get_paginator_type(return_type, is_async=self._is_async)
+            else AST.TypeHint.none()
+        )
+        return (
+            return_type
+            if not self.is_paginated
+            else self._context.core_utilities.get_paginator_type(return_type, is_async=self._is_async)
+        )
 
     def _get_endpoint_path_parameters(
         self,
@@ -348,7 +358,7 @@ class EndpointFunctionGenerator:
                     endpoint_name=get_endpoint_name(self._endpoint),
                     parameters=parameters,
                     named_parameters=named_parameters,
-                )
+                ),
             )
 
             timeout = AST.Expression(
@@ -436,11 +446,7 @@ class EndpointFunctionGenerator:
                 writer.write_line()
                 writer.write_line()
 
-            self._write_response_body_type(
-                writer,
-                self._endpoint.response,
-                self._get_endpoint_return_type()
-            )
+            self._write_response_body_type(writer, self._endpoint.response, self._get_endpoint_return_type())
 
             if snippet is not None:
                 writer.write_line()
@@ -586,7 +592,7 @@ class EndpointFunctionGenerator:
     def _get_pagination_results_type(self, fallback_typehint: AST.TypeHint) -> AST.TypeHint:
         if self.pagination is not None:
             results_response_property = self.pagination.get_as_union().results.property
-            
+
             # TODO: The IR should really have the inner type baked in so we don't have to unwrap it here
             unwrapped_type = results_response_property.value_type
             maybe_wrapped_type = results_response_property.value_type

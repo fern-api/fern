@@ -358,7 +358,8 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pagination"), named_import="AsyncPager" if is_async else "SyncPager"
+                module=AST.Module.local(*self._module_path, "pagination"),
+                named_import="AsyncPager" if is_async else "SyncPager",
             ),
         )
 
@@ -368,7 +369,9 @@ class CoreUtilities:
             type_parameters=[AST.TypeParameter(inner_type)],
         )
 
-    def instantiate_paginator(self, is_async: bool, has_next: AST.Expression, items: AST.Expression, get_next: AST.Expression) -> AST.Expression:
+    def instantiate_paginator(
+        self, is_async: bool, has_next: AST.Expression, items: AST.Expression, get_next: AST.Expression
+    ) -> AST.Expression:
         return AST.Expression(
             AST.ClassInstantiation(
                 class_=self.get_paginator_reference(is_async),
@@ -381,7 +384,7 @@ class CoreUtilities:
             )
         )
 
-     def get_pydantic_deep_union_import(self) -> AST.Reference:
+    def get_pydantic_deep_union_import(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
