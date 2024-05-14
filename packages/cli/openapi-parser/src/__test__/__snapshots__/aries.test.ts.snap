@@ -2,6 +2,7 @@
 
 exports[`open api parser aries parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -21985,6 +21986,10 @@ exports[`open api parser aries parse open api 1`] = `
                                 "type": "map",
                                 "value": [],
                               },
+                              {
+                                "type": "map",
+                                "value": [],
+                              },
                             ],
                           },
                           "credentialSubject": {
@@ -22009,7 +22014,14 @@ exports[`open api parser aries parse open api 1`] = `
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "type",
+                                  "value": "VerifiableCredential",
+                                },
+                              },
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "AlumniCredential",
                                 },
                               },
                             ],

@@ -6,5 +6,5 @@ namespace SeedTrace.V2.V3;
 public class GetFunctionSignatureResponse
 {
     [JsonPropertyName("functionByLanguage")]
-    public List<Dictionary<Language, string>> FunctionByLanguage { get; init; }
+    public Dictionary<Language, string> FunctionByLanguage { get; init; }
 }

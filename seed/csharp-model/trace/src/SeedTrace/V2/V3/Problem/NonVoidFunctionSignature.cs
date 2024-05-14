@@ -7,7 +7,7 @@ namespace SeedTrace.V2.V3;
 public class NonVoidFunctionSignature
 {
     [JsonPropertyName("parameters")]
-    public List<List<Parameter>> Parameters { get; init; }
+    public List<Parameter> Parameters { get; init; }
 
     [JsonPropertyName("returnType")]
     public VariableType ReturnType { get; init; }

@@ -1,9 +1,10 @@
 package com.fern.java.generators.auth;
 
-import com.fern.ir.model.auth.AuthScheme;
-import com.fern.ir.model.auth.BasicAuthScheme;
-import com.fern.ir.model.auth.BearerAuthScheme;
-import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.irV42.model.auth.AuthScheme;
+import com.fern.irV42.model.auth.BasicAuthScheme;
+import com.fern.irV42.model.auth.BearerAuthScheme;
+import com.fern.irV42.model.auth.HeaderAuthScheme;
+import com.fern.irV42.model.auth.OAuthScheme;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 
@@ -31,6 +32,11 @@ public final class AuthSchemeGenerator implements AuthScheme.Visitor<GeneratedJa
     public GeneratedJavaFile visitHeader(HeaderAuthScheme value) {
         HeaderAuthGenerator headerAuthGenerator = new HeaderAuthGenerator(generatorContext, value);
         return headerAuthGenerator.generateFile();
+    }
+
+    @Override
+    public GeneratedJavaFile visitOauth(OAuthScheme oauth) {
+        throw new RuntimeException("OAuth not supported");
     }
 
     @Override

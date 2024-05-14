@@ -6,10 +6,10 @@ public partial class SeedVariablesClient
 {
     private RawClient _client;
 
-    public SeedVariablesClient(ClientOptions clientOptions)
+    public SeedVariablesClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

@@ -21,7 +21,7 @@ import { convertLiteral } from "./convertLiteral";
 import { convertNumber } from "./convertNumber";
 import { convertObject } from "./convertObject";
 import { convertUndiscriminatedOneOf } from "./convertUndiscriminatedOneOf";
-import { getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
+import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
@@ -114,7 +114,10 @@ export function convertSchemaObject(
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false
 ): SchemaWithExample {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? getTitleAsName(schema.title);
+    const nameOverride =
+        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? context.shouldUseTitleAsName
+            ? getTitleAsName(schema.title)
+            : undefined;
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
@@ -373,7 +376,8 @@ export function convertSchemaObject(
             description,
             wrapAsNullable,
             context,
-            groupName
+            groupName,
+            example: getExampleAsArray(schema)
         });
     }
 
@@ -522,7 +526,10 @@ export function convertSchemaObject(
             }
         }
 
-        const maybeDiscriminant = getDiscriminant({ schemas: schema.anyOf, context });
+        const maybeDiscriminant = getDiscriminant({
+            schemas: schema.anyOf,
+            context
+        });
         if (maybeDiscriminant != null) {
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
@@ -850,8 +857,7 @@ function getDiscriminant({
         Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>
     > = {};
     for (const schema of schemas) {
-        const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
-        const possibleDiscriminants = getPossibleDiscriminants({ schema: resolvedSchema, context });
+        const possibleDiscriminants = getPossibleDiscriminants({ schema, context });
         for (const [property, value] of Object.entries(possibleDiscriminants)) {
             const variants = discriminantToVariants[property];
             if (variants != null) {
@@ -878,10 +884,33 @@ function getPossibleDiscriminants({
     schema,
     context
 }: {
+    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    context: SchemaParserContext;
+}): Record<string, string> {
+    const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+    return getPossibleDiscriminantsForSchemaObject({ schema: resolvedSchema, context });
+}
+
+function getPossibleDiscriminantsForSchemaObject({
+    schema,
+    context
+}: {
     schema: OpenAPIV3.SchemaObject;
     context: SchemaParserContext;
 }): Record<string, string> {
     const possibleDiscrimimants: Record<string, string> = {};
+    if (schema.anyOf != null) {
+        for (const elem of schema.anyOf) {
+            const possibleDiscriminantsForVariant = getPossibleDiscriminants({
+                schema: elem,
+                context
+            });
+            for (const [key, value] of Object.entries(possibleDiscriminantsForVariant ?? {})) {
+                possibleDiscrimimants[key] = value;
+            }
+        }
+        return possibleDiscrimimants;
+    }
     for (const [propertyName, propertySchema] of Object.entries(schema.properties ?? {})) {
         const resolvedPropertySchema = isReferenceObject(propertySchema)
             ? context.resolveSchemaReference(propertySchema)
@@ -890,7 +919,7 @@ function getPossibleDiscriminants({
             resolvedPropertySchema.type === "string" &&
             resolvedPropertySchema.enum != null &&
             isListOfStrings(resolvedPropertySchema.enum) &&
-            resolvedPropertySchema.enum.length === 1 &&
+            getEnumSet(resolvedPropertySchema.enum).length === 1 &&
             resolvedPropertySchema.enum[0] != null
         ) {
             possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0];
@@ -907,6 +936,32 @@ function getPossibleDiscriminants({
         }
     }
     return possibleDiscrimimants;
+}
+
+// getEnumSet reduces the list of enums values into a set and
+// removes duplicate variants (e.g. "foo" and "FOO"). This helps
+// to generate a discriminated union, where an undiscriminated
+// union would otherwise be required.
+//
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getEnumSet(enums: any[] | undefined): any[] {
+    if (!enums) {
+        return [];
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const set = new Set<any>();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    enums.forEach((item: any) => {
+        if (typeof item === "string") {
+            set.add(item.toLowerCase());
+        } else {
+            set.add(item);
+        }
+    });
+
+    return Array.from(set);
 }
 
 export function getProperty<T>(object: object, property: string): T | undefined {

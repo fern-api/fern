@@ -16,12 +16,13 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.model.auth.AuthScheme;
-import com.fern.ir.model.auth.BasicAuthScheme;
-import com.fern.ir.model.auth.BearerAuthScheme;
-import com.fern.ir.model.auth.HeaderAuthScheme;
-import com.fern.ir.model.commons.NameAndWireValue;
-import com.fern.ir.model.http.HttpHeader;
+import com.fern.irV42.model.auth.AuthScheme;
+import com.fern.irV42.model.auth.BasicAuthScheme;
+import com.fern.irV42.model.auth.BearerAuthScheme;
+import com.fern.irV42.model.auth.HeaderAuthScheme;
+import com.fern.irV42.model.auth.OAuthScheme;
+import com.fern.irV42.model.commons.NameAndWireValue;
+import com.fern.irV42.model.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -303,6 +304,11 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         @Override
         public RequestOption visitHeader(HeaderAuthScheme header) {
             return headerHandler.visitAuthScheme(header);
+        }
+
+        @Override
+        public RequestOption visitOauth(OAuthScheme oauth) {
+            throw new RuntimeException("OAuth not supported");
         }
 
         @Override

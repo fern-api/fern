@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.21.2 - 2024-05-07]
+
+- Fix: In-lined request body properties no longer include a non-empty `url` struct tag. This previously caused
+  request body properties to be encoded in the URL alongside the rest of the query parameters.
+
 ## [0.21.1 - 2024-04-29]
 
 - Fix: The Go generator now escapes path parameters that would previously create invalid URLs (e.g. "\\example").

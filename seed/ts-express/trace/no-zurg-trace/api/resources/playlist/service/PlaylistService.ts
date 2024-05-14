@@ -125,7 +125,6 @@ export class PlaylistService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'createPlaylist' unexpectedly threw ${error.constructor.name}.` +
@@ -150,7 +149,6 @@ export class PlaylistService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getPlaylists' unexpectedly threw ${error.constructor.name}.` +
@@ -175,7 +173,6 @@ export class PlaylistService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     switch (error.errorName) {
                         case "PlaylistIdNotFoundError":
@@ -206,7 +203,6 @@ export class PlaylistService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     switch (error.errorName) {
                         case "PlaylistIdNotFoundError":
@@ -236,7 +232,6 @@ export class PlaylistService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'deletePlaylist' unexpectedly threw ${error.constructor.name}.` +

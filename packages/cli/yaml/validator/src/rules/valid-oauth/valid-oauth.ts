@@ -1,3 +1,4 @@
+import { DocsLinks } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import {
     constructFernFileContext,
@@ -7,9 +8,14 @@ import {
 } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
+import terminalLink from "terminal-link";
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import { validateClientCredentials } from "./validateClientCredentials";
+
+const DOCS_LINK_MESSAGE = `For details, see the ${terminalLink("docs", DocsLinks.oauth, {
+    fallback: (text, url) => `${text}: ${url}`
+})}.`;
 
 export const ValidOauthRule: Rule = {
     name: "valid-oauth",
@@ -31,7 +37,7 @@ export const ValidOauthRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: `File declares oauth scheme '${oauthScheme.name}', but no imports are declared to reference the required token endpoint(s).`
+                                message: `File declares oauth scheme '${oauthScheme.name}', but no imports are declared to reference the required token endpoint(s). ${DOCS_LINK_MESSAGE}`
                             }
                         ];
                     }
@@ -55,7 +61,7 @@ export const ValidOauthRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: `File declares oauth scheme '${oauthScheme.name}', but the OAuth 'get-token' endpoint could not be resolved.`
+                                message: `File declares oauth scheme '${oauthScheme.name}', but the OAuth 'get-token' endpoint could not be resolved. ${DOCS_LINK_MESSAGE}`
                             }
                         ];
                     }
@@ -77,15 +83,13 @@ export const ValidOauthRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: `File declares oauth scheme '${oauthScheme.name}', but the OAuth 'refresh-token' endpoint could not be resolved.`
+                                message: `File declares oauth scheme '${oauthScheme.name}', but the OAuth 'refresh-token' endpoint could not be resolved. ${DOCS_LINK_MESSAGE}`
                             }
                         ];
                     }
                 }
             };
         }
-
-        // TODO: Add the default request-properties and response-properties if not set.
 
         return {
             definitionFile: {
@@ -105,8 +109,8 @@ export const ValidOauthRule: Rule = {
                     });
 
                     switch (oauthSchema.type) {
-                        case "client-credentials":
-                            return validateClientCredentials({
+                        case "client-credentials": {
+                            const violations = validateClientCredentials({
                                 endpointId,
                                 endpoint,
                                 typeResolver,
@@ -115,6 +119,14 @@ export const ValidOauthRule: Rule = {
                                 resolvedRefreshEndpoint,
                                 clientCredentials: oauthSchema
                             });
+                            if (violations.length > 0) {
+                                return violations.map((violation) => ({
+                                    severity: violation.severity,
+                                    message: violation.message + ` ${DOCS_LINK_MESSAGE}`
+                                }));
+                            }
+                            return [];
+                        }
                         default:
                             assertNever(oauthSchema.type);
                     }

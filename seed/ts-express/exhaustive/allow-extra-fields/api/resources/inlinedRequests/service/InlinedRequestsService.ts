@@ -61,7 +61,6 @@ export class InlinedRequestsService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         switch (error.errorName) {
                             case "BadRequestBody":

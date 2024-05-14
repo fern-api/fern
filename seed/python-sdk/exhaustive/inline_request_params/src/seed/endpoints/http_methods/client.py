@@ -208,16 +208,16 @@ class HttpMethodsClient:
         *,
         string: typing.Optional[str] = OMIT,
         integer: typing.Optional[int] = OMIT,
-        long: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
         double: typing.Optional[float] = OMIT,
-        bool: typing.Optional[bool] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[uuid.UUID] = OMIT,
         base_64: typing.Optional[str] = OMIT,
-        list: typing.Optional[typing.Sequence[str]] = OMIT,
-        set: typing.Optional[typing.Set[str]] = OMIT,
-        map: typing.Optional[typing.Dict[int, str]] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Set[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -229,25 +229,25 @@ class HttpMethodsClient:
 
         integer : typing.Optional[int]
 
-        long : typing.Optional[int]
+        long_ : typing.Optional[int]
 
         double : typing.Optional[float]
 
-        bool : typing.Optional[bool]
+        bool_ : typing.Optional[bool]
 
         datetime : typing.Optional[dt.datetime]
 
         date : typing.Optional[dt.date]
 
-        uuid : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[uuid.UUID]
 
         base_64 : typing.Optional[str]
 
-        list : typing.Optional[typing.Sequence[str]]
+        list_ : typing.Optional[typing.Sequence[str]]
 
-        set : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Set[str]]
 
-        map : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[int, str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -294,26 +294,26 @@ class HttpMethodsClient:
             _request["string"] = string
         if integer is not OMIT:
             _request["integer"] = integer
-        if long is not OMIT:
-            _request["long"] = long
+        if long_ is not OMIT:
+            _request["long"] = long_
         if double is not OMIT:
             _request["double"] = double
-        if bool is not OMIT:
-            _request["bool"] = bool
+        if bool_ is not OMIT:
+            _request["bool"] = bool_
         if datetime is not OMIT:
             _request["datetime"] = datetime
         if date is not OMIT:
             _request["date"] = date
-        if uuid is not OMIT:
-            _request["uuid"] = uuid
+        if uuid_ is not OMIT:
+            _request["uuid"] = uuid_
         if base_64 is not OMIT:
             _request["base64"] = base_64
-        if list is not OMIT:
-            _request["list"] = list
-        if set is not OMIT:
-            _request["set"] = set
-        if map is not OMIT:
-            _request["map"] = map
+        if list_ is not OMIT:
+            _request["list"] = list_
+        if set_ is not OMIT:
+            _request["set"] = set_
+        if map_ is not OMIT:
+            _request["map"] = map_
         _response = self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),
@@ -592,16 +592,16 @@ class AsyncHttpMethodsClient:
         *,
         string: typing.Optional[str] = OMIT,
         integer: typing.Optional[int] = OMIT,
-        long: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
         double: typing.Optional[float] = OMIT,
-        bool: typing.Optional[bool] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[uuid.UUID] = OMIT,
         base_64: typing.Optional[str] = OMIT,
-        list: typing.Optional[typing.Sequence[str]] = OMIT,
-        set: typing.Optional[typing.Set[str]] = OMIT,
-        map: typing.Optional[typing.Dict[int, str]] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Set[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -613,25 +613,25 @@ class AsyncHttpMethodsClient:
 
         integer : typing.Optional[int]
 
-        long : typing.Optional[int]
+        long_ : typing.Optional[int]
 
         double : typing.Optional[float]
 
-        bool : typing.Optional[bool]
+        bool_ : typing.Optional[bool]
 
         datetime : typing.Optional[dt.datetime]
 
         date : typing.Optional[dt.date]
 
-        uuid : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[uuid.UUID]
 
         base_64 : typing.Optional[str]
 
-        list : typing.Optional[typing.Sequence[str]]
+        list_ : typing.Optional[typing.Sequence[str]]
 
-        set : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Set[str]]
 
-        map : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[int, str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -678,26 +678,26 @@ class AsyncHttpMethodsClient:
             _request["string"] = string
         if integer is not OMIT:
             _request["integer"] = integer
-        if long is not OMIT:
-            _request["long"] = long
+        if long_ is not OMIT:
+            _request["long"] = long_
         if double is not OMIT:
             _request["double"] = double
-        if bool is not OMIT:
-            _request["bool"] = bool
+        if bool_ is not OMIT:
+            _request["bool"] = bool_
         if datetime is not OMIT:
             _request["datetime"] = datetime
         if date is not OMIT:
             _request["date"] = date
-        if uuid is not OMIT:
-            _request["uuid"] = uuid
+        if uuid_ is not OMIT:
+            _request["uuid"] = uuid_
         if base_64 is not OMIT:
             _request["base64"] = base_64
-        if list is not OMIT:
-            _request["list"] = list
-        if set is not OMIT:
-            _request["set"] = set
-        if map is not OMIT:
-            _request["map"] = map
+        if list_ is not OMIT:
+            _request["list"] = list_
+        if set_ is not OMIT:
+            _request["set"] = set_
+        if map_ is not OMIT:
+            _request["map"] = map_
         _response = await self._client_wrapper.httpx_client.request(
             method="PATCH",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{jsonable_encoder(id)}"),

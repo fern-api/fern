@@ -58,7 +58,7 @@ export class ImdbService {
                 try {
                     await this.methods.createMovie(req as any, {
                         send: async (responseBody) => {
-                            res.json(
+                            res.status(201).json(
                                 await serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                             );
                         },
@@ -67,7 +67,6 @@ export class ImdbService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedApiError) {
                         console.warn(
                             `Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -102,7 +101,6 @@ export class ImdbService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiError) {
                     switch (error.errorName) {
                         case "MovieDoesNotExistError":

@@ -39,6 +39,7 @@ class PyProjectToml:
             self._poetry_block,
             PyProjectToml.DependenciesBlock(
                 dependencies=self._dependency_manager.get_dependencies(),
+                dev_dependencies=self._dependency_manager.get_dev_dependencies(),
                 python_version=self._python_version,
             ),
             PyProjectToml.PluginConfigurationBlock(),
@@ -87,11 +88,12 @@ packages = [
     @dataclass(frozen=True)
     class DependenciesBlock(Block):
         dependencies: Set[Dependency]
+        dev_dependencies: Set[Dependency]
         python_version: str
 
-        def to_string(self) -> str:
+        def deps_to_string(self, dependencies: Set[Dependency]) -> str:
             deps = ""
-            for dep in sorted(self.dependencies, key=lambda dep: dep.name):
+            for dep in sorted(dependencies, key=lambda dep: dep.name):
                 compatiblity = dep.compatibility
                 # TODO(dsinghvi): assert all enum cases are visited
                 print(dep.compatibility)
@@ -101,17 +103,21 @@ packages = [
                 elif compatiblity == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
                     print(f"{dep.name} is greater than or equal")
                     deps += f'{dep.name.replace(".", "-")} = ">={dep.version}"\n'
-            self.dependencies
+            return deps
+
+        def to_string(self) -> str:
+            deps = self.deps_to_string(self.dependencies)
+            dev_deps = self.deps_to_string(self.dev_dependencies)
             return f"""
 [tool.poetry.dependencies]
-python = "^{self.python_version}"
+python = "{self.python_version}"
 {deps}
 [tool.poetry.dev-dependencies]
 mypy = "1.9.0"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
-"""
+{dev_deps}"""
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):

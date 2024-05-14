@@ -197,511 +197,514 @@ axios.request(options).then(function (response) {
               "queryParameters": [],
               "request": null,
               "response": {
-                "body": {
-                  "jsonExample": {
-                    "result": {
-                      "cpu": 1.1,
-                      "memory": 1.1,
-                      "network": 1.1,
+                "type": "ok",
+                "value": {
+                  "type": "body",
+                  "value": {
+                    "jsonExample": {
+                      "result": {
+                        "cpu": 1.1,
+                        "memory": 1.1,
+                        "network": 1.1,
+                      },
+                      "status": "status",
+                      "time": 1.1,
                     },
-                    "status": "status",
-                    "time": 1.1,
-                  },
-                  "shape": {
                     "shape": {
-                      "properties": [
-                        {
-                          "name": {
+                      "shape": {
+                        "properties": [
+                          {
                             "name": {
-                              "camelCase": {
-                                "safeName": "time",
-                                "unsafeName": "time",
-                              },
-                              "originalName": "time",
-                              "pascalCase": {
-                                "safeName": "Time",
-                                "unsafeName": "Time",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TIME",
-                                "unsafeName": "TIME",
-                              },
-                              "snakeCase": {
-                                "safeName": "time",
-                                "unsafeName": "time",
-                              },
-                            },
-                            "wireValue": "time",
-                          },
-                          "originalTypeDeclaration": {
-                            "fernFilepath": {
-                              "allParts": [],
-                              "file": null,
-                              "packagePath": [],
-                            },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "telemetryResponse",
-                                "unsafeName": "telemetryResponse",
-                              },
-                              "originalName": "TelemetryResponse",
-                              "pascalCase": {
-                                "safeName": "TelemetryResponse",
-                                "unsafeName": "TelemetryResponse",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TELEMETRY_RESPONSE",
-                                "unsafeName": "TELEMETRY_RESPONSE",
-                              },
-                              "snakeCase": {
-                                "safeName": "telemetry_response",
-                                "unsafeName": "telemetry_response",
-                              },
-                            },
-                            "typeId": "type_:TelemetryResponse",
-                          },
-                          "value": {
-                            "jsonExample": 1.1,
-                            "shape": {
-                              "container": {
-                                "optional": {
-                                  "jsonExample": 1.1,
-                                  "shape": {
-                                    "primitive": {
-                                      "double": 1.1,
-                                      "type": "double",
-                                    },
-                                    "type": "primitive",
-                                  },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "time",
+                                  "unsafeName": "time",
                                 },
-                                "type": "optional",
-                              },
-                              "type": "container",
-                            },
-                          },
-                        },
-                        {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "status",
-                                "unsafeName": "status",
-                              },
-                              "originalName": "status",
-                              "pascalCase": {
-                                "safeName": "Status",
-                                "unsafeName": "Status",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "STATUS",
-                                "unsafeName": "STATUS",
-                              },
-                              "snakeCase": {
-                                "safeName": "status",
-                                "unsafeName": "status",
-                              },
-                            },
-                            "wireValue": "status",
-                          },
-                          "originalTypeDeclaration": {
-                            "fernFilepath": {
-                              "allParts": [],
-                              "file": null,
-                              "packagePath": [],
-                            },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "telemetryResponse",
-                                "unsafeName": "telemetryResponse",
-                              },
-                              "originalName": "TelemetryResponse",
-                              "pascalCase": {
-                                "safeName": "TelemetryResponse",
-                                "unsafeName": "TelemetryResponse",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TELEMETRY_RESPONSE",
-                                "unsafeName": "TELEMETRY_RESPONSE",
-                              },
-                              "snakeCase": {
-                                "safeName": "telemetry_response",
-                                "unsafeName": "telemetry_response",
-                              },
-                            },
-                            "typeId": "type_:TelemetryResponse",
-                          },
-                          "value": {
-                            "jsonExample": "status",
-                            "shape": {
-                              "container": {
-                                "optional": {
-                                  "jsonExample": "status",
-                                  "shape": {
-                                    "primitive": {
-                                      "string": {
-                                        "original": "status",
-                                      },
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
+                                "originalName": "time",
+                                "pascalCase": {
+                                  "safeName": "Time",
+                                  "unsafeName": "Time",
                                 },
-                                "type": "optional",
+                                "screamingSnakeCase": {
+                                  "safeName": "TIME",
+                                  "unsafeName": "TIME",
+                                },
+                                "snakeCase": {
+                                  "safeName": "time",
+                                  "unsafeName": "time",
+                                },
                               },
-                              "type": "container",
+                              "wireValue": "time",
                             },
-                          },
-                        },
-                        {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "result",
-                                "unsafeName": "result",
+                            "originalTypeDeclaration": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
                               },
-                              "originalName": "result",
-                              "pascalCase": {
-                                "safeName": "Result",
-                                "unsafeName": "Result",
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
+                                },
+                                "originalName": "TelemetryResponse",
+                                "pascalCase": {
+                                  "safeName": "TelemetryResponse",
+                                  "unsafeName": "TelemetryResponse",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TELEMETRY_RESPONSE",
+                                  "unsafeName": "TELEMETRY_RESPONSE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "telemetry_response",
+                                  "unsafeName": "telemetry_response",
+                                },
                               },
-                              "screamingSnakeCase": {
-                                "safeName": "RESULT",
-                                "unsafeName": "RESULT",
-                              },
-                              "snakeCase": {
-                                "safeName": "result",
-                                "unsafeName": "result",
-                              },
+                              "typeId": "type_:TelemetryResponse",
                             },
-                            "wireValue": "result",
-                          },
-                          "originalTypeDeclaration": {
-                            "fernFilepath": {
-                              "allParts": [],
-                              "file": null,
-                              "packagePath": [],
-                            },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "telemetryResponse",
-                                "unsafeName": "telemetryResponse",
-                              },
-                              "originalName": "TelemetryResponse",
-                              "pascalCase": {
-                                "safeName": "TelemetryResponse",
-                                "unsafeName": "TelemetryResponse",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TELEMETRY_RESPONSE",
-                                "unsafeName": "TELEMETRY_RESPONSE",
-                              },
-                              "snakeCase": {
-                                "safeName": "telemetry_response",
-                                "unsafeName": "telemetry_response",
-                              },
-                            },
-                            "typeId": "type_:TelemetryResponse",
-                          },
-                          "value": {
-                            "jsonExample": {
-                              "cpu": 1.1,
-                              "memory": 1.1,
-                              "network": 1.1,
-                            },
-                            "shape": {
-                              "container": {
-                                "optional": {
-                                  "jsonExample": {
-                                    "cpu": 1.1,
-                                    "memory": 1.1,
-                                    "network": 1.1,
-                                  },
-                                  "shape": {
+                            "value": {
+                              "jsonExample": 1.1,
+                              "shape": {
+                                "container": {
+                                  "optional": {
+                                    "jsonExample": 1.1,
                                     "shape": {
-                                      "properties": [
-                                        {
-                                          "name": {
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "cpu",
-                                                "unsafeName": "cpu",
-                                              },
-                                              "originalName": "cpu",
-                                              "pascalCase": {
-                                                "safeName": "CPU",
-                                                "unsafeName": "CPU",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "CPU",
-                                                "unsafeName": "CPU",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "cpu",
-                                                "unsafeName": "cpu",
-                                              },
-                                            },
-                                            "wireValue": "cpu",
-                                          },
-                                          "originalTypeDeclaration": {
-                                            "fernFilepath": {
-                                              "allParts": [],
-                                              "file": null,
-                                              "packagePath": [],
-                                            },
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "telemetryData",
-                                                "unsafeName": "telemetryData",
-                                              },
-                                              "originalName": "TelemetryData",
-                                              "pascalCase": {
-                                                "safeName": "TelemetryData",
-                                                "unsafeName": "TelemetryData",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "TELEMETRY_DATA",
-                                                "unsafeName": "TELEMETRY_DATA",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "telemetry_data",
-                                                "unsafeName": "telemetry_data",
-                                              },
-                                            },
-                                            "typeId": "type_:TelemetryData",
-                                          },
-                                          "value": {
-                                            "jsonExample": 1.1,
-                                            "shape": {
-                                              "container": {
-                                                "optional": {
-                                                  "jsonExample": 1.1,
-                                                  "shape": {
-                                                    "primitive": {
-                                                      "double": 1.1,
-                                                      "type": "double",
-                                                    },
-                                                    "type": "primitive",
-                                                  },
-                                                },
-                                                "type": "optional",
-                                              },
-                                              "type": "container",
-                                            },
-                                          },
-                                        },
-                                        {
-                                          "name": {
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "memory",
-                                                "unsafeName": "memory",
-                                              },
-                                              "originalName": "memory",
-                                              "pascalCase": {
-                                                "safeName": "Memory",
-                                                "unsafeName": "Memory",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "MEMORY",
-                                                "unsafeName": "MEMORY",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "memory",
-                                                "unsafeName": "memory",
-                                              },
-                                            },
-                                            "wireValue": "memory",
-                                          },
-                                          "originalTypeDeclaration": {
-                                            "fernFilepath": {
-                                              "allParts": [],
-                                              "file": null,
-                                              "packagePath": [],
-                                            },
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "telemetryData",
-                                                "unsafeName": "telemetryData",
-                                              },
-                                              "originalName": "TelemetryData",
-                                              "pascalCase": {
-                                                "safeName": "TelemetryData",
-                                                "unsafeName": "TelemetryData",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "TELEMETRY_DATA",
-                                                "unsafeName": "TELEMETRY_DATA",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "telemetry_data",
-                                                "unsafeName": "telemetry_data",
-                                              },
-                                            },
-                                            "typeId": "type_:TelemetryData",
-                                          },
-                                          "value": {
-                                            "jsonExample": 1.1,
-                                            "shape": {
-                                              "container": {
-                                                "optional": {
-                                                  "jsonExample": 1.1,
-                                                  "shape": {
-                                                    "primitive": {
-                                                      "double": 1.1,
-                                                      "type": "double",
-                                                    },
-                                                    "type": "primitive",
-                                                  },
-                                                },
-                                                "type": "optional",
-                                              },
-                                              "type": "container",
-                                            },
-                                          },
-                                        },
-                                        {
-                                          "name": {
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "network",
-                                                "unsafeName": "network",
-                                              },
-                                              "originalName": "network",
-                                              "pascalCase": {
-                                                "safeName": "Network",
-                                                "unsafeName": "Network",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "NETWORK",
-                                                "unsafeName": "NETWORK",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "network",
-                                                "unsafeName": "network",
-                                              },
-                                            },
-                                            "wireValue": "network",
-                                          },
-                                          "originalTypeDeclaration": {
-                                            "fernFilepath": {
-                                              "allParts": [],
-                                              "file": null,
-                                              "packagePath": [],
-                                            },
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "telemetryData",
-                                                "unsafeName": "telemetryData",
-                                              },
-                                              "originalName": "TelemetryData",
-                                              "pascalCase": {
-                                                "safeName": "TelemetryData",
-                                                "unsafeName": "TelemetryData",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "TELEMETRY_DATA",
-                                                "unsafeName": "TELEMETRY_DATA",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "telemetry_data",
-                                                "unsafeName": "telemetry_data",
-                                              },
-                                            },
-                                            "typeId": "type_:TelemetryData",
-                                          },
-                                          "value": {
-                                            "jsonExample": 1.1,
-                                            "shape": {
-                                              "container": {
-                                                "optional": {
-                                                  "jsonExample": 1.1,
-                                                  "shape": {
-                                                    "primitive": {
-                                                      "double": 1.1,
-                                                      "type": "double",
-                                                    },
-                                                    "type": "primitive",
-                                                  },
-                                                },
-                                                "type": "optional",
-                                              },
-                                              "type": "container",
-                                            },
-                                          },
-                                        },
-                                      ],
-                                      "type": "object",
-                                    },
-                                    "type": "named",
-                                    "typeName": {
-                                      "fernFilepath": {
-                                        "allParts": [],
-                                        "file": null,
-                                        "packagePath": [],
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
                                       },
-                                      "name": {
-                                        "camelCase": {
-                                          "safeName": "telemetryData",
-                                          "unsafeName": "telemetryData",
-                                        },
-                                        "originalName": "TelemetryData",
-                                        "pascalCase": {
-                                          "safeName": "TelemetryData",
-                                          "unsafeName": "TelemetryData",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "TELEMETRY_DATA",
-                                          "unsafeName": "TELEMETRY_DATA",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "telemetry_data",
-                                          "unsafeName": "telemetry_data",
-                                        },
-                                      },
-                                      "typeId": "type_:TelemetryData",
+                                      "type": "primitive",
                                     },
                                   },
+                                  "type": "optional",
                                 },
-                                "type": "optional",
+                                "type": "container",
                               },
-                              "type": "container",
                             },
                           },
-                        },
-                      ],
-                      "type": "object",
-                    },
-                    "type": "named",
-                    "typeName": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "file": null,
-                        "packagePath": [],
+                          {
+                            "name": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "status",
+                                  "unsafeName": "status",
+                                },
+                                "originalName": "status",
+                                "pascalCase": {
+                                  "safeName": "Status",
+                                  "unsafeName": "Status",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "STATUS",
+                                  "unsafeName": "STATUS",
+                                },
+                                "snakeCase": {
+                                  "safeName": "status",
+                                  "unsafeName": "status",
+                                },
+                              },
+                              "wireValue": "status",
+                            },
+                            "originalTypeDeclaration": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
+                                },
+                                "originalName": "TelemetryResponse",
+                                "pascalCase": {
+                                  "safeName": "TelemetryResponse",
+                                  "unsafeName": "TelemetryResponse",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TELEMETRY_RESPONSE",
+                                  "unsafeName": "TELEMETRY_RESPONSE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "telemetry_response",
+                                  "unsafeName": "telemetry_response",
+                                },
+                              },
+                              "typeId": "type_:TelemetryResponse",
+                            },
+                            "value": {
+                              "jsonExample": "status",
+                              "shape": {
+                                "container": {
+                                  "optional": {
+                                    "jsonExample": "status",
+                                    "shape": {
+                                      "primitive": {
+                                        "string": {
+                                          "original": "status",
+                                        },
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "type": "optional",
+                                },
+                                "type": "container",
+                              },
+                            },
+                          },
+                          {
+                            "name": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "result",
+                                  "unsafeName": "result",
+                                },
+                                "originalName": "result",
+                                "pascalCase": {
+                                  "safeName": "Result",
+                                  "unsafeName": "Result",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "RESULT",
+                                  "unsafeName": "RESULT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "result",
+                                  "unsafeName": "result",
+                                },
+                              },
+                              "wireValue": "result",
+                            },
+                            "originalTypeDeclaration": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
+                                },
+                                "originalName": "TelemetryResponse",
+                                "pascalCase": {
+                                  "safeName": "TelemetryResponse",
+                                  "unsafeName": "TelemetryResponse",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TELEMETRY_RESPONSE",
+                                  "unsafeName": "TELEMETRY_RESPONSE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "telemetry_response",
+                                  "unsafeName": "telemetry_response",
+                                },
+                              },
+                              "typeId": "type_:TelemetryResponse",
+                            },
+                            "value": {
+                              "jsonExample": {
+                                "cpu": 1.1,
+                                "memory": 1.1,
+                                "network": 1.1,
+                              },
+                              "shape": {
+                                "container": {
+                                  "optional": {
+                                    "jsonExample": {
+                                      "cpu": 1.1,
+                                      "memory": 1.1,
+                                      "network": 1.1,
+                                    },
+                                    "shape": {
+                                      "shape": {
+                                        "properties": [
+                                          {
+                                            "name": {
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "cpu",
+                                                  "unsafeName": "cpu",
+                                                },
+                                                "originalName": "cpu",
+                                                "pascalCase": {
+                                                  "safeName": "CPU",
+                                                  "unsafeName": "CPU",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "CPU",
+                                                  "unsafeName": "CPU",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "cpu",
+                                                  "unsafeName": "cpu",
+                                                },
+                                              },
+                                              "wireValue": "cpu",
+                                            },
+                                            "originalTypeDeclaration": {
+                                              "fernFilepath": {
+                                                "allParts": [],
+                                                "file": null,
+                                                "packagePath": [],
+                                              },
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
+                                                },
+                                                "originalName": "TelemetryData",
+                                                "pascalCase": {
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "TELEMETRY_DATA",
+                                                  "unsafeName": "TELEMETRY_DATA",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "telemetry_data",
+                                                  "unsafeName": "telemetry_data",
+                                                },
+                                              },
+                                              "typeId": "type_:TelemetryData",
+                                            },
+                                            "value": {
+                                              "jsonExample": 1.1,
+                                              "shape": {
+                                                "container": {
+                                                  "optional": {
+                                                    "jsonExample": 1.1,
+                                                    "shape": {
+                                                      "primitive": {
+                                                        "double": 1.1,
+                                                        "type": "double",
+                                                      },
+                                                      "type": "primitive",
+                                                    },
+                                                  },
+                                                  "type": "optional",
+                                                },
+                                                "type": "container",
+                                              },
+                                            },
+                                          },
+                                          {
+                                            "name": {
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "memory",
+                                                  "unsafeName": "memory",
+                                                },
+                                                "originalName": "memory",
+                                                "pascalCase": {
+                                                  "safeName": "Memory",
+                                                  "unsafeName": "Memory",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "MEMORY",
+                                                  "unsafeName": "MEMORY",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "memory",
+                                                  "unsafeName": "memory",
+                                                },
+                                              },
+                                              "wireValue": "memory",
+                                            },
+                                            "originalTypeDeclaration": {
+                                              "fernFilepath": {
+                                                "allParts": [],
+                                                "file": null,
+                                                "packagePath": [],
+                                              },
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
+                                                },
+                                                "originalName": "TelemetryData",
+                                                "pascalCase": {
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "TELEMETRY_DATA",
+                                                  "unsafeName": "TELEMETRY_DATA",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "telemetry_data",
+                                                  "unsafeName": "telemetry_data",
+                                                },
+                                              },
+                                              "typeId": "type_:TelemetryData",
+                                            },
+                                            "value": {
+                                              "jsonExample": 1.1,
+                                              "shape": {
+                                                "container": {
+                                                  "optional": {
+                                                    "jsonExample": 1.1,
+                                                    "shape": {
+                                                      "primitive": {
+                                                        "double": 1.1,
+                                                        "type": "double",
+                                                      },
+                                                      "type": "primitive",
+                                                    },
+                                                  },
+                                                  "type": "optional",
+                                                },
+                                                "type": "container",
+                                              },
+                                            },
+                                          },
+                                          {
+                                            "name": {
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "network",
+                                                  "unsafeName": "network",
+                                                },
+                                                "originalName": "network",
+                                                "pascalCase": {
+                                                  "safeName": "Network",
+                                                  "unsafeName": "Network",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "NETWORK",
+                                                  "unsafeName": "NETWORK",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "network",
+                                                  "unsafeName": "network",
+                                                },
+                                              },
+                                              "wireValue": "network",
+                                            },
+                                            "originalTypeDeclaration": {
+                                              "fernFilepath": {
+                                                "allParts": [],
+                                                "file": null,
+                                                "packagePath": [],
+                                              },
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
+                                                },
+                                                "originalName": "TelemetryData",
+                                                "pascalCase": {
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "TELEMETRY_DATA",
+                                                  "unsafeName": "TELEMETRY_DATA",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "telemetry_data",
+                                                  "unsafeName": "telemetry_data",
+                                                },
+                                              },
+                                              "typeId": "type_:TelemetryData",
+                                            },
+                                            "value": {
+                                              "jsonExample": 1.1,
+                                              "shape": {
+                                                "container": {
+                                                  "optional": {
+                                                    "jsonExample": 1.1,
+                                                    "shape": {
+                                                      "primitive": {
+                                                        "double": 1.1,
+                                                        "type": "double",
+                                                      },
+                                                      "type": "primitive",
+                                                    },
+                                                  },
+                                                  "type": "optional",
+                                                },
+                                                "type": "container",
+                                              },
+                                            },
+                                          },
+                                        ],
+                                        "type": "object",
+                                      },
+                                      "type": "named",
+                                      "typeName": {
+                                        "fernFilepath": {
+                                          "allParts": [],
+                                          "file": null,
+                                          "packagePath": [],
+                                        },
+                                        "name": {
+                                          "camelCase": {
+                                            "safeName": "telemetryData",
+                                            "unsafeName": "telemetryData",
+                                          },
+                                          "originalName": "TelemetryData",
+                                          "pascalCase": {
+                                            "safeName": "TelemetryData",
+                                            "unsafeName": "TelemetryData",
+                                          },
+                                          "screamingSnakeCase": {
+                                            "safeName": "TELEMETRY_DATA",
+                                            "unsafeName": "TELEMETRY_DATA",
+                                          },
+                                          "snakeCase": {
+                                            "safeName": "telemetry_data",
+                                            "unsafeName": "telemetry_data",
+                                          },
+                                        },
+                                        "typeId": "type_:TelemetryData",
+                                      },
+                                    },
+                                  },
+                                  "type": "optional",
+                                },
+                                "type": "container",
+                              },
+                            },
+                          },
+                        ],
+                        "type": "object",
                       },
-                      "name": {
-                        "camelCase": {
-                          "safeName": "telemetryResponse",
-                          "unsafeName": "telemetryResponse",
+                      "type": "named",
+                      "typeName": {
+                        "fernFilepath": {
+                          "allParts": [],
+                          "file": null,
+                          "packagePath": [],
                         },
-                        "originalName": "TelemetryResponse",
-                        "pascalCase": {
-                          "safeName": "TelemetryResponse",
-                          "unsafeName": "TelemetryResponse",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "telemetryResponse",
+                            "unsafeName": "telemetryResponse",
+                          },
+                          "originalName": "TelemetryResponse",
+                          "pascalCase": {
+                            "safeName": "TelemetryResponse",
+                            "unsafeName": "TelemetryResponse",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TELEMETRY_RESPONSE",
+                            "unsafeName": "TELEMETRY_RESPONSE",
+                          },
+                          "snakeCase": {
+                            "safeName": "telemetry_response",
+                            "unsafeName": "telemetry_response",
+                          },
                         },
-                        "screamingSnakeCase": {
-                          "safeName": "TELEMETRY_RESPONSE",
-                          "unsafeName": "TELEMETRY_RESPONSE",
-                        },
-                        "snakeCase": {
-                          "safeName": "telemetry_response",
-                          "unsafeName": "telemetry_response",
-                        },
+                        "typeId": "type_:TelemetryResponse",
                       },
-                      "typeId": "type_:TelemetryResponse",
                     },
                   },
                 },
-                "type": "ok",
               },
               "rootPathParameters": [],
               "serviceHeaders": [],
@@ -753,511 +756,514 @@ axios.request(options).then(function (response) {
               ],
               "request": null,
               "response": {
-                "body": {
-                  "jsonExample": {
-                    "result": {
-                      "cpu": 1.1,
-                      "memory": 1.1,
-                      "network": 1.1,
+                "type": "ok",
+                "value": {
+                  "type": "body",
+                  "value": {
+                    "jsonExample": {
+                      "result": {
+                        "cpu": 1.1,
+                        "memory": 1.1,
+                        "network": 1.1,
+                      },
+                      "status": "status",
+                      "time": 1.1,
                     },
-                    "status": "status",
-                    "time": 1.1,
-                  },
-                  "shape": {
                     "shape": {
-                      "properties": [
-                        {
-                          "name": {
+                      "shape": {
+                        "properties": [
+                          {
                             "name": {
-                              "camelCase": {
-                                "safeName": "time",
-                                "unsafeName": "time",
-                              },
-                              "originalName": "time",
-                              "pascalCase": {
-                                "safeName": "Time",
-                                "unsafeName": "Time",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TIME",
-                                "unsafeName": "TIME",
-                              },
-                              "snakeCase": {
-                                "safeName": "time",
-                                "unsafeName": "time",
-                              },
-                            },
-                            "wireValue": "time",
-                          },
-                          "originalTypeDeclaration": {
-                            "fernFilepath": {
-                              "allParts": [],
-                              "file": null,
-                              "packagePath": [],
-                            },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "telemetryResponse",
-                                "unsafeName": "telemetryResponse",
-                              },
-                              "originalName": "TelemetryResponse",
-                              "pascalCase": {
-                                "safeName": "TelemetryResponse",
-                                "unsafeName": "TelemetryResponse",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TELEMETRY_RESPONSE",
-                                "unsafeName": "TELEMETRY_RESPONSE",
-                              },
-                              "snakeCase": {
-                                "safeName": "telemetry_response",
-                                "unsafeName": "telemetry_response",
-                              },
-                            },
-                            "typeId": "type_:TelemetryResponse",
-                          },
-                          "value": {
-                            "jsonExample": 1.1,
-                            "shape": {
-                              "container": {
-                                "optional": {
-                                  "jsonExample": 1.1,
-                                  "shape": {
-                                    "primitive": {
-                                      "double": 1.1,
-                                      "type": "double",
-                                    },
-                                    "type": "primitive",
-                                  },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "time",
+                                  "unsafeName": "time",
                                 },
-                                "type": "optional",
-                              },
-                              "type": "container",
-                            },
-                          },
-                        },
-                        {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "status",
-                                "unsafeName": "status",
-                              },
-                              "originalName": "status",
-                              "pascalCase": {
-                                "safeName": "Status",
-                                "unsafeName": "Status",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "STATUS",
-                                "unsafeName": "STATUS",
-                              },
-                              "snakeCase": {
-                                "safeName": "status",
-                                "unsafeName": "status",
-                              },
-                            },
-                            "wireValue": "status",
-                          },
-                          "originalTypeDeclaration": {
-                            "fernFilepath": {
-                              "allParts": [],
-                              "file": null,
-                              "packagePath": [],
-                            },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "telemetryResponse",
-                                "unsafeName": "telemetryResponse",
-                              },
-                              "originalName": "TelemetryResponse",
-                              "pascalCase": {
-                                "safeName": "TelemetryResponse",
-                                "unsafeName": "TelemetryResponse",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TELEMETRY_RESPONSE",
-                                "unsafeName": "TELEMETRY_RESPONSE",
-                              },
-                              "snakeCase": {
-                                "safeName": "telemetry_response",
-                                "unsafeName": "telemetry_response",
-                              },
-                            },
-                            "typeId": "type_:TelemetryResponse",
-                          },
-                          "value": {
-                            "jsonExample": "status",
-                            "shape": {
-                              "container": {
-                                "optional": {
-                                  "jsonExample": "status",
-                                  "shape": {
-                                    "primitive": {
-                                      "string": {
-                                        "original": "status",
-                                      },
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
+                                "originalName": "time",
+                                "pascalCase": {
+                                  "safeName": "Time",
+                                  "unsafeName": "Time",
                                 },
-                                "type": "optional",
+                                "screamingSnakeCase": {
+                                  "safeName": "TIME",
+                                  "unsafeName": "TIME",
+                                },
+                                "snakeCase": {
+                                  "safeName": "time",
+                                  "unsafeName": "time",
+                                },
                               },
-                              "type": "container",
+                              "wireValue": "time",
                             },
-                          },
-                        },
-                        {
-                          "name": {
-                            "name": {
-                              "camelCase": {
-                                "safeName": "result",
-                                "unsafeName": "result",
+                            "originalTypeDeclaration": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
                               },
-                              "originalName": "result",
-                              "pascalCase": {
-                                "safeName": "Result",
-                                "unsafeName": "Result",
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
+                                },
+                                "originalName": "TelemetryResponse",
+                                "pascalCase": {
+                                  "safeName": "TelemetryResponse",
+                                  "unsafeName": "TelemetryResponse",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TELEMETRY_RESPONSE",
+                                  "unsafeName": "TELEMETRY_RESPONSE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "telemetry_response",
+                                  "unsafeName": "telemetry_response",
+                                },
                               },
-                              "screamingSnakeCase": {
-                                "safeName": "RESULT",
-                                "unsafeName": "RESULT",
-                              },
-                              "snakeCase": {
-                                "safeName": "result",
-                                "unsafeName": "result",
-                              },
+                              "typeId": "type_:TelemetryResponse",
                             },
-                            "wireValue": "result",
-                          },
-                          "originalTypeDeclaration": {
-                            "fernFilepath": {
-                              "allParts": [],
-                              "file": null,
-                              "packagePath": [],
-                            },
-                            "name": {
-                              "camelCase": {
-                                "safeName": "telemetryResponse",
-                                "unsafeName": "telemetryResponse",
-                              },
-                              "originalName": "TelemetryResponse",
-                              "pascalCase": {
-                                "safeName": "TelemetryResponse",
-                                "unsafeName": "TelemetryResponse",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "TELEMETRY_RESPONSE",
-                                "unsafeName": "TELEMETRY_RESPONSE",
-                              },
-                              "snakeCase": {
-                                "safeName": "telemetry_response",
-                                "unsafeName": "telemetry_response",
-                              },
-                            },
-                            "typeId": "type_:TelemetryResponse",
-                          },
-                          "value": {
-                            "jsonExample": {
-                              "cpu": 1.1,
-                              "memory": 1.1,
-                              "network": 1.1,
-                            },
-                            "shape": {
-                              "container": {
-                                "optional": {
-                                  "jsonExample": {
-                                    "cpu": 1.1,
-                                    "memory": 1.1,
-                                    "network": 1.1,
-                                  },
-                                  "shape": {
+                            "value": {
+                              "jsonExample": 1.1,
+                              "shape": {
+                                "container": {
+                                  "optional": {
+                                    "jsonExample": 1.1,
                                     "shape": {
-                                      "properties": [
-                                        {
-                                          "name": {
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "cpu",
-                                                "unsafeName": "cpu",
-                                              },
-                                              "originalName": "cpu",
-                                              "pascalCase": {
-                                                "safeName": "CPU",
-                                                "unsafeName": "CPU",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "CPU",
-                                                "unsafeName": "CPU",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "cpu",
-                                                "unsafeName": "cpu",
-                                              },
-                                            },
-                                            "wireValue": "cpu",
-                                          },
-                                          "originalTypeDeclaration": {
-                                            "fernFilepath": {
-                                              "allParts": [],
-                                              "file": null,
-                                              "packagePath": [],
-                                            },
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "telemetryData",
-                                                "unsafeName": "telemetryData",
-                                              },
-                                              "originalName": "TelemetryData",
-                                              "pascalCase": {
-                                                "safeName": "TelemetryData",
-                                                "unsafeName": "TelemetryData",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "TELEMETRY_DATA",
-                                                "unsafeName": "TELEMETRY_DATA",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "telemetry_data",
-                                                "unsafeName": "telemetry_data",
-                                              },
-                                            },
-                                            "typeId": "type_:TelemetryData",
-                                          },
-                                          "value": {
-                                            "jsonExample": 1.1,
-                                            "shape": {
-                                              "container": {
-                                                "optional": {
-                                                  "jsonExample": 1.1,
-                                                  "shape": {
-                                                    "primitive": {
-                                                      "double": 1.1,
-                                                      "type": "double",
-                                                    },
-                                                    "type": "primitive",
-                                                  },
-                                                },
-                                                "type": "optional",
-                                              },
-                                              "type": "container",
-                                            },
-                                          },
-                                        },
-                                        {
-                                          "name": {
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "memory",
-                                                "unsafeName": "memory",
-                                              },
-                                              "originalName": "memory",
-                                              "pascalCase": {
-                                                "safeName": "Memory",
-                                                "unsafeName": "Memory",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "MEMORY",
-                                                "unsafeName": "MEMORY",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "memory",
-                                                "unsafeName": "memory",
-                                              },
-                                            },
-                                            "wireValue": "memory",
-                                          },
-                                          "originalTypeDeclaration": {
-                                            "fernFilepath": {
-                                              "allParts": [],
-                                              "file": null,
-                                              "packagePath": [],
-                                            },
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "telemetryData",
-                                                "unsafeName": "telemetryData",
-                                              },
-                                              "originalName": "TelemetryData",
-                                              "pascalCase": {
-                                                "safeName": "TelemetryData",
-                                                "unsafeName": "TelemetryData",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "TELEMETRY_DATA",
-                                                "unsafeName": "TELEMETRY_DATA",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "telemetry_data",
-                                                "unsafeName": "telemetry_data",
-                                              },
-                                            },
-                                            "typeId": "type_:TelemetryData",
-                                          },
-                                          "value": {
-                                            "jsonExample": 1.1,
-                                            "shape": {
-                                              "container": {
-                                                "optional": {
-                                                  "jsonExample": 1.1,
-                                                  "shape": {
-                                                    "primitive": {
-                                                      "double": 1.1,
-                                                      "type": "double",
-                                                    },
-                                                    "type": "primitive",
-                                                  },
-                                                },
-                                                "type": "optional",
-                                              },
-                                              "type": "container",
-                                            },
-                                          },
-                                        },
-                                        {
-                                          "name": {
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "network",
-                                                "unsafeName": "network",
-                                              },
-                                              "originalName": "network",
-                                              "pascalCase": {
-                                                "safeName": "Network",
-                                                "unsafeName": "Network",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "NETWORK",
-                                                "unsafeName": "NETWORK",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "network",
-                                                "unsafeName": "network",
-                                              },
-                                            },
-                                            "wireValue": "network",
-                                          },
-                                          "originalTypeDeclaration": {
-                                            "fernFilepath": {
-                                              "allParts": [],
-                                              "file": null,
-                                              "packagePath": [],
-                                            },
-                                            "name": {
-                                              "camelCase": {
-                                                "safeName": "telemetryData",
-                                                "unsafeName": "telemetryData",
-                                              },
-                                              "originalName": "TelemetryData",
-                                              "pascalCase": {
-                                                "safeName": "TelemetryData",
-                                                "unsafeName": "TelemetryData",
-                                              },
-                                              "screamingSnakeCase": {
-                                                "safeName": "TELEMETRY_DATA",
-                                                "unsafeName": "TELEMETRY_DATA",
-                                              },
-                                              "snakeCase": {
-                                                "safeName": "telemetry_data",
-                                                "unsafeName": "telemetry_data",
-                                              },
-                                            },
-                                            "typeId": "type_:TelemetryData",
-                                          },
-                                          "value": {
-                                            "jsonExample": 1.1,
-                                            "shape": {
-                                              "container": {
-                                                "optional": {
-                                                  "jsonExample": 1.1,
-                                                  "shape": {
-                                                    "primitive": {
-                                                      "double": 1.1,
-                                                      "type": "double",
-                                                    },
-                                                    "type": "primitive",
-                                                  },
-                                                },
-                                                "type": "optional",
-                                              },
-                                              "type": "container",
-                                            },
-                                          },
-                                        },
-                                      ],
-                                      "type": "object",
-                                    },
-                                    "type": "named",
-                                    "typeName": {
-                                      "fernFilepath": {
-                                        "allParts": [],
-                                        "file": null,
-                                        "packagePath": [],
+                                      "primitive": {
+                                        "double": 1.1,
+                                        "type": "double",
                                       },
-                                      "name": {
-                                        "camelCase": {
-                                          "safeName": "telemetryData",
-                                          "unsafeName": "telemetryData",
-                                        },
-                                        "originalName": "TelemetryData",
-                                        "pascalCase": {
-                                          "safeName": "TelemetryData",
-                                          "unsafeName": "TelemetryData",
-                                        },
-                                        "screamingSnakeCase": {
-                                          "safeName": "TELEMETRY_DATA",
-                                          "unsafeName": "TELEMETRY_DATA",
-                                        },
-                                        "snakeCase": {
-                                          "safeName": "telemetry_data",
-                                          "unsafeName": "telemetry_data",
-                                        },
-                                      },
-                                      "typeId": "type_:TelemetryData",
+                                      "type": "primitive",
                                     },
                                   },
+                                  "type": "optional",
                                 },
-                                "type": "optional",
+                                "type": "container",
                               },
-                              "type": "container",
                             },
                           },
-                        },
-                      ],
-                      "type": "object",
-                    },
-                    "type": "named",
-                    "typeName": {
-                      "fernFilepath": {
-                        "allParts": [],
-                        "file": null,
-                        "packagePath": [],
+                          {
+                            "name": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "status",
+                                  "unsafeName": "status",
+                                },
+                                "originalName": "status",
+                                "pascalCase": {
+                                  "safeName": "Status",
+                                  "unsafeName": "Status",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "STATUS",
+                                  "unsafeName": "STATUS",
+                                },
+                                "snakeCase": {
+                                  "safeName": "status",
+                                  "unsafeName": "status",
+                                },
+                              },
+                              "wireValue": "status",
+                            },
+                            "originalTypeDeclaration": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
+                                },
+                                "originalName": "TelemetryResponse",
+                                "pascalCase": {
+                                  "safeName": "TelemetryResponse",
+                                  "unsafeName": "TelemetryResponse",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TELEMETRY_RESPONSE",
+                                  "unsafeName": "TELEMETRY_RESPONSE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "telemetry_response",
+                                  "unsafeName": "telemetry_response",
+                                },
+                              },
+                              "typeId": "type_:TelemetryResponse",
+                            },
+                            "value": {
+                              "jsonExample": "status",
+                              "shape": {
+                                "container": {
+                                  "optional": {
+                                    "jsonExample": "status",
+                                    "shape": {
+                                      "primitive": {
+                                        "string": {
+                                          "original": "status",
+                                        },
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                  "type": "optional",
+                                },
+                                "type": "container",
+                              },
+                            },
+                          },
+                          {
+                            "name": {
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "result",
+                                  "unsafeName": "result",
+                                },
+                                "originalName": "result",
+                                "pascalCase": {
+                                  "safeName": "Result",
+                                  "unsafeName": "Result",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "RESULT",
+                                  "unsafeName": "RESULT",
+                                },
+                                "snakeCase": {
+                                  "safeName": "result",
+                                  "unsafeName": "result",
+                                },
+                              },
+                              "wireValue": "result",
+                            },
+                            "originalTypeDeclaration": {
+                              "fernFilepath": {
+                                "allParts": [],
+                                "file": null,
+                                "packagePath": [],
+                              },
+                              "name": {
+                                "camelCase": {
+                                  "safeName": "telemetryResponse",
+                                  "unsafeName": "telemetryResponse",
+                                },
+                                "originalName": "TelemetryResponse",
+                                "pascalCase": {
+                                  "safeName": "TelemetryResponse",
+                                  "unsafeName": "TelemetryResponse",
+                                },
+                                "screamingSnakeCase": {
+                                  "safeName": "TELEMETRY_RESPONSE",
+                                  "unsafeName": "TELEMETRY_RESPONSE",
+                                },
+                                "snakeCase": {
+                                  "safeName": "telemetry_response",
+                                  "unsafeName": "telemetry_response",
+                                },
+                              },
+                              "typeId": "type_:TelemetryResponse",
+                            },
+                            "value": {
+                              "jsonExample": {
+                                "cpu": 1.1,
+                                "memory": 1.1,
+                                "network": 1.1,
+                              },
+                              "shape": {
+                                "container": {
+                                  "optional": {
+                                    "jsonExample": {
+                                      "cpu": 1.1,
+                                      "memory": 1.1,
+                                      "network": 1.1,
+                                    },
+                                    "shape": {
+                                      "shape": {
+                                        "properties": [
+                                          {
+                                            "name": {
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "cpu",
+                                                  "unsafeName": "cpu",
+                                                },
+                                                "originalName": "cpu",
+                                                "pascalCase": {
+                                                  "safeName": "CPU",
+                                                  "unsafeName": "CPU",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "CPU",
+                                                  "unsafeName": "CPU",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "cpu",
+                                                  "unsafeName": "cpu",
+                                                },
+                                              },
+                                              "wireValue": "cpu",
+                                            },
+                                            "originalTypeDeclaration": {
+                                              "fernFilepath": {
+                                                "allParts": [],
+                                                "file": null,
+                                                "packagePath": [],
+                                              },
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
+                                                },
+                                                "originalName": "TelemetryData",
+                                                "pascalCase": {
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "TELEMETRY_DATA",
+                                                  "unsafeName": "TELEMETRY_DATA",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "telemetry_data",
+                                                  "unsafeName": "telemetry_data",
+                                                },
+                                              },
+                                              "typeId": "type_:TelemetryData",
+                                            },
+                                            "value": {
+                                              "jsonExample": 1.1,
+                                              "shape": {
+                                                "container": {
+                                                  "optional": {
+                                                    "jsonExample": 1.1,
+                                                    "shape": {
+                                                      "primitive": {
+                                                        "double": 1.1,
+                                                        "type": "double",
+                                                      },
+                                                      "type": "primitive",
+                                                    },
+                                                  },
+                                                  "type": "optional",
+                                                },
+                                                "type": "container",
+                                              },
+                                            },
+                                          },
+                                          {
+                                            "name": {
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "memory",
+                                                  "unsafeName": "memory",
+                                                },
+                                                "originalName": "memory",
+                                                "pascalCase": {
+                                                  "safeName": "Memory",
+                                                  "unsafeName": "Memory",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "MEMORY",
+                                                  "unsafeName": "MEMORY",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "memory",
+                                                  "unsafeName": "memory",
+                                                },
+                                              },
+                                              "wireValue": "memory",
+                                            },
+                                            "originalTypeDeclaration": {
+                                              "fernFilepath": {
+                                                "allParts": [],
+                                                "file": null,
+                                                "packagePath": [],
+                                              },
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
+                                                },
+                                                "originalName": "TelemetryData",
+                                                "pascalCase": {
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "TELEMETRY_DATA",
+                                                  "unsafeName": "TELEMETRY_DATA",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "telemetry_data",
+                                                  "unsafeName": "telemetry_data",
+                                                },
+                                              },
+                                              "typeId": "type_:TelemetryData",
+                                            },
+                                            "value": {
+                                              "jsonExample": 1.1,
+                                              "shape": {
+                                                "container": {
+                                                  "optional": {
+                                                    "jsonExample": 1.1,
+                                                    "shape": {
+                                                      "primitive": {
+                                                        "double": 1.1,
+                                                        "type": "double",
+                                                      },
+                                                      "type": "primitive",
+                                                    },
+                                                  },
+                                                  "type": "optional",
+                                                },
+                                                "type": "container",
+                                              },
+                                            },
+                                          },
+                                          {
+                                            "name": {
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "network",
+                                                  "unsafeName": "network",
+                                                },
+                                                "originalName": "network",
+                                                "pascalCase": {
+                                                  "safeName": "Network",
+                                                  "unsafeName": "Network",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "NETWORK",
+                                                  "unsafeName": "NETWORK",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "network",
+                                                  "unsafeName": "network",
+                                                },
+                                              },
+                                              "wireValue": "network",
+                                            },
+                                            "originalTypeDeclaration": {
+                                              "fernFilepath": {
+                                                "allParts": [],
+                                                "file": null,
+                                                "packagePath": [],
+                                              },
+                                              "name": {
+                                                "camelCase": {
+                                                  "safeName": "telemetryData",
+                                                  "unsafeName": "telemetryData",
+                                                },
+                                                "originalName": "TelemetryData",
+                                                "pascalCase": {
+                                                  "safeName": "TelemetryData",
+                                                  "unsafeName": "TelemetryData",
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "safeName": "TELEMETRY_DATA",
+                                                  "unsafeName": "TELEMETRY_DATA",
+                                                },
+                                                "snakeCase": {
+                                                  "safeName": "telemetry_data",
+                                                  "unsafeName": "telemetry_data",
+                                                },
+                                              },
+                                              "typeId": "type_:TelemetryData",
+                                            },
+                                            "value": {
+                                              "jsonExample": 1.1,
+                                              "shape": {
+                                                "container": {
+                                                  "optional": {
+                                                    "jsonExample": 1.1,
+                                                    "shape": {
+                                                      "primitive": {
+                                                        "double": 1.1,
+                                                        "type": "double",
+                                                      },
+                                                      "type": "primitive",
+                                                    },
+                                                  },
+                                                  "type": "optional",
+                                                },
+                                                "type": "container",
+                                              },
+                                            },
+                                          },
+                                        ],
+                                        "type": "object",
+                                      },
+                                      "type": "named",
+                                      "typeName": {
+                                        "fernFilepath": {
+                                          "allParts": [],
+                                          "file": null,
+                                          "packagePath": [],
+                                        },
+                                        "name": {
+                                          "camelCase": {
+                                            "safeName": "telemetryData",
+                                            "unsafeName": "telemetryData",
+                                          },
+                                          "originalName": "TelemetryData",
+                                          "pascalCase": {
+                                            "safeName": "TelemetryData",
+                                            "unsafeName": "TelemetryData",
+                                          },
+                                          "screamingSnakeCase": {
+                                            "safeName": "TELEMETRY_DATA",
+                                            "unsafeName": "TELEMETRY_DATA",
+                                          },
+                                          "snakeCase": {
+                                            "safeName": "telemetry_data",
+                                            "unsafeName": "telemetry_data",
+                                          },
+                                        },
+                                        "typeId": "type_:TelemetryData",
+                                      },
+                                    },
+                                  },
+                                  "type": "optional",
+                                },
+                                "type": "container",
+                              },
+                            },
+                          },
+                        ],
+                        "type": "object",
                       },
-                      "name": {
-                        "camelCase": {
-                          "safeName": "telemetryResponse",
-                          "unsafeName": "telemetryResponse",
+                      "type": "named",
+                      "typeName": {
+                        "fernFilepath": {
+                          "allParts": [],
+                          "file": null,
+                          "packagePath": [],
                         },
-                        "originalName": "TelemetryResponse",
-                        "pascalCase": {
-                          "safeName": "TelemetryResponse",
-                          "unsafeName": "TelemetryResponse",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "telemetryResponse",
+                            "unsafeName": "telemetryResponse",
+                          },
+                          "originalName": "TelemetryResponse",
+                          "pascalCase": {
+                            "safeName": "TelemetryResponse",
+                            "unsafeName": "TelemetryResponse",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TELEMETRY_RESPONSE",
+                            "unsafeName": "TELEMETRY_RESPONSE",
+                          },
+                          "snakeCase": {
+                            "safeName": "telemetry_response",
+                            "unsafeName": "telemetry_response",
+                          },
                         },
-                        "screamingSnakeCase": {
-                          "safeName": "TELEMETRY_RESPONSE",
-                          "unsafeName": "TELEMETRY_RESPONSE",
-                        },
-                        "snakeCase": {
-                          "safeName": "telemetry_response",
-                          "unsafeName": "telemetry_response",
-                        },
+                        "typeId": "type_:TelemetryResponse",
                       },
-                      "typeId": "type_:TelemetryResponse",
                     },
                   },
                 },
-                "type": "ok",
               },
               "rootPathParameters": [],
               "serviceHeaders": [],
@@ -1339,39 +1345,42 @@ axios.request(options).then(function (response) {
           ],
           "requestBody": null,
           "response": {
-            "type": "json",
-            "value": {
-              "docs": "successful operation",
-              "responseBodyType": {
-                "_type": "named",
-                "fernFilepath": {
-                  "allParts": [],
-                  "file": null,
-                  "packagePath": [],
+            "body": {
+              "type": "json",
+              "value": {
+                "docs": "successful operation",
+                "responseBodyType": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [],
+                    "file": null,
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "telemetryResponse",
+                      "unsafeName": "telemetryResponse",
+                    },
+                    "originalName": "TelemetryResponse",
+                    "pascalCase": {
+                      "safeName": "TelemetryResponse",
+                      "unsafeName": "TelemetryResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TELEMETRY_RESPONSE",
+                      "unsafeName": "TELEMETRY_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "telemetry_response",
+                      "unsafeName": "telemetry_response",
+                    },
+                  },
+                  "typeId": "type_:TelemetryResponse",
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "telemetryResponse",
-                    "unsafeName": "telemetryResponse",
-                  },
-                  "originalName": "TelemetryResponse",
-                  "pascalCase": {
-                    "safeName": "TelemetryResponse",
-                    "unsafeName": "TelemetryResponse",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TELEMETRY_RESPONSE",
-                    "unsafeName": "TELEMETRY_RESPONSE",
-                  },
-                  "snakeCase": {
-                    "safeName": "telemetry_response",
-                    "unsafeName": "telemetry_response",
-                  },
-                },
-                "typeId": "type_:TelemetryResponse",
+                "type": "response",
               },
-              "type": "response",
             },
+            "status-code": null,
           },
           "sdkRequest": {
             "requestParameterName": {

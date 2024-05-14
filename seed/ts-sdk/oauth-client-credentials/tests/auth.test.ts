@@ -6,7 +6,8 @@ import { SeedOauthClientCredentialsClient } from "../src/Client";
 
 const client = new SeedOauthClientCredentialsClient({
     environment: process.env.TESTS_BASE_URL || "test",
-    token: process.env.TESTS_AUTH || "test",
+    clientId: process.env.TESTS_CLIENT_ID || "test",
+    clientSecret: process.env.TESTS_CLIENT_SECRET || "test",
 });
 
 describe("Auth", () => {

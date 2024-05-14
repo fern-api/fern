@@ -6,10 +6,13 @@ public partial class SeedSingleUrlEnvironmentDefaultClient
 {
     private RawClient _client;
 
-    public SeedSingleUrlEnvironmentDefaultClient(string token, ClientOptions clientOptions)
+    public SeedSingleUrlEnvironmentDefaultClient(
+        string token = null,
+        ClientOptions clientOptions = null
+    )
     {
         _client = new RawClient(
-            new Dictionary<string, string>
+            new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },

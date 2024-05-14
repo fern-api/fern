@@ -6,7 +6,7 @@ import { AbstractOpenAPIV3ParserContext, DiscriminatedUnionReference } from "./A
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
-        super({ document, taskContext, authHeaders: new Set() });
+        super({ document, taskContext, authHeaders: new Set(), shouldUseTitleAsName: false });
     }
 
     public getDummy(): SchemaParserContext {

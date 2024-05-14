@@ -21,7 +21,7 @@ export class CsharpTypeMapper {
     public convert({ reference }: CsharpTypeMapper.Args): Type {
         switch (reference.type) {
             case "container":
-                return Type.list(this.convertContainer({ container: reference.container }));
+                return this.convertContainer({ container: reference.container });
             case "named":
                 return this.convertNamed({ named: reference });
             case "primitive":

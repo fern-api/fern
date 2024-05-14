@@ -18,13 +18,15 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     constructor({
         document,
         taskContext,
-        authHeaders
+        authHeaders,
+        shouldUseTitleAsName
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
+        shouldUseTitleAsName: boolean;
     }) {
-        super({ document, taskContext, authHeaders });
+        super({ document, taskContext, authHeaders, shouldUseTitleAsName });
     }
 
     public getDummy(): SchemaParserContext {

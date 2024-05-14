@@ -5,7 +5,7 @@
 import * as FernIr from "../../..";
 
 export interface OAuthTokenEndpoint {
-    /** The refrence to the access token endpoint (e.g. \_endpoint_auth.token). */
-    endpointReference: FernIr.EndpointId;
-    responseProperties: FernIr.OAuthAccessTokenProperties;
+    endpointReference: FernIr.EndpointReference;
+    requestProperties: FernIr.OAuthAccessTokenRequestProperties;
+    responseProperties: FernIr.OAuthAccessTokenResponseProperties;
 }

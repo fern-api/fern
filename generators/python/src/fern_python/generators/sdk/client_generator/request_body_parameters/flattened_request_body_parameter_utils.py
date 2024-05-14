@@ -11,7 +11,7 @@ _REQUEST_VARIABLE_NAME = "_request"
 
 
 def _get_property_name(property: ir_types.InlinedRequestBodyProperty) -> str:
-    return property.name.name.snake_case.unsafe_name
+    return property.name.name.snake_case.safe_name
 
 
 def get_json_body_for_inlined_request(

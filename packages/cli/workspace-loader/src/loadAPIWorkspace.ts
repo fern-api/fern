@@ -81,7 +81,8 @@ export async function loadAPIWorkspace({
                 absoluteFilepath,
                 absoluteFilepathToOverrides,
                 settings: {
-                    audiences: definition.audiences ?? []
+                    audiences: definition.audiences ?? [],
+                    shouldUseTitleAsName: definition.shouldUseTitleAsName ?? true
                 }
             });
         }

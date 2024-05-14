@@ -262,7 +262,6 @@
                 },
                 "wireValue": "UnauthorizedRequest"
             },
-            "statusCode": 401,
             "type": {
                 "_type": "named",
                 "name": {
@@ -329,6 +328,7 @@
                 },
                 "typeId": "type_errors:UnauthorizedRequestErrorBody"
             },
+            "statusCode": 401,
             "docs": null
         },
         "error_errors:BadRequest": {
@@ -419,8 +419,8 @@
                 },
                 "wireValue": "BadRequest"
             },
-            "statusCode": 400,
             "type": null,
+            "statusCode": 400,
             "docs": null
         }
     },

@@ -37,7 +37,8 @@
     "@fern-api/yaml-schema": "workspace:*",
     "chalk": "^5.0.1",
     "lodash-es": "^4.17.21",
-    "strip-ansi": "^7.1.0"
+    "strip-ansi": "^7.1.0",
+    "terminal-link": "^3.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

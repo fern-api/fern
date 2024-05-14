@@ -6,5 +6,5 @@ namespace SeedTrace;
 public class GetDefaultStarterFilesResponse
 {
     [JsonPropertyName("files")]
-    public List<Dictionary<Language, ProblemFiles>> Files { get; init; }
+    public Dictionary<Language, ProblemFiles> Files { get; init; }
 }

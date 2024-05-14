@@ -377,168 +377,154 @@
                     {
                         "type": "template",
                         "value": {
-                            "imports": [
-                                "from seed import Movie"
-                            ],
+                            "imports": [],
                             "isOptional": true,
-                            "templateString": "request=Movie(\n\t\t$FERN_INPUT\n\t)",
+                            "templateString": "id=$FERN_INPUT",
                             "templateInputs": [
                                 {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "id=$FERN_INPUT",
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "id",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "prequel=$FERN_INPUT",
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "prequel",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "title=$FERN_INPUT",
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "title",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "from_=$FERN_INPUT",
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "from",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "rating=$FERN_INPUT",
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "rating",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "tag=$FERN_INPUT",
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "tag",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "templateString": "book=$FERN_INPUT",
-                                        "templateInputs": [
-                                            {
-                                                "location": "BODY",
-                                                "path": "book",
-                                                "type": "payload"
-                                            }
-                                        ],
-                                        "type": "generic"
-                                    }
-                                },
-                                {
-                                    "type": "template",
-                                    "value": {
-                                        "imports": [],
-                                        "isOptional": true,
-                                        "containerTemplateString": "metadata={\n\t\t\t$FERN_INPUT\n\t\t}",
-                                        "delimiter": ",\n\t\t\t",
-                                        "keyTemplate": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "RELATIVE",
-                                                    "path": null,
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        },
-                                        "valueTemplate": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "RELATIVE",
-                                                    "path": null,
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        },
-                                        "keyValueSeparator": ": ",
-                                        "templateInput": {
-                                            "location": "BODY",
-                                            "path": "metadata"
-                                        },
-                                        "type": "dict"
-                                    }
+                                    "location": "BODY",
+                                    "path": "id",
+                                    "type": "payload"
                                 }
                             ],
-                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "prequel=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "prequel",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "title=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "title",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "from_=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "from",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "rating=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "rating",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "tag=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "tag",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "book=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "book",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "metadata={\n\t\t$FERN_INPUT\n\t}",
+                            "delimiter": ",\n\t\t",
+                            "keyTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "RELATIVE",
+                                        "path": null,
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "valueTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "RELATIVE",
+                                        "path": null,
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "keyValueSeparator": ": ",
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": "metadata"
+                            },
+                            "type": "dict"
                         }
                     }
                 ],
@@ -558,168 +544,154 @@
                         {
                             "type": "template",
                             "value": {
-                                "imports": [
-                                    "from seed import Movie"
-                                ],
+                                "imports": [],
                                 "isOptional": true,
-                                "templateString": "request=Movie(\n\t\t$FERN_INPUT\n\t)",
+                                "templateString": "id=$FERN_INPUT",
                                 "templateInputs": [
                                     {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "id=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "BODY",
-                                                    "path": "id",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "prequel=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "BODY",
-                                                    "path": "prequel",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "title=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "BODY",
-                                                    "path": "title",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "from_=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "BODY",
-                                                    "path": "from",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "rating=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "BODY",
-                                                    "path": "rating",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "tag=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "BODY",
-                                                    "path": "tag",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "templateString": "book=$FERN_INPUT",
-                                            "templateInputs": [
-                                                {
-                                                    "location": "BODY",
-                                                    "path": "book",
-                                                    "type": "payload"
-                                                }
-                                            ],
-                                            "type": "generic"
-                                        }
-                                    },
-                                    {
-                                        "type": "template",
-                                        "value": {
-                                            "imports": [],
-                                            "isOptional": true,
-                                            "containerTemplateString": "metadata={\n\t\t\t$FERN_INPUT\n\t\t}",
-                                            "delimiter": ",\n\t\t\t",
-                                            "keyTemplate": {
-                                                "imports": [],
-                                                "isOptional": true,
-                                                "templateString": "$FERN_INPUT",
-                                                "templateInputs": [
-                                                    {
-                                                        "location": "RELATIVE",
-                                                        "path": null,
-                                                        "type": "payload"
-                                                    }
-                                                ],
-                                                "type": "generic"
-                                            },
-                                            "valueTemplate": {
-                                                "imports": [],
-                                                "isOptional": true,
-                                                "templateString": "$FERN_INPUT",
-                                                "templateInputs": [
-                                                    {
-                                                        "location": "RELATIVE",
-                                                        "path": null,
-                                                        "type": "payload"
-                                                    }
-                                                ],
-                                                "type": "generic"
-                                            },
-                                            "keyValueSeparator": ": ",
-                                            "templateInput": {
-                                                "location": "BODY",
-                                                "path": "metadata"
-                                            },
-                                            "type": "dict"
-                                        }
+                                        "location": "BODY",
+                                        "path": "id",
+                                        "type": "payload"
                                     }
                                 ],
-                                "inputDelimiter": ",\n\t\t",
                                 "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "prequel=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "prequel",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "title=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "title",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "from_=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "from",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "rating=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "rating",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "tag=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "tag",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "book=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": "book",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "containerTemplateString": "metadata={\n\t\t$FERN_INPUT\n\t}",
+                                "delimiter": ",\n\t\t",
+                                "keyTemplate": {
+                                    "imports": [],
+                                    "isOptional": true,
+                                    "templateString": "$FERN_INPUT",
+                                    "templateInputs": [
+                                        {
+                                            "location": "RELATIVE",
+                                            "path": null,
+                                            "type": "payload"
+                                        }
+                                    ],
+                                    "type": "generic"
+                                },
+                                "valueTemplate": {
+                                    "imports": [],
+                                    "isOptional": true,
+                                    "templateString": "$FERN_INPUT",
+                                    "templateInputs": [
+                                        {
+                                            "location": "RELATIVE",
+                                            "path": null,
+                                            "type": "payload"
+                                        }
+                                    ],
+                                    "type": "generic"
+                                },
+                                "keyValueSeparator": ": ",
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "metadata"
+                                },
+                                "type": "dict"
                             }
                         }
                     ],

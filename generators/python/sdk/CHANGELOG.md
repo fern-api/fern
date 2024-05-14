@@ -5,6 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2024-05-09
+
+- Break: the python SDK is now on major version 2, there are no substantial logic changes, however default configuration has changed. To take this upgrade without any breaks, please add the below configuration to your `generators.yml` file:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        inline_request_params: false
+  ```
+
+
+## [1.7.0-rc0] - 2024-05-09
+
+- Improvement: you can now declare a new python version range for your `pyproject.toml`, which will declare a new version range for your pip package.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        pyproject_python_version: ^3.8.1
+  ```
+
+## [1.6.0-rc0] - 2024-05-09
+
+- Improvement: you can now specify dev dependencies from your `generators.yml` file:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        extra_dev_dependencies:
+          requests_mock: 1.12.1
+          boto3: 1.28.57
+  ```
+
+  These will then populare your `pyproject.toml` automatically:
+
+  ```toml
+  ...
+  [tool.poetry.dev-dependencies]
+  requests_mock = "1.12.1"
+  boto3 = "1.28.57"
+  ...
+  ```
+
+## [1.5.3-rc0] - 2024-05-02
+
+- Fix: the unchecked basemodel no longer tries to dereference an object if it's null.
+
 ## [1.5.2-rc0] - 2024-05-02
 
 - Improvement: The python generator now produces sync snippet templates, as opposed to just async templates as it was before

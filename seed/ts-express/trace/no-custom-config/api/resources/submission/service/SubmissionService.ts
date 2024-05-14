@@ -99,7 +99,6 @@ export class SubmissionService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'createExecutionSession' unexpectedly threw ${error.constructor.name}.` +
@@ -128,7 +127,6 @@ export class SubmissionService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getExecutionSession' unexpectedly threw ${error.constructor.name}.` +
@@ -153,7 +151,6 @@ export class SubmissionService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'stopExecutionSession' unexpectedly threw ${error.constructor.name}.` +
@@ -182,7 +179,6 @@ export class SubmissionService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getExecutionSessionsState' unexpectedly threw ${error.constructor.name}.` +

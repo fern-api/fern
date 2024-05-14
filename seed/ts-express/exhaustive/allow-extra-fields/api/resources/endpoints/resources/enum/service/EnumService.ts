@@ -56,7 +56,6 @@ export class EnumService {
                     });
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnEnum' unexpectedly threw ${error.constructor.name}.` +

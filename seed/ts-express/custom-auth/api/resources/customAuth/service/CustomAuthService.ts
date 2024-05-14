@@ -58,7 +58,6 @@ export class CustomAuthService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedCustomAuthError) {
                     switch (error.errorName) {
                         case "UnauthorizedRequest":
@@ -92,7 +91,6 @@ export class CustomAuthService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedCustomAuthError) {
                     switch (error.errorName) {
                         case "UnauthorizedRequest":

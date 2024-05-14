@@ -6,7 +6,7 @@ namespace SeedTrace;
 public class ExecutionSessionState
 {
     [JsonPropertyName("lastTimeContacted")]
-    public List<string?> LastTimeContacted { get; init; }
+    public string? LastTimeContacted { get; init; }
 
     /// <summary>
     /// The auto-generated session id. Formatted as a uuid.
@@ -18,7 +18,7 @@ public class ExecutionSessionState
     public bool IsWarmInstance { get; init; }
 
     [JsonPropertyName("awsTaskId")]
-    public List<string?> AwsTaskId { get; init; }
+    public string? AwsTaskId { get; init; }
 
     [JsonPropertyName("language")]
     public Language Language { get; init; }

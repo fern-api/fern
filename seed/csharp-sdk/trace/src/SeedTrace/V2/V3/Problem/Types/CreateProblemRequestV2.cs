@@ -16,13 +16,13 @@ public class CreateProblemRequestV2
     public CustomFiles CustomFiles { get; init; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public List<List<TestCaseTemplate>> CustomTestCaseTemplates { get; init; }
+    public List<TestCaseTemplate> CustomTestCaseTemplates { get; init; }
 
     [JsonPropertyName("testcases")]
-    public List<List<TestCaseV2>> Testcases { get; init; }
+    public List<TestCaseV2> Testcases { get; init; }
 
     [JsonPropertyName("supportedLanguages")]
-    public List<HashSet<Language>> SupportedLanguages { get; init; }
+    public HashSet<Language> SupportedLanguages { get; init; }
 
     [JsonPropertyName("isPublic")]
     public bool IsPublic { get; init; }

@@ -128,7 +128,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -215,9 +216,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "",
                         "parts": []
@@ -229,6 +231,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "fileUpload",
                         "name": {
@@ -319,107 +322,119 @@
                             },
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "file",
-                                        "camelCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "file",
+                                            "camelCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILE",
+                                                "safeName": "FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "File",
+                                                "safeName": "File"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FILE",
-                                            "safeName": "FILE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "File",
-                                            "safeName": "File"
-                                        }
+                                        "wireValue": "file"
                                     },
-                                    "wireValue": "file"
-                                },
-                                "isOptional": false
+                                    "isOptional": false
+                                }
                             },
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "fileList",
-                                        "camelCase": {
-                                            "unsafeName": "fileList",
-                                            "safeName": "fileList"
+                                "value": {
+                                    "type": "fileArray",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "fileList",
+                                            "camelCase": {
+                                                "unsafeName": "fileList",
+                                                "safeName": "fileList"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "file_list",
+                                                "safeName": "file_list"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILE_LIST",
+                                                "safeName": "FILE_LIST"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "FileList",
+                                                "safeName": "FileList"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "file_list",
-                                            "safeName": "file_list"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FILE_LIST",
-                                            "safeName": "FILE_LIST"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "FileList",
-                                            "safeName": "FileList"
-                                        }
+                                        "wireValue": "fileList"
                                     },
-                                    "wireValue": "fileList"
-                                },
-                                "isOptional": false
+                                    "isOptional": false
+                                }
                             },
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "maybeFile",
-                                        "camelCase": {
-                                            "unsafeName": "maybeFile",
-                                            "safeName": "maybeFile"
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "maybeFile",
+                                            "camelCase": {
+                                                "unsafeName": "maybeFile",
+                                                "safeName": "maybeFile"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "maybe_file",
+                                                "safeName": "maybe_file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MAYBE_FILE",
+                                                "safeName": "MAYBE_FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MaybeFile",
+                                                "safeName": "MaybeFile"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "maybe_file",
-                                            "safeName": "maybe_file"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "MAYBE_FILE",
-                                            "safeName": "MAYBE_FILE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "MaybeFile",
-                                            "safeName": "MaybeFile"
-                                        }
+                                        "wireValue": "maybeFile"
                                     },
-                                    "wireValue": "maybeFile"
-                                },
-                                "isOptional": true
+                                    "isOptional": true
+                                }
                             },
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "maybeFileList",
-                                        "camelCase": {
-                                            "unsafeName": "maybeFileList",
-                                            "safeName": "maybeFileList"
+                                "value": {
+                                    "type": "fileArray",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "maybeFileList",
+                                            "camelCase": {
+                                                "unsafeName": "maybeFileList",
+                                                "safeName": "maybeFileList"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "maybe_file_list",
+                                                "safeName": "maybe_file_list"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MAYBE_FILE_LIST",
+                                                "safeName": "MAYBE_FILE_LIST"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MaybeFileList",
+                                                "safeName": "MaybeFileList"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "maybe_file_list",
-                                            "safeName": "maybe_file_list"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "MAYBE_FILE_LIST",
-                                            "safeName": "MAYBE_FILE_LIST"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "MaybeFileList",
-                                            "safeName": "MaybeFileList"
-                                        }
+                                        "wireValue": "maybeFileList"
                                     },
-                                    "wireValue": "maybeFileList"
-                                },
-                                "isOptional": true
+                                    "isOptional": true
+                                }
                             },
                             {
                                 "type": "bodyProperty",
@@ -663,9 +678,27 @@
                     },
                     "response": null,
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -691,9 +724,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/just-file",
                         "parts": []
@@ -705,6 +739,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "fileUpload",
                         "name": {
@@ -729,29 +764,32 @@
                         "properties": [
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "file",
-                                        "camelCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "file",
+                                            "camelCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILE",
+                                                "safeName": "FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "File",
+                                                "safeName": "File"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FILE",
-                                            "safeName": "FILE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "File",
-                                            "safeName": "File"
-                                        }
+                                        "wireValue": "file"
                                     },
-                                    "wireValue": "file"
-                                },
-                                "isOptional": false
+                                    "isOptional": false
+                                }
                             }
                         ]
                     },
@@ -819,9 +857,27 @@
                     },
                     "response": null,
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/just-file",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 },
@@ -847,9 +903,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/just-file-with-query-params",
                         "parts": []
@@ -1035,6 +1092,7 @@
                             "docs": null
                         }
                     ],
+                    "headers": [],
                     "requestBody": {
                         "type": "fileUpload",
                         "name": {
@@ -1059,29 +1117,32 @@
                         "properties": [
                             {
                                 "type": "file",
-                                "key": {
-                                    "name": {
-                                        "originalName": "file",
-                                        "camelCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
+                                "value": {
+                                    "type": "file",
+                                    "key": {
+                                        "name": {
+                                            "originalName": "file",
+                                            "camelCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "file",
+                                                "safeName": "file"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FILE",
+                                                "safeName": "FILE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "File",
+                                                "safeName": "File"
+                                            }
                                         },
-                                        "snakeCase": {
-                                            "unsafeName": "file",
-                                            "safeName": "file"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FILE",
-                                            "safeName": "FILE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "File",
-                                            "safeName": "File"
-                                        }
+                                        "wireValue": "file"
                                     },
-                                    "wireValue": "file"
-                                },
-                                "isOptional": false
+                                    "isOptional": false
+                                }
                             }
                         ]
                     },
@@ -1149,9 +1210,204 @@
                     },
                     "response": null,
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/just-file-with-query-params",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "maybeString",
+                                            "camelCase": {
+                                                "unsafeName": "maybeString",
+                                                "safeName": "maybeString"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "maybe_string",
+                                                "safeName": "maybe_string"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MAYBE_STRING",
+                                                "safeName": "MAYBE_STRING"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MaybeString",
+                                                "safeName": "MaybeString"
+                                            }
+                                        },
+                                        "wireValue": "maybeString"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "integer",
+                                            "camelCase": {
+                                                "unsafeName": "integer",
+                                                "safeName": "integer"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "integer",
+                                                "safeName": "integer"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "INTEGER",
+                                                "safeName": "INTEGER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Integer",
+                                                "safeName": "Integer"
+                                            }
+                                        },
+                                        "wireValue": "integer"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "integer",
+                                                "integer": 1
+                                            }
+                                        },
+                                        "jsonExample": 1
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "maybeInteger",
+                                            "camelCase": {
+                                                "unsafeName": "maybeInteger",
+                                                "safeName": "maybeInteger"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "maybe_integer",
+                                                "safeName": "maybe_integer"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MAYBE_INTEGER",
+                                                "safeName": "MAYBE_INTEGER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MaybeInteger",
+                                                "safeName": "MaybeInteger"
+                                            }
+                                        },
+                                        "wireValue": "maybeInteger"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "integer",
+                                                "integer": 1
+                                            }
+                                        },
+                                        "jsonExample": 1
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "listOfStrings",
+                                            "camelCase": {
+                                                "unsafeName": "listOfStrings",
+                                                "safeName": "listOfStrings"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "list_of_strings",
+                                                "safeName": "list_of_strings"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "LIST_OF_STRINGS",
+                                                "safeName": "LIST_OF_STRINGS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ListOfStrings",
+                                                "safeName": "ListOfStrings"
+                                            }
+                                        },
+                                        "wireValue": "listOfStrings"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "optionalListOfStrings",
+                                            "camelCase": {
+                                                "unsafeName": "optionalListOfStrings",
+                                                "safeName": "optionalListOfStrings"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "optional_list_of_strings",
+                                                "safeName": "optional_list_of_strings"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "OPTIONAL_LIST_OF_STRINGS",
+                                                "safeName": "OPTIONAL_LIST_OF_STRINGS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "OptionalListOfStrings",
+                                                "safeName": "OptionalListOfStrings"
+                                            }
+                                        },
+                                        "wireValue": "optionalListOfStrings"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1198,6 +1454,7 @@
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_service": {
             "name": {
@@ -1270,6 +1527,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -1280,6 +1538,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],

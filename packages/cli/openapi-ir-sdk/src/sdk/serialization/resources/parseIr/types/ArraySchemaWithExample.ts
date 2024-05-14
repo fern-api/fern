@@ -12,6 +12,7 @@ export const ArraySchemaWithExample: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         value: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
+        example: core.serialization.list(core.serialization.unknown()).optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -20,5 +21,6 @@ export const ArraySchemaWithExample: core.serialization.ObjectSchema<
 export declare namespace ArraySchemaWithExample {
     interface Raw extends serializers.WithSdkGroupName.Raw, serializers.WithName.Raw, serializers.WithDescription.Raw {
         value: serializers.SchemaWithExample.Raw;
+        example?: unknown[] | null;
     }
 }

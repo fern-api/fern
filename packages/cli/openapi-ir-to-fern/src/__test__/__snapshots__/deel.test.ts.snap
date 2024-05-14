@@ -3490,7 +3490,9 @@ exports[`open api parser deel docs 1`] = `
                 "response": {
                   "body": {
                     "data": [
-                      "data",
+                      "VACATION",
+                      "SICK_LEAVE",
+                      "OTHER",
                     ],
                   },
                 },
@@ -4356,7 +4358,8 @@ exports[`open api parser deel docs 1`] = `
                 "request": {
                   "data": {
                     "ids": [
-                      1.1,
+                      1234,
+                      1235,
                     ],
                     "status": "approved",
                   },
@@ -5887,7 +5890,7 @@ exports[`open api parser deel docs 1`] = `
                 },
                 "request": {
                   "events": [
-                    "events",
+                    "contract.created",
                   ],
                   "status": "enabled",
                   "url": "https://mywebhook.com/listening",
@@ -5899,7 +5902,7 @@ exports[`open api parser deel docs 1`] = `
                       "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [
-                        "events",
+                        "contract.created",
                       ],
                       "hidden": false,
                       "id": 1.1,
@@ -5984,7 +5987,7 @@ exports[`open api parser deel docs 1`] = `
                       "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [
-                        "events",
+                        "contract.created",
                       ],
                       "hidden": false,
                       "id": 1.1,
@@ -6029,7 +6032,7 @@ exports[`open api parser deel docs 1`] = `
                 "request": {
                   "api_version": "v1",
                   "events": [
-                    "events",
+                    "contract.created",
                   ],
                   "status": "enabled",
                   "url": "https://mywebhook.com",
@@ -6041,7 +6044,7 @@ exports[`open api parser deel docs 1`] = `
                       "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [
-                        "events",
+                        "contract.created",
                       ],
                       "hidden": false,
                       "id": 1.1,
@@ -6125,7 +6128,7 @@ exports[`open api parser deel docs 1`] = `
                         "created_at": "created_at",
                         "description": "My first webhook",
                         "events": [
-                          "events",
+                          "contract.created",
                         ],
                         "hidden": false,
                         "id": 1.1,
@@ -16902,7 +16905,9 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": [
-                      "data",
+                      "VACATION",
+                      "SICK_LEAVE",
+                      "OTHER",
                     ],
                   },
                 },
@@ -17768,7 +17773,8 @@ exports[`open api parser deel simple 1`] = `
                 "request": {
                   "data": {
                     "ids": [
-                      1.1,
+                      1234,
+                      1235,
                     ],
                     "status": "approved",
                   },
@@ -19299,7 +19305,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "request": {
                   "events": [
-                    "events",
+                    "contract.created",
                   ],
                   "status": "enabled",
                   "url": "https://mywebhook.com/listening",
@@ -19311,7 +19317,7 @@ exports[`open api parser deel simple 1`] = `
                       "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [
-                        "events",
+                        "contract.created",
                       ],
                       "hidden": false,
                       "id": 1.1,
@@ -19396,7 +19402,7 @@ exports[`open api parser deel simple 1`] = `
                       "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [
-                        "events",
+                        "contract.created",
                       ],
                       "hidden": false,
                       "id": 1.1,
@@ -19441,7 +19447,7 @@ exports[`open api parser deel simple 1`] = `
                 "request": {
                   "api_version": "v1",
                   "events": [
-                    "events",
+                    "contract.created",
                   ],
                   "status": "enabled",
                   "url": "https://mywebhook.com",
@@ -19453,7 +19459,7 @@ exports[`open api parser deel simple 1`] = `
                       "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [
-                        "events",
+                        "contract.created",
                       ],
                       "hidden": false,
                       "id": 1.1,
@@ -19537,7 +19543,7 @@ exports[`open api parser deel simple 1`] = `
                         "created_at": "created_at",
                         "description": "My first webhook",
                         "events": [
-                          "events",
+                          "contract.created",
                         ],
                         "hidden": false,
                         "id": 1.1,

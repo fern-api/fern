@@ -2,6 +2,7 @@
 
 exports[`open api parser supertokens parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "This is the API exposed by the SuperTokens Core. To be consumed by your backend only.",
   "endpoints": [
@@ -27970,7 +27971,14 @@ e.g.:
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "features",
+                      "value": "feature_1",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "feature_2",
                     },
                   },
                 ],

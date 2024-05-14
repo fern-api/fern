@@ -1,1 +1,1 @@
-{ "ignores": ["@types/jest", "@types/node"], "ignore-patterns": ["lib"] }
+{ "ignores": ["@types/jest", "@types/node", "form-data", "jest-environment-jsdom"], "ignore-patterns": ["lib"] }

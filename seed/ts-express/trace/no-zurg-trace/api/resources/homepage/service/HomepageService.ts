@@ -54,7 +54,6 @@ export class HomepageService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getHomepageProblems' unexpectedly threw ${error.constructor.name}.` +
@@ -79,7 +78,6 @@ export class HomepageService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'setHomepageProblems' unexpectedly threw ${error.constructor.name}.` +

@@ -7,6 +7,7 @@ types:
     properties:
       title: optional<string>
       description: optional<string>
+      basePath: optional<string>
       servers: list<commons.Server>
       groups:
         docs: |

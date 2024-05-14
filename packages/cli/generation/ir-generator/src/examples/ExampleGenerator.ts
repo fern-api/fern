@@ -5,6 +5,7 @@ import {
     DeclaredTypeName,
     EnumTypeDeclaration,
     ExampleContainer,
+    ExampleEndpointSuccessResponse,
     ExampleObjectProperty,
     ExampleObjectTypeWithTypeId,
     ExamplePathParameter,
@@ -21,12 +22,9 @@ import {
     HttpEndpointExample,
     HttpHeader,
     HttpRequestBody,
-    HttpResponse,
+    HttpResponseBody,
     InlinedRequestBody,
     IntermediateRepresentation,
-    JsonResponse,
-    JsonResponseBody,
-    JsonResponseBodyWithProperty,
     Literal,
     MapType,
     NameAndWireValue,
@@ -37,7 +35,6 @@ import {
     ResponseError,
     SingleUnionType,
     SingleUnionTypeProperty,
-    StreamingResponse,
     TypeDeclaration,
     TypeId,
     TypeReference,
@@ -258,26 +255,42 @@ export class ExampleGenerator {
         // but there's no corralation between request and response really.
 
         // TODO: if there's a complete example, we should probably just return that, though that's just duplicative of the provided examples.
-        return [
+        const exampleWithoutResponse = this.getExampleWithoutResponse(
+            endpoint,
+            rootPathParameters,
+            servicePathParameters,
+            serviceHeaders
+        );
+        const successExamples = endpoint.examples.map(({ response }) =>
             HttpEndpointExample.generated({
-                ...this.getExampleWithoutResponse(endpoint, rootPathParameters, servicePathParameters, serviceHeaders),
+                ...exampleWithoutResponse,
                 response: this.generateSuccessResponseExample({
-                    response: endpoint.response,
-                    maybeResponse: endpoint.examples.map((example) => example.response)[0]
+                    response: endpoint.response?.body,
+                    maybeResponse: response
                 })
-            }),
-            ...endpoint.errors.map((e) =>
+            })
+        );
+
+        // If there are no examples, we should generate a default success example
+        if (successExamples.length === 0) {
+            successExamples.push(
                 HttpEndpointExample.generated({
-                    ...this.getExampleWithoutResponse(
-                        endpoint,
-                        rootPathParameters,
-                        servicePathParameters,
-                        serviceHeaders
-                    ),
-                    response: this.generateErrorResponseExample(e)
+                    ...exampleWithoutResponse,
+                    response: this.generateSuccessResponseExample({
+                        response: endpoint.response?.body,
+                        maybeResponse: undefined
+                    })
                 })
-            )
-        ];
+            );
+        }
+
+        const errorExamples = endpoint.errors.map((e) =>
+            HttpEndpointExample.generated({
+                ...exampleWithoutResponse,
+                response: this.generateErrorResponseExample(e)
+            })
+        );
+        return [...successExamples, ...errorExamples];
     }
 
     private generatePathParameterExample({
@@ -354,18 +367,25 @@ export class ExampleGenerator {
         response,
         maybeResponse
     }: {
-        response: HttpResponse | undefined;
+        response: HttpResponseBody | undefined;
         maybeResponse: ExampleResponse | undefined;
     }): ExampleResponse {
-        return (
-            maybeResponse ??
-            ExampleResponse.ok({
-                body: response?._visit<ExampleTypeReference>({
-                    json: (jsonResponse: JsonResponse) =>
-                        jsonResponse._visit<ExampleTypeReference>({
-                            response: (jsonResponseBody: JsonResponseBody) =>
+        if (maybeResponse != null) {
+            return maybeResponse;
+        }
+
+        if (response == null) {
+            return ExampleResponse.ok(ExampleEndpointSuccessResponse.body());
+        }
+
+        return ExampleResponse.ok(
+            response._visit<ExampleEndpointSuccessResponse>({
+                json: (jsonResponse) =>
+                    ExampleEndpointSuccessResponse.body(
+                        jsonResponse._visit({
+                            response: (jsonResponseBody) =>
                                 this.generateExampleTypeReference(jsonResponseBody.responseBodyType, 0),
-                            nestedPropertyAsResponse: (jsonResponseBody: JsonResponseBodyWithProperty) => {
+                            nestedPropertyAsResponse: (jsonResponseBody) => {
                                 if (jsonResponseBody.responseProperty !== undefined) {
                                     return this.generateExampleTypeReference(
                                         jsonResponseBody.responseProperty.valueType,
@@ -375,18 +395,36 @@ export class ExampleGenerator {
                                 return this.generateExampleTypeReference(jsonResponseBody.responseBodyType, 0);
                             },
                             _other: () => this.generateExampleUnknown({})
-                        }),
-                    fileDownload: () => this.generateExamplePrimitive({ primitiveType: PrimitiveType.Base64 }),
-                    text: () => this.generateExamplePrimitive({ primitiveType: PrimitiveType.String }),
-                    streaming: (streamingResponse: StreamingResponse) =>
-                        streamingResponse._visit<ExampleTypeReference>({
-                            sse: (sse) => this.generateExampleTypeReference(sse.payload, 0),
-                            json: (json) => this.generateExampleTypeReference(json.payload, 0),
-                            text: () => this.generateExamplePrimitive({ primitiveType: PrimitiveType.String }),
-                            _other: () => this.generateExampleUnknown({})
-                        }),
-                    _other: () => this.generateExampleUnknown({})
-                })
+                        })
+                    ),
+                fileDownload: () =>
+                    ExampleEndpointSuccessResponse.body(
+                        this.generateExamplePrimitive({ primitiveType: PrimitiveType.Base64 })
+                    ),
+                text: () =>
+                    ExampleEndpointSuccessResponse.body(
+                        this.generateExamplePrimitive({ primitiveType: PrimitiveType.String })
+                    ),
+                streaming: (streamingResponse) =>
+                    streamingResponse._visit<ExampleEndpointSuccessResponse>({
+                        sse: (sse) =>
+                            ExampleEndpointSuccessResponse.sse([
+                                { event: "message", data: this.generateExampleTypeReference(sse.payload, 0) },
+                                { event: "message", data: this.generateExampleTypeReference(sse.payload, 0) }
+                            ]),
+                        json: (json) =>
+                            ExampleEndpointSuccessResponse.stream([
+                                this.generateExampleTypeReference(json.payload, 0),
+                                this.generateExampleTypeReference(json.payload, 0)
+                            ]),
+                        text: () =>
+                            ExampleEndpointSuccessResponse.stream([
+                                this.generateExamplePrimitive({ primitiveType: PrimitiveType.String }),
+                                this.generateExamplePrimitive({ primitiveType: PrimitiveType.String })
+                            ]),
+                        _other: () => ExampleEndpointSuccessResponse.stream([this.generateExampleUnknown({})])
+                    }),
+                _other: () => ExampleEndpointSuccessResponse.body(this.generateExampleUnknown({}))
             })
         );
     }

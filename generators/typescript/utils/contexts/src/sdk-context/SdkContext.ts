@@ -28,4 +28,5 @@ export interface SdkContext extends ModelContext {
     targetRuntime: JavaScriptRuntime;
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
+    generateOAuthClients: boolean;
 }

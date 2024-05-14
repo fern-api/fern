@@ -2,6 +2,7 @@
 
 exports[`open api parser flagright parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "",
   "endpoints": [

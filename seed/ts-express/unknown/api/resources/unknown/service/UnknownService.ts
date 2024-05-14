@@ -50,7 +50,6 @@ export class UnknownService {
                 });
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedUnknownAsAnyError) {
                     console.warn(
                         `Endpoint 'post' unexpectedly threw ${error.constructor.name}.` +

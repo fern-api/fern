@@ -2,6 +2,7 @@
 
 exports[`open api parser merge parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": "The unified API for building rich integrations with multiple HR Information System platforms.",
   "endpoints": [
@@ -369,7 +370,14 @@ exports[`open api parser merge parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "available_operations",
+                              "value": "FETCH",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "CREATE",
                             },
                           },
                         ],
@@ -388,7 +396,7 @@ exports[`open api parser merge parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "required_post_parameters",
+                              "value": "remote_user_id",
                             },
                           },
                         ],
@@ -400,7 +408,28 @@ exports[`open api parser merge parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "supported_fields",
+                              "value": "first_name",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "last_name",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "company",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "title",
                             },
                           },
                         ],
@@ -714,11 +743,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/bank-info",
                                 },
                               },
                             },
@@ -1369,11 +1419,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/bank-info",
                         },
                       },
                     },
@@ -1734,11 +1805,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/benefits",
                                 },
                               },
                             },
@@ -2236,11 +2328,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/benefits",
                         },
                       },
                     },
@@ -2442,6 +2555,32 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "Waystar Royco",
                         },
                       },
+                      "eins": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "12-3456789",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "12-3451111",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "11-0011000",
+                            },
+                          },
+                        ],
+                      },
                       "field_mappings": {
                         "type": "map",
                         "value": [
@@ -2527,11 +2666,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/companies",
                                 },
                               },
                             },
@@ -2869,7 +3029,21 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "eins",
+                      "value": "12-3456789",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "12-3451111",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "11-0011000",
                     },
                   },
                 ],
@@ -2959,11 +3133,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/companies",
                         },
                       },
                     },
@@ -3207,6 +3402,27 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "company_deduction": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 78.78,
+                                },
+                              },
+                              "employee_deduction": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 34.54,
+                                },
+                              },
+                              "employee_payroll_run": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                                },
+                              },
                               "id": {
                                 "type": "primitive",
                                 "value": {
@@ -3221,6 +3437,13 @@ exports[`open api parser merge parse open api 1`] = `
                                   "value": "2021-10-16T00:00:00Z",
                                 },
                               },
+                              "name": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Social Security",
+                                },
+                              },
                             },
                             "type": "object",
                           },
@@ -3231,6 +3454,20 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "amount": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 1002.34,
+                                },
+                              },
+                              "employee_payroll_run": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                                },
+                              },
                               "id": {
                                 "type": "primitive",
                                 "value": {
@@ -3244,6 +3481,47 @@ exports[`open api parser merge parse open api 1`] = `
                                   "type": "datetime",
                                   "value": "2021-10-16T00:00:00Z",
                                 },
+                              },
+                              "type": {
+                                "type": "enum",
+                                "value": "SALARY",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "amount": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 8342.34,
+                                },
+                              },
+                              "employee_payroll_run": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                                },
+                              },
+                              "id": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "babbced6-3a81-4775-8da2-490dc6385259",
+                                },
+                              },
+                              "modified_at": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "datetime",
+                                  "value": "2021-10-16T00:00:00Z",
+                                },
+                              },
+                              "type": {
+                                "type": "enum",
+                                "value": "OVERTIME",
                               },
                             },
                             "type": "object",
@@ -3363,11 +3641,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/employee-payroll",
                                 },
                               },
                             },
@@ -3401,6 +3700,27 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "amount": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 100.25,
+                                },
+                              },
+                              "employee_payroll_run": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                                },
+                              },
+                              "employer_tax": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
                               "id": {
                                 "type": "primitive",
                                 "value": {
@@ -3413,6 +3733,13 @@ exports[`open api parser merge parse open api 1`] = `
                                 "value": {
                                   "type": "datetime",
                                   "value": "2021-10-16T00:00:00Z",
+                                },
+                              },
+                              "name": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "California State Income Tax",
                                 },
                               },
                             },
@@ -4033,11 +4360,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/payroll-deduction",
                                 },
                               },
                             },
@@ -4194,6 +4542,133 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "amount": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 8342.34,
+                        },
+                      },
+                      "employee_payroll_run": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                        },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "babbced6-3a81-4775-8da2-490dc6385259",
+                        },
+                      },
+                      "modified_at": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2021-10-16T00:00:00Z",
+                        },
+                      },
+                      "remote_data": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "path": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "path",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "remote_id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "52802",
+                        },
+                      },
+                      "remote_was_deleted": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "type": {
+                        "type": "enum",
+                        "value": "OVERTIME",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
               },
               "employee": {
@@ -4309,11 +4784,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/employee-payroll",
                         },
                       },
                     },
@@ -4723,6 +5219,18 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "enum",
                         "value": "ACTIVE",
                       },
+                      "employments": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "17a54124-287f-494d-965e-3c5b330c9a68",
+                            },
+                          },
+                        ],
+                      },
                       "ethnicity": {
                         "type": "enum",
                         "value": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
@@ -4796,6 +5304,18 @@ exports[`open api parser merge parse open api 1`] = `
                       "gender": {
                         "type": "enum",
                         "value": "MALE",
+                      },
+                      "groups": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "21a54124-397f-494d-985e-3c5b330b8a68",
+                            },
+                          },
+                        ],
                       },
                       "hire_date": {
                         "type": "primitive",
@@ -4876,11 +5396,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/people",
                                 },
                               },
                             },
@@ -9338,7 +9879,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "employments",
+                          "value": "17a54124-287f-494d-965e-3c5b330c9a68",
                         },
                       },
                     ],
@@ -9424,7 +9965,7 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "groups",
+                          "value": "21a54124-397f-494d-985e-3c5b330b8a68",
                         },
                       },
                     ],
@@ -9508,11 +10049,32 @@ exports[`open api parser merge parse open api 1`] = `
                     "value": [
                       {
                         "properties": {
+                          "data": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "0",
+                                },
+                                "value": {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Varies by platform",
+                                    },
+                                  },
+                                },
+                              },
+                            ],
+                          },
                           "path": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "path",
+                              "value": "/people",
                             },
                           },
                         },
@@ -9855,7 +10417,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "employments",
+                      "value": "17a54124-287f-494d-965e-3c5b330c9a68",
                     },
                   },
                 ],
@@ -9941,7 +10503,7 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "groups",
+                      "value": "21a54124-397f-494d-985e-3c5b330b8a68",
                     },
                   },
                 ],
@@ -10025,11 +10587,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/people",
                         },
                       },
                     },
@@ -14171,11 +14754,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/jobs",
                                 },
                               },
                             },
@@ -15160,11 +15764,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/jobs",
                         },
                       },
                     },
@@ -15970,11 +16595,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/group",
                                 },
                               },
                             },
@@ -16464,11 +17110,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/group",
                         },
                       },
                     },
@@ -16686,7 +17353,14 @@ exports[`open api parser merge parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "error_details",
+                              "value": "Missing employee permissions.",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Missing time off permissions.",
                             },
                           },
                         ],
@@ -17162,7 +17836,14 @@ exports[`open api parser merge parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "error_details",
+                      "value": "Missing employee permissions.",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Missing time off permissions.",
                     },
                   },
                 ],
@@ -17455,7 +18136,14 @@ exports[`open api parser merge parse open api 1`] = `
                                         "type": "primitive",
                                         "value": {
                                           "type": "string",
-                                          "value": "available_operations",
+                                          "value": "FETCH",
+                                        },
+                                      },
+                                      {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "CREATE",
                                         },
                                       },
                                     ],
@@ -17474,7 +18162,7 @@ exports[`open api parser merge parse open api 1`] = `
                                         "type": "primitive",
                                         "value": {
                                           "type": "string",
-                                          "value": "required_post_parameters",
+                                          "value": "remote_user_id",
                                         },
                                       },
                                     ],
@@ -17486,7 +18174,28 @@ exports[`open api parser merge parse open api 1`] = `
                                         "type": "primitive",
                                         "value": {
                                           "type": "string",
-                                          "value": "supported_fields",
+                                          "value": "first_name",
+                                        },
+                                      },
+                                      {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "last_name",
+                                        },
+                                      },
+                                      {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "company",
+                                        },
+                                      },
+                                      {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "title",
                                         },
                                       },
                                     ],
@@ -18154,11 +18863,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/locations",
                                 },
                               },
                             },
@@ -18663,11 +19393,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/locations",
                         },
                       },
                     },
@@ -19202,11 +19953,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/pay-group",
                                 },
                               },
                             },
@@ -19615,11 +20387,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/pay-group",
                         },
                       },
                     },
@@ -19876,11 +20669,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/payroll",
                                 },
                               },
                             },
@@ -20600,11 +21414,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/payroll",
                         },
                       },
                     },
@@ -22005,11 +22840,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/teams",
                                 },
                               },
                             },
@@ -22472,11 +23328,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/teams",
                         },
                       },
                     },
@@ -22777,11 +23654,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/leave",
                                 },
                               },
                             },
@@ -23831,11 +24729,32 @@ exports[`open api parser merge parse open api 1`] = `
                     "value": [
                       {
                         "properties": {
+                          "data": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "0",
+                                },
+                                "value": {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Varies by platform",
+                                    },
+                                  },
+                                },
+                              },
+                            ],
+                          },
                           "path": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "path",
+                              "value": "/leave",
                             },
                           },
                         },
@@ -24177,11 +25096,32 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": [
                           {
                             "properties": {
+                              "data": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "0",
+                                    },
+                                    "value": {
+                                      "type": "unknown",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "Varies by platform",
+                                        },
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
                               "path": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "path",
+                                  "value": "/leave",
                                 },
                               },
                             },
@@ -24801,11 +25741,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/leave",
                         },
                       },
                     },
@@ -25151,11 +26112,32 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "data": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Varies by platform",
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "path": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "path",
+                          "value": "/leave",
                         },
                       },
                     },

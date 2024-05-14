@@ -16,11 +16,12 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.model.http.FileProperty;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpMethod;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.SdkRequest;
+import com.fern.irV42.model.commons.NameAndWireValue;
+import com.fern.irV42.model.http.FileProperty;
+import com.fern.irV42.model.http.HttpEndpoint;
+import com.fern.irV42.model.http.HttpMethod;
+import com.fern.irV42.model.http.HttpService;
+import com.fern.irV42.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -33,6 +34,8 @@ import com.fern.java.client.GeneratedWrappedRequest.JsonFileUploadProperty;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
+import com.fern.java.client.generators.visitors.FilePropertyIsOptional;
+import com.fern.java.client.generators.visitors.GetFilePropertyKey;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -109,7 +112,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     (generatedWrappedRequest.requestBodyGetter().get());
             fileUploadRequest.fileProperties().forEach(fileProperty -> {
                 ParameterSpec fileParameter = ParameterSpec.builder(
-                                fileProperty.getIsOptional()
+                                fileProperty.visit(new FilePropertyIsOptional())
                                         ? ParameterizedTypeName.get(Optional.class, File.class)
                                         : ClassName.get(File.class),
                                 getFilePropertyParameterName(fileProperty))
@@ -336,12 +339,12 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 }
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
-                String mimeTypeVariableName =
-                        fileProperty.getKey().getName().getCamelCase().getUnsafeName() + "MimeType";
-                String mediaTypeVariableName =
-                        fileProperty.getKey().getName().getCamelCase().getUnsafeName() + "MediaType";
+                NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
+                String filePropertyName = filePropertyKey.getName().getCamelCase().getUnsafeName();
+                String mimeTypeVariableName = filePropertyName + "MimeType";
+                String mediaTypeVariableName = mimeTypeVariableName + "MediaType";
                 String filePropertyParameterName = getFilePropertyParameterName(fileProperty);
-                if (fileProperty.getIsOptional()) {
+                if (fileProperty.visit(new FilePropertyIsOptional())) {
                     requestBodyCodeBlock
                             .beginControlFlow("if ($N.isPresent())", getFilePropertyParameterName(fileProperty))
                             .addStatement(
@@ -359,7 +362,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                             .addStatement(
                                     "$L.addFormDataPart($S, $L.get().getName(), $T.create($L, $L.get()))",
                                     getMultipartBodyPropertiesName(),
-                                    fileProperty.getKey().getWireValue(),
+                                    filePropertyKey.getWireValue(),
                                     filePropertyParameterName,
                                     RequestBody.class,
                                     mediaTypeVariableName,
@@ -382,7 +385,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                             .addStatement(
                                     "$L.addFormDataPart($S, $L.getName(), $T.create($L, $L))",
                                     getMultipartBodyPropertiesName(),
-                                    fileProperty.getKey().getWireValue(),
+                                    filePropertyKey.getWireValue(),
                                     getFilePropertyParameterName(fileProperty),
                                     RequestBody.class,
                                     mediaTypeVariableName,
@@ -403,6 +406,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     }
 
     private static String getFilePropertyParameterName(FileProperty fileProperty) {
-        return fileProperty.getKey().getName().getCamelCase().getSafeName();
+        return fileProperty.visit(new GetFilePropertyKey()).getName().getCamelCase().getSafeName();
     }
 }

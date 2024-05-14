@@ -1921,34 +1921,13 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -2019,34 +1998,13 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -2154,34 +2112,13 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -2246,29 +2183,12 @@ exports[`open api parser hookdeck docs 1`] = `
                         "id": "id",
                         "name": "name",
                         "paused_at": "2024-01-15T09:30:00Z",
-                        "resolved_rules": [
-                          {
-                            "strategy": "linear",
-                            "type": "retry",
-                          },
-                        ],
-                        "rules": [
-                          {
-                            "strategy": "linear",
-                            "type": "retry",
-                          },
-                        ],
                         "ruleset": {
                           "created_at": "2024-01-15T09:30:00Z",
                           "id": "id",
                           "is_team_default": true,
                           "name": "name",
-                          "rules": [
-                            {
-                              "strategy": "linear",
-                              "type": "retry",
-                            },
-                          ],
+                          "rules": [],
                           "team_id": "team_id",
                           "updated_at": "2024-01-15T09:30:00Z",
                         },
@@ -2352,34 +2272,13 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -2449,34 +2348,13 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -2546,34 +2424,13 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -2646,34 +2503,13 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -2769,34 +2605,13 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -5450,14 +5265,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -5494,14 +5302,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -5552,14 +5353,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -5596,12 +5390,7 @@ exports[`open api parser hookdeck docs 1`] = `
                         "id": "id",
                         "is_team_default": true,
                         "name": "name",
-                        "rules": [
-                          {
-                            "strategy": "linear",
-                            "type": "retry",
-                          },
-                        ],
+                        "rules": [],
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
@@ -5657,14 +5446,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -5703,14 +5485,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -5769,14 +5544,7 @@ exports[`open api parser hookdeck docs 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -7600,10 +7368,6 @@ exports[`open api parser hookdeck docs 1`] = `
         "docs": undefined,
         "properties": {
           "strategy": "AlertStrategy",
-          "type": {
-            "docs": "An alert rule must be of type \`alert\`",
-            "type": "literal<"alert">",
-          },
         },
       },
       "AlertStrategy": {
@@ -7940,10 +7704,6 @@ exports[`open api parser hookdeck docs 1`] = `
           "delay": {
             "docs": "Delay to introduce in MS",
             "type": "integer",
-          },
-          "type": {
-            "docs": "A delay rule must be of type \`delay\`",
-            "type": "literal<"delay">",
           },
         },
       },
@@ -8370,10 +8130,6 @@ exports[`open api parser hookdeck docs 1`] = `
           "headers": "optional<ConnectionFilterProperty>",
           "path": "optional<ConnectionFilterProperty>",
           "query": "optional<ConnectionFilterProperty>",
-          "type": {
-            "docs": "A filter rule must be of type \`filter\`",
-            "type": "literal<"filter">",
-          },
         },
       },
       "FilteredMeta": {
@@ -8911,10 +8667,6 @@ exports[`open api parser hookdeck docs 1`] = `
             "type": "optional<integer>",
           },
           "strategy": "RetryStrategy",
-          "type": {
-            "docs": "A retry rule must be of type \`retry\`",
-            "type": "literal<"retry">",
-          },
         },
       },
       "RetryStrategy": {
@@ -8925,15 +8677,16 @@ exports[`open api parser hookdeck docs 1`] = `
         ],
       },
       "Rule": {
-        "discriminated": false,
+        "base-properties": {},
+        "discriminant": "type",
         "docs": undefined,
-        "union": [
-          "RetryRule",
-          "AlertRule",
-          "FilterRule",
-          "TransformRule",
-          "DelayRule",
-        ],
+        "union": {
+          "alert": "AlertRule",
+          "delay": "DelayRule",
+          "filter": "FilterRule",
+          "retry": "RetryRule",
+          "transform": "TransformRule",
+        },
       },
       "Ruleset": {
         "docs": "Associated [Ruleset](#ruleset-object) object",
@@ -11431,34 +11184,13 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -11529,34 +11261,13 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -11664,34 +11375,13 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -11756,29 +11446,12 @@ exports[`open api parser hookdeck simple 1`] = `
                         "id": "id",
                         "name": "name",
                         "paused_at": "2024-01-15T09:30:00Z",
-                        "resolved_rules": [
-                          {
-                            "strategy": "linear",
-                            "type": "retry",
-                          },
-                        ],
-                        "rules": [
-                          {
-                            "strategy": "linear",
-                            "type": "retry",
-                          },
-                        ],
                         "ruleset": {
                           "created_at": "2024-01-15T09:30:00Z",
                           "id": "id",
                           "is_team_default": true,
                           "name": "name",
-                          "rules": [
-                            {
-                              "strategy": "linear",
-                              "type": "retry",
-                            },
-                          ],
+                          "rules": [],
                           "team_id": "team_id",
                           "updated_at": "2024-01-15T09:30:00Z",
                         },
@@ -11862,34 +11535,13 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -11959,34 +11611,13 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -12056,34 +11687,13 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -12156,34 +11766,13 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -12279,34 +11868,13 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "name": "name",
                     "paused_at": "2024-01-15T09:30:00Z",
-                    "resolved_rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
                     "ruleset": {
                       "archived_at": "2024-01-15T09:30:00Z",
                       "created_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "is_team_default": true,
                       "name": "name",
-                      "rules": [
-                        {
-                          "strategy": "linear",
-                          "type": "retry",
-                        },
-                      ],
+                      "rules": [],
                       "team_id": "team_id",
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
@@ -14960,14 +14528,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -15004,14 +14565,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -15062,14 +14616,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -15106,12 +14653,7 @@ exports[`open api parser hookdeck simple 1`] = `
                         "id": "id",
                         "is_team_default": true,
                         "name": "name",
-                        "rules": [
-                          {
-                            "strategy": "linear",
-                            "type": "retry",
-                          },
-                        ],
+                        "rules": [],
                         "team_id": "team_id",
                         "updated_at": "2024-01-15T09:30:00Z",
                       },
@@ -15167,14 +14709,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -15213,14 +14748,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -15279,14 +14807,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "id": "id",
                     "is_team_default": true,
                     "name": "name",
-                    "rules": [
-                      {
-                        "count": 1,
-                        "interval": 1,
-                        "strategy": "linear",
-                        "type": "retry",
-                      },
-                    ],
+                    "rules": [],
                     "team_id": "team_id",
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
@@ -16355,10 +15876,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "docs": undefined,
         "properties": {
           "strategy": "AlertStrategy",
-          "type": {
-            "docs": "An alert rule must be of type \`alert\`",
-            "type": "literal<"alert">",
-          },
         },
       },
       "AlertStrategy": {
@@ -16695,10 +16212,6 @@ exports[`open api parser hookdeck simple 1`] = `
           "delay": {
             "docs": "Delay to introduce in MS",
             "type": "integer",
-          },
-          "type": {
-            "docs": "A delay rule must be of type \`delay\`",
-            "type": "literal<"delay">",
           },
         },
       },
@@ -17125,10 +16638,6 @@ exports[`open api parser hookdeck simple 1`] = `
           "headers": "optional<ConnectionFilterProperty>",
           "path": "optional<ConnectionFilterProperty>",
           "query": "optional<ConnectionFilterProperty>",
-          "type": {
-            "docs": "A filter rule must be of type \`filter\`",
-            "type": "literal<"filter">",
-          },
         },
       },
       "FilteredMeta": {
@@ -17666,10 +17175,6 @@ exports[`open api parser hookdeck simple 1`] = `
             "type": "optional<integer>",
           },
           "strategy": "RetryStrategy",
-          "type": {
-            "docs": "A retry rule must be of type \`retry\`",
-            "type": "literal<"retry">",
-          },
         },
       },
       "RetryStrategy": {
@@ -17680,15 +17185,16 @@ exports[`open api parser hookdeck simple 1`] = `
         ],
       },
       "Rule": {
-        "discriminated": false,
+        "base-properties": {},
+        "discriminant": "type",
         "docs": undefined,
-        "union": [
-          "RetryRule",
-          "AlertRule",
-          "FilterRule",
-          "TransformRule",
-          "DelayRule",
-        ],
+        "union": {
+          "alert": "AlertRule",
+          "delay": "DelayRule",
+          "filter": "FilterRule",
+          "retry": "RetryRule",
+          "transform": "TransformRule",
+        },
       },
       "Ruleset": {
         "docs": "Associated [Ruleset](#ruleset-object) object",

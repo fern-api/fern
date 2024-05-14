@@ -5207,6 +5207,12 @@ You can see a complete list of institutions by either consulting our [Institutio
                     "primary_color": "#056dae",
                     "resources": [
                       "ACCOUNTS",
+                      "BALANCES",
+                      "INCOMES",
+                      "OWNERS",
+                      "RECURRING_EXPENSES",
+                      "RISK_INSIGHTS",
+                      "TRANSACTIONS",
                     ],
                     "status": "healthy",
                     "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -5302,6 +5308,12 @@ You can see a complete list of institutions by either consulting our [Institutio
                         "primary_color": "#056dae",
                         "resources": [
                           "ACCOUNTS",
+                          "BALANCES",
+                          "INCOMES",
+                          "OWNERS",
+                          "RECURRING_EXPENSES",
+                          "RISK_INSIGHTS",
+                          "TRANSACTIONS",
                         ],
                         "status": "healthy",
                         "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -11785,6 +11797,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -11992,6 +12006,8 @@ client.connect()
                       {
                         "accounts": [
                           "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "00293c8e-1152-440b-9892-3c071fb88672",
+                          "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                         ],
                         "balances_metrics": {
                           "balance_threshold_x": 267,
@@ -12237,6 +12253,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -12445,6 +12463,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -19772,7 +19792,7 @@ If you try to access older information than what we can access, we will return a
       "CategorizeTransactionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ChangeLinkAccessModeRequestBadRequestError": {
         "docs": "Bad request error",
@@ -19787,7 +19807,7 @@ If you try to access older information than what we can access, we will return a
       "ChangeLinkAccessModeRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "ChangeLinkAccessModeRequestPreconditionError": {
         "docs": "MFA Token Required",
@@ -19797,7 +19817,7 @@ If you try to access older information than what we can access, we will return a
       "ChangeLinkAccessModeRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "CreateBankAccountRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -19812,12 +19832,12 @@ If you try to access older information than what we can access, we will return a
       "CreateBankAccountRequestRequestTimeoutError": {
         "docs": "Request Timeout Error",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "CreateBankAccountRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "CreateCustomerRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -19832,7 +19852,7 @@ If you try to access older information than what we can access, we will return a
       "CreateCustomerRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "CreatePaymentIntentRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -19847,12 +19867,12 @@ If you try to access older information than what we can access, we will return a
       "CreatePaymentIntentRequestRequestTimeoutError": {
         "docs": "Request Timeout Error",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "CreatePaymentIntentRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "CreatePaymentlinkRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -19867,12 +19887,12 @@ If you try to access older information than what we can access, we will return a
       "CreatePaymentlinkRequestRequestTimeoutError": {
         "docs": "Request Timeout Error",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "CreatePaymentlinkRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "CreateSecretKeysRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -19882,567 +19902,567 @@ If you try to access older information than what we can access, we will return a
       "CreateSecretKeysRequestRequestTimeoutError": {
         "docs": "Request Timeout Error",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "DeletePaymentWebhooksRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DeletePaymentWebhooksRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyAccountRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyAccountRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyBalanceRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyBalanceRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyEmploymentRecordRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyEmploymentRecordRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyIncomesRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyIncomesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyInvoiceRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyInvoiceRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyLinkRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyLinkRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyOwnerRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyOwnerRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyPortfolioRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyPortfolioRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyReceivableTransactionRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyReceivableTransactionRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyRecurringExpenseRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyRecurringExpenseRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyRiskInsightsRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyRiskInsightsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyTaxComplianceStatusRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyTaxComplianceStatusRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyTaxDeclarationRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyTaxDeclarationRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyTaxRetentionRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyTaxRetentionRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyTaxReturnRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyTaxReturnRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyTaxStatusRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyTaxStatusRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DestroyTransactionRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DestroyTransactionRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailAccountRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailAccountRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailBalanceRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailBalanceRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailBankAccountRequestNotFoundError": {
         "docs": "Not Found Error",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailBankAccountRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailCreatePaymentlinkRequestNotFoundError": {
         "docs": "Not Found Error",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailCreatePaymentlinkRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailCustomerRequestNotFoundError": {
         "docs": "Not Found Error",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailCustomerRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailEmploymentRecordRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailEmploymentRecordRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailIncomeRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailIncomeRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailInstitutionRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailInstitutionRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailInvoiceRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailInvoiceRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailLinkRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailLinkRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailOwnerRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailOwnerRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailPaymentInstitutionRequestNotFoundError": {
         "docs": "Not Found Error",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailPaymentInstitutionRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailPaymentIntentRequestNotFoundError": {
         "docs": "Not Found Error",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailPaymentIntentRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailPaymentTransactionsRequestNotFoundError": {
         "docs": "Not Found Error",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailPaymentTransactionsRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailPaymentWebhooksRequestNotFoundError": {
         "docs": "Not Found Error",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailPaymentWebhooksRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailPortfolioRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailPortfolioRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailReceivableTransactionRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailReceivableTransactionRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailRecurringExpenseRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailRecurringExpenseRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailRiskInsightsRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailRiskInsightsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailTaxComplianceStatusRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailTaxComplianceStatusRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailTaxDeclarationRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailTaxDeclarationRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailTaxRetentionsRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailTaxRetentionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailTaxReturnRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailTaxReturnRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailTaxStatusRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailTaxStatusRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "DetailTransactionRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "DetailTransactionRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListAccountsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListBalancesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListBankAccountRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListCustomersRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListEmploymentRecordsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListIncomesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListInstitutionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListInvoicesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListLinksRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListOwnersRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListPaymentInstitutionsRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListPaymentIntentsRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListPaymentLinksRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListPaymentTransactionsRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListPaymentWebhooksRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListPortfolioRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListReceivableTransactionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListRecurringExpensesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListRiskInsightsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListSecretKeysRequestUnauthorizedError": {
         "docs": "Authentication Error",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListTaxComplianceStatusRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListTaxDeclarationsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListTaxRetentionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListTaxReturnsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListTaxStatusRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "ListTransactionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchAccountsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20462,12 +20482,12 @@ If you try to access older information than what we can access, we will return a
       "PatchAccountsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "PatchAccountsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchBalancesRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20487,12 +20507,12 @@ If you try to access older information than what we can access, we will return a
       "PatchBalancesRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "PatchBalancesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchIncomesRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20512,12 +20532,12 @@ If you try to access older information than what we can access, we will return a
       "PatchIncomesRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "PatchIncomesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchInvoicesRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20537,12 +20557,12 @@ If you try to access older information than what we can access, we will return a
       "PatchInvoicesRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "PatchInvoicesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchLinksRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20562,7 +20582,7 @@ If you try to access older information than what we can access, we will return a
       "PatchLinksRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchOwnersRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20582,12 +20602,12 @@ If you try to access older information than what we can access, we will return a
       "PatchOwnersRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "PatchOwnersRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchPaymentIntentRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20597,7 +20617,7 @@ If you try to access older information than what we can access, we will return a
       "PatchPaymentIntentRequestNotFoundError": {
         "docs": "Not Found Error",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "PatchPortfolioRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20617,7 +20637,7 @@ If you try to access older information than what we can access, we will return a
       "PatchPortfolioRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchRecurringExpensesRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20637,12 +20657,12 @@ If you try to access older information than what we can access, we will return a
       "PatchRecurringExpensesRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "PatchRecurringExpensesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchRiskInsightsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20662,12 +20682,12 @@ If you try to access older information than what we can access, we will return a
       "PatchRiskInsightsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "PatchRiskInsightsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "PatchTransactionsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20687,12 +20707,12 @@ If you try to access older information than what we can access, we will return a
       "PatchTransactionsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "PatchTransactionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RegisterLinkRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20712,7 +20732,7 @@ If you try to access older information than what we can access, we will return a
       "RegisterLinkRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RegisterPaymentWebhookRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20727,12 +20747,12 @@ If you try to access older information than what we can access, we will return a
       "RegisterPaymentWebhookRequestRequestTimeoutError": {
         "docs": "Request Timeout Error",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RegisterPaymentWebhookRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveAccountsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20752,12 +20772,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveAccountsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveAccountsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveBalancesRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20777,12 +20797,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveBalancesRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveBalancesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveEmploymentRecordDetailsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20802,12 +20822,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveEmploymentRecordDetailsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveEmploymentRecordDetailsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveIncomeRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20827,12 +20847,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveIncomeRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveIncomeRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveInvoicesRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20847,12 +20867,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveInvoicesRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveInvoicesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveOwnersRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20872,12 +20892,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveOwnersRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveOwnersRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrievePortfolioRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20897,7 +20917,7 @@ If you try to access older information than what we can access, we will return a
       "RetrievePortfolioRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveReceivableTransactionsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20917,7 +20937,7 @@ If you try to access older information than what we can access, we will return a
       "RetrieveReceivableTransactionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveRecurringExpensesRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20937,12 +20957,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveRecurringExpensesRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveRecurringExpensesRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveRiskInsightsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20962,12 +20982,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveRiskInsightsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveRiskInsightsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveTaxComplianceStatusRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -20982,12 +21002,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveTaxComplianceStatusRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveTaxComplianceStatusRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveTaxDeclarationsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -21002,12 +21022,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveTaxDeclarationsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveTaxDeclarationsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveTaxRetentionsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -21022,12 +21042,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveTaxRetentionsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveTaxRetentionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveTaxReturnsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -21042,12 +21062,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveTaxReturnsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveTaxReturnsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveTaxStatusRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -21062,12 +21082,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveTaxStatusRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveTaxStatusRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveTransactionsAsyncRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -21087,12 +21107,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveTransactionsAsyncRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveTransactionsAsyncRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "RetrieveTransactionsRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -21112,12 +21132,12 @@ If you try to access older information than what we can access, we will return a
       "RetrieveTransactionsRequestRequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "RetrieveTransactionsRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "UpdateLinkRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -21132,7 +21152,7 @@ If you try to access older information than what we can access, we will return a
       "UpdateLinkRequestNotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "UpdateLinkRequestPreconditionError": {
         "docs": "MFA Token Required",
@@ -21142,7 +21162,7 @@ If you try to access older information than what we can access, we will return a
       "UpdateLinkRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
       "VerifyIncomeRequestBadRequestError": {
         "docs": "400 Bad Request.",
@@ -21162,7 +21182,7 @@ If you try to access older information than what we can access, we will return a
       "VerifyIncomeRequestUnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
     },
     "types": {
@@ -26267,7 +26287,7 @@ For \`login_error\` errors, the description can be one of the following:
           },
         },
       },
-      "NotFoundErrorBody": {
+      "NotFoundError": {
         "docs": undefined,
         "properties": {
           "code": {
@@ -27571,7 +27591,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "RequestTimeoutErrorBody": {
+      "RequestTimeoutError": {
         "docs": "Belvo has a limit regarding the time it takes to log in, retrieve account data, and log out. A timeout occurs when there is a very high amount of data and everything could not be obtained within the allotted time.",
         "properties": {
           "code": {
@@ -29766,7 +29786,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
         },
       },
-      "UnauthorizedErrorBody": {
+      "UnauthorizedError": {
         "docs": "This error occurs when you try to make an API call using incorrect Belvo API credentials (either your secret key or secret password, or both, are incorrect).",
         "properties": {
           "code": {
@@ -35124,6 +35144,12 @@ You can see a complete list of institutions by either consulting our [Institutio
                     "primary_color": "#056dae",
                     "resources": [
                       "ACCOUNTS",
+                      "BALANCES",
+                      "INCOMES",
+                      "OWNERS",
+                      "RECURRING_EXPENSES",
+                      "RISK_INSIGHTS",
+                      "TRANSACTIONS",
                     ],
                     "status": "healthy",
                     "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -35219,6 +35245,12 @@ You can see a complete list of institutions by either consulting our [Institutio
                         "primary_color": "#056dae",
                         "resources": [
                           "ACCOUNTS",
+                          "BALANCES",
+                          "INCOMES",
+                          "OWNERS",
+                          "RECURRING_EXPENSES",
+                          "RISK_INSIGHTS",
+                          "TRANSACTIONS",
                         ],
                         "status": "healthy",
                         "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -41702,6 +41734,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -41909,6 +41943,8 @@ client.connect()
                       {
                         "accounts": [
                           "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "00293c8e-1152-440b-9892-3c071fb88672",
+                          "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                         ],
                         "balances_metrics": {
                           "balance_threshold_x": 267,
@@ -42154,6 +42190,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -42362,6 +42400,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -49689,7 +49729,7 @@ If you try to access older information than what we can access, we will return a
       "NotFoundError": {
         "docs": "Not Found",
         "status-code": 404,
-        "type": "list<NotFoundErrorBody>",
+        "type": "list<NotFoundError>",
       },
       "PreconditionError": {
         "docs": "MFA Token Required",
@@ -49699,12 +49739,12 @@ If you try to access older information than what we can access, we will return a
       "RequestTimeoutError": {
         "docs": "Request Timeout",
         "status-code": 408,
-        "type": "list<RequestTimeoutErrorBody>",
+        "type": "list<RequestTimeoutError>",
       },
       "UnauthorizedError": {
         "docs": "Authentication to Belvo API failed",
         "status-code": 401,
-        "type": "list<UnauthorizedErrorBody>",
+        "type": "list<UnauthorizedError>",
       },
     },
     "types": {
@@ -54809,7 +54849,7 @@ For \`login_error\` errors, the description can be one of the following:
           },
         },
       },
-      "NotFoundErrorBody": {
+      "NotFoundError": {
         "docs": undefined,
         "properties": {
           "code": {
@@ -56113,7 +56153,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "RequestTimeoutErrorBody": {
+      "RequestTimeoutError": {
         "docs": "Belvo has a limit regarding the time it takes to log in, retrieve account data, and log out. A timeout occurs when there is a very high amount of data and everything could not be obtained within the allotted time.",
         "properties": {
           "code": {
@@ -58308,7 +58348,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
         },
       },
-      "UnauthorizedErrorBody": {
+      "UnauthorizedError": {
         "docs": "This error occurs when you try to make an API call using incorrect Belvo API credentials (either your secret key or secret password, or both, are incorrect).",
         "properties": {
           "code": {

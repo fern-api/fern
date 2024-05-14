@@ -17,7 +17,9 @@ export function appendPropertyToFormData({
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {
-            let statement = context.externalDependencies.formData.append({
+            const FOR_LOOP_ITEM_VARIABLE_NAME = "_file";
+
+            let statement = context.coreUtilities.formDataUtils.append({
                 referencetoFormData: referenceToFormData,
                 key: property.key.wireValue,
                 value: ts.factory.createIdentifier(
@@ -27,6 +29,39 @@ export function appendPropertyToFormData({
                     })
                 )
             });
+
+            if (property.type === "fileArray") {
+                statement = ts.factory.createForOfStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
+                                undefined,
+                                undefined,
+                                undefined
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    ),
+                    ts.factory.createIdentifier(
+                        getParameterNameForFile({
+                            property,
+                            retainOriginalCasing: context.retainOriginalCasing
+                        })
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            context.coreUtilities.formDataUtils.append({
+                                referencetoFormData: referenceToFormData,
+                                key: property.key.wireValue,
+                                value: ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME)
+                            })
+                        ],
+                        true
+                    )
+                );
+            }
 
             if (property.isOptional) {
                 statement = ts.factory.createIfStatement(
@@ -73,7 +108,7 @@ export function appendPropertyToFormData({
                     referenceToBodyProperty,
                     ts.factory.createBlock(
                         [
-                            context.externalDependencies.formData.append({
+                            context.coreUtilities.formDataUtils.append({
                                 referencetoFormData: referenceToFormData,
                                 key: property.name.wireValue,
                                 value: stringifyIterableItemType(
@@ -116,7 +151,7 @@ export function appendPropertyToFormData({
                     statement = ts.factory.createIfStatement(condition, statement);
                 }
             } else {
-                statement = context.externalDependencies.formData.append({
+                statement = context.coreUtilities.formDataUtils.append({
                     referencetoFormData: referenceToFormData,
                     key: property.name.wireValue,
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
