@@ -138,6 +138,7 @@ class CoreUtilities:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="deep_union_pydantic_dicts"
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="deep_union_pydantic_dicts",
             ),
         )

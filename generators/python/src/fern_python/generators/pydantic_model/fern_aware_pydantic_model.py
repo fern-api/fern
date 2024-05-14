@@ -306,7 +306,7 @@ class FernAwarePydanticModel:
                 args=[
                     AST.Expression("super().dict(**kwargs_with_defaults_exclude_unset)"),
                     AST.Expression("super().dict(**kwargs_with_defaults_exclude_none)"),
-                ]
+                ],
             )
             writer.write("return ")
             writer.write_node(AST.Expression(function_invocation))
