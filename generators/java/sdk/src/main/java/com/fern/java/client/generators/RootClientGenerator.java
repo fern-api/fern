@@ -25,9 +25,11 @@ import com.fern.irV42.model.auth.OAuthClientCredentials;
 import com.fern.irV42.model.auth.OAuthConfiguration;
 import com.fern.irV42.model.auth.OAuthScheme;
 import com.fern.irV42.model.commons.EndpointReference;
+import com.fern.irV42.model.commons.FernFilepath;
 import com.fern.irV42.model.commons.TypeId;
 import com.fern.irV42.model.http.HttpEndpoint;
 import com.fern.irV42.model.http.HttpService;
+import com.fern.irV42.model.ir.Subpackage;
 import com.fern.irV42.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
@@ -384,6 +386,16 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                 createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
 
+                Subpackage subpackage = clientGeneratorContext.getIr().getSubpackages()
+                    .get(tokenEndpointReference.getSubpackageId().get());
+                ClassName authClientClassName = clientGeneratorContext.getPoetClassNameFactory()
+                    .getClientClassName(subpackage);
+
+                clientBuilder.addMethod(MethodSpec.methodBuilder("build")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addStatement("$T authClient = new $T().builder().environment(this.$L).build()", authClientClassName, authClientClassName, ENVIRONMENT_FIELD_NAME)
+                    .addStatement("$T authClient = new $T().builder().environment(this.environment).build()")
+                    .build());
                 // todo: finish
 
             }
