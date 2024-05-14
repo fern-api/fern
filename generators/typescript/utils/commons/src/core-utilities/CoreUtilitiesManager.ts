@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, rm } from "fs/promises";
+import { cp, rm, writeFile } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
 import { SourceFile } from "ts-morph";
@@ -29,6 +29,7 @@ export declare namespace CoreUtilitiesManager {
 
 export class CoreUtilitiesManager {
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
+    private authOverrides: Record<RelativeFilePath, string> = {};
 
     public getCoreUtilities({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
         const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, importsManager });
@@ -53,19 +54,28 @@ export class CoreUtilitiesManager {
 
     public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
         await Promise.all(
-            [...Object.values(this.referencedCoreUtilities)].map(async (utility) => {
+            [...Object.entries(this.referencedCoreUtilities)].map(async ([utilityName, utility]) => {
+                const fromPath =
+                    process.env.NODE_ENV === "test"
+                        ? path.join(__dirname, "../../../../..", utility.repoInfoForTesting.path)
+                        : utility.originalPathOnDocker;
                 const toPath = join(
                     pathToSrc,
                     ...this.getPathToUtility(utility).map((directory) => RelativeFilePath.of(directory.nameOnDisk))
                 );
-                await cp(
-                    process.env.NODE_ENV === "test"
-                        ? path.join(__dirname, "../../../../..", utility.repoInfoForTesting.path)
-                        : utility.originalPathOnDocker,
-                    toPath,
-                    { recursive: true }
-                );
-
+                await cp(fromPath, toPath, {
+                    recursive: true
+                });
+                if (utilityName === "auth") {
+                    // TODO(amckinney): Find a better way to add utility-scoped overrides. The way we designed the
+                    // core utilities manifest is not flexible enough.
+                    for (const [filepath, content] of Object.entries(this.authOverrides)) {
+                        await writeFile(path.join(toPath, filepath), content);
+                    }
+                }
+                if (utility.writeConditionalFiles != null) {
+                    await utility.writeConditionalFiles(toPath);
+                }
                 if (utility.repoInfoForTesting.ignoreGlob != null && process.env.NODE_ENV === "test") {
                     const filesToDelete = await glob(utility.repoInfoForTesting.ignoreGlob, {
                         cwd: toPath,
@@ -75,6 +85,10 @@ export class CoreUtilitiesManager {
                 }
             })
         );
+    }
+
+    public addAuthOverride({ filepath, content }: { filepath: RelativeFilePath; content: string }): void {
+        this.authOverrides[filepath] = content;
     }
 
     private createGetReferenceToExport({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args) {

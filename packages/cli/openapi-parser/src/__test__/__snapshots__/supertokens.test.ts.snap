@@ -27971,7 +27971,14 @@ e.g.:
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "features",
+                      "value": "feature_1",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "feature_2",
                     },
                   },
                 ],

@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: Example API
+  version: 1.0.0
+paths:
+  /example:
+    get:
+      summary: Get Example
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExampleResponse"
+components:
+  schemas:
+    Conversation:
+      oneOf:
+        - "$ref": "#/components/schemas/Greeting"
+        - "$ref": "#/components/schemas/Farewell"
+    Greeting:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/GreetingEnum"
+        message:
+          type: string
+    Farewell:
+      type: object
+      properties:
+        type:
+          $ref: "#/components/schemas/FarewellEnum"
+        message:
+          type: string
+    GreetingEnum:
+      type: string
+      enum:
+        - hello
+        - HELLO
+    FarewellEnum:
+      type: string
+      enum:
+        - goodbye
+        - GOODBYE

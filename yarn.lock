@@ -4523,6 +4523,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     strip-ansi: ^7.1.0
+    terminal-link: ^3.0.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -5607,6 +5608,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
+    ts-poet: ^6.7.0
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
