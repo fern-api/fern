@@ -37,9 +37,9 @@ types:
       requestBody: optional<HttpRequestBody>
       sdkRequest:
         docs: |
-          This field provides details needed to generate the endpoint signature and request type. This is necessitated 
-          by (1) The options that Fern spec writers have for defining request bodies (inline or as separate types) and 
-          (2)
+          This field provides details needed to generate the endpoint signature and request type. This is required due
+          to variations in how requests can be defined in the Fern spec (inline, as a separate type, with or without 
+          query params and headers).
         type: optional<SdkRequest>
       response: optional<HttpResponse>
       errors: ResponseErrors

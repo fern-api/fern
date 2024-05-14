@@ -66,27 +66,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             .visit(new RequestPropertyToNameVisitor()).getName().getCamelCase().getUnsafeName();
         String clientSecretPropertyName = requestProperties.getClientSecret().getProperty()
             .visit(new RequestPropertyToNameVisitor()).getName().getCamelCase().getUnsafeName();
-        TypeName fetchTokenRequestType = httpEndpoint.getSdkRequest().get().getShape().visit(new Visitor<>() {
-            @Override
-            public TypeName visitJustRequestBody(SdkRequestBodyType justRequestBody) {
-                TypeReference requestBodyType = justRequestBody.getTypeReference().get().getRequestBodyType();
-                return clientGeneratorContext
-                    .getPoetTypeNameMapper()
-                    .convertToTypeName(true, requestBodyType);
-            }
-
-            @Override
-            public TypeName visitWrapper(SdkRequestWrapper wrapper) {
-                return clientGeneratorContext
-                    .getPoetClassNameFactory()
-                    .getRequestWrapperBodyClassName(httpService, wrapper);
-            }
-
-            @Override
-            public TypeName _visitUnknown(Object unknownType) {
-                throw new RuntimeException("Unknown SdkRequestShape: " + unknownType);
-            }
-        });
+        TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         // todo: handle other response types
         JsonResponseBody jsonResponseBody = httpEndpoint.getResponse().get().getJson().get().getResponse().get();
         TypeName fetchTokenReturnType =
@@ -144,5 +124,29 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             .className(className)
             .javaFile(authHeaderFile)
             .build();
+    }
+
+    private TypeName getFetchTokenRequestType(HttpEndpoint httpEndpoint, HttpService httpService) {
+        return httpEndpoint.getSdkRequest().get().getShape().visit(new Visitor<>() {
+            @Override
+            public TypeName visitJustRequestBody(SdkRequestBodyType justRequestBody) {
+                TypeReference requestBodyType = justRequestBody.getTypeReference().get().getRequestBodyType();
+                return clientGeneratorContext
+                    .getPoetTypeNameMapper()
+                    .convertToTypeName(true, requestBodyType);
+            }
+
+            @Override
+            public TypeName visitWrapper(SdkRequestWrapper wrapper) {
+                return clientGeneratorContext
+                    .getPoetClassNameFactory()
+                    .getRequestWrapperBodyClassName(httpService, wrapper);
+            }
+
+            @Override
+            public TypeName _visitUnknown(Object unknownType) {
+                throw new RuntimeException("Unknown SdkRequestShape: " + unknownType);
+            }
+        });
     }
 }

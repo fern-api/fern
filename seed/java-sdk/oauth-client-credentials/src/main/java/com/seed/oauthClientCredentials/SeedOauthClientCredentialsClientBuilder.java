@@ -5,19 +5,31 @@ package com.seed.oauthClientCredentials;
 
 import com.seed.oauthClientCredentials.core.ClientOptions;
 import com.seed.oauthClientCredentials.core.Environment;
+import com.seed.oauthClientCredentials.core.OAuthTokenSupplier;
+import com.seed.oauthClientCredentials.resources.auth.AuthClient;
 
 public final class SeedOauthClientCredentialsClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
-    private String token = null;
+    private String clientId = null;
+
+    private String clientSecret = null;
 
     private Environment environment;
 
     /**
-     * Sets token
+     * Sets clientId
      */
-    public SeedOauthClientCredentialsClientBuilder token(String token) {
-        this.token = token;
+    public SeedOauthClientCredentialsClientBuilder clientId(String clientId) {
+        this.clientId = clientId;
+        return this;
+    }
+
+    /**
+     * Sets clientSecret
+     */
+    public SeedOauthClientCredentialsClientBuilder clientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
         return this;
     }
 
@@ -27,7 +39,10 @@ public final class SeedOauthClientCredentialsClientBuilder {
     }
 
     public SeedOauthClientCredentialsClient build() {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
+        AuthClient authClient = new AuthClient(
+                ClientOptions.builder().environment(this.environment).build());
+        OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, authClient);
+        this.clientOptionsBuilder.addHeader("Authorization", oAuthTokenSupplier);
         clientOptionsBuilder.environment(this.environment);
         return new SeedOauthClientCredentialsClient(clientOptionsBuilder.build());
     }
