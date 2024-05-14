@@ -4,11 +4,11 @@
 
 package resources.queryparam;
 
-import java.lang.String;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import types.ColorOrOperand;
 import types.Operand;
 
 @RequestMapping(
@@ -18,12 +18,12 @@ public interface QueryParamService {
   @PostMapping("/query")
   void send(@RequestParam("operand") Operand operand,
       @RequestParam("maybeOperand") Optional<Operand> maybeOperand,
-      @RequestParam("operandOrColor") Optional<String> operandOrColor,
-      @RequestParam("maybeOperandOrColor") Optional<String> maybeOperandOrColor);
+      @RequestParam("operandOrColor") ColorOrOperand operandOrColor,
+      @RequestParam("maybeOperandOrColor") Optional<ColorOrOperand> maybeOperandOrColor);
 
   @PostMapping("/query-list")
   void sendList(@RequestParam("operand") Operand operand,
       @RequestParam("maybeOperand") Optional<Operand> maybeOperand,
-      @RequestParam("operandOrColor") Optional<String> operandOrColor,
-      @RequestParam("maybeOperandOrColor") Optional<String> maybeOperandOrColor);
+      @RequestParam("operandOrColor") ColorOrOperand operandOrColor,
+      @RequestParam("maybeOperandOrColor") Optional<ColorOrOperand> maybeOperandOrColor);
 }

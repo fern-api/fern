@@ -86,6 +86,7 @@
                 "_type": "primitive",
                 "primitive": "STRING"
             },
+            "env": "ANOTHER_ENV_VAR",
             "availability": null,
             "docs": null
         }
@@ -171,9 +172,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/apiKey",
                         "parts": []
@@ -185,6 +187,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -199,9 +202,38 @@
                         }
                     },
                     "errors": [],
-                    "auth": true,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/apiKey",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 },
@@ -227,7 +259,21 @@
                         }
                     },
                     "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
                     "method": "GET",
+                    "path": {
+                        "head": "/apiKeyInHeader",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "apiKeyInHeader",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
                     "headers": [
                         {
                             "name": {
@@ -256,22 +302,11 @@
                                 "_type": "primitive",
                                 "primitive": "STRING"
                             },
+                            "env": "MY_HEADER_ENV",
                             "availability": null,
                             "docs": "Specifies the endpoint key."
                         }
                     ],
-                    "baseUrl": null,
-                    "path": {
-                        "head": "/apiKeyInHeader",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "apiKeyInHeader",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -347,9 +382,75 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/apiKeyInHeader",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "X-Endpoint-Header",
+                                            "camelCase": {
+                                                "unsafeName": "xEndpointHeader",
+                                                "safeName": "xEndpointHeader"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "x_endpoint_header",
+                                                "safeName": "x_endpoint_header"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "X_ENDPOINT_HEADER",
+                                                "safeName": "X_ENDPOINT_HEADER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "XEndpointHeader",
+                                                "safeName": "XEndpointHeader"
+                                            }
+                                        },
+                                        "wireValue": "X-Endpoint-Header"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 }
@@ -392,6 +493,7 @@
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_service": {
             "name": {
@@ -462,6 +564,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -472,6 +575,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],

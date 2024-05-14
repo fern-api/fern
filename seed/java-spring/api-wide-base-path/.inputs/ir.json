@@ -141,9 +141,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/",
                         "parts": [
@@ -351,13 +352,165 @@
                         }
                     ],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": null,
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/",
+                            "rootPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "pathParam",
+                                        "camelCase": {
+                                            "unsafeName": "pathParam",
+                                            "safeName": "pathParam"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "path_param",
+                                            "safeName": "path_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PATH_PARAM",
+                                            "safeName": "PATH_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PathParam",
+                                            "safeName": "PathParam"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "servicePathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "serviceParam",
+                                        "camelCase": {
+                                            "unsafeName": "serviceParam",
+                                            "safeName": "serviceParam"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "service_param",
+                                            "safeName": "service_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SERVICE_PARAM",
+                                            "safeName": "SERVICE_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ServiceParam",
+                                            "safeName": "ServiceParam"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "endpointPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "resourceParam",
+                                        "camelCase": {
+                                            "unsafeName": "resourceParam",
+                                            "safeName": "resourceParam"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "resource_param",
+                                            "safeName": "resource_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RESOURCE_PARAM",
+                                            "safeName": "RESOURCE_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ResourceParam",
+                                            "safeName": "ResourceParam"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "originalName": "endpointParam",
+                                        "camelCase": {
+                                            "unsafeName": "endpointParam",
+                                            "safeName": "endpointParam"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "endpoint_param",
+                                            "safeName": "endpoint_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ENDPOINT_PARAM",
+                                            "safeName": "ENDPOINT_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "EndpointParam",
+                                            "safeName": "EndpointParam"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "integer",
+                                                "integer": 1
+                                            }
+                                        },
+                                        "jsonExample": 1
+                                    }
+                                }
+                            ],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -437,6 +590,7 @@
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_service": {
             "name": {
@@ -507,6 +661,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -517,6 +672,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],
