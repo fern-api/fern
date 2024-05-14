@@ -71,6 +71,14 @@ export class CsharpProject {
             this.coreFiles.push(await this.createCoreAsIsFile(file));
         }
 
+        const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
+        const githubWorkflow = template(githubWorkflowTemplate)({
+            projectName: this.name
+        }).replaceAll("\\{", "{");
+        const ghDir = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".github/workflows"));
+        await mkdir(ghDir, { recursive: true });
+        await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
+
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
 
         await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
