@@ -21,9 +21,9 @@ export function getExamplesString(schema: OpenAPIV3.SchemaObject): string | unde
     return undefined;
 }
 
-export function getExampleAsArray(schema: OpenAPIV3.SchemaObject): unknown[] {
+export function getExampleAsArray(schema: OpenAPIV3.SchemaObject): unknown[] | undefined {
     if (schema.example != null && Array.isArray(schema.example)) {
         return schema.example;
     }
-    return [];
+    return undefined;
 }

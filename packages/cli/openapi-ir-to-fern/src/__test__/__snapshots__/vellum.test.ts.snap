@@ -25,7 +25,9 @@ Used to retrieve a deployment given its ID or name.
                 },
                 "response": {
                   "body": {
-                    "active_model_version_ids": [],
+                    "active_model_version_ids": [
+                      "active_model_version_ids",
+                    ],
                     "created": "2024-01-15T09:30:00Z",
                     "environment": "DEVELOPMENT",
                     "id": "id",
@@ -254,6 +256,26 @@ Used to list documents. Optionally filter on supported fields.
                     "count": 123,
                     "next": "http://api.example.org/accounts/?offset=400&limit=100",
                     "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                    "results": [
+                      {
+                        "document_to_document_indexes": [
+                          {
+                            "document_index_id": "document_index_id",
+                            "id": "id",
+                          },
+                        ],
+                        "external_id": "external_id",
+                        "id": "id",
+                        "keywords": [
+                          "keywords",
+                        ],
+                        "label": "label",
+                        "last_uploaded_at": "2024-01-15T09:30:00Z",
+                        "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
+                        "processing_state": "QUEUED",
+                        "status": "ACTIVE",
+                      },
+                    ],
                   },
                 },
               },
@@ -432,17 +454,30 @@ Used to retrieve a model version given its ID.
                     },
                     "created": "2024-01-15T09:30:00Z",
                     "exec_config": {
-                      "input_variables": [],
+                      "input_variables": [
+                        {
+                          "key": "key",
+                        },
+                      ],
                       "parameters": {
                         "frequency_penalty": 1.1,
                         "max_tokens": 1,
                         "presence_penalty": 1.1,
+                        "stop": [
+                          "stop",
+                        ],
                         "temperature": 1.1,
                         "top_k": 1.1,
                         "top_p": 1.1,
                       },
                       "prompt_block_data": {
-                        "blocks": [],
+                        "blocks": [
+                          {
+                            "block_type": "CHAT_MESSAGE",
+                            "id": "id",
+                            "properties": {},
+                          },
+                        ],
                         "version": 1,
                       },
                       "prompt_syntax_version": 1,
@@ -508,9 +543,19 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     "top_p": 1.1,
                   },
                   "prompt": {
-                    "input_variables": [],
+                    "input_variables": [
+                      {
+                        "key": "key",
+                      },
+                    ],
                     "prompt_block_data": {
-                      "blocks": [],
+                      "blocks": [
+                        {
+                          "block_type": "CHAT_MESSAGE",
+                          "id": "id",
+                          "properties": {},
+                        },
+                      ],
                       "version": 1,
                     },
                   },
@@ -669,7 +714,19 @@ or overwritten with default values.",
                 "response": {
                   "body": {
                     "id": "id",
-                    "inputs": [],
+                    "inputs": [
+                      {
+                        "chat_history": [
+                          {
+                            "role": "SYSTEM",
+                            "text": "text",
+                          },
+                        ],
+                        "key": "key",
+                        "type": "TEXT",
+                        "value": "value",
+                      },
+                    ],
                     "label": "label",
                     "metric_input_params": {
                       "params": {
@@ -706,7 +763,19 @@ or overwritten with default values.",
                 "response": {
                   "body": {
                     "id": "id",
-                    "inputs": [],
+                    "inputs": [
+                      {
+                        "chat_history": [
+                          {
+                            "role": "SYSTEM",
+                            "text": "text",
+                          },
+                        ],
+                        "key": "key",
+                        "type": "TEXT",
+                        "value": "value",
+                      },
+                    ],
                     "label": "label",
                     "metric_input_params": {
                       "params": {
@@ -1020,11 +1089,30 @@ Generate a completion using a previously defined deployment.
           "examples": [
             {
               "request": {
-                "requests": [],
+                "requests": [
+                  {
+                    "input_values": {},
+                  },
+                ],
               },
               "response": {
                 "body": {
-                  "results": [],
+                  "results": [
+                    {
+                      "data": {
+                        "completions": [
+                          {
+                            "id": "id",
+                            "model_version_id": "model_version_id",
+                            "text": "text",
+                          },
+                        ],
+                      },
+                      "error": {
+                        "message": "message",
+                      },
+                    },
+                  ],
                 },
               },
             },
@@ -1128,7 +1216,19 @@ Perform a search against a document index.
               },
               "response": {
                 "body": {
-                  "results": [],
+                  "results": [
+                    {
+                      "document": {
+                        "id": "id",
+                        "label": "label",
+                      },
+                      "keywords": [
+                        "keywords",
+                      ],
+                      "score": 1.1,
+                      "text": "text",
+                    },
+                  ],
                 },
               },
             },
@@ -1181,7 +1281,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "examples": [
             {
               "request": {
-                "actuals": [],
+                "actuals": [
+                  {},
+                ],
               },
             },
           ],
@@ -2611,7 +2713,9 @@ Used to retrieve a deployment given its ID or name.
                 },
                 "response": {
                   "body": {
-                    "active_model_version_ids": [],
+                    "active_model_version_ids": [
+                      "active_model_version_ids",
+                    ],
                     "created": "2024-01-15T09:30:00Z",
                     "environment": "DEVELOPMENT",
                     "id": "id",
@@ -2840,6 +2944,26 @@ Used to list documents. Optionally filter on supported fields.
                     "count": 123,
                     "next": "http://api.example.org/accounts/?offset=400&limit=100",
                     "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                    "results": [
+                      {
+                        "document_to_document_indexes": [
+                          {
+                            "document_index_id": "document_index_id",
+                            "id": "id",
+                          },
+                        ],
+                        "external_id": "external_id",
+                        "id": "id",
+                        "keywords": [
+                          "keywords",
+                        ],
+                        "label": "label",
+                        "last_uploaded_at": "2024-01-15T09:30:00Z",
+                        "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
+                        "processing_state": "QUEUED",
+                        "status": "ACTIVE",
+                      },
+                    ],
                   },
                 },
               },
@@ -3018,17 +3142,30 @@ Used to retrieve a model version given its ID.
                     },
                     "created": "2024-01-15T09:30:00Z",
                     "exec_config": {
-                      "input_variables": [],
+                      "input_variables": [
+                        {
+                          "key": "key",
+                        },
+                      ],
                       "parameters": {
                         "frequency_penalty": 1.1,
                         "max_tokens": 1,
                         "presence_penalty": 1.1,
+                        "stop": [
+                          "stop",
+                        ],
                         "temperature": 1.1,
                         "top_k": 1.1,
                         "top_p": 1.1,
                       },
                       "prompt_block_data": {
-                        "blocks": [],
+                        "blocks": [
+                          {
+                            "block_type": "CHAT_MESSAGE",
+                            "id": "id",
+                            "properties": {},
+                          },
+                        ],
                         "version": 1,
                       },
                       "prompt_syntax_version": 1,
@@ -3094,9 +3231,19 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     "top_p": 1.1,
                   },
                   "prompt": {
-                    "input_variables": [],
+                    "input_variables": [
+                      {
+                        "key": "key",
+                      },
+                    ],
                     "prompt_block_data": {
-                      "blocks": [],
+                      "blocks": [
+                        {
+                          "block_type": "CHAT_MESSAGE",
+                          "id": "id",
+                          "properties": {},
+                        },
+                      ],
                       "version": 1,
                     },
                   },
@@ -3255,7 +3402,19 @@ or overwritten with default values.",
                 "response": {
                   "body": {
                     "id": "id",
-                    "inputs": [],
+                    "inputs": [
+                      {
+                        "chat_history": [
+                          {
+                            "role": "SYSTEM",
+                            "text": "text",
+                          },
+                        ],
+                        "key": "key",
+                        "type": "TEXT",
+                        "value": "value",
+                      },
+                    ],
                     "label": "label",
                     "metric_input_params": {
                       "params": {
@@ -3292,7 +3451,19 @@ or overwritten with default values.",
                 "response": {
                   "body": {
                     "id": "id",
-                    "inputs": [],
+                    "inputs": [
+                      {
+                        "chat_history": [
+                          {
+                            "role": "SYSTEM",
+                            "text": "text",
+                          },
+                        ],
+                        "key": "key",
+                        "type": "TEXT",
+                        "value": "value",
+                      },
+                    ],
                     "label": "label",
                     "metric_input_params": {
                       "params": {
@@ -3538,11 +3709,30 @@ Generate a completion using a previously defined deployment.
           "examples": [
             {
               "request": {
-                "requests": [],
+                "requests": [
+                  {
+                    "input_values": {},
+                  },
+                ],
               },
               "response": {
                 "body": {
-                  "results": [],
+                  "results": [
+                    {
+                      "data": {
+                        "completions": [
+                          {
+                            "id": "id",
+                            "model_version_id": "model_version_id",
+                            "text": "text",
+                          },
+                        ],
+                      },
+                      "error": {
+                        "message": "message",
+                      },
+                    },
+                  ],
                 },
               },
             },
@@ -3646,7 +3836,19 @@ Perform a search against a document index.
               },
               "response": {
                 "body": {
-                  "results": [],
+                  "results": [
+                    {
+                      "document": {
+                        "id": "id",
+                        "label": "label",
+                      },
+                      "keywords": [
+                        "keywords",
+                      ],
+                      "score": 1.1,
+                      "text": "text",
+                    },
+                  ],
                 },
               },
             },
@@ -3699,7 +3901,9 @@ Used to submit feedback regarding the quality of previously generated completion
           "examples": [
             {
               "request": {
-                "actuals": [],
+                "actuals": [
+                  {},
+                ],
               },
             },
           ],

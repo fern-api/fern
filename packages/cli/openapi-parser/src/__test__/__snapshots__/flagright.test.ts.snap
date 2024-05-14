@@ -274,6 +274,15 @@ Here are some of the most used payload fields explained (you can find the full p
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "AML",
@@ -327,6 +336,15 @@ Here are some of the most used payload fields explained (you can find the full p
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "AML",
@@ -683,6 +701,15 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "AML",
@@ -736,6 +763,15 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "AML",
@@ -824,6 +860,18 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   "type": "string",
                   "value": "loan repayment",
                 },
+              },
+              "relatedTransactionIds": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "relatedTransactionIds",
+                    },
+                  },
+                ],
               },
               "tags": {
                 "type": "array",
@@ -1082,6 +1130,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "AML",
@@ -1135,6 +1192,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "AML",
@@ -1334,6 +1400,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "type": "string",
                       "value": "loan repayment",
                     },
+                  },
+                  "relatedTransactionIds": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "relatedTransactionIds",
+                        },
+                      },
+                    ],
                   },
                   "tags": {
                     "type": "array",
@@ -1767,11 +1845,120 @@ Each consumer User entity needs three mandatory fields:
             "properties": {
               "executedRules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
+                      "ruleAction": {
+                        "type": "enum",
+                        "value": "BLOCK",
+                      },
+                      "ruleDescription": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                        },
+                      },
+                      "ruleHit": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "ruleId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "R-1a",
+                        },
+                      },
+                      "ruleInstanceId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ruleInstanceId",
+                        },
+                      },
+                      "ruleName": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof of funds for high value transactions",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "hitRules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "FRAUD",
+                      },
+                      "ruleAction": {
+                        "type": "enum",
+                        "value": "BLOCK",
+                      },
+                      "ruleDescription": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                        },
+                      },
+                      "ruleId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "R-1a",
+                        },
+                      },
+                      "ruleInstanceId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ruleInstanceId",
+                        },
+                      },
+                      "ruleName": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof of funds for high value transactions",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "message": {
                 "type": "primitive",
@@ -2048,6 +2235,18 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       },
                     ],
                   },
+                  "faxNumbers": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "faxNumbers",
+                        },
+                      },
+                    ],
+                  },
                   "websites": {
                     "type": "array",
                     "value": [
@@ -2175,6 +2374,42 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       },
                     },
                     "type": "object",
+                  },
+                ],
+              },
+              "pepStatus": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "isPepHit": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "pepCountry": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "pepCountry",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "reasonForAccountOpening": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reasonForAccountOpening",
+                    },
                   },
                 ],
               },
@@ -2527,11 +2762,120 @@ Each consumer Business entity needs three mandatory fields:
             "properties": {
               "executedRules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
+                      "ruleAction": {
+                        "type": "enum",
+                        "value": "BLOCK",
+                      },
+                      "ruleDescription": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                        },
+                      },
+                      "ruleHit": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "ruleId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "R-1a",
+                        },
+                      },
+                      "ruleInstanceId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ruleInstanceId",
+                        },
+                      },
+                      "ruleName": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof of funds for high value transactions",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "hitRules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "FRAUD",
+                      },
+                      "ruleAction": {
+                        "type": "enum",
+                        "value": "BLOCK",
+                      },
+                      "ruleDescription": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                        },
+                      },
+                      "ruleId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "R-1a",
+                        },
+                      },
+                      "ruleInstanceId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ruleInstanceId",
+                        },
+                      },
+                      "ruleName": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof of funds for high value transactions",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "message": {
                 "type": "primitive",
@@ -2704,6 +3048,15 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               "acquisitionChannel": {
                 "type": "enum",
                 "value": "ORGANIC",
+              },
+              "allowedPaymentMethods": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "enum",
+                    "value": "ACH",
+                  },
+                ],
               },
               "createdTimestamp": {
                 "type": "primitive",
@@ -2973,6 +3326,23 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           },
                         ],
                       },
+                      "pepStatus": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "isPepHit": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                       "tags": {
                         "type": "array",
                         "value": [
@@ -3054,6 +3424,30 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         },
                         "type": "object",
                       },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customKey",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customValue",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                     },
                     "type": "object",
                   },
@@ -3087,6 +3481,30 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                               "type": "string",
                               "value": "Hazelnut",
                             },
+                          },
+                        ],
+                      },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customKey",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customValue",
+                                },
+                              },
+                            },
+                            "type": "object",
                           },
                         ],
                       },
@@ -3127,6 +3545,30 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "type": "string",
                           "value": "PSJ554342",
                         },
+                      },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customKey",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customValue",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                       },
                       "taxIdentifier": {
                         "type": "primitive",
@@ -3217,6 +3659,54 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           },
                         ],
                       },
+                      "contactNumbers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "contactNumbers",
+                            },
+                          },
+                        ],
+                      },
+                      "emailIds": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "emailIds",
+                            },
+                          },
+                        ],
+                      },
+                      "faxNumbers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "faxNumbers",
+                            },
+                          },
+                        ],
+                      },
+                      "websites": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "websites",
+                            },
+                          },
+                        ],
+                      },
                     },
                     "type": "object",
                   },
@@ -3237,6 +3727,18 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               },
               "linkedEntities": {
                 "properties": {
+                  "childUserIds": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "childUserIds",
+                        },
+                      },
+                    ],
+                  },
                   "parentUserId": {
                     "type": "primitive",
                     "value": {
@@ -3525,6 +4027,23 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                                     "type": "object",
                                   },
                                 ],
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "pepStatus": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "isPepHit": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
                               },
                             },
                             "type": "object",
@@ -3859,12 +4378,259 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "enum",
                 "value": "ORGANIC",
               },
+              "contactDetails": {
+                "properties": {
+                  "addresses": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "addressLines": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "unknown",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "Klara-Franke Str 20",
+                                  },
+                                },
+                              },
+                            ],
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Berlin",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Germany",
+                            },
+                          },
+                          "postcode": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "10557",
+                            },
+                          },
+                          "state": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Berlin",
+                            },
+                          },
+                          "tags": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "key": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "customKey",
+                                    },
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "customValue",
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "contactNumbers": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "contactNumbers",
+                        },
+                      },
+                    ],
+                  },
+                  "emailIds": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "emailIds",
+                        },
+                      },
+                    ],
+                  },
+                  "faxNumbers": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "faxNumbers",
+                        },
+                      },
+                    ],
+                  },
+                  "websites": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "websites",
+                        },
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "createdTimestamp": {
                 "type": "primitive",
                 "value": {
                   "type": "double",
                   "value": 1.1,
                 },
+              },
+              "executedRules": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
+                      "ruleAction": {
+                        "type": "enum",
+                        "value": "BLOCK",
+                      },
+                      "ruleDescription": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                        },
+                      },
+                      "ruleHit": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "ruleId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "R-1a",
+                        },
+                      },
+                      "ruleInstanceId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ruleInstanceId",
+                        },
+                      },
+                      "ruleName": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof of funds for high value transactions",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "hitRules": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "FRAUD",
+                      },
+                      "ruleAction": {
+                        "type": "enum",
+                        "value": "BLOCK",
+                      },
+                      "ruleDescription": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                        },
+                      },
+                      "ruleId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "R-1a",
+                        },
+                      },
+                      "ruleInstanceId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ruleInstanceId",
+                        },
+                      },
+                      "ruleName": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof of funds for high value transactions",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "kycStatusDetails": {
                 "properties": {
@@ -3882,9 +4648,161 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
                 "type": "object",
               },
+              "legalDocuments": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "documentExpirationDate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1839939034000,
+                        },
+                      },
+                      "documentIssuedCountry": {
+                        "type": "enum",
+                        "value": "DE",
+                      },
+                      "documentIssuedDate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1639939034000,
+                        },
+                      },
+                      "documentNumber": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Z9431P",
+                        },
+                      },
+                      "documentType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "passport",
+                        },
+                      },
+                      "nameOnDocument": {
+                        "properties": {
+                          "firstName": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Baran",
+                            },
+                          },
+                          "lastName": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Ozkan",
+                            },
+                          },
+                          "middleName": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Realblood",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customerType",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "wallet",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "pepStatus": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "isPepHit": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "pepCountry": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "pepCountry",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "reasonForAccountOpening": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reasonForAccountOpening",
+                    },
+                  },
+                ],
+              },
               "riskLevel": {
                 "type": "enum",
                 "value": "VERY_HIGH",
+              },
+              "tags": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "key": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "customKey",
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "customValue",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "transactionLimits": {
                 "properties": {
@@ -4209,12 +5127,445 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "enum",
                 "value": "ORGANIC",
               },
+              "allowedPaymentMethods": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "enum",
+                    "value": "ACH",
+                  },
+                ],
+              },
               "createdTimestamp": {
                 "type": "primitive",
                 "value": {
                   "type": "double",
                   "value": 1.1,
                 },
+              },
+              "directors": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "contactDetails": {
+                        "properties": {
+                          "addresses": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "addressLines": {
+                                    "type": "array",
+                                    "value": [
+                                      {
+                                        "type": "unknown",
+                                        "value": {
+                                          "type": "primitive",
+                                          "value": {
+                                            "type": "string",
+                                            "value": "Klara-Franke Str 20",
+                                          },
+                                        },
+                                      },
+                                    ],
+                                  },
+                                  "city": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Berlin",
+                                    },
+                                  },
+                                  "country": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Germany",
+                                    },
+                                  },
+                                  "postcode": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "10557",
+                                    },
+                                  },
+                                  "state": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Berlin",
+                                    },
+                                  },
+                                  "tags": {
+                                    "type": "array",
+                                    "value": [
+                                      {
+                                        "properties": {
+                                          "key": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "customKey",
+                                            },
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "customValue",
+                                            },
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                          "contactNumbers": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "+371 123132",
+                                },
+                              },
+                            ],
+                          },
+                          "emailIds": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "baran@flagright.com",
+                                },
+                              },
+                            ],
+                          },
+                          "websites": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "flagright.com",
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "generalDetails": {
+                        "properties": {
+                          "countryOfNationality": {
+                            "type": "enum",
+                            "value": "DE",
+                          },
+                          "countryOfResidence": {
+                            "type": "enum",
+                            "value": "US",
+                          },
+                          "dateOfBirth": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1991-01-01",
+                            },
+                          },
+                          "name": {
+                            "properties": {
+                              "firstName": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Baran",
+                                },
+                              },
+                              "lastName": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Ozkan",
+                                },
+                              },
+                              "middleName": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Realblood",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "legalDocuments": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "documentExpirationDate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 1839939034000,
+                                },
+                              },
+                              "documentIssuedCountry": {
+                                "type": "enum",
+                                "value": "DE",
+                              },
+                              "documentIssuedDate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 1639939034000,
+                                },
+                              },
+                              "documentNumber": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Z9431P",
+                                },
+                              },
+                              "documentType": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "passport",
+                                },
+                              },
+                              "nameOnDocument": {
+                                "properties": {
+                                  "firstName": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Baran",
+                                    },
+                                  },
+                                  "lastName": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Ozkan",
+                                    },
+                                  },
+                                  "middleName": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Realblood",
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                              "tags": {
+                                "type": "array",
+                                "value": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "customerType",
+                                        },
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "wallet",
+                                        },
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "pepStatus": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "isPepHit": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customKey",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customValue",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "executedRules": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
+                      "ruleAction": {
+                        "type": "enum",
+                        "value": "BLOCK",
+                      },
+                      "ruleDescription": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                        },
+                      },
+                      "ruleHit": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "ruleId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "R-1a",
+                        },
+                      },
+                      "ruleInstanceId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ruleInstanceId",
+                        },
+                      },
+                      "ruleName": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof of funds for high value transactions",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "hitRules": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "FRAUD",
+                      },
+                      "ruleAction": {
+                        "type": "enum",
+                        "value": "BLOCK",
+                      },
+                      "ruleDescription": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                        },
+                      },
+                      "ruleId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "R-1a",
+                        },
+                      },
+                      "ruleInstanceId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ruleInstanceId",
+                        },
+                      },
+                      "ruleName": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof of funds for high value transactions",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "kycStatusDetails": {
                 "properties": {
@@ -4268,6 +5619,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         },
                         "type": "object",
                       },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customKey",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customValue",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                     },
                     "type": "object",
                   },
@@ -4301,6 +5676,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                               "type": "string",
                               "value": "Hazelnut",
                             },
+                          },
+                        ],
+                      },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customKey",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customValue",
+                                },
+                              },
+                            },
+                            "type": "object",
                           },
                         ],
                       },
@@ -4342,6 +5741,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "value": "PSJ554342",
                         },
                       },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customKey",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customValue",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                       "taxIdentifier": {
                         "type": "primitive",
                         "value": {
@@ -4352,11 +5775,165 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     },
                     "type": "object",
                   },
+                  "contactDetails": {
+                    "properties": {
+                      "addresses": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "addressLines": {
+                                "type": "array",
+                                "value": [
+                                  {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "Klara-Franke Str 20",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                              "city": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Berlin",
+                                },
+                              },
+                              "country": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Germany",
+                                },
+                              },
+                              "postcode": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "10557",
+                                },
+                              },
+                              "state": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Berlin",
+                                },
+                              },
+                              "tags": {
+                                "type": "array",
+                                "value": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "customKey",
+                                        },
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "customValue",
+                                        },
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "contactNumbers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "contactNumbers",
+                            },
+                          },
+                        ],
+                      },
+                      "emailIds": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "emailIds",
+                            },
+                          },
+                        ],
+                      },
+                      "faxNumbers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "faxNumbers",
+                            },
+                          },
+                        ],
+                      },
+                      "websites": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "websites",
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "reasonForAccountOpening": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "reasonForAccountOpening",
+                        },
+                      },
+                    ],
+                  },
                 },
                 "type": "object",
               },
               "linkedEntities": {
                 "properties": {
+                  "childUserIds": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "childUserIds",
+                        },
+                      },
+                    ],
+                  },
                   "parentUserId": {
                     "type": "primitive",
                     "value": {
@@ -4389,6 +5966,337 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "riskLevel": {
                 "type": "enum",
                 "value": "VERY_HIGH",
+              },
+              "shareHolders": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "contactDetails": {
+                        "properties": {
+                          "addresses": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "addressLines": {
+                                    "type": "array",
+                                    "value": [
+                                      {
+                                        "type": "unknown",
+                                        "value": {
+                                          "type": "primitive",
+                                          "value": {
+                                            "type": "string",
+                                            "value": "Klara-Franke Str 20",
+                                          },
+                                        },
+                                      },
+                                    ],
+                                  },
+                                  "city": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Berlin",
+                                    },
+                                  },
+                                  "country": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Germany",
+                                    },
+                                  },
+                                  "postcode": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "10557",
+                                    },
+                                  },
+                                  "state": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Berlin",
+                                    },
+                                  },
+                                  "tags": {
+                                    "type": "array",
+                                    "value": [
+                                      {
+                                        "properties": {
+                                          "key": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "customKey",
+                                            },
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "customValue",
+                                            },
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                          "contactNumbers": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "+371 123132",
+                                },
+                              },
+                            ],
+                          },
+                          "emailIds": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "baran@flagright.com",
+                                },
+                              },
+                            ],
+                          },
+                          "websites": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "flagright.com",
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "generalDetails": {
+                        "properties": {
+                          "countryOfNationality": {
+                            "type": "enum",
+                            "value": "DE",
+                          },
+                          "countryOfResidence": {
+                            "type": "enum",
+                            "value": "US",
+                          },
+                          "dateOfBirth": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1991-01-01",
+                            },
+                          },
+                          "name": {
+                            "properties": {
+                              "firstName": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Baran",
+                                },
+                              },
+                              "lastName": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Ozkan",
+                                },
+                              },
+                              "middleName": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Realblood",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "legalDocuments": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "documentExpirationDate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 1839939034000,
+                                },
+                              },
+                              "documentIssuedCountry": {
+                                "type": "enum",
+                                "value": "DE",
+                              },
+                              "documentIssuedDate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 1639939034000,
+                                },
+                              },
+                              "documentNumber": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Z9431P",
+                                },
+                              },
+                              "documentType": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "passport",
+                                },
+                              },
+                              "nameOnDocument": {
+                                "properties": {
+                                  "firstName": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Baran",
+                                    },
+                                  },
+                                  "lastName": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Ozkan",
+                                    },
+                                  },
+                                  "middleName": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Realblood",
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                              "tags": {
+                                "type": "array",
+                                "value": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "customerType",
+                                        },
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "wallet",
+                                        },
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "pepStatus": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "isPepHit": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "tags": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "key": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customKey",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "customValue",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "tags": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "key": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "customKey",
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "customValue",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "transactionLimits": {
                 "properties": {

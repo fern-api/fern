@@ -288,7 +288,7 @@ export class ExampleTypeFactory {
                         }
                     }
                     // Otherwise, use a schema level example
-                } else if (schema.example != null) {
+                } else if (schema.example != null && schema.example.length > 0) {
                     for (const item of schema.example) {
                         const itemExample = this.buildExampleHelper({
                             exampleId,

@@ -400,6 +400,9 @@ exports[`open api parser flexport docs 1`] = `
                   "consignee_entity_ref": "zoomit_ref",
                   "delivery_date": "2019-07-31",
                   "destination_address_ref": "my-albany-ref",
+                  "metadata": [
+                    {},
+                  ],
                   "name": "PO 123",
                   "ocean_booking": {
                     "container_counts": {
@@ -442,6 +445,14 @@ exports[`open api parser flexport docs 1`] = `
                           "_object": "/place",
                           "name": "ORD - Chicago - IL",
                         },
+                        "product_descriptions": [
+                          {
+                            "_object": "/bookings/product_descriptions",
+                            "description": "Wristwatches",
+                            "description_for_export_customs": "手表",
+                            "description_for_export_customs_locale": "zh_CN",
+                          },
+                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -814,6 +825,14 @@ exports[`open api parser flexport docs 1`] = `
                           "_object": "/place",
                           "name": "ORD - Chicago - IL",
                         },
+                        "product_descriptions": [
+                          {
+                            "_object": "/bookings/product_descriptions",
+                            "description": "Wristwatches",
+                            "description_for_export_customs": "手表",
+                            "description_for_export_customs_locale": "zh_CN",
+                          },
+                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -990,6 +1009,14 @@ exports[`open api parser flexport docs 1`] = `
                           ],
                           "name": "Shanghai, China",
                         },
+                        "product_descriptions": [
+                          {
+                            "_object": "/bookings/product_descriptions",
+                            "description": "Wristwatches",
+                            "description_for_export_customs": "手表",
+                            "description_for_export_customs_locale": "zh_CN",
+                          },
+                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -1214,6 +1241,9 @@ exports[`open api parser flexport docs 1`] = `
                     "forty_ft_hc": 4,
                     "twenty_ft": 2,
                   },
+                  "new_metadata": [
+                    {},
+                  ],
                   "new_name": "Valentine's Day - 2020",
                   "new_origin_address_ref": "warehouse_cn",
                   "new_origin_port_loc_code": "CNSZP",
@@ -1340,6 +1370,13 @@ exports[`open api parser flexport docs 1`] = `
                         "unlocode": "US AL2",
                         "zip": "60666",
                       },
+                      "new_product_descriptions": [
+                        {
+                          "_object": "/booking_amendment_product_description",
+                          "description": "Wristwatches",
+                          "description_for_export_customs": "手表",
+                        },
+                      ],
                       "new_wants_bco": true,
                       "new_wants_flexport_freight": true,
                       "new_wants_import_customs_service": false,
@@ -1888,7 +1925,17 @@ exports[`open api parser flexport docs 1`] = `
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
-                  "line_items": [],
+                  "line_items": [
+                    {
+                      "price_per_unit": {},
+                      "product_sku": "PRODUCT-123",
+                      "quantity": {
+                        "unit": "pcs",
+                        "value": 1.1,
+                      },
+                      "value": {},
+                    },
+                  ],
                   "proration_amount": {},
                 },
                 "response": {
@@ -1901,6 +1948,13 @@ exports[`open api parser flexport docs 1`] = `
                       "id": "abcxyz-23456-def",
                       "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
+                      "involved_parties": [
+                        {
+                          "_object": "/customs/involved_party",
+                          "name": "The West Coast Company",
+                          "type": "consignee",
+                        },
+                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -2234,6 +2288,13 @@ exports[`open api parser flexport docs 1`] = `
                       "id": "abcxyz-23456-def",
                       "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
+                      "involved_parties": [
+                        {
+                          "_object": "/customs/involved_party",
+                          "name": "The West Coast Company",
+                          "type": "consignee",
+                        },
+                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -2370,6 +2431,13 @@ exports[`open api parser flexport docs 1`] = `
                       "id": "abcxyz-23456-def",
                       "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
+                      "involved_parties": [
+                        {
+                          "_object": "/customs/involved_party",
+                          "name": "The West Coast Company",
+                          "type": "consignee",
+                        },
+                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -2607,6 +2675,13 @@ exports[`open api parser flexport docs 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "id-123456",
+                          "vat_numbers": [
+                            {
+                              "_object": "/company_entity/vat_number",
+                              "country_code": "GB",
+                              "number": "GB 123456789",
+                            },
+                          ],
                         },
                       ],
                       "id": "K67EZV1K8cQ5afQErZwk1Q",
@@ -2800,6 +2875,13 @@ exports[`open api parser flexport docs 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "zoomit_ref",
+                          "vat_numbers": [
+                            {
+                              "_object": "/company_entity/vat_number",
+                              "country_code": "GB",
+                              "number": "GB 123456789",
+                            },
+                          ],
                         },
                       ],
                       "id": "ABC123",
@@ -2958,6 +3040,13 @@ exports[`open api parser flexport docs 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "id-123456",
+                          "vat_numbers": [
+                            {
+                              "_object": "/company_entity/vat_number",
+                              "country_code": "GB",
+                              "number": "GB 123456789",
+                            },
+                          ],
                         },
                       ],
                       "id": "K67EZV1K8cQ5afQErZwk1Q",
@@ -4697,6 +4786,16 @@ exports[`open api parser flexport docs 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/api/collections/paginated",
+                      "data": [
+                        {
+                          "_object": "/event",
+                          "created_at": "2019-04-16T18:05:10.964Z",
+                          "id": 354987,
+                          "occurred_at": "2019-04-16T18:05:10.964Z",
+                          "type": "/shipment_leg#departed",
+                          "version": 2,
+                        },
+                      ],
                       "next": "next",
                       "prev": "prev",
                     },
@@ -4758,12 +4857,30 @@ exports[`open api parser flexport docs 1`] = `
                       "created_at": "2019-04-16T18:05:10.964Z",
                       "data": {
                         "_object": "/shipment_event_data",
+                        "containers": [
+                          {
+                            "_object": "/ocean/shipment_container",
+                            "container_number": "BWSE3982156",
+                            "id": 283910,
+                            "metadata": {
+                              "purchase_order": {
+                                "0": "12345",
+                              },
+                              "sku": {
+                                "0": "abc123",
+                              },
+                            },
+                          },
+                        ],
                         "exception": {
                           "message": "US Customs Hold",
                           "root_cause_name": "Government Agency",
                         },
                         "location": {
                           "_object": "/shipment_node",
+                          "tags": [
+                            "port_of_loading",
+                          ],
                         },
                         "resource": {
                           "_object": "/shipments",
@@ -6653,6 +6770,9 @@ Other details about this invoice",
                           "value": "1.0",
                         },
                       ],
+                      "metadata": [
+                        {},
+                      ],
                       "must_arrive_date": "2019-07-31",
                       "origin_location_ref": "id-123456",
                       "origin_port": {
@@ -6731,6 +6851,21 @@ Other details about this invoice",
                     "archived_at": "archived_at",
                     "cargo_ready_date": "cargo_ready_date",
                     "created_at": "created_at",
+                    "destination_addresses": [
+                      {
+                        "_object": "/address",
+                        "city": "Albany",
+                        "country": "United States of America",
+                        "country_code": "US",
+                        "ref": "address_ref_x",
+                        "state": "MN",
+                        "street_address": "1641 Settlers Lane",
+                        "street_address2": "STE 2918",
+                        "timezone": "America/Los_Angeles",
+                        "unlocode": "US AL2",
+                        "zip": "56307",
+                      },
+                    ],
                     "destination_port": {
                       "_object": "/place",
                       "address": {
@@ -6746,6 +6881,15 @@ Other details about this invoice",
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "details": [
+                        {
+                          "_object": "/air/port",
+                          "country_code": "US",
+                          "iata_code": "LAX",
+                          "icao_code": "KLAX",
+                          "port_code": "3901",
+                        },
+                      ],
                       "name": "ORD - Chicago - IL",
                     },
                     "freight_paymnet_terms": "freight_collect",
@@ -6798,8 +6942,46 @@ Other details about this invoice",
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "details": [
+                        {
+                          "_object": "/air/port",
+                          "country_code": "US",
+                          "iata_code": "LAX",
+                          "icao_code": "KLAX",
+                          "port_code": "3901",
+                        },
+                      ],
                       "name": "ORD - Chicago - IL",
                     },
+                    "parties": [
+                      {
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 9281,
+                          "name": "Zoomit",
+                          "ref": "zoomit_ref",
+                        },
+                        "contacts": [
+                          {
+                            "department": "marketing",
+                            "email": "John.Doe@example.com",
+                            "fax": "1 323 555 1234",
+                            "name": "John Doe",
+                            "phone": "767 878 8888",
+                          },
+                        ],
+                        "location": {
+                          "_object": "/address",
+                          "city": "Albany",
+                          "country": "United States of America",
+                          "country_code": "US",
+                          "ref": "address_ref_x",
+                          "street_address": "1641 Settlers Lane",
+                          "timezone": "America/Los_Angeles",
+                        },
+                        "role": "buyer",
+                      },
+                    ],
                     "priority": "standard",
                     "status": "open",
                     "transportation_mode": "ocean",
@@ -6965,7 +7147,23 @@ Other details about this invoice",
                                 },
                                 "name": "test",
                                 "ref": "id-754619",
+                                "vat_numbers": [
+                                  {
+                                    "_object": "/company_entity/vat_number",
+                                    "country_code": "GB",
+                                    "number": "GB 123456789",
+                                  },
+                                ],
                               },
+                              "contacts": [
+                                {
+                                  "department": "marketing",
+                                  "email": "John.Doe@example.com",
+                                  "fax": "1 323 555 1234",
+                                  "name": "John Doe",
+                                  "phone": "767 878 8888",
+                                },
+                              ],
                               "role": "buyer",
                             },
                             {
@@ -6974,6 +7172,13 @@ Other details about this invoice",
                                 "id": 677939,
                                 "name": "75 Aero Camino Suite 203 Goleta",
                                 "ref": "id-677939",
+                                "vat_numbers": [
+                                  {
+                                    "_object": "/company_entity/vat_number",
+                                    "country_code": "GB",
+                                    "number": "GB 123456789",
+                                  },
+                                ],
                               },
                               "contacts": [
                                 {
@@ -7002,6 +7207,13 @@ Other details about this invoice",
                                 },
                                 "name": "test",
                                 "ref": "id-754619",
+                                "vat_numbers": [
+                                  {
+                                    "_object": "/company_entity/vat_number",
+                                    "country_code": "GB",
+                                    "number": "GB 123456789",
+                                  },
+                                ],
                               },
                               "contacts": [
                                 {
@@ -7125,6 +7337,17 @@ Other details about this invoice",
                       "archived_at": "archived_at",
                       "cargo_ready_date": "cargo_ready_date",
                       "created_at": "created_at",
+                      "destination_addresses": [
+                        {
+                          "_object": "/address",
+                          "city": "Albany",
+                          "country": "United States of America",
+                          "country_code": "US",
+                          "ref": "address_ref_x",
+                          "street_address": "1641 Settlers Lane",
+                          "timezone": "America/Los_Angeles",
+                        },
+                      ],
                       "destination_port": {
                         "_object": "/place",
                         "address": {
@@ -7136,6 +7359,15 @@ Other details about this invoice",
                           "street_address": "1641 Settlers Lane",
                           "timezone": "America/Los_Angeles",
                         },
+                        "details": [
+                          {
+                            "_object": "/air/port",
+                            "country_code": "US",
+                            "iata_code": "LAX",
+                            "icao_code": "KLAX",
+                            "port_code": "3901",
+                          },
+                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "freight_paymnet_terms": "freight_collect",
@@ -7184,8 +7416,20 @@ Other details about this invoice",
                           "street_address": "1641 Settlers Lane",
                           "timezone": "America/Los_Angeles",
                         },
+                        "details": [
+                          {
+                            "_object": "/air/port",
+                            "country_code": "US",
+                            "iata_code": "LAX",
+                            "icao_code": "KLAX",
+                            "port_code": "3901",
+                          },
+                        ],
                         "name": "ORD - Chicago - IL",
                       },
+                      "parties": [
+                        {},
+                      ],
                       "priority": "standard",
                       "status": "open",
                       "transportation_mode": "ocean",
@@ -7246,7 +7490,15 @@ Other details about this invoice",
                   "freight_payment_terms": "freight_collect",
                   "incoterm": "FOB",
                   "issue_date": "2019-06-30",
-                  "line_items": [],
+                  "line_items": [
+                    {
+                      "item_key": "item_key_1",
+                      "product": {
+                        "name": "AC Adapter 12",
+                      },
+                      "units": 100,
+                    },
+                  ],
                   "memo": "memo",
                   "must_arrive_date": "2019-07-31",
                   "name": "PO 123",
@@ -7279,6 +7531,21 @@ Other details about this invoice",
                     "archived_at": "archived_at",
                     "cargo_ready_date": "cargo_ready_date",
                     "created_at": "created_at",
+                    "destination_addresses": [
+                      {
+                        "_object": "/address",
+                        "city": "Albany",
+                        "country": "United States of America",
+                        "country_code": "US",
+                        "ref": "address_ref_x",
+                        "state": "MN",
+                        "street_address": "1641 Settlers Lane",
+                        "street_address2": "STE 2918",
+                        "timezone": "America/Los_Angeles",
+                        "unlocode": "US AL2",
+                        "zip": "56307",
+                      },
+                    ],
                     "destination_port": {
                       "_object": "/place",
                       "address": {
@@ -7294,6 +7561,15 @@ Other details about this invoice",
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "details": [
+                        {
+                          "_object": "/air/port",
+                          "country_code": "US",
+                          "iata_code": "LAX",
+                          "icao_code": "KLAX",
+                          "port_code": "3901",
+                        },
+                      ],
                       "name": "ORD - Chicago - IL",
                     },
                     "freight_paymnet_terms": "freight_collect",
@@ -7346,8 +7622,46 @@ Other details about this invoice",
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "details": [
+                        {
+                          "_object": "/air/port",
+                          "country_code": "US",
+                          "iata_code": "LAX",
+                          "icao_code": "KLAX",
+                          "port_code": "3901",
+                        },
+                      ],
                       "name": "ORD - Chicago - IL",
                     },
+                    "parties": [
+                      {
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 9281,
+                          "name": "Zoomit",
+                          "ref": "zoomit_ref",
+                        },
+                        "contacts": [
+                          {
+                            "department": "marketing",
+                            "email": "John.Doe@example.com",
+                            "fax": "1 323 555 1234",
+                            "name": "John Doe",
+                            "phone": "767 878 8888",
+                          },
+                        ],
+                        "location": {
+                          "_object": "/address",
+                          "city": "Albany",
+                          "country": "United States of America",
+                          "country_code": "US",
+                          "ref": "address_ref_x",
+                          "street_address": "1641 Settlers Lane",
+                          "timezone": "America/Los_Angeles",
+                        },
+                        "role": "buyer",
+                      },
+                    ],
                     "priority": "standard",
                     "status": "open",
                     "transportation_mode": "ocean",
@@ -7683,6 +7997,15 @@ Other details about this invoice",
                           "street_address": "1641 Settlers Lane",
                           "timezone": "America/Los_Angeles",
                         },
+                        "details": [
+                          {
+                            "_object": "/air/port",
+                            "country_code": "US",
+                            "iata_code": "LAX",
+                            "icao_code": "KLAX",
+                            "port_code": "3901",
+                          },
+                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "hs_codes": [
@@ -7734,6 +8057,15 @@ Other details about this invoice",
                           "street_address": "1641 Settlers Lane",
                           "timezone": "America/Los_Angeles",
                         },
+                        "details": [
+                          {
+                            "_object": "/air/port",
+                            "country_code": "US",
+                            "iata_code": "LAX",
+                            "icao_code": "KLAX",
+                            "port_code": "3901",
+                          },
+                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "parent_line_key": "parent_line_key",
@@ -8408,6 +8740,14 @@ Other details about this invoice",
                         "value": 2300.4,
                       },
                       "cargo_ready_date": "2019-02-06",
+                      "child_shipments": [
+                        {
+                          "_object": "/api/refs/object",
+                          "id": 123,
+                          "link": "https://api.flexport.com/shipments/123",
+                          "ref_type": "/shipment",
+                        },
+                      ],
                       "commercial_invoices": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -8732,6 +9072,14 @@ Other details about this invoice",
                         "value": 2300.4,
                       },
                       "cargo_ready_date": "2019-02-06",
+                      "child_shipments": [
+                        {
+                          "_object": "/api/refs/object",
+                          "id": 123,
+                          "link": "https://api.flexport.com/shipments/123",
+                          "ref_type": "/shipment",
+                        },
+                      ],
                       "commercial_invoices": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -14235,6 +14583,9 @@ exports[`open api parser flexport simple 1`] = `
                   "consignee_entity_ref": "zoomit_ref",
                   "delivery_date": "2019-07-31",
                   "destination_address_ref": "my-albany-ref",
+                  "metadata": [
+                    {},
+                  ],
                   "name": "PO 123",
                   "ocean_booking": {
                     "container_counts": {
@@ -14277,6 +14628,14 @@ exports[`open api parser flexport simple 1`] = `
                           "_object": "/place",
                           "name": "ORD - Chicago - IL",
                         },
+                        "product_descriptions": [
+                          {
+                            "_object": "/bookings/product_descriptions",
+                            "description": "Wristwatches",
+                            "description_for_export_customs": "手表",
+                            "description_for_export_customs_locale": "zh_CN",
+                          },
+                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -14649,6 +15008,14 @@ exports[`open api parser flexport simple 1`] = `
                           "_object": "/place",
                           "name": "ORD - Chicago - IL",
                         },
+                        "product_descriptions": [
+                          {
+                            "_object": "/bookings/product_descriptions",
+                            "description": "Wristwatches",
+                            "description_for_export_customs": "手表",
+                            "description_for_export_customs_locale": "zh_CN",
+                          },
+                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -14825,6 +15192,14 @@ exports[`open api parser flexport simple 1`] = `
                           ],
                           "name": "Shanghai, China",
                         },
+                        "product_descriptions": [
+                          {
+                            "_object": "/bookings/product_descriptions",
+                            "description": "Wristwatches",
+                            "description_for_export_customs": "手表",
+                            "description_for_export_customs_locale": "zh_CN",
+                          },
+                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -15049,6 +15424,9 @@ exports[`open api parser flexport simple 1`] = `
                     "forty_ft_hc": 4,
                     "twenty_ft": 2,
                   },
+                  "new_metadata": [
+                    {},
+                  ],
                   "new_name": "Valentine's Day - 2020",
                   "new_origin_address_ref": "warehouse_cn",
                   "new_origin_port_loc_code": "CNSZP",
@@ -15175,6 +15553,13 @@ exports[`open api parser flexport simple 1`] = `
                         "unlocode": "US AL2",
                         "zip": "60666",
                       },
+                      "new_product_descriptions": [
+                        {
+                          "_object": "/booking_amendment_product_description",
+                          "description": "Wristwatches",
+                          "description_for_export_customs": "手表",
+                        },
+                      ],
                       "new_wants_bco": true,
                       "new_wants_flexport_freight": true,
                       "new_wants_import_customs_service": false,
@@ -15723,7 +16108,17 @@ exports[`open api parser flexport simple 1`] = `
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
-                  "line_items": [],
+                  "line_items": [
+                    {
+                      "price_per_unit": {},
+                      "product_sku": "PRODUCT-123",
+                      "quantity": {
+                        "unit": "pcs",
+                        "value": 1.1,
+                      },
+                      "value": {},
+                    },
+                  ],
                   "proration_amount": {},
                 },
                 "response": {
@@ -15736,6 +16131,13 @@ exports[`open api parser flexport simple 1`] = `
                       "id": "abcxyz-23456-def",
                       "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
+                      "involved_parties": [
+                        {
+                          "_object": "/customs/involved_party",
+                          "name": "The West Coast Company",
+                          "type": "consignee",
+                        },
+                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -16069,6 +16471,13 @@ exports[`open api parser flexport simple 1`] = `
                       "id": "abcxyz-23456-def",
                       "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
+                      "involved_parties": [
+                        {
+                          "_object": "/customs/involved_party",
+                          "name": "The West Coast Company",
+                          "type": "consignee",
+                        },
+                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -16205,6 +16614,13 @@ exports[`open api parser flexport simple 1`] = `
                       "id": "abcxyz-23456-def",
                       "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
+                      "involved_parties": [
+                        {
+                          "_object": "/customs/involved_party",
+                          "name": "The West Coast Company",
+                          "type": "consignee",
+                        },
+                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -16442,6 +16858,13 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "id-123456",
+                          "vat_numbers": [
+                            {
+                              "_object": "/company_entity/vat_number",
+                              "country_code": "GB",
+                              "number": "GB 123456789",
+                            },
+                          ],
                         },
                       ],
                       "id": "K67EZV1K8cQ5afQErZwk1Q",
@@ -16635,6 +17058,13 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "zoomit_ref",
+                          "vat_numbers": [
+                            {
+                              "_object": "/company_entity/vat_number",
+                              "country_code": "GB",
+                              "number": "GB 123456789",
+                            },
+                          ],
                         },
                       ],
                       "id": "ABC123",
@@ -16793,6 +17223,13 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "id-123456",
+                          "vat_numbers": [
+                            {
+                              "_object": "/company_entity/vat_number",
+                              "country_code": "GB",
+                              "number": "GB 123456789",
+                            },
+                          ],
                         },
                       ],
                       "id": "K67EZV1K8cQ5afQErZwk1Q",
@@ -18532,6 +18969,16 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/api/collections/paginated",
+                      "data": [
+                        {
+                          "_object": "/event",
+                          "created_at": "2019-04-16T18:05:10.964Z",
+                          "id": 354987,
+                          "occurred_at": "2019-04-16T18:05:10.964Z",
+                          "type": "/shipment_leg#departed",
+                          "version": 2,
+                        },
+                      ],
                       "next": "next",
                       "prev": "prev",
                     },
@@ -18593,12 +19040,30 @@ exports[`open api parser flexport simple 1`] = `
                       "created_at": "2019-04-16T18:05:10.964Z",
                       "data": {
                         "_object": "/shipment_event_data",
+                        "containers": [
+                          {
+                            "_object": "/ocean/shipment_container",
+                            "container_number": "BWSE3982156",
+                            "id": 283910,
+                            "metadata": {
+                              "purchase_order": {
+                                "0": "12345",
+                              },
+                              "sku": {
+                                "0": "abc123",
+                              },
+                            },
+                          },
+                        ],
                         "exception": {
                           "message": "US Customs Hold",
                           "root_cause_name": "Government Agency",
                         },
                         "location": {
                           "_object": "/shipment_node",
+                          "tags": [
+                            "port_of_loading",
+                          ],
                         },
                         "resource": {
                           "_object": "/shipments",
@@ -20488,6 +20953,9 @@ Other details about this invoice",
                           "value": "1.0",
                         },
                       ],
+                      "metadata": [
+                        {},
+                      ],
                       "must_arrive_date": "2019-07-31",
                       "origin_location_ref": "id-123456",
                       "origin_port": {
@@ -20566,6 +21034,21 @@ Other details about this invoice",
                     "archived_at": "archived_at",
                     "cargo_ready_date": "cargo_ready_date",
                     "created_at": "created_at",
+                    "destination_addresses": [
+                      {
+                        "_object": "/address",
+                        "city": "Albany",
+                        "country": "United States of America",
+                        "country_code": "US",
+                        "ref": "address_ref_x",
+                        "state": "MN",
+                        "street_address": "1641 Settlers Lane",
+                        "street_address2": "STE 2918",
+                        "timezone": "America/Los_Angeles",
+                        "unlocode": "US AL2",
+                        "zip": "56307",
+                      },
+                    ],
                     "destination_port": {
                       "_object": "/place",
                       "address": {
@@ -20581,6 +21064,15 @@ Other details about this invoice",
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "details": [
+                        {
+                          "_object": "/air/port",
+                          "country_code": "US",
+                          "iata_code": "LAX",
+                          "icao_code": "KLAX",
+                          "port_code": "3901",
+                        },
+                      ],
                       "name": "ORD - Chicago - IL",
                     },
                     "freight_paymnet_terms": "freight_collect",
@@ -20633,8 +21125,46 @@ Other details about this invoice",
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "details": [
+                        {
+                          "_object": "/air/port",
+                          "country_code": "US",
+                          "iata_code": "LAX",
+                          "icao_code": "KLAX",
+                          "port_code": "3901",
+                        },
+                      ],
                       "name": "ORD - Chicago - IL",
                     },
+                    "parties": [
+                      {
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 9281,
+                          "name": "Zoomit",
+                          "ref": "zoomit_ref",
+                        },
+                        "contacts": [
+                          {
+                            "department": "marketing",
+                            "email": "John.Doe@example.com",
+                            "fax": "1 323 555 1234",
+                            "name": "John Doe",
+                            "phone": "767 878 8888",
+                          },
+                        ],
+                        "location": {
+                          "_object": "/address",
+                          "city": "Albany",
+                          "country": "United States of America",
+                          "country_code": "US",
+                          "ref": "address_ref_x",
+                          "street_address": "1641 Settlers Lane",
+                          "timezone": "America/Los_Angeles",
+                        },
+                        "role": "buyer",
+                      },
+                    ],
                     "priority": "standard",
                     "status": "open",
                     "transportation_mode": "ocean",
@@ -20800,7 +21330,23 @@ Other details about this invoice",
                                 },
                                 "name": "test",
                                 "ref": "id-754619",
+                                "vat_numbers": [
+                                  {
+                                    "_object": "/company_entity/vat_number",
+                                    "country_code": "GB",
+                                    "number": "GB 123456789",
+                                  },
+                                ],
                               },
+                              "contacts": [
+                                {
+                                  "department": "marketing",
+                                  "email": "John.Doe@example.com",
+                                  "fax": "1 323 555 1234",
+                                  "name": "John Doe",
+                                  "phone": "767 878 8888",
+                                },
+                              ],
                               "role": "buyer",
                             },
                             {
@@ -20809,6 +21355,13 @@ Other details about this invoice",
                                 "id": 677939,
                                 "name": "75 Aero Camino Suite 203 Goleta",
                                 "ref": "id-677939",
+                                "vat_numbers": [
+                                  {
+                                    "_object": "/company_entity/vat_number",
+                                    "country_code": "GB",
+                                    "number": "GB 123456789",
+                                  },
+                                ],
                               },
                               "contacts": [
                                 {
@@ -20837,6 +21390,13 @@ Other details about this invoice",
                                 },
                                 "name": "test",
                                 "ref": "id-754619",
+                                "vat_numbers": [
+                                  {
+                                    "_object": "/company_entity/vat_number",
+                                    "country_code": "GB",
+                                    "number": "GB 123456789",
+                                  },
+                                ],
                               },
                               "contacts": [
                                 {
@@ -20960,6 +21520,17 @@ Other details about this invoice",
                       "archived_at": "archived_at",
                       "cargo_ready_date": "cargo_ready_date",
                       "created_at": "created_at",
+                      "destination_addresses": [
+                        {
+                          "_object": "/address",
+                          "city": "Albany",
+                          "country": "United States of America",
+                          "country_code": "US",
+                          "ref": "address_ref_x",
+                          "street_address": "1641 Settlers Lane",
+                          "timezone": "America/Los_Angeles",
+                        },
+                      ],
                       "destination_port": {
                         "_object": "/place",
                         "address": {
@@ -20971,6 +21542,15 @@ Other details about this invoice",
                           "street_address": "1641 Settlers Lane",
                           "timezone": "America/Los_Angeles",
                         },
+                        "details": [
+                          {
+                            "_object": "/air/port",
+                            "country_code": "US",
+                            "iata_code": "LAX",
+                            "icao_code": "KLAX",
+                            "port_code": "3901",
+                          },
+                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "freight_paymnet_terms": "freight_collect",
@@ -21019,8 +21599,20 @@ Other details about this invoice",
                           "street_address": "1641 Settlers Lane",
                           "timezone": "America/Los_Angeles",
                         },
+                        "details": [
+                          {
+                            "_object": "/air/port",
+                            "country_code": "US",
+                            "iata_code": "LAX",
+                            "icao_code": "KLAX",
+                            "port_code": "3901",
+                          },
+                        ],
                         "name": "ORD - Chicago - IL",
                       },
+                      "parties": [
+                        {},
+                      ],
                       "priority": "standard",
                       "status": "open",
                       "transportation_mode": "ocean",
@@ -21081,7 +21673,15 @@ Other details about this invoice",
                   "freight_payment_terms": "freight_collect",
                   "incoterm": "FOB",
                   "issue_date": "2019-06-30",
-                  "line_items": [],
+                  "line_items": [
+                    {
+                      "item_key": "item_key_1",
+                      "product": {
+                        "name": "AC Adapter 12",
+                      },
+                      "units": 100,
+                    },
+                  ],
                   "memo": "memo",
                   "must_arrive_date": "2019-07-31",
                   "name": "PO 123",
@@ -21114,6 +21714,21 @@ Other details about this invoice",
                     "archived_at": "archived_at",
                     "cargo_ready_date": "cargo_ready_date",
                     "created_at": "created_at",
+                    "destination_addresses": [
+                      {
+                        "_object": "/address",
+                        "city": "Albany",
+                        "country": "United States of America",
+                        "country_code": "US",
+                        "ref": "address_ref_x",
+                        "state": "MN",
+                        "street_address": "1641 Settlers Lane",
+                        "street_address2": "STE 2918",
+                        "timezone": "America/Los_Angeles",
+                        "unlocode": "US AL2",
+                        "zip": "56307",
+                      },
+                    ],
                     "destination_port": {
                       "_object": "/place",
                       "address": {
@@ -21129,6 +21744,15 @@ Other details about this invoice",
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "details": [
+                        {
+                          "_object": "/air/port",
+                          "country_code": "US",
+                          "iata_code": "LAX",
+                          "icao_code": "KLAX",
+                          "port_code": "3901",
+                        },
+                      ],
                       "name": "ORD - Chicago - IL",
                     },
                     "freight_paymnet_terms": "freight_collect",
@@ -21181,8 +21805,46 @@ Other details about this invoice",
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
+                      "details": [
+                        {
+                          "_object": "/air/port",
+                          "country_code": "US",
+                          "iata_code": "LAX",
+                          "icao_code": "KLAX",
+                          "port_code": "3901",
+                        },
+                      ],
                       "name": "ORD - Chicago - IL",
                     },
+                    "parties": [
+                      {
+                        "company_entity": {
+                          "_object": "/company_entity",
+                          "id": 9281,
+                          "name": "Zoomit",
+                          "ref": "zoomit_ref",
+                        },
+                        "contacts": [
+                          {
+                            "department": "marketing",
+                            "email": "John.Doe@example.com",
+                            "fax": "1 323 555 1234",
+                            "name": "John Doe",
+                            "phone": "767 878 8888",
+                          },
+                        ],
+                        "location": {
+                          "_object": "/address",
+                          "city": "Albany",
+                          "country": "United States of America",
+                          "country_code": "US",
+                          "ref": "address_ref_x",
+                          "street_address": "1641 Settlers Lane",
+                          "timezone": "America/Los_Angeles",
+                        },
+                        "role": "buyer",
+                      },
+                    ],
                     "priority": "standard",
                     "status": "open",
                     "transportation_mode": "ocean",
@@ -21518,6 +22180,15 @@ Other details about this invoice",
                           "street_address": "1641 Settlers Lane",
                           "timezone": "America/Los_Angeles",
                         },
+                        "details": [
+                          {
+                            "_object": "/air/port",
+                            "country_code": "US",
+                            "iata_code": "LAX",
+                            "icao_code": "KLAX",
+                            "port_code": "3901",
+                          },
+                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "hs_codes": [
@@ -21569,6 +22240,15 @@ Other details about this invoice",
                           "street_address": "1641 Settlers Lane",
                           "timezone": "America/Los_Angeles",
                         },
+                        "details": [
+                          {
+                            "_object": "/air/port",
+                            "country_code": "US",
+                            "iata_code": "LAX",
+                            "icao_code": "KLAX",
+                            "port_code": "3901",
+                          },
+                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "parent_line_key": "parent_line_key",
@@ -22243,6 +22923,14 @@ Other details about this invoice",
                         "value": 2300.4,
                       },
                       "cargo_ready_date": "2019-02-06",
+                      "child_shipments": [
+                        {
+                          "_object": "/api/refs/object",
+                          "id": 123,
+                          "link": "https://api.flexport.com/shipments/123",
+                          "ref_type": "/shipment",
+                        },
+                      ],
                       "commercial_invoices": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -22567,6 +23255,14 @@ Other details about this invoice",
                         "value": 2300.4,
                       },
                       "cargo_ready_date": "2019-02-06",
+                      "child_shipments": [
+                        {
+                          "_object": "/api/refs/object",
+                          "id": 123,
+                          "link": "https://api.flexport.com/shipments/123",
+                          "ref_type": "/shipment",
+                        },
+                      ],
                       "commercial_invoices": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",

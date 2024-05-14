@@ -211,7 +211,129 @@ This error response may have one of the following \`type\` values:
               },
               "items": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "allows": {
+                        "properties": {
+                          "billPay": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "manageCards": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "mobileCheckDeposit": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "transferFrom": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "transferTo": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "view": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "viewCards": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "id",
+                        },
+                      },
+                      "label": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Checking *1008",
+                        },
+                      },
+                      "location": {
+                        "type": "enum",
+                        "value": "internal",
+                      },
+                      "maskedNumber": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "maskedNumber",
+                        },
+                      },
+                      "nickname": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Payroll Checking",
+                        },
+                      },
+                      "product": {
+                        "properties": {
+                          "code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "180D_CDA",
+                            },
+                          },
+                          "description": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Certificate of Deposit with a 180 day term",
+                            },
+                          },
+                          "label": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "180 Day CD",
+                            },
+                          },
+                          "type": {
+                            "type": "enum",
+                            "value": "cd",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "limit": {
                 "type": "primitive",
@@ -1344,7 +1466,27 @@ This error response may have one of the following \`type\` values:
             "properties": {
               "items": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "0399abed-fd3d",
+                        },
+                      },
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Max Pike",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
             },
             "type": "object",
@@ -3145,6 +3287,81 @@ This error response may have one of the following \`type\` values:
                   },
                 },
                 "type": "object",
+              },
+              "intermediaryInstitutions": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "address": {
+                        "properties": {
+                          "address1": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "239 West Princess Ave.",
+                            },
+                          },
+                          "address2": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Building 14, Suite 1500",
+                            },
+                          },
+                          "countryCode": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "locality": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Andalasia",
+                            },
+                          },
+                          "postalCode": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "28407",
+                            },
+                          },
+                          "regionCode": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "NC",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "locator": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "503000196",
+                        },
+                      },
+                      "locatorType": {
+                        "type": "enum",
+                        "value": "abaRoutingNumber",
+                      },
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "First Bank of Andalasia",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
             },
             "type": "object",
@@ -5895,7 +6112,31 @@ This error response may have one of the following \`type\` values:
             "properties": {
               "items": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "0399abed-fd3d",
+                        },
+                      },
+                      "label": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Dining",
+                        },
+                      },
+                      "type": {
+                        "type": "enum",
+                        "value": "debit",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
             },
             "type": "object",

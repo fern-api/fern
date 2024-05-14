@@ -33,7 +33,11 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "id": "id",
+                    },
+                  ],
                 },
               },
             ],
@@ -120,7 +124,11 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "id": "id",
+                    },
+                  ],
                 },
               },
             ],

@@ -23,7 +23,186 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "appName": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appName",
+                    },
+                  },
+                  "appSecret": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appSecret",
+                    },
+                  },
+                  "authConfiguration": {
+                    "properties": {
+                      "google": {
+                        "properties": {
+                          "clientId": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "clientId",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "createdAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "createdBy": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "createdBy",
+                    },
+                  },
+                  "deletedAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "deletedBy": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "deletedBy",
+                    },
+                  },
+                  "deployment": {
+                    "properties": {
+                      "appId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "appId",
+                        },
+                      },
+                      "buildId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "containerPort": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "createdAt": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2024-01-15T09:30:00Z",
+                        },
+                      },
+                      "createdBy": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "createdBy",
+                        },
+                      },
+                      "deploymentId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "env": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "name": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "name",
+                                },
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "planName": {
+                        "type": "enum",
+                        "value": "tiny",
+                      },
+                      "requestedCPU": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "requestedMemoryMB": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "roomsPerProcess": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "transportType": {
+                        "type": "enum",
+                        "value": "tcp",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "orgId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "orgId",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -1546,7 +1725,94 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "buildId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "createdAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "createdBy": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "createdBy",
+                    },
+                  },
+                  "deletedAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "finishedAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "imageSize": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "regionalContainerTags": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "containerTag": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "containerTag",
+                            },
+                          },
+                          "region": {
+                            "type": "enum",
+                            "value": "Seattle",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "startedAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "created",
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -1710,7 +1976,24 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "regionalContainerTags": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "containerTag": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "containerTag",
+                        },
+                      },
+                      "region": {
+                        "type": "enum",
+                        "value": "Seattle",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "startedAt": {
                 "type": "primitive",
@@ -1920,7 +2203,24 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "regionalContainerTags": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "containerTag": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "containerTag",
+                        },
+                      },
+                      "region": {
+                        "type": "enum",
+                        "value": "Seattle",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "startedAt": {
                 "type": "primitive",
@@ -2277,7 +2577,108 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "buildId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "containerPort": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "createdAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "createdBy": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "createdBy",
+                    },
+                  },
+                  "deploymentId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "env": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "name",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "planName": {
+                    "type": "enum",
+                    "value": "tiny",
+                  },
+                  "requestedCPU": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "requestedMemoryMB": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "roomsPerProcess": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "transportType": {
+                    "type": "enum",
+                    "value": "tcp",
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -2434,7 +2835,27 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "env": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "name",
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "planName": {
                 "type": "enum",
@@ -2629,7 +3050,27 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "env": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "name",
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "planName": {
                 "type": "enum",
@@ -2695,7 +3136,27 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "env": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "name",
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "planName": {
                 "type": "enum",
@@ -2818,7 +3279,31 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "host": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "host",
+                    },
+                  },
+                  "port": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "region": {
+                    "type": "enum",
+                    "value": "Seattle",
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -3417,7 +3902,114 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "createdAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "createdBy": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "createdBy",
+                    },
+                  },
+                  "initialConfig": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "initialConfig",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "local": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
+                    },
+                  },
+                  "region": {
+                    "type": "enum",
+                    "value": "Seattle",
+                  },
+                  "roomId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "roomId",
+                    },
+                  },
+                  "state": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "state",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "visibility": {
+                    "type": "enum",
+                    "value": "private",
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -5191,7 +5783,114 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "createdAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "createdBy": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "createdBy",
+                    },
+                  },
+                  "initialConfig": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "initialConfig",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "local": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
+                    },
+                  },
+                  "region": {
+                    "type": "enum",
+                    "value": "Seattle",
+                  },
+                  "roomId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "roomId",
+                    },
+                  },
+                  "state": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "state",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "visibility": {
+                    "type": "enum",
+                    "value": "private",
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -6219,7 +6918,104 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {},
+            "properties": {
+              "cpu": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "timestamp": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "memory": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "timestamp": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "rate_egress": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "timestamp": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "total_egress": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "timestamp": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "type": "full",
@@ -6423,7 +7219,157 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "activeConnections": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "deploymentId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "draining": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
+                    },
+                  },
+                  "egressedBytes": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "host": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "host",
+                    },
+                  },
+                  "idleSince": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "port": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "processId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "processId",
+                    },
+                  },
+                  "region": {
+                    "type": "enum",
+                    "value": "Seattle",
+                  },
+                  "roomSlotsAvailable": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "rooms": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "appId": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "appId",
+                            },
+                          },
+                          "roomId": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "roomId",
+                            },
+                          },
+                          "status": {
+                            "type": "enum",
+                            "value": "scheduling",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "roomsPerProcess": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "startedAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "startingAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "stoppingAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "terminatedAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "totalRooms": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -6547,7 +7493,122 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "activeConnections": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "deploymentId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "draining": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
+                    },
+                  },
+                  "egressedBytes": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "host": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "host",
+                    },
+                  },
+                  "idleSince": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "port": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "processId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "processId",
+                    },
+                  },
+                  "region": {
+                    "type": "enum",
+                    "value": "Seattle",
+                  },
+                  "roomSlotsAvailable": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "roomsPerProcess": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "startedAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "startingAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "stoppingAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                  "terminatedAt": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -7067,7 +8128,41 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": {
               "allocations": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "properties": {
+                      "processId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "processId",
+                        },
+                      },
+                      "roomAllocationId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "roomAllocationId",
+                        },
+                      },
+                      "scheduledAt": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2024-01-15T09:30:00Z",
+                        },
+                      },
+                      "unscheduledAt": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2024-01-15T09:30:00Z",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
               "appId": {
                 "type": "primitive",
@@ -7240,7 +8335,64 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "currentAllocation": {
+                    "properties": {
+                      "processId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "processId",
+                        },
+                      },
+                      "roomAllocationId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "roomAllocationId",
+                        },
+                      },
+                      "scheduledAt": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2024-01-15T09:30:00Z",
+                        },
+                      },
+                      "unscheduledAt": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2024-01-15T09:30:00Z",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "roomId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "roomId",
+                    },
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "scheduling",
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },
@@ -7366,7 +8518,64 @@ exports[`open api parser hathora parse open api 1`] = `
           "request": null,
           "response": {
             "type": "array",
-            "value": [],
+            "value": [
+              {
+                "properties": {
+                  "appId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "appId",
+                    },
+                  },
+                  "currentAllocation": {
+                    "properties": {
+                      "processId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "processId",
+                        },
+                      },
+                      "roomAllocationId": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "roomAllocationId",
+                        },
+                      },
+                      "scheduledAt": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2024-01-15T09:30:00Z",
+                        },
+                      },
+                      "unscheduledAt": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2024-01-15T09:30:00Z",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "roomId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "roomId",
+                    },
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "scheduling",
+                  },
+                },
+                "type": "object",
+              },
+            ],
           },
           "type": "full",
         },

@@ -30,7 +30,12 @@ exports[`open api parser apiture docs 1`] = `
                 },
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "id": "0399abed-fd3d",
+                        "name": "Max Pike",
+                      },
+                    ],
                   },
                 },
               },
@@ -192,7 +197,30 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "response": {
                   "body": {
                     "count": 1,
-                    "items": [],
+                    "items": [
+                      {
+                        "allows": {
+                          "billPay": true,
+                          "manageCards": true,
+                          "mobileCheckDeposit": true,
+                          "transferFrom": true,
+                          "transferTo": true,
+                          "view": true,
+                          "viewCards": true,
+                        },
+                        "id": "id",
+                        "label": "Checking *1008",
+                        "location": "internal",
+                        "maskedNumber": "maskedNumber",
+                        "nickname": "Payroll Checking",
+                        "product": {
+                          "code": "180D_CDA",
+                          "description": "Certificate of Deposit with a 180 day term",
+                          "label": "180 Day CD",
+                          "type": "cd",
+                        },
+                      },
+                    ],
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                     "primaryAccountId": "primaryAccountId",
@@ -661,6 +689,21 @@ This information provides hints to clients, allowing bank customers to select tr
                       "locatorType": "abaRoutingNumber",
                       "name": "First Bank of Andalasia",
                     },
+                    "intermediaryInstitutions": [
+                      {
+                        "address": {
+                          "address1": "239 West Princess Ave.",
+                          "address2": "Building 14, Suite 1500",
+                          "countryCode": "US",
+                          "locality": "Andalasia",
+                          "postalCode": "28407",
+                          "regionCode": "NC",
+                        },
+                        "locator": "503000196",
+                        "locatorType": "abaRoutingNumber",
+                        "name": "First Bank of Andalasia",
+                      },
+                    ],
                   },
                 },
               },
@@ -968,7 +1011,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               {
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "id": "0399abed-fd3d",
+                        "label": "Dining",
+                        "type": "debit",
+                      },
+                    ],
                   },
                 },
               },
@@ -5259,7 +5308,12 @@ exports[`open api parser apiture simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "id": "0399abed-fd3d",
+                        "name": "Max Pike",
+                      },
+                    ],
                   },
                 },
               },
@@ -5421,7 +5475,30 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "response": {
                   "body": {
                     "count": 1,
-                    "items": [],
+                    "items": [
+                      {
+                        "allows": {
+                          "billPay": true,
+                          "manageCards": true,
+                          "mobileCheckDeposit": true,
+                          "transferFrom": true,
+                          "transferTo": true,
+                          "view": true,
+                          "viewCards": true,
+                        },
+                        "id": "id",
+                        "label": "Checking *1008",
+                        "location": "internal",
+                        "maskedNumber": "maskedNumber",
+                        "nickname": "Payroll Checking",
+                        "product": {
+                          "code": "180D_CDA",
+                          "description": "Certificate of Deposit with a 180 day term",
+                          "label": "180 Day CD",
+                          "type": "cd",
+                        },
+                      },
+                    ],
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                     "primaryAccountId": "primaryAccountId",
@@ -5890,6 +5967,21 @@ This information provides hints to clients, allowing bank customers to select tr
                       "locatorType": "abaRoutingNumber",
                       "name": "First Bank of Andalasia",
                     },
+                    "intermediaryInstitutions": [
+                      {
+                        "address": {
+                          "address1": "239 West Princess Ave.",
+                          "address2": "Building 14, Suite 1500",
+                          "countryCode": "US",
+                          "locality": "Andalasia",
+                          "postalCode": "28407",
+                          "regionCode": "NC",
+                        },
+                        "locator": "503000196",
+                        "locatorType": "abaRoutingNumber",
+                        "name": "First Bank of Andalasia",
+                      },
+                    ],
                   },
                 },
               },
@@ -6197,7 +6289,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               {
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "id": "0399abed-fd3d",
+                        "label": "Dining",
+                        "type": "debit",
+                      },
+                    ],
                   },
                 },
               },
