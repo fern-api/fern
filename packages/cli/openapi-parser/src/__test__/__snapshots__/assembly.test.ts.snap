@@ -372,6 +372,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "POST",
       "operationId": "uploadFile",
+      "pagination": null,
       "path": "/v2/upload",
       "pathParameters": [],
       "queryParameters": [],
@@ -615,6 +616,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "GET",
       "operationId": "listTranscripts",
+      "pagination": null,
       "path": "/v2/transcript",
       "pathParameters": [],
       "queryParameters": [
@@ -1865,6 +1867,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "POST",
       "operationId": "createTranscript",
+      "pagination": null,
       "path": "/v2/transcript",
       "pathParameters": [],
       "queryParameters": [],
@@ -2899,6 +2902,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "GET",
       "operationId": "getTranscript",
+      "pagination": null,
       "path": "/v2/transcript/{transcript_id}",
       "pathParameters": [
         {
@@ -3939,6 +3943,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteTranscript",
+      "pagination": null,
       "path": "/v2/transcript/{transcript_id}",
       "pathParameters": [
         {
@@ -4092,6 +4097,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "GET",
       "operationId": "getSubtitles",
+      "pagination": null,
       "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
       "pathParameters": [
         {
@@ -4396,6 +4402,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "GET",
       "operationId": "getTranscriptSentences",
+      "pagination": null,
       "path": "/v2/transcript/{transcript_id}/sentences",
       "pathParameters": [
         {
@@ -4673,6 +4680,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "GET",
       "operationId": "getTranscriptParagraphs",
+      "pagination": null,
       "path": "/v2/transcript/{transcript_id}/paragraphs",
       "pathParameters": [
         {
@@ -4826,6 +4834,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "GET",
       "operationId": "wordSearch",
+      "pagination": null,
       "path": "/v2/transcript/{transcript_id}/word-search",
       "pathParameters": [
         {
@@ -5045,6 +5054,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "GET",
       "operationId": "getRedactedAudio",
+      "pagination": null,
       "path": "/v2/transcript/{transcript_id}/redacted-audio",
       "pathParameters": [
         {
@@ -5232,6 +5242,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "POST",
       "operationId": "createRealtimeToken",
+      "pagination": null,
       "path": "/v2/realtime/token",
       "pathParameters": [],
       "queryParameters": [],
@@ -5425,6 +5436,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "POST",
       "operationId": "lemurSummary",
+      "pagination": null,
       "path": "/lemur/v3/generate/summary",
       "pathParameters": [],
       "queryParameters": [],
@@ -5652,6 +5664,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "POST",
       "operationId": "lemurQuestionAnswer",
+      "pagination": null,
       "path": "/lemur/v3/generate/question-answer",
       "pathParameters": [],
       "queryParameters": [],
@@ -5845,6 +5858,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "POST",
       "operationId": "lemurActionItems",
+      "pagination": null,
       "path": "/lemur/v3/generate/action-items",
       "pathParameters": [],
       "queryParameters": [],
@@ -6045,6 +6059,7 @@ The parameter should map to a JSON encoded list of strings.
       "internal": null,
       "method": "POST",
       "operationId": "lemurTask",
+      "pagination": null,
       "path": "/lemur/v3/generate/task",
       "pathParameters": [],
       "queryParameters": [],
@@ -6242,6 +6257,7 @@ The LLM response data, as well as any context provided in the original request w
       "internal": null,
       "method": "DELETE",
       "operationId": "purgeLemurRequestData",
+      "pagination": null,
       "path": "/lemur/v3/{request_id}",
       "pathParameters": [
         {

@@ -192,13 +192,13 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-generator-exec-sdk"
-version = "0.0.750"
+version = "0.0.804"
 description = ""
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_generator_exec_sdk-0.0.750-py3-none-any.whl", hash = "sha256:8a058c6b1c5bfa726ed41f1ae1e9044907413ca8913eb3bfbfe2e35344c5d8a4"},
-    {file = "fern_fern_generator_exec_sdk-0.0.750.tar.gz", hash = "sha256:3256ffc3566e5ed106c83a4f8f5f74781594f159948721de20ba4a3a0b384b1c"},
+    {file = "fern_fern_generator_exec_sdk-0.0.804-py3-none-any.whl", hash = "sha256:8b3ad9fe297bf3f55b3578d82face92f17f853e17f61d2657f6a1696b1896b9c"},
+    {file = "fern_fern_generator_exec_sdk-0.0.804.tar.gz", hash = "sha256:6254d219897b666db89f199dc801d0e0410f4394850924389973a76d039f0c82"},
 ]
 
 [package.dependencies]
@@ -607,17 +607,16 @@ files = [
 
 [[package]]
 name = "pygments"
-version = "2.17.2"
+version = "2.18.0"
 description = "Pygments is a syntax highlighting package written in Python."
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "pygments-2.17.2-py3-none-any.whl", hash = "sha256:b27c2826c47d0f3219f29554824c30c5e8945175d888647acd804ddd04af846c"},
-    {file = "pygments-2.17.2.tar.gz", hash = "sha256:da46cec9fd2de5be3a8a784f434e4c4ab670b4ff54d605c4c2717e9d49c4c367"},
+    {file = "pygments-2.18.0-py3-none-any.whl", hash = "sha256:b8e6aca0523f3ab76fee51799c488e38782ac06eafcf95e7ba832985c8e7b13a"},
+    {file = "pygments-2.18.0.tar.gz", hash = "sha256:786ff802f32e91311bff3889f6e9a86e81505fe99f2735bb6d60ae0c5004f199"},
 ]
 
 [package.extras]
-plugins = ["importlib-metadata"]
 windows-terminal = ["colorama (>=0.4.6)"]
 
 [[package]]
@@ -894,13 +893,13 @@ files = [
 
 [[package]]
 name = "virtualenv"
-version = "20.26.1"
+version = "20.26.2"
 description = "Virtual Python Environment builder"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "virtualenv-20.26.1-py3-none-any.whl", hash = "sha256:7aa9982a728ae5892558bff6a2839c00b9ed145523ece2274fad6f414690ae75"},
-    {file = "virtualenv-20.26.1.tar.gz", hash = "sha256:604bfdceaeece392802e6ae48e69cec49168b9c5f4a44e483963f9242eb0e78b"},
+    {file = "virtualenv-20.26.2-py3-none-any.whl", hash = "sha256:a624db5e94f01ad993d476b9ee5346fdf7b9de43ccaee0e0197012dc838a0e9b"},
+    {file = "virtualenv-20.26.2.tar.gz", hash = "sha256:82bf0f4eebbb78d36ddaee0283d43fe5736b53880b8a8cdcd37390a07ac3741c"},
 ]
 
 [package.dependencies]
@@ -961,4 +960,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "46baa4a52d35666d4089cf60c07f4ded4bd21c6a0589791619d54788e3a2942b"
+content-hash = "a3c0f31d0091a55f152b1f4d8233b45e72afba1b481f8e98e4bce6aa73d0b70e"

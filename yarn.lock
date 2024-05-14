@@ -3401,7 +3401,7 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.532
+    "@fern-fern/fiddle-sdk": ^0.0.538
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
     "@types/is-ci": ^3.0.2
@@ -3451,7 +3451,7 @@ __metadata:
     "@fern-api/fdr-sdk": ^0.93.1-abf6adb7b
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.532
+    "@fern-fern/fiddle-sdk": ^0.0.538
     "@types/dockerode": ^3.3.9
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3498,7 +3498,7 @@ __metadata:
     "@fern-api/fdr-sdk": ^0.93.1-abf6adb7b
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fdr-test-sdk": ^0.0.5297
-    "@fern-fern/fiddle-sdk": ^0.0.532
+    "@fern-fern/fiddle-sdk": ^0.0.538
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -3684,7 +3684,7 @@ __metadata:
     "@fern-api/fern-csharp-model": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
@@ -3714,7 +3714,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3744,7 +3744,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3789,7 +3789,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3998,8 +3998,8 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.532
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/fiddle-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -4320,7 +4320,7 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.532
+    "@fern-fern/fiddle-sdk": ^0.0.538
     "@types/decompress": ^4.2.7
     "@types/diff": ^5.2.0
     "@types/jest": ^29.0.3
@@ -4358,7 +4358,7 @@ __metadata:
   resolution: "@fern-api/ruby-codegen@workspace:generators/ruby/codegen"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
@@ -4437,8 +4437,8 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.532
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/fiddle-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -4553,7 +4553,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.532
+    "@fern-fern/fiddle-sdk": ^0.0.538
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.9
@@ -4673,16 +4673,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fiddle-sdk@npm:^0.0.532":
-  version: 0.0.532
-  resolution: "@fern-fern/fiddle-sdk@npm:0.0.532"
+"@fern-fern/fiddle-sdk@npm:^0.0.538":
+  version: 0.0.538
+  resolution: "@fern-fern/fiddle-sdk@npm:0.0.538"
   dependencies:
     form-data: 4.0.0
     js-base64: 3.7.2
     node-fetch: 2.7.0
     qs: 6.11.2
     url-join: 4.0.1
-  checksum: 28df53ea9725032ef27517fee956d3065420bc769e937535a75273bc820e14c8e666cb2c6c7bfe36f84c1142278001fb554594ccda5f6e1ebc63a494d79db2eb
+  checksum: 19c9ec250305540cabbcafa3e40e3dc3d489e14bcec185f73e314e4f1f3ad4fefb9c49008ced7bf446d56a65ef76970e33d01904b3e402a14da8e05eb7eba7ff
   languageName: node
   linkType: hard
 
@@ -4698,15 +4698,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:^0.0.763":
-  version: 0.0.763
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.763"
+"@fern-fern/generator-exec-sdk@npm:^0.0.803":
+  version: 0.0.803
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.803"
   dependencies:
     form-data: 4.0.0
     node-fetch: 2.7.0
     qs: 6.11.2
     url-join: 4.0.1
-  checksum: e6c27a08d17d3ee6a5ea6be17d08a7235a14c4dd2e3a5d62229688fcf79f7b4fbd205f88178522d40a6f14d125f266d5d71eaa47219cc4701a038428e89882de
+  checksum: 9bc640237f974c79b69fd4b23bee628f00467a2d752d7e28ab8377b6c06a86e43a1987914552ff3ad1f538c074f30c41a6b667ad2aa25cce0735eac863383931
   languageName: node
   linkType: hard
 
@@ -5102,7 +5102,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@fern-fern/ir-sdk": ^43.0.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -5344,7 +5344,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-generator-cli@workspace:generators/typescript/express/cli"
   dependencies:
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@fern-fern/ir-sdk": ^43.0.0
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -5702,7 +5702,7 @@ __metadata:
     "@babel/preset-typescript": ^7.24.1
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.763
+    "@fern-fern/generator-exec-sdk": ^0.0.803
     "@fern-fern/ir-sdk": ^43.0.0
     "@fern-fern/snippet-sdk": ^0.0.5346
     "@fern-typescript/commons": "workspace:*"

@@ -192,6 +192,16 @@
         },
         {
             "id": {
+                "path": "/response",
+                "method": "POST"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_response",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
                 "path": "/movie/{movieId}",
                 "method": "GET"
             },
@@ -217,6 +227,16 @@
             },
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_metadata(\n  x_api_version: \"0.0.1\",\n  shallow: false,\n  tag: \"development\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/response",
+                "method": "POST"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_response",
                 "type": "ruby"
             }
         },

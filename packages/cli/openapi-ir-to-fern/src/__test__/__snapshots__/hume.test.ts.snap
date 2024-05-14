@@ -17,6 +17,7 @@ exports[`open api parser hume docs 1`] = `
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
             "method": "GET",
+            "pagination": undefined,
             "path": "/v0/batch/jobs/{id}",
             "path-parameters": {
               "id": "string",
@@ -31,6 +32,7 @@ exports[`open api parser hume docs 1`] = `
             "display-name": "Get Job Artifacts",
             "docs": "Get the artifacts ZIP of a completed job.",
             "method": "GET",
+            "pagination": undefined,
             "path": "/v0/batch/jobs/{id}/artifacts",
             "path-parameters": {
               "id": "string",
@@ -64,6 +66,7 @@ exports[`open api parser hume docs 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/v0/batch/jobs/{id}/predictions",
           "path-parameters": {
             "id": "string",
@@ -85,6 +88,7 @@ exports[`open api parser hume docs 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/v0/batch/jobs",
           "request": {
             "name": "ListJobsRequest",
@@ -136,6 +140,7 @@ exports[`open api parser hume docs 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v0/batch/jobs",
           "request": {
             "body": {
@@ -1029,6 +1034,7 @@ exports[`open api parser hume simple 1`] = `
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
             "method": "GET",
+            "pagination": undefined,
             "path": "/v0/batch/jobs/{id}",
             "path-parameters": {
               "id": "string",
@@ -1043,6 +1049,7 @@ exports[`open api parser hume simple 1`] = `
             "display-name": "Get Job Artifacts",
             "docs": "Get the artifacts ZIP of a completed job.",
             "method": "GET",
+            "pagination": undefined,
             "path": "/v0/batch/jobs/{id}/artifacts",
             "path-parameters": {
               "id": "string",
@@ -1076,6 +1083,7 @@ exports[`open api parser hume simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/v0/batch/jobs/{id}/predictions",
           "path-parameters": {
             "id": "string",
@@ -1097,6 +1105,7 @@ exports[`open api parser hume simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/v0/batch/jobs",
           "request": {
             "name": "ListJobsRequest",
@@ -1148,6 +1157,7 @@ exports[`open api parser hume simple 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v0/batch/jobs",
           "request": {
             "body": {

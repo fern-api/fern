@@ -47,6 +47,14 @@ export interface ServiceServiceMethods {
             locals: any;
         }
     ): void | Promise<void>;
+    getResponse(
+        req: express.Request<never, SeedExamples.Response, never, never>,
+        res: {
+            send: (responseBody: SeedExamples.Response) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        }
+    ): void | Promise<void>;
 }
 
 export class ServiceService {
@@ -146,6 +154,32 @@ export class ServiceService {
                 if (error instanceof errors.SeedExamplesError) {
                     console.warn(
                         `Endpoint 'getMetadata' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition."
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.post("/response", async (req, res, next) => {
+            try {
+                await this.methods.getResponse(req as any, {
+                    send: async (responseBody) => {
+                        res.json(
+                            await serializers.Response.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                        );
+                    },
+                    cookie: res.cookie.bind(res),
+                    locals: res.locals,
+                });
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedExamplesError) {
+                    console.warn(
+                        `Endpoint 'getResponse' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
                             " the endpoint's errors list in your Fern Definition."
                     );

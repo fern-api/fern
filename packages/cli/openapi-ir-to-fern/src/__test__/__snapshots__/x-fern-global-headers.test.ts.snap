@@ -32,6 +32,7 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
               "userId": "string",
@@ -61,6 +62,7 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
             "auth": false,
             "docs": undefined,
             "method": "GET",
+            "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
               "userId": "string",
@@ -167,6 +169,7 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
               "userId": "string",
@@ -196,6 +199,7 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
             "auth": false,
             "docs": undefined,
             "method": "GET",
+            "pagination": undefined,
             "path": "/user/{userId}",
             "path-parameters": {
               "userId": "string",

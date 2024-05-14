@@ -836,5 +836,42 @@
                 "type": "v1"
             }
         }
+    },
+    {
+        "sdk": {
+            "package": "fern_examples",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/response",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.service.get_response(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExamplesEnvironment.PRODUCTION,\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.get_response(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
     }
 ]

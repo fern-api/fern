@@ -52,6 +52,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/attempts/{id}",
             "path-parameters": {
               "id": "string",
@@ -110,6 +111,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/attempts",
             "request": {
               "name": "GetAttemptsRequest",
@@ -192,6 +194,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bookmarks",
             "request": {
               "body": {
@@ -243,6 +246,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
@@ -288,6 +292,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
@@ -338,6 +343,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bookmarks",
             "request": {
               "name": "GetBookmarksRequest",
@@ -410,6 +416,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bookmarks/{id}/trigger",
             "path-parameters": {
               "id": "string",
@@ -471,6 +478,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
@@ -576,6 +584,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/events/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
@@ -622,6 +631,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/events/retry",
             "request": {
               "body": {
@@ -661,6 +671,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/events/retry/plan",
             "response": {
               "docs": "Events bulk retry plan",
@@ -710,6 +721,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/events/retry",
             "request": {
               "name": "GetEventBulkRetriesRequest",
@@ -770,6 +782,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/events/retry/{id}",
             "path-parameters": {
               "id": "string",
@@ -1149,6 +1162,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
@@ -1195,6 +1209,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry",
             "request": {
               "body": {
@@ -1234,6 +1249,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry/plan",
             "response": {
               "docs": "Ignored events bulk retry plan",
@@ -1283,6 +1299,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry",
             "request": {
               "name": "GetIgnoredEventBulkRetriesRequest",
@@ -1343,6 +1360,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry/{id}",
             "path-parameters": {
               "id": "string",
@@ -1449,6 +1467,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/requests/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
@@ -1495,6 +1514,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/requests/retry",
             "request": {
               "body": {
@@ -1534,6 +1554,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/requests/retry/plan",
             "response": {
               "docs": "Requests bulk retry plan",
@@ -1583,6 +1604,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/requests/retry",
             "request": {
               "name": "GetRequestBulkRetriesRequest",
@@ -1643,6 +1665,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/requests/retry/{id}",
             "path-parameters": {
               "id": "string",
@@ -1956,6 +1979,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}/archive",
             "path-parameters": {
               "id": "string",
@@ -2033,6 +2057,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks",
             "request": {
               "body": {
@@ -2147,6 +2172,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -2216,6 +2242,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks",
             "request": {
               "name": "GetConnectionsRequest",
@@ -2307,6 +2334,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}/pause",
             "path-parameters": {
               "id": "string",
@@ -2383,6 +2411,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}/unarchive",
             "path-parameters": {
               "id": "string",
@@ -2459,6 +2488,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}/unpause",
             "path-parameters": {
               "id": "string",
@@ -2538,6 +2568,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -2640,6 +2671,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks",
             "request": {
               "body": {
@@ -2871,6 +2903,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/destinations/{id}/archive",
             "path-parameters": {
               "id": "string",
@@ -2911,6 +2944,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/destinations",
             "request": {
               "body": {
@@ -2977,6 +3011,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/destinations/{id}",
             "path-parameters": {
               "id": "string",
@@ -3026,6 +3061,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/destinations",
             "request": {
               "name": "GetDestinationsRequest",
@@ -3078,6 +3114,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/destinations/{id}/unarchive",
             "path-parameters": {
               "id": "string",
@@ -3122,6 +3159,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/destinations/{id}",
             "path-parameters": {
               "id": "string",
@@ -3196,6 +3234,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/destinations",
             "request": {
               "body": {
@@ -3327,6 +3366,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events/{id}",
             "path-parameters": {
               "id": "string",
@@ -3386,6 +3426,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events",
             "request": {
               "name": "GetEventsRequest",
@@ -3443,6 +3484,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events/{id}/raw_body",
             "path-parameters": {
               "id": "string",
@@ -3497,6 +3539,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/events/{id}/mute",
             "path-parameters": {
               "id": "string",
@@ -3575,6 +3618,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/events/{id}/retry",
             "path-parameters": {
               "id": "string",
@@ -3634,6 +3678,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/integrations/{id}/attach/{source_id}",
             "path-parameters": {
               "id": "string",
@@ -3692,6 +3737,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/integrations",
             "request": {
               "body": {
@@ -3740,6 +3786,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/integrations/{id}",
             "path-parameters": {
               "id": "string",
@@ -3769,6 +3816,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/integrations/{id}/detach/{source_id}",
             "path-parameters": {
               "id": "string",
@@ -3816,6 +3864,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/integrations/{id}",
             "path-parameters": {
               "id": "string",
@@ -3872,6 +3921,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/integrations",
             "request": {
               "name": "GetIntegrationsRequest",
@@ -3925,6 +3975,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/integrations/{id}",
             "path-parameters": {
               "id": "string",
@@ -4030,6 +4081,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-triggers",
             "request": {
               "body": {
@@ -4075,6 +4127,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
@@ -4120,6 +4173,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}/disable",
             "path-parameters": {
               "id": "string",
@@ -4165,6 +4219,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}/enable",
             "path-parameters": {
               "id": "string",
@@ -4210,6 +4265,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
@@ -4260,6 +4316,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-triggers",
             "request": {
               "name": "GetIssueTriggersRequest",
@@ -4317,6 +4374,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
@@ -4386,6 +4444,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issue-triggers",
             "request": {
               "body": {
@@ -4473,6 +4532,7 @@ exports[`open api parser hookdeck docs 1`] = `
               "root.DismissIssueRequestNotFoundError",
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/issues/{id}",
             "path-parameters": {
               "id": "string",
@@ -4490,6 +4550,7 @@ exports[`open api parser hookdeck docs 1`] = `
               "root.GetIssueRequestNotFoundError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issues/{id}",
             "path-parameters": {
               "id": "string",
@@ -4521,6 +4582,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issues/count",
             "request": {
               "name": "GetIssueCountRequest",
@@ -4576,6 +4638,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issues",
             "request": {
               "name": "GetIssuesRequest",
@@ -4610,6 +4673,7 @@ exports[`open api parser hookdeck docs 1`] = `
               "root.UpdateIssueRequestUnprocessableEntityError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issues/{id}",
             "path-parameters": {
               "id": "string",
@@ -4735,6 +4799,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/notifications/webhooks",
             "request": {
               "body": {
@@ -4818,6 +4883,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests/{id}",
             "path-parameters": {
               "id": "string",
@@ -4881,6 +4947,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests/{id}/events",
             "path-parameters": {
               "id": "string",
@@ -4962,6 +5029,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests/{id}/ignored_events",
             "path-parameters": {
               "id": "string",
@@ -5002,6 +5070,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests/{id}/raw_body",
             "path-parameters": {
               "id": "string",
@@ -5059,6 +5128,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests",
             "request": {
               "name": "GetRequestsRequest",
@@ -5167,6 +5237,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/requests/{id}/retry",
             "path-parameters": {
               "id": "string",
@@ -5273,6 +5344,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/rulesets/{id}/archive",
             "path-parameters": {
               "id": "string",
@@ -5310,6 +5382,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rulesets",
             "request": {
               "body": {
@@ -5361,6 +5434,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rulesets/{id}",
             "path-parameters": {
               "id": "string",
@@ -5407,6 +5481,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rulesets",
             "request": {
               "name": "GetRulesetsRequest",
@@ -5454,6 +5529,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/rulesets/{id}/unarchive",
             "path-parameters": {
               "id": "string",
@@ -5493,6 +5569,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/rulesets/{id}",
             "path-parameters": {
               "id": "string",
@@ -5552,6 +5629,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/rulesets",
             "request": {
               "body": {
@@ -5637,6 +5715,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/sources/{id}/archive",
             "path-parameters": {
               "id": "string",
@@ -5682,6 +5761,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/sources",
             "request": {
               "body": {
@@ -5736,6 +5816,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/sources/{id}",
             "path-parameters": {
               "id": "string",
@@ -5790,6 +5871,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/sources",
             "request": {
               "name": "GetSourcesRequest",
@@ -5846,6 +5928,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/sources/{id}/unarchive",
             "path-parameters": {
               "id": "string",
@@ -5893,6 +5976,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/sources/{id}",
             "path-parameters": {
               "id": "string",
@@ -5955,6 +6039,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/sources",
             "request": {
               "body": {
@@ -6032,6 +6117,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transformations",
             "request": {
               "body": {
@@ -6089,6 +6175,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transformations/{id}",
             "path-parameters": {
               "id": "string",
@@ -6150,6 +6237,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transformations/{id}/executions/{execution_id}",
             "path-parameters": {
               "execution_id": "string",
@@ -6214,6 +6302,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transformations/{id}/executions",
             "path-parameters": {
               "id": "string",
@@ -6274,6 +6363,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transformations",
             "request": {
               "name": "GetTransformationsRequest",
@@ -6326,6 +6416,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/transformations/run",
             "request": {
               "body": {
@@ -6395,6 +6486,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/transformations/{id}",
             "path-parameters": {
               "id": "string",
@@ -6457,6 +6549,7 @@ exports[`open api parser hookdeck docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/transformations",
             "request": {
               "body": {
@@ -9315,6 +9408,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/attempts/{id}",
             "path-parameters": {
               "id": "string",
@@ -9373,6 +9467,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/attempts",
             "request": {
               "name": "GetAttemptsRequest",
@@ -9455,6 +9550,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bookmarks",
             "request": {
               "body": {
@@ -9506,6 +9602,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
@@ -9551,6 +9648,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
@@ -9601,6 +9699,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bookmarks",
             "request": {
               "name": "GetBookmarksRequest",
@@ -9673,6 +9772,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bookmarks/{id}/trigger",
             "path-parameters": {
               "id": "string",
@@ -9734,6 +9834,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/bookmarks/{id}",
             "path-parameters": {
               "id": "string",
@@ -9839,6 +9940,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/events/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
@@ -9885,6 +9987,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/events/retry",
             "request": {
               "body": {
@@ -9924,6 +10027,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/events/retry/plan",
             "response": {
               "docs": "Events bulk retry plan",
@@ -9973,6 +10077,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/events/retry",
             "request": {
               "name": "GetEventBulkRetriesRequest",
@@ -10033,6 +10138,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/events/retry/{id}",
             "path-parameters": {
               "id": "string",
@@ -10412,6 +10518,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
@@ -10458,6 +10565,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry",
             "request": {
               "body": {
@@ -10497,6 +10605,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry/plan",
             "response": {
               "docs": "Ignored events bulk retry plan",
@@ -10546,6 +10655,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry",
             "request": {
               "name": "GetIgnoredEventBulkRetriesRequest",
@@ -10606,6 +10716,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/ignored-events/retry/{id}",
             "path-parameters": {
               "id": "string",
@@ -10712,6 +10823,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/requests/retry/{id}/cancel",
             "path-parameters": {
               "id": "string",
@@ -10758,6 +10870,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bulk/requests/retry",
             "request": {
               "body": {
@@ -10797,6 +10910,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/requests/retry/plan",
             "response": {
               "docs": "Requests bulk retry plan",
@@ -10846,6 +10960,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/requests/retry",
             "request": {
               "name": "GetRequestBulkRetriesRequest",
@@ -10906,6 +11021,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bulk/requests/retry/{id}",
             "path-parameters": {
               "id": "string",
@@ -11219,6 +11335,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}/archive",
             "path-parameters": {
               "id": "string",
@@ -11296,6 +11413,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks",
             "request": {
               "body": {
@@ -11410,6 +11528,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -11479,6 +11598,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks",
             "request": {
               "name": "GetConnectionsRequest",
@@ -11570,6 +11690,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}/pause",
             "path-parameters": {
               "id": "string",
@@ -11646,6 +11767,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}/unarchive",
             "path-parameters": {
               "id": "string",
@@ -11722,6 +11844,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}/unpause",
             "path-parameters": {
               "id": "string",
@@ -11801,6 +11924,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -11903,6 +12027,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/webhooks",
             "request": {
               "body": {
@@ -12134,6 +12259,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/destinations/{id}/archive",
             "path-parameters": {
               "id": "string",
@@ -12174,6 +12300,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/destinations",
             "request": {
               "body": {
@@ -12240,6 +12367,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/destinations/{id}",
             "path-parameters": {
               "id": "string",
@@ -12289,6 +12417,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/destinations",
             "request": {
               "name": "GetDestinationsRequest",
@@ -12341,6 +12470,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/destinations/{id}/unarchive",
             "path-parameters": {
               "id": "string",
@@ -12385,6 +12515,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/destinations/{id}",
             "path-parameters": {
               "id": "string",
@@ -12459,6 +12590,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/destinations",
             "request": {
               "body": {
@@ -12590,6 +12722,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events/{id}",
             "path-parameters": {
               "id": "string",
@@ -12649,6 +12782,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events",
             "request": {
               "name": "GetEventsRequest",
@@ -12706,6 +12840,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events/{id}/raw_body",
             "path-parameters": {
               "id": "string",
@@ -12760,6 +12895,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/events/{id}/mute",
             "path-parameters": {
               "id": "string",
@@ -12838,6 +12974,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/events/{id}/retry",
             "path-parameters": {
               "id": "string",
@@ -12897,6 +13034,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/integrations/{id}/attach/{source_id}",
             "path-parameters": {
               "id": "string",
@@ -12955,6 +13093,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/integrations",
             "request": {
               "body": {
@@ -13003,6 +13142,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/integrations/{id}",
             "path-parameters": {
               "id": "string",
@@ -13032,6 +13172,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/integrations/{id}/detach/{source_id}",
             "path-parameters": {
               "id": "string",
@@ -13079,6 +13220,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/integrations/{id}",
             "path-parameters": {
               "id": "string",
@@ -13135,6 +13277,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/integrations",
             "request": {
               "name": "GetIntegrationsRequest",
@@ -13188,6 +13331,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/integrations/{id}",
             "path-parameters": {
               "id": "string",
@@ -13293,6 +13437,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-triggers",
             "request": {
               "body": {
@@ -13338,6 +13483,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
@@ -13383,6 +13529,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}/disable",
             "path-parameters": {
               "id": "string",
@@ -13428,6 +13575,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}/enable",
             "path-parameters": {
               "id": "string",
@@ -13473,6 +13621,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
@@ -13523,6 +13672,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-triggers",
             "request": {
               "name": "GetIssueTriggersRequest",
@@ -13580,6 +13730,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issue-triggers/{id}",
             "path-parameters": {
               "id": "string",
@@ -13649,6 +13800,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issue-triggers",
             "request": {
               "body": {
@@ -13736,6 +13888,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/issues/{id}",
             "path-parameters": {
               "id": "string",
@@ -13753,6 +13906,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issues/{id}",
             "path-parameters": {
               "id": "string",
@@ -13784,6 +13938,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issues/count",
             "request": {
               "name": "GetIssueCountRequest",
@@ -13839,6 +13994,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issues",
             "request": {
               "name": "GetIssuesRequest",
@@ -13873,6 +14029,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.UnprocessableEntityError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/issues/{id}",
             "path-parameters": {
               "id": "string",
@@ -13998,6 +14155,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/notifications/webhooks",
             "request": {
               "body": {
@@ -14081,6 +14239,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests/{id}",
             "path-parameters": {
               "id": "string",
@@ -14144,6 +14303,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests/{id}/events",
             "path-parameters": {
               "id": "string",
@@ -14225,6 +14385,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests/{id}/ignored_events",
             "path-parameters": {
               "id": "string",
@@ -14265,6 +14426,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests/{id}/raw_body",
             "path-parameters": {
               "id": "string",
@@ -14322,6 +14484,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/requests",
             "request": {
               "name": "GetRequestsRequest",
@@ -14430,6 +14593,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/requests/{id}/retry",
             "path-parameters": {
               "id": "string",
@@ -14536,6 +14700,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/rulesets/{id}/archive",
             "path-parameters": {
               "id": "string",
@@ -14573,6 +14738,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rulesets",
             "request": {
               "body": {
@@ -14624,6 +14790,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rulesets/{id}",
             "path-parameters": {
               "id": "string",
@@ -14670,6 +14837,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rulesets",
             "request": {
               "name": "GetRulesetsRequest",
@@ -14717,6 +14885,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/rulesets/{id}/unarchive",
             "path-parameters": {
               "id": "string",
@@ -14756,6 +14925,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/rulesets/{id}",
             "path-parameters": {
               "id": "string",
@@ -14815,6 +14985,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/rulesets",
             "request": {
               "body": {
@@ -14900,6 +15071,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/sources/{id}/archive",
             "path-parameters": {
               "id": "string",
@@ -14945,6 +15117,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/sources",
             "request": {
               "body": {
@@ -14999,6 +15172,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/sources/{id}",
             "path-parameters": {
               "id": "string",
@@ -15053,6 +15227,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/sources",
             "request": {
               "name": "GetSourcesRequest",
@@ -15109,6 +15284,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/sources/{id}/unarchive",
             "path-parameters": {
               "id": "string",
@@ -15156,6 +15332,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/sources/{id}",
             "path-parameters": {
               "id": "string",
@@ -15218,6 +15395,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/sources",
             "request": {
               "body": {
@@ -15295,6 +15473,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transformations",
             "request": {
               "body": {
@@ -15352,6 +15531,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transformations/{id}",
             "path-parameters": {
               "id": "string",
@@ -15413,6 +15593,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transformations/{id}/executions/{execution_id}",
             "path-parameters": {
               "execution_id": "string",
@@ -15477,6 +15658,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transformations/{id}/executions",
             "path-parameters": {
               "id": "string",
@@ -15537,6 +15719,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transformations",
             "request": {
               "name": "GetTransformationsRequest",
@@ -15589,6 +15772,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/transformations/run",
             "request": {
               "body": {
@@ -15658,6 +15842,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/transformations/{id}",
             "path-parameters": {
               "id": "string",
@@ -15720,6 +15905,7 @@ exports[`open api parser hookdeck simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/transformations",
             "request": {
               "body": {

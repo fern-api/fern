@@ -411,6 +411,7 @@ Here are some of the most used payload fields explained (you can find the full p
       "internal": null,
       "method": "POST",
       "operationId": "post-consumer-transaction",
+      "pagination": null,
       "path": "/transactions",
       "pathParameters": [],
       "queryParameters": [
@@ -930,6 +931,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
       "internal": null,
       "method": "GET",
       "operationId": "get-consumer-transaction",
+      "pagination": null,
       "path": "/transactions/{transactionId}",
       "pathParameters": [
         {
@@ -1473,6 +1475,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "internal": false,
       "method": "POST",
       "operationId": "post-transaction-event",
+      "pagination": null,
       "path": "/events/transaction",
       "pathParameters": [],
       "queryParameters": [],
@@ -1985,6 +1988,7 @@ Each consumer User entity needs three mandatory fields:
       "internal": null,
       "method": "POST",
       "operationId": "post-consumer-user",
+      "pagination": null,
       "path": "/consumer/users",
       "pathParameters": [],
       "queryParameters": [],
@@ -2637,6 +2641,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
       "internal": null,
       "method": "GET",
       "operationId": "get-consumer-user",
+      "pagination": null,
       "path": "/consumer/users/{userId}",
       "pathParameters": [
         {
@@ -2902,6 +2907,7 @@ Each consumer Business entity needs three mandatory fields:
       "internal": null,
       "method": "POST",
       "operationId": "post-business-user",
+      "pagination": null,
       "path": "/business/users",
       "pathParameters": [],
       "queryParameters": [],
@@ -4245,6 +4251,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
       "internal": null,
       "method": "GET",
       "operationId": "get-business-user-userId",
+      "pagination": null,
       "path": "/business/users/{userId}",
       "pathParameters": [
         {
@@ -5000,6 +5007,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "internal": false,
       "method": "POST",
       "operationId": "post-user-event",
+      "pagination": null,
       "path": "/events/consumer/user",
       "pathParameters": [],
       "queryParameters": [],
@@ -6440,6 +6448,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "internal": false,
       "method": "POST",
       "operationId": "post-business-user-event",
+      "pagination": null,
       "path": "/events/business/user",
       "pathParameters": [],
       "queryParameters": [],

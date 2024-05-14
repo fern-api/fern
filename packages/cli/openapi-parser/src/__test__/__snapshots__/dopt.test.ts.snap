@@ -422,6 +422,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "findBlocks",
+      "pagination": null,
       "path": "/v2/block/{uid}",
       "pathParameters": [
         {
@@ -1235,6 +1236,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "blockTransitions",
+      "pagination": null,
       "path": "/v2/block/{uid}/transition",
       "pathParameters": [
         {
@@ -1827,6 +1829,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getFlow",
+      "pagination": null,
       "path": "/v2/flow/{sid}",
       "pathParameters": [
         {
@@ -2930,6 +2933,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "flowIntent",
+      "pagination": null,
       "path": "/v2/flow/{uid}/{intent}",
       "pathParameters": [
         {

@@ -265,8 +265,64 @@ paths:
                       - development
                       - public
                     value: <head>...</head>
+  /response:
+    post:
+      operationId: service_getResponse
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Response'
+              examples:
+                Example1:
+                  value:
+                    response: Initializing...
+                    identifiers:
+                      - type: primitive
+                        value: example
+                        label: Primitive
+                      - type: unknown
+                        value: '{}'
+                        label: Unknown
 components:
   schemas:
+    Type:
+      title: Type
+      oneOf:
+        - $ref: '#/components/schemas/BasicType'
+        - $ref: '#/components/schemas/ComplexType'
+    Identifier:
+      title: Identifier
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        value:
+          type: string
+        label:
+          type: string
+      required:
+        - type
+        - value
+        - label
+    BasicType:
+      title: BasicType
+      type: string
+      enum:
+        - primitive
+        - literal
+    ComplexType:
+      title: ComplexType
+      type: string
+      enum:
+        - object
+        - union
+        - unknown
     commonsTag:
       title: commonsTag
       type: string
@@ -624,8 +680,21 @@ components:
       type: object
       properties:
         response: {}
+        identifiers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Identifier'
       required:
         - response
+        - identifiers
+    ResponseType:
+      title: ResponseType
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+      required:
+        - type
     Test:
       title: Test
       oneOf:
@@ -649,6 +718,18 @@ components:
               type: boolean
           required:
             - type
+    Entity:
+      title: Entity
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        name:
+          type: string
+          example: unknown
+      required:
+        - type
+        - name
   securitySchemes:
     BearerAuth:
       type: http

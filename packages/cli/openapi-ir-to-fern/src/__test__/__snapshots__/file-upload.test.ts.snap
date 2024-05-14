@@ -18,6 +18,7 @@ exports[`open api parser file-upload docs 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/upload",
           "request": {
             "body": {
@@ -63,6 +64,7 @@ exports[`open api parser file-upload simple 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/upload",
           "request": {
             "body": {

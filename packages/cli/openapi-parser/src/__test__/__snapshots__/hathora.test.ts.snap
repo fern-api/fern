@@ -212,6 +212,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetApps",
+      "pagination": null,
       "path": "/apps/v1/list",
       "pathParameters": [],
       "queryParameters": [],
@@ -397,6 +398,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateApp",
+      "pagination": null,
       "path": "/apps/v1/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -744,6 +746,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "UpdateApp",
+      "pagination": null,
       "path": "/apps/v1/update/{appId}",
       "pathParameters": [
         {
@@ -1054,6 +1057,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetAppInfo",
+      "pagination": null,
       "path": "/apps/v1/info/{appId}",
       "pathParameters": [
         {
@@ -1165,6 +1169,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "DeleteApp",
+      "pagination": null,
       "path": "/apps/v1/delete/{appId}",
       "pathParameters": [
         {
@@ -1257,6 +1262,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "LoginAnonymous",
+      "pagination": null,
       "path": "/auth/v1/{appId}/login/anonymous",
       "pathParameters": [
         {
@@ -1394,6 +1400,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "LoginNickname",
+      "pagination": null,
       "path": "/auth/v1/{appId}/login/nickname",
       "pathParameters": [
         {
@@ -1583,6 +1590,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "LoginGoogle",
+      "pagination": null,
       "path": "/auth/v1/{appId}/login/google",
       "pathParameters": [
         {
@@ -1822,6 +1830,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetBuilds",
+      "pagination": null,
       "path": "/builds/v1/{appId}/list",
       "pathParameters": [
         {
@@ -2017,6 +2026,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetBuildInfo",
+      "pagination": null,
       "path": "/builds/v1/{appId}/info/{buildId}",
       "pathParameters": [
         {
@@ -2244,6 +2254,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateBuild",
+      "pagination": null,
       "path": "/builds/v1/{appId}/create",
       "pathParameters": [
         {
@@ -2332,6 +2343,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "RunBuild",
+      "pagination": null,
       "path": "/builds/v1/{appId}/run/{buildId}",
       "pathParameters": [
         {
@@ -2490,6 +2502,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "DeleteBuild",
+      "pagination": null,
       "path": "/builds/v1/{appId}/delete/{buildId}",
       "pathParameters": [
         {
@@ -2688,6 +2701,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetDeployments",
+      "pagination": null,
       "path": "/deployments/v1/{appId}/list",
       "pathParameters": [
         {
@@ -2897,6 +2911,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetDeploymentInfo",
+      "pagination": null,
       "path": "/deployments/v1/{appId}/info/{deploymentId}",
       "pathParameters": [
         {
@@ -3198,6 +3213,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateDeployment",
+      "pagination": null,
       "path": "/deployments/v1/{appId}/create/{buildId}",
       "pathParameters": [
         {
@@ -3313,6 +3329,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetPingServiceEndpoints",
+      "pagination": null,
       "path": "/discovery/v1/ping",
       "pathParameters": [],
       "queryParameters": [],
@@ -3500,6 +3517,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreatePrivateLobbyDeprecated",
+      "pagination": null,
       "path": "/lobby/v1/{appId}/create/private",
       "pathParameters": [
         {
@@ -3744,6 +3762,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreatePublicLobbyDeprecated",
+      "pagination": null,
       "path": "/lobby/v1/{appId}/create/public",
       "pathParameters": [
         {
@@ -4038,6 +4057,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListActivePublicLobbiesDeprecated",
+      "pagination": null,
       "path": "/lobby/v1/{appId}/list",
       "pathParameters": [
         {
@@ -4400,6 +4420,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreatePrivateLobby",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/create/private",
       "pathParameters": [
         {
@@ -4793,6 +4814,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreatePublicLobby",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/create/public",
       "pathParameters": [
         {
@@ -5186,6 +5208,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateLocalLobby",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/create/local",
       "pathParameters": [
         {
@@ -5583,6 +5606,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateLobby",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/create",
       "pathParameters": [
         {
@@ -5900,6 +5924,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListActivePublicLobbies",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/list/public",
       "pathParameters": [
         {
@@ -6136,6 +6161,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetLobbyInfo",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/info/{roomId}",
       "pathParameters": [
         {
@@ -6383,6 +6409,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "SetLobbyState",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/setState/{roomId}",
       "pathParameters": [
         {
@@ -6511,6 +6538,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetLogsForApp",
+      "pagination": null,
       "path": "/logs/v1/{appId}/all",
       "pathParameters": [
         {
@@ -6637,6 +6665,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetLogsForProcess",
+      "pagination": null,
       "path": "/logs/v1/{appId}/process/{processId}",
       "pathParameters": [
         {
@@ -6756,6 +6785,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetLogsForDeployment",
+      "pagination": null,
       "path": "/logs/v1/{appId}/deployment/{deploymentId}",
       "pathParameters": [
         {
@@ -7026,6 +7056,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetMetrics",
+      "pagination": null,
       "path": "/metrics/v1/{appId}/process/{processId}",
       "pathParameters": [
         {
@@ -7379,6 +7410,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetRunningProcesses",
+      "pagination": null,
       "path": "/processes/v1/{appId}/list/running",
       "pathParameters": [
         {
@@ -7618,6 +7650,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetStoppedProcesses",
+      "pagination": null,
       "path": "/processes/v1/{appId}/list/stopped",
       "pathParameters": [
         {
@@ -7862,6 +7895,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetProcessInfo",
+      "pagination": null,
       "path": "/processes/v1/{appId}/info/{processId}",
       "pathParameters": [
         {
@@ -8000,6 +8034,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateRoom",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/create",
       "pathParameters": [
         {
@@ -8226,6 +8261,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetRoomInfo",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/info/{roomId}",
       "pathParameters": [
         {
@@ -8402,6 +8438,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetActiveRoomsForProcess",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/list/{processId}/active",
       "pathParameters": [
         {
@@ -8585,6 +8622,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetInactiveRoomsForProcess",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/list/{processId}/inactive",
       "pathParameters": [
         {
@@ -8726,6 +8764,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "DestroyRoom",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
       "pathParameters": [
         {
@@ -8848,6 +8887,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "SuspendRoom",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
       "pathParameters": [
         {
@@ -8955,6 +8995,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetConnectionInfo",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
       "pathParameters": [
         {

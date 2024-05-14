@@ -173,6 +173,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "UserManagement_GetUsers",
+      "pagination": null,
       "path": "/api/user-management",
       "pathParameters": [],
       "queryParameters": [
@@ -443,6 +444,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "UserManagement_PostUser",
+      "pagination": null,
       "path": "/api/user-management",
       "pathParameters": [],
       "queryParameters": [],
@@ -627,6 +629,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "UserManagement_GetUser",
+      "pagination": null,
       "path": "/api/user-management/{id}",
       "pathParameters": [
         {
@@ -861,6 +864,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "UserManagement_PutUser",
+      "pagination": null,
       "path": "/api/user-management/{id}",
       "pathParameters": [
         {
@@ -1010,6 +1014,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "UserManagement_DeleteUser",
+      "pagination": null,
       "path": "/api/user-management/{id}",
       "pathParameters": [
         {
@@ -1216,6 +1221,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "UserManagement_LockUser",
+      "pagination": null,
       "path": "/api/user-management/{id}/lock",
       "pathParameters": [
         {
@@ -1434,6 +1440,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "UserManagement_UnlockUser",
+      "pagination": null,
       "path": "/api/user-management/{id}/unlock",
       "pathParameters": [
         {
@@ -1562,6 +1569,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "Users_GetUserResources",
+      "pagination": null,
       "path": "/api",
       "pathParameters": [],
       "queryParameters": [],
@@ -1710,6 +1718,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "Users_GetUsers",
+      "pagination": null,
       "path": "/api/users",
       "pathParameters": [],
       "queryParameters": [
@@ -1914,6 +1923,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "Users_GetUser",
+      "pagination": null,
       "path": "/api/users/{id}",
       "pathParameters": [
         {
@@ -2000,6 +2010,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "Users_GetUserPicture",
+      "pagination": null,
       "path": "/api/users/{id}/picture",
       "pathParameters": [
         {
@@ -2136,6 +2147,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "Translations_PostTranslation",
+      "pagination": null,
       "path": "/api/apps/{app}/translations",
       "pathParameters": [
         {
@@ -2344,6 +2356,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "Templates_GetTemplates",
+      "pagination": null,
       "path": "/api/templates",
       "pathParameters": [],
       "queryParameters": [],
@@ -2483,6 +2496,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "Templates_GetTemplate",
+      "pagination": null,
       "path": "/api/templates/{name}",
       "pathParameters": [
         {
@@ -2720,6 +2734,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "TeamContributors_GetContributors",
+      "pagination": null,
       "path": "/api/teams/{team}/contributors",
       "pathParameters": [
         {
@@ -2982,6 +2997,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "TeamContributors_PostContributor",
+      "pagination": null,
       "path": "/api/teams/{team}/contributors",
       "pathParameters": [
         {
@@ -3245,6 +3261,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "TeamContributors_DeleteMyself",
+      "pagination": null,
       "path": "/api/teams/{team}/contributors/me",
       "pathParameters": [
         {
@@ -3506,6 +3523,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "TeamContributors_DeleteContributor",
+      "pagination": null,
       "path": "/api/teams/{team}/contributors/{id}",
       "pathParameters": [
         {
@@ -3692,6 +3710,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
       "internal": null,
       "method": "GET",
       "operationId": "Teams_GetTeams",
+      "pagination": null,
       "path": "/api/teams",
       "pathParameters": [],
       "queryParameters": [],
@@ -3891,6 +3910,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Teams_PostTeam",
+      "pagination": null,
       "path": "/api/teams",
       "pathParameters": [],
       "queryParameters": [],
@@ -4077,6 +4097,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Teams_GetTeam",
+      "pagination": null,
       "path": "/api/teams/{team}",
       "pathParameters": [
         {
@@ -4294,6 +4315,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Teams_PutTeam",
+      "pagination": null,
       "path": "/api/teams/{team}",
       "pathParameters": [
         {
@@ -4426,6 +4448,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Usages_GetLog",
+      "pagination": null,
       "path": "/api/apps/{app}/usages/log",
       "pathParameters": [
         {
@@ -4664,6 +4687,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Usages_GetUsages",
+      "pagination": null,
       "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
       "pathParameters": [
         {
@@ -4936,6 +4960,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Usages_GetUsagesForTeam",
+      "pagination": null,
       "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
       "pathParameters": [
         {
@@ -5097,6 +5122,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Usages_GetCurrentStorageSize",
+      "pagination": null,
       "path": "/api/apps/{app}/usages/storage/today",
       "pathParameters": [
         {
@@ -5224,6 +5250,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Usages_GetTeamCurrentStorageSizeForTeam",
+      "pagination": null,
       "path": "/api/teams/{team}/usages/storage/today",
       "pathParameters": [
         {
@@ -5383,6 +5410,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Usages_GetStorageSizes",
+      "pagination": null,
       "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
       "pathParameters": [
         {
@@ -5583,6 +5611,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Usages_GetStorageSizesForTeam",
+      "pagination": null,
       "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
       "pathParameters": [
         {
@@ -5790,6 +5819,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Search_GetSearchResults",
+      "pagination": null,
       "path": "/api/apps/{app}/search",
       "pathParameters": [
         {
@@ -5936,6 +5966,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "SchemaFields_PostField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields",
       "pathParameters": [
         {
@@ -6079,6 +6110,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "SchemaFields_PostNestedField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
       "pathParameters": [
         {
@@ -6554,6 +6586,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_PutSchemaUIFields",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
       "pathParameters": [
         {
@@ -7027,6 +7060,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_PutSchemaFieldOrdering",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
       "pathParameters": [
         {
@@ -7510,6 +7544,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_PutNestedFieldOrdering",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
       "pathParameters": [
         {
@@ -7654,6 +7689,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_PutField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
       "pathParameters": [
         {
@@ -8136,6 +8172,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "SchemaFields_DeleteField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
       "pathParameters": [
         {
@@ -8268,6 +8305,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_PutNestedField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
       "pathParameters": [
         {
@@ -8775,6 +8813,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "SchemaFields_DeleteNestedField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
       "pathParameters": [
         {
@@ -9260,6 +9299,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_LockField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
       "pathParameters": [
         {
@@ -9740,6 +9780,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_LockNestedField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
       "pathParameters": [
         {
@@ -10225,6 +10266,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_HideField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
       "pathParameters": [
         {
@@ -10705,6 +10747,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_HideNestedField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
       "pathParameters": [
         {
@@ -11190,6 +11233,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_ShowField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
       "pathParameters": [
         {
@@ -11670,6 +11714,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_ShowNestedField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
       "pathParameters": [
         {
@@ -12155,6 +12200,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_EnableField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/enable",
       "pathParameters": [
         {
@@ -12635,6 +12681,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_EnableNestedField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable",
       "pathParameters": [
         {
@@ -13120,6 +13167,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_DisableField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/disable",
       "pathParameters": [
         {
@@ -13600,6 +13648,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "SchemaFields_DisableNestedField",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable",
       "pathParameters": [
         {
@@ -13994,6 +14043,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Schemas_GetSchemas",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas",
       "pathParameters": [
         {
@@ -14444,6 +14494,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Schemas_PostSchema",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas",
       "pathParameters": [
         {
@@ -14870,6 +14921,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Schemas_GetSchema",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}",
       "pathParameters": [
         {
@@ -15326,6 +15378,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Schemas_PutSchema",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}",
       "pathParameters": [
         {
@@ -15488,6 +15541,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Schemas_DeleteSchema",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}",
       "pathParameters": [
         {
@@ -15946,6 +16000,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Schemas_PutSchemaSync",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/sync",
       "pathParameters": [
         {
@@ -16406,6 +16461,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Schemas_PutCategory",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/category",
       "pathParameters": [
         {
@@ -16880,6 +16936,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Schemas_PutPreviewUrls",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
       "pathParameters": [
         {
@@ -17340,6 +17397,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Schemas_PutScripts",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/scripts",
       "pathParameters": [
         {
@@ -17800,6 +17858,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Schemas_PutRules",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/rules",
       "pathParameters": [
         {
@@ -18257,6 +18316,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Schemas_PublishSchema",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/publish",
       "pathParameters": [
         {
@@ -18702,6 +18762,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Schemas_UnpublishSchema",
+      "pagination": null,
       "path": "/api/apps/{app}/schemas/{schema}/unpublish",
       "pathParameters": [
         {
@@ -18905,6 +18966,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Rules_GetActions",
+      "pagination": null,
       "path": "/api/rules/actions",
       "pathParameters": [],
       "queryParameters": [],
@@ -19066,6 +19128,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Rules_GetRules",
+      "pagination": null,
       "path": "/api/apps/{app}/rules",
       "pathParameters": [
         {
@@ -19166,6 +19229,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Rules_PostRule",
+      "pagination": null,
       "path": "/api/apps/{app}/rules",
       "pathParameters": [
         {
@@ -19290,6 +19354,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Rules_DeleteRuleRun",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/run",
       "pathParameters": [
         {
@@ -19378,6 +19443,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Rules_PutRule",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/{id}",
       "pathParameters": [
         {
@@ -19540,6 +19606,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Rules_DeleteRule",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/{id}",
       "pathParameters": [
         {
@@ -19645,6 +19712,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Rules_EnableRule",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/{id}/enable",
       "pathParameters": [
         {
@@ -19762,6 +19830,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Rules_DisableRule",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/{id}/disable",
       "pathParameters": [
         {
@@ -19912,6 +19981,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Rules_TriggerRule",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/{id}/trigger",
       "pathParameters": [
         {
@@ -20039,6 +20109,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Rules_PutRuleRun",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/{id}/run",
       "pathParameters": [
         {
@@ -20189,6 +20260,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Rules_DeleteRuleEvents",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/{id}/events",
       "pathParameters": [
         {
@@ -20294,6 +20366,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Rules_SimulatePOST",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/simulate",
       "pathParameters": [
         {
@@ -20570,6 +20643,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Rules_SimulateGET",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/{id}/simulate",
       "pathParameters": [
         {
@@ -20841,6 +20915,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Rules_GetEvents",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/events",
       "pathParameters": [
         {
@@ -21022,6 +21097,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Rules_DeleteEvents",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/events",
       "pathParameters": [
         {
@@ -21143,6 +21219,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Rules_PutEvent",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/events/{id}",
       "pathParameters": [
         {
@@ -21281,6 +21358,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Rules_DeleteEvent",
+      "pagination": null,
       "path": "/api/apps/{app}/rules/events/{id}",
       "pathParameters": [
         {
@@ -21384,6 +21462,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Rules_GetEventTypes",
+      "pagination": null,
       "path": "/api/rules/eventtypes",
       "pathParameters": [],
       "queryParameters": [],
@@ -21503,6 +21582,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Rules_GetEventSchema",
+      "pagination": null,
       "path": "/api/rules/eventtypes/{type}",
       "pathParameters": [
         {
@@ -21751,6 +21831,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "AppPlans_GetPlans",
+      "pagination": null,
       "path": "/api/apps/{app}/plans",
       "pathParameters": [
         {
@@ -21896,6 +21977,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "AppPlans_PutPlan",
+      "pagination": null,
       "path": "/api/apps/{app}/plan",
       "pathParameters": [
         {
@@ -22159,6 +22241,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "TeamPlans_GetTeamPlans",
+      "pagination": null,
       "path": "/api/teams/{team}/plans",
       "pathParameters": [
         {
@@ -22304,6 +22387,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "TeamPlans_PutTeamPlan",
+      "pagination": null,
       "path": "/api/teams/{team}/plan",
       "pathParameters": [
         {
@@ -22420,6 +22504,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Ping_GetInfo",
+      "pagination": null,
       "path": "/api/info",
       "pathParameters": [],
       "queryParameters": [],
@@ -22489,6 +22574,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Ping_GetPing",
+      "pagination": null,
       "path": "/api/ping",
       "pathParameters": [],
       "queryParameters": [],
@@ -22557,6 +22643,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Ping_GetAppPing",
+      "pagination": null,
       "path": "/api/ping/{app}",
       "pathParameters": [
         {
@@ -22667,6 +22754,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "News_GetNews",
+      "pagination": null,
       "path": "/api/news/features",
       "pathParameters": [],
       "queryParameters": [
@@ -22789,6 +22877,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Languages_GetLanguages",
+      "pagination": null,
       "path": "/api/languages",
       "pathParameters": [],
       "queryParameters": [],
@@ -22938,6 +23027,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "History_GetAppHistory",
+      "pagination": null,
       "path": "/api/apps/{app}/history",
       "pathParameters": [
         {
@@ -23130,6 +23220,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "History_GetTeamHistory",
+      "pagination": null,
       "path": "/api/teams/{team}/history",
       "pathParameters": [
         {
@@ -23372,6 +23463,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "EventConsumers_GetEventConsumers",
+      "pagination": null,
       "path": "/api/event-consumers",
       "pathParameters": [],
       "queryParameters": [],
@@ -23560,6 +23652,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "EventConsumers_StartEventConsumer",
+      "pagination": null,
       "path": "/api/event-consumers/{consumerName}/start",
       "pathParameters": [
         {
@@ -23766,6 +23859,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "EventConsumers_StopEventConsumer",
+      "pagination": null,
       "path": "/api/event-consumers/{consumerName}/stop",
       "pathParameters": [
         {
@@ -23972,6 +24066,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "EventConsumers_ResetEventConsumer",
+      "pagination": null,
       "path": "/api/event-consumers/{consumerName}/reset",
       "pathParameters": [
         {
@@ -24073,6 +24168,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Diagnostics_GetDump",
+      "pagination": null,
       "path": "/api/diagnostics/dump",
       "pathParameters": [],
       "queryParameters": [],
@@ -24144,6 +24240,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Diagnostics_GetGCDump",
+      "pagination": null,
       "path": "/api/diagnostics/gcdump",
       "pathParameters": [],
       "queryParameters": [],
@@ -24523,6 +24620,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Contents_GetContents",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}",
       "pathParameters": [
         {
@@ -25026,6 +25124,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Contents_PostContent",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}",
       "pathParameters": [
         {
@@ -25552,6 +25651,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Contents_GetContentsPost",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/query",
       "pathParameters": [
         {
@@ -25954,6 +26054,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Contents_GetContent",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}",
       "pathParameters": [
         {
@@ -26458,6 +26559,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Contents_PostUpsertContent",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}",
       "pathParameters": [
         {
@@ -27020,6 +27122,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Contents_PutContent",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}",
       "pathParameters": [
         {
@@ -27209,6 +27312,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Contents_DeleteContent",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}",
       "pathParameters": [
         {
@@ -27723,6 +27827,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PATCH",
       "operationId": "Contents_PatchContent",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}",
       "pathParameters": [
         {
@@ -27912,6 +28017,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Contents_GetContentValidity",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}/validity",
       "pathParameters": [
         {
@@ -28353,6 +28459,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Contents_GetReferences",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}/references",
       "pathParameters": [
         {
@@ -28831,6 +28938,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Contents_GetReferencing",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}/referencing",
       "pathParameters": [
         {
@@ -28976,6 +29084,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Contents_GetContentVersion",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}/{version}",
       "pathParameters": [
         {
@@ -29255,6 +29364,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Contents_PostContents",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/import",
       "pathParameters": [
         {
@@ -29519,6 +29629,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Contents_BulkUpdateContents",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/bulk",
       "pathParameters": [
         {
@@ -29999,6 +30110,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Contents_PutContentStatus",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}/status",
       "pathParameters": [
         {
@@ -30478,6 +30590,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Contents_DeleteContentStatus",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}/status",
       "pathParameters": [
         {
@@ -30945,6 +31058,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Contents_CreateDraft",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}/draft",
       "pathParameters": [
         {
@@ -31412,6 +31526,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Contents_DeleteVersion",
+      "pagination": null,
       "path": "/api/content/{app}/{schema}/{id}/draft",
       "pathParameters": [
         {
@@ -31566,6 +31681,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Comments_GetWatchingUsers",
+      "pagination": null,
       "path": "/api/apps/{app}/watching/{resource}",
       "pathParameters": [
         {
@@ -31833,6 +31949,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Comments_GetComments",
+      "pagination": null,
       "path": "/api/apps/{app}/comments/{commentsId}",
       "pathParameters": [
         {
@@ -32056,6 +32173,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Comments_PostComment",
+      "pagination": null,
       "path": "/api/apps/{app}/comments/{commentsId}",
       "pathParameters": [
         {
@@ -32239,6 +32357,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Comments_PutComment",
+      "pagination": null,
       "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
       "pathParameters": [
         {
@@ -32416,6 +32535,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Comments_DeleteComment",
+      "pagination": null,
       "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
       "pathParameters": [
         {
@@ -32649,6 +32769,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "UserNotifications_GetNotifications",
+      "pagination": null,
       "path": "/api/users/{userId}/notifications",
       "pathParameters": [
         {
@@ -32805,6 +32926,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "UserNotifications_DeleteComment",
+      "pagination": null,
       "path": "/api/users/{userId}/notifications/{commentId}",
       "pathParameters": [
         {
@@ -32896,6 +33018,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "BackupContent_GetBackupContent",
+      "pagination": null,
       "path": "/api/apps/{app}/backups/{id}",
       "pathParameters": [
         {
@@ -33037,6 +33160,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Backups_DeleteBackup",
+      "pagination": null,
       "path": "/api/apps/{app}/backups/{id}",
       "pathParameters": [
         {
@@ -33128,6 +33252,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "BackupContent_GetBackupContentV2",
+      "pagination": null,
       "path": "/api/apps/backups/{id}",
       "pathParameters": [
         {
@@ -33397,6 +33522,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Backups_GetBackups",
+      "pagination": null,
       "path": "/api/apps/{app}/backups",
       "pathParameters": [
         {
@@ -33520,6 +33646,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Backups_PostBackup",
+      "pagination": null,
       "path": "/api/apps/{app}/backups",
       "pathParameters": [
         {
@@ -33636,6 +33763,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Restore_GetRestoreJob",
+      "pagination": null,
       "path": "/api/apps/restore",
       "pathParameters": [],
       "queryParameters": [],
@@ -33730,6 +33858,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Restore_PostRestoreJob",
+      "pagination": null,
       "path": "/api/apps/restore",
       "pathParameters": [],
       "queryParameters": [],
@@ -33798,6 +33927,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "AssetContent_GetAssetContentBySlug",
+      "pagination": null,
       "path": "/api/assets/{app}/{idOrSlug}/{more}",
       "pathParameters": [
         {
@@ -34223,6 +34353,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "AssetContent_GetAssetContent",
+      "pagination": null,
       "path": "/api/assets/{id}",
       "pathParameters": [
         {
@@ -34814,6 +34945,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "AssetFolders_GetAssetFolders",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/folders",
       "pathParameters": [
         {
@@ -35062,6 +35194,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "AssetFolders_PostAssetFolder",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/folders",
       "pathParameters": [
         {
@@ -35287,6 +35420,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "AssetFolders_PutAssetFolder",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/folders/{id}",
       "pathParameters": [
         {
@@ -35449,6 +35583,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "AssetFolders_DeleteAssetFolder",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/folders/{id}",
       "pathParameters": [
         {
@@ -35659,6 +35794,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "AssetFolders_PutAssetFolderParent",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/folders/{id}/parent",
       "pathParameters": [
         {
@@ -35814,6 +35950,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Assets_GetTags",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/tags",
       "pathParameters": [
         {
@@ -35995,6 +36132,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Assets_PutTag",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/tags/{name}",
       "pathParameters": [
         {
@@ -36413,6 +36551,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Assets_GetAssets",
+      "pagination": null,
       "path": "/api/apps/{app}/assets",
       "pathParameters": [
         {
@@ -36956,6 +37095,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Assets_PostAsset",
+      "pagination": null,
       "path": "/api/apps/{app}/assets",
       "pathParameters": [
         {
@@ -37428,6 +37568,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Assets_GetAssetsPost",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/query",
       "pathParameters": [
         {
@@ -37797,6 +37938,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "Assets_GetAsset",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/{id}",
       "pathParameters": [
         {
@@ -38202,6 +38344,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Assets_PostUpsertAsset",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/{id}",
       "pathParameters": [
         {
@@ -38655,6 +38798,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Assets_PutAsset",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/{id}",
       "pathParameters": [
         {
@@ -38817,6 +38961,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Assets_DeleteAsset",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/{id}",
       "pathParameters": [
         {
@@ -39075,6 +39220,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Assets_BulkUpdateAssets",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/bulk",
       "pathParameters": [
         {
@@ -39482,6 +39628,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Assets_PutAssetContent",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/{id}/content",
       "pathParameters": [
         {
@@ -39888,6 +40035,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "Assets_PutAssetParent",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/{id}/parent",
       "pathParameters": [
         {
@@ -40123,6 +40271,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "AppAssets_GetAssetScripts",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/scripts",
       "pathParameters": [
         {
@@ -40346,6 +40495,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "PUT",
       "operationId": "AppAssets_PutAssetScripts",
+      "pagination": null,
       "path": "/api/apps/{app}/assets/scripts",
       "pathParameters": [
         {
@@ -40597,6 +40747,7 @@ You will be assigned as owner of the new team automatically.",
       "internal": null,
       "method": "GET",
       "operationId": "AppClients_GetClients",
+      "pagination": null,
       "path": "/api/apps/{app}/clients",
       "pathParameters": [
         {
@@ -40862,6 +41013,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "POST",
       "operationId": "AppClients_PostClient",
+      "pagination": null,
       "path": "/api/apps/{app}/clients",
       "pathParameters": [
         {
@@ -41140,6 +41292,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "PUT",
       "operationId": "AppClients_PutClient",
+      "pagination": null,
       "path": "/api/apps/{app}/clients/{id}",
       "pathParameters": [
         {
@@ -41432,6 +41585,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "DELETE",
       "operationId": "AppClients_DeleteClient",
+      "pagination": null,
       "path": "/api/apps/{app}/clients/{id}",
       "pathParameters": [
         {
@@ -41686,6 +41840,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "GET",
       "operationId": "AppContributors_GetContributors",
+      "pagination": null,
       "path": "/api/apps/{app}/contributors",
       "pathParameters": [
         {
@@ -41948,6 +42103,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "POST",
       "operationId": "AppContributors_PostContributor",
+      "pagination": null,
       "path": "/api/apps/{app}/contributors",
       "pathParameters": [
         {
@@ -42211,6 +42367,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "DELETE",
       "operationId": "AppContributors_DeleteMyself",
+      "pagination": null,
       "path": "/api/apps/{app}/contributors/me",
       "pathParameters": [
         {
@@ -42472,6 +42629,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "DELETE",
       "operationId": "AppContributors_DeleteContributor",
+      "pagination": null,
       "path": "/api/apps/{app}/contributors/{id}",
       "pathParameters": [
         {
@@ -42575,6 +42733,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "GET",
       "operationId": "AppImage_GetImage",
+      "pagination": null,
       "path": "/api/apps/{app}/image",
       "pathParameters": [
         {
@@ -42851,6 +43010,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "POST",
       "operationId": "Apps_UploadImage",
+      "pagination": null,
       "path": "/api/apps/{app}/image",
       "pathParameters": [
         {
@@ -43148,6 +43308,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "DELETE",
       "operationId": "Apps_DeleteImage",
+      "pagination": null,
       "path": "/api/apps/{app}/image",
       "pathParameters": [
         {
@@ -43378,6 +43539,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "GET",
       "operationId": "AppLanguages_GetLanguages",
+      "pagination": null,
       "path": "/api/apps/{app}/languages",
       "pathParameters": [
         {
@@ -43633,6 +43795,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "POST",
       "operationId": "AppLanguages_PostLanguage",
+      "pagination": null,
       "path": "/api/apps/{app}/languages",
       "pathParameters": [
         {
@@ -43902,6 +44065,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "PUT",
       "operationId": "AppLanguages_PutLanguage",
+      "pagination": null,
       "path": "/api/apps/{app}/languages/{language}",
       "pathParameters": [
         {
@@ -44185,6 +44349,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "DELETE",
       "operationId": "AppLanguages_DeleteLanguage",
+      "pagination": null,
       "path": "/api/apps/{app}/languages/{language}",
       "pathParameters": [
         {
@@ -44436,6 +44601,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "GET",
       "operationId": "AppRoles_GetRoles",
+      "pagination": null,
       "path": "/api/apps/{app}/roles",
       "pathParameters": [
         {
@@ -44695,6 +44861,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "POST",
       "operationId": "AppRoles_PostRole",
+      "pagination": null,
       "path": "/api/apps/{app}/roles",
       "pathParameters": [
         {
@@ -44827,6 +44994,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "GET",
       "operationId": "AppRoles_GetPermissions",
+      "pagination": null,
       "path": "/api/apps/{app}/roles/permissions",
       "pathParameters": [
         {
@@ -45112,6 +45280,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "PUT",
       "operationId": "AppRoles_PutRole",
+      "pagination": null,
       "path": "/api/apps/{app}/roles/{roleName}",
       "pathParameters": [
         {
@@ -45399,6 +45568,7 @@ The client secret is auto generated on the server and returned. The client does 
       "internal": null,
       "method": "DELETE",
       "operationId": "AppRoles_DeleteRole",
+      "pagination": null,
       "path": "/api/apps/{app}/roles/{roleName}",
       "pathParameters": [
         {
@@ -45661,6 +45831,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "GET",
       "operationId": "Apps_GetApps",
+      "pagination": null,
       "path": "/api/apps",
       "pathParameters": [],
       "queryParameters": [],
@@ -45936,6 +46107,7 @@ You will be assigned as owner of the new app automatically.",
       "internal": null,
       "method": "POST",
       "operationId": "Apps_PostApp",
+      "pagination": null,
       "path": "/api/apps",
       "pathParameters": [],
       "queryParameters": [],
@@ -46186,6 +46358,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "GET",
       "operationId": "Apps_GetTeamApps",
+      "pagination": null,
       "path": "/api/teams/{team}/apps",
       "pathParameters": [
         {
@@ -46461,6 +46634,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "GET",
       "operationId": "Apps_GetApp",
+      "pagination": null,
       "path": "/api/apps/{app}",
       "pathParameters": [
         {
@@ -46746,6 +46920,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "PUT",
       "operationId": "Apps_PutApp",
+      "pagination": null,
       "path": "/api/apps/{app}",
       "pathParameters": [
         {
@@ -46881,6 +47056,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "DELETE",
       "operationId": "Apps_DeleteApp",
+      "pagination": null,
       "path": "/api/apps/{app}",
       "pathParameters": [
         {
@@ -47154,6 +47330,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "PUT",
       "operationId": "Apps_PutAppTeam",
+      "pagination": null,
       "path": "/api/apps/{app}/team",
       "pathParameters": [
         {
@@ -47392,6 +47569,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "GET",
       "operationId": "AppSettings_GetSettings",
+      "pagination": null,
       "path": "/api/apps/{app}/settings",
       "pathParameters": [
         {
@@ -47684,6 +47862,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "PUT",
       "operationId": "AppSettings_PutSettings",
+      "pagination": null,
       "path": "/api/apps/{app}/settings",
       "pathParameters": [
         {
@@ -47946,6 +48125,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "GET",
       "operationId": "AppWorkflows_GetWorkflows",
+      "pagination": null,
       "path": "/api/apps/{app}/workflows",
       "pathParameters": [
         {
@@ -48221,6 +48401,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "POST",
       "operationId": "AppWorkflows_PostWorkflow",
+      "pagination": null,
       "path": "/api/apps/{app}/workflows",
       "pathParameters": [
         {
@@ -48533,6 +48714,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "PUT",
       "operationId": "AppWorkflows_PutWorkflow",
+      "pagination": null,
       "path": "/api/apps/{app}/workflows/{id}",
       "pathParameters": [
         {
@@ -48836,6 +49018,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "internal": null,
       "method": "DELETE",
       "operationId": "AppWorkflows_DeleteWorkflow",
+      "pagination": null,
       "path": "/api/apps/{app}/workflows/{id}",
       "pathParameters": [
         {

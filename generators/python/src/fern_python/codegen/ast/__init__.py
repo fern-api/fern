@@ -33,6 +33,7 @@ from .nodes import (
     ReferenceNode,
     TypeAliasDeclaration,
     TypeHint,
+    TypeParameter,
     VariableDeclaration,
 )
 from .references import (
@@ -45,6 +46,7 @@ from .references import (
 )
 
 __all__ = [
+    "TypeParameter",
     "AstNode",
     "Declaration",
     "Writer",

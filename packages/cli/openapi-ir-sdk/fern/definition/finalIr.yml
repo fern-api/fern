@@ -148,6 +148,23 @@ types:
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       server: list<commons.Server>
       examples: list<EndpointExample>
+      pagination: optional<Pagination>
+
+  Pagination:
+    union:
+      cursor: CursorPagination
+      offset: OffsetPagination
+
+  CursorPagination:
+    properties:
+      cursor: string
+      next_cursor: string
+      results: string
+  
+  OffsetPagination:
+    properties:
+      offset: string
+      results: string
 
   CustomCodeSample:
     availability: in-development

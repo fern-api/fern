@@ -12,6 +12,7 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse docs 1`] = `
             "auth": false,
             "docs": undefined,
             "method": "POST",
+            "pagination": undefined,
             "path": "/completions/chat",
             "request": {
               "body": {
@@ -72,6 +73,7 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse simple 1`] = `
             "auth": false,
             "docs": undefined,
             "method": "POST",
+            "pagination": undefined,
             "path": "/completions/chat",
             "request": {
               "body": {

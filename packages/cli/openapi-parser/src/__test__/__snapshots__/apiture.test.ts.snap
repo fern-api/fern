@@ -374,6 +374,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/accounts",
       "pathParameters": [],
       "queryParameters": [
@@ -825,6 +826,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/accounts/{accountId}",
       "pathParameters": [
         {
@@ -1238,6 +1240,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/accountBalances",
       "pathParameters": [],
       "queryParameters": [
@@ -1499,6 +1502,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/accounts/{accountId}/jointOwners",
       "pathParameters": [
         {
@@ -1682,6 +1686,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/achEligibleAccounts",
       "pathParameters": [],
       "queryParameters": [
@@ -2130,6 +2135,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
       "pathParameters": [
         {
@@ -2390,6 +2396,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/accounts/{accountId}/overdraftProtection",
       "pathParameters": [
         {
@@ -2654,6 +2661,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "PATCH",
       "operationId": null,
+      "pagination": null,
       "path": "/accounts/{accountId}/overdraftProtection",
       "pathParameters": [
         {
@@ -2978,6 +2986,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "POST",
       "operationId": null,
+      "pagination": null,
       "path": "/accounts/{accountId}/jointOwnerInvitations",
       "pathParameters": [
         {
@@ -3374,6 +3383,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/institutionByLocator",
       "pathParameters": [],
       "queryParameters": [
@@ -3806,6 +3816,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/institutions/{institutionId}/transferSchedule",
       "pathParameters": [
         {
@@ -4242,6 +4253,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/institutions/{institutionId}/cutoffTimes",
       "pathParameters": [
         {
@@ -5010,6 +5022,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/institutions/{institutionId}/transferDateRestrictions",
       "pathParameters": [
         {
@@ -5652,6 +5665,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/accounts/{accountId}/transactions",
       "pathParameters": [
         {
@@ -6175,6 +6189,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/transactionCategories",
       "pathParameters": [],
       "queryParameters": [],
@@ -6690,6 +6705,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/transfers",
       "pathParameters": [],
       "queryParameters": [
@@ -7270,6 +7286,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "POST",
       "operationId": null,
+      "pagination": null,
       "path": "/transfers",
       "pathParameters": [],
       "queryParameters": [],
@@ -7612,6 +7629,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/transfers/{transferId}",
       "pathParameters": [
         {
@@ -7810,6 +7828,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "DELETE",
       "operationId": null,
+      "pagination": null,
       "path": "/transfers/{transferId}",
       "pathParameters": [
         {
@@ -8261,6 +8280,7 @@ This error response may have one of the following \`type\` values:
       "internal": null,
       "method": "PATCH",
       "operationId": null,
+      "pagination": null,
       "path": "/transfers/{transferId}",
       "pathParameters": [
         {

@@ -4,6 +4,7 @@ require_relative "../../requests"
 require_relative "../types/types/movie"
 require "json"
 require_relative "../types/types/metadata"
+require_relative "../types/types/response"
 require "async"
 
 module SeedExamplesClient
@@ -84,6 +85,21 @@ module SeedExamplesClient
         req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
       end
       SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
+    end
+
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [SeedExamplesClient::Types::Response]
+    # @example
+    #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  examples.get_response
+    def get_response(request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/response"
+      end
+      SeedExamplesClient::Types::Response.from_json(json_object: response.body)
     end
   end
 
@@ -174,6 +190,23 @@ module SeedExamplesClient
           req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
         end
         SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
+      end
+    end
+
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [SeedExamplesClient::Types::Response]
+    # @example
+    #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  examples.get_response
+    def get_response(request_options: nil)
+      Async do
+        response = @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/response"
+        end
+        SeedExamplesClient::Types::Response.from_json(json_object: response.body)
       end
     end
   end

@@ -24,6 +24,7 @@ exports[`open api parser streaming docs 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/users",
           "request": {
             "body": {
@@ -48,6 +49,7 @@ exports[`open api parser streaming docs 1`] = `
           "auth": false,
           "docs": undefined,
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/users",
           "request": {
             "body": {
@@ -87,6 +89,7 @@ exports[`open api parser streaming docs 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v2/users",
           "request": {
             "body": {
@@ -111,6 +114,7 @@ exports[`open api parser streaming docs 1`] = `
           "auth": false,
           "docs": undefined,
           "method": "POST",
+          "pagination": undefined,
           "path": "/v2/users",
           "request": {
             "body": {
@@ -149,6 +153,7 @@ exports[`open api parser streaming docs 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v3/users",
           "request": {
             "body": {
@@ -173,6 +178,7 @@ exports[`open api parser streaming docs 1`] = `
           "auth": false,
           "docs": undefined,
           "method": "POST",
+          "pagination": undefined,
           "path": "/v3/users",
           "request": {
             "body": {
@@ -276,6 +282,7 @@ exports[`open api parser streaming simple 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/users",
           "request": {
             "body": {
@@ -300,6 +307,7 @@ exports[`open api parser streaming simple 1`] = `
           "auth": false,
           "docs": undefined,
           "method": "POST",
+          "pagination": undefined,
           "path": "/v1/users",
           "request": {
             "body": {
@@ -339,6 +347,7 @@ exports[`open api parser streaming simple 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v2/users",
           "request": {
             "body": {
@@ -363,6 +372,7 @@ exports[`open api parser streaming simple 1`] = `
           "auth": false,
           "docs": undefined,
           "method": "POST",
+          "pagination": undefined,
           "path": "/v2/users",
           "request": {
             "body": {
@@ -401,6 +411,7 @@ exports[`open api parser streaming simple 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/v3/users",
           "request": {
             "body": {
@@ -425,6 +436,7 @@ exports[`open api parser streaming simple 1`] = `
           "auth": false,
           "docs": undefined,
           "method": "POST",
+          "pagination": undefined,
           "path": "/v3/users",
           "request": {
             "body": {

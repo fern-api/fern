@@ -73,6 +73,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/payments/{payment_id}/breakdown",
             "path-parameters": {
               "payment_id": "string",
@@ -115,6 +116,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/billing/{invoice_id}/download",
             "path-parameters": {
               "invoice_id": {
@@ -160,6 +162,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoices/{invoice_id}/download",
             "path-parameters": {
               "invoice_id": {
@@ -214,6 +217,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoices",
             "request": {
               "name": "GetInvoiceListRequest",
@@ -288,6 +292,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/payments",
             "request": {
               "name": "GetPaymentListRequest",
@@ -363,6 +368,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/attachments",
             "request": {
               "body": {
@@ -439,6 +445,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/people/me",
             "response": {
               "docs": "Successful operation.",
@@ -527,6 +534,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/people",
             "request": {
               "name": "GetPeopleListRequest",
@@ -606,6 +614,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
               "contract_id": {
@@ -662,6 +671,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/amendments",
             "path-parameters": {
               "contract_id": {
@@ -833,6 +843,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts",
             "request": {
               "body": {
@@ -995,6 +1006,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/fixed-rate",
             "request": {
               "body": {
@@ -1155,6 +1167,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/milestone-based",
             "request": {
               "body": {
@@ -1315,6 +1328,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/task-based",
             "request": {
               "body": {
@@ -1477,6 +1491,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/time-based",
             "request": {
               "body": {
@@ -1517,6 +1532,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/preview",
             "path-parameters": {
               "contract_id": {
@@ -1565,6 +1581,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
               "contract_id": {
@@ -1621,6 +1638,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/terminations",
             "path-parameters": {
               "contract_id": {
@@ -1689,6 +1707,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/documents",
             "path-parameters": {
               "contract_id": {
@@ -1741,6 +1760,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/archive",
             "path-parameters": {
               "contract_id": {
@@ -1789,6 +1809,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}",
             "path-parameters": {
               "contract_id": {
@@ -1846,6 +1867,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/final-payments",
             "path-parameters": {
               "contract_id": {
@@ -1912,6 +1934,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/documents",
             "path-parameters": {
               "contract_id": {
@@ -1965,6 +1988,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/alternate_emails",
             "path-parameters": {
               "contract_id": {
@@ -2101,6 +2125,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}",
             "path-parameters": {
               "contract_id": {
@@ -2168,6 +2193,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts",
             "request": {
               "name": "GetContractListRequest",
@@ -2254,6 +2280,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contract-templates",
             "response": {
               "docs": "Successful operation.",
@@ -2297,6 +2324,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/invitations",
             "path-parameters": {
               "contract_id": {
@@ -2367,6 +2395,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/estimate",
             "request": {
               "body": {
@@ -2419,6 +2448,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/signatures",
             "path-parameters": {
               "contract_id": {
@@ -2472,6 +2502,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/invitations",
             "path-parameters": {
               "contract_id": {
@@ -2576,6 +2607,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/eor",
             "request": {
               "body": {
@@ -2671,6 +2703,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/eor/validations/{country_code}",
             "path-parameters": {
               "country_code": {
@@ -2712,6 +2745,7 @@ exports[`open api parser deel docs 1`] = `
               "root.CreateDirectEmployeeRequestInternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/hris/direct-employees",
             "request": {
               "body": "root.HrisDirectEmployee",
@@ -2774,6 +2808,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/invoice-adjustments",
             "request": {
               "body": {
@@ -2826,6 +2861,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
             "path-parameters": {
               "invoice_adjustment_id": {
@@ -2884,6 +2920,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/invoice-adjustments/many/reviews",
             "request": {
               "body": {
@@ -2931,6 +2968,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
               "invoice_adjustment_id": {
@@ -3027,6 +3065,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoice-adjustments",
             "request": {
               "name": "GetInvoiceAdjustmentsRequest",
@@ -3159,6 +3198,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/invoice-adjustments",
             "path-parameters": {
               "contract_id": {
@@ -3251,6 +3291,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
               "invoice_adjustment_id": {
@@ -3326,6 +3367,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/countries",
             "response": {
               "docs": "Successful operation.",
@@ -3363,6 +3405,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/currencies",
             "response": {
               "docs": "Successful operation.",
@@ -3403,6 +3446,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/job-titles",
             "request": {
               "name": "GetJobTitleListRequest",
@@ -3454,6 +3498,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/seniorities",
             "request": {
               "name": "GetSeniorityListRequest",
@@ -3499,6 +3544,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/time-off-types",
             "response": {
               "docs": "Successful operation.",
@@ -3556,6 +3602,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones",
             "path-parameters": {
               "contract_id": {
@@ -3615,6 +3662,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
             "path-parameters": {
               "contract_id": {
@@ -3680,6 +3728,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones/many/reviews",
             "path-parameters": {
               "contract_id": {
@@ -3734,6 +3783,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
               "contract_id": {
@@ -3797,6 +3847,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones",
             "path-parameters": {
               "contract_id": {
@@ -3855,6 +3906,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
               "contract_id": {
@@ -3921,6 +3973,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
               "contract_id": {
@@ -3992,6 +4045,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
             "path-parameters": {
               "contract_id": {
@@ -4058,6 +4112,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
               "contract_id": {
@@ -4126,6 +4181,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/agreements",
             "request": {
               "name": "GetAgreementsRequest",
@@ -4182,6 +4238,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/legal-entities",
             "response": {
               "docs": "Successful operation.",
@@ -4219,6 +4276,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/organizations",
             "response": {
               "docs": "Successful operation.",
@@ -4256,6 +4314,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/teams",
             "response": {
               "docs": "Successful operation.",
@@ -4312,6 +4371,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks",
             "path-parameters": {
               "contract_id": {
@@ -4384,6 +4444,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks/many/reviews",
             "path-parameters": {
               "contract_id": {
@@ -4453,6 +4514,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
             "path-parameters": {
               "contract_id": {
@@ -4511,6 +4573,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks/{task_id}",
             "path-parameters": {
               "contract_id": {
@@ -4577,6 +4640,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks",
             "path-parameters": {
               "contract_id": {
@@ -4715,6 +4779,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/time-offs",
             "path-parameters": {
               "contract_id": {
@@ -4759,6 +4824,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
               "contract_id": {
@@ -4889,6 +4955,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
               "contract_id": {
@@ -4996,6 +5063,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/time-offs/",
             "response": {
               "docs": "successful operation",
@@ -5049,6 +5117,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/entitlements",
             "path-parameters": {
               "contract_id": {
@@ -5144,6 +5213,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/time-offs",
             "path-parameters": {
               "contract_id": {
@@ -5192,6 +5262,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/time-offs/{timeoff_id}/review",
             "path-parameters": {
               "timeoff_id": {
@@ -5267,6 +5338,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timesheets",
             "request": {
               "body": {
@@ -5319,6 +5391,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timesheets/{timesheet_id}/reviews",
             "path-parameters": {
               "timesheet_id": {
@@ -5377,6 +5450,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timesheets/many/reviews",
             "request": {
               "body": {
@@ -5424,6 +5498,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
@@ -5523,6 +5598,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
@@ -5604,6 +5680,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/timesheets",
             "request": {
               "name": "GetTimesheetsRequest",
@@ -5721,6 +5798,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/timesheets",
             "path-parameters": {
               "contract_id": {
@@ -5805,6 +5883,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
@@ -5862,6 +5941,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -5917,6 +5997,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -6002,6 +6083,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -6059,6 +6141,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks",
             "request": {
               "body": {
@@ -6144,6 +6227,7 @@ exports[`open api parser deel docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks",
             "response": {
               "docs": "successful operation",
@@ -13488,6 +13572,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/payments/{payment_id}/breakdown",
             "path-parameters": {
               "payment_id": "string",
@@ -13530,6 +13615,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/billing/{invoice_id}/download",
             "path-parameters": {
               "invoice_id": {
@@ -13575,6 +13661,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoices/{invoice_id}/download",
             "path-parameters": {
               "invoice_id": {
@@ -13629,6 +13716,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoices",
             "request": {
               "name": "GetInvoiceListRequest",
@@ -13703,6 +13791,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/payments",
             "request": {
               "name": "GetPaymentListRequest",
@@ -13778,6 +13867,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/attachments",
             "request": {
               "body": {
@@ -13854,6 +13944,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/people/me",
             "response": {
               "docs": "Successful operation.",
@@ -13942,6 +14033,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/people",
             "request": {
               "name": "GetPeopleListRequest",
@@ -14021,6 +14113,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
               "contract_id": {
@@ -14077,6 +14170,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/amendments",
             "path-parameters": {
               "contract_id": {
@@ -14248,6 +14342,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts",
             "request": {
               "body": {
@@ -14410,6 +14505,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/fixed-rate",
             "request": {
               "body": {
@@ -14570,6 +14666,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/milestone-based",
             "request": {
               "body": {
@@ -14730,6 +14827,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/task-based",
             "request": {
               "body": {
@@ -14892,6 +14990,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/time-based",
             "request": {
               "body": {
@@ -14932,6 +15031,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/preview",
             "path-parameters": {
               "contract_id": {
@@ -14980,6 +15080,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
               "contract_id": {
@@ -15036,6 +15137,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/terminations",
             "path-parameters": {
               "contract_id": {
@@ -15104,6 +15206,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/documents",
             "path-parameters": {
               "contract_id": {
@@ -15156,6 +15259,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/archive",
             "path-parameters": {
               "contract_id": {
@@ -15204,6 +15308,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}",
             "path-parameters": {
               "contract_id": {
@@ -15261,6 +15366,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/final-payments",
             "path-parameters": {
               "contract_id": {
@@ -15327,6 +15433,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/documents",
             "path-parameters": {
               "contract_id": {
@@ -15380,6 +15487,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/alternate_emails",
             "path-parameters": {
               "contract_id": {
@@ -15516,6 +15624,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}",
             "path-parameters": {
               "contract_id": {
@@ -15583,6 +15692,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts",
             "request": {
               "name": "GetContractListRequest",
@@ -15669,6 +15779,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contract-templates",
             "response": {
               "docs": "Successful operation.",
@@ -15712,6 +15823,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/invitations",
             "path-parameters": {
               "contract_id": {
@@ -15782,6 +15894,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/estimate",
             "request": {
               "body": {
@@ -15834,6 +15947,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/signatures",
             "path-parameters": {
               "contract_id": {
@@ -15887,6 +16001,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/invitations",
             "path-parameters": {
               "contract_id": {
@@ -15991,6 +16106,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/eor",
             "request": {
               "body": {
@@ -16086,6 +16202,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/eor/validations/{country_code}",
             "path-parameters": {
               "country_code": {
@@ -16127,6 +16244,7 @@ exports[`open api parser deel simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/hris/direct-employees",
             "request": {
               "body": "root.HrisDirectEmployee",
@@ -16189,6 +16307,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/invoice-adjustments",
             "request": {
               "body": {
@@ -16241,6 +16360,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
             "path-parameters": {
               "invoice_adjustment_id": {
@@ -16299,6 +16419,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/invoice-adjustments/many/reviews",
             "request": {
               "body": {
@@ -16346,6 +16467,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
               "invoice_adjustment_id": {
@@ -16442,6 +16564,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoice-adjustments",
             "request": {
               "name": "GetInvoiceAdjustmentsRequest",
@@ -16574,6 +16697,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/invoice-adjustments",
             "path-parameters": {
               "contract_id": {
@@ -16666,6 +16790,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
               "invoice_adjustment_id": {
@@ -16741,6 +16866,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/countries",
             "response": {
               "docs": "Successful operation.",
@@ -16778,6 +16904,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/currencies",
             "response": {
               "docs": "Successful operation.",
@@ -16818,6 +16945,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/job-titles",
             "request": {
               "name": "GetJobTitleListRequest",
@@ -16869,6 +16997,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/seniorities",
             "request": {
               "name": "GetSeniorityListRequest",
@@ -16914,6 +17043,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lookups/time-off-types",
             "response": {
               "docs": "Successful operation.",
@@ -16971,6 +17101,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones",
             "path-parameters": {
               "contract_id": {
@@ -17030,6 +17161,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
             "path-parameters": {
               "contract_id": {
@@ -17095,6 +17227,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones/many/reviews",
             "path-parameters": {
               "contract_id": {
@@ -17149,6 +17282,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
               "contract_id": {
@@ -17212,6 +17346,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones",
             "path-parameters": {
               "contract_id": {
@@ -17270,6 +17405,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
               "contract_id": {
@@ -17336,6 +17472,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
               "contract_id": {
@@ -17407,6 +17544,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
             "path-parameters": {
               "contract_id": {
@@ -17473,6 +17611,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
               "contract_id": {
@@ -17541,6 +17680,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/agreements",
             "request": {
               "name": "GetAgreementsRequest",
@@ -17597,6 +17737,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/legal-entities",
             "response": {
               "docs": "Successful operation.",
@@ -17634,6 +17775,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/organizations",
             "response": {
               "docs": "Successful operation.",
@@ -17671,6 +17813,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/teams",
             "response": {
               "docs": "Successful operation.",
@@ -17727,6 +17870,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks",
             "path-parameters": {
               "contract_id": {
@@ -17799,6 +17943,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks/many/reviews",
             "path-parameters": {
               "contract_id": {
@@ -17868,6 +18013,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
             "path-parameters": {
               "contract_id": {
@@ -17926,6 +18072,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks/{task_id}",
             "path-parameters": {
               "contract_id": {
@@ -17992,6 +18139,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/tasks",
             "path-parameters": {
               "contract_id": {
@@ -18130,6 +18278,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/time-offs",
             "path-parameters": {
               "contract_id": {
@@ -18174,6 +18323,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
               "contract_id": {
@@ -18304,6 +18454,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
               "contract_id": {
@@ -18411,6 +18562,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/time-offs/",
             "response": {
               "docs": "successful operation",
@@ -18464,6 +18616,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/entitlements",
             "path-parameters": {
               "contract_id": {
@@ -18559,6 +18712,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/time-offs",
             "path-parameters": {
               "contract_id": {
@@ -18607,6 +18761,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/time-offs/{timeoff_id}/review",
             "path-parameters": {
               "timeoff_id": {
@@ -18682,6 +18837,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timesheets",
             "request": {
               "body": {
@@ -18734,6 +18890,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timesheets/{timesheet_id}/reviews",
             "path-parameters": {
               "timesheet_id": {
@@ -18792,6 +18949,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timesheets/many/reviews",
             "request": {
               "body": {
@@ -18839,6 +18997,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
@@ -18938,6 +19097,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
@@ -19019,6 +19179,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/timesheets",
             "request": {
               "name": "GetTimesheetsRequest",
@@ -19136,6 +19297,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/contracts/{contract_id}/timesheets",
             "path-parameters": {
               "contract_id": {
@@ -19220,6 +19382,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
               "timesheet_id": {
@@ -19277,6 +19440,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -19332,6 +19496,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -19417,6 +19582,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks/{id}",
             "path-parameters": {
               "id": "string",
@@ -19474,6 +19640,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks",
             "request": {
               "body": {
@@ -19559,6 +19726,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks",
             "response": {
               "docs": "successful operation",

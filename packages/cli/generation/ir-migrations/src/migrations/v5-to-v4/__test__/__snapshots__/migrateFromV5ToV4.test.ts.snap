@@ -112,6 +112,7 @@ exports[`migrateFromV5ToV4 correctly migrates 1`] = `
   "headers": [],
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {

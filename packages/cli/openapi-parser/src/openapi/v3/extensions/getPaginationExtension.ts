@@ -1,28 +1,7 @@
+import { Pagination } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
-
-export type FernPaginationExtension =
-    | FernPaginationEnabledExtension
-    | FernCursorPaginationExtension
-    | FernOffsetPaginationExtension;
-
-export interface FernPaginationEnabledExtension {
-    type: "pagination";
-}
-
-export interface FernCursorPaginationExtension {
-    type: "cursor";
-    cursor: string;
-    next_cursor: string;
-    results: string;
-}
-
-export interface FernOffsetPaginationExtension {
-    type: "offset";
-    offset: string;
-    results: string;
-}
 
 declare namespace Raw {
     export type PaginationExtensionSchema = boolean | CursorPaginationExtensionSchema | OffsetPaginationExtensionSchema;
@@ -39,41 +18,45 @@ declare namespace Raw {
     }
 }
 
+export function convertPaginationExtension(
+    pagination: Raw.CursorPaginationExtensionSchema | Raw.OffsetPaginationExtensionSchema
+): Pagination {
+    const maybeCursorPagination = pagination as Raw.CursorPaginationExtensionSchema;
+    if (maybeCursorPagination.cursor != null) {
+        return Pagination.cursor({
+            cursor: maybeCursorPagination.cursor,
+            nextCursor: maybeCursorPagination.next_cursor,
+            results: maybeCursorPagination.results
+        });
+    }
+
+    const maybeOffsetPagination = pagination as Raw.OffsetPaginationExtensionSchema;
+    return Pagination.offset({
+        offset: maybeOffsetPagination.offset,
+        results: maybeOffsetPagination.results
+    });
+}
+
 export function getFernPaginationExtension(
-    node: OpenAPIV3.Document | OpenAPIV3.OperationObject
-): FernPaginationExtension | undefined {
-    const pagination = getExtension<Raw.PaginationExtensionSchema>(node, FernOpenAPIExtension.PAGINATION);
+    document: OpenAPIV3.Document,
+    operation: OpenAPIV3.OperationObject
+): Pagination | undefined {
+    const pagination = getExtension<Raw.PaginationExtensionSchema>(operation, FernOpenAPIExtension.PAGINATION);
     if (pagination == null) {
         return undefined;
     }
     if (typeof pagination === "boolean") {
-        return pagination
-            ? {
-                  type: "pagination"
-              }
-            : undefined;
+        // The endpoint is tryning to leverage the gloabl config, grab extension from global
+        const topLevelPagination = getExtension<Raw.PaginationExtensionSchema>(
+            document,
+            FernOpenAPIExtension.PAGINATION
+        );
+        if (typeof topLevelPagination === "boolean") {
+            throw new Error(
+                "Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination."
+            );
+        }
+        return topLevelPagination == null ? undefined : convertPaginationExtension(topLevelPagination);
     }
-    if (isRawCursorPaginationSchema(pagination)) {
-        return {
-            type: "cursor",
-            cursor: pagination.cursor,
-            next_cursor: pagination.next_cursor,
-            results: pagination.results
-        };
-    }
-    return {
-        type: "offset",
-        offset: pagination.offset,
-        results: pagination.results
-    };
-}
-
-function isRawCursorPaginationSchema(
-    rawPaginationSchema: Raw.PaginationExtensionSchema
-): rawPaginationSchema is Raw.CursorPaginationExtensionSchema {
-    return (
-        (rawPaginationSchema as Raw.CursorPaginationExtensionSchema).cursor != null &&
-        (rawPaginationSchema as Raw.CursorPaginationExtensionSchema).next_cursor != null &&
-        (rawPaginationSchema as Raw.CursorPaginationExtensionSchema).results != null
-    );
+    return convertPaginationExtension(pagination);
 }

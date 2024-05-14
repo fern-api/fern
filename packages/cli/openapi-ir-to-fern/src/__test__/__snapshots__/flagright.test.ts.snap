@@ -441,6 +441,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/business/users/{userId}",
           "path-parameters": {
             "userId": {
@@ -546,6 +547,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/transactions/{transactionId}",
           "path-parameters": {
             "transactionId": {
@@ -700,6 +702,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/consumer/users/{userId}",
           "path-parameters": {
             "userId": {
@@ -777,6 +780,7 @@ Each consumer Business entity needs three mandatory fields:
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/business/users",
           "request": {
             "body": "Business",
@@ -1140,6 +1144,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/events/business/user",
           "request": {
             "body": {
@@ -1281,6 +1286,7 @@ Here are some of the most used payload fields explained (you can find the full p
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/transactions",
           "request": {
             "body": "Transaction",
@@ -1424,6 +1430,7 @@ Each consumer User entity needs three mandatory fields:
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/consumer/users",
           "request": {
             "body": "User",
@@ -1557,6 +1564,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/events/transaction",
           "request": {
             "body": {
@@ -1780,6 +1788,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/events/consumer/user",
           "request": {
             "body": {
@@ -4234,6 +4243,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/business/users/{userId}",
           "path-parameters": {
             "userId": {
@@ -4339,6 +4349,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/transactions/{transactionId}",
           "path-parameters": {
             "transactionId": {
@@ -4493,6 +4504,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/consumer/users/{userId}",
           "path-parameters": {
             "userId": {
@@ -4570,6 +4582,7 @@ Each consumer Business entity needs three mandatory fields:
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/business/users",
           "request": {
             "body": "Business",
@@ -4933,6 +4946,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/events/business/user",
           "request": {
             "body": {
@@ -5074,6 +5088,7 @@ Here are some of the most used payload fields explained (you can find the full p
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/transactions",
           "request": {
             "body": "Transaction",
@@ -5217,6 +5232,7 @@ Each consumer User entity needs three mandatory fields:
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/consumer/users",
           "request": {
             "body": "User",
@@ -5350,6 +5366,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/events/transaction",
           "request": {
             "body": {
@@ -5573,6 +5590,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/events/consumer/user",
           "request": {
             "body": {

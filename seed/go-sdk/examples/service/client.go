@@ -145,3 +145,37 @@ func (c *Client) GetMetadata(
 	}
 	return response, nil
 }
+
+func (c *Client) GetResponse(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (*fern.Response, error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/response"
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	var response *fern.Response
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:         endpointURL,
+			Method:      http.MethodPost,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
