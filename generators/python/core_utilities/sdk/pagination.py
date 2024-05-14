@@ -33,18 +33,24 @@ class AsyncPage(BasePage, typing.Generic[T]):
 
 
 class SyncPager(SyncPage[T], typing.Generic[T]):
-    def __iter__(self) -> typing.Iterator[T]:
+    # Here we type ignore the iterator to avoid a mypy error
+    # caused by the type conflict with Pydanitc's __iter__ method
+    # brought in by extending the base model
+    def __iter__(self) -> typing.Iterator[T]:  # type: ignore
         for page in self.iter_pages():
             for item in page.items:
                 yield item
 
     def iter_pages(self) -> typing.Iterator[SyncPage[T]]:
-        page = self
+        page: typing.Union[SyncPager[T], None] = self
         while True:
-            yield page
-            if page.has_next and page.get_next is not None:
-                page = page.get_next()
-                if page is None or page.items is None or len(page.items) == 0:
+            if page is not None:
+                yield page
+                if page.has_next and page.get_next is not None:
+                    page = page.get_next()
+                    if page is None or page.items is None or len(page.items) == 0:
+                        return
+                else:
                     return
             else:
                 return
@@ -54,18 +60,21 @@ class SyncPager(SyncPage[T], typing.Generic[T]):
 
 
 class AsyncPager(AsyncPage[T], typing.Generic[T]):
-    async def __aiter__(self) -> typing.AsyncIterator[T]:
+    async def __aiter__(self) -> typing.AsyncIterator[T]:  # type: ignore
         async for page in self.iter_pages():
             for item in page.items:
                 yield item
 
     async def iter_pages(self) -> typing.AsyncIterator[AsyncPage[T]]:
-        page = self
+        page: typing.Union[AsyncPager[T], None] = self
         while True:
-            yield page
-            if page.has_next and page.get_next is not None:
-                page = await page.get_next()
-                if page is None or page.items is None or len(page.items) == 0:
+            if page is not None:
+                yield page
+                if page is not None and page.has_next and page.get_next is not None:
+                    page = await page.get_next()
+                    if page is None or page.items is None or len(page.items) == 0:
+                        return
+                else:
                     return
             else:
                 return
