@@ -295,6 +295,9 @@ navigation:
         #   typescript: "@fern-api/node-sdk"
 
 navbar-links:
+  - type: minimal
+    text: Github
+    url: https://github.com/fern-api/fern
   - type: filled
     text: Book a demo
     url: https://buildwithfern.com/contact
