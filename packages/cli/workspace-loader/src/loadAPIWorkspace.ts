@@ -28,10 +28,10 @@ export async function loadAPIWorkspace({
     cliVersion: string;
     workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
-    let generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined = undefined;
-    try {
-        generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
-    } catch (err) {}
+    const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
+        absolutePathToWorkspace,
+        context
+    });
 
     let changelog: APIChangelog | undefined = undefined;
     try {
