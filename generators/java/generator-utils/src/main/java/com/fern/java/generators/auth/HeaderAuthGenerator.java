@@ -1,9 +1,9 @@
 package com.fern.java.generators.auth;
 
-import com.fern.ir.model.auth.HeaderAuthScheme;
-import com.fern.ir.model.types.AliasTypeDeclaration;
-import com.fern.ir.model.types.PrimitiveType;
-import com.fern.ir.model.types.ResolvedTypeReference;
+import com.fern.irV42.model.auth.HeaderAuthScheme;
+import com.fern.irV42.model.types.AliasTypeDeclaration;
+import com.fern.irV42.model.types.PrimitiveType;
+import com.fern.irV42.model.types.ResolvedTypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.AliasGenerator;

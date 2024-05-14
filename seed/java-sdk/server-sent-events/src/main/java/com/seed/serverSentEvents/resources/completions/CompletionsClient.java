@@ -8,7 +8,9 @@ import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.MediaTypes;
 import com.seed.serverSentEvents.core.ObjectMappers;
 import com.seed.serverSentEvents.core.RequestOptions;
+import com.seed.serverSentEvents.core.Stream;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
+import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -25,11 +27,11 @@ public class CompletionsClient {
         this.clientOptions = clientOptions;
     }
 
-    public void stream(StreamCompletionRequest request) {
-        stream(request, null);
+    public Iterable<StreamedCompletion> stream(StreamCompletionRequest request) {
+        return stream(request, null);
     }
 
-    public void stream(StreamCompletionRequest request, RequestOptions requestOptions) {
+    public Iterable<StreamedCompletion> stream(StreamCompletionRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("stream")
@@ -55,7 +57,7 @@ public class CompletionsClient {
             Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return;
+                return new Stream<StreamedCompletion>(StreamedCompletion.class, responseBody.charStream(), "[[DONE]]");
             }
             throw new ApiError(
                     response.code(),

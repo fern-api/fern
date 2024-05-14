@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.0-rc0] - 2024-05-13
+- Chore: Bump intermediate representation to v42
+
 ## [0.8.11] - 2024-05-08
 
 - Fix: Corrects the fix in 0.8.10 to check null value as opposed to a .isPresent check, given the header is not `Optional`, it's always `String`

@@ -37,25 +37,18 @@ public class UserClient {
         httpUrl.addQueryParameter("date", request.getDate());
         httpUrl.addQueryParameter("deadline", request.getDeadline().toString());
         httpUrl.addQueryParameter("bytes", request.getBytes().toString());
-        if (request.getUser().isPresent()) {
-            httpUrl.addQueryParameter("user", request.getUser().get());
-        }
-        if (request.getKeyValue().isPresent()) {
-            httpUrl.addQueryParameter("keyValue", request.getKeyValue().get());
-        }
+        httpUrl.addQueryParameter("user", request.getUser().toString());
+        httpUrl.addQueryParameter("keyValue", request.getKeyValue());
         if (request.getOptionalString().isPresent()) {
             httpUrl.addQueryParameter(
                     "optionalString", request.getOptionalString().get());
         }
-        if (request.getNestedUser().isPresent()) {
-            httpUrl.addQueryParameter("nestedUser", request.getNestedUser().get());
-        }
+        httpUrl.addQueryParameter("nestedUser", request.getNestedUser().toString());
         if (request.getOptionalUser().isPresent()) {
-            httpUrl.addQueryParameter("optionalUser", request.getOptionalUser().get());
+            httpUrl.addQueryParameter(
+                    "optionalUser", request.getOptionalUser().get().toString());
         }
-        if (request.getExcludeUser().isPresent()) {
-            httpUrl.addQueryParameter("excludeUser", request.getExcludeUser().get());
-        }
+        httpUrl.addQueryParameter("excludeUser", request.getExcludeUser().toString());
         httpUrl.addQueryParameter("filter", request.getFilter());
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())

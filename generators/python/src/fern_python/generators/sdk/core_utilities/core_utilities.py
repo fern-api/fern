@@ -97,7 +97,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"pydantic_v1"},
+            exports={"pydantic_v1", "deep_union_pydantic_dicts"},
         )
 
         if self._has_paginated_endpoints:
@@ -379,4 +379,13 @@ class CoreUtilities:
                     ("get_next", get_next),
                 ],
             )
+        )
+
+     def get_pydantic_deep_union_import(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="deep_union_pydantic_dicts",
+            ),
         )
