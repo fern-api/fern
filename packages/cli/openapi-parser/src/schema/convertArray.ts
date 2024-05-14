@@ -41,7 +41,7 @@ export function convertArray({
         itemSchema,
         wrapAsNullable,
         description,
-        example: example
+        example
     });
 }
 
