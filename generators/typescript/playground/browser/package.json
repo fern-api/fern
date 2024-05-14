@@ -34,7 +34,7 @@
   "dependencies": {
     "form-data": "4.0.0",
     "js-base64": "^3.7.6",
-    "node-fetch": "2.7.0",
+    "node-fetch": "3.3.2",
     "qs": "6.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
