@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-import re
 from typing import Dict, List, Optional, Set, Tuple
 
 import fern.ir.resources as ir_types
@@ -73,8 +72,8 @@ class EndpointFunctionGenerator:
         self._generated_root_client = generated_root_client
         self.snippet_writer = snippet_writer
 
-        self.is_paginated = self._endpoint.pagination is not None
-        self.pagination = self._endpoint.pagination
+        self.is_paginated = self._endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients
+        self.pagination = self._endpoint.pagination if self._context.generator_config.generate_paginated_clients else None
 
     def generate(self) -> GeneratedEndpointFunction:
         is_primitive: bool = (
