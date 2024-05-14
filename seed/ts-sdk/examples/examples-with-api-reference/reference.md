@@ -593,3 +593,56 @@ await seedExamples.service.getMetadata({
 
 </dl>
 </details>
+
+<details><summary> <code>seedExamples.service.<a href="./src/api/resources/service/client/Client.ts">getResponse</a>() -> SeedExamples.Response</code> </summary>
+
+<dl>
+
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+```ts
+await seedExamples.service.getResponse();
+```
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+
+<dd>
+
+<dl>
+
+<dd>
+
+**requestOptions: `Service.RequestOptions`**
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+
+</dd>
+
+</dl>
+</details>

@@ -11,6 +11,136 @@ import (
 	time "time"
 )
 
+type BasicType string
+
+const (
+	BasicTypePrimitive BasicType = "primitive"
+	BasicTypeLiteral   BasicType = "literal"
+)
+
+func NewBasicTypeFromString(s string) (BasicType, error) {
+	switch s {
+	case "primitive":
+		return BasicTypePrimitive, nil
+	case "literal":
+		return BasicTypeLiteral, nil
+	}
+	var t BasicType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BasicType) Ptr() *BasicType {
+	return &b
+}
+
+type ComplexType string
+
+const (
+	ComplexTypeObject  ComplexType = "object"
+	ComplexTypeUnion   ComplexType = "union"
+	ComplexTypeUnknown ComplexType = "unknown"
+)
+
+func NewComplexTypeFromString(s string) (ComplexType, error) {
+	switch s {
+	case "object":
+		return ComplexTypeObject, nil
+	case "union":
+		return ComplexTypeUnion, nil
+	case "unknown":
+		return ComplexTypeUnknown, nil
+	}
+	var t ComplexType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ComplexType) Ptr() *ComplexType {
+	return &c
+}
+
+type Identifier struct {
+	Type  *Type  `json:"type,omitempty" url:"type,omitempty"`
+	Value string `json:"value" url:"value"`
+	Label string `json:"label" url:"label"`
+
+	_rawJSON json.RawMessage
+}
+
+func (i *Identifier) UnmarshalJSON(data []byte) error {
+	type unmarshaler Identifier
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = Identifier(value)
+	i._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *Identifier) String() string {
+	if len(i._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(i._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+type Type struct {
+	BasicType   BasicType
+	ComplexType ComplexType
+}
+
+func NewTypeFromBasicType(value BasicType) *Type {
+	return &Type{BasicType: value}
+}
+
+func NewTypeFromComplexType(value ComplexType) *Type {
+	return &Type{ComplexType: value}
+}
+
+func (t *Type) UnmarshalJSON(data []byte) error {
+	var valueBasicType BasicType
+	if err := json.Unmarshal(data, &valueBasicType); err == nil {
+		t.BasicType = valueBasicType
+		return nil
+	}
+	var valueComplexType ComplexType
+	if err := json.Unmarshal(data, &valueComplexType); err == nil {
+		t.ComplexType = valueComplexType
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, t)
+}
+
+func (t Type) MarshalJSON() ([]byte, error) {
+	if t.BasicType != "" {
+		return json.Marshal(t.BasicType)
+	}
+	if t.ComplexType != "" {
+		return json.Marshal(t.ComplexType)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", t)
+}
+
+type TypeVisitor interface {
+	VisitBasicType(BasicType) error
+	VisitComplexType(ComplexType) error
+}
+
+func (t *Type) Accept(visitor TypeVisitor) error {
+	if t.BasicType != "" {
+		return visitor.VisitBasicType(t.BasicType)
+	}
+	if t.ComplexType != "" {
+		return visitor.VisitComplexType(t.ComplexType)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", t)
+}
+
 type Actor struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
@@ -169,6 +299,36 @@ func (d *Directory) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
+}
+
+type Entity struct {
+	Type *Type  `json:"type,omitempty" url:"type,omitempty"`
+	Name string `json:"name" url:"name"`
+
+	_rawJSON json.RawMessage
+}
+
+func (e *Entity) UnmarshalJSON(data []byte) error {
+	type unmarshaler Entity
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = Entity(value)
+	e._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *Entity) String() string {
+	if len(e._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(e._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type Exception struct {
@@ -698,7 +858,8 @@ func (r *Request) String() string {
 }
 
 type Response struct {
-	Response interface{} `json:"response,omitempty" url:"response,omitempty"`
+	Response    interface{}   `json:"response,omitempty" url:"response,omitempty"`
+	Identifiers []*Identifier `json:"identifiers,omitempty" url:"identifiers,omitempty"`
 
 	_rawJSON json.RawMessage
 }
@@ -715,6 +876,35 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 }
 
 func (r *Response) String() string {
+	if len(r._rawJSON) > 0 {
+		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+type ResponseType struct {
+	Type *Type `json:"type,omitempty" url:"type,omitempty"`
+
+	_rawJSON json.RawMessage
+}
+
+func (r *ResponseType) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResponseType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResponseType(value)
+	r._rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResponseType) String() string {
 	if len(r._rawJSON) > 0 {
 		if value, err := core.StringifyJSON(r._rawJSON); err == nil {
 			return value
