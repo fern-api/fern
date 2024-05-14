@@ -37,7 +37,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     private final OAuthClientCredentials clientCredentials;
     private final ClientGeneratorContext clientGeneratorContext;
 
-    public OAuthTokenSupplierGenerator(ClientGeneratorContext clientGeneratorContext, OAuthClientCredentials clientCredentials) {
+    public OAuthTokenSupplierGenerator(ClientGeneratorContext clientGeneratorContext,
+        OAuthClientCredentials clientCredentials) {
         super(clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("OAuth"), clientGeneratorContext);
         this.clientCredentials = clientCredentials;
         this.clientGeneratorContext = clientGeneratorContext;
@@ -57,8 +58,10 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             .getClientClassName(subpackage);
         OAuthAccessTokenRequestProperties requestProperties = clientCredentials.getTokenEndpoint()
             .getRequestProperties();
-        String clientIdPropertyName = requestProperties.getClientId().getProperty().visit(new RequestPropertyToNameVisitor()).getName().getCamelCase().getUnsafeName();
-        String clientSecretPropertyName = requestProperties.getClientSecret().getProperty().visit(new RequestPropertyToNameVisitor()).getName().getCamelCase().getUnsafeName();
+        String clientIdPropertyName = requestProperties.getClientId().getProperty()
+            .visit(new RequestPropertyToNameVisitor()).getName().getCamelCase().getUnsafeName();
+        String clientSecretPropertyName = requestProperties.getClientSecret().getProperty()
+            .visit(new RequestPropertyToNameVisitor()).getName().getCamelCase().getUnsafeName();
         TypeName fetchTokenRequestType = httpEndpoint.getSdkRequest().get().getShape().visit(new Visitor<>() {
             @Override
             public TypeName visitJustRequestBody(SdkRequestBodyType justRequestBody) {
@@ -83,8 +86,10 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         // todo: handle other response types
         JsonResponseBody jsonResponseBody = httpEndpoint.getResponse().get().getJson().get().getResponse().get();
         TypeName fetchTokenReturnType =
-            clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, jsonResponseBody.getResponseBodyType());
-        String accessTokenResponsePropertyName = clientCredentials.getTokenEndpoint().getResponseProperties().getAccessToken().getProperty()
+            clientGeneratorContext.getPoetTypeNameMapper()
+                .convertToTypeName(true, jsonResponseBody.getResponseBodyType());
+        String accessTokenResponsePropertyName = clientCredentials.getTokenEndpoint().getResponseProperties()
+            .getAccessToken().getProperty()
             .getName().getName()
             .getCamelCase().getUnsafeName();
         TypeSpec oAuthTypeSpec = TypeSpec.classBuilder(className)
@@ -109,8 +114,11 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
             .addMethod(MethodSpec.methodBuilder(FETCH_TOKEN_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(fetchTokenReturnType)
-                .addStatement("$T $L = $T.builder().$L($L).$L($L).build()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType, clientIdPropertyName, CLIENT_ID_FIELD_NAME, clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME)
-                .addStatement("return $L.$L($L),", AUTH_CLIENT_NAME, httpEndpoint.getName().get().getCamelCase().getUnsafeName(), GET_TOKEN_REQUEST_NAME)
+                .addStatement("$T $L = $T.builder().$L($L).$L($L).build()", fetchTokenRequestType,
+                    GET_TOKEN_REQUEST_NAME, fetchTokenRequestType, clientIdPropertyName, CLIENT_ID_FIELD_NAME,
+                    clientSecretPropertyName, CLIENT_SECRET_FIELD_NAME)
+                .addStatement("return $L.$L($L),", AUTH_CLIENT_NAME,
+                    httpEndpoint.getName().get().getCamelCase().getUnsafeName(), GET_TOKEN_REQUEST_NAME)
                 .build())
             // todo: this
             .addMethod(MethodSpec.methodBuilder(GET_METHOD_NAME)
@@ -121,7 +129,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addStatement("$N authResponse = $N", fetchTokenReturnType, FETCH_TOKEN_METHOD_NAME)
                 .addStatement("this.$L = authResponse.$L()", ACCESS_TOKEN_FIELD_NAME, accessTokenResponsePropertyName)
                 .endControlFlow()
-                .addStatement("return $S + ($L != null ? $L : $L())", "Bearer ", ACCESS_TOKEN_FIELD_NAME, ACCESS_TOKEN_FIELD_NAME, FETCH_TOKEN_METHOD_NAME)
+                .addStatement("return $S + ($L != null ? $L : $L())", "Bearer ", ACCESS_TOKEN_FIELD_NAME,
+                    ACCESS_TOKEN_FIELD_NAME, FETCH_TOKEN_METHOD_NAME)
                 .build())
             .build();
         JavaFile authHeaderFile =
