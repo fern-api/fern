@@ -115,9 +115,8 @@ export function convertSchemaObject(
     referencedAsRequest = false
 ): SchemaWithExample {
     const nameOverride =
-        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? context.shouldUseTitleAsName
-            ? getTitleAsName(schema.title)
-            : undefined;
+        getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ??
+        (context.shouldUseTitleAsName ? getTitleAsName(schema.title) : undefined);
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
