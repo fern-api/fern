@@ -6,6 +6,7 @@ from typing import List, Optional, Sequence, Tuple, Type
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.codegen.ast.nodes.expressions import function_invocation
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
@@ -292,11 +293,23 @@ class FernAwarePydanticModel:
 
     def _override_dict(self) -> None:
         def write_dict_body(writer: AST.NodeWriter) -> None:
-            writer.write("kwargs_with_defaults: ")
+            writer.write("kwargs_with_defaults_exclude_unset: ")
             writer.write_node(AST.TypeHint.any())
-            writer.write(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
+            writer.write_line(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
+            writer.write("kwargs_with_defaults_exclude_none: ")
+            writer.write_node(AST.TypeHint.any())
+            writer.write_line(' = { "by_alias": True, "exclude_none": True, **kwargs }')
             writer.write_line()
-            writer.write_line("return super().dict(**kwargs_with_defaults)")
+
+            function_invocation = AST.FunctionInvocation(
+                function_definition=self._context.core_utilities.get_pydantic_deep_union_import(),
+                args=[
+                    AST.Expression("super().dict(**kwargs_with_defaults_exclude_unset)"),
+                    AST.Expression("super().dict(**kwargs_with_defaults_exclude_none)"),
+                ],
+            )
+            writer.write("return ")
+            writer.write_node(AST.Expression(function_invocation))
 
         self._pydantic_model.add_method(
             AST.FunctionDeclaration(

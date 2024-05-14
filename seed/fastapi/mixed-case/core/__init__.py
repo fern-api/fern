@@ -8,7 +8,7 @@ from .exceptions import (
     fern_http_exception_handler,
     http_exception_handler,
 )
-from .pydantic_utilities import pydantic_v1
+from .pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .route_args import route_args
 from .security import BearerToken
 
@@ -16,6 +16,7 @@ __all__ = [
     "BearerToken",
     "FernHTTPException",
     "UnauthorizedException",
+    "deep_union_pydantic_dicts",
     "default_exception_handler",
     "fern_http_exception_handler",
     "http_exception_handler",
