@@ -48,6 +48,7 @@ export abstract class TypescriptProject {
         const directoryOnDiskToWriteTo = AbsoluteFilePath.of((await tmp.dir()).path);
         // eslint-disable-next-line no-console
         console.log("Persisted typescript project to " + directoryOnDiskToWriteTo);
+
         await this.writeSrcToVolume();
 
         for (const [filepath, fileContents] of Object.entries(this.extraFiles)) {

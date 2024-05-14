@@ -7737,7 +7737,14 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 1.1,
+                          "value": 1234,
+                        },
+                      },
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1235,
                         },
                       },
                     ],
@@ -21121,7 +21128,21 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "data",
+                      "value": "VACATION",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "SICK_LEAVE",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "OTHER",
                     },
                   },
                 ],
@@ -25020,7 +25041,7 @@ exports[`open api parser deel parse open api 1`] = `
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "events",
+                              "value": "contract.created",
                             },
                           },
                         ],
@@ -25241,7 +25262,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "events",
+                      "value": "contract.created",
                     },
                   },
                 ],
@@ -25292,7 +25313,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "events",
+                          "value": "contract.created",
                         },
                       },
                     ],
@@ -25551,7 +25572,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "events",
+                          "value": "contract.created",
                         },
                       },
                     ],
@@ -25957,7 +25978,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "events",
+                      "value": "contract.created",
                     },
                   },
                 ],
@@ -26008,7 +26029,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "events",
+                          "value": "contract.created",
                         },
                       },
                     ],

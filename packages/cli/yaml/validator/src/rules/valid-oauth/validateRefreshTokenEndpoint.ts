@@ -4,6 +4,8 @@ import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
 import { maybeFileFromResolvedType, resolveResponseType } from "../../utils/propertyValidatorUtils";
 import {
+    DEFAULT_ACCESS_TOKEN,
+    DEFAULT_REFRESH_TOKEN,
     validateAccessTokenResponseProperty,
     validateExpiresInResponseProperty,
     validateRefreshTokenRequestProperty,
@@ -25,15 +27,34 @@ export function validateRefreshTokenEndpoint({
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];
 
-    violations.push(
-        ...validateRefreshTokenRequestProperty({
+    const maybeRefreshToken = refreshEndpoint["request-properties"]?.["refresh-token"];
+    if (maybeRefreshToken != null) {
+        violations.push(
+            ...validateRefreshTokenRequestProperty({
+                endpointId,
+                endpoint,
+                typeResolver,
+                file,
+                refreshTokenProperty: maybeRefreshToken
+            })
+        );
+    } else {
+        const refreshTokenViolations = validateRefreshTokenRequestProperty({
             endpointId,
             endpoint,
             typeResolver,
             file,
-            refreshTokenProperty: refreshEndpoint["request-properties"]["refresh-token"]
-        })
-    );
+            refreshTokenProperty: DEFAULT_REFRESH_TOKEN
+        });
+        if (refreshTokenViolations.length > 0) {
+            violations.push({
+                severity: "error",
+                message: `OAuth configuration for endpoint ${chalk.bold(
+                    endpointId
+                )} is missing a valid refresh-token, such as '${DEFAULT_REFRESH_TOKEN}'.`
+            });
+        }
+    }
 
     const resolvedResponseType = resolveResponseType({ endpoint, typeResolver, file });
     if (resolvedResponseType == null) {
@@ -44,20 +65,36 @@ export function validateRefreshTokenEndpoint({
         return violations;
     }
 
-    const accessTokenProperty = refreshEndpoint["response-properties"]["access-token"];
-    if (accessTokenProperty != null) {
+    const maybeAccessToken = refreshEndpoint["response-properties"]?.["access-token"];
+    if (maybeAccessToken != null) {
         violations.push(
             ...validateAccessTokenResponseProperty({
                 endpointId,
                 typeResolver,
-                file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
+                file,
                 resolvedResponseType,
-                accessTokenProperty
+                accessTokenProperty: maybeAccessToken
             })
         );
+    } else {
+        const accessTokenViolations = validateAccessTokenResponseProperty({
+            endpointId,
+            typeResolver,
+            file,
+            resolvedResponseType,
+            accessTokenProperty: DEFAULT_ACCESS_TOKEN
+        });
+        if (accessTokenViolations.length > 0) {
+            violations.push({
+                severity: "error",
+                message: `OAuth configuration for endpoint ${chalk.bold(
+                    endpointId
+                )} is missing a valid access-token, such as '${DEFAULT_ACCESS_TOKEN}'.`
+            });
+        }
     }
 
-    const expiresInProperty = refreshEndpoint["response-properties"]["expires-in"];
+    const expiresInProperty = refreshEndpoint?.["response-properties"]?.["expires-in"];
     if (expiresInProperty != null) {
         violations.push(
             ...validateExpiresInResponseProperty({
@@ -70,7 +107,7 @@ export function validateRefreshTokenEndpoint({
         );
     }
 
-    const refreshTokenProperty = refreshEndpoint["response-properties"]["refresh-token"];
+    const refreshTokenProperty = refreshEndpoint?.["response-properties"]?.["refresh-token"];
     if (refreshTokenProperty != null) {
         violations.push(
             ...validateRefreshTokenResponseProperty({
@@ -82,8 +119,6 @@ export function validateRefreshTokenEndpoint({
             })
         );
     }
-
-    // TODO: Validate the request has 'grant_type: literal<"refresh_token">'.
 
     return violations;
 }

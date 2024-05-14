@@ -5,14 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.18.0] - 2024-05-13
+
+- Feature: Add support for the OAuth client credentials flow. The new `OAuthTokenProvider` automatically
+  resolves the access token and refreshes it as needed. The resolved access token is then used as the
+  bearer token in all client requests.
+
 ## [0.17.1] - 2024-05-06
 
-- Fix: Multipart form data requests are now compatible across browser and Node.js runtimes. 
+- Fix: Multipart form data requests are now compatible across browser and Node.js runtimes.
 
 ## [0.17.0] - 2024-05-06
 
-- Internal: Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your 
-  CLI version, please run `fern upgrade`. 
+- Internal: Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your
+  CLI version, please run `fern upgrade`.
 
 ## [0.16.0-rc8] - 2024-05-06
 

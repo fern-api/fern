@@ -6,8 +6,8 @@ import {
     getRequestPropertyComponents,
     getResponsePropertyComponents,
     maybeFileFromResolvedType,
-    PropertyValidator,
-    resolvedTypeHasProperty
+    resolvedTypeHasProperty,
+    ResponsePropertyValidator
 } from "../../utils/propertyValidatorUtils";
 
 export function validateResultsProperty({
@@ -49,7 +49,7 @@ export function validateQueryParameterProperty({
     typeResolver: TypeResolver;
     file: FernFileContext;
     queryParameterProperty: string;
-    propertyValidator: PropertyValidator;
+    propertyValidator: ResponsePropertyValidator;
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];
 
@@ -134,7 +134,7 @@ export function validateResponseProperty({
     file: FernFileContext;
     resolvedResponseType: ResolvedType;
     responseProperty: string;
-    propertyValidator: PropertyValidator;
+    propertyValidator: ResponsePropertyValidator;
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];
 
@@ -188,6 +188,6 @@ function isValidResultsProperty({
     });
 }
 
-function isValidResultsType(resolvedType: ResolvedType | undefined): boolean {
+function isValidResultsType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
     return true;
 }

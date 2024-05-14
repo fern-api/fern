@@ -272,7 +272,7 @@ export class ExampleTypeFactory {
             case "array": {
                 const fullExample = getFullExampleAsArray(example);
                 const itemExamples = [];
-                // If you have an example use that
+                // If you have a top-level example use that
                 if (fullExample != null && fullExample.length > 0) {
                     for (const item of fullExample) {
                         const itemExample = this.buildExampleHelper({
@@ -287,8 +287,23 @@ export class ExampleTypeFactory {
                             itemExamples.push(itemExample);
                         }
                     }
-                } else {
+                    // Otherwise, use a schema level example
+                } else if (schema.example != null && schema.example.length > 0) {
+                    for (const item of schema.example) {
+                        const itemExample = this.buildExampleHelper({
+                            exampleId,
+                            example: item,
+                            schema: schema.value,
+                            depth: depth + 1,
+                            visitedSchemaIds,
+                            options
+                        });
+                        if (itemExample != null) {
+                            itemExamples.push(itemExample);
+                        }
+                    }
                     // Otherwise, generate an example
+                } else {
                     const itemExample = this.buildExampleHelper({
                         exampleId,
                         example: undefined,
@@ -301,7 +316,6 @@ export class ExampleTypeFactory {
                         itemExamples.push(itemExample);
                     }
                 }
-
                 return FullExample.array(itemExamples);
             }
             case "map": {

@@ -146,6 +146,7 @@ types:
       - commons.WithDescription
     properties:
       value: SchemaWithExample
+      example: optional<list<unknown>>
 
   MapSchemaWithExample:
     extends:
