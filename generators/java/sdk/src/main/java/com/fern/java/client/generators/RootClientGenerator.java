@@ -21,8 +21,13 @@ import com.fern.irV42.model.auth.BasicAuthScheme;
 import com.fern.irV42.model.auth.BearerAuthScheme;
 import com.fern.irV42.model.auth.EnvironmentVariable;
 import com.fern.irV42.model.auth.HeaderAuthScheme;
+import com.fern.irV42.model.auth.OAuthClientCredentials;
+import com.fern.irV42.model.auth.OAuthConfiguration;
 import com.fern.irV42.model.auth.OAuthScheme;
+import com.fern.irV42.model.commons.EndpointReference;
 import com.fern.irV42.model.commons.TypeId;
+import com.fern.irV42.model.http.HttpEndpoint;
+import com.fern.irV42.model.http.HttpService;
 import com.fern.irV42.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
@@ -32,6 +37,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.ClientGeneratorUtils.Result;
 import com.fern.java.generators.AbstractFileGenerator;
+import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -360,7 +366,32 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
+            oauth.getConfiguration().visit(new OAuthSchemeHandler());
             throw new RuntimeException("OAuth not supported");
+        }
+
+        public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
+
+            @Override
+            public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
+                EndpointReference tokenEndpointReference = clientCredentials.getTokenEndpoint().getEndpointReference();
+                HttpService service = clientGeneratorContext.getIr().getServices()
+                    .get(tokenEndpointReference.getServiceId());
+                HttpEndpoint endpoint = service.getEndpoints().stream()
+                    .filter(it -> it.getId() == tokenEndpointReference.getEndpointId())
+                    .findFirst().orElseThrow();
+
+                createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
+                createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
+
+                // todo: finish
+
+            }
+
+            @Override
+            public Void _visitUnknown(Object unknownType) {
+                throw new RuntimeException("Encountered unknown oauth scheme" + unknownType);
+            }
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {
