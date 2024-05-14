@@ -2,6 +2,7 @@
 
 from ......core.pydantic_utilities import pydantic_v1
 import typing
+from ......core.pydantic_utilities import deep_union_pydantic_dicts
 import datetime as dt
 from ......core.datetime_utils import serialize_datetime
 class Dog(pydantic_v1.BaseModel):
@@ -11,8 +12,10 @@ class Dog(pydantic_v1.BaseModel):
         kwargs_with_defaults: typing.Any = { "by_alias": True, "exclude_unset": True, **kwargs }
         return super().json(**kwargs_with_defaults)
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = { "by_alias": True, "exclude_unset": True, **kwargs }
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = { "by_alias": True, "exclude_unset": True, **kwargs }
+        kwargs_with_defaults_exclude_none: typing.Any = { "by_alias": True, "exclude_none": True, **kwargs }
+        
+        return deep_union_pydantic_dicts(super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none))
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
