@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List, Optional, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -594,9 +594,9 @@ class EndpointFunctionGenerator:
             results_response_property = self.pagination.get_as_union().results.property
 
             # TODO: The IR should really have the inner type baked in so we don't have to unwrap it here
-            unwrapped_type = results_response_property.value_type
-            maybe_wrapped_type = results_response_property.value_type
-            if maybe_wrapped_type.get_as_union().type == "container":
+            unwrapped_type: Union[ir_types.TypeReference, None] = results_response_property.value_type
+            maybe_wrapped_type: Union[ir_types.TypeReference, None] = results_response_property.value_type
+            if maybe_wrapped_type is not None and maybe_wrapped_type.get_as_union().type == "container":
                 unwrapped_type = maybe_wrapped_type.get_as_union().container.visit(
                     list_=lambda item_type: item_type,
                     set_=lambda item_type: item_type,

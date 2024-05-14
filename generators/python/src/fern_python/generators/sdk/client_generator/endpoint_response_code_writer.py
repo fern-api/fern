@@ -23,7 +23,7 @@ class EndpointDummySnippetConfig:
     parameters: List[FunctionParameter]
     named_parameters: List[NamedFunctionParameter]
 
-    def __init__(self, endpoint_name, parameters, named_parameters):
+    def __init__(self, endpoint_name: str, parameters: List[FunctionParameter], named_parameters: List[NamedFunctionParameter]) -> None:
         self.endpoint_name = endpoint_name
         self.parameters = parameters
         self.named_parameters = named_parameters
