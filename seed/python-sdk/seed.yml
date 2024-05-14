@@ -105,3 +105,4 @@ allowedFailures:
   - extra-properties
   - trace
   - circular-references-advanced
+  - oauth-client-credentials-default

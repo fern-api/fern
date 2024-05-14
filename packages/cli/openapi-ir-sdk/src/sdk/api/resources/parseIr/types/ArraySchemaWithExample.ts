@@ -9,4 +9,5 @@ export interface ArraySchemaWithExample
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription {
     value: FernOpenapiIr.SchemaWithExample;
+    example: unknown[] | undefined;
 }

@@ -19,6 +19,7 @@ export declare namespace CoreUtility {
         originalPathOnDocker: AbsoluteFilePath;
         pathInCoreUtilities: ExportedDirectory[];
         addDependencies?: (dependencyManager: DependencyManager) => void;
+        writeConditionalFiles?: (pathToSrc: AbsoluteFilePath) => Promise<void>;
     }
 }
 

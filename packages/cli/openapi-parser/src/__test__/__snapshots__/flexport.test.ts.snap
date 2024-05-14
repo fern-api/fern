@@ -50072,7 +50072,14 @@ Other details about this invoice",
                                     "type": "primitive",
                                     "value": {
                                       "type": "string",
-                                      "value": "classifications",
+                                      "value": "1.2",
+                                    },
+                                  },
+                                  {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "2",
                                     },
                                   },
                                 ],
@@ -52869,7 +52876,14 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "classifications",
+                              "value": "1.2",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "2",
                             },
                           },
                         ],
@@ -54826,7 +54840,14 @@ Other details about this invoice",
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "classifications",
+                              "value": "1.2",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "2",
                             },
                           },
                         ],

@@ -1,9 +1,11 @@
 import { z } from "zod";
-import { OAuthAccessTokenPropertiesSchema } from "./OAuthAccessTokenPropertiesSchema";
+import { OAuthAccessTokenRequestPropertiesSchema } from "./OAuthAccessTokenRequestPropertiesSchema";
+import { OAuthAccessTokenResponsePropertiesSchema } from "./OAuthAccessTokenResponsePropertiesSchema";
 
 export const OAuthGetTokenEndpointSchema = z.strictObject({
     endpoint: z.string().describe("The endpoint to get the access token, such as 'auth.get_token')"),
-    "response-properties": OAuthAccessTokenPropertiesSchema
+    "request-properties": OAuthAccessTokenRequestPropertiesSchema.optional(),
+    "response-properties": OAuthAccessTokenResponsePropertiesSchema.optional()
 });
 
 export type OAuthGetTokenEndpointSchema = z.infer<typeof OAuthGetTokenEndpointSchema>;

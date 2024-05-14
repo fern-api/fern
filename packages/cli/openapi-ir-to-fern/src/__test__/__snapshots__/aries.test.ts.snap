@@ -7973,12 +7973,14 @@ exports[`open api parser aries docs 1`] = `
                       "credential": {
                         "@context": [
                           {},
+                          {},
                         ],
                         "credentialSubject": {},
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {},
                         "type": [
-                          "type",
+                          "VerifiableCredential",
+                          "AlumniCredential",
                         ],
                       },
                       "options": {
@@ -28408,12 +28410,14 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [
                           {},
+                          {},
                         ],
                         "credentialSubject": {},
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {},
                         "type": [
-                          "type",
+                          "VerifiableCredential",
+                          "AlumniCredential",
                         ],
                       },
                       "options": {

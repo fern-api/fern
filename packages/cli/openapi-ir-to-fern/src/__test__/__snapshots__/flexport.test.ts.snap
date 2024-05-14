@@ -8282,7 +8282,8 @@ Other details about this invoice",
                           "dangerous_goods": {
                             "_object": "/shipment/dangerous_goods",
                             "classifications": [
-                              "classifications",
+                              "1.2",
+                              "2",
                             ],
                             "review_status": "complete",
                           },
@@ -8789,7 +8790,8 @@ Other details about this invoice",
                       "dangerous_goods": {
                         "_object": "/shipment/dangerous_goods",
                         "classifications": [
-                          "classifications",
+                          "1.2",
+                          "2",
                         ],
                         "review_status": "complete",
                       },
@@ -9120,7 +9122,8 @@ Other details about this invoice",
                       "dangerous_goods": {
                         "_object": "/shipment/dangerous_goods",
                         "classifications": [
-                          "classifications",
+                          "1.2",
+                          "2",
                         ],
                         "review_status": "complete",
                       },
@@ -22462,7 +22465,8 @@ Other details about this invoice",
                           "dangerous_goods": {
                             "_object": "/shipment/dangerous_goods",
                             "classifications": [
-                              "classifications",
+                              "1.2",
+                              "2",
                             ],
                             "review_status": "complete",
                           },
@@ -22969,7 +22973,8 @@ Other details about this invoice",
                       "dangerous_goods": {
                         "_object": "/shipment/dangerous_goods",
                         "classifications": [
-                          "classifications",
+                          "1.2",
+                          "2",
                         ],
                         "review_status": "complete",
                       },
@@ -23300,7 +23305,8 @@ Other details about this invoice",
                       "dangerous_goods": {
                         "_object": "/shipment/dangerous_goods",
                         "classifications": [
-                          "classifications",
+                          "1.2",
+                          "2",
                         ],
                         "review_status": "complete",
                       },

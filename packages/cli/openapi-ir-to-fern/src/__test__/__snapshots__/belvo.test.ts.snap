@@ -5207,6 +5207,12 @@ You can see a complete list of institutions by either consulting our [Institutio
                     "primary_color": "#056dae",
                     "resources": [
                       "ACCOUNTS",
+                      "BALANCES",
+                      "INCOMES",
+                      "OWNERS",
+                      "RECURRING_EXPENSES",
+                      "RISK_INSIGHTS",
+                      "TRANSACTIONS",
                     ],
                     "status": "healthy",
                     "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -5302,6 +5308,12 @@ You can see a complete list of institutions by either consulting our [Institutio
                         "primary_color": "#056dae",
                         "resources": [
                           "ACCOUNTS",
+                          "BALANCES",
+                          "INCOMES",
+                          "OWNERS",
+                          "RECURRING_EXPENSES",
+                          "RISK_INSIGHTS",
+                          "TRANSACTIONS",
                         ],
                         "status": "healthy",
                         "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -11785,6 +11797,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -11992,6 +12006,8 @@ client.connect()
                       {
                         "accounts": [
                           "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "00293c8e-1152-440b-9892-3c071fb88672",
+                          "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                         ],
                         "balances_metrics": {
                           "balance_threshold_x": 267,
@@ -12237,6 +12253,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -12445,6 +12463,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -35124,6 +35144,12 @@ You can see a complete list of institutions by either consulting our [Institutio
                     "primary_color": "#056dae",
                     "resources": [
                       "ACCOUNTS",
+                      "BALANCES",
+                      "INCOMES",
+                      "OWNERS",
+                      "RECURRING_EXPENSES",
+                      "RISK_INSIGHTS",
+                      "TRANSACTIONS",
                     ],
                     "status": "healthy",
                     "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -35219,6 +35245,12 @@ You can see a complete list of institutions by either consulting our [Institutio
                         "primary_color": "#056dae",
                         "resources": [
                           "ACCOUNTS",
+                          "BALANCES",
+                          "INCOMES",
+                          "OWNERS",
+                          "RECURRING_EXPENSES",
+                          "RISK_INSIGHTS",
+                          "TRANSACTIONS",
                         ],
                         "status": "healthy",
                         "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
@@ -41702,6 +41734,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -41909,6 +41943,8 @@ client.connect()
                       {
                         "accounts": [
                           "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "00293c8e-1152-440b-9892-3c071fb88672",
+                          "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                         ],
                         "balances_metrics": {
                           "balance_threshold_x": 267,
@@ -42154,6 +42190,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,
@@ -42362,6 +42400,8 @@ client.connect()
                     {
                       "accounts": [
                         "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "00293c8e-1152-440b-9892-3c071fb88672",
+                        "cf638fba-ef45-4c10-bc6f-adecc4b2bf4e",
                       ],
                       "balances_metrics": {
                         "balance_threshold_x": 267,

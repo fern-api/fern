@@ -1,7 +1,13 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { ExampleEndpointCall, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    HttpEndpoint,
+    HttpService,
+    IntermediateRepresentation,
+    OAuthScheme
+} from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 import {
     BundledTypescriptProject,
@@ -26,6 +32,7 @@ import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typ
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
@@ -73,6 +80,7 @@ export declare namespace SdkGenerator {
 
     export interface Config {
         whitelabel: boolean;
+        generateOAuthClients: boolean;
         snippetFilepath: AbsoluteFilePath | undefined;
         snippetTemplateFilepath: AbsoluteFilePath | undefined;
         shouldBundle: boolean;
@@ -111,6 +119,7 @@ export class SdkGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
+    private generateOAuthClients: boolean;
     private generateJestTests: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
@@ -153,8 +162,10 @@ export class SdkGenerator {
     private sdkClientClassGenerator: SdkClientClassGenerator;
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
+    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
     private FdrClient: FdrSnippetTemplateClient | undefined;
+    private generatedOAuthClients = false;
 
     constructor({
         namespaceExport,
@@ -170,6 +181,9 @@ export class SdkGenerator {
         this.config = config;
         this.npmPackage = npmPackage;
         this.generateJestTests = generateJestTests;
+        this.generateOAuthClients =
+            this.config.generateOAuthClients &&
+            this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
 
         this.exportsManager = new ExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager();
@@ -287,6 +301,7 @@ export class SdkGenerator {
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
+        this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator(intermediateRepresentation);
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation,
             errorResolver: this.errorResolver,
@@ -300,7 +315,8 @@ export class SdkGenerator {
             targetRuntime: config.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: config.includeSerdeLayer,
-            retainOriginalCasing: config.retainOriginalCasing
+            retainOriginalCasing: config.retainOriginalCasing,
+            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -354,6 +370,15 @@ export class SdkGenerator {
             this.generateInlinedRequestBodySchemas();
             this.context.logger.debug("Generated serde layer.");
         }
+
+        if (this.generateOAuthClients) {
+            const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
+            if (oauthScheme != null && oauthScheme.type === "oauth") {
+                this.generateOAuthTokenProvider(oauthScheme);
+                this.generatedOAuthClients = true;
+            }
+        }
+
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         this.context.logger.debug("Generated exports");
@@ -591,6 +616,25 @@ export class SdkGenerator {
                 }
             });
         }
+    }
+
+    private generateOAuthTokenProvider(oauthScheme: OAuthScheme) {
+        this.context.logger.debug("Generating OAuth token provider...");
+        this.withSourceFile({
+            filepath: this.oauthTokenProviderGenerator.getExportedFilePath(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                const file = this.oauthTokenProviderGenerator.buildFile({
+                    context,
+                    oauthScheme
+                });
+                sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+            }
+        });
+        this.coreUtilitiesManager.addAuthOverride({
+            filepath: RelativeFilePath.of("index.ts"),
+            content: this.oauthTokenProviderGenerator.buildIndexFile().toString()
+        });
     }
 
     private generateTestFiles() {
@@ -908,16 +952,18 @@ export class SdkGenerator {
     private withSourceFile({
         run,
         filepath,
-        addExportTypeModifier
+        addExportTypeModifier,
+        overwrite
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
         addExportTypeModifier?: boolean;
+        overwrite?: boolean;
     }) {
         const filepathStr = convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
 
-        const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
+        const sourceFile = this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite });
         const importsManager = new ImportsManager();
 
         run({ sourceFile, importsManager });
@@ -1011,7 +1057,8 @@ export class SdkGenerator {
             treatUnknownAsAny: this.config.treatUnknownAsAny,
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
-            targetRuntime: this.config.targetRuntime
+            targetRuntime: this.config.targetRuntime,
+            generateOAuthClients: this.generateOAuthClients
         });
     }
 }
