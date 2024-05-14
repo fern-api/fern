@@ -9,9 +9,7 @@ from ....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 
 
 class ObjectWithOptionalField(pydantic_v1.BaseModel):
-    lit: typing.Literal["TEST"] = "TEST"
     string: typing.Optional[str] = None
-    set_integer: typing.Optional[int] = None
     integer: typing.Optional[int] = None
     long_: typing.Optional[int] = pydantic_v1.Field(alias="long", default=None)
     double: typing.Optional[float] = None
