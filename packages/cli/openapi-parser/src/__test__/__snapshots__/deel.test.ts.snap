@@ -100,6 +100,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createDirectEmployee",
+      "pagination": null,
       "path": "/hris/direct-employees",
       "pathParameters": [],
       "queryParameters": [],
@@ -476,6 +477,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEorCountryValidations",
+      "pagination": null,
       "path": "/eor/validations/{country_code}",
       "pathParameters": [
         {
@@ -838,6 +840,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createEorContract",
+      "pagination": null,
       "path": "/eor",
       "pathParameters": [],
       "queryParameters": [],
@@ -1641,6 +1644,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": true,
       "method": "POST",
       "operationId": "createContractTimeBased",
+      "pagination": null,
       "path": "/contracts/time-based",
       "pathParameters": [],
       "queryParameters": [],
@@ -2433,6 +2437,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": true,
       "method": "POST",
       "operationId": "createContractTaskBased",
+      "pagination": null,
       "path": "/contracts/task-based",
       "pathParameters": [],
       "queryParameters": [],
@@ -3225,6 +3230,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": true,
       "method": "POST",
       "operationId": "createContractMilestoneBased",
+      "pagination": null,
       "path": "/contracts/milestone-based",
       "pathParameters": [],
       "queryParameters": [],
@@ -4028,6 +4034,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": true,
       "method": "POST",
       "operationId": "createContractFixedRate",
+      "pagination": null,
       "path": "/contracts/fixed-rate",
       "pathParameters": [],
       "queryParameters": [],
@@ -4342,6 +4349,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getContractList",
+      "pagination": null,
       "path": "/contracts",
       "pathParameters": [],
       "queryParameters": [
@@ -5370,6 +5378,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createContract",
+      "pagination": null,
       "path": "/contracts",
       "pathParameters": [],
       "queryParameters": [],
@@ -6067,6 +6076,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getContractById",
+      "pagination": null,
       "path": "/contracts/{contract_id}",
       "pathParameters": [
         {
@@ -6276,6 +6286,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "attachExternalId",
+      "pagination": null,
       "path": "/contracts/{contract_id}",
       "pathParameters": [
         {
@@ -6491,6 +6502,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "addContractDocument",
+      "pagination": null,
       "path": "/contracts/{contract_id}/documents",
       "pathParameters": [
         {
@@ -6709,6 +6721,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "editContractDocument",
+      "pagination": null,
       "path": "/contracts/{contract_id}/documents",
       "pathParameters": [
         {
@@ -6901,6 +6914,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getContractPreview",
+      "pagination": null,
       "path": "/contracts/{contract_id}/preview",
       "pathParameters": [
         {
@@ -7159,6 +7173,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTasksByContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/tasks",
       "pathParameters": [
         {
@@ -7375,6 +7390,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createContractPgoTak",
+      "pagination": null,
       "path": "/contracts/{contract_id}/tasks",
       "pathParameters": [
         {
@@ -7559,6 +7575,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getAlternateEmailsByContractId",
+      "pagination": null,
       "path": "/contracts/{contract_id}/alternate_emails",
       "pathParameters": [
         {
@@ -7836,6 +7853,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createTaskManyReview",
+      "pagination": null,
       "path": "/contracts/{contract_id}/tasks/many/reviews",
       "pathParameters": [
         {
@@ -8116,6 +8134,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createTaskReviewById",
+      "pagination": null,
       "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
       "pathParameters": [
         {
@@ -8348,6 +8367,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteContractPgoTak",
+      "pagination": null,
       "path": "/contracts/{contract_id}/tasks/{task_id}",
       "pathParameters": [
         {
@@ -8591,6 +8611,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "amendContractDetails",
+      "pagination": null,
       "path": "/contracts/{contract_id}/amendments",
       "pathParameters": [
         {
@@ -8811,6 +8832,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "terminateContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/terminations",
       "pathParameters": [
         {
@@ -9032,6 +9054,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "signContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/signatures",
       "pathParameters": [
         {
@@ -9209,6 +9232,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "archiveContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/archive",
       "pathParameters": [
         {
@@ -9425,6 +9449,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "inviteToSignContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/invitations",
       "pathParameters": [
         {
@@ -9630,6 +9655,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "uninviteToSignContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/invitations",
       "pathParameters": [
         {
@@ -10044,6 +10070,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTimesheetsByContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/timesheets",
       "pathParameters": [
         {
@@ -10469,6 +10496,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getMilestonesByContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/milestones",
       "pathParameters": [
         {
@@ -10692,6 +10720,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createMilestone",
+      "pagination": null,
       "path": "/contracts/{contract_id}/milestones",
       "pathParameters": [
         {
@@ -10987,6 +11016,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getMilestonesByContractAndId",
+      "pagination": null,
       "path": "/contracts/{contract_id}/milestones/{milestone_id}",
       "pathParameters": [
         {
@@ -11207,6 +11237,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteMilestoneById",
+      "pagination": null,
       "path": "/contracts/{contract_id}/milestones/{milestone_id}",
       "pathParameters": [
         {
@@ -11440,6 +11471,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createMilestoneReview",
+      "pagination": null,
       "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
       "pathParameters": [
         {
@@ -11687,6 +11719,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createMilestoneReviews",
+      "pagination": null,
       "path": "/contracts/{contract_id}/milestones/many/reviews",
       "pathParameters": [
         {
@@ -11998,6 +12031,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getOffCyclePaymentsByContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/off-cycle-payments",
       "pathParameters": [
         {
@@ -12214,6 +12248,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createOffCyclePayment",
+      "pagination": null,
       "path": "/contracts/{contract_id}/off-cycle-payments",
       "pathParameters": [
         {
@@ -12530,6 +12565,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getOffCyclePaymentByContractAndId",
+      "pagination": null,
       "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
       "pathParameters": [
         {
@@ -12785,6 +12821,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "addPremium",
+      "pagination": null,
       "path": "/contracts/{contract_id}/premium",
       "pathParameters": [
         {
@@ -12990,6 +13027,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "removePremiumFromContract",
+      "pagination": null,
       "path": "/contracts/{contract_id}/premium",
       "pathParameters": [
         {
@@ -13224,6 +13262,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": true,
       "method": "GET",
       "operationId": "calculateFinalPayment",
+      "pagination": null,
       "path": "/contracts/{contract_id}/final-payments",
       "pathParameters": [
         {
@@ -13602,6 +13641,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "postContractEstimate",
+      "pagination": null,
       "path": "/contracts/estimate",
       "pathParameters": [],
       "queryParameters": [],
@@ -14042,6 +14082,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEorTimeOffs",
+      "pagination": null,
       "path": "/contracts/{contract_id}/time-offs",
       "pathParameters": [
         {
@@ -14649,6 +14690,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createEorTimeOffs",
+      "pagination": null,
       "path": "/contracts/{contract_id}/time-offs",
       "pathParameters": [
         {
@@ -15278,6 +15320,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "editEorTimeOffs",
+      "pagination": null,
       "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
       "pathParameters": [
         {
@@ -15468,6 +15511,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteEorTimeOffs",
+      "pagination": null,
       "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
       "pathParameters": [
         {
@@ -15888,6 +15932,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTimesheets",
+      "pagination": null,
       "path": "/timesheets",
       "pathParameters": [],
       "queryParameters": [
@@ -16288,6 +16333,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createTimesheet",
+      "pagination": null,
       "path": "/timesheets",
       "pathParameters": [],
       "queryParameters": [],
@@ -16729,6 +16775,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTimesheetById",
+      "pagination": null,
       "path": "/timesheets/{timesheet_id}",
       "pathParameters": [
         {
@@ -16920,6 +16967,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteTimesheetById",
+      "pagination": null,
       "path": "/timesheets/{timesheet_id}",
       "pathParameters": [
         {
@@ -17159,6 +17207,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "updateTimesheetById",
+      "pagination": null,
       "path": "/timesheets/{timesheet_id}",
       "pathParameters": [
         {
@@ -17375,6 +17424,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createTimesheetReview",
+      "pagination": null,
       "path": "/timesheets/{timesheet_id}/reviews",
       "pathParameters": [
         {
@@ -17592,6 +17642,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createTimesheetReviews",
+      "pagination": null,
       "path": "/timesheets/many/reviews",
       "pathParameters": [],
       "queryParameters": [],
@@ -18030,6 +18081,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getInvoiceAdjustmentsByContractId",
+      "pagination": null,
       "path": "/contracts/{contract_id}/invoice-adjustments",
       "pathParameters": [
         {
@@ -18652,6 +18704,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getInvoiceAdjustments",
+      "pagination": null,
       "path": "/invoice-adjustments",
       "pathParameters": [],
       "queryParameters": [
@@ -19091,6 +19144,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createInvoiceAdjustment",
+      "pagination": null,
       "path": "/invoice-adjustments",
       "pathParameters": [],
       "queryParameters": [],
@@ -19278,6 +19332,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "deleteInvoiceAdjustmentById",
+      "pagination": null,
       "path": "/invoice-adjustments/{invoice_adjustment_id}",
       "pathParameters": [
         {
@@ -19510,6 +19565,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "updateInvoiceAdjustmentById",
+      "pagination": null,
       "path": "/invoice-adjustments/{invoice_adjustment_id}",
       "pathParameters": [
         {
@@ -19726,6 +19782,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createInvoiceAdjustmentReview",
+      "pagination": null,
       "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
       "pathParameters": [
         {
@@ -19943,6 +20000,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createInvoiceAdjustmentReviews",
+      "pagination": null,
       "path": "/invoice-adjustments/many/reviews",
       "pathParameters": [],
       "queryParameters": [],
@@ -20142,6 +20200,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getLegalEntityList",
+      "pagination": null,
       "path": "/legal-entities",
       "pathParameters": [],
       "queryParameters": [],
@@ -20363,6 +20422,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getCountries",
+      "pagination": null,
       "path": "/lookups/countries",
       "pathParameters": [],
       "queryParameters": [],
@@ -20539,6 +20599,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getCurrencies",
+      "pagination": null,
       "path": "/lookups/currencies",
       "pathParameters": [],
       "queryParameters": [],
@@ -20727,6 +20788,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getJobTitleList",
+      "pagination": null,
       "path": "/lookups/job-titles",
       "pathParameters": [],
       "queryParameters": [
@@ -20957,6 +21019,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getSeniorityList",
+      "pagination": null,
       "path": "/lookups/seniorities",
       "pathParameters": [],
       "queryParameters": [
@@ -21158,6 +21221,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTimeoffTypeList",
+      "pagination": null,
       "path": "/lookups/time-off-types",
       "pathParameters": [],
       "queryParameters": [],
@@ -21335,6 +21399,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getOrganizations",
+      "pagination": null,
       "path": "/organizations",
       "pathParameters": [],
       "queryParameters": [],
@@ -21511,6 +21576,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getTeams",
+      "pagination": null,
       "path": "/teams",
       "pathParameters": [],
       "queryParameters": [],
@@ -21681,6 +21747,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": true,
       "method": "POST",
       "operationId": "createFileRef",
+      "pagination": null,
       "path": "/attachments",
       "pathParameters": [],
       "queryParameters": [],
@@ -21931,6 +21998,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": true,
       "method": "GET",
       "operationId": "getAgreements",
+      "pagination": null,
       "path": "/agreements",
       "pathParameters": [],
       "queryParameters": [
@@ -22158,6 +22226,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": true,
       "method": "GET",
       "operationId": "getContractTemplates",
+      "pagination": null,
       "path": "/contract-templates",
       "pathParameters": [],
       "queryParameters": [],
@@ -22406,6 +22475,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEorEntitlements",
+      "pagination": null,
       "path": "/contracts/{contract_id}/entitlements",
       "pathParameters": [
         {
@@ -22843,6 +22913,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEorClientTimeOffs",
+      "pagination": null,
       "path": "/time-offs/",
       "pathParameters": [],
       "queryParameters": [],
@@ -23034,6 +23105,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "reviewTimeoff",
+      "pagination": null,
       "path": "/time-offs/{timeoff_id}/review",
       "pathParameters": [
         {
@@ -23282,6 +23354,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getInvoiceList",
+      "pagination": null,
       "path": "/invoices",
       "pathParameters": [],
       "queryParameters": [
@@ -23560,6 +23633,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getInvoiceDownloadLink",
+      "pagination": null,
       "path": "/invoices/{invoice_id}/download",
       "pathParameters": [
         {
@@ -23765,6 +23839,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getBillingInvoiceDownloadLink",
+      "pagination": null,
       "path": "/billing/{invoice_id}/download",
       "pathParameters": [
         {
@@ -23999,6 +24074,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getPaymentList",
+      "pagination": null,
       "path": "/payments",
       "pathParameters": [],
       "queryParameters": [
@@ -24561,6 +24637,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getPeopleList",
+      "pagination": null,
       "path": "/people",
       "pathParameters": [],
       "queryParameters": [
@@ -24867,6 +24944,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getPeople",
+      "pagination": null,
       "path": "/people/me",
       "pathParameters": [],
       "queryParameters": [],
@@ -25108,6 +25186,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getAllWebhooks",
+      "pagination": null,
       "path": "/webhooks",
       "pathParameters": [],
       "queryParameters": [],
@@ -25378,6 +25457,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "createWebhook",
+      "pagination": null,
       "path": "/webhooks",
       "pathParameters": [],
       "queryParameters": [],
@@ -25637,6 +25717,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "WebhookController_getById",
+      "pagination": null,
       "path": "/webhooks/{id}",
       "pathParameters": [
         {
@@ -25814,6 +25895,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "WebhookController_deleteById",
+      "pagination": null,
       "path": "/webhooks/{id}",
       "pathParameters": [
         {
@@ -26094,6 +26176,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "WebhookController_editById",
+      "pagination": null,
       "path": "/webhooks/{id}",
       "pathParameters": [
         {
@@ -26493,6 +26576,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetPaymentsBreakDownById",
+      "pagination": null,
       "path": "/payments/{payment_id}/breakdown",
       "pathParameters": [
         {

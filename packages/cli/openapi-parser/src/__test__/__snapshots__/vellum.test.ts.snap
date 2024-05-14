@@ -136,6 +136,7 @@ Used to retrieve a deployment given its ID or name.
       "internal": null,
       "method": "GET",
       "operationId": "deployments_retrieve",
+      "pagination": null,
       "path": "/v1/deployments/{id}",
       "pathParameters": [
         {
@@ -860,6 +861,7 @@ Creates a new document index.",
       "internal": null,
       "method": "POST",
       "operationId": "document_indexes_create",
+      "pagination": null,
       "path": "/v1/document-indexes",
       "pathParameters": [],
       "queryParameters": [],
@@ -1042,6 +1044,7 @@ Used to list documents. Optionally filter on supported fields.
       "internal": null,
       "method": "GET",
       "operationId": "documents_list",
+      "pagination": null,
       "path": "/v1/documents",
       "pathParameters": [],
       "queryParameters": [
@@ -1174,6 +1177,7 @@ Executes a deployed Workflow and streams back its results.",
       "internal": null,
       "method": "POST",
       "operationId": "execute_workflow_stream",
+      "pagination": null,
       "path": "/v1/execute-workflow-stream",
       "pathParameters": [],
       "queryParameters": [],
@@ -1382,6 +1386,7 @@ Generate a completion using a previously defined deployment.
       "internal": null,
       "method": "POST",
       "operationId": "generate",
+      "pagination": null,
       "path": "/v1/generate",
       "pathParameters": [],
       "queryParameters": [],
@@ -1498,6 +1503,7 @@ Generate a stream of completions using a previously defined deployment.
       "internal": null,
       "method": "POST",
       "operationId": "generate_stream",
+      "pagination": null,
       "path": "/v1/generate-stream",
       "pathParameters": [],
       "queryParameters": [],
@@ -1801,6 +1807,7 @@ Used to retrieve a model version given its ID.
       "internal": null,
       "method": "GET",
       "operationId": "model_versions_retrieve",
+      "pagination": null,
       "path": "/v1/model-versions/{id}",
       "pathParameters": [
         {
@@ -1912,6 +1919,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "internal": null,
       "method": "POST",
       "operationId": "model_version_compile_prompt",
+      "pagination": null,
       "path": "/v1/model-versions/{id}/compile-prompt",
       "pathParameters": [
         {
@@ -2238,6 +2246,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "internal": null,
       "method": "POST",
       "operationId": "register_prompt",
+      "pagination": null,
       "path": "/v1/registered-prompts/register",
       "pathParameters": [],
       "queryParameters": [],
@@ -2639,6 +2648,7 @@ or overwritten with default values.",
       "internal": null,
       "method": "POST",
       "operationId": "upsert_sandbox_scenario",
+      "pagination": null,
       "path": "/v1/sandboxes/{id}/scenarios",
       "pathParameters": [
         {
@@ -2741,6 +2751,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_sandbox_scenario",
+      "pagination": null,
       "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
       "pathParameters": [
         {
@@ -2930,6 +2941,7 @@ Perform a search against a document index.
       "internal": null,
       "method": "POST",
       "operationId": "search",
+      "pagination": null,
       "path": "/v1/search",
       "pathParameters": [],
       "queryParameters": [],
@@ -3057,6 +3069,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "internal": null,
       "method": "POST",
       "operationId": "submit_completion_actuals",
+      "pagination": null,
       "path": "/v1/submit-completion-actuals",
       "pathParameters": [],
       "queryParameters": [],
@@ -3202,6 +3215,7 @@ or overwritten with default values.",
       "internal": null,
       "method": "POST",
       "operationId": "upsert_test_suite_test_case",
+      "pagination": null,
       "path": "/v1/test-suites/{id}/test-cases",
       "pathParameters": [
         {
@@ -3304,6 +3318,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_test_suite_test_case",
+      "pagination": null,
       "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
       "pathParameters": [
         {
@@ -3445,6 +3460,7 @@ Upload a document to be indexed and used for search.
       "internal": null,
       "method": "POST",
       "operationId": "documents_upload",
+      "pagination": null,
       "path": "/v1/upload-document",
       "pathParameters": [],
       "queryParameters": [],

@@ -25,6 +25,7 @@ exports[`open api parser assembly docs 1`] = `
               "root.FilesUploadRequestGatewayTimeoutError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v2/upload",
             "request": {
               "body": "bytes",
@@ -77,6 +78,7 @@ exports[`open api parser assembly docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lemur/v3/generate/action-items",
             "request": {
               "body": "root.LemurActionItemsParameters",
@@ -116,6 +118,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/lemur/v3/{request_id}",
             "path-parameters": {
               "request_id": {
@@ -167,6 +170,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lemur/v3/generate/question-answer",
             "request": {
               "body": {
@@ -218,6 +222,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lemur/v3/generate/summary",
             "request": {
               "body": {
@@ -271,6 +276,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lemur/v3/generate/task",
             "request": {
               "body": {
@@ -400,6 +406,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v2/realtime/token",
             "request": {
               "body": {
@@ -648,6 +655,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v2/transcript",
             "request": {
               "body": {
@@ -865,6 +873,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}",
             "path-parameters": {
               "transcript_id": {
@@ -1072,6 +1081,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}",
             "path-parameters": {
               "transcript_id": {
@@ -1128,6 +1138,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/paragraphs",
             "path-parameters": {
               "transcript_id": {
@@ -1167,6 +1178,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/redacted-audio",
             "path-parameters": {
               "transcript_id": {
@@ -1223,6 +1235,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/sentences",
             "path-parameters": {
               "transcript_id": {
@@ -1249,6 +1262,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TranscriptGetSubtitlesRequestGatewayTimeoutError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
             "path-parameters": {
               "subtitle_format": {
@@ -1313,6 +1327,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript",
             "request": {
               "name": "TranscriptListRequest",
@@ -1362,6 +1377,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TranscriptWordSearchRequestGatewayTimeoutError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/word-search",
             "path-parameters": {
               "transcript_id": {
@@ -3464,6 +3480,7 @@ exports[`open api parser assembly simple 1`] = `
               "root.GatewayTimeoutError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v2/upload",
             "request": {
               "body": "bytes",
@@ -3516,6 +3533,7 @@ exports[`open api parser assembly simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lemur/v3/generate/action-items",
             "request": {
               "body": "root.LemurActionItemsParameters",
@@ -3555,6 +3573,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/lemur/v3/{request_id}",
             "path-parameters": {
               "request_id": {
@@ -3606,6 +3625,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lemur/v3/generate/question-answer",
             "request": {
               "body": {
@@ -3657,6 +3677,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lemur/v3/generate/summary",
             "request": {
               "body": {
@@ -3710,6 +3731,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lemur/v3/generate/task",
             "request": {
               "body": {
@@ -3839,6 +3861,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v2/realtime/token",
             "request": {
               "body": {
@@ -4087,6 +4110,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/v2/transcript",
             "request": {
               "body": {
@@ -4304,6 +4328,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}",
             "path-parameters": {
               "transcript_id": {
@@ -4511,6 +4536,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}",
             "path-parameters": {
               "transcript_id": {
@@ -4567,6 +4593,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/paragraphs",
             "path-parameters": {
               "transcript_id": {
@@ -4606,6 +4633,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/redacted-audio",
             "path-parameters": {
               "transcript_id": {
@@ -4662,6 +4690,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/sentences",
             "path-parameters": {
               "transcript_id": {
@@ -4688,6 +4717,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.GatewayTimeoutError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
             "path-parameters": {
               "subtitle_format": {
@@ -4752,6 +4782,7 @@ The parameter should map to a JSON encoded list of strings.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript",
             "request": {
               "name": "TranscriptListRequest",
@@ -4801,6 +4832,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.GatewayTimeoutError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/v2/transcript/{transcript_id}/word-search",
             "path-parameters": {
               "transcript_id": {

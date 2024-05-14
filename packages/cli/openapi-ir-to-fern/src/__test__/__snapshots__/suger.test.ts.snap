@@ -32,6 +32,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/public/apiClient/accessToken",
             "request": {
               "body": {
@@ -125,6 +126,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
               "buyerId": {
@@ -175,6 +177,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/buyer",
             "path-parameters": {
               "orgId": {
@@ -246,6 +249,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
               "buyerId": {
@@ -317,6 +321,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
             "path-parameters": {
               "entitlementId": {
@@ -420,6 +425,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}",
             "path-parameters": {
               "entitlementId": {
@@ -509,6 +515,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement",
             "path-parameters": {
               "orgId": {
@@ -595,6 +602,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
             "path-parameters": {
               "buyerId": {
@@ -685,6 +693,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer/{offerId}/entitlement",
             "path-parameters": {
               "offerId": {
@@ -775,6 +784,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/entitlement",
             "path-parameters": {
               "orgId": {
@@ -865,6 +875,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/entitlement",
             "path-parameters": {
               "orgId": {
@@ -954,6 +965,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
             "path-parameters": {
               "entitlementId": {
@@ -1075,6 +1087,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
             "path-parameters": {
               "entitlementId": {
@@ -1169,6 +1182,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
             "path-parameters": {
               "entitlementId": {
@@ -1296,6 +1310,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration",
             "path-parameters": {
               "orgId": {
@@ -1342,6 +1357,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
@@ -1458,6 +1474,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
@@ -1507,6 +1524,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration",
             "path-parameters": {
               "orgId": {
@@ -1621,6 +1639,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
@@ -1682,6 +1701,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration/{partner}/{service}/verify",
             "path-parameters": {
               "orgId": {
@@ -1817,6 +1837,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
             "path-parameters": {
               "orgId": {
@@ -1905,6 +1926,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
             "path-parameters": {
               "orgId": {
@@ -1958,6 +1980,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
               "entitlementId": {
@@ -2031,6 +2054,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
               "orgId": {
@@ -2101,6 +2125,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
             "path-parameters": {
               "orgId": {
@@ -2170,6 +2195,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
             "path-parameters": {
               "entitlementId": {
@@ -2242,6 +2268,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
               "orgId": {
@@ -2307,6 +2334,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
             "path-parameters": {
               "orgId": {
@@ -2389,6 +2417,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
               "entitlementId": {
@@ -2456,6 +2485,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer/{offerId}/cancel",
             "path-parameters": {
               "offerId": {
@@ -2614,6 +2644,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer",
             "path-parameters": {
               "orgId": {
@@ -2771,6 +2802,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/draftOffer",
             "path-parameters": {
               "orgId": {
@@ -2805,6 +2837,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
               "offerId": {
@@ -2962,6 +2995,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
               "offerId": {
@@ -3056,6 +3090,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer",
             "path-parameters": {
               "orgId": {
@@ -3150,6 +3185,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/offer",
             "path-parameters": {
               "orgId": {
@@ -3255,6 +3291,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/offer",
             "path-parameters": {
               "orgId": {
@@ -3319,6 +3356,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/operation",
             "path-parameters": {
               "orgId": {
@@ -3382,6 +3420,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
@@ -3496,6 +3535,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
@@ -3541,6 +3581,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/dimension",
             "path-parameters": {
               "orgId": {
@@ -3609,6 +3650,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product",
             "path-parameters": {
               "orgId": {
@@ -3674,6 +3716,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/product",
             "path-parameters": {
               "orgId": {
@@ -3793,6 +3836,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
@@ -3899,6 +3943,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/revenueReport",
             "path-parameters": {
               "orgId": {
@@ -3986,6 +4031,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageReport",
             "path-parameters": {
               "orgId": {
@@ -4034,6 +4080,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
             "path-parameters": {
               "orgId": {
@@ -4129,6 +4176,7 @@ exports[`open api parser suger docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",
             "path-parameters": {
               "orgId": {
@@ -7748,6 +7796,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/public/apiClient/accessToken",
             "request": {
               "body": {
@@ -7841,6 +7890,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
               "buyerId": {
@@ -7891,6 +7941,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/buyer",
             "path-parameters": {
               "orgId": {
@@ -7962,6 +8013,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
               "buyerId": {
@@ -8033,6 +8085,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
             "path-parameters": {
               "entitlementId": {
@@ -8136,6 +8189,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}",
             "path-parameters": {
               "entitlementId": {
@@ -8225,6 +8279,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement",
             "path-parameters": {
               "orgId": {
@@ -8311,6 +8366,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
             "path-parameters": {
               "buyerId": {
@@ -8401,6 +8457,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer/{offerId}/entitlement",
             "path-parameters": {
               "offerId": {
@@ -8491,6 +8548,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/entitlement",
             "path-parameters": {
               "orgId": {
@@ -8581,6 +8639,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/entitlement",
             "path-parameters": {
               "orgId": {
@@ -8670,6 +8729,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
             "path-parameters": {
               "entitlementId": {
@@ -8791,6 +8851,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
             "path-parameters": {
               "entitlementId": {
@@ -8885,6 +8946,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
             "path-parameters": {
               "entitlementId": {
@@ -9012,6 +9074,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration",
             "path-parameters": {
               "orgId": {
@@ -9058,6 +9121,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
@@ -9174,6 +9238,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
@@ -9223,6 +9288,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration",
             "path-parameters": {
               "orgId": {
@@ -9337,6 +9403,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
@@ -9398,6 +9465,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/integration/{partner}/{service}/verify",
             "path-parameters": {
               "orgId": {
@@ -9533,6 +9601,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
             "path-parameters": {
               "orgId": {
@@ -9621,6 +9690,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
             "path-parameters": {
               "orgId": {
@@ -9674,6 +9744,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
               "entitlementId": {
@@ -9747,6 +9818,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
               "orgId": {
@@ -9817,6 +9889,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
             "path-parameters": {
               "orgId": {
@@ -9886,6 +9959,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
             "path-parameters": {
               "entitlementId": {
@@ -9958,6 +10032,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
               "orgId": {
@@ -10023,6 +10098,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
             "path-parameters": {
               "orgId": {
@@ -10105,6 +10181,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
               "entitlementId": {
@@ -10172,6 +10249,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer/{offerId}/cancel",
             "path-parameters": {
               "offerId": {
@@ -10330,6 +10408,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer",
             "path-parameters": {
               "orgId": {
@@ -10487,6 +10566,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/draftOffer",
             "path-parameters": {
               "orgId": {
@@ -10521,6 +10601,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
               "offerId": {
@@ -10678,6 +10759,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
               "offerId": {
@@ -10772,6 +10854,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/offer",
             "path-parameters": {
               "orgId": {
@@ -10866,6 +10949,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/offer",
             "path-parameters": {
               "orgId": {
@@ -10971,6 +11055,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/offer",
             "path-parameters": {
               "orgId": {
@@ -11035,6 +11120,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/operation",
             "path-parameters": {
               "orgId": {
@@ -11098,6 +11184,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
@@ -11212,6 +11299,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
@@ -11257,6 +11345,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}/dimension",
             "path-parameters": {
               "orgId": {
@@ -11325,6 +11414,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/product",
             "path-parameters": {
               "orgId": {
@@ -11390,6 +11480,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/product",
             "path-parameters": {
               "orgId": {
@@ -11509,6 +11600,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
@@ -11615,6 +11707,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/revenueReport",
             "path-parameters": {
               "orgId": {
@@ -11702,6 +11795,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/org/{orgId}/usageReport",
             "path-parameters": {
               "orgId": {
@@ -11750,6 +11844,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
             "path-parameters": {
               "orgId": {
@@ -11845,6 +11940,7 @@ exports[`open api parser suger simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",
             "path-parameters": {
               "orgId": {

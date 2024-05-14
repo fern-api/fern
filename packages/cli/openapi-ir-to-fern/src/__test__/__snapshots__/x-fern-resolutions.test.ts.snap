@@ -24,6 +24,7 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user",
             "response": {
               "docs": "Success",
@@ -45,6 +46,7 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/users",
             "response": {
               "docs": "Success",
@@ -99,6 +101,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user",
             "response": {
               "docs": "Success",
@@ -120,6 +123,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/users",
             "response": {
               "docs": "Success",

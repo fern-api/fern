@@ -201,6 +201,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/group/",
             "request": {
               "body": {
@@ -398,6 +399,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/group/info/",
             "request": {
               "name": "FilesGroupInfoRequest",
@@ -562,6 +564,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/base/",
             "request": {
               "body": {
@@ -785,6 +788,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/info/",
             "request": {
               "name": "FileUploadInfoRequest",
@@ -1156,6 +1160,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/from_url/",
             "request": {
               "body": {
@@ -1786,6 +1791,7 @@ Log.d("TAG", status.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/from_url/status/",
             "request": {
               "name": "FromUrlUploadStatusRequest",
@@ -2025,6 +2031,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multipart/complete/",
             "request": {
               "body": {
@@ -2164,6 +2171,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/<presigned-url-x>",
             "request": {
               "body": "bytes",
@@ -2321,6 +2329,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multipart/start/",
             "request": {
               "body": {
@@ -4351,6 +4360,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/group/",
             "request": {
               "body": {
@@ -4548,6 +4558,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/group/info/",
             "request": {
               "name": "FilesGroupInfoRequest",
@@ -4712,6 +4723,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/base/",
             "request": {
               "body": {
@@ -4935,6 +4947,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/info/",
             "request": {
               "name": "FileUploadInfoRequest",
@@ -5306,6 +5319,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/from_url/",
             "request": {
               "body": {
@@ -5936,6 +5950,7 @@ Log.d("TAG", status.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/from_url/status/",
             "request": {
               "name": "FromUrlUploadStatusRequest",
@@ -6175,6 +6190,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multipart/complete/",
             "request": {
               "body": {
@@ -6314,6 +6330,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/<presigned-url-x>",
             "request": {
               "body": "bytes",
@@ -6471,6 +6488,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multipart/start/",
             "request": {
               "body": {

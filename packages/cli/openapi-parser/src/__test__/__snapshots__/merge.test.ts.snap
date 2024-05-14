@@ -131,6 +131,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "account_details_retrieve",
+      "pagination": null,
       "path": "/account-details",
       "pathParameters": [],
       "queryParameters": [],
@@ -287,6 +288,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "account_token_retrieve",
+      "pagination": null,
       "path": "/account-token/{public_token}",
       "pathParameters": [
         {
@@ -561,6 +563,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "available_actions_retrieve",
+      "pagination": null,
       "path": "/available-actions",
       "pathParameters": [],
       "queryParameters": [],
@@ -832,6 +835,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "bank_info_list",
+      "pagination": null,
       "path": "/bank-info",
       "pathParameters": [],
       "queryParameters": [
@@ -1503,6 +1507,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "bank_info_retrieve",
+      "pagination": null,
       "path": "/bank-info/{id}",
       "pathParameters": [
         {
@@ -1894,6 +1899,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "benefits_list",
+      "pagination": null,
       "path": "/benefits",
       "pathParameters": [],
       "queryParameters": [
@@ -2412,6 +2418,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "benefits_retrieve",
+      "pagination": null,
       "path": "/benefits/{id}",
       "pathParameters": [
         {
@@ -2748,6 +2755,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "companies_list",
+      "pagination": null,
       "path": "/companies",
       "pathParameters": [],
       "queryParameters": [
@@ -3210,6 +3218,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "companies_retrieve",
+      "pagination": null,
       "path": "/companies/{id}",
       "pathParameters": [
         {
@@ -3330,6 +3339,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "delete_account_create",
+      "pagination": null,
       "path": "/delete-account",
       "pathParameters": [],
       "queryParameters": [],
@@ -3782,6 +3792,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "employee_payroll_runs_list",
+      "pagination": null,
       "path": "/employee-payroll-runs",
       "pathParameters": [],
       "queryParameters": [
@@ -5010,6 +5021,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "employee_payroll_runs_retrieve",
+      "pagination": null,
       "path": "/employee-payroll-runs/{id}",
       "pathParameters": [
         {
@@ -5527,6 +5539,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "employees_list",
+      "pagination": null,
       "path": "/employees",
       "pathParameters": [],
       "queryParameters": [
@@ -10221,6 +10234,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "employees_create",
+      "pagination": null,
       "path": "/employees",
       "pathParameters": [],
       "queryParameters": [
@@ -10713,6 +10727,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "employees_retrieve",
+      "pagination": null,
       "path": "/employees/{id}",
       "pathParameters": [
         {
@@ -14357,6 +14372,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "employees_ignore_create",
+      "pagination": null,
       "path": "/employees/ignore/{model_id}",
       "pathParameters": [
         {
@@ -14549,6 +14565,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "employees_meta_post_retrieve",
+      "pagination": null,
       "path": "/employees/meta/post",
       "pathParameters": [],
       "queryParameters": [],
@@ -14836,6 +14853,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "employments_list",
+      "pagination": null,
       "path": "/employments",
       "pathParameters": [],
       "queryParameters": [
@@ -15841,6 +15859,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "employments_retrieve",
+      "pagination": null,
       "path": "/employments/{id}",
       "pathParameters": [
         {
@@ -16419,6 +16438,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "generate_key_create",
+      "pagination": null,
       "path": "/generate-key",
       "pathParameters": [],
       "queryParameters": [],
@@ -16681,6 +16701,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "groups_list",
+      "pagination": null,
       "path": "/groups",
       "pathParameters": [],
       "queryParameters": [
@@ -17191,6 +17212,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "groups_retrieve",
+      "pagination": null,
       "path": "/groups/{id}",
       "pathParameters": [
         {
@@ -17413,6 +17435,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "issues_list",
+      "pagination": null,
       "path": "/issues",
       "pathParameters": [],
       "queryParameters": [
@@ -17891,6 +17914,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "issues_retrieve",
+      "pagination": null,
       "path": "/issues/{id}",
       "pathParameters": [
         {
@@ -18017,6 +18041,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "link_token_create",
+      "pagination": null,
       "path": "/link-token",
       "pathParameters": [],
       "queryParameters": [],
@@ -18286,6 +18311,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "linked_accounts_list",
+      "pagination": null,
       "path": "/linked-accounts",
       "pathParameters": [],
       "queryParameters": [
@@ -18973,6 +18999,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "locations_list",
+      "pagination": null,
       "path": "/locations",
       "pathParameters": [],
       "queryParameters": [
@@ -19498,6 +19525,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "locations_retrieve",
+      "pagination": null,
       "path": "/locations/{id}",
       "pathParameters": [
         {
@@ -19784,6 +19812,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "passthrough_create",
+      "pagination": null,
       "path": "/passthrough",
       "pathParameters": [],
       "queryParameters": [],
@@ -20035,6 +20064,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "pay_groups_list",
+      "pagination": null,
       "path": "/pay-groups",
       "pathParameters": [],
       "queryParameters": [
@@ -20464,6 +20494,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "pay_groups_retrieve",
+      "pagination": null,
       "path": "/pay-groups/{id}",
       "pathParameters": [
         {
@@ -20766,6 +20797,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "payroll_runs_list",
+      "pagination": null,
       "path": "/payroll-runs",
       "pathParameters": [],
       "queryParameters": [
@@ -21506,6 +21538,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "payroll_runs_retrieve",
+      "pagination": null,
       "path": "/payroll-runs/{id}",
       "pathParameters": [
         {
@@ -21739,6 +21772,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "regenerate_key_create",
+      "pagination": null,
       "path": "/regenerate-key",
       "pathParameters": [],
       "queryParameters": [],
@@ -21894,6 +21928,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "selective_sync_configurations_list",
+      "pagination": null,
       "path": "/selective-sync/configurations",
       "pathParameters": [],
       "queryParameters": [],
@@ -22062,6 +22097,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "selective_sync_configurations_update",
+      "pagination": null,
       "path": "/selective-sync/configurations",
       "pathParameters": [],
       "queryParameters": [],
@@ -22270,6 +22306,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "selective_sync_meta_list",
+      "pagination": null,
       "path": "/selective-sync/meta",
       "pathParameters": [],
       "queryParameters": [
@@ -22491,6 +22528,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "sync_status_list",
+      "pagination": null,
       "path": "/sync-status",
       "pathParameters": [],
       "queryParameters": [
@@ -22669,6 +22707,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "sync_status_resync_create",
+      "pagination": null,
       "path": "/sync-status/resync",
       "pathParameters": [],
       "queryParameters": [],
@@ -22922,6 +22961,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "teams_list",
+      "pagination": null,
       "path": "/teams",
       "pathParameters": [],
       "queryParameters": [
@@ -23405,6 +23445,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "teams_retrieve",
+      "pagination": null,
       "path": "/teams/{id}",
       "pathParameters": [
         {
@@ -23755,6 +23796,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "time_off_list",
+      "pagination": null,
       "path": "/time-off",
       "pathParameters": [],
       "queryParameters": [
@@ -24871,6 +24913,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "time_off_create",
+      "pagination": null,
       "path": "/time-off",
       "pathParameters": [],
       "queryParameters": [
@@ -25185,6 +25228,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "time_off_balances_list",
+      "pagination": null,
       "path": "/time-off-balances",
       "pathParameters": [],
       "queryParameters": [
@@ -25825,6 +25869,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "time_off_balances_retrieve",
+      "pagination": null,
       "path": "/time-off-balances/{id}",
       "pathParameters": [
         {
@@ -26208,6 +26253,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "time_off_retrieve",
+      "pagination": null,
       "path": "/time-off/{id}",
       "pathParameters": [
         {
@@ -26690,6 +26736,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "time_off_meta_post_retrieve",
+      "pagination": null,
       "path": "/time-off/meta/post",
       "pathParameters": [],
       "queryParameters": [],
@@ -26799,6 +26846,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "webhook_receivers_list",
+      "pagination": null,
       "path": "/webhook-receivers",
       "pathParameters": [],
       "queryParameters": [],
@@ -26928,6 +26976,7 @@ exports[`open api parser merge parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "webhook_receivers_create",
+      "pagination": null,
       "path": "/webhook-receivers",
       "pathParameters": [],
       "queryParameters": [],

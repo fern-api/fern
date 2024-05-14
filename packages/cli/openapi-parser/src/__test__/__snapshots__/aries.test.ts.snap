@@ -69,6 +69,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "close_menu_by_conn_id",
+      "pagination": null,
       "path": "/action-menu/{conn_id}/close",
       "pathParameters": [
         {
@@ -229,6 +230,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "fetch_menu_by_conn_id",
+      "pagination": null,
       "path": "/action-menu/{conn_id}/fetch",
       "pathParameters": [
         {
@@ -364,6 +366,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "perform_action_by_conn_id",
+      "pagination": null,
       "path": "/action-menu/{conn_id}/perform",
       "pathParameters": [
         {
@@ -482,6 +485,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "request_menu_by_conn_id",
+      "pagination": null,
       "path": "/action-menu/{conn_id}/request",
       "pathParameters": [
         {
@@ -621,6 +625,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_menu_to_conn_id",
+      "pagination": null,
       "path": "/action-menu/{conn_id}/send-menu",
       "pathParameters": [
         {
@@ -969,6 +974,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_matching_connections",
+      "pagination": null,
       "path": "/connections",
       "pathParameters": [],
       "queryParameters": [
@@ -1572,6 +1578,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_connection_invitation",
+      "pagination": null,
       "path": "/connections/create-invitation",
       "pathParameters": [],
       "queryParameters": [
@@ -1953,6 +1960,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_static_connection",
+      "pagination": null,
       "path": "/connections/create-static",
       "pathParameters": [],
       "queryParameters": [],
@@ -2227,6 +2235,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "receive_connection_invitation",
+      "pagination": null,
       "path": "/connections/receive-invitation",
       "pathParameters": [],
       "queryParameters": [
@@ -2499,6 +2508,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_connection_record",
+      "pagination": null,
       "path": "/connections/{conn_id}",
       "pathParameters": [
         {
@@ -2605,6 +2615,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_connection_record",
+      "pagination": null,
       "path": "/connections/{conn_id}",
       "pathParameters": [
         {
@@ -2812,6 +2823,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "accept_connection_invitation",
+      "pagination": null,
       "path": "/connections/{conn_id}/accept-invitation",
       "pathParameters": [
         {
@@ -3092,6 +3104,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "accept_connection_request",
+      "pagination": null,
       "path": "/connections/{conn_id}/accept-request",
       "pathParameters": [
         {
@@ -3213,6 +3226,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_connection_endpoint",
+      "pagination": null,
       "path": "/connections/{conn_id}/endpoints",
       "pathParameters": [
         {
@@ -3329,6 +3343,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "set_inbound_connection",
+      "pagination": null,
       "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
       "pathParameters": [
         {
@@ -3427,6 +3442,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_connection_metadata",
+      "pagination": null,
       "path": "/connections/{conn_id}/metadata",
       "pathParameters": [
         {
@@ -3541,6 +3557,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "set_connection_metadata",
+      "pagination": null,
       "path": "/connections/{conn_id}/metadata",
       "pathParameters": [
         {
@@ -3670,6 +3687,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_message",
+      "pagination": null,
       "path": "/connections/{conn_id}/send-message",
       "pathParameters": [
         {
@@ -3782,6 +3800,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_ping",
+      "pagination": null,
       "path": "/connections/{conn_id}/send-ping",
       "pathParameters": [
         {
@@ -3911,6 +3930,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "start_connection_introduction",
+      "pagination": null,
       "path": "/connections/{conn_id}/start-introduction",
       "pathParameters": [
         {
@@ -4242,6 +4262,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "publish_credential_definition",
+      "pagination": null,
       "path": "/credential-definitions",
       "pathParameters": [],
       "queryParameters": [
@@ -4373,6 +4394,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_created_cred_defs",
+      "pagination": null,
       "path": "/credential-definitions/created",
       "pathParameters": [],
       "queryParameters": [
@@ -4764,6 +4786,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_credential_definition",
+      "pagination": null,
       "path": "/credential-definitions/{cred_def_id}",
       "pathParameters": [
         {
@@ -5028,6 +5051,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "write_credential_definition",
+      "pagination": null,
       "path": "/credential-definitions/{cred_def_id}/write_record",
       "pathParameters": [
         {
@@ -5128,6 +5152,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_credential_mime_types",
+      "pagination": null,
       "path": "/credential/mime-types/{credential_id}",
       "pathParameters": [
         {
@@ -5217,6 +5242,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_revocation_status",
+      "pagination": null,
       "path": "/credential/revoked/{credential_id}",
       "pathParameters": [
         {
@@ -5482,6 +5508,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_w3c_credential",
+      "pagination": null,
       "path": "/credential/w3c/{credential_id}",
       "pathParameters": [
         {
@@ -5588,6 +5615,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_w3c_credential",
+      "pagination": null,
       "path": "/credential/w3c/{credential_id}",
       "pathParameters": [
         {
@@ -5723,6 +5751,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_credential_record",
+      "pagination": null,
       "path": "/credential/{credential_id}",
       "pathParameters": [
         {
@@ -5829,6 +5858,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_credential_record",
+      "pagination": null,
       "path": "/credential/{credential_id}",
       "pathParameters": [
         {
@@ -6021,6 +6051,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_credentials",
+      "pagination": null,
       "path": "/credentials",
       "pathParameters": [],
       "queryParameters": [
@@ -6568,6 +6599,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "get_w3c_credentials",
+      "pagination": null,
       "path": "/credentials/w3c",
       "pathParameters": [],
       "queryParameters": [
@@ -6842,6 +6874,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_didex_request",
+      "pagination": null,
       "path": "/didexchange/create-request",
       "pathParameters": [],
       "queryParameters": [
@@ -7273,6 +7306,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "receive_didex_request",
+      "pagination": null,
       "path": "/didexchange/receive-request",
       "pathParameters": [],
       "queryParameters": [
@@ -7569,6 +7603,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "accept_didex_invitation",
+      "pagination": null,
       "path": "/didexchange/{conn_id}/accept-invitation",
       "pathParameters": [
         {
@@ -7825,6 +7860,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "accept_didex_request",
+      "pagination": null,
       "path": "/didexchange/{conn_id}/accept-request",
       "pathParameters": [
         {
@@ -8067,6 +8103,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_v20_features_queries",
+      "pagination": null,
       "path": "/discover-features-2.0/queries",
       "pathParameters": [],
       "queryParameters": [
@@ -8400,6 +8437,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_v20_feature_records",
+      "pagination": null,
       "path": "/discover-features-2.0/records",
       "pathParameters": [],
       "queryParameters": [
@@ -8596,6 +8634,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_v10_features_query",
+      "pagination": null,
       "path": "/discover-features/query",
       "pathParameters": [],
       "queryParameters": [
@@ -8959,6 +8998,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_v10_feature_records",
+      "pagination": null,
       "path": "/discover-features/records",
       "pathParameters": [],
       "queryParameters": [
@@ -10005,6 +10045,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_credential_record",
+      "pagination": null,
       "path": "/issue-credential-2.0/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -11045,6 +11086,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_free_credential_offer",
+      "pagination": null,
       "path": "/issue-credential-2.0/create-offer",
       "pathParameters": [],
       "queryParameters": [],
@@ -13035,6 +13077,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_matching_cred_ex_records-v2",
+      "pagination": null,
       "path": "/issue-credential-2.0/records",
       "pathParameters": [],
       "queryParameters": [
@@ -14329,6 +14372,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_cred_ex_record",
+      "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
       "pathParameters": [
         {
@@ -14435,6 +14479,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_cred_ex_record",
+      "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
       "pathParameters": [
         {
@@ -15511,6 +15556,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "issue_credential_to_holder",
+      "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
       "pathParameters": [
         {
@@ -15640,6 +15686,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "report_cred_ex_problem",
+      "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
       "pathParameters": [
         {
@@ -16677,6 +16724,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_credential_offer",
+      "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
       "pathParameters": [
         {
@@ -17652,6 +17700,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_credential_request",
+      "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
       "pathParameters": [
         {
@@ -18740,6 +18789,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "store_received_credential",
+      "pagination": null,
       "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
       "pathParameters": [
         {
@@ -19805,6 +19855,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_credential",
+      "pagination": null,
       "path": "/issue-credential-2.0/send",
       "pathParameters": [],
       "queryParameters": [],
@@ -20852,6 +20903,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_credential_offer",
+      "pagination": null,
       "path": "/issue-credential-2.0/send-offer",
       "pathParameters": [],
       "queryParameters": [],
@@ -21899,6 +21951,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_credential_proposal",
+      "pagination": null,
       "path": "/issue-credential-2.0/send-proposal",
       "pathParameters": [],
       "queryParameters": [],
@@ -22947,6 +23000,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_credential_request",
+      "pagination": null,
       "path": "/issue-credential-2.0/send-request",
       "pathParameters": [],
       "queryParameters": [],
@@ -23815,6 +23869,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_credential_record",
+      "pagination": null,
       "path": "/issue-credential/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -24655,6 +24710,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_free_credential_offer",
+      "pagination": null,
       "path": "/issue-credential/create-offer",
       "pathParameters": [],
       "queryParameters": [],
@@ -26013,6 +26069,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_matching_cred_ex_records",
+      "pagination": null,
       "path": "/issue-credential/records",
       "pathParameters": [],
       "queryParameters": [
@@ -26991,6 +27048,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_cred_ex_record",
+      "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}",
       "pathParameters": [
         {
@@ -27097,6 +27155,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_cred_ex_record",
+      "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}",
       "pathParameters": [
         {
@@ -27857,6 +27916,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "issue_credential_to_holder",
+      "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/issue",
       "pathParameters": [
         {
@@ -27986,6 +28046,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "report_cred_ex_problem",
+      "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/problem-report",
       "pathParameters": [
         {
@@ -28750,6 +28811,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_credential_offer",
+      "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/send-offer",
       "pathParameters": [
         {
@@ -29511,6 +29573,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_credential_request",
+      "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/send-request",
       "pathParameters": [
         {
@@ -30271,6 +30334,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "store_received_credential",
+      "pagination": null,
       "path": "/issue-credential/records/{cred_ex_id}/store",
       "pathParameters": [
         {
@@ -31164,6 +31228,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_credential",
+      "pagination": null,
       "path": "/issue-credential/send",
       "pathParameters": [],
       "queryParameters": [],
@@ -32011,6 +32076,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_credential_offer",
+      "pagination": null,
       "path": "/issue-credential/send-offer",
       "pathParameters": [],
       "queryParameters": [],
@@ -32886,6 +32952,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_credential_proposal",
+      "pagination": null,
       "path": "/issue-credential/send-proposal",
       "pathParameters": [],
       "queryParameters": [],
@@ -32997,6 +33064,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "sign",
+      "pagination": null,
       "path": "/jsonld/sign",
       "pathParameters": [],
       "queryParameters": [],
@@ -33111,6 +33179,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "verify",
+      "pagination": null,
       "path": "/jsonld/verify",
       "pathParameters": [],
       "queryParameters": [],
@@ -33194,6 +33263,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_published_did_endpoint",
+      "pagination": null,
       "path": "/ledger/did-endpoint",
       "pathParameters": [],
       "queryParameters": [
@@ -33340,6 +33410,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_did_verkey",
+      "pagination": null,
       "path": "/ledger/did-verkey",
       "pathParameters": [],
       "queryParameters": [
@@ -33426,6 +33497,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_did_nym_role",
+      "pagination": null,
       "path": "/ledger/get-nym-role",
       "pathParameters": [],
       "queryParameters": [
@@ -33582,6 +33654,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_multiple_ledger_config",
+      "pagination": null,
       "path": "/ledger/multiple/config",
       "pathParameters": [],
       "queryParameters": [],
@@ -33642,6 +33715,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_write_ledger",
+      "pagination": null,
       "path": "/ledger/multiple/get-write-ledger",
       "pathParameters": [],
       "queryParameters": [],
@@ -33897,6 +33971,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "register_nym",
+      "pagination": null,
       "path": "/ledger/register-nym",
       "pathParameters": [],
       "queryParameters": [
@@ -34160,6 +34235,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "rotate_public_did_keypair",
+      "pagination": null,
       "path": "/ledger/rotate-public-did-keypair",
       "pathParameters": [],
       "queryParameters": [],
@@ -34307,6 +34383,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_taa",
+      "pagination": null,
       "path": "/ledger/taa",
       "pathParameters": [],
       "queryParameters": [],
@@ -34409,6 +34486,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "accept_taa",
+      "pagination": null,
       "path": "/ledger/taa/accept",
       "pathParameters": [],
       "queryParameters": [],
@@ -34580,6 +34658,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_default_mediator",
+      "pagination": null,
       "path": "/mediation/default-mediator",
       "pathParameters": [],
       "queryParameters": [],
@@ -34739,6 +34818,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "clear_default_mediator",
+      "pagination": null,
       "path": "/mediation/default-mediator",
       "pathParameters": [],
       "queryParameters": [],
@@ -34919,6 +34999,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_keylists",
+      "pagination": null,
       "path": "/mediation/keylists",
       "pathParameters": [],
       "queryParameters": [
@@ -35089,6 +35170,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_keylist_query_to_mediator",
+      "pagination": null,
       "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
       "pathParameters": [
         {
@@ -35320,6 +35402,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_keylist_update_to_mediator",
+      "pagination": null,
       "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
       "pathParameters": [
         {
@@ -35562,6 +35645,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "request_mediation_for_connection",
+      "pagination": null,
       "path": "/mediation/request/{conn_id}",
       "pathParameters": [
         {
@@ -35872,6 +35956,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_matching_mediation_records",
+      "pagination": null,
       "path": "/mediation/requests",
       "pathParameters": [],
       "queryParameters": [
@@ -36186,6 +36271,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_mediation_record",
+      "pagination": null,
       "path": "/mediation/requests/{mediation_id}",
       "pathParameters": [
         {
@@ -36374,6 +36460,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_mediation_record",
+      "pagination": null,
       "path": "/mediation/requests/{mediation_id}",
       "pathParameters": [
         {
@@ -36550,6 +36637,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "deny_mediation_request",
+      "pagination": null,
       "path": "/mediation/requests/{mediation_id}/deny",
       "pathParameters": [
         {
@@ -36684,6 +36772,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "grant_mediation_request",
+      "pagination": null,
       "path": "/mediation/requests/{mediation_id}/grant",
       "pathParameters": [
         {
@@ -36828,6 +36917,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "update_keylist_for_conn_id",
+      "pagination": null,
       "path": "/mediation/update-keylist/{conn_id}",
       "pathParameters": [
         {
@@ -37028,6 +37118,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "set_default_mediator",
+      "pagination": null,
       "path": "/mediation/{mediation_id}/default-mediator",
       "pathParameters": [
         {
@@ -37208,6 +37299,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_wallet",
+      "pagination": null,
       "path": "/multitenancy/wallet",
       "pathParameters": [],
       "queryParameters": [],
@@ -37316,6 +37408,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_wallet_record",
+      "pagination": null,
       "path": "/multitenancy/wallet/{wallet_id}",
       "pathParameters": [
         {
@@ -37471,6 +37564,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "update_wallet",
+      "pagination": null,
       "path": "/multitenancy/wallet/{wallet_id}",
       "pathParameters": [
         {
@@ -37600,6 +37694,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "delete_wallet",
+      "pagination": null,
       "path": "/multitenancy/wallet/{wallet_id}/remove",
       "pathParameters": [
         {
@@ -37712,6 +37807,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "get_auth_token",
+      "pagination": null,
       "path": "/multitenancy/wallet/{wallet_id}/token",
       "pathParameters": [
         {
@@ -37874,6 +37970,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_matching_wallets",
+      "pagination": null,
       "path": "/multitenancy/wallets",
       "pathParameters": [],
       "queryParameters": [
@@ -38500,6 +38597,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_oob_invitation",
+      "pagination": null,
       "path": "/out-of-band/create-invitation",
       "pathParameters": [],
       "queryParameters": [
@@ -39479,6 +39577,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "receive_oob_invitation",
+      "pagination": null,
       "path": "/out-of-band/receive-invitation",
       "pathParameters": [],
       "queryParameters": [
@@ -39656,6 +39755,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_loaded_plugins",
+      "pagination": null,
       "path": "/plugins",
       "pathParameters": [],
       "queryParameters": [],
@@ -40448,6 +40548,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_proof_request",
+      "pagination": null,
       "path": "/present-proof-2.0/create-request",
       "pathParameters": [],
       "queryParameters": [],
@@ -41522,6 +41623,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_matching_pres_ex_records-v2",
+      "pagination": null,
       "path": "/present-proof-2.0/records",
       "pathParameters": [],
       "queryParameters": [
@@ -42322,6 +42424,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_pres_ex_record",
+      "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}",
       "pathParameters": [
         {
@@ -42428,6 +42531,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_pres_ex_record",
+      "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}",
       "pathParameters": [
         {
@@ -42611,6 +42715,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_pres_ex_credentials-v2",
+      "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
       "pathParameters": [
         {
@@ -42832,6 +42937,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "report_pres_ex_problem",
+      "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
       "pathParameters": [
         {
@@ -43552,6 +43658,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_proof_presentation",
+      "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
       "pathParameters": [
         {
@@ -44189,6 +44296,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_proof_presentation_request",
+      "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
       "pathParameters": [
         {
@@ -44808,6 +44916,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "verify_received_presentation",
+      "pagination": null,
       "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
       "pathParameters": [
         {
@@ -45625,6 +45734,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_presentation_proposal",
+      "pagination": null,
       "path": "/present-proof-2.0/send-proposal",
       "pathParameters": [],
       "queryParameters": [],
@@ -46436,6 +46546,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_presentation_request",
+      "pagination": null,
       "path": "/present-proof-2.0/send-request",
       "pathParameters": [],
       "queryParameters": [],
@@ -47381,6 +47492,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_free_proof_request",
+      "pagination": null,
       "path": "/present-proof/create-request",
       "pathParameters": [],
       "queryParameters": [],
@@ -48611,6 +48723,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_matching_pres_ex_records",
+      "pagination": null,
       "path": "/present-proof/records",
       "pathParameters": [],
       "queryParameters": [
@@ -49569,6 +49682,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_pres_ex_record",
+      "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}",
       "pathParameters": [
         {
@@ -49675,6 +49789,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_pres_ex_record",
+      "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}",
       "pathParameters": [
         {
@@ -49858,6 +49973,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_pres_ex_credentials",
+      "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/credentials",
       "pathParameters": [
         {
@@ -50079,6 +50195,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "report_pres_ex_problem",
+      "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/problem-report",
       "pathParameters": [
         {
@@ -50933,6 +51050,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_proof_presentation",
+      "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/send-presentation",
       "pathParameters": [
         {
@@ -51716,6 +51834,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_proof_presentation_request",
+      "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/send-request",
       "pathParameters": [
         {
@@ -52481,6 +52600,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "verify_received_presentation",
+      "pagination": null,
       "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
       "pathParameters": [
         {
@@ -53417,6 +53537,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_presentation_proposal",
+      "pagination": null,
       "path": "/present-proof/send-proposal",
       "pathParameters": [],
       "queryParameters": [],
@@ -54369,6 +54490,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "send_free_presentation_request",
+      "pagination": null,
       "path": "/present-proof/send-request",
       "pathParameters": [],
       "queryParameters": [],
@@ -54453,6 +54575,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_did_document",
+      "pagination": null,
       "path": "/resolver/resolve/{did}",
       "pathParameters": [
         {
@@ -54747,6 +54870,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_active_registry_for_cred_def_id",
+      "pagination": null,
       "path": "/revocation/active-registry/{cred_def_id}",
       "pathParameters": [
         {
@@ -54882,6 +55006,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "clear_pending_revocations",
+      "pagination": null,
       "path": "/revocation/clear-pending-revocations",
       "pathParameters": [],
       "queryParameters": [],
@@ -55177,6 +55302,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_revocation_registry",
+      "pagination": null,
       "path": "/revocation/create-registry",
       "pathParameters": [],
       "queryParameters": [],
@@ -55310,6 +55436,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_credential_revocation_record",
+      "pagination": null,
       "path": "/revocation/credential-record",
       "pathParameters": [],
       "queryParameters": [
@@ -55679,6 +55806,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "publish_revocations",
+      "pagination": null,
       "path": "/revocation/publish-revocations",
       "pathParameters": [],
       "queryParameters": [],
@@ -55763,6 +55891,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_created_registries",
+      "pagination": null,
       "path": "/revocation/registries/created",
       "pathParameters": [],
       "queryParameters": [
@@ -55929,6 +56058,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "delete_tails_file",
+      "pagination": null,
       "path": "/revocation/registry/delete-tails-file",
       "pathParameters": [],
       "queryParameters": [
@@ -56254,6 +56384,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_revocation_registry",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}",
       "pathParameters": [
         {
@@ -56559,6 +56690,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "update_revocation_registry",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}",
       "pathParameters": [
         {
@@ -56992,6 +57124,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "publish_revocation_registry_definition",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/definition",
       "pathParameters": [
         {
@@ -57333,6 +57466,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "publish_revocation_registry_entry",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/entry",
       "pathParameters": [
         {
@@ -57472,6 +57606,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "update_revocation_entry_state",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
       "pathParameters": [
         {
@@ -57577,6 +57712,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_issued_credentials_count",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/issued",
       "pathParameters": [
         {
@@ -57800,6 +57936,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_issued_credential_details",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/issued/details",
       "pathParameters": [
         {
@@ -57881,6 +58018,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_published_credential_details",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
       "pathParameters": [
         {
@@ -58183,6 +58321,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "set_revocation_registry_state",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/set-state",
       "pathParameters": [
         {
@@ -58313,6 +58452,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "download_tails_file_sparse",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
       "pathParameters": [
         {
@@ -58359,6 +58499,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "download_tails_file",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
       "pathParameters": [
         {
@@ -58456,6 +58597,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "PUT",
       "operationId": "upload_tails_file",
+      "pagination": null,
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
       "pathParameters": [
         {
@@ -58615,6 +58757,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "revoke_issued_credential",
+      "pagination": null,
       "path": "/revocation/revoke",
       "pathParameters": [],
       "queryParameters": [],
@@ -58962,6 +59105,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "publish_schema",
+      "pagination": null,
       "path": "/schemas",
       "pathParameters": [],
       "queryParameters": [
@@ -59093,6 +59237,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_matching_created_schemas",
+      "pagination": null,
       "path": "/schemas/created",
       "pathParameters": [],
       "queryParameters": [
@@ -59313,6 +59458,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_schema",
+      "pagination": null,
       "path": "/schemas/{schema_id}",
       "pathParameters": [
         {
@@ -59454,6 +59600,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "write_schema_record_to_wallet",
+      "pagination": null,
       "path": "/schemas/{schema_id}/write_record",
       "pathParameters": [
         {
@@ -59549,6 +59696,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "shutdown_server",
+      "pagination": null,
       "path": "/shutdown",
       "pathParameters": [],
       "queryParameters": [],
@@ -59616,6 +59764,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_status",
+      "pagination": null,
       "path": "/status",
       "pathParameters": [],
       "queryParameters": [],
@@ -59668,6 +59817,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_config",
+      "pagination": null,
       "path": "/status/config",
       "pathParameters": [],
       "queryParameters": [],
@@ -59728,6 +59878,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_liveliness",
+      "pagination": null,
       "path": "/status/live",
       "pathParameters": [],
       "queryParameters": [],
@@ -59788,6 +59939,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_readiness",
+      "pagination": null,
       "path": "/status/ready",
       "pathParameters": [],
       "queryParameters": [],
@@ -59865,6 +60017,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "reset_statistics",
+      "pagination": null,
       "path": "/status/reset",
       "pathParameters": [],
       "queryParameters": [],
@@ -60098,6 +60251,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "resend_transaction_request",
+      "pagination": null,
       "path": "/transaction/{tran_id}/resend",
       "pathParameters": [
         {
@@ -60522,6 +60676,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_transaction_list",
+      "pagination": null,
       "path": "/transactions",
       "pathParameters": [],
       "queryParameters": [],
@@ -60766,6 +60921,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_transaction_request",
+      "pagination": null,
       "path": "/transactions/create-request",
       "pathParameters": [],
       "queryParameters": [
@@ -60907,6 +61063,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "set_endorser_info_for_conn_id",
+      "pagination": null,
       "path": "/transactions/{conn_id}/set-endorser-info",
       "pathParameters": [
         {
@@ -61039,6 +61196,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "set_endorser_role_for_conn_id",
+      "pagination": null,
       "path": "/transactions/{conn_id}/set-endorser-role",
       "pathParameters": [
         {
@@ -61348,6 +61506,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_transaction_record",
+      "pagination": null,
       "path": "/transactions/{tran_id}",
       "pathParameters": [
         {
@@ -61599,6 +61758,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "cancel_transaction_request",
+      "pagination": null,
       "path": "/transactions/{tran_id}/cancel",
       "pathParameters": [
         {
@@ -61850,6 +62010,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "endorse_transaction",
+      "pagination": null,
       "path": "/transactions/{tran_id}/endorse",
       "pathParameters": [
         {
@@ -62126,6 +62287,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "refuse_transaction",
+      "pagination": null,
       "path": "/transactions/{tran_id}/refuse",
       "pathParameters": [
         {
@@ -62377,6 +62539,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "publish_endorsed_transaction",
+      "pagination": null,
       "path": "/transactions/{tran_id}/write",
       "pathParameters": [
         {
@@ -62521,6 +62684,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_dids",
+      "pagination": null,
       "path": "/wallet/did",
       "pathParameters": [],
       "queryParameters": [
@@ -62822,6 +62986,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_local_did",
+      "pagination": null,
       "path": "/wallet/did/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -62922,6 +63087,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "PATCH",
       "operationId": "rotate_keypair",
+      "pagination": null,
       "path": "/wallet/did/local/rotate-keypair",
       "pathParameters": [],
       "queryParameters": [
@@ -63027,6 +63193,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_public_did",
+      "pagination": null,
       "path": "/wallet/did/public",
       "pathParameters": [],
       "queryParameters": [],
@@ -63125,6 +63292,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "set_public_did",
+      "pagination": null,
       "path": "/wallet/did/public",
       "pathParameters": [],
       "queryParameters": [
@@ -63291,6 +63459,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_did_endpoint",
+      "pagination": null,
       "path": "/wallet/get-did-endpoint",
       "pathParameters": [],
       "queryParameters": [
@@ -63408,6 +63577,7 @@ exports[`open api parser aries parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "set_did_endpoint",
+      "pagination": null,
       "path": "/wallet/set-did-endpoint",
       "pathParameters": [],
       "queryParameters": [

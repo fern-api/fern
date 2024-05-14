@@ -18,6 +18,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/example",
       "pathParameters": [],
       "queryParameters": [],

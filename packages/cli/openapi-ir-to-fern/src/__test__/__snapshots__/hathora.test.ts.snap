@@ -44,6 +44,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/apps/v1/create",
             "request": {
               "body": "root.AppConfig",
@@ -68,6 +69,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/apps/v1/delete/{appId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -104,6 +106,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/apps/v1/info/{appId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -159,6 +162,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/apps/v1/list",
             "response": {
               "docs": "Ok",
@@ -201,6 +205,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/apps/v1/update/{appId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -243,6 +248,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth/v1/{appId}/login/anonymous",
             "path-parameters": {
               "appId": "root.AppId",
@@ -275,6 +281,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth/v1/{appId}/login/google",
             "path-parameters": {
               "appId": "root.AppId",
@@ -316,6 +323,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth/v1/{appId}/login/nickname",
             "path-parameters": {
               "appId": "root.AppId",
@@ -401,6 +409,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/create",
             "path-parameters": {
               "appId": "root.AppId",
@@ -427,6 +436,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/delete/{buildId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -467,6 +477,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/info/{buildId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -512,6 +523,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/list",
             "path-parameters": {
               "appId": "root.AppId",
@@ -529,6 +541,7 @@ exports[`open api parser hathora docs 1`] = `
               "root.RunBuildRequestInternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -611,6 +624,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/deployments/v1/{appId}/create/{buildId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -660,6 +674,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/deployments/v1/{appId}/info/{deploymentId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -707,6 +722,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/deployments/v1/{appId}/list",
             "path-parameters": {
               "appId": "root.AppId",
@@ -744,6 +760,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discovery/v1/ping",
             "response": {
               "docs": "Ok",
@@ -786,6 +803,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v1/{appId}/create/private",
             "path-parameters": {
               "appId": "root.AppId",
@@ -833,6 +851,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v1/{appId}/create/public",
             "path-parameters": {
               "appId": "root.AppId",
@@ -897,6 +916,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lobby/v1/{appId}/list",
             "path-parameters": {
               "appId": "root.AppId",
@@ -977,6 +997,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/create",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1052,6 +1073,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/create/local",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1126,6 +1148,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/create/private",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1200,6 +1223,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/create/public",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1263,6 +1287,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/info/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1307,6 +1332,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/list/public",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1362,6 +1388,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/setState/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1409,6 +1436,7 @@ exports[`open api parser hathora docs 1`] = `
               "root.GetLogsForAppRequestNotFoundError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/logs/v1/{appId}/all",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1433,6 +1461,7 @@ exports[`open api parser hathora docs 1`] = `
               "root.GetLogsForDeploymentRequestNotFoundError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1457,6 +1486,7 @@ exports[`open api parser hathora docs 1`] = `
               "root.GetLogsForProcessRequestNotFoundError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/logs/v1/{appId}/process/{processId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1529,6 +1559,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/metrics/v1/{appId}/process/{processId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1597,6 +1628,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/processes/v1/{appId}/info/{processId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1651,6 +1683,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/processes/v1/{appId}/list/running",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1702,6 +1735,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/processes/v1/{appId}/list/stopped",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1749,6 +1783,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/create",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1784,6 +1819,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/destroy/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1820,6 +1856,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/list/{processId}/active",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1839,6 +1876,7 @@ exports[`open api parser hathora docs 1`] = `
               "root.GetConnectionInfoRequestInternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1879,6 +1917,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/list/{processId}/inactive",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1925,6 +1964,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/info/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -1951,6 +1991,7 @@ exports[`open api parser hathora docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/suspend/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -2748,6 +2789,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/apps/v1/create",
             "request": {
               "body": "root.AppConfig",
@@ -2772,6 +2814,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/apps/v1/delete/{appId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -2808,6 +2851,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/apps/v1/info/{appId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -2863,6 +2907,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/apps/v1/list",
             "response": {
               "docs": "Ok",
@@ -2905,6 +2950,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/apps/v1/update/{appId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -2947,6 +2993,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth/v1/{appId}/login/anonymous",
             "path-parameters": {
               "appId": "root.AppId",
@@ -2979,6 +3026,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth/v1/{appId}/login/google",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3020,6 +3068,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth/v1/{appId}/login/nickname",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3105,6 +3154,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/create",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3131,6 +3181,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/delete/{buildId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3171,6 +3222,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/info/{buildId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3216,6 +3268,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/list",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3233,6 +3286,7 @@ exports[`open api parser hathora simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3315,6 +3369,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/deployments/v1/{appId}/create/{buildId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3364,6 +3419,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/deployments/v1/{appId}/info/{deploymentId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3411,6 +3467,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/deployments/v1/{appId}/list",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3448,6 +3505,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discovery/v1/ping",
             "response": {
               "docs": "Ok",
@@ -3490,6 +3548,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v1/{appId}/create/private",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3537,6 +3596,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v1/{appId}/create/public",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3601,6 +3661,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lobby/v1/{appId}/list",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3681,6 +3742,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/create",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3756,6 +3818,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/create/local",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3830,6 +3893,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/create/private",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3904,6 +3968,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/create/public",
             "path-parameters": {
               "appId": "root.AppId",
@@ -3967,6 +4032,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/info/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4011,6 +4077,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/list/public",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4066,6 +4133,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/lobby/v2/{appId}/setState/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4113,6 +4181,7 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/logs/v1/{appId}/all",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4137,6 +4206,7 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4161,6 +4231,7 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/logs/v1/{appId}/process/{processId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4233,6 +4304,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/metrics/v1/{appId}/process/{processId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4301,6 +4373,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/processes/v1/{appId}/info/{processId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4355,6 +4428,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/processes/v1/{appId}/list/running",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4406,6 +4480,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/processes/v1/{appId}/list/stopped",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4453,6 +4528,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/create",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4488,6 +4564,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/destroy/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4524,6 +4601,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/list/{processId}/active",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4543,6 +4621,7 @@ exports[`open api parser hathora simple 1`] = `
               "root.InternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4583,6 +4662,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/list/{processId}/inactive",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4629,6 +4709,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/info/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",
@@ -4655,6 +4736,7 @@ exports[`open api parser hathora simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rooms/v1/{appId}/suspend/{roomId}",
             "path-parameters": {
               "appId": "root.AppId",

@@ -51,7 +51,7 @@ export function getFernPaginationExtension(
             document,
             FernOpenAPIExtension.PAGINATION
         );
-        if (typeof topLevelPagination == "boolean") {
+        if (typeof topLevelPagination === "boolean") {
             throw new Error(
                 "Global pagination extension is a boolean, expected an object. Only endpoints may declare a boolean for x-fern-pagination."
             );

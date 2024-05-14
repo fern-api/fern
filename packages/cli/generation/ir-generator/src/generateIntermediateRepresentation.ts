@@ -372,7 +372,7 @@ export async function generateIntermediateRepresentation({
     });
 
     const hasPaginatedEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
-        return service.endpoints.some((endpoint) => endpoint.pagination !== null);
+        return service.endpoints.some((endpoint) => endpoint.pagination != null);
     });
 
     const hasFileDownloadEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {

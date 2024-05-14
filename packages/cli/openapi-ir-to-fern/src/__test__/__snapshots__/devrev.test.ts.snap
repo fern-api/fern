@@ -39,6 +39,7 @@ exports[`open api parser devrev docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/artifacts.locate",
             "request": {
               "name": "ArtifactsLocateRequest",
@@ -86,6 +87,7 @@ exports[`open api parser devrev docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/artifacts.prepare",
             "request": {
               "body": {
@@ -136,6 +138,7 @@ enterprise connections can be created by an organization.
               "root.DevOrgAuthConnectionsCreateRequestServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.create",
             "request": {
               "body": "root.DevOrgAuthConnectionsCreateRequest",
@@ -168,6 +171,7 @@ connections can not be deleted using this method.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.delete",
             "request": {
               "body": {
@@ -196,6 +200,7 @@ connections can not be deleted using this method.
               "root.DevOrgAuthConnectionsGetRequestServiceUnavailableError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.get",
             "request": {
               "name": "DevOrgAuthConnectionsGetRequest",
@@ -236,6 +241,7 @@ created by the user.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.list",
             "response": {
               "docs": "Success.",
@@ -267,6 +273,7 @@ disabled.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.toggle",
             "request": {
               "body": {
@@ -296,6 +303,7 @@ disabled.
               "root.DevOrgAuthConnectionsUpdateRequestServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.update",
             "request": {
               "body": "root.DevOrgAuthConnectionsUpdateRequest",
@@ -347,6 +355,7 @@ authenticated user.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth-tokens.create",
             "request": {
               "body": {
@@ -420,6 +429,7 @@ given Dev organization.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth-tokens.delete",
             "request": {
               "body": {
@@ -480,6 +490,7 @@ given Dev organization.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/auth-tokens.get",
             "request": {
               "name": "AuthTokensGetRequest",
@@ -537,6 +548,7 @@ token type issued for a given subject.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/auth-tokens.list",
             "request": {
               "name": "AuthTokensListRequest",
@@ -587,6 +599,7 @@ authenticated user.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth-tokens.self.delete",
             "request": {
               "body": {
@@ -642,6 +655,7 @@ organization.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth-tokens.update",
             "request": {
               "body": {
@@ -722,6 +736,7 @@ organization.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/dev-users.list",
             "request": {
               "name": "DevUsersListRequest",
@@ -806,6 +821,7 @@ used.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/dev-users.self",
             "response": {
               "docs": "Success.",
@@ -837,6 +853,7 @@ used.
               "root.PartsCreateRequestServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/parts.create",
             "request": {
               "body": "root.PartsCreateRequest",
@@ -873,6 +890,7 @@ used.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/parts.delete",
             "request": {
               "body": {
@@ -906,6 +924,7 @@ used.
               "root.PartsGetRequestServiceUnavailableError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/parts.get",
             "request": {
               "name": "PartsGetRequest",
@@ -945,6 +964,7 @@ used.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/parts.list",
             "request": {
               "name": "PartsListRequest",
@@ -1007,6 +1027,7 @@ used.
               "root.PartsUpdateRequestServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/parts.update",
             "request": {
               "body": "root.PartsUpdateRequest",
@@ -1064,6 +1085,7 @@ organization.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rev-orgs.create",
             "request": {
               "body": {
@@ -1130,6 +1152,7 @@ records.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rev-orgs.delete",
             "request": {
               "body": {
@@ -1183,6 +1206,7 @@ records.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rev-orgs.get",
             "request": {
               "name": "RevOrgsGetRequest",
@@ -1236,6 +1260,7 @@ to access.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rev-orgs.list",
             "request": {
               "name": "RevOrgsListRequest",
@@ -1337,6 +1362,7 @@ them.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rev-orgs.update",
             "request": {
               "body": {
@@ -1429,6 +1455,7 @@ and a logical concept denoted by the tag's name.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/tags.create",
             "request": {
               "body": {
@@ -1486,6 +1513,7 @@ permitted.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/tags.delete",
             "request": {
               "body": {
@@ -1540,6 +1568,7 @@ permitted.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/tags.get",
             "request": {
               "name": "TagsGetRequest",
@@ -1590,6 +1619,7 @@ permitted.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/tags.list",
             "request": {
               "name": "TagsListRequest",
@@ -1652,6 +1682,7 @@ used.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/tags.update",
             "request": {
               "body": {
@@ -1707,6 +1738,7 @@ tags.
               "root.TimelineEntriesCreateRequestServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timeline-entries.create",
             "request": {
               "body": "root.TimelineEntriesCreateRequest",
@@ -1729,6 +1761,7 @@ tags.
               "root.TimelineEntriesGetRequestServiceUnavailableError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/timeline-entries.get",
             "request": {
               "name": "TimelineEntriesGetRequest",
@@ -1771,6 +1804,7 @@ tags.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/timeline-entries.list",
             "request": {
               "name": "TimelineEntriesListRequest",
@@ -1816,6 +1850,7 @@ used.
               "root.TimelineEntriesUpdateRequestServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timeline-entries.update",
             "request": {
               "body": "root.TimelineEntriesUpdateRequest",
@@ -1873,6 +1908,7 @@ used.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks.create",
             "request": {
               "body": {
@@ -1931,6 +1967,7 @@ response.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks.delete",
             "request": {
               "body": {
@@ -1986,6 +2023,7 @@ response.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks.get",
             "request": {
               "name": "WebhooksGetRequest",
@@ -2035,6 +2073,7 @@ response.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks.list",
             "response": {
               "docs": "Success.",
@@ -2077,6 +2116,7 @@ response.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks.update",
             "request": {
               "body": {
@@ -2141,6 +2181,7 @@ won't receive any object events until successfully verified.
               "root.WorksCreateRequestServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/works.create",
             "request": {
               "body": "root.WorksCreateRequest",
@@ -2177,6 +2218,7 @@ won't receive any object events until successfully verified.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/works.delete",
             "request": {
               "body": {
@@ -2217,6 +2259,7 @@ won't receive any object events until successfully verified.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/works.export",
             "request": {
               "name": "WorksExportRequest",
@@ -2295,6 +2338,7 @@ organizations.
               "root.WorksGetRequestServiceUnavailableError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/works.get",
             "request": {
               "name": "WorksGetRequest",
@@ -2333,6 +2377,7 @@ organizations.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/works.list",
             "request": {
               "name": "WorksListRequest",
@@ -2422,6 +2467,7 @@ organizations.
               "root.WorksUpdateRequestServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/works.update",
             "request": {
               "body": "root.WorksUpdateRequest",
@@ -6144,6 +6190,7 @@ exports[`open api parser devrev simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/artifacts.locate",
             "request": {
               "name": "ArtifactsLocateRequest",
@@ -6191,6 +6238,7 @@ exports[`open api parser devrev simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/artifacts.prepare",
             "request": {
               "body": {
@@ -6241,6 +6289,7 @@ enterprise connections can be created by an organization.
               "root.ServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.create",
             "request": {
               "body": "root.DevOrgAuthConnectionsCreateRequest",
@@ -6273,6 +6322,7 @@ connections can not be deleted using this method.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.delete",
             "request": {
               "body": {
@@ -6301,6 +6351,7 @@ connections can not be deleted using this method.
               "root.ServiceUnavailableError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.get",
             "request": {
               "name": "DevOrgAuthConnectionsGetRequest",
@@ -6341,6 +6392,7 @@ created by the user.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.list",
             "response": {
               "docs": "Success.",
@@ -6372,6 +6424,7 @@ disabled.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.toggle",
             "request": {
               "body": {
@@ -6401,6 +6454,7 @@ disabled.
               "root.ServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/dev-orgs.auth-connections.update",
             "request": {
               "body": "root.DevOrgAuthConnectionsUpdateRequest",
@@ -6452,6 +6506,7 @@ authenticated user.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth-tokens.create",
             "request": {
               "body": {
@@ -6525,6 +6580,7 @@ given Dev organization.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth-tokens.delete",
             "request": {
               "body": {
@@ -6585,6 +6641,7 @@ given Dev organization.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/auth-tokens.get",
             "request": {
               "name": "AuthTokensGetRequest",
@@ -6642,6 +6699,7 @@ token type issued for a given subject.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/auth-tokens.list",
             "request": {
               "name": "AuthTokensListRequest",
@@ -6692,6 +6750,7 @@ authenticated user.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth-tokens.self.delete",
             "request": {
               "body": {
@@ -6747,6 +6806,7 @@ organization.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/auth-tokens.update",
             "request": {
               "body": {
@@ -6827,6 +6887,7 @@ organization.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/dev-users.list",
             "request": {
               "name": "DevUsersListRequest",
@@ -6911,6 +6972,7 @@ used.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/dev-users.self",
             "response": {
               "docs": "Success.",
@@ -6942,6 +7004,7 @@ used.
               "root.ServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/parts.create",
             "request": {
               "body": "root.PartsCreateRequest",
@@ -6978,6 +7041,7 @@ used.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/parts.delete",
             "request": {
               "body": {
@@ -7011,6 +7075,7 @@ used.
               "root.ServiceUnavailableError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/parts.get",
             "request": {
               "name": "PartsGetRequest",
@@ -7050,6 +7115,7 @@ used.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/parts.list",
             "request": {
               "name": "PartsListRequest",
@@ -7112,6 +7178,7 @@ used.
               "root.ServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/parts.update",
             "request": {
               "body": "root.PartsUpdateRequest",
@@ -7169,6 +7236,7 @@ organization.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rev-orgs.create",
             "request": {
               "body": {
@@ -7235,6 +7303,7 @@ records.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rev-orgs.delete",
             "request": {
               "body": {
@@ -7288,6 +7357,7 @@ records.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rev-orgs.get",
             "request": {
               "name": "RevOrgsGetRequest",
@@ -7341,6 +7411,7 @@ to access.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/rev-orgs.list",
             "request": {
               "name": "RevOrgsListRequest",
@@ -7442,6 +7513,7 @@ them.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/rev-orgs.update",
             "request": {
               "body": {
@@ -7534,6 +7606,7 @@ and a logical concept denoted by the tag's name.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/tags.create",
             "request": {
               "body": {
@@ -7591,6 +7664,7 @@ permitted.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/tags.delete",
             "request": {
               "body": {
@@ -7645,6 +7719,7 @@ permitted.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/tags.get",
             "request": {
               "name": "TagsGetRequest",
@@ -7695,6 +7770,7 @@ permitted.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/tags.list",
             "request": {
               "name": "TagsListRequest",
@@ -7757,6 +7833,7 @@ used.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/tags.update",
             "request": {
               "body": {
@@ -7812,6 +7889,7 @@ tags.
               "root.ServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timeline-entries.create",
             "request": {
               "body": "root.TimelineEntriesCreateRequest",
@@ -7834,6 +7912,7 @@ tags.
               "root.ServiceUnavailableError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/timeline-entries.get",
             "request": {
               "name": "TimelineEntriesGetRequest",
@@ -7876,6 +7955,7 @@ tags.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/timeline-entries.list",
             "request": {
               "name": "TimelineEntriesListRequest",
@@ -7921,6 +8001,7 @@ used.
               "root.ServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/timeline-entries.update",
             "request": {
               "body": "root.TimelineEntriesUpdateRequest",
@@ -7978,6 +8059,7 @@ used.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks.create",
             "request": {
               "body": {
@@ -8036,6 +8118,7 @@ response.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks.delete",
             "request": {
               "body": {
@@ -8091,6 +8174,7 @@ response.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks.get",
             "request": {
               "name": "WebhooksGetRequest",
@@ -8140,6 +8224,7 @@ response.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/webhooks.list",
             "response": {
               "docs": "Success.",
@@ -8182,6 +8267,7 @@ response.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/webhooks.update",
             "request": {
               "body": {
@@ -8246,6 +8332,7 @@ won't receive any object events until successfully verified.
               "root.ServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/works.create",
             "request": {
               "body": "root.WorksCreateRequest",
@@ -8282,6 +8369,7 @@ won't receive any object events until successfully verified.
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/works.delete",
             "request": {
               "body": {
@@ -8322,6 +8410,7 @@ won't receive any object events until successfully verified.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/works.export",
             "request": {
               "name": "WorksExportRequest",
@@ -8400,6 +8489,7 @@ organizations.
               "root.ServiceUnavailableError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/works.get",
             "request": {
               "name": "WorksGetRequest",
@@ -8438,6 +8528,7 @@ organizations.
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/works.list",
             "request": {
               "name": "WorksListRequest",
@@ -8527,6 +8618,7 @@ organizations.
               "root.ServiceUnavailableError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/works.update",
             "request": {
               "body": "root.WorksUpdateRequest",

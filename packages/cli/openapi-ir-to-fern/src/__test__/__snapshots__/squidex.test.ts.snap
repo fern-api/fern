@@ -28,6 +28,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
@@ -82,6 +83,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
               "app": {
@@ -145,6 +147,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/contributors/{id}",
             "path-parameters": {
               "app": {
@@ -208,6 +211,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
@@ -266,6 +270,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
               "app": {
@@ -328,6 +333,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/contributors/me",
             "path-parameters": {
               "app": {
@@ -387,6 +393,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
               "app": {
@@ -454,6 +461,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
               "app": {
@@ -516,6 +524,7 @@ exports[`open api parser squidex docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
@@ -572,6 +581,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps",
             "response": {
               "docs": "Apps returned.",
@@ -613,6 +623,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/scripts",
             "path-parameters": {
               "app": {
@@ -669,6 +680,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
               "app": {
@@ -726,6 +738,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
               "app": {
@@ -747,6 +760,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "root.AppsGetImageRequestInternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
@@ -803,6 +817,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
               "app": {
@@ -836,6 +851,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles/permissions",
             "path-parameters": {
               "app": {
@@ -893,6 +909,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
               "app": {
@@ -948,6 +965,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/settings",
             "path-parameters": {
               "app": {
@@ -1007,6 +1025,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/apps",
             "path-parameters": {
               "team": {
@@ -1068,6 +1087,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
               "app": {
@@ -1128,6 +1148,7 @@ You will be assigned as owner of the new app automatically.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps",
             "request": {
               "body": {
@@ -1200,6 +1221,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
               "app": {
@@ -1274,6 +1296,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
               "app": {
@@ -1337,6 +1360,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
               "app": {
@@ -1411,6 +1435,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
               "app": {
@@ -1489,6 +1514,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
               "app": {
@@ -1562,6 +1588,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
@@ -1639,6 +1666,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/team",
             "path-parameters": {
               "app": {
@@ -1701,6 +1729,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/scripts",
             "path-parameters": {
               "app": {
@@ -1797,6 +1826,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
               "app": {
@@ -1889,6 +1919,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
               "app": {
@@ -1978,6 +2009,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
               "app": {
@@ -2069,6 +2101,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/settings",
             "path-parameters": {
               "app": {
@@ -2163,6 +2196,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
               "app": {
@@ -2252,6 +2286,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
@@ -2323,6 +2358,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/bulk",
             "path-parameters": {
               "app": {
@@ -2378,6 +2414,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -2421,6 +2458,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
               "app": {
@@ -2493,6 +2531,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -2519,6 +2558,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.AssetsGetAssetContentRequestInternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/assets/{id}",
             "path-parameters": {
               "id": {
@@ -2601,6 +2641,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.AssetsGetAssetContentBySlugRequestInternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/assets/{app}/{idOrSlug}/{more}",
             "path-parameters": {
               "app": {
@@ -2738,6 +2779,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
               "app": {
@@ -2829,6 +2871,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets",
             "path-parameters": {
               "app": {
@@ -2942,6 +2985,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/query",
             "path-parameters": {
               "app": {
@@ -2978,6 +3022,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/tags",
             "path-parameters": {
               "app": {
@@ -3052,6 +3097,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets",
             "path-parameters": {
               "app": {
@@ -3123,6 +3169,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
               "app": {
@@ -3215,6 +3262,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -3313,6 +3361,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -3421,6 +3470,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}/content",
             "path-parameters": {
               "app": {
@@ -3484,6 +3534,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
               "app": {
@@ -3547,6 +3598,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders/{id}/parent",
             "path-parameters": {
               "app": {
@@ -3638,6 +3690,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}/parent",
             "path-parameters": {
               "app": {
@@ -3693,6 +3746,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/tags/{name}",
             "path-parameters": {
               "app": {
@@ -3751,6 +3805,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
               "app": {
@@ -3772,6 +3827,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BackupsGetBackupContentRequestInternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
               "app": {
@@ -3797,6 +3853,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BackupsGetBackupContentV2RequestInternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/backups/{id}",
             "path-parameters": {
               "id": {
@@ -3865,6 +3922,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
               "app": {
@@ -3900,6 +3958,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/restore",
             "response": {
               "docs": "Status returned.",
@@ -3923,6 +3982,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
               "app": {
@@ -3947,6 +4007,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/restore",
             "request": {
               "body": {
@@ -3996,6 +4057,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
               "app": {
@@ -4055,6 +4117,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/comments/{commentsId}",
             "path-parameters": {
               "app": {
@@ -4101,6 +4164,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/watching/{resource}",
             "path-parameters": {
               "app": {
@@ -4147,6 +4211,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/comments/{commentsId}",
             "path-parameters": {
               "app": {
@@ -4188,6 +4253,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
               "app": {
@@ -4260,6 +4326,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/bulk",
             "path-parameters": {
               "app": {
@@ -4388,6 +4455,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
               "app": {
@@ -4427,6 +4495,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -4531,6 +4600,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
               "app": {
@@ -4626,6 +4696,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
               "app": {
@@ -4707,6 +4778,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -4755,6 +4827,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/validity",
             "path-parameters": {
               "app": {
@@ -4781,6 +4854,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.ContentsGetContentVersionRequestInternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/{version}",
             "path-parameters": {
               "app": {
@@ -4878,6 +4952,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
               "app": {
@@ -4982,6 +5057,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/query",
             "path-parameters": {
               "app": {
@@ -5075,6 +5151,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/references",
             "path-parameters": {
               "app": {
@@ -5178,6 +5255,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/referencing",
             "path-parameters": {
               "app": {
@@ -5285,6 +5363,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -5385,6 +5464,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
               "app": {
@@ -5464,6 +5544,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/import",
             "path-parameters": {
               "app": {
@@ -5583,6 +5664,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -5699,6 +5781,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -5800,6 +5883,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
               "app": {
@@ -5864,6 +5948,7 @@ The client secret is auto generated on the server and returned. The client does 
               {},
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/diagnostics/dump",
           },
           "getGCDump": {
@@ -5878,6 +5963,7 @@ The client secret is auto generated on the server and returned. The client does 
               {},
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/diagnostics/gcdump",
           },
         },
@@ -5930,6 +6016,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/event-consumers",
             "response": {
               "docs": "Event consumers returned.",
@@ -5970,6 +6057,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/event-consumers/{consumerName}/reset",
             "path-parameters": {
               "consumerName": {
@@ -6016,6 +6104,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/event-consumers/{consumerName}/start",
             "path-parameters": {
               "consumerName": {
@@ -6062,6 +6151,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/event-consumers/{consumerName}/stop",
             "path-parameters": {
               "consumerName": {
@@ -6113,6 +6203,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/history",
             "path-parameters": {
               "app": {
@@ -6162,6 +6253,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/history",
             "path-parameters": {
               "team": {
@@ -6215,6 +6307,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/languages",
             "response": {
               "docs": "Supported language codes returned.",
@@ -6255,6 +6348,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/news/features",
             "request": {
               "name": "NewsGetNewsRequest",
@@ -6299,6 +6393,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
               "commentId": {
@@ -6352,6 +6447,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/users/{userId}/notifications",
             "path-parameters": {
               "userId": {
@@ -6399,6 +6495,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/ping/{app}",
             "path-parameters": {
               "app": {
@@ -6424,6 +6521,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/info",
             "response": {
               "docs": "Infos returned.",
@@ -6441,6 +6539,7 @@ The client secret is auto generated on the server and returned. The client does 
               {},
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/ping",
           },
         },
@@ -6498,6 +6597,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/plans",
             "path-parameters": {
               "app": {
@@ -6554,6 +6654,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/plans",
             "path-parameters": {
               "team": {
@@ -6591,6 +6692,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/plan",
             "path-parameters": {
               "app": {
@@ -6631,6 +6733,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/teams/{team}/plan",
             "path-parameters": {
               "team": {
@@ -6675,6 +6778,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
               "app": {
@@ -6703,6 +6807,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
               "app": {
@@ -6729,6 +6834,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
               "app": {
@@ -6758,6 +6864,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/events",
             "path-parameters": {
               "app": {
@@ -6786,6 +6893,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/run",
             "path-parameters": {
               "app": {
@@ -6804,6 +6912,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.RulesDisableRuleRequestInternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/disable",
             "path-parameters": {
               "app": {
@@ -6830,6 +6939,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.RulesEnableRuleRequestInternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/enable",
             "path-parameters": {
               "app": {
@@ -6879,6 +6989,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/rules/actions",
             "response": {
               "docs": "Rule actions returned.",
@@ -6906,6 +7017,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/rules/eventtypes/{type}",
             "path-parameters": {
               "type": {
@@ -6935,6 +7047,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/rules/eventtypes",
             "response": {
               "docs": "Rule events returned.",
@@ -6988,6 +7101,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
               "app": {
@@ -7046,6 +7160,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
               "app": {
@@ -7068,6 +7183,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.RulesPostRuleRequestInternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
               "app": {
@@ -7101,6 +7217,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
               "app": {
@@ -7123,6 +7240,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.RulesPutRuleRequestInternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
               "app": {
@@ -7181,6 +7299,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/run",
             "path-parameters": {
               "app": {
@@ -7250,6 +7369,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/simulate",
             "path-parameters": {
               "app": {
@@ -7276,6 +7396,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.RulesSimulatePostRequestInternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/simulate",
             "path-parameters": {
               "app": {
@@ -7309,6 +7430,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/trigger",
             "path-parameters": {
               "app": {
@@ -7409,6 +7531,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
               "app": {
@@ -7507,6 +7630,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
               "app": {
@@ -7549,6 +7673,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
@@ -7638,6 +7763,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/disable",
             "path-parameters": {
               "app": {
@@ -7736,6 +7862,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable",
             "path-parameters": {
               "app": {
@@ -7837,6 +7964,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/enable",
             "path-parameters": {
               "app": {
@@ -7935,6 +8063,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable",
             "path-parameters": {
               "app": {
@@ -8034,6 +8163,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
@@ -8118,6 +8248,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
               "app": {
@@ -8207,6 +8338,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
             "path-parameters": {
               "app": {
@@ -8305,6 +8437,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
             "path-parameters": {
               "app": {
@@ -8406,6 +8539,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
             "path-parameters": {
               "app": {
@@ -8504,6 +8638,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
             "path-parameters": {
               "app": {
@@ -8539,6 +8674,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.SchemasPostFieldRequestInternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields",
             "path-parameters": {
               "app": {
@@ -8569,6 +8705,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.SchemasPostNestedFieldRequestInternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
             "path-parameters": {
               "app": {
@@ -8673,6 +8810,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
               "app": {
@@ -8785,6 +8923,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/publish",
             "path-parameters": {
               "app": {
@@ -8878,6 +9017,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/category",
             "path-parameters": {
               "app": {
@@ -8917,6 +9057,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.SchemasPutFieldRequestInternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
               "app": {
@@ -8950,6 +9091,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.SchemasPutNestedFieldRequestInternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
               "app": {
@@ -9059,6 +9201,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
             "path-parameters": {
               "app": {
@@ -9161,6 +9304,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
             "path-parameters": {
               "app": {
@@ -9257,6 +9401,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/rules",
             "path-parameters": {
               "app": {
@@ -9365,6 +9510,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
@@ -9499,6 +9645,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
             "path-parameters": {
               "app": {
@@ -9599,6 +9746,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/sync",
             "path-parameters": {
               "app": {
@@ -9712,6 +9860,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
             "path-parameters": {
               "app": {
@@ -9822,6 +9971,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/scripts",
             "path-parameters": {
               "app": {
@@ -9918,6 +10068,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
             "path-parameters": {
               "app": {
@@ -10016,6 +10167,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
             "path-parameters": {
               "app": {
@@ -10116,6 +10268,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/unpublish",
             "path-parameters": {
               "app": {
@@ -10174,6 +10327,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/search",
             "path-parameters": {
               "app": {
@@ -10228,6 +10382,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/usages/storage/today",
             "path-parameters": {
               "app": {
@@ -10261,6 +10416,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/usages/log",
             "path-parameters": {
               "app": {
@@ -10300,6 +10456,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
               "app": {
@@ -10347,6 +10504,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
               "fromDate": {
@@ -10389,6 +10547,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/usages/storage/today",
             "path-parameters": {
               "team": {
@@ -10441,6 +10600,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
               "app": {
@@ -10501,6 +10661,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
               "fromDate": {
@@ -10579,6 +10740,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/teams/{team}/contributors/{id}",
             "path-parameters": {
               "id": {
@@ -10641,6 +10803,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/teams/{team}/contributors/me",
             "path-parameters": {
               "team": {
@@ -10698,6 +10861,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
               "team": {
@@ -10743,6 +10907,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}",
             "path-parameters": {
               "team": {
@@ -10786,6 +10951,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams",
             "response": {
               "docs": "Teams returned.",
@@ -10841,6 +11007,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
               "team": {
@@ -10891,6 +11058,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/teams",
             "request": {
               "body": {
@@ -10947,6 +11115,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/teams/{team}",
             "path-parameters": {
               "team": {
@@ -11011,6 +11180,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/templates/{name}",
             "path-parameters": {
               "name": {
@@ -11060,6 +11230,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/templates",
             "response": {
               "docs": "Templates returned.",
@@ -11103,6 +11274,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/translations",
             "path-parameters": {
               "app": {
@@ -11165,6 +11337,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
@@ -11207,6 +11380,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
@@ -11260,6 +11434,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/user-management",
             "request": {
               "name": "UserManagementGetUsersRequest",
@@ -11319,6 +11494,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/user-management/{id}/lock",
             "path-parameters": {
               "id": {
@@ -11370,6 +11546,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/user-management",
             "request": {
               "body": {
@@ -11443,6 +11620,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
@@ -11516,6 +11694,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/user-management/{id}/unlock",
             "path-parameters": {
               "id": {
@@ -11573,6 +11752,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/users/{id}",
             "path-parameters": {
               "id": {
@@ -11594,6 +11774,7 @@ You will be assigned as owner of the new team automatically.",
               "root.UsersGetUserPictureRequestInternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/users/{id}/picture",
             "path-parameters": {
               "id": {
@@ -11629,6 +11810,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api",
             "response": {
               "docs": "User resources returned.",
@@ -11666,6 +11848,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/users",
             "request": {
               "name": "UsersGetUsersRequest",
@@ -17607,6 +17790,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
@@ -17661,6 +17845,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
               "app": {
@@ -17724,6 +17909,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/contributors/{id}",
             "path-parameters": {
               "app": {
@@ -17787,6 +17973,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
@@ -17845,6 +18032,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
               "app": {
@@ -17907,6 +18095,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/contributors/me",
             "path-parameters": {
               "app": {
@@ -17966,6 +18155,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
               "app": {
@@ -18033,6 +18223,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
               "app": {
@@ -18095,6 +18286,7 @@ exports[`open api parser squidex simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
@@ -18151,6 +18343,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps",
             "response": {
               "docs": "Apps returned.",
@@ -18192,6 +18385,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/scripts",
             "path-parameters": {
               "app": {
@@ -18248,6 +18442,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
               "app": {
@@ -18305,6 +18500,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
               "app": {
@@ -18326,6 +18522,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "root.InternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
@@ -18382,6 +18579,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
               "app": {
@@ -18415,6 +18613,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles/permissions",
             "path-parameters": {
               "app": {
@@ -18472,6 +18671,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
               "app": {
@@ -18527,6 +18727,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/settings",
             "path-parameters": {
               "app": {
@@ -18586,6 +18787,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/apps",
             "path-parameters": {
               "team": {
@@ -18647,6 +18849,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
               "app": {
@@ -18707,6 +18910,7 @@ You will be assigned as owner of the new app automatically.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps",
             "request": {
               "body": {
@@ -18779,6 +18983,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
               "app": {
@@ -18853,6 +19058,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
               "app": {
@@ -18916,6 +19122,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
               "app": {
@@ -18990,6 +19197,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
               "app": {
@@ -19068,6 +19276,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
               "app": {
@@ -19141,6 +19350,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
@@ -19218,6 +19428,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/team",
             "path-parameters": {
               "app": {
@@ -19280,6 +19491,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/scripts",
             "path-parameters": {
               "app": {
@@ -19376,6 +19588,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
               "app": {
@@ -19468,6 +19681,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
               "app": {
@@ -19557,6 +19771,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
               "app": {
@@ -19648,6 +19863,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/settings",
             "path-parameters": {
               "app": {
@@ -19742,6 +19958,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
               "app": {
@@ -19831,6 +20048,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
@@ -19902,6 +20120,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/bulk",
             "path-parameters": {
               "app": {
@@ -19957,6 +20176,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -20000,6 +20220,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
               "app": {
@@ -20072,6 +20293,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -20098,6 +20320,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/assets/{id}",
             "path-parameters": {
               "id": {
@@ -20180,6 +20403,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/assets/{app}/{idOrSlug}/{more}",
             "path-parameters": {
               "app": {
@@ -20317,6 +20541,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
               "app": {
@@ -20408,6 +20633,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets",
             "path-parameters": {
               "app": {
@@ -20521,6 +20747,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/query",
             "path-parameters": {
               "app": {
@@ -20557,6 +20784,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/tags",
             "path-parameters": {
               "app": {
@@ -20631,6 +20859,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets",
             "path-parameters": {
               "app": {
@@ -20702,6 +20931,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
               "app": {
@@ -20794,6 +21024,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -20892,6 +21123,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -21000,6 +21232,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}/content",
             "path-parameters": {
               "app": {
@@ -21063,6 +21296,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
               "app": {
@@ -21126,6 +21360,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/folders/{id}/parent",
             "path-parameters": {
               "app": {
@@ -21217,6 +21452,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/{id}/parent",
             "path-parameters": {
               "app": {
@@ -21272,6 +21508,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/assets/tags/{name}",
             "path-parameters": {
               "app": {
@@ -21330,6 +21567,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
               "app": {
@@ -21351,6 +21589,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
               "app": {
@@ -21376,6 +21615,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/backups/{id}",
             "path-parameters": {
               "id": {
@@ -21444,6 +21684,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
               "app": {
@@ -21479,6 +21720,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/restore",
             "response": {
               "docs": "Status returned.",
@@ -21502,6 +21744,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
               "app": {
@@ -21526,6 +21769,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/restore",
             "request": {
               "body": {
@@ -21575,6 +21819,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
               "app": {
@@ -21634,6 +21879,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/comments/{commentsId}",
             "path-parameters": {
               "app": {
@@ -21680,6 +21926,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/watching/{resource}",
             "path-parameters": {
               "app": {
@@ -21726,6 +21973,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/comments/{commentsId}",
             "path-parameters": {
               "app": {
@@ -21767,6 +22015,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
               "app": {
@@ -21839,6 +22088,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/bulk",
             "path-parameters": {
               "app": {
@@ -21967,6 +22217,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
               "app": {
@@ -22006,6 +22257,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -22110,6 +22362,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
               "app": {
@@ -22205,6 +22458,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
               "app": {
@@ -22286,6 +22540,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -22334,6 +22589,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/validity",
             "path-parameters": {
               "app": {
@@ -22360,6 +22616,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/{version}",
             "path-parameters": {
               "app": {
@@ -22457,6 +22714,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
               "app": {
@@ -22561,6 +22819,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/query",
             "path-parameters": {
               "app": {
@@ -22654,6 +22913,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/references",
             "path-parameters": {
               "app": {
@@ -22757,6 +23017,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/referencing",
             "path-parameters": {
               "app": {
@@ -22864,6 +23125,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -22964,6 +23226,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
               "app": {
@@ -23043,6 +23306,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/import",
             "path-parameters": {
               "app": {
@@ -23162,6 +23426,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -23278,6 +23543,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -23379,6 +23645,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
               "app": {
@@ -23443,6 +23710,7 @@ The client secret is auto generated on the server and returned. The client does 
               {},
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/diagnostics/dump",
           },
           "getGCDump": {
@@ -23457,6 +23725,7 @@ The client secret is auto generated on the server and returned. The client does 
               {},
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/diagnostics/gcdump",
           },
         },
@@ -23509,6 +23778,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/event-consumers",
             "response": {
               "docs": "Event consumers returned.",
@@ -23549,6 +23819,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/event-consumers/{consumerName}/reset",
             "path-parameters": {
               "consumerName": {
@@ -23595,6 +23866,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/event-consumers/{consumerName}/start",
             "path-parameters": {
               "consumerName": {
@@ -23641,6 +23913,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/event-consumers/{consumerName}/stop",
             "path-parameters": {
               "consumerName": {
@@ -23692,6 +23965,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/history",
             "path-parameters": {
               "app": {
@@ -23741,6 +24015,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/history",
             "path-parameters": {
               "team": {
@@ -23794,6 +24069,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/languages",
             "response": {
               "docs": "Supported language codes returned.",
@@ -23834,6 +24110,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/news/features",
             "request": {
               "name": "NewsGetNewsRequest",
@@ -23878,6 +24155,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
               "commentId": {
@@ -23931,6 +24209,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/users/{userId}/notifications",
             "path-parameters": {
               "userId": {
@@ -23978,6 +24257,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/ping/{app}",
             "path-parameters": {
               "app": {
@@ -24003,6 +24283,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/info",
             "response": {
               "docs": "Infos returned.",
@@ -24020,6 +24301,7 @@ The client secret is auto generated on the server and returned. The client does 
               {},
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/ping",
           },
         },
@@ -24077,6 +24359,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/plans",
             "path-parameters": {
               "app": {
@@ -24133,6 +24416,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/plans",
             "path-parameters": {
               "team": {
@@ -24170,6 +24454,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/plan",
             "path-parameters": {
               "app": {
@@ -24210,6 +24495,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/teams/{team}/plan",
             "path-parameters": {
               "team": {
@@ -24254,6 +24540,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
               "app": {
@@ -24282,6 +24569,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
               "app": {
@@ -24308,6 +24596,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
               "app": {
@@ -24337,6 +24626,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/events",
             "path-parameters": {
               "app": {
@@ -24365,6 +24655,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/run",
             "path-parameters": {
               "app": {
@@ -24383,6 +24674,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/disable",
             "path-parameters": {
               "app": {
@@ -24409,6 +24701,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/enable",
             "path-parameters": {
               "app": {
@@ -24458,6 +24751,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/rules/actions",
             "response": {
               "docs": "Rule actions returned.",
@@ -24485,6 +24779,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/rules/eventtypes/{type}",
             "path-parameters": {
               "type": {
@@ -24514,6 +24809,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/rules/eventtypes",
             "response": {
               "docs": "Rule events returned.",
@@ -24567,6 +24863,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
               "app": {
@@ -24625,6 +24922,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
               "app": {
@@ -24647,6 +24945,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
               "app": {
@@ -24680,6 +24979,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
               "app": {
@@ -24702,6 +25002,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
               "app": {
@@ -24760,6 +25061,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/run",
             "path-parameters": {
               "app": {
@@ -24829,6 +25131,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/simulate",
             "path-parameters": {
               "app": {
@@ -24855,6 +25158,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/simulate",
             "path-parameters": {
               "app": {
@@ -24888,6 +25192,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/rules/{id}/trigger",
             "path-parameters": {
               "app": {
@@ -24988,6 +25293,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
               "app": {
@@ -25086,6 +25392,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
               "app": {
@@ -25128,6 +25435,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
@@ -25217,6 +25525,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/disable",
             "path-parameters": {
               "app": {
@@ -25315,6 +25624,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable",
             "path-parameters": {
               "app": {
@@ -25416,6 +25726,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/enable",
             "path-parameters": {
               "app": {
@@ -25514,6 +25825,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable",
             "path-parameters": {
               "app": {
@@ -25613,6 +25925,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
@@ -25697,6 +26010,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
               "app": {
@@ -25786,6 +26100,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
             "path-parameters": {
               "app": {
@@ -25884,6 +26199,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
             "path-parameters": {
               "app": {
@@ -25985,6 +26301,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
             "path-parameters": {
               "app": {
@@ -26083,6 +26400,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
             "path-parameters": {
               "app": {
@@ -26118,6 +26436,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields",
             "path-parameters": {
               "app": {
@@ -26148,6 +26467,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
             "path-parameters": {
               "app": {
@@ -26252,6 +26572,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
               "app": {
@@ -26364,6 +26685,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/publish",
             "path-parameters": {
               "app": {
@@ -26457,6 +26779,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/category",
             "path-parameters": {
               "app": {
@@ -26496,6 +26819,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
               "app": {
@@ -26529,6 +26853,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
               "app": {
@@ -26638,6 +26963,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
             "path-parameters": {
               "app": {
@@ -26740,6 +27066,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
             "path-parameters": {
               "app": {
@@ -26836,6 +27163,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/rules",
             "path-parameters": {
               "app": {
@@ -26944,6 +27272,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
@@ -27078,6 +27407,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
             "path-parameters": {
               "app": {
@@ -27178,6 +27508,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/sync",
             "path-parameters": {
               "app": {
@@ -27291,6 +27622,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
             "path-parameters": {
               "app": {
@@ -27401,6 +27733,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/scripts",
             "path-parameters": {
               "app": {
@@ -27497,6 +27830,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
             "path-parameters": {
               "app": {
@@ -27595,6 +27929,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
             "path-parameters": {
               "app": {
@@ -27695,6 +28030,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/apps/{app}/schemas/{schema}/unpublish",
             "path-parameters": {
               "app": {
@@ -27753,6 +28089,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/search",
             "path-parameters": {
               "app": {
@@ -27807,6 +28144,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/usages/storage/today",
             "path-parameters": {
               "app": {
@@ -27840,6 +28178,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/usages/log",
             "path-parameters": {
               "app": {
@@ -27879,6 +28218,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
               "app": {
@@ -27926,6 +28266,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
               "fromDate": {
@@ -27968,6 +28309,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/usages/storage/today",
             "path-parameters": {
               "team": {
@@ -28020,6 +28362,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
               "app": {
@@ -28080,6 +28423,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
               "fromDate": {
@@ -28158,6 +28502,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/teams/{team}/contributors/{id}",
             "path-parameters": {
               "id": {
@@ -28220,6 +28565,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/teams/{team}/contributors/me",
             "path-parameters": {
               "team": {
@@ -28277,6 +28623,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
               "team": {
@@ -28322,6 +28669,7 @@ The client secret is auto generated on the server and returned. The client does 
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams/{team}",
             "path-parameters": {
               "team": {
@@ -28365,6 +28713,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/teams",
             "response": {
               "docs": "Teams returned.",
@@ -28420,6 +28769,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
               "team": {
@@ -28470,6 +28820,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/teams",
             "request": {
               "body": {
@@ -28526,6 +28877,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/teams/{team}",
             "path-parameters": {
               "team": {
@@ -28590,6 +28942,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/templates/{name}",
             "path-parameters": {
               "name": {
@@ -28639,6 +28992,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/templates",
             "response": {
               "docs": "Templates returned.",
@@ -28682,6 +29036,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/apps/{app}/translations",
             "path-parameters": {
               "app": {
@@ -28744,6 +29099,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
@@ -28786,6 +29142,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
@@ -28839,6 +29196,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/user-management",
             "request": {
               "name": "UserManagementGetUsersRequest",
@@ -28898,6 +29256,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/user-management/{id}/lock",
             "path-parameters": {
               "id": {
@@ -28949,6 +29308,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/api/user-management",
             "request": {
               "body": {
@@ -29022,6 +29382,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
@@ -29095,6 +29456,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/api/user-management/{id}/unlock",
             "path-parameters": {
               "id": {
@@ -29152,6 +29514,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/users/{id}",
             "path-parameters": {
               "id": {
@@ -29173,6 +29536,7 @@ You will be assigned as owner of the new team automatically.",
               "root.InternalServerError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/users/{id}/picture",
             "path-parameters": {
               "id": {
@@ -29208,6 +29572,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api",
             "response": {
               "docs": "User resources returned.",
@@ -29245,6 +29610,7 @@ You will be assigned as owner of the new team automatically.",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/users",
             "request": {
               "name": "UsersGetUsersRequest",

@@ -3,7 +3,6 @@ import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { PaginationSchema } from "@fern-api/yaml-schema/src/schemas";
 import { buildEndpointExample, convertFullExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
@@ -59,7 +58,7 @@ export function buildEndpoint({
         names.add(queryParameter.name);
     }
 
-    let pagination: PaginationSchema | undefined = undefined;
+    let pagination: RawSchemas.PaginationSchema | undefined = undefined;
     if (endpoint.pagination != null) {
         if (endpoint.pagination.type === "cursor") {
             pagination = {

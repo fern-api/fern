@@ -132,6 +132,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "list_numbers",
+      "pagination": null,
       "path": "/v1/numbers/list",
       "pathParameters": [],
       "queryParameters": [
@@ -229,6 +230,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_number",
+      "pagination": null,
       "path": "/v1/numbers",
       "pathParameters": [],
       "queryParameters": [
@@ -284,6 +286,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "buy_number",
+      "pagination": null,
       "path": "/v1/numbers/buy",
       "pathParameters": [],
       "queryParameters": [],
@@ -336,6 +339,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "update_number",
+      "pagination": null,
       "path": "/v1/numbers/update",
       "pathParameters": [],
       "queryParameters": [
@@ -418,6 +422,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "cancel_number",
+      "pagination": null,
       "path": "/v1/numbers/cancel",
       "pathParameters": [],
       "queryParameters": [
@@ -616,6 +621,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "list_calls",
+      "pagination": null,
       "path": "/v1/calls/list",
       "pathParameters": [],
       "queryParameters": [
@@ -713,6 +719,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_call",
+      "pagination": null,
       "path": "/v1/calls",
       "pathParameters": [],
       "queryParameters": [
@@ -783,6 +790,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "end_call",
+      "pagination": null,
       "path": "/v1/calls/end",
       "pathParameters": [],
       "queryParameters": [
@@ -853,6 +861,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_call",
+      "pagination": null,
       "path": "/v1/calls/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -957,6 +966,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_recording",
+      "pagination": null,
       "path": "/v1/calls/recording",
       "pathParameters": [],
       "queryParameters": [
@@ -1050,6 +1060,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_usage",
+      "pagination": null,
       "path": "/v1/usage",
       "pathParameters": [],
       "queryParameters": [],
@@ -1102,6 +1113,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_action",
+      "pagination": null,
       "path": "/v1/actions",
       "pathParameters": [],
       "queryParameters": [
@@ -1243,6 +1255,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "list_actions",
+      "pagination": null,
       "path": "/v1/actions/list",
       "pathParameters": [],
       "queryParameters": [
@@ -1340,6 +1353,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_action",
+      "pagination": null,
       "path": "/v1/actions/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -1434,6 +1448,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "update_action",
+      "pagination": null,
       "path": "/v1/actions/update",
       "pathParameters": [],
       "queryParameters": [
@@ -1546,6 +1561,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_agent",
+      "pagination": null,
       "path": "/v1/agents",
       "pathParameters": [],
       "queryParameters": [
@@ -1732,6 +1748,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "list_agents",
+      "pagination": null,
       "path": "/v1/agents/list",
       "pathParameters": [],
       "queryParameters": [
@@ -1829,6 +1846,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_agent",
+      "pagination": null,
       "path": "/v1/agents/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -1893,6 +1911,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "update_agent",
+      "pagination": null,
       "path": "/v1/agents/update",
       "pathParameters": [],
       "queryParameters": [
@@ -1975,6 +1994,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_voice",
+      "pagination": null,
       "path": "/v1/voices",
       "pathParameters": [],
       "queryParameters": [
@@ -2124,6 +2144,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "list_voices",
+      "pagination": null,
       "path": "/v1/voices/list",
       "pathParameters": [],
       "queryParameters": [
@@ -2221,6 +2242,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_voice",
+      "pagination": null,
       "path": "/v1/voices/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -2323,6 +2345,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "update_voice",
+      "pagination": null,
       "path": "/v1/voices/update",
       "pathParameters": [],
       "queryParameters": [
@@ -2504,6 +2527,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_webhook",
+      "pagination": null,
       "path": "/v1/webhooks",
       "pathParameters": [],
       "queryParameters": [
@@ -2655,6 +2679,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "list_webhooks",
+      "pagination": null,
       "path": "/v1/webhooks/list",
       "pathParameters": [],
       "queryParameters": [
@@ -2822,6 +2847,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "create_webhook",
+      "pagination": null,
       "path": "/v1/webhooks/create",
       "pathParameters": [],
       "queryParameters": [],
@@ -2950,6 +2976,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "update_webhook",
+      "pagination": null,
       "path": "/v1/webhooks/update",
       "pathParameters": [],
       "queryParameters": [

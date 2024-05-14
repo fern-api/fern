@@ -249,6 +249,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bookings",
             "request": {
               "name": "BookingsIndexRequest",
@@ -711,6 +712,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bookings",
             "request": {
               "body": {
@@ -1085,6 +1087,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bookings/{id}",
             "path-parameters": {
               "id": {
@@ -1389,6 +1392,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/booking_amendments",
             "request": {
               "body": {
@@ -1522,6 +1526,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/booking_line_items",
             "request": {
               "body": {
@@ -1600,6 +1605,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/booking_line_items",
             "request": {
               "name": "BookingLineItemIndexRequest",
@@ -1675,6 +1681,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/booking_line_items/{id}",
             "path-parameters": {
               "id": {
@@ -1784,6 +1791,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/carbon_calculation",
             "request": {
               "body": {
@@ -2058,6 +2066,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/commercial_invoices",
             "request": {
               "body": {
@@ -2230,6 +2239,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/commercial_invoices",
             "request": {
               "name": "CommercialInvoicesIndexRequest",
@@ -2398,6 +2408,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/commercial_invoices/{id}",
             "path-parameters": {
               "id": {
@@ -2541,6 +2552,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/commercial_invoices",
             "request": {
               "body": {
@@ -2708,6 +2720,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/network/companies",
             "request": {
               "body": {
@@ -2808,6 +2821,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/companies",
             "request": {
               "name": "NetworkCompanyIndexRequest",
@@ -2908,6 +2922,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/me/companies",
             "response": {
               "docs": "Success",
@@ -2984,6 +2999,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/companies/{id}",
             "path-parameters": {
               "id": {
@@ -3073,6 +3089,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/network/companies/{id}",
             "path-parameters": {
               "id": {
@@ -3230,6 +3247,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/company_entities",
             "request": {
               "name": "CompanyEntityIndexRequest",
@@ -3311,6 +3329,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/network/company_entities",
             "request": {
               "body": {
@@ -3399,6 +3418,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/company_entities/{id}",
             "path-parameters": {
               "id": {
@@ -3461,6 +3481,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/network/company_entities/{id}",
             "path-parameters": {
               "id": {
@@ -3599,6 +3620,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/network/contacts",
             "request": {
               "body": {
@@ -3680,6 +3702,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/contacts",
             "request": {
               "name": "NetworkContactIndexRequest",
@@ -3752,6 +3775,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/contacts/{id}",
             "path-parameters": {
               "id": {
@@ -3806,6 +3830,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/network/contacts/{id}",
             "path-parameters": {
               "id": {
@@ -3992,6 +4017,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ocean/shipment_containers",
             "request": {
               "name": "ContainerListRequest",
@@ -4113,6 +4139,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ocean/shipment_containers/{id}",
             "path-parameters": {
               "id": {
@@ -4218,6 +4245,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ocean/shipment_container_legs",
             "request": {
               "name": "OceanContainerLegsIndexRequest",
@@ -4292,6 +4320,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ocean/shipment_container_legs/{id}",
             "path-parameters": {
               "id": {
@@ -4390,6 +4419,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/customs_entries",
             "request": {
               "name": "CustomsEntryIndexRequest",
@@ -4449,6 +4479,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/customs_entries/{id}",
             "path-parameters": {
               "id": {
@@ -4539,6 +4570,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/documents",
             "request": {
               "body": "root.CreateDocument",
@@ -4556,6 +4588,7 @@ exports[`open api parser flexport docs 1`] = `
               "root.DocumentsDownloadRequestBadRequestError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/documents/{id}/download",
             "path-parameters": {
               "id": {
@@ -4618,6 +4651,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/documents",
             "request": {
               "name": "DocumentsIndexRequest",
@@ -4708,6 +4742,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/documents/{id}",
             "path-parameters": {
               "id": {
@@ -4806,6 +4841,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events",
             "request": {
               "name": "EventsIndexRequest",
@@ -4945,6 +4981,7 @@ exports[`open api parser flexport docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events/{id}",
             "path-parameters": {
               "id": {
@@ -5292,6 +5329,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoices",
             "request": {
               "name": "InvoiceIndexRequest",
@@ -5616,6 +5654,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoices/{id}",
             "path-parameters": {
               "id": {
@@ -5746,6 +5785,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/locations",
             "request": {
               "name": "LocationIndexRequest",
@@ -5847,6 +5887,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/network/locations",
             "request": {
               "body": {
@@ -5943,6 +5984,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/locations/{id}",
             "path-parameters": {
               "id": {
@@ -6016,6 +6058,7 @@ Other details about this invoice",
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/network/locations/{id}",
             "path-parameters": {
               "id": {
@@ -6208,6 +6251,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ports",
             "request": {
               "name": "PortsIndexRequest",
@@ -6337,6 +6381,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/products",
             "request": {
               "body": {
@@ -6449,6 +6494,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/products",
             "request": {
               "name": "ProductIndexRequest",
@@ -6529,6 +6575,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/products/{id}",
             "path-parameters": {
               "id": {
@@ -6599,6 +6646,7 @@ Other details about this invoice",
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/products/{id}",
             "path-parameters": {
               "id": {
@@ -6991,6 +7039,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/purchase_orders",
             "request": {
               "body": "root.CreateOrUpdatePurchaseOrder",
@@ -7243,6 +7292,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/purchase_orders",
             "request": {
               "name": "PurchaseOrderIndexRequest",
@@ -7442,6 +7492,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/purchase_orders/{id}",
             "path-parameters": {
               "id": {
@@ -7671,6 +7722,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/purchase_orders/{id}",
             "path-parameters": {
               "id": {
@@ -7892,6 +7944,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/purchase_order_line_items",
             "request": {
               "name": "PurchaseOrderLineItemIndexRequest",
@@ -8104,6 +8157,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/purchase_order_line_items/{id}",
             "path-parameters": {
               "id": {
@@ -8461,6 +8515,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shipments",
             "request": {
               "name": "ShipmentIndexRequest",
@@ -8638,6 +8693,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/shipments_shareable",
             "request": {
               "body": {
@@ -8977,6 +9033,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shipments/{id}",
             "path-parameters": {
               "id": {
@@ -9309,6 +9366,7 @@ Other details about this invoice",
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/shipments/{id}",
             "path-parameters": {
               "id": {
@@ -9581,6 +9639,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shipment_legs",
             "request": {
               "name": "ShipmentLegIndexRequest",
@@ -9794,6 +9853,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shipment_legs/{id}",
             "path-parameters": {
               "id": {
@@ -14432,6 +14492,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bookings",
             "request": {
               "name": "BookingsIndexRequest",
@@ -14894,6 +14955,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/bookings",
             "request": {
               "body": {
@@ -15268,6 +15330,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/bookings/{id}",
             "path-parameters": {
               "id": {
@@ -15572,6 +15635,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/booking_amendments",
             "request": {
               "body": {
@@ -15705,6 +15769,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/booking_line_items",
             "request": {
               "body": {
@@ -15783,6 +15848,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/booking_line_items",
             "request": {
               "name": "BookingLineItemIndexRequest",
@@ -15858,6 +15924,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/booking_line_items/{id}",
             "path-parameters": {
               "id": {
@@ -15967,6 +16034,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/carbon_calculation",
             "request": {
               "body": {
@@ -16241,6 +16309,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/commercial_invoices",
             "request": {
               "body": {
@@ -16413,6 +16482,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/commercial_invoices",
             "request": {
               "name": "CommercialInvoicesIndexRequest",
@@ -16581,6 +16651,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/commercial_invoices/{id}",
             "path-parameters": {
               "id": {
@@ -16724,6 +16795,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/commercial_invoices",
             "request": {
               "body": {
@@ -16891,6 +16963,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/network/companies",
             "request": {
               "body": {
@@ -16991,6 +17064,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/companies",
             "request": {
               "name": "NetworkCompanyIndexRequest",
@@ -17091,6 +17165,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/me/companies",
             "response": {
               "docs": "Success",
@@ -17167,6 +17242,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/companies/{id}",
             "path-parameters": {
               "id": {
@@ -17256,6 +17332,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/network/companies/{id}",
             "path-parameters": {
               "id": {
@@ -17413,6 +17490,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/company_entities",
             "request": {
               "name": "CompanyEntityIndexRequest",
@@ -17494,6 +17572,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/network/company_entities",
             "request": {
               "body": {
@@ -17582,6 +17661,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/company_entities/{id}",
             "path-parameters": {
               "id": {
@@ -17644,6 +17724,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/network/company_entities/{id}",
             "path-parameters": {
               "id": {
@@ -17782,6 +17863,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/network/contacts",
             "request": {
               "body": {
@@ -17863,6 +17945,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/contacts",
             "request": {
               "name": "NetworkContactIndexRequest",
@@ -17935,6 +18018,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/contacts/{id}",
             "path-parameters": {
               "id": {
@@ -17989,6 +18073,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/network/contacts/{id}",
             "path-parameters": {
               "id": {
@@ -18175,6 +18260,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ocean/shipment_containers",
             "request": {
               "name": "ContainerListRequest",
@@ -18296,6 +18382,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ocean/shipment_containers/{id}",
             "path-parameters": {
               "id": {
@@ -18401,6 +18488,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ocean/shipment_container_legs",
             "request": {
               "name": "OceanContainerLegsIndexRequest",
@@ -18475,6 +18563,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ocean/shipment_container_legs/{id}",
             "path-parameters": {
               "id": {
@@ -18573,6 +18662,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/customs_entries",
             "request": {
               "name": "CustomsEntryIndexRequest",
@@ -18632,6 +18722,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/customs_entries/{id}",
             "path-parameters": {
               "id": {
@@ -18722,6 +18813,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/documents",
             "request": {
               "body": "root.CreateDocument",
@@ -18739,6 +18831,7 @@ exports[`open api parser flexport simple 1`] = `
               "root.BadRequestError",
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/documents/{id}/download",
             "path-parameters": {
               "id": {
@@ -18801,6 +18894,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/documents",
             "request": {
               "name": "DocumentsIndexRequest",
@@ -18891,6 +18985,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/documents/{id}",
             "path-parameters": {
               "id": {
@@ -18989,6 +19084,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events",
             "request": {
               "name": "EventsIndexRequest",
@@ -19128,6 +19224,7 @@ exports[`open api parser flexport simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/events/{id}",
             "path-parameters": {
               "id": {
@@ -19475,6 +19572,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoices",
             "request": {
               "name": "InvoiceIndexRequest",
@@ -19799,6 +19897,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/invoices/{id}",
             "path-parameters": {
               "id": {
@@ -19929,6 +20028,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/locations",
             "request": {
               "name": "LocationIndexRequest",
@@ -20030,6 +20130,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/network/locations",
             "request": {
               "body": {
@@ -20126,6 +20227,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/network/locations/{id}",
             "path-parameters": {
               "id": {
@@ -20199,6 +20301,7 @@ Other details about this invoice",
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/network/locations/{id}",
             "path-parameters": {
               "id": {
@@ -20391,6 +20494,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ports",
             "request": {
               "name": "PortsIndexRequest",
@@ -20520,6 +20624,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/products",
             "request": {
               "body": {
@@ -20632,6 +20737,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/products",
             "request": {
               "name": "ProductIndexRequest",
@@ -20712,6 +20818,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/products/{id}",
             "path-parameters": {
               "id": {
@@ -20782,6 +20889,7 @@ Other details about this invoice",
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/products/{id}",
             "path-parameters": {
               "id": {
@@ -21174,6 +21282,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/purchase_orders",
             "request": {
               "body": "root.CreateOrUpdatePurchaseOrder",
@@ -21426,6 +21535,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/purchase_orders",
             "request": {
               "name": "PurchaseOrderIndexRequest",
@@ -21625,6 +21735,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/purchase_orders/{id}",
             "path-parameters": {
               "id": {
@@ -21854,6 +21965,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/purchase_orders/{id}",
             "path-parameters": {
               "id": {
@@ -22075,6 +22187,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/purchase_order_line_items",
             "request": {
               "name": "PurchaseOrderLineItemIndexRequest",
@@ -22287,6 +22400,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/purchase_order_line_items/{id}",
             "path-parameters": {
               "id": {
@@ -22644,6 +22758,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shipments",
             "request": {
               "name": "ShipmentIndexRequest",
@@ -22821,6 +22936,7 @@ Other details about this invoice",
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/shipments_shareable",
             "request": {
               "body": {
@@ -23160,6 +23276,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shipments/{id}",
             "path-parameters": {
               "id": {
@@ -23492,6 +23609,7 @@ Other details about this invoice",
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/shipments/{id}",
             "path-parameters": {
               "id": {
@@ -23764,6 +23882,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shipment_legs",
             "request": {
               "name": "ShipmentLegIndexRequest",
@@ -23977,6 +24096,7 @@ Other details about this invoice",
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shipment_legs/{id}",
             "path-parameters": {
               "id": {

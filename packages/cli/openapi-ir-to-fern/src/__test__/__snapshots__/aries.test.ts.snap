@@ -32,6 +32,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/close",
             "path-parameters": {
               "conn_id": {
@@ -75,6 +76,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/fetch",
             "path-parameters": {
               "conn_id": {
@@ -112,6 +114,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/perform",
             "path-parameters": {
               "conn_id": {
@@ -160,6 +163,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/request",
             "path-parameters": {
               "conn_id": {
@@ -201,6 +205,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/send-menu",
             "path-parameters": {
               "conn_id": {
@@ -258,6 +263,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/send-message",
             "path-parameters": {
               "conn_id": {
@@ -332,6 +338,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/accept-invitation",
             "path-parameters": {
               "conn_id": {
@@ -397,6 +404,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/accept-request",
             "path-parameters": {
               "conn_id": {
@@ -462,6 +470,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/create-invitation",
             "request": {
               "body": {
@@ -568,6 +577,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/create-static",
             "request": {
               "body": {
@@ -634,6 +644,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/connections/{conn_id}",
             "path-parameters": {
               "conn_id": {
@@ -664,6 +675,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/endpoints",
             "path-parameters": {
               "conn_id": {
@@ -691,6 +703,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/metadata",
             "path-parameters": {
               "conn_id": {
@@ -748,6 +761,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/connections/{conn_id}",
             "path-parameters": {
               "conn_id": {
@@ -819,6 +833,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/connections",
             "request": {
               "name": "GetMatchingConnectionsRequest",
@@ -915,6 +930,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/receive-invitation",
             "request": {
               "body": {
@@ -993,6 +1009,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/metadata",
             "path-parameters": {
               "conn_id": {
@@ -1038,6 +1055,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
             "path-parameters": {
               "conn_id": {
@@ -1127,6 +1145,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential-definitions/created",
             "request": {
               "name": "GetCreatedCredDefsRequest",
@@ -1210,6 +1229,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential-definitions/{cred_def_id}",
             "path-parameters": {
               "cred_def_id": {
@@ -1277,6 +1297,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/credential-definitions",
             "request": {
               "body": {
@@ -1365,6 +1386,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/credential-definitions/{cred_def_id}/write_record",
             "path-parameters": {
               "cred_def_id": {
@@ -1409,6 +1431,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/credential/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -1440,6 +1463,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/credential/w3c/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -1471,6 +1495,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential/mime-types/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -1507,6 +1532,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -1554,6 +1580,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credentials",
             "request": {
               "name": "GetCredentialsRequest",
@@ -1594,6 +1621,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential/revoked/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -1661,6 +1689,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential/w3c/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -1772,6 +1801,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/credentials/w3c",
             "request": {
               "body": {
@@ -1876,6 +1906,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/didexchange/{conn_id}/accept-invitation",
             "path-parameters": {
               "conn_id": {
@@ -1937,6 +1968,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/didexchange/{conn_id}/accept-request",
             "path-parameters": {
               "conn_id": {
@@ -1998,6 +2030,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/didexchange/create-request",
             "request": {
               "name": "CreateDidexRequestRequest",
@@ -2088,6 +2121,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/didexchange/receive-request",
             "request": {
               "body": {
@@ -2211,6 +2245,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discover-features/records",
             "request": {
               "name": "GetV10FeatureRecordsRequest",
@@ -2261,6 +2296,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discover-features/query",
             "request": {
               "name": "GetV10FeaturesQueryRequest",
@@ -2352,6 +2388,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discover-features-2.0/records",
             "request": {
               "name": "GetV20FeatureRecordsRequest",
@@ -2406,6 +2443,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discover-features-2.0/queries",
             "request": {
               "name": "GetV20FeaturesQueriesRequest",
@@ -2489,6 +2527,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{tran_id}/cancel",
             "path-parameters": {
               "tran_id": {
@@ -2551,6 +2590,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/create-request",
             "request": {
               "body": {
@@ -2660,6 +2700,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transactions",
             "response": {
               "docs": "",
@@ -2713,6 +2754,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transactions/{tran_id}",
             "path-parameters": {
               "tran_id": {
@@ -2772,6 +2814,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{tran_id}/write",
             "path-parameters": {
               "tran_id": {
@@ -2831,6 +2874,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{tran_id}/refuse",
             "path-parameters": {
               "tran_id": {
@@ -2890,6 +2934,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transaction/{tran_id}/resend",
             "path-parameters": {
               "tran_id": {
@@ -2923,6 +2968,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{conn_id}/set-endorser-info",
             "path-parameters": {
               "conn_id": {
@@ -2966,6 +3012,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{conn_id}/set-endorser-role",
             "path-parameters": {
               "conn_id": {
@@ -3031,6 +3078,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/start-introduction",
             "path-parameters": {
               "conn_id": {
@@ -3235,6 +3283,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/create",
             "request": {
               "body": {
@@ -3449,6 +3498,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/create-offer",
             "request": {
               "body": {
@@ -3504,6 +3554,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}",
             "path-parameters": {
               "cred_ex_id": {
@@ -3659,6 +3710,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}",
             "path-parameters": {
               "cred_ex_id": {
@@ -3936,6 +3988,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-credential/records",
             "request": {
               "name": "GetMatchingCredExRecordsRequest",
@@ -4109,6 +4162,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/issue",
             "path-parameters": {
               "cred_ex_id": {
@@ -4156,6 +4210,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/problem-report",
             "path-parameters": {
               "cred_ex_id": {
@@ -4322,6 +4377,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/send-offer",
             "path-parameters": {
               "cred_ex_id": {
@@ -4487,6 +4543,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/send-request",
             "path-parameters": {
               "cred_ex_id": {
@@ -4666,6 +4723,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/send",
             "request": {
               "body": {
@@ -4885,6 +4943,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/send-offer",
             "request": {
               "body": {
@@ -5092,6 +5151,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/send-proposal",
             "request": {
               "body": {
@@ -5294,6 +5354,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/store",
             "path-parameters": {
               "cred_ex_id": {
@@ -5563,6 +5624,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/create",
             "request": {
               "body": {
@@ -5804,6 +5866,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/create-offer",
             "request": {
               "body": {
@@ -5856,6 +5919,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}",
             "path-parameters": {
               "cred_ex_id": {
@@ -6081,6 +6145,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}",
             "path-parameters": {
               "cred_ex_id": {
@@ -6498,6 +6563,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records",
             "request": {
               "name": "GetMatchingCredExRecordsV2Request",
@@ -6741,6 +6807,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
             "path-parameters": {
               "cred_ex_id": {
@@ -6788,6 +6855,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
             "path-parameters": {
               "cred_ex_id": {
@@ -7020,6 +7088,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
             "path-parameters": {
               "cred_ex_id": {
@@ -7239,6 +7308,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
             "path-parameters": {
               "cred_ex_id": {
@@ -7477,6 +7547,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/send",
             "request": {
               "body": "root.V20CredExFree",
@@ -7699,6 +7770,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/send-offer",
             "request": {
               "body": {
@@ -7949,6 +8021,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/send-proposal",
             "request": {
               "body": "root.V20CredExFree",
@@ -8175,6 +8248,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/send-request",
             "request": {
               "body": {
@@ -8427,6 +8501,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
             "path-parameters": {
               "cred_ex_id": {
@@ -8536,6 +8611,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/jsonld/sign",
             "request": {
               "body": {
@@ -8580,6 +8656,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/jsonld/verify",
             "request": {
               "body": {
@@ -8634,6 +8711,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/ledger/taa/accept",
             "request": {
               "body": {
@@ -8669,6 +8747,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/get-nym-role",
             "request": {
               "name": "GetDidNymRoleRequest",
@@ -8701,6 +8780,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/did-verkey",
             "request": {
               "name": "GetDidVerkeyRequest",
@@ -8745,6 +8825,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/multiple/config",
             "response": {
               "docs": "",
@@ -8768,6 +8849,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/did-endpoint",
             "request": {
               "name": "GetPublishedDidEndpointRequest",
@@ -8819,6 +8901,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/taa",
             "response": {
               "docs": "",
@@ -8839,6 +8922,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/multiple/get-write-ledger",
             "response": {
               "docs": "",
@@ -8896,6 +8980,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/ledger/register-nym",
             "request": {
               "name": "RegisterNymRequest",
@@ -8947,6 +9032,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/ledger/rotate-public-did-keypair",
             "response": {
               "docs": "",
@@ -9016,6 +9102,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/mediation/default-mediator",
             "response": {
               "docs": "",
@@ -9057,6 +9144,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/mediation/requests/{mediation_id}",
             "path-parameters": {
               "mediation_id": {
@@ -9105,6 +9193,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/requests/{mediation_id}/deny",
             "path-parameters": {
               "mediation_id": {
@@ -9166,6 +9255,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/mediation/default-mediator",
             "response": {
               "docs": "",
@@ -9207,6 +9297,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/mediation/keylists",
             "request": {
               "name": "GetKeylistsRequest",
@@ -9283,6 +9374,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/mediation/requests",
             "request": {
               "name": "GetMatchingMediationRecordsRequest",
@@ -9347,6 +9439,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/mediation/requests/{mediation_id}",
             "path-parameters": {
               "mediation_id": {
@@ -9382,6 +9475,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/requests/{mediation_id}/grant",
             "path-parameters": {
               "mediation_id": {
@@ -9439,6 +9533,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/request/{conn_id}",
             "path-parameters": {
               "conn_id": {
@@ -9491,6 +9586,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
             "path-parameters": {
               "mediation_id": {
@@ -9565,6 +9661,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
             "path-parameters": {
               "mediation_id": {
@@ -9622,6 +9719,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/mediation/{mediation_id}/default-mediator",
             "path-parameters": {
               "mediation_id": {
@@ -9665,6 +9763,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/update-keylist/{conn_id}",
             "path-parameters": {
               "conn_id": {
@@ -9755,6 +9854,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multitenancy/wallet",
             "request": {
               "body": {
@@ -9828,6 +9928,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multitenancy/wallet/{wallet_id}/remove",
             "path-parameters": {
               "wallet_id": {
@@ -9873,6 +9974,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multitenancy/wallet/{wallet_id}/token",
             "path-parameters": {
               "wallet_id": "string",
@@ -9924,6 +10026,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/multitenancy/wallets",
             "request": {
               "name": "GetMatchingWalletsRequest",
@@ -9960,6 +10063,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/multitenancy/wallet/{wallet_id}",
             "path-parameters": {
               "wallet_id": {
@@ -10002,6 +10106,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/multitenancy/wallet/{wallet_id}",
             "path-parameters": {
               "wallet_id": {
@@ -10195,6 +10300,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/out-of-band/create-invitation",
             "request": {
               "body": {
@@ -10412,6 +10518,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/out-of-band/receive-invitation",
             "request": {
               "body": "root.InvitationMessage",
@@ -10651,6 +10758,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/create-request",
             "request": {
               "body": {
@@ -10695,6 +10803,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}",
             "path-parameters": {
               "pres_ex_id": {
@@ -10952,6 +11061,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof/records",
             "request": {
               "name": "GetMatchingPresExRecordsRequest",
@@ -11015,6 +11125,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/credentials",
             "path-parameters": {
               "pres_ex_id": {
@@ -11201,6 +11312,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}",
             "path-parameters": {
               "pres_ex_id": {
@@ -11235,6 +11347,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/problem-report",
             "path-parameters": {
               "pres_ex_id": {
@@ -11450,6 +11563,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/send-request",
             "request": {
               "body": {
@@ -11668,6 +11782,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/send-proposal",
             "request": {
               "body": {
@@ -11871,6 +11986,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/send-presentation",
             "path-parameters": {
               "pres_ex_id": {
@@ -12043,6 +12159,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/send-request",
             "path-parameters": {
               "pres_ex_id": {
@@ -12225,6 +12342,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
             "path-parameters": {
               "pres_ex_id": {
@@ -12433,6 +12551,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/create-request",
             "request": {
               "body": {
@@ -12477,6 +12596,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}",
             "path-parameters": {
               "pres_ex_id": {
@@ -12710,6 +12830,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records",
             "request": {
               "name": "GetMatchingPresExRecordsV2Request",
@@ -12773,6 +12894,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
             "path-parameters": {
               "pres_ex_id": {
@@ -12927,6 +13049,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}",
             "path-parameters": {
               "pres_ex_id": {
@@ -12961,6 +13084,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
             "path-parameters": {
               "pres_ex_id": {
@@ -13146,6 +13270,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/send-request",
             "request": {
               "body": {
@@ -13338,6 +13463,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/send-proposal",
             "request": {
               "body": {
@@ -13512,6 +13638,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
             "path-parameters": {
               "pres_ex_id": {
@@ -13664,6 +13791,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
             "path-parameters": {
               "pres_ex_id": {
@@ -13814,6 +13942,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
             "path-parameters": {
               "pres_ex_id": {
@@ -13895,6 +14024,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/resolver/resolve/{did}",
             "path-parameters": {
               "did": {
@@ -13947,6 +14077,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/clear-pending-revocations",
             "request": {
               "body": {
@@ -14021,6 +14152,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/create-registry",
             "request": {
               "body": {
@@ -14058,6 +14190,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/revocation/registry/delete-tails-file",
             "request": {
               "name": "DeleteTailsFileRequest",
@@ -14082,6 +14215,7 @@ exports[`open api parser aries docs 1`] = `
             "display-name": "Download tails file",
             "docs": undefined,
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/tails-file",
             "path-parameters": {
               "rev_reg_id": {
@@ -14099,6 +14233,7 @@ exports[`open api parser aries docs 1`] = `
             "display-name": "Download tails file",
             "docs": undefined,
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
             "path-parameters": {
               "rev_reg_id": {
@@ -14165,6 +14300,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/active-registry/{cred_def_id}",
             "path-parameters": {
               "cred_def_id": {
@@ -14194,6 +14330,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registries/created",
             "request": {
               "name": "GetCreatedRegistriesRequest",
@@ -14237,6 +14374,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/credential-record",
             "request": {
               "name": "GetCredentialRevocationRecordRequest",
@@ -14300,6 +14438,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/issued/details",
             "path-parameters": {
               "rev_reg_id": {
@@ -14329,6 +14468,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/issued",
             "path-parameters": {
               "rev_reg_id": {
@@ -14356,6 +14496,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
             "path-parameters": {
               "rev_reg_id": {
@@ -14422,6 +14563,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}",
             "path-parameters": {
               "rev_reg_id": {
@@ -14513,6 +14655,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/definition",
             "path-parameters": {
               "rev_reg_id": {
@@ -14592,6 +14735,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/entry",
             "path-parameters": {
               "rev_reg_id": {
@@ -14679,6 +14823,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/publish-revocations",
             "request": {
               "body": "root.PublishRevocations",
@@ -14715,6 +14860,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/revoke",
             "request": {
               "body": {
@@ -14823,6 +14969,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/set-state",
             "path-parameters": {
               "rev_reg_id": {
@@ -14862,6 +15009,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
             "path-parameters": {
               "rev_reg_id": {
@@ -14940,6 +15088,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}",
             "path-parameters": {
               "rev_reg_id": {
@@ -14984,6 +15133,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/tails-file",
             "path-parameters": {
               "rev_reg_id": {
@@ -15053,6 +15203,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/schemas/created",
             "request": {
               "name": "GetMatchingCreatedSchemasRequest",
@@ -15107,6 +15258,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/schemas/{schema_id}",
             "path-parameters": {
               "schema_id": {
@@ -15187,6 +15339,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/schemas",
             "request": {
               "body": {
@@ -15250,6 +15403,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/schemas/{schema_id}/write_record",
             "path-parameters": {
               "schema_id": {
@@ -15285,6 +15439,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/status/config",
             "response": {
               "docs": "",
@@ -15305,6 +15460,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/status/live",
             "response": {
               "docs": "",
@@ -15328,6 +15484,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/plugins",
             "response": {
               "docs": "",
@@ -15348,6 +15505,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/status/ready",
             "response": {
               "docs": "",
@@ -15369,6 +15527,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/status",
             "response": {
               "docs": "",
@@ -15391,6 +15550,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/status/reset",
             "response": {
               "docs": "",
@@ -15413,6 +15573,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shutdown",
             "response": {
               "docs": "",
@@ -15452,6 +15613,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/send-ping",
             "path-parameters": {
               "conn_id": {
@@ -15514,6 +15676,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/wallet/did/create",
             "request": {
               "body": {
@@ -15556,6 +15719,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/wallet/get-did-endpoint",
             "request": {
               "name": "GetDidEndpointRequest",
@@ -15600,6 +15764,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/wallet/did",
             "request": {
               "name": "GetDidsRequest",
@@ -15651,6 +15816,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/wallet/did/public",
             "response": {
               "docs": "",
@@ -15676,6 +15842,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/wallet/did/local/rotate-keypair",
             "request": {
               "name": "RotateKeypairRequest",
@@ -15712,6 +15879,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/wallet/set-did-endpoint",
             "request": {
               "body": {
@@ -15771,6 +15939,7 @@ exports[`open api parser aries docs 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/wallet/did/public",
             "request": {
               "name": "SetPublicDidRequest",
@@ -15883,6 +16052,7 @@ exports[`open api parser aries docs 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/transactions/{tran_id}/endorse",
           "path-parameters": {
             "tran_id": {
@@ -20469,6 +20639,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/close",
             "path-parameters": {
               "conn_id": {
@@ -20512,6 +20683,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/fetch",
             "path-parameters": {
               "conn_id": {
@@ -20549,6 +20721,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/perform",
             "path-parameters": {
               "conn_id": {
@@ -20597,6 +20770,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/request",
             "path-parameters": {
               "conn_id": {
@@ -20638,6 +20812,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/action-menu/{conn_id}/send-menu",
             "path-parameters": {
               "conn_id": {
@@ -20695,6 +20870,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/send-message",
             "path-parameters": {
               "conn_id": {
@@ -20769,6 +20945,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/accept-invitation",
             "path-parameters": {
               "conn_id": {
@@ -20834,6 +21011,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/accept-request",
             "path-parameters": {
               "conn_id": {
@@ -20899,6 +21077,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/create-invitation",
             "request": {
               "body": {
@@ -21005,6 +21184,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/create-static",
             "request": {
               "body": {
@@ -21071,6 +21251,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/connections/{conn_id}",
             "path-parameters": {
               "conn_id": {
@@ -21101,6 +21282,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/endpoints",
             "path-parameters": {
               "conn_id": {
@@ -21128,6 +21310,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/metadata",
             "path-parameters": {
               "conn_id": {
@@ -21185,6 +21368,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/connections/{conn_id}",
             "path-parameters": {
               "conn_id": {
@@ -21256,6 +21440,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/connections",
             "request": {
               "name": "GetMatchingConnectionsRequest",
@@ -21352,6 +21537,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/receive-invitation",
             "request": {
               "body": {
@@ -21430,6 +21616,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/metadata",
             "path-parameters": {
               "conn_id": {
@@ -21475,6 +21662,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
             "path-parameters": {
               "conn_id": {
@@ -21564,6 +21752,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential-definitions/created",
             "request": {
               "name": "GetCreatedCredDefsRequest",
@@ -21647,6 +21836,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential-definitions/{cred_def_id}",
             "path-parameters": {
               "cred_def_id": {
@@ -21714,6 +21904,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/credential-definitions",
             "request": {
               "body": {
@@ -21802,6 +21993,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/credential-definitions/{cred_def_id}/write_record",
             "path-parameters": {
               "cred_def_id": {
@@ -21846,6 +22038,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/credential/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -21877,6 +22070,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/credential/w3c/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -21908,6 +22102,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential/mime-types/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -21944,6 +22139,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -21991,6 +22187,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credentials",
             "request": {
               "name": "GetCredentialsRequest",
@@ -22031,6 +22228,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential/revoked/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -22098,6 +22296,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/credential/w3c/{credential_id}",
             "path-parameters": {
               "credential_id": {
@@ -22209,6 +22408,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/credentials/w3c",
             "request": {
               "body": {
@@ -22313,6 +22513,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/didexchange/{conn_id}/accept-invitation",
             "path-parameters": {
               "conn_id": {
@@ -22374,6 +22575,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/didexchange/{conn_id}/accept-request",
             "path-parameters": {
               "conn_id": {
@@ -22435,6 +22637,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/didexchange/create-request",
             "request": {
               "name": "CreateDidexRequestRequest",
@@ -22525,6 +22728,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/didexchange/receive-request",
             "request": {
               "body": {
@@ -22648,6 +22852,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discover-features/records",
             "request": {
               "name": "GetV10FeatureRecordsRequest",
@@ -22698,6 +22903,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discover-features/query",
             "request": {
               "name": "GetV10FeaturesQueryRequest",
@@ -22789,6 +22995,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discover-features-2.0/records",
             "request": {
               "name": "GetV20FeatureRecordsRequest",
@@ -22843,6 +23050,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/discover-features-2.0/queries",
             "request": {
               "name": "GetV20FeaturesQueriesRequest",
@@ -22926,6 +23134,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{tran_id}/cancel",
             "path-parameters": {
               "tran_id": {
@@ -22988,6 +23197,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/create-request",
             "request": {
               "body": {
@@ -23097,6 +23307,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transactions",
             "response": {
               "docs": "",
@@ -23150,6 +23361,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/transactions/{tran_id}",
             "path-parameters": {
               "tran_id": {
@@ -23209,6 +23421,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{tran_id}/write",
             "path-parameters": {
               "tran_id": {
@@ -23268,6 +23481,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{tran_id}/refuse",
             "path-parameters": {
               "tran_id": {
@@ -23327,6 +23541,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transaction/{tran_id}/resend",
             "path-parameters": {
               "tran_id": {
@@ -23360,6 +23575,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{conn_id}/set-endorser-info",
             "path-parameters": {
               "conn_id": {
@@ -23403,6 +23619,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/transactions/{conn_id}/set-endorser-role",
             "path-parameters": {
               "conn_id": {
@@ -23468,6 +23685,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/start-introduction",
             "path-parameters": {
               "conn_id": {
@@ -23672,6 +23890,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/create",
             "request": {
               "body": {
@@ -23886,6 +24105,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/create-offer",
             "request": {
               "body": {
@@ -23941,6 +24161,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}",
             "path-parameters": {
               "cred_ex_id": {
@@ -24096,6 +24317,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}",
             "path-parameters": {
               "cred_ex_id": {
@@ -24373,6 +24595,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-credential/records",
             "request": {
               "name": "GetMatchingCredExRecordsRequest",
@@ -24546,6 +24769,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/issue",
             "path-parameters": {
               "cred_ex_id": {
@@ -24593,6 +24817,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/problem-report",
             "path-parameters": {
               "cred_ex_id": {
@@ -24759,6 +24984,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/send-offer",
             "path-parameters": {
               "cred_ex_id": {
@@ -24924,6 +25150,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/send-request",
             "path-parameters": {
               "cred_ex_id": {
@@ -25103,6 +25330,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/send",
             "request": {
               "body": {
@@ -25322,6 +25550,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/send-offer",
             "request": {
               "body": {
@@ -25529,6 +25758,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/send-proposal",
             "request": {
               "body": {
@@ -25731,6 +25961,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential/records/{cred_ex_id}/store",
             "path-parameters": {
               "cred_ex_id": {
@@ -26000,6 +26231,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/create",
             "request": {
               "body": {
@@ -26241,6 +26473,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/create-offer",
             "request": {
               "body": {
@@ -26293,6 +26526,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}",
             "path-parameters": {
               "cred_ex_id": {
@@ -26518,6 +26752,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}",
             "path-parameters": {
               "cred_ex_id": {
@@ -26935,6 +27170,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records",
             "request": {
               "name": "GetMatchingCredExRecordsV2Request",
@@ -27178,6 +27414,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
             "path-parameters": {
               "cred_ex_id": {
@@ -27225,6 +27462,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
             "path-parameters": {
               "cred_ex_id": {
@@ -27457,6 +27695,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
             "path-parameters": {
               "cred_ex_id": {
@@ -27676,6 +27915,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
             "path-parameters": {
               "cred_ex_id": {
@@ -27914,6 +28154,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/send",
             "request": {
               "body": "root.V20CredExFree",
@@ -28136,6 +28377,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/send-offer",
             "request": {
               "body": {
@@ -28386,6 +28628,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/send-proposal",
             "request": {
               "body": "root.V20CredExFree",
@@ -28612,6 +28855,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/send-request",
             "request": {
               "body": {
@@ -28864,6 +29108,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
             "path-parameters": {
               "cred_ex_id": {
@@ -28973,6 +29218,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/jsonld/sign",
             "request": {
               "body": {
@@ -29017,6 +29263,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/jsonld/verify",
             "request": {
               "body": {
@@ -29071,6 +29318,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/ledger/taa/accept",
             "request": {
               "body": {
@@ -29106,6 +29354,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/get-nym-role",
             "request": {
               "name": "GetDidNymRoleRequest",
@@ -29138,6 +29387,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/did-verkey",
             "request": {
               "name": "GetDidVerkeyRequest",
@@ -29182,6 +29432,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/multiple/config",
             "response": {
               "docs": "",
@@ -29205,6 +29456,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/did-endpoint",
             "request": {
               "name": "GetPublishedDidEndpointRequest",
@@ -29256,6 +29508,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/taa",
             "response": {
               "docs": "",
@@ -29276,6 +29529,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/ledger/multiple/get-write-ledger",
             "response": {
               "docs": "",
@@ -29333,6 +29587,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/ledger/register-nym",
             "request": {
               "name": "RegisterNymRequest",
@@ -29384,6 +29639,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/ledger/rotate-public-did-keypair",
             "response": {
               "docs": "",
@@ -29453,6 +29709,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/mediation/default-mediator",
             "response": {
               "docs": "",
@@ -29494,6 +29751,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/mediation/requests/{mediation_id}",
             "path-parameters": {
               "mediation_id": {
@@ -29542,6 +29800,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/requests/{mediation_id}/deny",
             "path-parameters": {
               "mediation_id": {
@@ -29603,6 +29862,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/mediation/default-mediator",
             "response": {
               "docs": "",
@@ -29644,6 +29904,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/mediation/keylists",
             "request": {
               "name": "GetKeylistsRequest",
@@ -29720,6 +29981,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/mediation/requests",
             "request": {
               "name": "GetMatchingMediationRecordsRequest",
@@ -29784,6 +30046,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/mediation/requests/{mediation_id}",
             "path-parameters": {
               "mediation_id": {
@@ -29819,6 +30082,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/requests/{mediation_id}/grant",
             "path-parameters": {
               "mediation_id": {
@@ -29876,6 +30140,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/request/{conn_id}",
             "path-parameters": {
               "conn_id": {
@@ -29928,6 +30193,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
             "path-parameters": {
               "mediation_id": {
@@ -30002,6 +30268,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
             "path-parameters": {
               "mediation_id": {
@@ -30059,6 +30326,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/mediation/{mediation_id}/default-mediator",
             "path-parameters": {
               "mediation_id": {
@@ -30102,6 +30370,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/mediation/update-keylist/{conn_id}",
             "path-parameters": {
               "conn_id": {
@@ -30192,6 +30461,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multitenancy/wallet",
             "request": {
               "body": {
@@ -30265,6 +30535,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multitenancy/wallet/{wallet_id}/remove",
             "path-parameters": {
               "wallet_id": {
@@ -30310,6 +30581,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multitenancy/wallet/{wallet_id}/token",
             "path-parameters": {
               "wallet_id": "string",
@@ -30361,6 +30633,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/multitenancy/wallets",
             "request": {
               "name": "GetMatchingWalletsRequest",
@@ -30397,6 +30670,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/multitenancy/wallet/{wallet_id}",
             "path-parameters": {
               "wallet_id": {
@@ -30439,6 +30713,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/multitenancy/wallet/{wallet_id}",
             "path-parameters": {
               "wallet_id": {
@@ -30632,6 +30907,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/out-of-band/create-invitation",
             "request": {
               "body": {
@@ -30849,6 +31125,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/out-of-band/receive-invitation",
             "request": {
               "body": "root.InvitationMessage",
@@ -31088,6 +31365,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/create-request",
             "request": {
               "body": {
@@ -31132,6 +31410,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}",
             "path-parameters": {
               "pres_ex_id": {
@@ -31389,6 +31668,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof/records",
             "request": {
               "name": "GetMatchingPresExRecordsRequest",
@@ -31452,6 +31732,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/credentials",
             "path-parameters": {
               "pres_ex_id": {
@@ -31638,6 +31919,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}",
             "path-parameters": {
               "pres_ex_id": {
@@ -31672,6 +31954,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/problem-report",
             "path-parameters": {
               "pres_ex_id": {
@@ -31887,6 +32170,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/send-request",
             "request": {
               "body": {
@@ -32105,6 +32389,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/send-proposal",
             "request": {
               "body": {
@@ -32308,6 +32593,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/send-presentation",
             "path-parameters": {
               "pres_ex_id": {
@@ -32480,6 +32766,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/send-request",
             "path-parameters": {
               "pres_ex_id": {
@@ -32662,6 +32949,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
             "path-parameters": {
               "pres_ex_id": {
@@ -32870,6 +33158,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/create-request",
             "request": {
               "body": {
@@ -32914,6 +33203,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}",
             "path-parameters": {
               "pres_ex_id": {
@@ -33147,6 +33437,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records",
             "request": {
               "name": "GetMatchingPresExRecordsV2Request",
@@ -33210,6 +33501,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
             "path-parameters": {
               "pres_ex_id": {
@@ -33364,6 +33656,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}",
             "path-parameters": {
               "pres_ex_id": {
@@ -33398,6 +33691,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
             "path-parameters": {
               "pres_ex_id": {
@@ -33583,6 +33877,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/send-request",
             "request": {
               "body": {
@@ -33775,6 +34070,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/send-proposal",
             "request": {
               "body": {
@@ -33949,6 +34245,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
             "path-parameters": {
               "pres_ex_id": {
@@ -34101,6 +34398,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
             "path-parameters": {
               "pres_ex_id": {
@@ -34251,6 +34549,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
             "path-parameters": {
               "pres_ex_id": {
@@ -34332,6 +34631,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/resolver/resolve/{did}",
             "path-parameters": {
               "did": {
@@ -34384,6 +34684,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/clear-pending-revocations",
             "request": {
               "body": {
@@ -34458,6 +34759,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/create-registry",
             "request": {
               "body": {
@@ -34495,6 +34797,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "DELETE",
+            "pagination": undefined,
             "path": "/revocation/registry/delete-tails-file",
             "request": {
               "name": "DeleteTailsFileRequest",
@@ -34519,6 +34822,7 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Download tails file",
             "docs": undefined,
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/tails-file",
             "path-parameters": {
               "rev_reg_id": {
@@ -34536,6 +34840,7 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Download tails file",
             "docs": undefined,
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
             "path-parameters": {
               "rev_reg_id": {
@@ -34602,6 +34907,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/active-registry/{cred_def_id}",
             "path-parameters": {
               "cred_def_id": {
@@ -34631,6 +34937,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registries/created",
             "request": {
               "name": "GetCreatedRegistriesRequest",
@@ -34674,6 +34981,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/credential-record",
             "request": {
               "name": "GetCredentialRevocationRecordRequest",
@@ -34737,6 +35045,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/issued/details",
             "path-parameters": {
               "rev_reg_id": {
@@ -34766,6 +35075,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/issued",
             "path-parameters": {
               "rev_reg_id": {
@@ -34793,6 +35103,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
             "path-parameters": {
               "rev_reg_id": {
@@ -34859,6 +35170,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}",
             "path-parameters": {
               "rev_reg_id": {
@@ -34950,6 +35262,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/definition",
             "path-parameters": {
               "rev_reg_id": {
@@ -35029,6 +35342,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/entry",
             "path-parameters": {
               "rev_reg_id": {
@@ -35116,6 +35430,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/publish-revocations",
             "request": {
               "body": "root.PublishRevocations",
@@ -35152,6 +35467,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/revocation/revoke",
             "request": {
               "body": {
@@ -35260,6 +35576,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/set-state",
             "path-parameters": {
               "rev_reg_id": {
@@ -35299,6 +35616,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
             "path-parameters": {
               "rev_reg_id": {
@@ -35377,6 +35695,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}",
             "path-parameters": {
               "rev_reg_id": {
@@ -35421,6 +35740,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/revocation/registry/{rev_reg_id}/tails-file",
             "path-parameters": {
               "rev_reg_id": {
@@ -35490,6 +35810,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/schemas/created",
             "request": {
               "name": "GetMatchingCreatedSchemasRequest",
@@ -35544,6 +35865,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/schemas/{schema_id}",
             "path-parameters": {
               "schema_id": {
@@ -35624,6 +35946,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/schemas",
             "request": {
               "body": {
@@ -35687,6 +36010,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/schemas/{schema_id}/write_record",
             "path-parameters": {
               "schema_id": {
@@ -35722,6 +36046,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/status/config",
             "response": {
               "docs": "",
@@ -35742,6 +36067,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/status/live",
             "response": {
               "docs": "",
@@ -35765,6 +36091,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/plugins",
             "response": {
               "docs": "",
@@ -35785,6 +36112,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/status/ready",
             "response": {
               "docs": "",
@@ -35806,6 +36134,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/status",
             "response": {
               "docs": "",
@@ -35828,6 +36157,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/status/reset",
             "response": {
               "docs": "",
@@ -35850,6 +36180,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/shutdown",
             "response": {
               "docs": "",
@@ -35889,6 +36220,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/connections/{conn_id}/send-ping",
             "path-parameters": {
               "conn_id": {
@@ -35951,6 +36283,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/wallet/did/create",
             "request": {
               "body": {
@@ -35993,6 +36326,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/wallet/get-did-endpoint",
             "request": {
               "name": "GetDidEndpointRequest",
@@ -36037,6 +36371,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/wallet/did",
             "request": {
               "name": "GetDidsRequest",
@@ -36088,6 +36423,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/wallet/did/public",
             "response": {
               "docs": "",
@@ -36113,6 +36449,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "PATCH",
+            "pagination": undefined,
             "path": "/wallet/did/local/rotate-keypair",
             "request": {
               "name": "RotateKeypairRequest",
@@ -36149,6 +36486,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/wallet/set-did-endpoint",
             "request": {
               "body": {
@@ -36208,6 +36546,7 @@ exports[`open api parser aries simple 1`] = `
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/wallet/did/public",
             "request": {
               "name": "SetPublicDidRequest",
@@ -36320,6 +36659,7 @@ exports[`open api parser aries simple 1`] = `
             },
           ],
           "method": "POST",
+          "pagination": undefined,
           "path": "/transactions/{tran_id}/endorse",
           "path-parameters": {
             "tran_id": {
