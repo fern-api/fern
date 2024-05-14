@@ -115,6 +115,9 @@ navigation:
           - page: Auto-Pagination
             path: ./pages/sdks/features/auto-pagination.mdx
             icon: pro
+          - page: OAuth
+            path: ./pages/sdks/features/oauth.mdx
+            icon: pro
           - page: Retries with backoff
             path: ./pages/sdks/features/retries-with-backoff.mdx
             icon: pro
