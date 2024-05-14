@@ -2,6 +2,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 import { validateSchema } from "../commons/validateSchema";
 import { GENERATORS_CONFIGURATION_FILENAME } from "../constants";
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
@@ -20,13 +21,22 @@ export async function loadRawGeneratorsConfiguration({
         return undefined;
     }
     const contentsStr = await readFile(filepath);
-    const contentsParsed = yaml.load(contentsStr.toString());
-    return validateSchema({
-        schema: GeneratorsConfigurationSchema,
-        value: contentsParsed,
-        context,
-        filepathBeingParsed: filepath
-    });
+    try {
+        const contentsParsed = yaml.load(contentsStr.toString());
+        return validateSchema({
+            schema: GeneratorsConfigurationSchema,
+            value: contentsParsed,
+            context,
+            filepathBeingParsed: filepath
+        });
+    } catch (e) {
+        if (e instanceof yaml.YAMLException) {
+            context.failAndThrow(`Failed to parse ${path.relative(process.cwd(), filepath)}: ${e.reason}`);
+        } else {
+            throw e;
+        }
+    }
+    return undefined;
 }
 
 export async function loadGeneratorsConfiguration({

@@ -131,7 +131,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"pydantic_v1"},
+            exports={"pydantic_v1", "deep_union_pydantic_dicts"},
         )
         self._copy_security_to_project(project=project)
         self._copy_exceptions_to_project(project=project)
