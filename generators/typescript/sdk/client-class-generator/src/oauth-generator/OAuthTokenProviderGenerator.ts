@@ -255,8 +255,8 @@ export class OAuthTokenProviderGenerator {
         return code`
             private async _getToken(): Promise<string> {
                 const tokenResponse = await this._authClient.${getTokenEndpoint.name.camelCase.unsafeName}({
-                    clientId: await core.Supplier.get(this._clientId),
-                    clientSecret: await core.Supplier.get(this._clientSecret),
+                    ${clientIdProperty}: await core.Supplier.get(this._clientId),
+                    ${clientSecretProperty}: await core.Supplier.get(this._clientSecret),
                 });
                 this._accessToken = tokenResponse.${accessTokenProperty};
                 return this._accessToken;
