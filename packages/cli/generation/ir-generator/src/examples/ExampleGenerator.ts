@@ -599,12 +599,7 @@ export class ExampleGenerator {
         opts: ExampleGenerator.Options = {}
     ): ExampleTypeReference {
         if (this.exceedsMaxDepth(depth)) {
-            // TODO: Is this right?
             return this.generateExampleUnknown({}, opts);
-        }
-
-        if (opts.unknownAsPrimitive != null) {
-            console.log("generateExampleTypeReference", typeReference.type, opts);
         }
 
         switch (typeReference.type) {
@@ -668,9 +663,6 @@ export class ExampleGenerator {
         const exampleTypeReferenceKey = this.generateExampleTypeReference(mapType.keyType, depth, {
             unknownAsPrimitive: true
         });
-        if (exampleTypeReferenceKey.shape.type !== "primitive") {
-            console.log("Key type is not primitive wtf");
-        }
         const exampleTypeReferenceValue = this.generateExampleTypeReference(mapType.valueType, depth);
         const jsonExampleMapKey = this.jsonExampleToMapKey(exampleTypeReferenceKey.jsonExample);
         return {
