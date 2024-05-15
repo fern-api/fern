@@ -71,12 +71,12 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         ]),
                     map: (examplePairs) =>
                         ts.factory.createObjectLiteralExpression(
-                            examplePairs.map((examplePair) => {
-                                return ts.factory.createPropertyAssignment(
+                            examplePairs.map((examplePair) =>
+                                ts.factory.createPropertyAssignment(
                                     this.getExampleAsPropertyName({ example: examplePair.key, context, opts }),
                                     this.buildExample({ example: examplePair.value, context, opts })
-                                );
-                            }),
+                                )
+                            ),
                             true
                         ),
                     optional: (exampleItem) =>
