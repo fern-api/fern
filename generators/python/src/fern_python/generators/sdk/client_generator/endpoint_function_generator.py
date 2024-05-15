@@ -1113,6 +1113,7 @@ class EndpointFunctionSnippetGenerator:
                     writer.write_line("yield chunk")
 
             return AST.Expression(AST.CodeWriter(snippet_writer))
+        return None
 
     def _get_snippet_for_inlined_request_body_properties(
         self,
