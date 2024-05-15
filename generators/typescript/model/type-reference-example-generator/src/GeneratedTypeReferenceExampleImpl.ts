@@ -69,16 +69,18 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                 )
                             )
                         ]),
-                    map: (examplePairs) =>
-                        ts.factory.createObjectLiteralExpression(
-                            examplePairs.map((examplePair) =>
-                                ts.factory.createPropertyAssignment(
+                    map: (examplePairs) => {
+                        return ts.factory.createObjectLiteralExpression(
+                            examplePairs.map((examplePair) => {
+                                console.log(" examplePair.key",  examplePair.key);
+                                return ts.factory.createPropertyAssignment(
                                     this.getExampleAsPropertyName({ example: examplePair.key, context, opts }),
                                     this.buildExample({ example: examplePair.value, context, opts })
-                                )
-                            ),
+                                );
+                            }),
                             true
-                        ),
+                        );
+                    },
                     optional: (exampleItem) =>
                         exampleItem != null
                             ? this.buildExample({ example: exampleItem, context, opts })
@@ -150,6 +152,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         );
                     }
                     case "alias":
+                        console.log("In alias, calling getExampleAsPropertyName");
                         return this.getExampleAsPropertyName({ example: example.value, context, opts });
                     case "undiscriminatedUnion":
                         throw new Error("Cannot convert undiscriminated union to property name");
@@ -158,6 +161,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 }
             },
             unknown: () => {
+                console.log(JSON.stringify(example));
                 throw new Error("Cannot convert unknown to property name");
             },
             _other: () => {
