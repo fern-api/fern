@@ -57,6 +57,20 @@ export async function publishDocs({
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
     });
 
+    // track all changelog markdown files in parsedDocsConfig.pages
+    fernWorkspaces.forEach((workspace) => {
+        if (workspace.changelog != null) {
+            workspace.changelog.files.forEach((file) => {
+                const filename = last(file.absoluteFilepath.split("/"));
+                if (filename == null) {
+                    return;
+                }
+                const relativePath = relative(docsWorkspace.absoluteFilepath, file.absoluteFilepath);
+                parsedDocsConfig.pages[relativePath] = file.contents;
+            });
+        }
+    });
+
     const mdxImageReferences: docsYml.ImageReference[] = [];
 
     // preprocess markdown files to extract image paths
@@ -143,8 +157,6 @@ export async function publishDocs({
     }
 
     const { docsRegistrationId, uploadUrls } = startDocsRegisterResponse.body;
-
-    // const copiedRecord: Record<RelativeFilePath, string> = Object.assign({}, parsedDocsConfig.pages);
 
     const collectedFileIds = new Map<RelativeFilePath, string>();
 
@@ -285,8 +297,7 @@ async function constructRegisterDocsRequest({
                 }
             }),
             {}
-        ),
-        ...convertedDocsConfiguration.pages
+        )
     };
     pages = Object.fromEntries(
         Object.entries(pages).map(([pageId, pageContent]) => {
@@ -332,7 +343,6 @@ function createEditThisPageUrl(
 
 interface ConvertedDocsConfiguration {
     config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2">;
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertDocsConfiguration({
@@ -396,15 +406,11 @@ async function convertDocsConfiguration({
         css: parsedDocsConfig.css,
         js: convertJavascriptConfiguration(parsedDocsConfig.js, uploadUrls, parsedDocsConfig)
     };
-    return {
-        config,
-        pages: convertedNavigation.pages
-    };
+    return { config };
 }
 
 interface ConvertedNavigationConfig {
     config: DocsV1Write.NavigationConfig;
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertNavigationConfig({
@@ -431,7 +437,6 @@ async function convertNavigationConfig({
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedNavigationConfig> {
     let config: DocsV1Write.NavigationConfig;
-    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (navigationConfig.type) {
         case "untabbed": {
             const untabbedItems = await Promise.all(
@@ -449,12 +454,6 @@ async function convertNavigationConfig({
                     })
                 )
             );
-            for (const untabbedItem of untabbedItems) {
-                pages = {
-                    ...pages,
-                    ...untabbedItem.pages
-                };
-            }
             config = {
                 items: untabbedItems.map((item) => item.item)
             };
@@ -474,7 +473,6 @@ async function convertNavigationConfig({
             config = {
                 tabs: tabbedItem.tabs
             };
-            pages = { ...pages, ...tabbedItem.pages };
             break;
         }
         case "versioned":
@@ -494,10 +492,6 @@ async function convertNavigationConfig({
                                 fullSlugs,
                                 absolutePathToFernFolder
                             });
-                            pages = {
-                                ...pages,
-                                ...convertedNavigation.pages
-                            };
                             return {
                                 version: version.version,
                                 config: convertedNavigation.config,
@@ -515,10 +509,7 @@ async function convertNavigationConfig({
         default:
             assertNever(navigationConfig);
     }
-    return {
-        config,
-        pages
-    };
+    return { config };
 }
 
 function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.VersionAvailability {
@@ -538,7 +529,6 @@ function convertAvailability(availability: docsYml.RawSchemas.VersionAvailabilit
 
 interface ConvertedUnversionedNavigationConfig {
     config: DocsV1Write.UnversionedNavigationConfig;
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertUnversionedNavigationConfig({
@@ -565,7 +555,6 @@ async function convertUnversionedNavigationConfig({
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedUnversionedNavigationConfig> {
     let config: DocsV1Write.UnversionedNavigationConfig;
-    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (navigationConfig.type) {
         case "untabbed": {
             const untabbedItems = await Promise.all(
@@ -586,12 +575,6 @@ async function convertUnversionedNavigationConfig({
             config = {
                 items: untabbedItems.map((item) => item.item)
             };
-            for (const untabbedItem of untabbedItems) {
-                pages = {
-                    ...pages,
-                    ...untabbedItem.pages
-                };
-            }
             break;
         }
         case "tabbed": {
@@ -608,16 +591,12 @@ async function convertUnversionedNavigationConfig({
             config = {
                 tabs: tabbedItem.tabs
             };
-            pages = { ...pages, ...tabbedItem.pages };
             break;
         }
         default:
             assertNever(navigationConfig);
     }
-    return {
-        config,
-        pages
-    };
+    return { config };
 }
 
 async function convertTabbedNavigation(
@@ -642,11 +621,7 @@ async function convertTabbedNavigation(
         fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
         absolutePathToFernFolder: AbsoluteFilePath;
     }
-): Promise<{
-    tabs: DocsV1Write.NavigationTab[];
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
-}> {
-    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
+): Promise<{ tabs: DocsV1Write.NavigationTab[] }> {
     const convertedTabs = await Promise.all(
         items.map(async (tabbedItem) => {
             const tabConfig = tabs?.[tabbedItem.tab];
@@ -690,13 +665,6 @@ async function convertTabbedNavigation(
                 )
             );
 
-            tabbedItems.forEach((tabbedItem) => {
-                pages = {
-                    ...pages,
-                    ...tabbedItem.pages
-                };
-            });
-
             return {
                 title: tabConfig.displayName,
                 icon: tabConfig.icon,
@@ -705,10 +673,7 @@ async function convertTabbedNavigation(
             };
         })
     );
-    return {
-        tabs: convertedTabs,
-        pages
-    };
+    return { tabs: convertedTabs };
 }
 
 function convertDocsTypographyConfiguration({
@@ -938,7 +903,6 @@ function convertImageReference({
 
 interface ConvertedNavigationItem {
     item: DocsV1Write.NavigationItem;
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertNavigationItem({
@@ -963,7 +927,6 @@ async function convertNavigationItem({
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedNavigationItem> {
     let convertedItem: DocsV1Write.NavigationItem;
-    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (item.type) {
         case "page": {
             convertedItem = {
@@ -1003,12 +966,6 @@ async function convertNavigationItem({
                 hidden: item.hidden,
                 skipUrlSlug: item.skipUrlSlug
             };
-            for (const sectionItem of sectionItems) {
-                pages = {
-                    ...pages,
-                    ...sectionItem.pages
-                };
-            }
             break;
         }
         case "apiSection": {
@@ -1041,9 +998,6 @@ async function convertNavigationItem({
                         continue;
                     }
                     const relativePath = relative(absolutePathToFernFolder, file.absoluteFilepath);
-                    pages[relativePath] = {
-                        markdown: file.contents
-                    };
                     changelogItems.push({
                         date: changelogDate.toISOString(),
                         pageId: relativePath
@@ -1089,8 +1043,7 @@ async function convertNavigationItem({
             assertNever(item);
     }
     return {
-        item: convertedItem,
-        pages
+        item: convertedItem
     };
 }
 
