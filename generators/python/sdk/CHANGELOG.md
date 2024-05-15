@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2024-05-15
+
+- Improvement: The generated SDK will now correctly encode deep object query parameters.
+  For example, if you have an object `{"test": {"nested": "object"}}` as a query parameter, we will now encode it as `test[nested]=object`.
+
 ## [2.1.0] - 2024-05-14
 
 - Feature: Add support for cursor and offset pagination.
@@ -68,7 +73,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.1] - 2024-05-14
 
 - Fix: the python generator previously used `exclude_unset` on pydantic models, however this would remove defaulted values. This change updates this to only exclude none fields that were not required.
-
 
 ## [2.0.0] - 2024-05-09
 
