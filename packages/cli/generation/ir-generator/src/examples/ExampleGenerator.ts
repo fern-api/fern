@@ -713,7 +713,7 @@ export class ExampleGenerator {
         primitiveType: PrimitiveType;
         example?: unknown | undefined;
     }): ExampleTypeReference {
-        switch (primitiveType) {
+        switch (primitiveType.category) {
             case "STRING": {
                 const exString = example != null && typeof example === "string" ? example : Examples.STRING;
                 return {
@@ -775,6 +775,13 @@ export class ExampleGenerator {
                 return {
                     jsonExample: exB64,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: exB64 }))
+                };
+            }
+            case "BIG_INTEGER": {
+                const exBigInt = example != null && typeof example === "string" ? example : Examples.BIG_INTEGER;
+                return {
+                    jsonExample: exBigInt,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: exBigInt }))
                 };
             }
             default:
