@@ -13,7 +13,7 @@ import chalk from "chalk";
 import { readFile } from "fs/promises";
 import matter from "gray-matter";
 import { imageSize } from "image-size";
-import { last } from "lodash-es";
+import { chunk, last, orderBy } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
@@ -55,6 +55,20 @@ export async function publishDocs({
         context,
         absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
+    });
+
+    // track all changelog markdown files in parsedDocsConfig.pages
+    fernWorkspaces.forEach((workspace) => {
+        if (workspace.changelog != null) {
+            workspace.changelog.files.forEach((file) => {
+                const filename = last(file.absoluteFilepath.split("/"));
+                if (filename == null) {
+                    return;
+                }
+                const relativePath = relative(docsWorkspace.absoluteFilepath, file.absoluteFilepath);
+                parsedDocsConfig.pages[relativePath] = file.contents;
+            });
+        }
     });
 
     const mdxImageReferences: docsYml.ImageReference[] = [];
@@ -144,52 +158,39 @@ export async function publishDocs({
 
     const { docsRegistrationId, uploadUrls } = startDocsRegisterResponse.body;
 
-    // const copiedRecord: Record<RelativeFilePath, string> = Object.assign({}, parsedDocsConfig.pages);
-
     const collectedFileIds = new Map<RelativeFilePath, string>();
 
-    await Promise.all([
-        ...filepathsToUpload.map(async (filepathToUpload) => {
-            const relativePath = convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig);
-            const uploadUrl = uploadUrls[relativePath];
-            if (uploadUrl == null) {
-                context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
-            } else {
-                try {
-                    const mimeType = mime.lookup(filepathToUpload);
-                    await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
-                        headers: {
-                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
-                        }
-                    });
-                    collectedFileIds.set(relativePath, uploadUrl.fileId);
-                } catch (e) {
-                    // file might not exist
-                    context.failAndThrow(`Failed to upload ${filepathToUpload}`, e);
+    const allFilepathsToUpload = [
+        ...filepathsToUpload,
+        ...imageFilepathsWithSizesToUpload.map((image) => image.filePath)
+    ];
+
+    // upload all files and images, 50 at a time
+    const chunkedFilepathsToUpload = chunk(allFilepathsToUpload, 50);
+    for (const chunkedFilepaths of chunkedFilepathsToUpload) {
+        await Promise.all(
+            chunkedFilepaths.map(async (filepathToUpload) => {
+                const relativePath = convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig);
+                const uploadUrl = uploadUrls[relativePath];
+                if (uploadUrl == null) {
+                    context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
+                } else {
+                    try {
+                        const mimeType = mime.lookup(filepathToUpload);
+                        await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
+                            headers: {
+                                "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                            }
+                        });
+                        collectedFileIds.set(relativePath, uploadUrl.fileId);
+                    } catch (e) {
+                        // file might not exist
+                        context.failAndThrow(`Failed to upload ${filepathToUpload}`, e);
+                    }
                 }
-            }
-        }),
-        ...imageFilepathsWithSizesToUpload.map(async ({ filePath: imageFilepathToUpload }) => {
-            const relativePath = convertAbsoluteFilepathToFdrFilepath(imageFilepathToUpload, parsedDocsConfig);
-            const uploadUrl = uploadUrls[relativePath];
-            if (uploadUrl == null) {
-                context.failAndThrow(`Failed to upload ${imageFilepathToUpload}`, "Upload URL is missing");
-            } else {
-                try {
-                    const mimeType = mime.lookup(imageFilepathToUpload);
-                    await axios.put(uploadUrl.uploadUrl, await readFile(imageFilepathToUpload), {
-                        headers: {
-                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
-                        }
-                    });
-                    collectedFileIds.set(relativePath, uploadUrl.fileId);
-                } catch (e) {
-                    // file might not exist
-                    context.failAndThrow(`Failed to upload ${imageFilepathToUpload}`, e);
-                }
-            }
-        })
-    ]);
+            })
+        );
+    }
 
     // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
     for (const [relativePath, markdown] of Object.entries(parsedDocsConfig.pages)) {
@@ -285,8 +286,7 @@ async function constructRegisterDocsRequest({
                 }
             }),
             {}
-        ),
-        ...convertedDocsConfiguration.pages
+        )
     };
     pages = Object.fromEntries(
         Object.entries(pages).map(([pageId, pageContent]) => {
@@ -332,7 +332,6 @@ function createEditThisPageUrl(
 
 interface ConvertedDocsConfiguration {
     config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2">;
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertDocsConfiguration({
@@ -396,15 +395,11 @@ async function convertDocsConfiguration({
         css: parsedDocsConfig.css,
         js: convertJavascriptConfiguration(parsedDocsConfig.js, uploadUrls, parsedDocsConfig)
     };
-    return {
-        config,
-        pages: convertedNavigation.pages
-    };
+    return { config };
 }
 
 interface ConvertedNavigationConfig {
     config: DocsV1Write.NavigationConfig;
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertNavigationConfig({
@@ -431,7 +426,6 @@ async function convertNavigationConfig({
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedNavigationConfig> {
     let config: DocsV1Write.NavigationConfig;
-    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (navigationConfig.type) {
         case "untabbed": {
             const untabbedItems = await Promise.all(
@@ -449,12 +443,6 @@ async function convertNavigationConfig({
                     })
                 )
             );
-            for (const untabbedItem of untabbedItems) {
-                pages = {
-                    ...pages,
-                    ...untabbedItem.pages
-                };
-            }
             config = {
                 items: untabbedItems.map((item) => item.item)
             };
@@ -474,7 +462,6 @@ async function convertNavigationConfig({
             config = {
                 tabs: tabbedItem.tabs
             };
-            pages = { ...pages, ...tabbedItem.pages };
             break;
         }
         case "versioned":
@@ -494,10 +481,6 @@ async function convertNavigationConfig({
                                 fullSlugs,
                                 absolutePathToFernFolder
                             });
-                            pages = {
-                                ...pages,
-                                ...convertedNavigation.pages
-                            };
                             return {
                                 version: version.version,
                                 config: convertedNavigation.config,
@@ -515,10 +498,7 @@ async function convertNavigationConfig({
         default:
             assertNever(navigationConfig);
     }
-    return {
-        config,
-        pages
-    };
+    return { config };
 }
 
 function convertAvailability(availability: docsYml.RawSchemas.VersionAvailability): DocsV1Write.VersionAvailability {
@@ -538,7 +518,6 @@ function convertAvailability(availability: docsYml.RawSchemas.VersionAvailabilit
 
 interface ConvertedUnversionedNavigationConfig {
     config: DocsV1Write.UnversionedNavigationConfig;
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertUnversionedNavigationConfig({
@@ -565,7 +544,6 @@ async function convertUnversionedNavigationConfig({
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedUnversionedNavigationConfig> {
     let config: DocsV1Write.UnversionedNavigationConfig;
-    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (navigationConfig.type) {
         case "untabbed": {
             const untabbedItems = await Promise.all(
@@ -586,12 +564,6 @@ async function convertUnversionedNavigationConfig({
             config = {
                 items: untabbedItems.map((item) => item.item)
             };
-            for (const untabbedItem of untabbedItems) {
-                pages = {
-                    ...pages,
-                    ...untabbedItem.pages
-                };
-            }
             break;
         }
         case "tabbed": {
@@ -608,16 +580,12 @@ async function convertUnversionedNavigationConfig({
             config = {
                 tabs: tabbedItem.tabs
             };
-            pages = { ...pages, ...tabbedItem.pages };
             break;
         }
         default:
             assertNever(navigationConfig);
     }
-    return {
-        config,
-        pages
-    };
+    return { config };
 }
 
 async function convertTabbedNavigation(
@@ -642,11 +610,7 @@ async function convertTabbedNavigation(
         fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>;
         absolutePathToFernFolder: AbsoluteFilePath;
     }
-): Promise<{
-    tabs: DocsV1Write.NavigationTab[];
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
-}> {
-    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
+): Promise<{ tabs: DocsV1Write.NavigationTab[] }> {
     const convertedTabs = await Promise.all(
         items.map(async (tabbedItem) => {
             const tabConfig = tabs?.[tabbedItem.tab];
@@ -690,13 +654,6 @@ async function convertTabbedNavigation(
                 )
             );
 
-            tabbedItems.forEach((tabbedItem) => {
-                pages = {
-                    ...pages,
-                    ...tabbedItem.pages
-                };
-            });
-
             return {
                 title: tabConfig.displayName,
                 icon: tabConfig.icon,
@@ -705,10 +662,7 @@ async function convertTabbedNavigation(
             };
         })
     );
-    return {
-        tabs: convertedTabs,
-        pages
-    };
+    return { tabs: convertedTabs };
 }
 
 function convertDocsTypographyConfiguration({
@@ -938,7 +892,6 @@ function convertImageReference({
 
 interface ConvertedNavigationItem {
     item: DocsV1Write.NavigationItem;
-    pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent>;
 }
 
 async function convertNavigationItem({
@@ -963,7 +916,6 @@ async function convertNavigationItem({
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<ConvertedNavigationItem> {
     let convertedItem: DocsV1Write.NavigationItem;
-    let pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
     switch (item.type) {
         case "page": {
             convertedItem = {
@@ -1003,12 +955,6 @@ async function convertNavigationItem({
                 hidden: item.hidden,
                 skipUrlSlug: item.skipUrlSlug
             };
-            for (const sectionItem of sectionItems) {
-                pages = {
-                    ...pages,
-                    ...sectionItem.pages
-                };
-            }
             break;
         }
         case "apiSection": {
@@ -1029,7 +975,7 @@ async function convertNavigationItem({
                     }
                 })
             });
-            const changelogItems: DocsV1Write.ChangelogItem[] = [];
+            const unsortedChangelogItems: { date: Date; pageId: RelativeFilePath }[] = [];
             if (workspace.changelog != null) {
                 for (const file of workspace.changelog.files) {
                     const filename = last(file.absoluteFilepath.split("/"));
@@ -1041,15 +987,18 @@ async function convertNavigationItem({
                         continue;
                     }
                     const relativePath = relative(absolutePathToFernFolder, file.absoluteFilepath);
-                    pages[relativePath] = {
-                        markdown: file.contents
-                    };
-                    changelogItems.push({
-                        date: changelogDate.toISOString(),
-                        pageId: relativePath
-                    });
+                    unsortedChangelogItems.push({ date: changelogDate, pageId: relativePath });
                 }
             }
+
+            // sort changelog items by date, in descending order
+            const changelogItems = orderBy(unsortedChangelogItems, (item) => item.date, "desc").map(
+                (item): DocsV1Write.ChangelogItem => ({
+                    date: item.date.toISOString(),
+                    pageId: item.pageId
+                })
+            );
+
             convertedItem = {
                 type: "api",
                 title: item.title,
@@ -1089,8 +1038,7 @@ async function convertNavigationItem({
             assertNever(item);
     }
     return {
-        item: convertedItem,
-        pages
+        item: convertedItem
     };
 }
 
@@ -1238,22 +1186,29 @@ async function getImageFilepathsToUpload(
         filepaths.add(parsedImagePath.filepath);
     }
 
-    const imageFilepathsAndSizesToUpload = await Promise.all(
-        [...filepaths].map(async (filePath): Promise<ImageFile> => {
-            try {
-                const size = await sizeOf(filePath);
-                if (size == null || size.height == null || size.width == null) {
+    // measure the size of the images, 10 at a time
+    const filepathChunks = chunk([...filepaths], 10);
+    const imageFilepathsAndSizesToUpload: ImageFile[] = [];
+    for (const filepaths of filepathChunks) {
+        const chunk: ImageFile[] = await Promise.all(
+            filepaths.map(async (filePath): Promise<ImageFile> => {
+                try {
+                    const size = await sizeOf(filePath);
+                    if (size == null || size.height == null || size.width == null) {
+                        return { type: "filepath", value: filePath };
+                    }
+                    return {
+                        type: "image",
+                        value: { filePath, width: size.width, height: size.height, blurDataUrl: undefined }
+                    };
+                } catch (e) {
                     return { type: "filepath", value: filePath };
                 }
-                return {
-                    type: "image",
-                    value: { filePath, width: size.width, height: size.height, blurDataUrl: undefined }
-                };
-            } catch (e) {
-                return { type: "filepath", value: filePath };
-            }
-        })
-    );
+            })
+        );
+
+        imageFilepathsAndSizesToUpload.push(...chunk);
+    }
 
     const imagesWithSize = imageFilepathsAndSizesToUpload.filter(isImage).map((image) => image.value);
     const imagesWithoutSize = imageFilepathsAndSizesToUpload.filter(isFilePath).map((image) => image.value);
