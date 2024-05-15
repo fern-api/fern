@@ -69,8 +69,8 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                 )
                             )
                         ]),
-                    map: (examplePairs) => {
-                        return ts.factory.createObjectLiteralExpression(
+                    map: (examplePairs) =>
+                        ts.factory.createObjectLiteralExpression(
                             examplePairs.map((examplePair) => {
                                 return ts.factory.createPropertyAssignment(
                                     this.getExampleAsPropertyName({ example: examplePair.key, context, opts }),
@@ -78,8 +78,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                 );
                             }),
                             true
-                        );
-                    },
+                        ),
                     optional: (exampleItem) =>
                         exampleItem != null
                             ? this.buildExample({ example: exampleItem, context, opts })
