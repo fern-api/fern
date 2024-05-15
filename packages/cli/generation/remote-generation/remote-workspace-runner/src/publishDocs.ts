@@ -13,7 +13,7 @@ import chalk from "chalk";
 import { readFile } from "fs/promises";
 import matter from "gray-matter";
 import { imageSize } from "image-size";
-import { last, orderBy } from "lodash-es";
+import { chunk, last, orderBy } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
@@ -160,48 +160,37 @@ export async function publishDocs({
 
     const collectedFileIds = new Map<RelativeFilePath, string>();
 
-    await Promise.all([
-        ...filepathsToUpload.map(async (filepathToUpload) => {
-            const relativePath = convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig);
-            const uploadUrl = uploadUrls[relativePath];
-            if (uploadUrl == null) {
-                context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
-            } else {
-                try {
-                    const mimeType = mime.lookup(filepathToUpload);
-                    await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
-                        headers: {
-                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
-                        }
-                    });
-                    collectedFileIds.set(relativePath, uploadUrl.fileId);
-                } catch (e) {
-                    // file might not exist
-                    context.failAndThrow(`Failed to upload ${filepathToUpload}`, e);
+    const allFilepathsToUpload = [
+        ...filepathsToUpload,
+        ...imageFilepathsWithSizesToUpload.map((image) => image.filePath)
+    ];
+
+    // upload all files and images, 50 at a time
+    const chunkedFilepathsToUpload = chunk(allFilepathsToUpload, 50);
+    for (const chunkedFilepaths of chunkedFilepathsToUpload) {
+        await Promise.all(
+            chunkedFilepaths.map(async (filepathToUpload) => {
+                const relativePath = convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig);
+                const uploadUrl = uploadUrls[relativePath];
+                if (uploadUrl == null) {
+                    context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
+                } else {
+                    try {
+                        const mimeType = mime.lookup(filepathToUpload);
+                        await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
+                            headers: {
+                                "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                            }
+                        });
+                        collectedFileIds.set(relativePath, uploadUrl.fileId);
+                    } catch (e) {
+                        // file might not exist
+                        context.failAndThrow(`Failed to upload ${filepathToUpload}`, e);
+                    }
                 }
-            }
-        }),
-        ...imageFilepathsWithSizesToUpload.map(async ({ filePath: imageFilepathToUpload }) => {
-            const relativePath = convertAbsoluteFilepathToFdrFilepath(imageFilepathToUpload, parsedDocsConfig);
-            const uploadUrl = uploadUrls[relativePath];
-            if (uploadUrl == null) {
-                context.failAndThrow(`Failed to upload ${imageFilepathToUpload}`, "Upload URL is missing");
-            } else {
-                try {
-                    const mimeType = mime.lookup(imageFilepathToUpload);
-                    await axios.put(uploadUrl.uploadUrl, await readFile(imageFilepathToUpload), {
-                        headers: {
-                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
-                        }
-                    });
-                    collectedFileIds.set(relativePath, uploadUrl.fileId);
-                } catch (e) {
-                    // file might not exist
-                    context.failAndThrow(`Failed to upload ${imageFilepathToUpload}`, e);
-                }
-            }
-        })
-    ]);
+            })
+        );
+    }
 
     // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
     for (const [relativePath, markdown] of Object.entries(parsedDocsConfig.pages)) {
@@ -1197,22 +1186,29 @@ async function getImageFilepathsToUpload(
         filepaths.add(parsedImagePath.filepath);
     }
 
-    const imageFilepathsAndSizesToUpload = await Promise.all(
-        [...filepaths].map(async (filePath): Promise<ImageFile> => {
-            try {
-                const size = await sizeOf(filePath);
-                if (size == null || size.height == null || size.width == null) {
+    // measure the size of the images, 10 at a time
+    const filepathChunks = chunk([...filepaths], 10);
+    const imageFilepathsAndSizesToUpload: ImageFile[] = [];
+    for (const filepaths of filepathChunks) {
+        const chunk: ImageFile[] = await Promise.all(
+            filepaths.map(async (filePath): Promise<ImageFile> => {
+                try {
+                    const size = await sizeOf(filePath);
+                    if (size == null || size.height == null || size.width == null) {
+                        return { type: "filepath", value: filePath };
+                    }
+                    return {
+                        type: "image",
+                        value: { filePath, width: size.width, height: size.height, blurDataUrl: undefined }
+                    };
+                } catch (e) {
                     return { type: "filepath", value: filePath };
                 }
-                return {
-                    type: "image",
-                    value: { filePath, width: size.width, height: size.height, blurDataUrl: undefined }
-                };
-            } catch (e) {
-                return { type: "filepath", value: filePath };
-            }
-        })
-    );
+            })
+        );
+
+        imageFilepathsAndSizesToUpload.push(...chunk);
+    }
 
     const imagesWithSize = imageFilepathsAndSizesToUpload.filter(isImage).map((image) => image.value);
     const imagesWithoutSize = imageFilepathsAndSizesToUpload.filter(isFilePath).map((image) => image.value);
