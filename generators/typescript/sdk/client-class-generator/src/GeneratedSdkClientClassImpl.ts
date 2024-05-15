@@ -1155,18 +1155,51 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const statements: ts.Statement[] = [];
 
         if (this.oauthAuthScheme != null) {
+            const BEARER_TOKEN_VARIABLE_NAME = "bearer";
             statements.push(
-                ts.factory.createReturnStatement(
-                    ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
-                        ts.factory.createTemplateSpan(
-                            context.coreUtilities.fetcher.Supplier.get(
-                                this.getReferenceToOption(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME)
-                            ),
-                            ts.factory.createTemplateTail("", "")
-                        )
-                    ])
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                undefined,
+                                undefined,
+                                context.coreUtilities.fetcher.Supplier.get(
+                                    this.getReferenceToOption(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME)
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
                 )
             );
+
+            statements.push(
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createReturnStatement(
+                                ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
+                                    ts.factory.createTemplateSpan(
+                                        ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                        ts.factory.createTemplateTail("", "")
+                                    )
+                                ])
+                            )
+                        ],
+                        true
+                    )
+                )
+            );
+
+            statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));
+
             return statements;
         }
         if (this.bearerAuthScheme != null) {
