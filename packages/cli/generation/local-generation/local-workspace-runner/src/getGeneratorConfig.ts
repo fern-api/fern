@@ -210,7 +210,7 @@ function newDummyPublishOutputConfig(
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
     } else if (outputMode != null) {
         outputMode = multipleOutputMode._visit<
-            NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | undefined
+            NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined
         >({
             mavenOverride: (value) => value,
             npmOverride: (value) => value,

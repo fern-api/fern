@@ -463,6 +463,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("ruby")) {
         return GenerationLanguage.RUBY;
     }
+    if (generatorName.includes("csharp")) {
+        return GenerationLanguage.CSHARP;
+    }
     return undefined;
 }
 
