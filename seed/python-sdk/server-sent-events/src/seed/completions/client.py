@@ -45,9 +45,11 @@ class CompletionsClient:
         client = SeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.completions.stream(
+        response = client.completions.stream(
             query="string",
         )
+        for chunk in response:
+            yield chunk
         """
         with self._client_wrapper.httpx_client.stream(
             method="POST",
@@ -114,9 +116,11 @@ class AsyncCompletionsClient:
         client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.completions.stream(
+        response = await client.completions.stream(
             query="string",
         )
+        async for chunk in response:
+            yield chunk
         """
         async with self._client_wrapper.httpx_client.stream(
             method="POST",
