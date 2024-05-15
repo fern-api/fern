@@ -41,7 +41,7 @@ jobs:
 
       - name: Publish
         env:
-          NUGET_API_KEY: ${{ secrets. }}
+          NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
           dotnet pack src -c Release
-          dotnet nuget push src/SeedEnum/bin/Release/*.nupkg --api-key ${{ secrets.NUGET_API_TOKEN }} --source "nuget.org"
+          dotnet nuget push src/SeedEnum/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"

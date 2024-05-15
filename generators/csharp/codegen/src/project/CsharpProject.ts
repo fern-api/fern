@@ -75,7 +75,11 @@ export class CsharpProject {
         const githubWorkflow = template(githubWorkflowTemplate)({
             projectName: this.name,
             shouldWritePublishBlock: this.context.publishConfig != null,
-            nugetTokenEnvvar: this.context.publishConfig?.apiKeyEnvironmentVariable ?? "NUGET_API_TOKEN"
+            nugetTokenEnvvar:
+                this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
+                this.context.publishConfig?.apiKeyEnvironmentVariable === ""
+                    ? "NUGET_API_TOKEN"
+                    : this.context.publishConfig.apiKeyEnvironmentVariable
         }).replaceAll("\\{", "{");
         const ghDir = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(".github/workflows"));
         await mkdir(ghDir, { recursive: true });
