@@ -1,10 +1,10 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
-import { V44_TO_V43_MIGRATION } from "../migrateFromV44ToV43";
+import { V45_TO_V44_MIGRATION } from "../migrateFromV45ToV44";
 
-const runMigration = createMigrationTester(V44_TO_V43_MIGRATION);
+const runMigration = createMigrationTester(V45_TO_V44_MIGRATION);
 
-describe("migrateFromV44ToV43", () => {
+describe("migrateFromV45ToV44", () => {
     it("snapshot", async () => {
         const pathToFixture = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"));
         const migrated = await runMigration({

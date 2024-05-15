@@ -6,30 +6,15 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const PrimitiveType: core.serialization.Schema<serializers.PrimitiveType.Raw, FernIr.PrimitiveType> =
-    core.serialization.enum_([
-        "INTEGER",
-        "DOUBLE",
-        "STRING",
-        "BOOLEAN",
-        "LONG",
-        "DATE_TIME",
-        "DATE",
-        "UUID",
-        "BASE_64",
-        "BIG_INTEGER",
-    ]);
+export const PrimitiveType: core.serialization.ObjectSchema<serializers.PrimitiveType.Raw, FernIr.PrimitiveType> =
+    core.serialization.objectWithoutOptionalProperties({
+        category: core.serialization.lazy(async () => (await import("../../..")).PrimitiveTypeCategory),
+        rules: core.serialization.lazy(async () => (await import("../../..")).PrimitiveTypeRules).optional(),
+    });
 
 export declare namespace PrimitiveType {
-    type Raw =
-        | "INTEGER"
-        | "DOUBLE"
-        | "STRING"
-        | "BOOLEAN"
-        | "LONG"
-        | "DATE_TIME"
-        | "DATE"
-        | "UUID"
-        | "BASE_64"
-        | "BIG_INTEGER";
+    interface Raw {
+        category: serializers.PrimitiveTypeCategory.Raw;
+        rules?: serializers.PrimitiveTypeRules.Raw | null;
+    }
 }
