@@ -13,7 +13,7 @@ import chalk from "chalk";
 import { readFile } from "fs/promises";
 import matter from "gray-matter";
 import { imageSize } from "image-size";
-import { last } from "lodash-es";
+import { last, orderBy } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
@@ -986,7 +986,7 @@ async function convertNavigationItem({
                     }
                 })
             });
-            const changelogItems: DocsV1Write.ChangelogItem[] = [];
+            const unsortedChangelogItems: { date: Date; pageId: RelativeFilePath }[] = [];
             if (workspace.changelog != null) {
                 for (const file of workspace.changelog.files) {
                     const filename = last(file.absoluteFilepath.split("/"));
@@ -998,12 +998,18 @@ async function convertNavigationItem({
                         continue;
                     }
                     const relativePath = relative(absolutePathToFernFolder, file.absoluteFilepath);
-                    changelogItems.push({
-                        date: changelogDate.toISOString(),
-                        pageId: relativePath
-                    });
+                    unsortedChangelogItems.push({ date: changelogDate, pageId: relativePath });
                 }
             }
+
+            // sort changelog items by date, in descending order
+            const changelogItems = orderBy(unsortedChangelogItems, (item) => item.date, "desc").map(
+                (item): DocsV1Write.ChangelogItem => ({
+                    date: item.date.toISOString(),
+                    pageId: item.pageId
+                })
+            );
+
             convertedItem = {
                 type: "api",
                 title: item.title,
