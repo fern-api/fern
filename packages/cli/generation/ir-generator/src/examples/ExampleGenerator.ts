@@ -599,7 +599,8 @@ export class ExampleGenerator {
         opts: ExampleGenerator.Options = {}
     ): ExampleTypeReference {
         if (this.exceedsMaxDepth(depth)) {
-            return this.generateExampleUnknown();
+            // TODO: Is this right?
+            return this.generateExampleUnknown({}, opts);
         }
 
         if (opts.unknownAsPrimitive != null) {
