@@ -151,7 +151,12 @@ types:
     properties:
       keyType: TypeReference
       valueType: TypeReference
+
   PrimitiveType:
+    properties:
+      basic: BasicPrimitiveType
+      wrapped: WrappedPrimitiveType
+  BasicPrimitiveType:
     enum:
       - INTEGER
       - DOUBLE
@@ -164,6 +169,32 @@ types:
       - UUID
       - BASE_64
       - BIG_INTEGER
+  WrappedPrimitiveType:
+    union:
+      integer: IntegerType
+      string: StringType
+  IntegerType:
+    properties:
+      default: optional<integer>
+      validation: optional<IntegerValidation>
+  IntegerValidation:
+    properties:
+      min: optional<integer>
+      max: optional<integer>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<integer>
+  StringType:
+    properties:
+      default: optional<string>
+      validation: optional<StringValidation>
+  StringValidation:
+    properties:
+      format: optional<string>
+      pattern: optional<string>
+      minLength: optional<integer>
+      maxLength: optional<integer>
+
   Literal:
     union:
       string:
