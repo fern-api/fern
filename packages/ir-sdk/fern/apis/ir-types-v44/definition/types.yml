@@ -163,7 +163,6 @@ types:
       - DATE
       - UUID
       - BASE_64
-      - BIG_INTEGER
   Literal:
     union:
       string:

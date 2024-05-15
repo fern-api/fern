@@ -17,8 +17,19 @@ export const PrimitiveType: core.serialization.Schema<serializers.PrimitiveType.
         "DATE",
         "UUID",
         "BASE_64",
+        "BIG_INTEGER",
     ]);
 
 export declare namespace PrimitiveType {
-    type Raw = "INTEGER" | "DOUBLE" | "STRING" | "BOOLEAN" | "LONG" | "DATE_TIME" | "DATE" | "UUID" | "BASE_64";
+    type Raw =
+        | "INTEGER"
+        | "DOUBLE"
+        | "STRING"
+        | "BOOLEAN"
+        | "LONG"
+        | "DATE_TIME"
+        | "DATE"
+        | "UUID"
+        | "BASE_64"
+        | "BIG_INTEGER";
 }

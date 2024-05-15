@@ -13,7 +13,8 @@ export type PrimitiveType =
     | "DATE_TIME"
     | "DATE"
     | "UUID"
-    | "BASE_64";
+    | "BASE_64"
+    | "BIG_INTEGER";
 
 export const PrimitiveType = {
     Integer: "INTEGER",
@@ -25,6 +26,7 @@ export const PrimitiveType = {
     Date: "DATE",
     Uuid: "UUID",
     Base64: "BASE_64",
+    BigInteger: "BIG_INTEGER",
     _visit: <R>(value: PrimitiveType, visitor: PrimitiveType.Visitor<R>) => {
         switch (value) {
             case PrimitiveType.Integer:
@@ -45,6 +47,8 @@ export const PrimitiveType = {
                 return visitor.uuid();
             case PrimitiveType.Base64:
                 return visitor.base64();
+            case PrimitiveType.BigInteger:
+                return visitor.bigInteger();
             default:
                 return visitor._other();
         }
@@ -62,6 +66,7 @@ export declare namespace PrimitiveType {
         date: () => R;
         uuid: () => R;
         base64: () => R;
+        bigInteger: () => R;
         _other: () => R;
     }
 }
