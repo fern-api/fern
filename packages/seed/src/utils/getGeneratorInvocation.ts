@@ -110,7 +110,10 @@ function getGithubPublishInfo({
                 registryUrl: ""
             });
         case "csharp":
-            return undefined;
+            return FernFiddle.GithubPublishInfo.nuget({
+                packageName: `Fern${fixtureName}`,
+                registryUrl: ""
+            });
         default:
             assertNever(language);
     }

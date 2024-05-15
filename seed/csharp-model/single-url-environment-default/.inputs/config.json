@@ -5,7 +5,12 @@
             "type": "github",
             "repoUrl": "https://github.com/single-url-environment-default/fern",
             "version": "0.0.1",
-            "publishInfo": null
+            "publishInfo": {
+                "type": "nuget",
+                "registryUrl": "",
+                "packageName": "Fernsingle-url-environment-default",
+                "apiKeyEnvironmentVariable": ""
+            }
         },
         "path": "/fern/output",
         "publishingMetadata": null,

@@ -5,7 +5,12 @@
             "type": "github",
             "repoUrl": "https://github.com/circular-references-advanced/fern",
             "version": "0.0.1",
-            "publishInfo": null
+            "publishInfo": {
+                "type": "nuget",
+                "registryUrl": "",
+                "packageName": "Ferncircular-references-advanced",
+                "apiKeyEnvironmentVariable": ""
+            }
         },
         "path": "/fern/output",
         "publishingMetadata": null,

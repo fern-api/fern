@@ -5,7 +5,12 @@
             "type": "github",
             "repoUrl": "https://github.com/response-property/fern",
             "version": "0.0.1",
-            "publishInfo": null
+            "publishInfo": {
+                "type": "nuget",
+                "registryUrl": "",
+                "packageName": "Fernresponse-property",
+                "apiKeyEnvironmentVariable": ""
+            }
         },
         "path": "/fern/output",
         "publishingMetadata": null,
