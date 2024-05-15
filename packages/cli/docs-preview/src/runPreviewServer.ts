@@ -8,6 +8,9 @@ import next from "next";
 import WebSocket from "ws";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
+// TODO: make port configurable, and automatically find an open port
+const PORT = 3000;
+
 export async function runPreviewServer({
     docsWorkspace,
     apiWorkspaces,
@@ -24,13 +27,13 @@ export async function runPreviewServer({
 
     const nextApp = next({
         dev: true,
+        customServer: true,
         hostname: "localhost",
-        // TODO: make port configurable, and automatically find an open port
-        port: 3000,
+        port: PORT,
         httpServer,
         conf: {
             env: {
-                PORT: "3000"
+                PORT: PORT.toString()
             }
         },
         dir: "/Volumes/git/fern-platform/packages/ui/local-preview-bundle"
@@ -73,11 +76,12 @@ export async function runPreviewServer({
         }
         const handler = nextApp.getRequestHandler();
         return handler(req, res);
+        // return res.send("Hello World");
     });
 
-    app.listen(3000);
+    app.listen(PORT);
 
-    context.logger.info("Running server on https://localhost:3000");
+    context.logger.info(`Running server on https://localhost:${PORT}`);
 
     // await infiinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
