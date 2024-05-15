@@ -1,4 +1,4 @@
-import { Literal, PrimitiveType } from "@fern-api/ir-sdk";
+import { Literal, PrimitiveType, PrimitiveTypeCategory } from "@fern-api/ir-sdk";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {
@@ -23,25 +23,55 @@ export interface RawTypeReferenceVisitor<R> {
 export function visitRawTypeReference<R>(type: string, visitor: RawTypeReferenceVisitor<R>): R {
     switch (type) {
         case RawPrimitiveType.integer:
-            return visitor.primitive(PrimitiveType.Integer);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.Integer,
+                rules: undefined // TODO: Add rules for integer.
+            });
         case RawPrimitiveType.double:
-            return visitor.primitive(PrimitiveType.Double);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.Double,
+                rules: undefined
+            });
         case RawPrimitiveType.long:
-            return visitor.primitive(PrimitiveType.Long);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.Long,
+                rules: undefined
+            });
         case RawPrimitiveType.string:
-            return visitor.primitive(PrimitiveType.String);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.String,
+                rules: undefined // TODO: Add rules for string.
+            });
         case RawPrimitiveType.boolean:
-            return visitor.primitive(PrimitiveType.Boolean);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.Boolean,
+                rules: undefined
+            });
         case RawPrimitiveType.datetime:
-            return visitor.primitive(PrimitiveType.DateTime);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.DateTime,
+                rules: undefined
+            });
         case RawPrimitiveType.date:
-            return visitor.primitive(PrimitiveType.Date);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.Date,
+                rules: undefined
+            });
         case RawPrimitiveType.uuid:
-            return visitor.primitive(PrimitiveType.Uuid);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.Uuid,
+                rules: undefined
+            });
         case RawPrimitiveType.base64:
-            return visitor.primitive(PrimitiveType.Base64);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.Base64,
+                rules: undefined
+            });
         case RawPrimitiveType.bigint:
-            return visitor.primitive(PrimitiveType.BigInteger);
+            return visitor.primitive({
+                category: PrimitiveTypeCategory.BigInteger,
+                rules: undefined
+            });
         case RawPrimitiveType.unknown:
             return visitor.unknown();
     }
