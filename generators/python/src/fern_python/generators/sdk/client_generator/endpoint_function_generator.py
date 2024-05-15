@@ -489,7 +489,7 @@ class EndpointFunctionGenerator:
             endpoint=endpoint,
             example=example,
         )
-        
+
         endpoint_snippet = endpoint_snippet_generator.generate_snippet()
 
         response_name = "response"
@@ -1101,9 +1101,10 @@ class EndpointFunctionSnippetGenerator:
                 args=args,
             ),
         )
-    
+
     def generate_usage(self, response_name: str, is_async: bool) -> Optional[AST.Expression]:
         if self.endpoint.response is not None and self.endpoint.response.get_as_union().type == "streaming":
+
             def snippet_writer(writer: AST.NodeWriter) -> None:
                 if is_async:
                     writer.write("async ")
