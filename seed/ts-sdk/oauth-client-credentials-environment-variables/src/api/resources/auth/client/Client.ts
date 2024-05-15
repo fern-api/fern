@@ -161,6 +161,11 @@ export class Auth {
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        return `Bearer ${await core.Supplier.get(this._options.token)}`;
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

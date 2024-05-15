@@ -29,7 +29,6 @@ public final class ClientOptions {
         this.headers.putAll(Map.of("X-Fern-Language", "JAVA"));
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
-        ;
     }
 
     public Environment environment() {
