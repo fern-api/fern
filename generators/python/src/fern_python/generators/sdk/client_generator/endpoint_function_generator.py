@@ -845,11 +845,13 @@ class EndpointFunctionGenerator:
         ]
 
         if len(query_parameters) == 0:
-            return self._context.core_utilities.get_encode_query(self._context.core_utilities.jsonable_encoder(
-                AST.Expression(
-                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
+            return self._context.core_utilities.get_encode_query(
+                self._context.core_utilities.jsonable_encoder(
+                    AST.Expression(
+                        f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
+                    )
                 )
-            ))
+            )
 
         def write_query_parameters_dict(writer: AST.NodeWriter) -> None:
             writer.write("{")
@@ -862,11 +864,13 @@ class EndpointFunctionGenerator:
             )
             writer.write_line("},")
 
-        return self._context.core_utilities.get_encode_query(self._context.core_utilities.jsonable_encoder(
-            self._context.core_utilities.remove_none_from_dict(
-                AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
+        return self._context.core_utilities.get_encode_query(
+            self._context.core_utilities.jsonable_encoder(
+                self._context.core_utilities.remove_none_from_dict(
+                    AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
+                )
             )
-        ))
+        )
 
     def _is_datetime(
         self,
