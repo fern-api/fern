@@ -132,7 +132,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (this.context.config.publish != null) {
             headerEntries.push({
                 key: csharp.codeblock(`"${platformHeaders.sdkName}"`),
-                value: csharp.codeblock(`"${this.context.config.publish.registriesV2.rubygems.packageName}"`)
+                value: csharp.codeblock(`"${this.context.config.publish.registriesV2.nuget.packageName}"`)
             });
             headerEntries.push({
                 key: csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
