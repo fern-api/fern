@@ -100,6 +100,16 @@ class CoreUtilities:
             exports={"pydantic_v1", "deep_union_pydantic_dicts"},
         )
 
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="query_encoder.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="query_encoder"),
+            ),
+            exports={"encode_query"},
+        )
+
         if self._has_paginated_endpoints:
             self._copy_file_to_project(
                 project=project,
@@ -391,4 +401,18 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "pydantic_utilities"),
                 named_import="deep_union_pydantic_dicts",
             ),
+        )
+
+    def get_encode_query(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "query_encoder"),
+                        named_import="encode_query",
+                    ),
+                ),
+                args=[obj],
+            )
         )
