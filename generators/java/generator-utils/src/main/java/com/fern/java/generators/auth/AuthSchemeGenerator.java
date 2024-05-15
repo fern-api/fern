@@ -36,7 +36,8 @@ public final class AuthSchemeGenerator implements AuthScheme.Visitor<GeneratedJa
 
     @Override
     public GeneratedJavaFile visitOauth(OAuthScheme oauth) {
-        throw new RuntimeException("Oauth not supported");
+        BearerAuthGenerator bearerAuthGenerator = new BearerAuthGenerator(generatorContext);
+        return bearerAuthGenerator.generateFile();
     }
 
     @Override
