@@ -5,19 +5,33 @@ package com.seed.oauthClientCredentialsEnvironmentVariables;
 
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsEnvironmentVariables.core.Environment;
+import com.seed.oauthClientCredentialsEnvironmentVariables.core.OAuthTokenSupplier;
+import com.seed.oauthClientCredentialsEnvironmentVariables.resources.auth.AuthClient;
 
 public final class SeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
-    private String token = null;
+    private String clientId = System.getenv("CLIENT_ID");
+
+    private String clientSecret = System.getenv("CLIENT_SECRET");
 
     private Environment environment;
 
     /**
-     * Sets token
+     * Sets clientId.
+     * Defaults to the CLIENT_ID environment variable.
      */
-    public SeedOauthClientCredentialsEnvironmentVariablesClientBuilder token(String token) {
-        this.token = token;
+    public SeedOauthClientCredentialsEnvironmentVariablesClientBuilder clientId(String clientId) {
+        this.clientId = clientId;
+        return this;
+    }
+
+    /**
+     * Sets clientSecret.
+     * Defaults to the CLIENT_SECRET environment variable.
+     */
+    public SeedOauthClientCredentialsEnvironmentVariablesClientBuilder clientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
         return this;
     }
 
@@ -27,7 +41,10 @@ public final class SeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
     }
 
     public SeedOauthClientCredentialsEnvironmentVariablesClient build() {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
+        AuthClient authClient = new AuthClient(
+                ClientOptions.builder().environment(this.environment).build());
+        OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(clientId, clientSecret, authClient);
+        this.clientOptionsBuilder.addHeader("Authorization", oAuthTokenSupplier);
         clientOptionsBuilder.environment(this.environment);
         return new SeedOauthClientCredentialsEnvironmentVariablesClient(clientOptionsBuilder.build());
     }

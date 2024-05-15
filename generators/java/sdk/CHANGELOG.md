@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.1] - 2024-05-14
+- Feature: Support OAuth without token refresh. Example of initializing a client with OAuth:
+```java
+ExampleApiClient client = ExampleApiClient
+    .builder()
+    .clientId("4bf2a37d-8512-44a2-af50-28a7701d9f2e")
+    .clientSecret("b3b187b0-ef48-49ba-9d99-80d89fd11c4a")
+    .build();
+```
+
 ## [0.9.0-rc0] - 2024-05-13
 - Chore: Bump intermediate representation to v42
 
