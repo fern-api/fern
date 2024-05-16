@@ -4,26 +4,40 @@ types:
   DocsConfiguration:
     properties:
       instances: list<DocsInstances>
-      navigation:
-        type: optional<NavigationConfig>
-        docs: The navigation config is skipped when multiple versions are present.
-      tabs:
-        type: optional<map<TabId, TabConfig>>
-      versions: optional<list<VersionConfig>>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
+
+      # navigation
+      tabs:
+        type: optional<map<TabId, TabConfig>>
+      versions: optional<list<VersionConfig>>
+      navigation:
+        type: optional<NavigationConfig>
+        docs: The navigation config is skipped when multiple versions are present.
+      "navbar-links": optional<list<NavbarLink>>
+      "footer-links": optional<list<FooterLink>>
+
+      # seo
+      metadata: optional<MetadataConfig>
+      redirects: optional<list<RedirectConfig>>
+
+      # styles
       logo: optional<LogoConfiguration>
       favicon: optional<string>
       background-image:
         type: optional<BackgroundImageConfiguration>
         docs: This background image is used to customize the appearance of your docs site.
       colors: optional<ColorsConfiguration>
-      "navbar-links": optional<list<NavbarLink>>
       typography: optional<DocsTypographyConfig>
       layout:
         type: optional<LayoutConfig>
         availability: in-development
+
+      # integrations
+      integrations: optional<IntegrationsConfig>
+
+      # scripts
       css: optional<CssConfig>
       js: optional<JsConfig>
 
@@ -559,21 +573,43 @@ types:
 
   NavbarLink:
     union:
-      filled: NavbarLinkConfiguration
-      outlined: NavbarLinkConfiguration
-      minimal: NavbarLinkConfiguration
+      filled: NavbarLinkConfig
+      outlined: NavbarLinkConfig
+      minimal: NavbarLinkConfig
+      github: NavbarGithubConfig
 
       # deprecated
-      primary: NavbarLinkConfiguration # use `outlined` instead
-      secondary: NavbarLinkConfiguration # use `minimal` instead
+      primary: NavbarLinkConfig # use `outlined` instead
+      secondary: NavbarLinkConfig # use `minimal` instead
 
-  NavbarLinkConfiguration:
+  NavbarLinkConfig:
     properties:
       href: optional<string>
       url:
         type: optional<string>
         availability: deprecated
-      text: string
+        docs: Use `href` instead.
+      text: optional<string>
+      icon: optional<string>
+      rightIcon: optional<string>
+      rounded: optional<boolean>
+
+  NavbarGithubConfig: string
+
+  FooterLink:
+    union:
+      github: string
+      twitter: string
+      x: string
+      linkedin: string
+      youtube: string
+      instagram: string
+      facebook: string
+      discord: string
+      slack: string
+      hackernews: string
+      medium: string
+      website: string
 
   CssConfig:
     docs: |-
@@ -660,3 +696,38 @@ types:
       - beforeInteractive
       - afterInteractive # default
       - lazyOnload
+
+  MetadataConfig:
+    properties:
+      "og:site_name": optional<string>
+      "og:title": optional<string>
+      "og:description": optional<string>
+      "og:url": optional<string>
+      "og:image": optional<string>
+      "og:image:width": optional<double>
+      "og:image:height": optional<double>
+      "og:locale": optional<string>
+      "og:logo": optional<string>
+      "twitter:title": optional<string>
+      "twitter:description": optional<string>
+      "twitter:handle": optional<string>
+      "twitter:image": optional<string>
+      "twitter:site": optional<string>
+      "twitter:url": optional<string>
+      "twitter:card": optional<TwitterCardSetting>
+
+  TwitterCardSetting:
+    enum:
+      - summary
+      - summary_large_image
+      - app
+      - player
+
+  RedirectConfig:
+    properties:
+      source: string
+      destination: string
+
+  IntegrationsConfig:
+    properties:
+      intercom: optional<string>
