@@ -9,7 +9,7 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
-    PrimitiveType
+    PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
@@ -192,7 +192,7 @@ export function convertTypeReferenceExample({
         primitive: (primitive) => {
             return convertPrimitiveExample({
                 example: resolvedExample,
-                typeBeingExemplified: primitive
+                typeBeingExemplified: primitive.v1
             });
         },
         map: ({ keyType, valueType }) => {
@@ -339,9 +339,9 @@ function convertPrimitiveExample({
     typeBeingExemplified
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;
-    typeBeingExemplified: PrimitiveType;
+    typeBeingExemplified: PrimitiveTypeV1;
 }): ExampleTypeReferenceShape {
-    return PrimitiveType._visit(typeBeingExemplified, {
+    return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
@@ -403,6 +403,16 @@ function convertPrimitiveExample({
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
+        },
+        bigInteger: () => {
+            if (typeof example !== "string") {
+                throw new Error("Example is not a string");
+            }
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.string({
+                    original: example
+                })
+            );
         },
         _other: () => {
             throw new Error("Unknown primitive type: " + typeBeingExemplified);

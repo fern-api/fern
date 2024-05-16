@@ -172,7 +172,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
         primitive: (primitive) => {
             return {
                 type: "primitive",
-                value: Ir.types.PrimitiveType._visit<APIV1Write.PrimitiveType>(primitive, {
+                value: Ir.types.PrimitiveTypeV1._visit<APIV1Write.PrimitiveType>(primitive.v1, {
                     integer: () => {
                         return {
                             type: "integer"
@@ -216,6 +216,12 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                     base64: () => {
                         return {
                             type: "base64"
+                        };
+                    },
+                    bigInteger: () => {
+                        // TODO(amckinney): Add support for bigInteger in FDR.
+                        return {
+                            type: "string"
                         };
                     },
                     _other: () => {

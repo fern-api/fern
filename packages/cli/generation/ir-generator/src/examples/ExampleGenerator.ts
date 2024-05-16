@@ -31,7 +31,7 @@ import {
     ObjectProperty,
     ObjectTypeDeclaration,
     PathParameter,
-    PrimitiveType,
+    PrimitiveTypeV1,
     ResponseError,
     SingleUnionType,
     SingleUnionTypeProperty,
@@ -405,11 +405,11 @@ export class ExampleGenerator {
                     ),
                 fileDownload: () =>
                     ExampleEndpointSuccessResponse.body(
-                        this.generateExamplePrimitive({ primitiveType: PrimitiveType.Base64 })
+                        this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.Base64 })
                     ),
                 text: () =>
                     ExampleEndpointSuccessResponse.body(
-                        this.generateExamplePrimitive({ primitiveType: PrimitiveType.String })
+                        this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String })
                     ),
                 streaming: (streamingResponse) =>
                     streamingResponse._visit<ExampleEndpointSuccessResponse>({
@@ -425,8 +425,8 @@ export class ExampleGenerator {
                             ]),
                         text: () =>
                             ExampleEndpointSuccessResponse.stream([
-                                this.generateExamplePrimitive({ primitiveType: PrimitiveType.String }),
-                                this.generateExamplePrimitive({ primitiveType: PrimitiveType.String })
+                                this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String }),
+                                this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String })
                             ]),
                         _other: () => ExampleEndpointSuccessResponse.stream([this.generateExampleUnknown()])
                     }),
@@ -608,7 +608,7 @@ export class ExampleGenerator {
             case "named":
                 return this.generateExampleNamed(typeReference, depth);
             case "primitive":
-                return this.generateExamplePrimitive({ primitiveType: typeReference.primitive });
+                return this.generateExamplePrimitive({ primitiveType: typeReference.primitive.v1 });
             case "unknown":
                 return this.generateExampleUnknown({}, opts);
             default:
@@ -722,7 +722,7 @@ export class ExampleGenerator {
         primitiveType,
         example
     }: {
-        primitiveType: PrimitiveType;
+        primitiveType: PrimitiveTypeV1;
         example?: unknown | undefined;
     }): ExampleTypeReference {
         switch (primitiveType) {
@@ -789,8 +789,13 @@ export class ExampleGenerator {
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: exB64 }))
                 };
             }
-            default:
-                assertNever(primitiveType);
+            case "BIG_INTEGER": {
+                const exBigInt = example != null && typeof example === "string" ? example : Examples.BIG_INTEGER;
+                return {
+                    jsonExample: exBigInt,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.string({ original: exBigInt }))
+                };
+            }
         }
     }
 
@@ -804,7 +809,7 @@ export class ExampleGenerator {
     ): ExampleTypeReference {
         if (opts.unknownAsPrimitive) {
             const value = name ?? "string";
-            return this.generateExamplePrimitive({ primitiveType: PrimitiveType.String, example: value });
+            return this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String, example: value });
         }
         const value = { key: "value" };
         return {

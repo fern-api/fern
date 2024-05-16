@@ -103,11 +103,17 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -185,11 +191,17 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "INTEGER"
+                    "primitive": {
+                        "v1": "INTEGER",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "INTEGER"
+                    "primitive": {
+                        "v1": "INTEGER",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -306,11 +318,17 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -797,4 +815,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2657162`;
+exports[`dependencies file dependencies 1`] = `2671214`;

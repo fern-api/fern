@@ -14,7 +14,7 @@ export const TypeReference: core.serialization.Schema<serializers.TypeReference.
             }),
             named: core.serialization.lazyObject(async () => (await import("../../..")).DeclaredTypeName),
             primitive: core.serialization.object({
-                primitive: core.serialization.lazy(async () => (await import("../../..")).PrimitiveType),
+                primitive: core.serialization.lazyObject(async () => (await import("../../..")).PrimitiveType),
             }),
             unknown: core.serialization.object({}),
         })

@@ -52,7 +52,10 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
                 },
                 "valueType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "prefix": "ApiKey",
                 "headerEnvVar": null,
@@ -351,7 +354,10 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -745,11 +751,17 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -1372,7 +1384,10 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                 },
                                 "valueType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": null
+                                    }
                                 },
                                 "docs": null
                             },
@@ -1460,7 +1475,10 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                 },
                                 "valueType": {
                                     "_type": "primitive",
-                                    "primitive": "INTEGER"
+                                    "primitive": {
+                                        "v1": "INTEGER",
+                                        "v2": null
+                                    }
                                 },
                                 "docs": null
                             }
@@ -8938,7 +8956,10 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                         "_type": "map",
                                         "keyType": {
                                             "_type": "primitive",
-                                            "primitive": "STRING"
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": null
+                                            }
                                         },
                                         "valueType": {
                                             "_type": "named",
@@ -9206,11 +9227,17 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -10561,11 +10588,17 @@ exports[`ir {"name":"packages"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -10645,11 +10678,17 @@ exports[`ir {"name":"packages"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -10995,11 +11034,17 @@ exports[`ir {"name":"packages"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -11746,7 +11791,10 @@ exports[`ir {"name":"response-property"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -11854,7 +11902,10 @@ exports[`ir {"name":"response-property"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -12206,7 +12257,10 @@ exports[`ir {"name":"response-property"} 1`] = `
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "contentType": null,
                         "docs": null
@@ -12218,7 +12272,10 @@ exports[`ir {"name":"response-property"} 1`] = `
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": null
+                                    }
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -12672,7 +12729,10 @@ exports[`ir {"name":"response-property"} 1`] = `
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "contentType": null,
                         "docs": null
@@ -12684,7 +12744,10 @@ exports[`ir {"name":"response-property"} 1`] = `
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": null
+                                    }
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -12806,7 +12869,10 @@ exports[`ir {"name":"response-property"} 1`] = `
                                     },
                                     "valueType": {
                                         "_type": "primitive",
-                                        "primitive": "STRING"
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": null
+                                        }
                                     },
                                     "availability": null,
                                     "docs": null
@@ -13083,7 +13149,10 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "STRING"
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": null
+                        }
                     }
                 }
             },
@@ -13189,7 +13258,10 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -13524,7 +13596,10 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": null
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -13706,7 +13781,10 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": null
+                                    }
                                 },
                                 "docs": null
                             }
@@ -14439,7 +14517,10 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": null
+                }
             },
             "location": "ROOT",
             "variable": null,
@@ -14704,7 +14785,10 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "STRING"
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": null
+                        }
                     }
                 }
             },
@@ -14810,7 +14894,10 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -14893,11 +14980,17 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -15041,7 +15134,10 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -15075,7 +15171,10 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 "_type": "list",
                                 "list": {
                                     "_type": "primitive",
-                                    "primitive": "DOUBLE"
+                                    "primitive": {
+                                        "v1": "DOUBLE",
+                                        "v2": null
+                                    }
                                 }
                             }
                         },
@@ -15576,7 +15675,10 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": null
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -18325,7 +18427,10 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": null
+                }
             },
             "location": "ROOT",
             "variable": null,
@@ -18592,7 +18697,10 @@ exports[`ir {"name":"simple"} 1`] = `
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "STRING"
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": null
+                        }
                     }
                 }
             },
@@ -18698,7 +18806,10 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -18806,7 +18917,10 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -18891,7 +19005,10 @@ exports[`ir {"name":"simple"} 1`] = `
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "docs": null
                     },
@@ -18902,7 +19019,10 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "list",
                                 "list": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": null
+                                    }
                                 }
                             }
                         },
@@ -18911,7 +19031,10 @@ exports[`ir {"name":"simple"} 1`] = `
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "INTEGER"
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": null
+                            }
                         },
                         "docs": null
                     },
@@ -18926,7 +19049,10 @@ exports[`ir {"name":"simple"} 1`] = `
                                         "_type": "list",
                                         "list": {
                                             "_type": "primitive",
-                                            "primitive": "INTEGER"
+                                            "primitive": {
+                                                "v1": "INTEGER",
+                                                "v2": null
+                                            }
                                         }
                                     }
                                 }
@@ -19036,7 +19162,10 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -19519,11 +19648,17 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "INTEGER"
+                    "primitive": {
+                        "v1": "INTEGER",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "INTEGER"
+                    "primitive": {
+                        "v1": "INTEGER",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -19826,11 +19961,17 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -19929,11 +20070,17 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -20052,11 +20199,17 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -20251,7 +20404,10 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -20281,7 +20437,10 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "DOUBLE"
+                            "primitive": {
+                                "v1": "DOUBLE",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -20781,7 +20940,10 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": null
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -20815,7 +20977,10 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "list",
                                 "list": {
                                     "_type": "primitive",
-                                    "primitive": "DOUBLE"
+                                    "primitive": {
+                                        "v1": "DOUBLE",
+                                        "v2": null
+                                    }
                                 }
                             }
                         },
@@ -24718,7 +24883,10 @@ exports[`ir {"name":"simple"} 1`] = `
             "statusCode": 404,
             "type": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": null
+                }
             },
             "examples": [],
             "docs": null
@@ -24843,7 +25011,10 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": null
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -25025,7 +25196,10 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": null
+                                    }
                                 },
                                 "docs": null
                             }
@@ -25714,7 +25888,10 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": null
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -28519,7 +28696,10 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": null
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -28642,7 +28822,10 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": null
+                                }
                             },
                             "allowMultiple": true,
                             "availability": null,
@@ -31474,7 +31657,10 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": null
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -32150,7 +32336,10 @@ exports[`ir {"name":"simple"} 1`] = `
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": null
+                }
             },
             "location": "ROOT",
             "variable": null,
@@ -32597,7 +32786,10 @@ exports[`ir {"name":"streaming"} 1`] = `
                                 "type": "json",
                                 "payload": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": null
+                                    }
                                 },
                                 "terminator": null,
                                 "docs": null
@@ -32745,7 +32937,10 @@ exports[`ir {"name":"streaming"} 1`] = `
                                 },
                                 "valueType": {
                                     "_type": "primitive",
-                                    "primitive": "BOOLEAN"
+                                    "primitive": {
+                                        "v1": "BOOLEAN",
+                                        "v2": null
+                                    }
                                 },
                                 "docs": null
                             }
@@ -32821,7 +33016,10 @@ exports[`ir {"name":"streaming"} 1`] = `
                                 "type": "json",
                                 "payload": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": null
+                                    }
                                 },
                                 "terminator": "[DONE]",
                                 "docs": null
@@ -33172,11 +33370,17 @@ exports[`ir {"name":"variables"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": null
+                    }
                 }
             },
             "referencedTypes": [],
@@ -34373,7 +34577,10 @@ exports[`ir {"name":"webhooks"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": null
+                                }
                             },
                             "docs": null
                         },
@@ -34402,7 +34609,10 @@ exports[`ir {"name":"webhooks"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "BOOLEAN"
+                                "primitive": {
+                                    "v1": "BOOLEAN",
+                                    "v2": null
+                                }
                             },
                             "docs": "Some docs about urgency"
                         }

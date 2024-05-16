@@ -151,7 +151,12 @@ types:
     properties:
       keyType: TypeReference
       valueType: TypeReference
+
   PrimitiveType:
+    properties:
+      v1: PrimitiveTypeV1
+      v2: optional<PrimitiveTypeV2>
+  PrimitiveTypeV1:
     enum:
       - INTEGER
       - DOUBLE
@@ -163,6 +168,46 @@ types:
       - DATE
       - UUID
       - BASE_64
+      - BIG_INTEGER
+  PrimitiveTypeV2:
+    union:
+      integer: IntegerType
+      double: DoubleType
+      string: StringType
+
+  IntegerType:
+    properties:
+      default: optional<integer>
+      validation: optional<IntegerValidationRules>
+  IntegerValidationRules:
+    properties:
+      min: optional<integer>
+      max: optional<integer>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<integer>
+  DoubleType:
+    properties:
+      default: optional<integer>
+      validation: optional<IntegerValidationRules>
+  DoubleValidationRules:
+    properties:
+      min: optional<double>
+      max: optional<double>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<double>
+  StringType:
+    properties:
+      default: optional<string>
+      validation: optional<StringValidationRules>
+  StringValidationRules:
+    properties:
+      format: optional<string>
+      pattern: optional<string>
+      minLength: optional<integer>
+      maxLength: optional<integer>
+
   Literal:
     union:
       string:
