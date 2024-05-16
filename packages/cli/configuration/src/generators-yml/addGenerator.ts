@@ -24,7 +24,17 @@ export async function getLatestGeneratorVersion(
     const docker = new Docker();
     let image;
     try {
-        await docker.pull(`${generatorName}`);
+        context?.logger.debug(`Determining latest version for generator ${generatorName}.`);
+        const pullStream = await docker.pull(`${generatorName}`);
+        await new Promise((resolve, reject) => {
+            docker.modem.followProgress(pullStream, (err, res) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res);
+                }
+            });
+        });
         image = await docker.getImage(`${generatorName}:latest`).inspect();
     } catch (e) {
         context?.logger.error(`No image found behind generator ${generatorName} at tag latest.`);
