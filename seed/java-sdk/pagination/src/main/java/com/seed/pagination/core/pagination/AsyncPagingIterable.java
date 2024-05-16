@@ -6,22 +6,23 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 
-public class AsyncPager<T> extends AsyncPage<T> implements Iterable<CompletableFuture<T>> {
+public class AsyncPagingIterable<T> extends AsyncPage<T> implements Iterable<CompletableFuture<T>> {
 
-    public AsyncPager(boolean hasNext, List<T> items, Supplier<CompletableFuture<AsyncPage<T>>> getNext) {
+    public AsyncPagingIterable(boolean hasNext, List<T> items, Supplier<CompletableFuture<AsyncPage<T>>> getNext) {
         super(hasNext, items, getNext);
     }
 
     public Iterator<CompletableFuture<T>> iterator() {
         return new Iterator<CompletableFuture<T>>() {
-            private Iterator<T> currentIterator = AsyncPager.this.getItems().iterator();
-            private CompletableFuture<AsyncPage<T>> currentPageFuture = CompletableFuture.completedFuture(AsyncPager.this);
+            private Iterator<T> currentIterator = AsyncPagingIterable.this.getItems().iterator();
+            private CompletableFuture<AsyncPage<T>> currentPageFuture = CompletableFuture.completedFuture(
+                AsyncPagingIterable.this);
 
             @Override
             public boolean hasNext() {
                 try {
                     AsyncPage<T> currentPage = currentPageFuture.get();
-                    return currentIterator.hasNext() || (currentPage.hasNext() && getNextPageFuture() != null);
+                    return currentIterator.hasNext() || (currentPage.hasNext());
                 } catch (InterruptedException | ExecutionException e) {
                     throw new RuntimeException(e);
                 }

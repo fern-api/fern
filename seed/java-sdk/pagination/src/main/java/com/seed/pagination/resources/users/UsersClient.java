@@ -7,6 +7,7 @@ import com.seed.pagination.core.ApiError;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.RequestOptions;
+import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
@@ -14,9 +15,14 @@ import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationReq
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
+import com.seed.pagination.resources.users.types.NextPage;
+import com.seed.pagination.resources.users.types.Page;
+import com.seed.pagination.resources.users.types.User;
 import com.seed.pagination.resources.users.types.UsernameContainer;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
+import java.util.Optional;
+import java.util.function.Supplier;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -31,16 +37,16 @@ public class UsersClient {
         this.clientOptions = clientOptions;
     }
 
-    public ListUsersPaginationResponse listWithCursorPagination() {
+    public SyncPagingIterable<User> listWithCursorPagination() {
         return listWithCursorPagination(
                 ListUsersCursorPaginationRequest.builder().build());
     }
 
-    public ListUsersPaginationResponse listWithCursorPagination(ListUsersCursorPaginationRequest request) {
+    public SyncPagingIterable<User> listWithCursorPagination(ListUsersCursorPaginationRequest request) {
         return listWithCursorPagination(request, null);
     }
 
-    public ListUsersPaginationResponse listWithCursorPagination(
+    public SyncPagingIterable<User> listWithCursorPagination(
             ListUsersCursorPaginationRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -71,8 +77,22 @@ public class UsersClient {
             }
             Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
+
             if (response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+                ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
+                    responseBody.string(), ListUsersPaginationResponse.class);
+                Optional<String> startingAfter = parsedResponse.getPage()
+                    .flatMap(Page::getNext).map(NextPage::getStartingAfter);
+                Supplier<SyncPagingIterable<User>> runnable = null;
+                boolean hasNext = startingAfter.isPresent();
+                if (hasNext) {
+                    ListUsersCursorPaginationRequest nextRequest = ListUsersCursorPaginationRequest.builder()
+                        .from(request)
+                        .startingAfter(request.getStartingAfter())
+                        .build();
+                    runnable = () -> listWithCursorPagination(nextRequest, requestOptions);
+                }
+                return new SyncPagingIterable(hasNext, parsedResponse.getData(), runnable);
             }
             throw new ApiError(
                     response.code(),

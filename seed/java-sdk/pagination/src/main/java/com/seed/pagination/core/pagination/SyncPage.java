@@ -1,6 +1,7 @@
 package com.seed.pagination.core.pagination;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 public class SyncPage<T> extends BasePage<T> {
@@ -12,6 +13,9 @@ public class SyncPage<T> extends BasePage<T> {
     }
 
     public SyncPage<T> getNext() {
-        return getNext != null ? getNext.get() : null;
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        return getNext.get();
     }
 }

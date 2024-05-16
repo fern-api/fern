@@ -2,7 +2,7 @@ package com.seed.pagination.core.pagination;
 
 import java.util.List;
 
-public class BasePage<T> {
+public abstract class BasePage<T> {
     private boolean hasNext;
     private List<T> items;
 
