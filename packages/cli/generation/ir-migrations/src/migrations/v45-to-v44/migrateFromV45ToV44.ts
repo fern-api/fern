@@ -44,8 +44,7 @@ export const V45_TO_V44_MIGRATION: IrMigration<
                     shape: IrVersions.V45.types.Type._visit<IrVersions.V44.types.Type>(typeDeclaration.shape, {
                         union: (union) => {
                             return IrVersions.V44.types.Type.union({
-                                discriminant: union.discriminant,
-                                extends: union.extends,
+                                ...union,
                                 baseProperties: union.baseProperties.map((objectProperty) => {
                                     return {
                                         ...objectProperty,
@@ -184,8 +183,7 @@ function convertWebhookPayload(
 
 function convertAuth(auth: IrVersions.V45.auth.ApiAuth): IrVersions.V44.auth.ApiAuth {
     return {
-        docs: auth.docs,
-        requirement: auth.requirement,
+        ...auth,
         schemes: auth.schemes.map((scheme) => {
             switch (scheme.type) {
                 case "basic":
@@ -203,11 +201,8 @@ function convertAuth(auth: IrVersions.V45.auth.ApiAuth): IrVersions.V44.auth.Api
 
 function convertHeader(header: IrVersions.V45.auth.AuthScheme.Header): IrVersions.V44.auth.HeaderAuthScheme {
     return {
-        docs: header.docs,
-        prefix: header.prefix,
-        name: header.name,
-        valueType: convertTypeReference(header.valueType),
-        headerEnvVar: header.headerEnvVar
+        ...header,
+        valueType: convertTypeReference(header.valueType)
     };
 }
 
@@ -215,10 +210,7 @@ function convertOAuth(oauth: IrVersions.V45.auth.AuthScheme.Oauth): IrVersions.V
     return {
         ...oauth,
         configuration: IrVersions.V44.auth.OAuthConfiguration.clientCredentials({
-            clientIdEnvVar: oauth.configuration.clientIdEnvVar,
-            clientSecretEnvVar: oauth.configuration.clientSecretEnvVar,
-            tokenPrefix: oauth.configuration.tokenPrefix,
-            scopes: oauth.configuration.scopes,
+            ...oauth.configuration,
             tokenEndpoint: convertOAuthTokenEndpoint(oauth.configuration.tokenEndpoint),
             refreshEndpoint:
                 oauth.configuration.refreshEndpoint != null
@@ -279,11 +271,8 @@ function convertOAuthRefreshEndpoint(
 
 function convertHttpHeader(header: IrVersions.V45.http.HttpHeader): IrVersions.V44.http.HttpHeader {
     return {
-        docs: header.docs,
-        availability: header.availability,
-        name: header.name,
-        valueType: convertTypeReference(header.valueType),
-        env: header.env
+        ...header,
+        valueType: convertTypeReference(header.valueType)
     };
 }
 
@@ -325,8 +314,7 @@ function convertSingleUnionType(
     singleUnionType: IrVersions.V45.types.SingleUnionType
 ): IrVersions.V44.types.SingleUnionType {
     return {
-        docs: singleUnionType.docs,
-        discriminantValue: singleUnionType.discriminantValue,
+        ...singleUnionType,
         shape: convertSingleUnionTypeProperties(singleUnionType.shape)
     };
 }
@@ -341,7 +329,7 @@ function convertSingleUnionTypeProperties(
                 IrVersions.V44.types.SingleUnionTypeProperties.samePropertiesAsObject(declaredTypeName),
             singleProperty: (singleProperty) =>
                 IrVersions.V44.types.SingleUnionTypeProperties.singleProperty({
-                    name: singleProperty.name,
+                    ...singleProperty,
                     type: convertTypeReference(singleProperty.type)
                 }),
             noProperties: IrVersions.V44.types.SingleUnionTypeProperties.noProperties,
@@ -386,10 +374,7 @@ function convertUndiscriminatedUnion(
 
 function convertHttpService(service: IrVersions.V45.http.HttpService): IrVersions.V44.http.HttpService {
     return {
-        availability: service.availability,
-        name: service.name,
-        displayName: service.displayName,
-        basePath: service.basePath,
+        ...service,
         pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         headers: service.headers.map((header) => convertHttpHeader(header)),
         endpoints: service.endpoints.map((endpoint) => convertEndpoint(endpoint))
@@ -398,11 +383,8 @@ function convertHttpService(service: IrVersions.V45.http.HttpService): IrVersion
 
 function convertPathParameter(pathParameter: IrVersions.V45.http.PathParameter): IrVersions.V44.http.PathParameter {
     return {
-        docs: pathParameter.docs,
-        name: pathParameter.name,
-        valueType: convertTypeReference(pathParameter.valueType),
-        location: pathParameter.location,
-        variable: pathParameter.variable
+        ...pathParameter,
+        valueType: convertTypeReference(pathParameter.valueType)
     };
 }
 
@@ -415,27 +397,15 @@ function convertVariable(variable: IrVersions.V45.VariableDeclaration): IrVersio
 
 function convertEndpoint(endpoint: IrVersions.V45.http.HttpEndpoint): IrVersions.V44.http.HttpEndpoint {
     return {
-        id: endpoint.id,
-        baseUrl: endpoint.baseUrl,
-        fullPath: endpoint.fullPath,
-        idempotent: endpoint.idempotent,
+        ...endpoint,
         pagination: endpoint.pagination != null ? convertPagination(endpoint.pagination) : undefined,
         allPathParameters: endpoint.allPathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
-        docs: endpoint.docs,
-        availability: endpoint.availability,
-        name: endpoint.name,
-        displayName: endpoint.displayName,
-        errors: endpoint.errors,
-        auth: endpoint.auth,
-        method: endpoint.method,
-        path: endpoint.path,
         pathParameters: endpoint.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         sdkRequest: endpoint.sdkRequest != null ? convertSdkRequest(endpoint.sdkRequest) : undefined,
         requestBody: endpoint.requestBody != null ? convertRequestBody(endpoint.requestBody) : undefined,
         response: endpoint.response != null ? convertHttpResponse(endpoint.response) : undefined,
         headers: endpoint.headers.map((header) => convertHttpHeader(header)),
-        queryParameters: endpoint.queryParameters.map((queryParameter) => convertQueryParameter(queryParameter)),
-        examples: endpoint.examples
+        queryParameters: endpoint.queryParameters.map((queryParameter) => convertQueryParameter(queryParameter))
     };
 }
 
@@ -510,6 +480,7 @@ function convertCursorPagination(
     cursorPagination: IrVersions.V45.http.CursorPagination
 ): IrVersions.V44.http.CursorPagination {
     return {
+        ...cursorPagination,
         page: convertQueryParameter(cursorPagination.page),
         next: convertResponseProperty(cursorPagination.next),
         results: convertResponseProperty(cursorPagination.results)
@@ -520,6 +491,7 @@ function convertOffsetPagination(
     offsetPagination: IrVersions.V45.http.OffsetPagination
 ): IrVersions.V44.http.OffsetPagination {
     return {
+        ...offsetPagination,
         page: convertQueryParameter(offsetPagination.page),
         results: convertResponseProperty(offsetPagination.results)
     };
@@ -529,7 +501,7 @@ function convertRequestProperty(
     requestProperty: IrVersions.V45.http.RequestProperty
 ): IrVersions.V44.http.RequestProperty {
     return {
-        propertyPath: requestProperty.propertyPath,
+        ...requestProperty,
         property: convertRequestPropertValue(requestProperty.property)
     };
 }
@@ -549,7 +521,7 @@ function convertResponseProperty(
     responseProperty: IrVersions.V45.http.ResponseProperty
 ): IrVersions.V44.http.ResponseProperty {
     return {
-        propertyPath: responseProperty.propertyPath,
+        ...responseProperty,
         property: convertObjectProperty(responseProperty.property)
     };
 }
@@ -565,17 +537,14 @@ function convertObjectProperty(
 
 function convertQueryParameter(queryParameter: IrVersions.V45.http.QueryParameter): IrVersions.V44.http.QueryParameter {
     return {
-        availability: queryParameter.availability,
-        docs: queryParameter.docs,
-        name: queryParameter.name,
-        valueType: convertTypeReference(queryParameter.valueType),
-        allowMultiple: queryParameter.allowMultiple
+        ...queryParameter,
+        valueType: convertTypeReference(queryParameter.valueType)
     };
 }
 
 function convertSdkRequest(sdkRequest: IrVersions.V45.http.SdkRequest): IrVersions.V44.http.SdkRequest {
     return {
-        requestParameterName: sdkRequest.requestParameterName,
+        ...sdkRequest,
         shape: convertSdkRequestShape(sdkRequest.shape)
     };
 }
@@ -599,9 +568,8 @@ function convertSdkRequestBodyType(
             return IrVersions.V44.http.SdkRequestBodyType.bytes(shape);
         case "typeReference":
             return IrVersions.V44.http.SdkRequestBodyType.typeReference({
-                docs: shape.docs,
-                requestBodyType: convertTypeReference(shape.requestBodyType),
-                contentType: shape.contentType
+                ...shape,
+                requestBodyType: convertTypeReference(shape.requestBodyType)
             });
     }
 }
@@ -610,25 +578,20 @@ function convertRequestBody(requestBody: IrVersions.V45.http.HttpRequestBody): I
     return IrVersions.V45.http.HttpRequestBody._visit<IrVersions.V44.http.HttpRequestBody>(requestBody, {
         inlinedRequestBody: (inlinedRequestBody) =>
             IrVersions.V44.http.HttpRequestBody.inlinedRequestBody({
-                name: inlinedRequestBody.name,
-                extends: inlinedRequestBody.extends,
-                contentType: inlinedRequestBody.contentType,
-                extraProperties: inlinedRequestBody.extraProperties,
+                ...inlinedRequestBody,
                 properties: inlinedRequestBody.properties.map((property) => ({
-                    docs: property.docs,
-                    name: property.name,
+                    ...property,
                     valueType: convertTypeReference(property.valueType)
                 }))
             }),
         reference: (reference) =>
             IrVersions.V44.http.HttpRequestBody.reference({
-                docs: reference.docs,
-                requestBodyType: convertTypeReference(reference.requestBodyType),
-                contentType: reference.contentType
+                ...reference,
+                requestBodyType: convertTypeReference(reference.requestBodyType)
             }),
         fileUpload: (fileUpload) =>
             IrVersions.V44.http.HttpRequestBody.fileUpload({
-                name: fileUpload.name,
+                ...fileUpload,
                 properties: fileUpload.properties.map((fileUploadRequestProperty) => {
                     switch (fileUploadRequestProperty.type) {
                         case "bodyProperty":
@@ -665,11 +628,7 @@ function convertErrorDeclaration(
     error: IrVersions.V45.errors.ErrorDeclaration
 ): IrVersions.V44.errors.ErrorDeclaration {
     return {
-        docs: error.docs,
-        name: error.name,
-        discriminantValue: error.discriminantValue,
-        type: error.type != null ? convertTypeReference(error.type) : undefined,
-        statusCode: error.statusCode,
-        examples: error.examples
+        ...error,
+        type: error.type != null ? convertTypeReference(error.type) : undefined
     };
 }

@@ -45,7 +45,7 @@ export function getSchemaFromFernType({
 }): SchemaWithExample | undefined {
     return recursivelyVisitRawTypeReference<SchemaWithExample | undefined>(fernType, {
         primitive: (primitive) => {
-            switch (primitive) {
+            switch (primitive.category) {
                 case "BASE_64":
                     return SchemaWithExample.primitive({
                         nameOverride,
@@ -118,6 +118,7 @@ export function getSchemaFromFernType({
                     });
                 case "STRING":
                 case "UUID":
+                case "BIG_INTEGER":
                     return SchemaWithExample.primitive({
                         nameOverride,
                         generatedName,
@@ -131,7 +132,7 @@ export function getSchemaFromFernType({
                         })
                     });
                 default:
-                    assertNever(primitive);
+                    assertNever(primitive.category);
             }
         },
         unknown: () => {
