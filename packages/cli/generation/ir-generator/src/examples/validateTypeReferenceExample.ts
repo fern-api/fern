@@ -1,10 +1,11 @@
 import { assertNever, getDuplicates, isPlainObject } from "@fern-api/core-utils";
 import {
+    DoubleValidationRules,
     IntegerValidationRules,
     Literal,
     PrimitiveType,
     PrimitiveTypeV1,
-    PrimitiveTypeRules,
+    PrimitiveTypeV2,
     StringValidationRules
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -205,20 +206,25 @@ function validatePrimitiveExample({
     primitiveType: PrimitiveType;
     example: RawSchemas.ExampleTypeReferenceSchema;
 }): ExampleViolation[] {
-    if (primitiveType.rules != null) {
-        return PrimitiveTypeRules._visit<ExampleViolation[]>(primitiveType.rules, {
-            integer: (rules) =>
+    if (primitiveType.v2 != null) {
+        return PrimitiveTypeV2._visit<ExampleViolation[]>(primitiveType.v2, {
+            integer: (v2) =>
                 validateIntegerWithRules({
                     example,
-                    rules: rules.validation
+                    rules: v2.validation
                 }),
-            string: (rules) =>
+            double: (v2) =>
+                validateDoubleWithRules({
+                    example,
+                    rules: v2.validation
+                }),
+            string: (v2) =>
                 validateStringWithRules({
                     example,
-                    rules: rules.validation
+                    rules: v2.validation
                 }),
             _other: () => {
-                throw new Error("Unknown primitive type rules: " + primitiveType.rules);
+                throw new Error("Unknown primitive type v2: " + primitiveType.v2);
             }
         });
     }
@@ -274,6 +280,48 @@ function validateIntegerWithRules({
             return [
                 {
                     message: `Expected integer to be a multiple of ${rules.multipleOf}. Example is ${example}.`
+                }
+            ];
+        }
+    }
+    return [];
+}
+
+function validateDoubleWithRules({
+    example,
+    rules
+}: {
+    example: RawSchemas.ExampleTypeReferenceSchema;
+    rules: DoubleValidationRules | undefined;
+}): ExampleViolation[] {
+    const violations = validateDouble(example);
+    if (violations.length > 0 || rules == null) {
+        return violations;
+    }
+    const double = example as number;
+    if (rules.min != null) {
+        if ((rules.exclusiveMin && double <= rules.min) || (!rules.exclusiveMin && double < rules.min)) {
+            return [
+                {
+                    message: `Expected double to be greater than or equal to ${rules.min}. Example is ${example}.`
+                }
+            ];
+        }
+    }
+    if (rules.max != null) {
+        if ((rules.exclusiveMax && double >= rules.max) || (!rules.exclusiveMax && double > rules.max)) {
+            return [
+                {
+                    message: `Expected double to be less than or equal to ${rules.max}. Example is ${example}.`
+                }
+            ];
+        }
+    }
+    if (rules.multipleOf != null) {
+        if (double % rules.multipleOf !== 0) {
+            return [
+                {
+                    message: `Expected double to be a multiple of ${rules.multipleOf}. Example is ${example}.`
                 }
             ];
         }
