@@ -129,7 +129,7 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
 
   Once you've created the Github repository you must add it to your `generators.yml`: 
 
-  ```yaml title="TypeScript" {9-10}
+  ```yaml title="TypeScript" {10-11}
   groups: 
     ts-sdk:
       generators:
@@ -145,8 +145,9 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
 
   ### Run `fern generate`
 
-  At this point, you are ready to go and can run `fern generate --version <version>` to 
-  see your SDK generate! Make sure that any environment variables like `NPM_TOKEN` are present!
+  At this point, you are ready to go and can run `fern generate --version <version>`. 
+  
+  <Warning> Make sure that any environment variables like `NPM_TOKEN` are present! </Warning>
 
   ### Setup a GitHub action
 
@@ -213,14 +214,11 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
             run: |
               fern generate --group ts-sdk --version ${{ inputs.version }} --log-level debug
     ```
-
-    Once these actions are merged in, you can simply releease your SDK by navigating to the actions tab: 
-
   </CodeBlocks>
 
-  <Frame caption="Pass in your version and hit release!">
-    <img alt="GitHub Page" src="assets/sdk-release-action.png" />
-  </Frame>
+  Once these actions are merged in, you can simply releease your SDK by navigating to the actions tab: 
+
+  <img alt="GitHub Page" src="assets/sdk-release-action.png" width="250" height="300"/>
 
 
 </Steps>
