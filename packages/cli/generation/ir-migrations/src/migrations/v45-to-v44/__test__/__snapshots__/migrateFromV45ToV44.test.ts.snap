@@ -742,6 +742,44 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
                   "name": {
                     "name": {
                       "camelCase": {
+                        "safeName": "big",
+                        "unsafeName": "big",
+                      },
+                      "originalName": "big",
+                      "pascalCase": {
+                        "safeName": "Big",
+                        "unsafeName": "Big",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "BIG",
+                        "unsafeName": "BIG",
+                      },
+                      "snakeCase": {
+                        "safeName": "big",
+                        "unsafeName": "big",
+                      },
+                    },
+                    "wireValue": "big",
+                  },
+                  "value": {
+                    "jsonExample": "123456789123456789",
+                    "shape": {
+                      "_visit": [Function],
+                      "primitive": {
+                        "_visit": [Function],
+                        "string": {
+                          "original": "123456789123456789",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+                {
+                  "name": {
+                    "name": {
+                      "camelCase": {
                         "safeName": "pageNum",
                         "unsafeName": "pageNum",
                       },
@@ -1386,6 +1424,38 @@ exports[`migrateFromV45ToV44 snapshot 1`] = `
           },
           "pathParameters": [],
           "queryParameters": [
+            {
+              "allowMultiple": false,
+              "availability": undefined,
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "big",
+                    "unsafeName": "big",
+                  },
+                  "originalName": "big",
+                  "pascalCase": {
+                    "safeName": "Big",
+                    "unsafeName": "Big",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "BIG",
+                    "unsafeName": "BIG",
+                  },
+                  "snakeCase": {
+                    "safeName": "big",
+                    "unsafeName": "big",
+                  },
+                },
+                "wireValue": "big",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": "STRING",
+                "type": "primitive",
+              },
+            },
             {
               "allowMultiple": false,
               "availability": undefined,

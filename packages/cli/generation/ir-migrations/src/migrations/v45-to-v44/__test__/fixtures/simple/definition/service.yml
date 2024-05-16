@@ -17,6 +17,7 @@ service:
       request:
         name: ListRequest
         query-parameters:
+          big: bigint
           pageNum: integer
       response:
         status-code: 201
