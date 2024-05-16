@@ -192,7 +192,7 @@ export function convertTypeReferenceExample({
         primitive: (primitive) => {
             return convertPrimitiveExample({
                 example: resolvedExample,
-                typeBeingExemplified: primitive
+                typeBeingExemplified: primitive.category
             });
         },
         map: ({ keyType, valueType }) => {
