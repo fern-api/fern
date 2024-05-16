@@ -11,6 +11,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.nested_user import NestedUser
@@ -122,27 +123,29 @@ class UserClient:
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "user"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "limit": limit,
-                        "id": jsonable_encoder(id),
-                        "date": str(date),
-                        "deadline": serialize_datetime(deadline),
-                        "bytes": jsonable_encoder(bytes),
-                        "user": jsonable_encoder(user),
-                        "keyValue": jsonable_encoder(key_value),
-                        "optionalString": optional_string,
-                        "nestedUser": jsonable_encoder(nested_user),
-                        "optionalUser": jsonable_encoder(optional_user),
-                        "excludeUser": jsonable_encoder(exclude_user),
-                        "filter": filter,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "limit": limit,
+                            "id": jsonable_encoder(id),
+                            "date": str(date),
+                            "deadline": serialize_datetime(deadline),
+                            "bytes": jsonable_encoder(bytes),
+                            "user": jsonable_encoder(user),
+                            "keyValue": jsonable_encoder(key_value),
+                            "optionalString": optional_string,
+                            "nestedUser": jsonable_encoder(nested_user),
+                            "optionalUser": jsonable_encoder(optional_user),
+                            "excludeUser": jsonable_encoder(exclude_user),
+                            "filter": filter,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -273,27 +276,29 @@ class AsyncUserClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "user"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "limit": limit,
-                        "id": jsonable_encoder(id),
-                        "date": str(date),
-                        "deadline": serialize_datetime(deadline),
-                        "bytes": jsonable_encoder(bytes),
-                        "user": jsonable_encoder(user),
-                        "keyValue": jsonable_encoder(key_value),
-                        "optionalString": optional_string,
-                        "nestedUser": jsonable_encoder(nested_user),
-                        "optionalUser": jsonable_encoder(optional_user),
-                        "excludeUser": jsonable_encoder(exclude_user),
-                        "filter": filter,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "limit": limit,
+                            "id": jsonable_encoder(id),
+                            "date": str(date),
+                            "deadline": serialize_datetime(deadline),
+                            "bytes": jsonable_encoder(bytes),
+                            "user": jsonable_encoder(user),
+                            "keyValue": jsonable_encoder(key_value),
+                            "optionalString": optional_string,
+                            "nestedUser": jsonable_encoder(nested_user),
+                            "optionalUser": jsonable_encoder(optional_user),
+                            "excludeUser": jsonable_encoder(exclude_user),
+                            "filter": filter,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(

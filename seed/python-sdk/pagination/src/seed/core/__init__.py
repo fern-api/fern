@@ -8,6 +8,7 @@ from .http_client import AsyncHttpClient, HttpClient
 from .jsonable_encoder import jsonable_encoder
 from .pagination import AsyncPager, SyncPager
 from .pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from .query_encoder import encode_query
 from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
 
@@ -24,6 +25,7 @@ __all__ = [
     "SyncPager",
     "convert_file_dict_to_httpx_tuples",
     "deep_union_pydantic_dicts",
+    "encode_query",
     "jsonable_encoder",
     "pydantic_v1",
     "remove_none_from_dict",
