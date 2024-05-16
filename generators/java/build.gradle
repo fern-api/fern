@@ -3,10 +3,6 @@ buildscript {
         gradlePluginPortal()
         mavenCentral()
     }
-
-    dependencies {
-//        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.20.0'
-    }
 }
 
 plugins {
@@ -55,8 +51,4 @@ allprojects {
     }
 
     sourceCompatibility = 11
-
-//    java {
-//        palantirJavaFormat {}
-//    }
 }
