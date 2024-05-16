@@ -220,7 +220,9 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                     },
                     bigInteger: () => {
                         // TODO(amckinney): Add support for bigInteger in FDR.
-                        throw new Error("big integers are not supported yet");
+                        return {
+                            type: "string"
+                        };
                     },
                     _other: () => {
                         throw new Error("Unknown primitive: " + primitive);
