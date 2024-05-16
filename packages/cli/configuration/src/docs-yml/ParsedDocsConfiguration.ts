@@ -5,20 +5,35 @@ import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
-    absoluteFilepath: AbsoluteFilePath;
     instances: DocsInstances[];
+    title: string | undefined;
+    absoluteFilepath: AbsoluteFilePath;
+
+    /* filepath of page to contents */
+    pages: Record<RelativeFilePath, string>;
+
+    /* navigation */
     tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: DocsNavigationConfiguration;
-    title: string | undefined;
+    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
+    footerLinks: DocsV1Write.FooterLink[] | undefined;
+
+    /* seo */
+    metadata: ParsedMetadataConfig | undefined;
+    redirects: DocsV1Write.RedirectConfig[] | undefined;
+
+    /* branding */
     logo: Logo | undefined;
     favicon: ImageReference | undefined;
     backgroundImage: BackgroundImage | undefined;
     colors: DocsV1Write.ColorsConfigV3 | undefined;
-    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
     layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
-    /* filepath of page to contents */
-    pages: Record<RelativeFilePath, string>;
+
+    /* integrations */
+    integrations: DocsV1Write.IntegrationsConfig | undefined;
+
+    /* scripts */
     css: DocsV1Write.CssConfig | undefined;
     js: JavascriptConfig | undefined;
 }
@@ -36,6 +51,13 @@ export interface JavascriptConfig {
 export interface DocsColorsConfiguration {
     accentPrimary: ColorConfiguration | undefined;
     background: ColorConfiguration | undefined;
+}
+
+export interface ParsedMetadataConfig
+    extends Omit<WithoutQuestionMarks<DocsV1Write.MetadataConfig>, "og:image" | "og:logo" | "twitter:image"> {
+    "og:image": FilepathOrUrl | undefined;
+    "og:logo": FilepathOrUrl | undefined;
+    "twitter:image": FilepathOrUrl | undefined;
 }
 
 export type ColorConfiguration =
@@ -95,6 +117,8 @@ export interface TypographyConfig {
 export interface ImageReference {
     filepath: AbsoluteFilePath;
 }
+
+export type FilepathOrUrl = { type: "filepath"; value: AbsoluteFilePath } | { type: "url"; value: string };
 
 export interface UntabbedDocsNavigation {
     type: "untabbed";
