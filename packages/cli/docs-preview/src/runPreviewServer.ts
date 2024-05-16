@@ -26,7 +26,7 @@ export async function runPreviewServer({
     });
     const response: DocsV2Read.LoadDocsForUrlResponse = {
         baseUrl: {
-            domain: "localhost:3002",
+            domain: "localhost:3000",
             basePath: ""
         },
         definition: docsDefinition,
@@ -36,7 +36,7 @@ export async function runPreviewServer({
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         res.send(response);
     });
-    app.listen(3002);
+    app.listen(3000);
 
     app.use("/_next", express.static(path.join(__dirname, "out/_next")));
 
@@ -48,7 +48,7 @@ export async function runPreviewServer({
     //     res.sendFile("/Users/dsinghvi/Git/fern-platform/packages/ui/local-preview-bundle/out/[[...slug]].html");
     // });
 
-    context.logger.info("Running server on http://localhost:3002");
+    context.logger.info("Running server on http://localhost:3000");
 
     // await infiinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
