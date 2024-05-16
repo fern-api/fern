@@ -8,4 +8,25 @@ export const JsScriptStrategy = {
     BeforeInteractive: "beforeInteractive",
     AfterInteractive: "afterInteractive",
     LazyOnload: "lazyOnload",
+    _visit: <R>(value: JsScriptStrategy, visitor: JsScriptStrategy.Visitor<R>) => {
+        switch (value) {
+            case JsScriptStrategy.BeforeInteractive:
+                return visitor.beforeInteractive();
+            case JsScriptStrategy.AfterInteractive:
+                return visitor.afterInteractive();
+            case JsScriptStrategy.LazyOnload:
+                return visitor.lazyOnload();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace JsScriptStrategy {
+    interface Visitor<R> {
+        beforeInteractive: () => R;
+        afterInteractive: () => R;
+        lazyOnload: () => R;
+        _other: () => R;
+    }
+}

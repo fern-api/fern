@@ -7,4 +7,22 @@ export type HeaderPosition = "fixed" | "static";
 export const HeaderPosition = {
     Fixed: "fixed",
     Static: "static",
+    _visit: <R>(value: HeaderPosition, visitor: HeaderPosition.Visitor<R>) => {
+        switch (value) {
+            case HeaderPosition.Fixed:
+                return visitor.fixed();
+            case HeaderPosition.Static:
+                return visitor.static();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace HeaderPosition {
+    interface Visitor<R> {
+        fixed: () => R;
+        static: () => R;
+        _other: () => R;
+    }
+}

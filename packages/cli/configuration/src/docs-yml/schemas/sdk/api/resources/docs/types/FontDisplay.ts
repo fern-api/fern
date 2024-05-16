@@ -10,4 +10,31 @@ export const FontDisplay = {
     Swap: "swap",
     Fallback: "fallback",
     Optional: "optional",
+    _visit: <R>(value: FontDisplay, visitor: FontDisplay.Visitor<R>) => {
+        switch (value) {
+            case FontDisplay.Auto:
+                return visitor.auto();
+            case FontDisplay.Block:
+                return visitor.block();
+            case FontDisplay.Swap:
+                return visitor.swap();
+            case FontDisplay.Fallback:
+                return visitor.fallback();
+            case FontDisplay.Optional:
+                return visitor.optional();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace FontDisplay {
+    interface Visitor<R> {
+        auto: () => R;
+        block: () => R;
+        swap: () => R;
+        fallback: () => R;
+        optional: () => R;
+        _other: () => R;
+    }
+}

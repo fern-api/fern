@@ -7,4 +7,22 @@ export type ContentAlignment = "center" | "left";
 export const ContentAlignment = {
     Center: "center",
     Left: "left",
+    _visit: <R>(value: ContentAlignment, visitor: ContentAlignment.Visitor<R>) => {
+        switch (value) {
+            case ContentAlignment.Center:
+                return visitor.center();
+            case ContentAlignment.Left:
+                return visitor.left();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace ContentAlignment {
+    interface Visitor<R> {
+        center: () => R;
+        left: () => R;
+        _other: () => R;
+    }
+}

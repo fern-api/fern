@@ -7,4 +7,22 @@ export type SidebarOrHeaderPlacement = "header" | "sidebar";
 export const SidebarOrHeaderPlacement = {
     Header: "header",
     Sidebar: "sidebar",
+    _visit: <R>(value: SidebarOrHeaderPlacement, visitor: SidebarOrHeaderPlacement.Visitor<R>) => {
+        switch (value) {
+            case SidebarOrHeaderPlacement.Header:
+                return visitor.header();
+            case SidebarOrHeaderPlacement.Sidebar:
+                return visitor.sidebar();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace SidebarOrHeaderPlacement {
+    interface Visitor<R> {
+        header: () => R;
+        sidebar: () => R;
+        _other: () => R;
+    }
+}
