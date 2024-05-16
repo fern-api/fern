@@ -3,8 +3,6 @@
 from collections import ChainMap
 from typing import Any
 
-import httpx
-
 from .pydantic_utilities import pydantic_v1
 
 
