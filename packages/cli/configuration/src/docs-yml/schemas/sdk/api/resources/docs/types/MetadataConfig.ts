@@ -4,6 +4,10 @@
 
 import * as FernDocsConfig from "../../..";
 
+/**
+ * The `metadata` object allows you to customize the appearance of your docs site in search engines and social media.
+ * These settings are applied globally, but can be overridden on a per-page basis using frontmatter.
+ */
 export interface MetadataConfig {
     ogSiteName?: string;
     ogTitle?: string;
