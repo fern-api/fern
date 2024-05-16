@@ -87,8 +87,8 @@ public class UsersClient {
                     .from(request)
                     .startingAfter(startingAfter)
                     .build();
-                Supplier<SyncPagingIterable<User>> getNext = () -> listWithCursorPagination(nextRequest, requestOptions);
-                return new SyncPagingIterable<>(startingAfter.isPresent(), parsedResponse.getData(), getNext);
+                return new SyncPagingIterable<>(startingAfter.isPresent(), parsedResponse.getData(),
+                    () -> listWithCursorPagination(nextRequest, requestOptions));
             }
             throw new ApiError(
                     response.code(),
