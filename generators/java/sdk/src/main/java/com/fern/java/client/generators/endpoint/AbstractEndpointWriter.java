@@ -123,20 +123,20 @@ public abstract class AbstractEndpointWriter {
                 .addModifiers(Modifier.PUBLIC);
     }
 
-    public static CodeBlock stringify(String reference, TypeName typeName) {
-        if (typeName instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class))) {
-            return CodeBlock.of(reference);
-        } else if (typeName.equals(ClassName.get(String.class))) {
-            return CodeBlock.of(reference);
-        } else if (typeName.equals(TypeName.DOUBLE)) {
-            return CodeBlock.of("$T.toString($L)", Double.class, reference);
-        } else if (typeName.equals(TypeName.INT)) {
-            return CodeBlock.of("$T.toString($L)", Integer.class, reference);
-        } else {
-            return CodeBlock.of("$L.toString()", reference);
-        }
+public static CodeBlock stringify(String reference, TypeName typeName) {
+    if (typeName instanceof ParameterizedTypeName
+            && ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class))) {
+        return CodeBlock.of(reference);
+    } else if (typeName.equals(ClassName.get(String.class))) {
+        return CodeBlock.of(reference);
+    } else if (typeName.equals(TypeName.DOUBLE)) {
+        return CodeBlock.of("$T.toString($L)", Double.class, reference);
+    } else if (typeName.equals(TypeName.INT)) {
+        return CodeBlock.of("$T.toString($L)", Integer.class, reference);
+    } else {
+        return CodeBlock.of("$L.toString()", reference);
     }
+}
 
     private static boolean typeNameIsOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
