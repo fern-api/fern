@@ -30,7 +30,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     ),
     footerLinks: core.serialization.property(
         "footer-links",
-        core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).FooterLink)).optional()
+        core.serialization.lazyObject(async () => (await import("../../..")).FooterLinksConfig).optional()
     ),
     metadata: core.serialization.lazyObject(async () => (await import("../../..")).MetadataConfig).optional(),
     redirects: core.serialization
@@ -58,7 +58,7 @@ export declare namespace DocsConfiguration {
         versions?: serializers.VersionConfig.Raw[] | null;
         navigation?: serializers.NavigationConfig.Raw | null;
         "navbar-links"?: serializers.NavbarLink.Raw[] | null;
-        "footer-links"?: serializers.FooterLink.Raw[] | null;
+        "footer-links"?: serializers.FooterLinksConfig.Raw | null;
         metadata?: serializers.MetadataConfig.Raw | null;
         redirects?: serializers.RedirectConfig.Raw[] | null;
         logo?: serializers.LogoConfiguration.Raw | null;

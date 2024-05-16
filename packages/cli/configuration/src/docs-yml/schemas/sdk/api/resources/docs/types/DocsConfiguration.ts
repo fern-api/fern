@@ -13,7 +13,7 @@ export interface DocsConfiguration {
     /** The navigation config is skipped when multiple versions are present. */
     navigation?: FernDocsConfig.NavigationConfig;
     navbarLinks?: FernDocsConfig.NavbarLink[];
-    footerLinks?: FernDocsConfig.FooterLink[];
+    footerLinks?: FernDocsConfig.FooterLinksConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
     logo?: FernDocsConfig.LogoConfiguration;

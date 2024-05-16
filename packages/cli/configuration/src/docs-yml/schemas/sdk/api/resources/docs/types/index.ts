@@ -42,7 +42,7 @@ export * from "./ColorThemedConfig";
 export * from "./NavbarLink";
 export * from "./NavbarLinkConfig";
 export * from "./NavbarGithubConfig";
-export * from "./FooterLink";
+export * from "./FooterLinksConfig";
 export * from "./CssConfig";
 export * from "./JsConfig";
 export * from "./JsConfigOptions";

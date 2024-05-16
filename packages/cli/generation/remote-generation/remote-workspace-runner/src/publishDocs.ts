@@ -393,7 +393,11 @@ async function convertDocsConfiguration({
         }),
         layout: parsedDocsConfig.layout,
         css: parsedDocsConfig.css,
-        js: convertJavascriptConfiguration(parsedDocsConfig.js, uploadUrls, parsedDocsConfig)
+        js: convertJavascriptConfiguration(parsedDocsConfig.js, uploadUrls, parsedDocsConfig),
+        metadata: parsedDocsConfig.metadata,
+        redirects: parsedDocsConfig.redirects,
+        integrations: parsedDocsConfig.integrations,
+        footerLinks: parsedDocsConfig.footerLinks
     };
     return { config };
 }

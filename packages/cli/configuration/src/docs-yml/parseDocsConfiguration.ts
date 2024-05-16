@@ -92,12 +92,23 @@ export async function parseDocsConfiguration({
     ]);
 
     return {
-        instances,
-        absoluteFilepath: absoluteFilepathToDocsConfig,
-        pages,
-        navigation: convertedNavigation,
         title,
+        absoluteFilepath: absoluteFilepathToDocsConfig,
+        instances,
+        pages,
         tabs,
+        navigation: convertedNavigation,
+        // navbarLinks: navbarLinks?.map((navbarLink) => ({
+        //     type: navbarLink.type,
+        //     text: navbarLink.text,
+        //     url: navbarLink.href ?? navbarLink.url ?? "/"
+        // })),
+        navbarLinks: [],
+        footerLinks: [],
+
+        metadata: undefined,
+        redirects: [],
+
         logo,
         favicon,
         backgroundImage,
@@ -108,13 +119,9 @@ export async function parseDocsConfiguration({
             },
             context
         ),
-        navbarLinks: navbarLinks?.map((navbarLink) => ({
-            type: navbarLink.type,
-            text: navbarLink.text,
-            url: navbarLink.href ?? navbarLink.url ?? "/"
-        })),
         typography,
         layout: convertLayoutConfig(layout),
+        integrations: undefined,
         css,
         js
     };

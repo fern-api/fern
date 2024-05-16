@@ -16,7 +16,7 @@ types:
         type: optional<NavigationConfig>
         docs: The navigation config is skipped when multiple versions are present.
       "navbar-links": optional<list<NavbarLink>>
-      "footer-links": optional<list<FooterLink>>
+      "footer-links": optional<FooterLinksConfig>
 
       # seo
       metadata: optional<MetadataConfig>
@@ -596,20 +596,20 @@ types:
 
   NavbarGithubConfig: string
 
-  FooterLink:
-    union:
-      github: string
-      twitter: string
-      x: string
-      linkedin: string
-      youtube: string
-      instagram: string
-      facebook: string
-      discord: string
-      slack: string
-      hackernews: string
-      medium: string
-      website: string
+  FooterLinksConfig:
+    properties:
+      github: optional<string>
+      twitter: optional<string>
+      x: optional<string>
+      linkedin: optional<string>
+      youtube: optional<string>
+      instagram: optional<string>
+      facebook: optional<string>
+      discord: optional<string>
+      slack: optional<string>
+      hackernews: optional<string>
+      medium: optional<string>
+      website: optional<string>
 
   CssConfig:
     docs: |-

@@ -5,20 +5,35 @@ import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
+    title: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
     instances: DocsInstances[];
+
+    /* filepath of page to contents */
+    pages: Record<RelativeFilePath, string>;
+
+    /* navigation */
     tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: DocsNavigationConfiguration;
-    title: string | undefined;
+    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
+    footerLinks: DocsV1Write.FooterLink[] | undefined;
+
+    /* seo */
+    metadata: DocsV1Write.MetadataConfig | undefined;
+    redirects: DocsV1Write.RedirectConfig[] | undefined;
+
+    /* branding */
     logo: Logo | undefined;
     favicon: ImageReference | undefined;
     backgroundImage: BackgroundImage | undefined;
     colors: DocsV1Write.ColorsConfigV3 | undefined;
-    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
     layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
-    /* filepath of page to contents */
-    pages: Record<RelativeFilePath, string>;
+
+    /* integrations */
+    integrations: DocsV1Write.IntegrationsConfig | undefined;
+
+    /* scripts */
     css: DocsV1Write.CssConfig | undefined;
     js: JavascriptConfig | undefined;
 }
