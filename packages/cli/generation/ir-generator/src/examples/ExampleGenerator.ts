@@ -31,7 +31,7 @@ import {
     ObjectProperty,
     ObjectTypeDeclaration,
     PathParameter,
-    PrimitiveTypeCategory,
+    PrimitiveTypeV1,
     ResponseError,
     SingleUnionType,
     SingleUnionTypeProperty,
@@ -405,11 +405,11 @@ export class ExampleGenerator {
                     ),
                 fileDownload: () =>
                     ExampleEndpointSuccessResponse.body(
-                        this.generateExamplePrimitive({ primitiveType: PrimitiveTypeCategory.Base64 })
+                        this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.Base64 })
                     ),
                 text: () =>
                     ExampleEndpointSuccessResponse.body(
-                        this.generateExamplePrimitive({ primitiveType: PrimitiveTypeCategory.String })
+                        this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String })
                     ),
                 streaming: (streamingResponse) =>
                     streamingResponse._visit<ExampleEndpointSuccessResponse>({
@@ -425,8 +425,8 @@ export class ExampleGenerator {
                             ]),
                         text: () =>
                             ExampleEndpointSuccessResponse.stream([
-                                this.generateExamplePrimitive({ primitiveType: PrimitiveTypeCategory.String }),
-                                this.generateExamplePrimitive({ primitiveType: PrimitiveTypeCategory.String })
+                                this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String }),
+                                this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String })
                             ]),
                         _other: () => ExampleEndpointSuccessResponse.stream([this.generateExampleUnknown()])
                     }),
@@ -722,7 +722,7 @@ export class ExampleGenerator {
         primitiveType,
         example
     }: {
-        primitiveType: PrimitiveTypeCategory;
+        primitiveType: PrimitiveTypeV1;
         example?: unknown | undefined;
     }): ExampleTypeReference {
         switch (primitiveType) {
@@ -809,7 +809,7 @@ export class ExampleGenerator {
     ): ExampleTypeReference {
         if (opts.unknownAsPrimitive) {
             const value = name ?? "string";
-            return this.generateExamplePrimitive({ primitiveType: PrimitiveTypeCategory.String, example: value });
+            return this.generateExamplePrimitive({ primitiveType: PrimitiveTypeV1.String, example: value });
         }
         const value = { key: "value" };
         return {

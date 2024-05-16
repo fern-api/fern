@@ -172,7 +172,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
         primitive: (primitive) => {
             return {
                 type: "primitive",
-                value: Ir.types.PrimitiveTypeCategory._visit<APIV1Write.PrimitiveType>(primitive.category, {
+                value: Ir.types.PrimitiveTypeV1._visit<APIV1Write.PrimitiveType>(primitive.category, {
                     integer: () => {
                         return {
                             type: "integer"

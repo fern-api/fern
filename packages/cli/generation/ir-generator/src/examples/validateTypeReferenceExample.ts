@@ -3,7 +3,7 @@ import {
     IntegerValidationRules,
     Literal,
     PrimitiveType,
-    PrimitiveTypeCategory,
+    PrimitiveTypeV1,
     PrimitiveTypeRules,
     StringValidationRules
 } from "@fern-api/ir-sdk";
@@ -222,7 +222,7 @@ function validatePrimitiveExample({
             }
         });
     }
-    return PrimitiveTypeCategory._visit<ExampleViolation[]>(primitiveType.category, {
+    return PrimitiveTypeV1._visit<ExampleViolation[]>(primitiveType.category, {
         string: () => validateString(example),
         integer: () => validateInteger(example),
         double: () => validateDouble(example),

@@ -9,7 +9,7 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
-    PrimitiveTypeCategory
+    PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
@@ -339,9 +339,9 @@ function convertPrimitiveExample({
     typeBeingExemplified
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;
-    typeBeingExemplified: PrimitiveTypeCategory;
+    typeBeingExemplified: PrimitiveTypeV1;
 }): ExampleTypeReferenceShape {
-    return PrimitiveTypeCategory._visit(typeBeingExemplified, {
+    return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
