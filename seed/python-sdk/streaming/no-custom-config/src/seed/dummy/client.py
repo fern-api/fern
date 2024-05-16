@@ -44,9 +44,11 @@ class DummyClient:
         client = SeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.dummy.generate_stream(
+        response = client.dummy.generate_stream(
             num_events=1,
         )
+        for chunk in response:
+            yield chunk
         """
         with self._client_wrapper.httpx_client.stream(
             method="POST",
@@ -116,9 +118,11 @@ class AsyncDummyClient:
         client = AsyncSeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.dummy.generate_stream(
+        response = await client.dummy.generate_stream(
             num_events=1,
         )
+        async for chunk in response:
+            yield chunk
         """
         async with self._client_wrapper.httpx_client.stream(
             method="POST",

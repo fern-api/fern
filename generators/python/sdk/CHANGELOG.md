@@ -5,10 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.1] - 2024-05-15
+## [2.1.2] - 2024-05-16
 
 - Improvement: The generated SDK will now correctly encode deep object query parameters.
   For example, if you have an object `{"test": {"nested": "object"}}` as a query parameter, we will now encode it as `test[nested]=object`.
+
+## [2.1.1] - 2024-05-15
+
+- Chore: add enhanced snippet support for streaming endpoints.
+
+  Before:
+
+  ```python
+  from seed.client import SeedStreaming
+
+  client = SeedStreaming(
+      base_url="https://yourhost.com/path/to/api",
+  )
+  client.dummy.generate_stream(
+      num_events=1,
+  )
+  ```
+
+  After:
+
+  ```python
+  from seed.client import SeedStreaming
+
+  client = SeedStreaming(
+      base_url="https://yourhost.com/path/to/api",
+  )
+  response = client.dummy.generate_stream(
+      num_events=1,
+  )
+  for chunk in response:
+      yield chunk
+  ```
 
 ## [2.1.0] - 2024-05-14
 
