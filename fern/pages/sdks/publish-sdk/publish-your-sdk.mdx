@@ -42,38 +42,38 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
   
   <CodeBlocks>
     ```yaml TypeScript 
-    ts-sdk:
-      generators:
-        - name: fernapi/fern-typescript-node-sdk
-          version: 0.9.5
-          output:
-            location: local-file-system
-            path: ../sdks/typescript
+    groups: 
+      ts-sdk:
+        generators:
+          - name: fernapi/fern-typescript-node-sdk
+            version: 0.9.5
+            output:
+              location: local-file-system
+              path: ../sdks/typescript
     ```
     ```yaml Python 
-    python-sdk:
-      generators:
-        - name: fernapi/fern-python-sdk
-          version: 0.8.1
-          output:
-            location: local-file-system
-            path: ../sdks/python
+    groups: 
+      python-sdk:
+        generators:
+          - name: fernapi/fern-python-sdk
+            version: 0.8.1
+            output:
+              location: local-file-system
+              path: ../sdks/python
     ```
     ```yaml Java 
-    java-sdk:
-      generators:
-        - java-sdk:
-            generators:
-              - name: fernapi/fern-java-sdk
-                version: 0.9.1
+    groups: 
+      java-sdk:
+        generators:
+          - name: fernapi/fern-java-sdk
+            version: 0.9.1
     ```
     ```yaml Go 
-    go-sdk:
-      generators:
-        - go-sdk:
-            generators:
-              - name: fernapi/fern-go-sdk
-                version: 0.9.1
+    groups:
+      go-sdk:
+        generators:
+          - name: fernapi/fern-go-sdk
+            version: 0.9.1
     ```
   </CodeBlocks>
 
@@ -83,38 +83,39 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
   an output location in your `generators.yml`.
 
     <CodeBlocks>
-    ```yaml title="TypeScript" {5-8}
-    ts-sdk:
-      generators:
-        - name: fernapi/fern-typescript-node-sdk
-          version: 0.9.5
-          output:
-            location: npm
-            package-name: imdb
-            token: ${NPM_TOKEN} # reads from environment
+    ```yaml title="TypeScript" {6-9}
+    groups: 
+      ts-sdk:
+        generators:
+          - name: fernapi/fern-typescript-node-sdk
+            version: 0.9.5
+            output:
+              location: npm
+              package-name: imdb
+              token: ${NPM_TOKEN} # reads from environment
     ```
-    ```yaml title="Python" {5-8}
-    python-sdk:
-      generators:
-        - name: fernapi/fern-python-sdk
-          version: 0.8.1
-          output:
-            location: pypi
-            package-name: imdb
-            token: ${PYPI_TOKEN} # reads from environment
+    ```yaml title="Python" {6-9}
+    groups: 
+      python-sdk:
+        generators:
+          - name: fernapi/fern-python-sdk
+            version: 0.8.1
+            output:
+              location: pypi
+              package-name: imdb
+              token: ${PYPI_TOKEN} # reads from environment
     ```
-    ```yaml title="Java" {8-11}
-    python-sdk:
-      generators:
-        - java-sdk:
-            generators:
-              - name: fernapi/fern-java-sdk
-                version: 0.9.1
-                output:
-                  location: maven
-                  artifact: com.imdb:imdb-java
-                  username: ${MAVEN_USERNAME} # reads from environment
-                  password: ${MAVEN_PASSWORD} # reads from environment
+    ```yaml title="Java" {9-12}
+    groups: 
+      java-sdk:
+        generators:
+          - name: fernapi/fern-java-sdk
+            version: 0.9.1
+            output:
+              location: maven
+              artifact: com.imdb:imdb-java
+              username: ${MAVEN_USERNAME} # reads from environment
+              password: ${MAVEN_PASSWORD} # reads from environment
     ```
   </CodeBlocks>
 
@@ -129,16 +130,17 @@ This guide will walk you through how to publish public-facing SDKs through Fern.
   Once you've created the Github repository you must add it to your `generators.yml`: 
 
   ```yaml title="TypeScript" {9-10}
-  ts-sdk:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
-        output:
-          location: npm
-          package-name: imdb
-          token: ${NPM_TOKEN} 
-        github: 
-          repository: your-org/your-repository
+  groups: 
+    ts-sdk:
+      generators:
+        - name: fernapi/fern-typescript-node-sdk
+          version: 0.9.5
+          output:
+            location: npm
+            package-name: imdb
+            token: ${NPM_TOKEN} 
+          github: 
+            repository: your-org/your-repository
   ```
 
   ### Run `fern generate`
