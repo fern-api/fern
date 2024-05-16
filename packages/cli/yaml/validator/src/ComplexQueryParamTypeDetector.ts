@@ -107,7 +107,7 @@ export class ComplexQueryParamTypeDetector {
                     // This is how we denote generic objects, which we should allow to pass through.
                     !(
                         type.keyType._type === "primitive" &&
-                        type.keyType.primitive.category === "STRING" &&
+                        type.keyType.primitive.v1 === "STRING" &&
                         type.valueType._type === "unknown"
                     )
                 );

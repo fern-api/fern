@@ -204,7 +204,7 @@ export function resolveResponseType({
 
 export function maybePrimitiveType(resolvedType: ResolvedType | undefined): string | undefined {
     if (resolvedType?._type === "primitive") {
-        return resolvedType.primitive.category;
+        return resolvedType.primitive.v1;
     }
     if (resolvedType?._type === "container" && resolvedType.container._type === "optional") {
         return maybePrimitiveType(resolvedType.container.itemType);

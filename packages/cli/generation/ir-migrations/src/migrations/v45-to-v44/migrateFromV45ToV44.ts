@@ -280,10 +280,10 @@ function convertTypeReference(typeReference: IrVersions.V45.types.TypeReference)
     return IrVersions.V45.types.TypeReference._visit<IrVersions.V44.types.TypeReference>(typeReference, {
         container: (container) => IrVersions.V44.types.TypeReference.container(convertContainerType(container)),
         primitive: (primitiveType) => {
-            if (primitiveType.category === "BIG_INTEGER") {
+            if (primitiveType.v1 === "BIG_INTEGER") {
                 return IrVersions.V44.types.TypeReference.primitive(IrVersions.V44.types.PrimitiveType.String);
             }
-            return IrVersions.V44.types.TypeReference.primitive(primitiveType.category);
+            return IrVersions.V44.types.TypeReference.primitive(primitiveType.v1);
         },
         named: IrVersions.V44.types.TypeReference.named,
         unknown: IrVersions.V44.types.TypeReference.unknown,
@@ -347,10 +347,10 @@ function convertResolvedType(
         container: (container) => IrVersions.V44.types.ResolvedTypeReference.container(convertContainerType(container)),
         named: IrVersions.V44.types.ResolvedTypeReference.named,
         primitive: (primitiveType) => {
-            if (primitiveType.category === "BIG_INTEGER") {
+            if (primitiveType.v1 === "BIG_INTEGER") {
                 return IrVersions.V44.types.ResolvedTypeReference.primitive(IrVersions.V44.types.PrimitiveType.String);
             }
-            return IrVersions.V44.types.ResolvedTypeReference.primitive(primitiveType.category);
+            return IrVersions.V44.types.ResolvedTypeReference.primitive(primitiveType.v1);
         },
         unknown: IrVersions.V44.types.ResolvedTypeReference.unknown,
         _other: () => {

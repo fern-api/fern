@@ -608,7 +608,7 @@ export class ExampleGenerator {
             case "named":
                 return this.generateExampleNamed(typeReference, depth);
             case "primitive":
-                return this.generateExamplePrimitive({ primitiveType: typeReference.primitive.category });
+                return this.generateExamplePrimitive({ primitiveType: typeReference.primitive.v1 });
             case "unknown":
                 return this.generateExampleUnknown({}, opts);
             default:

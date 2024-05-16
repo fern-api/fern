@@ -222,7 +222,7 @@ function validatePrimitiveExample({
             }
         });
     }
-    return PrimitiveTypeV1._visit<ExampleViolation[]>(primitiveType.category, {
+    return PrimitiveTypeV1._visit<ExampleViolation[]>(primitiveType.v1, {
         string: () => validateString(example),
         integer: () => validateInteger(example),
         double: () => validateDouble(example),
@@ -234,7 +234,7 @@ function validatePrimitiveExample({
         base64: () => validateString(example),
         bigInteger: () => validateString(example),
         _other: () => {
-            throw new Error("Unknown primitive type: " + primitiveType.category);
+            throw new Error("Unknown primitive type: " + primitiveType.v1);
         }
     });
 }
@@ -353,7 +353,7 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
         return true;
     }
     if (expected._type === "primitive") {
-        return actual._type === "primitive" && expected.primitive.category === actual.primitive.category;
+        return actual._type === "primitive" && expected.primitive.v1 === actual.primitive.v1;
     }
     if (expected._type === "container") {
         switch (expected.container._type) {
