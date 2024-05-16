@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernDocsConfig as RawDocs } from "./schemas";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import tinycolor from "tinycolor2";
+import { FernDocsConfig as RawDocs } from "./schemas";
 
 export function convertColorsConfiguration(
-    rawConfig: RawDocs.ColorsConfiguration,
+    rawConfig: RawDocs.ColorsConfiguration = { accentPrimary: undefined, background: undefined },
     context: TaskContext
 ): DocsV1Write.ColorsConfigV3 {
     rawConfig.accentPrimary = rawConfig.accentPrimary ?? rawConfig.accentPrimaryDeprecated;

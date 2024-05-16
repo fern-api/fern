@@ -22,7 +22,7 @@ types:
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
 
-      # styles
+      # branding
       logo: optional<LogoConfiguration>
       favicon: optional<string>
       background-image:

@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
+import { assertNever, entries, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { getReferencedMarkdownFiles } from "@fern-api/docs-validator";
 import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
@@ -108,12 +108,18 @@ export async function publishDocs({
         new Set(
             imageFilepathsWithSizesToUpload.map((imageFilePath) => ({
                 ...imageFilePath,
-                filePath: convertAbsoluteFilepathToFdrFilepath(imageFilePath.filePath, parsedDocsConfig)
+                filePath: convertAbsoluteFilepathToFdrFilepath({
+                    filepath: imageFilePath.filePath,
+                    docsYmlFilePath: parsedDocsConfig.absoluteFilepath
+                })
             }))
         )
     );
     const relativeFilepathsToUpload = filepathsToUpload.map((filepath) =>
-        convertAbsoluteFilepathToFdrFilepath(filepath, parsedDocsConfig)
+        convertAbsoluteFilepathToFdrFilepath({
+            filepath,
+            docsYmlFilePath: parsedDocsConfig.absoluteFilepath
+        })
     );
     context.logger.debug("Relative filepaths to upload: [", relativeFilepathsToUpload.join(", "));
 
@@ -170,7 +176,10 @@ export async function publishDocs({
     for (const chunkedFilepaths of chunkedFilepathsToUpload) {
         await Promise.all(
             chunkedFilepaths.map(async (filepathToUpload) => {
-                const relativePath = convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig);
+                const relativePath = convertAbsoluteFilepathToFdrFilepath({
+                    filepath: filepathToUpload,
+                    docsYmlFilePath: parsedDocsConfig.absoluteFilepath
+                });
                 const uploadUrl = uploadUrls[relativePath];
                 if (uploadUrl == null) {
                     context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
@@ -260,7 +269,10 @@ async function constructRegisterDocsRequest({
                 // TODO: make this more robust
                 pageId.startsWith("/")
                     ? AbsoluteFilePath.of(pageId)
-                    : convertFdrFilepathToAbsoluteFilepath(RelativeFilePath.of(pageId), parsedDocsConfig),
+                    : convertFdrFilepathToAbsoluteFilepath({
+                          filepath: RelativeFilePath.of(pageId),
+                          docsYmlFilePath: parsedDocsConfig.absoluteFilepath
+                      }),
                 { fullSlug }
             ];
         })
@@ -294,7 +306,10 @@ async function constructRegisterDocsRequest({
                 content: pageContent.markdown,
                 absoluteFilepath: pageId.startsWith("/")
                     ? AbsoluteFilePath.of(pageId)
-                    : convertFdrFilepathToAbsoluteFilepath(RelativeFilePath.of(pageId), parsedDocsConfig)
+                    : convertFdrFilepathToAbsoluteFilepath({
+                          filepath: RelativeFilePath.of(pageId),
+                          docsYmlFilePath: parsedDocsConfig.absoluteFilepath
+                      })
             });
             let markdown = pageContent.markdown;
             for (const reference of references) {
@@ -367,18 +382,18 @@ async function convertDocsConfiguration({
         fullSlugs,
         absolutePathToFernFolder
     });
+    const filepathsContext = {
+        docsYmlFilePath: parsedDocsConfig.absoluteFilepath,
+        uploadUrls,
+        context
+    };
     const config: ConvertedDocsConfiguration["config"] = {
         title: parsedDocsConfig.title,
         // deprecated, use colorsV3 instead of logoV2
         logoV2: undefined,
         logoHeight: parsedDocsConfig.logo?.height,
         logoHref: parsedDocsConfig.logo?.href,
-        favicon: convertImageReference({
-            imageReference: parsedDocsConfig.favicon,
-            parsedDocsConfig,
-            uploadUrls,
-            context
-        }),
+        favicon: convertAbsoluteFilePathToFileId(parsedDocsConfig.favicon?.filepath, filepathsContext),
         // deprecated, use colorsV3 instead of backgroundImage
         backgroundImage: undefined,
         navigation: convertedNavigation.config,
@@ -393,8 +408,8 @@ async function convertDocsConfiguration({
         }),
         layout: parsedDocsConfig.layout,
         css: parsedDocsConfig.css,
-        js: convertJavascriptConfiguration(parsedDocsConfig.js, uploadUrls, parsedDocsConfig),
-        metadata: parsedDocsConfig.metadata,
+        js: convertJavascriptConfiguration(parsedDocsConfig.js, uploadUrls, parsedDocsConfig, context),
+        metadata: convertMetadata(parsedDocsConfig.metadata, filepathsContext),
         redirects: parsedDocsConfig.redirects,
         integrations: parsedDocsConfig.integrations,
         footerLinks: parsedDocsConfig.footerLinks
@@ -713,7 +728,8 @@ function convertDocsTypographyConfiguration({
 function convertJavascriptConfiguration(
     jsConfiguration: docsYml.JavascriptConfig | undefined,
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>,
-    parsedDocsConfig: docsYml.ParsedDocsConfiguration
+    parsedDocsConfig: docsYml.ParsedDocsConfiguration,
+    context: TaskContext
 ): DocsV1Write.JsConfig | undefined {
     if (jsConfiguration == null) {
         return;
@@ -721,15 +737,15 @@ function convertJavascriptConfiguration(
     return {
         files: jsConfiguration.files
             .map(({ absolutePath, strategy }) => {
-                const filepath = convertAbsoluteFilepathToFdrFilepath(absolutePath, parsedDocsConfig);
-                const file = uploadUrls[filepath];
-                if (file == null) {
+                const fileId = convertAbsoluteFilePathToFileId(absolutePath, {
+                    docsYmlFilePath: parsedDocsConfig.absoluteFilepath,
+                    uploadUrls,
+                    context
+                });
+                if (fileId == null) {
                     return;
                 }
-                return {
-                    fileId: file.fileId,
-                    strategy
-                };
+                return { fileId, strategy };
             })
             .filter(isNonNullish)
     };
@@ -756,24 +772,21 @@ function convertFont({
         return;
     }
 
-    const filepath = convertAbsoluteFilepathToFdrFilepath(font.variants[0].absolutePath, parsedDocsConfig);
+    const filepathsContext = {
+        docsYmlFilePath: parsedDocsConfig.absoluteFilepath,
+        uploadUrls,
+        context
+    };
 
-    const file = uploadUrls[filepath];
-    if (file == null) {
-        return context.failAndThrow(`Failed to locate ${label} font file after uploading`);
-    }
+    const fileId = convertAbsoluteFilePathToFileId(font.variants[0].absolutePath, filepathsContext);
 
     return {
         type: "custom",
-        name: font.name ?? `font:${label}:${file.fileId}`,
+        name: font.name ?? `font:${label}:${fileId}`,
         variants: font.variants.map((variant) => {
-            const filepath = convertAbsoluteFilepathToFdrFilepath(variant.absolutePath, parsedDocsConfig);
-            const file = uploadUrls[filepath];
-            if (file == null) {
-                return context.failAndThrow(`Failed to locate ${label} font file after uploading`);
-            }
+            const fontFile = convertAbsoluteFilePathToFileId(variant.absolutePath, filepathsContext);
             return {
-                fontFile: file.fileId,
+                fontFile,
                 weight: variant.weight,
                 style: variant.style != null ? [variant.style] : undefined
             };
@@ -856,38 +869,40 @@ function convertLogoAndBackgroundImage({
     const { logo, backgroundImage } = parsedDocsConfig;
     const logoRef = logo?.[theme];
     const backgroundImageRef = backgroundImage?.[theme];
+    const filepathsContext = {
+        docsYmlFilePath: parsedDocsConfig.absoluteFilepath,
+        uploadUrls,
+        context
+    };
     return {
-        logo: convertImageReference({
-            imageReference: logoRef,
-            parsedDocsConfig,
-            uploadUrls,
-            context
-        }),
-        backgroundImage: convertImageReference({
-            imageReference: backgroundImageRef,
-            parsedDocsConfig,
-            uploadUrls,
-            context
-        })
+        logo: convertAbsoluteFilePathToFileId(logoRef?.filepath, filepathsContext),
+        backgroundImage: convertAbsoluteFilePathToFileId(backgroundImageRef?.filepath, filepathsContext)
     };
 }
 
-function convertImageReference({
-    imageReference,
-    parsedDocsConfig,
-    uploadUrls,
-    context
-}: {
-    imageReference: docsYml.ImageReference | undefined;
-    parsedDocsConfig: docsYml.ParsedDocsConfiguration;
+interface FilePathsContext {
+    docsYmlFilePath: AbsoluteFilePath;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
-}): DocsV1Write.FileId | undefined {
-    if (imageReference == null) {
+}
+
+function convertAbsoluteFilePathToFileId(filepath: AbsoluteFilePath, context: FilePathsContext): DocsV1Write.FileId;
+function convertAbsoluteFilePathToFileId(
+    filepath: AbsoluteFilePath | undefined,
+    context: FilePathsContext
+): DocsV1Write.FileId | undefined;
+function convertAbsoluteFilePathToFileId(
+    filepath: AbsoluteFilePath | undefined,
+    { docsYmlFilePath, uploadUrls, context }: FilePathsContext
+): DocsV1Write.FileId | undefined {
+    if (filepath == null) {
         return undefined;
     }
-    const filepath = convertAbsoluteFilepathToFdrFilepath(imageReference.filepath, parsedDocsConfig);
-    const file = uploadUrls[filepath];
+    const relativeFilepath = convertAbsoluteFilepathToFdrFilepath({
+        filepath,
+        docsYmlFilePath
+    });
+    const file = uploadUrls[relativeFilepath];
     if (file == null) {
         return context.failAndThrow("Failed to locate file after uploading");
     }
@@ -1190,6 +1205,21 @@ async function getImageFilepathsToUpload(
         filepaths.add(parsedImagePath.filepath);
     }
 
+    if (parsedDocsConfig.metadata?.["og:image"] != null && parsedDocsConfig.metadata["og:image"].type === "filepath") {
+        filepaths.add(parsedDocsConfig.metadata["og:image"].value);
+    }
+
+    if (parsedDocsConfig.metadata?.["og:logo"] != null && parsedDocsConfig.metadata["og:logo"].type === "filepath") {
+        filepaths.add(parsedDocsConfig.metadata["og:logo"].value);
+    }
+
+    if (
+        parsedDocsConfig.metadata?.["twitter:image"] != null &&
+        parsedDocsConfig.metadata["twitter:image"].type === "filepath"
+    ) {
+        filepaths.add(parsedDocsConfig.metadata["twitter:image"].value);
+    }
+
     // measure the size of the images, 10 at a time
     const filepathChunks = chunk([...filepaths], 10);
     const imageFilepathsAndSizesToUpload: ImageFile[] = [];
@@ -1244,20 +1274,61 @@ function getFilepathsToUpload(parsedDocsConfig: docsYml.ParsedDocsConfiguration)
     return filepaths;
 }
 
-function convertAbsoluteFilepathToFdrFilepath(
-    filepath: AbsoluteFilePath,
-    parsedDocsConfig: docsYml.ParsedDocsConfiguration
-) {
-    return relative(dirname(parsedDocsConfig.absoluteFilepath), filepath);
+function convertAbsoluteFilepathToFdrFilepath({
+    filepath,
+    docsYmlFilePath
+}: {
+    filepath: AbsoluteFilePath;
+    docsYmlFilePath: AbsoluteFilePath;
+}): RelativeFilePath {
+    return relative(dirname(docsYmlFilePath), filepath);
 }
 
-function convertFdrFilepathToAbsoluteFilepath(
-    filepath: RelativeFilePath,
-    parsedDocsConfig: docsYml.ParsedDocsConfiguration
-) {
-    return join(dirname(parsedDocsConfig.absoluteFilepath), filepath);
+function convertFdrFilepathToAbsoluteFilepath({
+    filepath,
+    docsYmlFilePath
+}: {
+    filepath: RelativeFilePath;
+    docsYmlFilePath: AbsoluteFilePath;
+}) {
+    return join(dirname(docsYmlFilePath), filepath);
 }
 
 function wrapWithHttps(url: string): string {
     return url.startsWith("https://") || url.startsWith("http://") ? url : `https://${url}`;
+}
+
+function convertMetadata(
+    metadata: docsYml.ParsedMetadataConfig | undefined,
+    context: FilePathsContext
+): DocsV1Write.MetadataConfig | undefined {
+    if (metadata == null) {
+        return;
+    }
+
+    const { "og:image": ogImage, "og:logo": ogLogo, "twitter:image": twitterImage, ...rest } = metadata;
+    return {
+        ...rest,
+        "og:image": convertFileIdOrUrl(ogImage, context),
+        "og:logo": convertFileIdOrUrl(ogLogo, context),
+        "twitter:image": convertFileIdOrUrl(twitterImage, context)
+    };
+}
+
+function convertFileIdOrUrl(
+    filepathOrUrl: docsYml.FilepathOrUrl | undefined,
+    context: FilePathsContext
+): DocsV1Write.FileIdOrUrl | undefined {
+    if (filepathOrUrl == null) {
+        return;
+    }
+
+    return visitDiscriminatedUnion(filepathOrUrl, "type")._visit<DocsV1Write.FileIdOrUrl>({
+        filepath: ({ value }) => ({
+            type: "fileId",
+            value: convertAbsoluteFilePathToFileId(value, context)
+        }),
+        url: ({ value }) => ({ type: "url", value }),
+        _other: () => context.context.failAndThrow("Invalid metadata configuration")
+    });
 }

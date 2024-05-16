@@ -5,9 +5,9 @@ import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
+    instances: DocsInstances[];
     title: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
-    instances: DocsInstances[];
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
@@ -19,7 +19,7 @@ export interface ParsedDocsConfiguration {
     footerLinks: DocsV1Write.FooterLink[] | undefined;
 
     /* seo */
-    metadata: DocsV1Write.MetadataConfig | undefined;
+    metadata: ParsedMetadataConfig | undefined;
     redirects: DocsV1Write.RedirectConfig[] | undefined;
 
     /* branding */
@@ -51,6 +51,13 @@ export interface JavascriptConfig {
 export interface DocsColorsConfiguration {
     accentPrimary: ColorConfiguration | undefined;
     background: ColorConfiguration | undefined;
+}
+
+export interface ParsedMetadataConfig
+    extends Omit<WithoutQuestionMarks<DocsV1Write.MetadataConfig>, "og:image" | "og:logo" | "twitter:image"> {
+    "og:image": FilepathOrUrl | undefined;
+    "og:logo": FilepathOrUrl | undefined;
+    "twitter:image": FilepathOrUrl | undefined;
 }
 
 export type ColorConfiguration =
@@ -110,6 +117,8 @@ export interface TypographyConfig {
 export interface ImageReference {
     filepath: AbsoluteFilePath;
 }
+
+export type FilepathOrUrl = { type: "filepath"; value: AbsoluteFilePath } | { type: "url"; value: string };
 
 export interface UntabbedDocsNavigation {
     type: "untabbed";
