@@ -97,6 +97,9 @@ navigation:
         contents:
           - page: Generate your first SDK
             path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
+          - page: Publish a public-facing SDK
+            path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
+            # hidden: true
       - section: Features
         contents:
           - page: Strongly typed
