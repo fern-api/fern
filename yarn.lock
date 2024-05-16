@@ -3576,6 +3576,7 @@ __metadata:
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    serve-static: ^1.15.0
     typescript: 4.6.4
     uuid: ^9.0.1
   languageName: unknown
@@ -21278,7 +21279,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"serve-static@npm:1.15.0":
+"serve-static@npm:1.15.0, serve-static@npm:^1.15.0":
   version: 1.15.0
   resolution: "serve-static@npm:1.15.0"
   dependencies:

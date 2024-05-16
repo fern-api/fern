@@ -37,6 +37,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "serve-static": "^1.15.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
