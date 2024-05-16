@@ -809,7 +809,7 @@ export class ExampleGenerator {
     ): ExampleTypeReference {
         if (opts.unknownAsPrimitive) {
             const value = name ?? "string";
-            return this.generateExamplePrimitive({ primitiveType: PrimitiveType.String, example: value });
+            return this.generateExamplePrimitive({ primitiveType: PrimitiveTypeCategory.String, example: value });
         }
         const value = { key: "value" };
         return {
