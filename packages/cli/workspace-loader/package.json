@@ -36,7 +36,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.538",
+    "@fern-fern/fiddle-sdk": "^0.0.542",
     "axios": "^0.28.0",
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",

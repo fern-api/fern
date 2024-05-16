@@ -4,6 +4,7 @@ import {
     GithubPublishInfo as FiddleGithubPublishInfo,
     MavenOutput,
     NpmOutput,
+    NugetOutput,
     PostmanOutput,
     PublishOutputMode,
     PublishOutputModeV2,
@@ -84,6 +85,12 @@ function getGithubPublishConfig(
                   FernGeneratorExec.GithubPublishInfo.postman({
                       apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? ""),
                       workspaceIdEnvironmentVariable: EnvironmentVariable(value.workspaceId ?? "")
+                  }),
+              nuget: (value) =>
+                  FernGeneratorExec.GithubPublishInfo.nuget({
+                      registryUrl: value.registryUrl,
+                      packageName: value.packageName,
+                      apiKeyEnvironmentVariable: EnvironmentVariable(value.apiKey ?? "")
                   }),
               _other: () => undefined
           })
@@ -198,18 +205,19 @@ function newDummyPublishOutputConfig(
     version: string,
     multipleOutputMode: PublishOutputMode | PublishOutputModeV2
 ): FernGeneratorExec.GeneratorOutputConfig {
-    let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | undefined;
+    let outputMode: NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined;
     if ("registryOverrides" in multipleOutputMode) {
         outputMode = multipleOutputMode.registryOverrides.maven ?? multipleOutputMode.registryOverrides.npm;
     } else if (outputMode != null) {
         outputMode = multipleOutputMode._visit<
-            NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | undefined
+            NpmOutput | MavenOutput | PypiOutput | RubyGemsOutput | PostmanOutput | NugetOutput | undefined
         >({
             mavenOverride: (value) => value,
             npmOverride: (value) => value,
             pypiOverride: (value) => value,
             rubyGemsOverride: (value) => value,
             postman: (value) => value,
+            nugetOverride: (value) => value,
             _other: () => undefined
         });
     }
@@ -253,6 +261,11 @@ function newDummyPublishOutputConfig(
                     registryUrl: (outputMode as RubyGemsOutput)?.registryUrl ?? "",
                     apiKey: (outputMode as RubyGemsOutput)?.apiKey ?? "",
                     packageName: (outputMode as RubyGemsOutput)?.packageName ?? ""
+                },
+                nuget: {
+                    registryUrl: (outputMode as NugetOutput)?.registryUrl ?? "",
+                    apiKey: (outputMode as NugetOutput)?.apiKey ?? "",
+                    packageName: (outputMode as NugetOutput)?.packageName ?? ""
                 }
             },
             version

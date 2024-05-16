@@ -21,8 +21,14 @@ import com.fern.irV42.model.auth.BasicAuthScheme;
 import com.fern.irV42.model.auth.BearerAuthScheme;
 import com.fern.irV42.model.auth.EnvironmentVariable;
 import com.fern.irV42.model.auth.HeaderAuthScheme;
+import com.fern.irV42.model.auth.OAuthClientCredentials;
+import com.fern.irV42.model.auth.OAuthConfiguration;
 import com.fern.irV42.model.auth.OAuthScheme;
+import com.fern.irV42.model.commons.EndpointReference;
 import com.fern.irV42.model.commons.TypeId;
+import com.fern.irV42.model.http.HttpEndpoint;
+import com.fern.irV42.model.http.HttpService;
+import com.fern.irV42.model.ir.Subpackage;
 import com.fern.irV42.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
@@ -55,6 +61,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final ClientGeneratorContext clientGeneratorContext;
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final Optional<GeneratedJavaFile> generatedOAuthTokenSupplier;
     private final GeneratedJavaFile generatedSuppliersFile;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName builderName;
@@ -68,7 +75,8 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             GeneratedJavaFile generatedSuppliersFile,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedJavaFile requestOptionsFile,
-            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
+            Optional<GeneratedJavaFile> generatedOAuthTokenSupplier) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
@@ -83,6 +91,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.generatedSuppliersFile = generatedSuppliersFile;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
+        this.generatedOAuthTokenSupplier = generatedOAuthTokenSupplier;
         this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
         this.requestOptionsFile = requestOptionsFile;
     }
@@ -360,7 +369,37 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
-            throw new RuntimeException("OAuth not supported");
+            return oauth.getConfiguration().visit(new OAuthSchemeHandler());
+        }
+
+        public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
+
+            @Override
+            public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
+                EndpointReference tokenEndpointReference = clientCredentials.getTokenEndpoint().getEndpointReference();
+
+                createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
+                createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
+
+                Subpackage subpackage = clientGeneratorContext.getIr().getSubpackages()
+                    .get(tokenEndpointReference.getSubpackageId().get());
+                ClassName authClientClassName = clientGeneratorContext.getPoetClassNameFactory()
+                    .getClientClassName(subpackage);
+                ClassName oauthTokenSupplierClassName = generatedOAuthTokenSupplier.get().getClassName();
+                buildMethod
+                    .addStatement("$T authClient = new $T($T.builder().environment(this.$L).build())",
+                        authClientClassName, authClientClassName, generatedClientOptions.getClassName(),
+                        ENVIRONMENT_FIELD_NAME)
+                    .addStatement("$T oAuthTokenSupplier = new $T(clientId, clientSecret, authClient)",
+                        oauthTokenSupplierClassName, oauthTokenSupplierClassName)
+                    .addStatement("this.$L.addHeader($S, oAuthTokenSupplier)", CLIENT_OPTIONS_BUILDER_NAME, "Authorization");
+                return null;
+            }
+
+            @Override
+            public Void _visitUnknown(Object unknownType) {
+                throw new RuntimeException("Encountered unknown oauth scheme" + unknownType);
+            }
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {

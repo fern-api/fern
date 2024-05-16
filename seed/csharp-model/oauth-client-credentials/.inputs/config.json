@@ -5,7 +5,12 @@
             "type": "github",
             "repoUrl": "https://github.com/oauth-client-credentials/fern",
             "version": "0.0.1",
-            "publishInfo": null
+            "publishInfo": {
+                "type": "nuget",
+                "registryUrl": "",
+                "packageName": "Fernoauth-client-credentials",
+                "apiKeyEnvironmentVariable": ""
+            }
         },
         "path": "/fern/output",
         "publishingMetadata": null,

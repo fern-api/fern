@@ -205,11 +205,9 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 mavenGithubPublishInfo.map(MavenGithubPublishInfo::getRegistryUrl),
                 mavenGithubPublishInfo.flatMap(MavenGithubPublishInfo::getSignature)));
-
         // write files to disk
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory,
                 false, Optional.empty()));
-
         runCommandBlocking(new String[] { "gradle", "wrapper" }, outputDirectory,
                 Collections.emptyMap());
         runCommandBlocking(new String[] { "gradle", "spotlessApply" },

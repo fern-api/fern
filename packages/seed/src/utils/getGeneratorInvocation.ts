@@ -110,7 +110,10 @@ function getGithubPublishInfo({
                 registryUrl: ""
             });
         case "csharp":
-            return undefined;
+            return FernFiddle.GithubPublishInfo.nuget({
+                packageName: `Fern${fixtureName}`,
+                registryUrl: ""
+            });
         default:
             assertNever(language);
     }
@@ -149,7 +152,7 @@ function getPublishInfo({
         case "ruby":
             throw new Error("Seed doesn't support publish mode in Ruby!");
         case "csharp":
-            throw new Error("Seed doesn't support publish mode in Ruby!");
+            throw new Error("Seed doesn't support publish mode in C#!");
         default:
             assertNever(language);
     }

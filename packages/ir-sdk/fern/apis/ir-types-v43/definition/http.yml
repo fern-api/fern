@@ -35,7 +35,12 @@ types:
       allPathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
       requestBody: optional<HttpRequestBody>
-      sdkRequest: optional<SdkRequest>
+      sdkRequest:
+        docs: |
+          This field provides details needed to generate the endpoint signature and request type. This is required due
+          to variations in how requests can be defined in the Fern spec (inline, as a separate type, with or without 
+          query params and headers).
+        type: optional<SdkRequest>
       response: optional<HttpResponse>
       errors: ResponseErrors
       auth: boolean
@@ -141,8 +146,14 @@ types:
       shape: SdkRequestShape
   SdkRequestShape:
     union:
-      justRequestBody: SdkRequestBodyType
-      wrapper: SdkRequestWrapper
+      justRequestBody:
+        docs: This endpoint only takes in a request body (no headers or query parameters).
+        type: SdkRequestBodyType
+      wrapper:
+        docs: |
+          This endpoint takes in a request that may includes headers or query parameters, which should all be wrapped
+          into a single request type.
+        type: SdkRequestWrapper
   SdkRequestWrapper:
     properties:
       wrapperName: commons.Name

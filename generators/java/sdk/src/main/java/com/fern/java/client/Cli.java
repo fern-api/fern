@@ -5,6 +5,8 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.irV42.core.ObjectMappers;
+import com.fern.irV42.model.auth.AuthScheme;
+import com.fern.irV42.model.auth.OAuthScheme;
 import com.fern.irV42.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
@@ -13,6 +15,7 @@ import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
+import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.RootClientGenerator;
@@ -196,6 +199,15 @@ public final class Cli
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);
 
+
+        Optional<OAuthScheme> maybeOAuthScheme = context.getIr().getAuth().getSchemes().stream().map(AuthScheme::getOauth)
+            .flatMap(Optional::stream).findFirst();
+
+        Optional<GeneratedJavaFile> generatedOAuthTokenSupplier = maybeOAuthScheme.map(
+            it -> new OAuthTokenSupplierGenerator(context,
+                it.getConfiguration().getClientCredentials().get()).generateFile());
+        generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
+
         // subpackage clients
         ir.getSubpackages().values().forEach(subpackage -> {
             if (!subpackage.getHasEndpointsInTree()) {
@@ -225,7 +237,8 @@ public final class Cli
                 generatedSuppliersFile,
                 generatedEnvironmentsClass,
                 generatedRequestOptions,
-                generatedTypes.getInterfaces());
+                generatedTypes.getInterfaces(),
+                generatedOAuthTokenSupplier);
         GeneratedRootClient generatedRootClient = rootClientGenerator.generateFile();
         this.addGeneratedFile(generatedRootClient);
         this.addGeneratedFile(generatedRootClient.builderClass());

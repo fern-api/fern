@@ -327,6 +327,14 @@ async function convertOutputMode({
                 })
             );
         case "nuget":
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.nugetOverride({
+                    registryUrl: generator.output.url ?? "https://nuget.org/",
+                    packageName: generator.output["package-name"],
+                    apiKey: generator.output["api-key"] ?? "",
+                    downloadSnippets
+                })
+            );
         case "rubygems":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
@@ -423,6 +431,11 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                           }
             });
         case "nuget":
+            return FernFiddle.GithubPublishInfo.nuget({
+                registryUrl: output.url ?? "https://nuget.org/",
+                packageName: output["package-name"],
+                apiKey: output["api-key"]
+            });
         case "rubygems":
             return FernFiddle.GithubPublishInfo.rubygems({
                 registryUrl: output.url ?? "https://rubygems.org/",
@@ -449,6 +462,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     }
     if (generatorName.includes("ruby")) {
         return GenerationLanguage.RUBY;
+    }
+    if (generatorName.includes("csharp")) {
+        return GenerationLanguage.CSHARP;
     }
     return undefined;
 }

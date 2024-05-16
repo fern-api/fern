@@ -482,13 +482,18 @@ class EndpointFunctionGenerator:
         if len(user_provided_examples) > 0:
             example = user_provided_examples[0]
 
-        endpoint_snippet = EndpointFunctionSnippetGenerator(
+        endpoint_snippet_generator = EndpointFunctionSnippetGenerator(
             context=self._context,
             snippet_writer=snippet_writer,
             service=service,
             endpoint=endpoint,
             example=example,
-        ).generate_snippet()
+        )
+
+        endpoint_snippet = endpoint_snippet_generator.generate_snippet()
+
+        response_name = "response"
+        endpoint_usage = endpoint_snippet_generator.generate_usage(is_async=is_async, response_name=response_name)
 
         def write(writer: AST.NodeWriter) -> None:
             if is_async:
@@ -497,6 +502,8 @@ class EndpointFunctionGenerator:
                 writer.write_node(generated_root_client.sync_instantiation)
             writer.write_line()
 
+            if endpoint_usage is not None:
+                writer.write(f"{response_name} = ")
             if is_async:
                 writer.write("await ")
 
@@ -504,6 +511,11 @@ class EndpointFunctionGenerator:
             writer.write(self._get_subpackage_client_accessor(package))
 
             writer.write_node(endpoint_snippet)
+
+            if endpoint_usage is not None:
+                writer.write_line()
+                writer.write_node(endpoint_usage)
+
             writer.write_newline_if_last_line_not()
 
         return AST.Expression(AST.CodeWriter(write))
@@ -845,9 +857,11 @@ class EndpointFunctionGenerator:
         ]
 
         if len(query_parameters) == 0:
-            return self._context.core_utilities.jsonable_encoder(
-                AST.Expression(
-                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
+            return self._context.core_utilities.get_encode_query(
+                self._context.core_utilities.jsonable_encoder(
+                    AST.Expression(
+                        f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('additional_query_parameters') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
+                    )
                 )
             )
 
@@ -862,9 +876,11 @@ class EndpointFunctionGenerator:
             )
             writer.write_line("},")
 
-        return self._context.core_utilities.jsonable_encoder(
-            self._context.core_utilities.remove_none_from_dict(
-                AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
+        return self._context.core_utilities.get_encode_query(
+            self._context.core_utilities.jsonable_encoder(
+                self._context.core_utilities.remove_none_from_dict(
+                    AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
+                )
             )
         )
 
@@ -1089,6 +1105,19 @@ class EndpointFunctionSnippetGenerator:
                 args=args,
             ),
         )
+
+    def generate_usage(self, response_name: str, is_async: bool) -> Optional[AST.Expression]:
+        if self.endpoint.response is not None and self.endpoint.response.get_as_union().type == "streaming":
+
+            def snippet_writer(writer: AST.NodeWriter) -> None:
+                if is_async:
+                    writer.write("async ")
+                writer.write_line(f"for chunk in {response_name}:")
+                with writer.indent():
+                    writer.write_line("yield chunk")
+
+            return AST.Expression(AST.CodeWriter(snippet_writer))
+        return None
 
     def _get_snippet_for_inlined_request_body_properties(
         self,
