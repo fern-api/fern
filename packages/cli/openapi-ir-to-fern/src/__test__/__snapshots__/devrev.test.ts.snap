@@ -4014,7 +4014,12 @@ organizations.
             "type": "optional<datetime>",
           },
           "url": {
+            "default": undefined,
             "docs": "The artifact's download URL.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4027,11 +4032,21 @@ organizations.
             "type": "list<ArtifactsPrepareResponseFormData>",
           },
           "id": {
+            "default": undefined,
             "docs": "The generated artifact's ID.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "url": {
+            "default": undefined,
             "docs": "The URL that the file's data should be uploaded to.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4040,11 +4055,21 @@ organizations.
         "docs": undefined,
         "properties": {
           "key": {
+            "default": undefined,
             "docs": "Key of the form field.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "value": {
+            "default": undefined,
             "docs": "Value corresponding to the key.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4062,7 +4087,12 @@ organizations.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "Globally unique object ID.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "modified_by": "optional<UserSummary>",
@@ -4080,7 +4110,12 @@ organizations.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "Globally unique object ID.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4355,9 +4390,14 @@ requested token type.
 ",
         "properties": {
           "access_token": {
+            "default": undefined,
             "docs": "The issued JSON Web Token (JWT) corresponding to the requested
 token type.
 ",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "client_id": {
@@ -4368,9 +4408,15 @@ application access token (AAT).
             "type": "optional<string>",
           },
           "expires_in": {
+            "default": undefined,
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
+            "exclusiveMax": undefined,
+            "exclusiveMin": undefined,
+            "max": undefined,
+            "min": undefined,
+            "multipleOf": undefined,
             "type": "integer",
           },
           "refresh_token": {
@@ -4429,7 +4475,12 @@ issue a Rev session token.
             "type": "optional<string>",
           },
           "user_ref": {
+            "default": undefined,
             "docs": "An identifier which uniquely identifies a Rev user.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "user_traits": "optional<AuthTokensUserTraits>",
@@ -4628,11 +4679,21 @@ sort order. If not set, then no prior elements exist.
             "type": "list<string>",
           },
           "field_name": {
+            "default": undefined,
             "docs": "The field whose enum value is invalid.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "value": {
+            "default": undefined,
             "docs": "The value that was received.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4641,7 +4702,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "field_name": {
+            "default": undefined,
             "docs": "The missing field's name.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4660,7 +4726,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "field_name": {
+            "default": undefined,
             "docs": "The field whose value is not permitted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "reason": {
@@ -4742,7 +4813,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the part that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4763,7 +4839,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the Rev organization that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4784,7 +4865,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the tag that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4805,7 +4891,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the timeline entry that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4826,7 +4917,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the webhook that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4847,7 +4943,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the work that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -4943,7 +5044,12 @@ always be returned in the specified sort-by order.
             "type": "optional<string>",
           },
           "name": {
+            "default": undefined,
             "docs": "Name of the part.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "owned_by": {
@@ -4963,7 +5069,12 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "name": {
+            "default": undefined,
             "docs": "Name of the part.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -5228,7 +5339,12 @@ system-generated identifier will be assigned to the user.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the tag.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "value": {
@@ -5266,10 +5382,15 @@ the value must be one that's specified in the tag's allowed values.
         ],
         "properties": {
           "name": {
+            "default": undefined,
             "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -5596,7 +5717,12 @@ default visibility.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The event's ID.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "part_created": "optional<EventPartCreated>",
@@ -5624,7 +5750,12 @@ seconds.
           "webhook_created": "optional<EventWebhookCreated>",
           "webhook_deleted": "optional<EventWebhookDeleted>",
           "webhook_id": {
+            "default": undefined,
             "docs": "ID of the webhook for the event.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "webhook_updated": "optional<EventWebhookUpdated>",
@@ -5672,7 +5803,12 @@ be set for other request types.
         "docs": undefined,
         "properties": {
           "challenge": {
+            "default": undefined,
             "docs": "The challenge that must be echoed in the response.",
+            "format": "byte",
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -5782,7 +5918,12 @@ event types. Note this is mutually exclusive with 'add' and
             "type": "optional<datetime>",
           },
           "title": {
+            "default": undefined,
             "docs": "Title of the work object.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -6053,7 +6194,12 @@ empty.
         "docs": "Describes the current stage of a work item.",
         "properties": {
           "name": {
+            "default": undefined,
             "docs": "Current stage name of the work item.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -6078,10 +6224,15 @@ on the tag's purpose and usage.
             "type": "optional<string>",
           },
           "name": {
+            "default": undefined,
             "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -6108,12 +6259,22 @@ unique.
             "type": "optional<list<WebhookEventType>>",
           },
           "secret": {
+            "default": undefined,
             "docs": "The secret to use for verifying webhook events.",
+            "format": "byte",
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "status": "WebhookStatus",
           "url": {
+            "default": undefined,
             "docs": "The URL of the webhook endpoint.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -8680,7 +8841,12 @@ organizations.
             "type": "optional<datetime>",
           },
           "url": {
+            "default": undefined,
             "docs": "The artifact's download URL.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -8693,11 +8859,21 @@ organizations.
             "type": "list<ArtifactsPrepareResponseFormData>",
           },
           "id": {
+            "default": undefined,
             "docs": "The generated artifact's ID.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "url": {
+            "default": undefined,
             "docs": "The URL that the file's data should be uploaded to.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -8706,11 +8882,21 @@ organizations.
         "docs": undefined,
         "properties": {
           "key": {
+            "default": undefined,
             "docs": "Key of the form field.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "value": {
+            "default": undefined,
             "docs": "Value corresponding to the key.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -8728,7 +8914,12 @@ organizations.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "Globally unique object ID.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "modified_by": "optional<UserSummary>",
@@ -8746,7 +8937,12 @@ organizations.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "Globally unique object ID.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9021,9 +9217,14 @@ requested token type.
 ",
         "properties": {
           "access_token": {
+            "default": undefined,
             "docs": "The issued JSON Web Token (JWT) corresponding to the requested
 token type.
 ",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "client_id": {
@@ -9034,9 +9235,15 @@ application access token (AAT).
             "type": "optional<string>",
           },
           "expires_in": {
+            "default": undefined,
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
+            "exclusiveMax": undefined,
+            "exclusiveMin": undefined,
+            "max": undefined,
+            "min": undefined,
+            "multipleOf": undefined,
             "type": "integer",
           },
           "refresh_token": {
@@ -9095,7 +9302,12 @@ issue a Rev session token.
             "type": "optional<string>",
           },
           "user_ref": {
+            "default": undefined,
             "docs": "An identifier which uniquely identifies a Rev user.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "user_traits": "optional<AuthTokensUserTraits>",
@@ -9294,11 +9506,21 @@ sort order. If not set, then no prior elements exist.
             "type": "list<string>",
           },
           "field_name": {
+            "default": undefined,
             "docs": "The field whose enum value is invalid.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "value": {
+            "default": undefined,
             "docs": "The value that was received.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9307,7 +9529,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "field_name": {
+            "default": undefined,
             "docs": "The missing field's name.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9326,7 +9553,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "field_name": {
+            "default": undefined,
             "docs": "The field whose value is not permitted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "reason": {
@@ -9408,7 +9640,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the part that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9429,7 +9666,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the Rev organization that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9450,7 +9692,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the tag that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9471,7 +9718,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the timeline entry that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9492,7 +9744,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the webhook that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9513,7 +9770,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the work that was deleted.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9609,7 +9871,12 @@ always be returned in the specified sort-by order.
             "type": "optional<string>",
           },
           "name": {
+            "default": undefined,
             "docs": "Name of the part.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "owned_by": {
@@ -9629,7 +9896,12 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "name": {
+            "default": undefined,
             "docs": "Name of the part.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -9894,7 +10166,12 @@ system-generated identifier will be assigned to the user.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the tag.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "value": {
@@ -9932,10 +10209,15 @@ the value must be one that's specified in the tag's allowed values.
         ],
         "properties": {
           "name": {
+            "default": undefined,
             "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -10262,7 +10544,12 @@ default visibility.
         "docs": undefined,
         "properties": {
           "id": {
+            "default": undefined,
             "docs": "The event's ID.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "part_created": "optional<EventPartCreated>",
@@ -10290,7 +10577,12 @@ seconds.
           "webhook_created": "optional<EventWebhookCreated>",
           "webhook_deleted": "optional<EventWebhookDeleted>",
           "webhook_id": {
+            "default": undefined,
             "docs": "ID of the webhook for the event.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "webhook_updated": "optional<EventWebhookUpdated>",
@@ -10338,7 +10630,12 @@ be set for other request types.
         "docs": undefined,
         "properties": {
           "challenge": {
+            "default": undefined,
             "docs": "The challenge that must be echoed in the response.",
+            "format": "byte",
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -10448,7 +10745,12 @@ event types. Note this is mutually exclusive with 'add' and
             "type": "optional<datetime>",
           },
           "title": {
+            "default": undefined,
             "docs": "Title of the work object.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -10719,7 +11021,12 @@ empty.
         "docs": "Describes the current stage of a work item.",
         "properties": {
           "name": {
+            "default": undefined,
             "docs": "Current stage name of the work item.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -10744,10 +11051,15 @@ on the tag's purpose and usage.
             "type": "optional<string>",
           },
           "name": {
+            "default": undefined,
             "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },
@@ -10774,12 +11086,22 @@ unique.
             "type": "optional<list<WebhookEventType>>",
           },
           "secret": {
+            "default": undefined,
             "docs": "The secret to use for verifying webhook events.",
+            "format": "byte",
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
           "status": "WebhookStatus",
           "url": {
+            "default": undefined,
             "docs": "The URL of the webhook endpoint.",
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
             "type": "string",
           },
         },

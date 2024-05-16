@@ -1,0 +1,137 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rules rules docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "defaultAndValidationRules": {
+          "auth": false,
+          "display-name": "Default and validation rules",
+          "docs": undefined,
+          "examples": [
+            {
+              "response": {
+                "body": {
+                  "id": 1,
+                  "name": "name",
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/example",
+          "response": {
+            "docs": "Successful response",
+            "type": "GetExampleResponse",
+          },
+        },
+      },
+    },
+    "types": {
+      "GetExampleResponse": {
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "Schema",
+          "GetExampleResponseMessage",
+        ],
+      },
+      "GetExampleResponseMessage": {
+        "docs": undefined,
+        "properties": {
+          "message": "optional<string>",
+        },
+      },
+      "Schema": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<integer>",
+          "name": "optional<string>",
+          "value": "optional<double>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Sample API",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`rules rules simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "defaultAndValidationRules": {
+          "auth": false,
+          "display-name": "Default and validation rules",
+          "docs": undefined,
+          "examples": [
+            {
+              "response": {
+                "body": {
+                  "id": 1,
+                  "name": "name",
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/example",
+          "response": {
+            "docs": "Successful response",
+            "type": "GetExampleResponse",
+          },
+        },
+      },
+    },
+    "types": {
+      "GetExampleResponse": {
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "Schema",
+          "GetExampleResponseMessage",
+        ],
+      },
+      "GetExampleResponseMessage": {
+        "docs": undefined,
+        "properties": {
+          "message": "optional<string>",
+        },
+      },
+      "Schema": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<integer>",
+          "name": "optional<string>",
+          "value": "optional<double>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Sample API",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

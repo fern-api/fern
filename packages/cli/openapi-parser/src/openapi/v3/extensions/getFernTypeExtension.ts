@@ -93,6 +93,12 @@ export function getSchemaFromFernType({
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.double({
+                            default: undefined,
+                            minimum: undefined,
+                            maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
                             example: undefined
                         })
                     });
@@ -103,6 +109,12 @@ export function getSchemaFromFernType({
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.int({
+                            default: undefined,
+                            minimum: undefined,
+                            maximum: undefined,
+                            exclusiveMinimum: undefined,
+                            exclusiveMaximum: undefined,
+                            multipleOf: undefined,
                             example: undefined
                         })
                     });
@@ -125,6 +137,8 @@ export function getSchemaFromFernType({
                         description,
                         groupName,
                         schema: PrimitiveSchemaValueWithExample.string({
+                            default: undefined,
+                            pattern: undefined,
                             maxLength: undefined,
                             minLength: undefined,
                             example: undefined,

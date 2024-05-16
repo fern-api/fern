@@ -16,7 +16,7 @@ export type PrimitiveSchemaValue =
     | FernOpenapiIr.PrimitiveSchemaValue.Boolean;
 
 export declare namespace PrimitiveSchemaValue {
-    interface Int extends _Utils {
+    interface Int extends FernOpenapiIr.IntSchema, _Utils {
         type: "int";
     }
 
@@ -28,7 +28,7 @@ export declare namespace PrimitiveSchemaValue {
         type: "float";
     }
 
-    interface Double extends _Utils {
+    interface Double extends FernOpenapiIr.DoubleSchema, _Utils {
         type: "double";
     }
 
@@ -57,10 +57,10 @@ export declare namespace PrimitiveSchemaValue {
     }
 
     interface _Visitor<_Result> {
-        int: () => _Result;
+        int: (value: FernOpenapiIr.IntSchema) => _Result;
         int64: () => _Result;
         float: () => _Result;
-        double: () => _Result;
+        double: (value: FernOpenapiIr.DoubleSchema) => _Result;
         string: (value: FernOpenapiIr.StringSchema) => _Result;
         datetime: () => _Result;
         date: () => _Result;
@@ -71,8 +71,9 @@ export declare namespace PrimitiveSchemaValue {
 }
 
 export const PrimitiveSchemaValue = {
-    int: (): FernOpenapiIr.PrimitiveSchemaValue.Int => {
+    int: (value: FernOpenapiIr.IntSchema): FernOpenapiIr.PrimitiveSchemaValue.Int => {
         return {
+            ...value,
             type: "int",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValue.Int,
@@ -107,8 +108,9 @@ export const PrimitiveSchemaValue = {
         };
     },
 
-    double: (): FernOpenapiIr.PrimitiveSchemaValue.Double => {
+    double: (value: FernOpenapiIr.DoubleSchema): FernOpenapiIr.PrimitiveSchemaValue.Double => {
         return {
+            ...value,
             type: "double",
             _visit: function <_Result>(
                 this: FernOpenapiIr.PrimitiveSchemaValue.Double,
@@ -186,13 +188,13 @@ export const PrimitiveSchemaValue = {
     ): _Result => {
         switch (value.type) {
             case "int":
-                return visitor.int();
+                return visitor.int(value);
             case "int64":
                 return visitor.int64();
             case "float":
                 return visitor.float();
             case "double":
-                return visitor.double();
+                return visitor.double(value);
             case "string":
                 return visitor.string(value);
             case "datetime":

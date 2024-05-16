@@ -1084,8 +1084,24 @@ exports[`open api parser superagent docs 1`] = `
         "docs": undefined,
         "properties": {
           "loc": "list<ValidationErrorLocItem>",
-          "msg": "string",
-          "type": "string",
+          "msg": {
+            "default": undefined,
+            "docs": undefined,
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
+            "type": "string",
+          },
+          "type": {
+            "default": undefined,
+            "docs": undefined,
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
+            "type": "string",
+          },
         },
       },
       "ValidationErrorLocItem": {
@@ -2105,8 +2121,24 @@ exports[`open api parser superagent simple 1`] = `
         "docs": undefined,
         "properties": {
           "loc": "list<ValidationErrorLocItem>",
-          "msg": "string",
-          "type": "string",
+          "msg": {
+            "default": undefined,
+            "docs": undefined,
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
+            "type": "string",
+          },
+          "type": {
+            "default": undefined,
+            "docs": undefined,
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "pattern": undefined,
+            "type": "string",
+          },
         },
       },
       "ValidationErrorLocItem": {

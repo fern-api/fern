@@ -1,4 +1,4 @@
-import { ObjectProperty, Type } from "@fern-api/ir-sdk";
+import { ObjectProperty, PrimitiveTypeV1, PrimitiveTypeV2, Type, TypeReference } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
@@ -32,7 +32,10 @@ export async function getObjectPropertiesFromRawObjectSchema(
                 wireValue: propertyKey,
                 name: getPropertyName({ propertyKey, property: propertyDefinition }).name
             }),
-            valueType: file.parseTypeReference(propertyDefinition)
+            valueType: parsePropertyTypeReference({
+                file,
+                property: propertyDefinition
+            })
         }))
     );
 }
@@ -65,4 +68,101 @@ export function getPropertyName({
         name: propertyKey,
         wasExplicitlySet: false
     };
+}
+
+function parsePropertyTypeReference({
+    property,
+    file
+}: {
+    property: RawSchemas.ObjectPropertySchema;
+    file: FernFileContext;
+}): TypeReference {
+    const typeReference = file.parseTypeReference(property);
+    if (isRawStringObjectProperty(property)) {
+        return TypeReference.primitive({
+            v1: PrimitiveTypeV1.String,
+            v2: PrimitiveTypeV2.string({
+                default: property.default != null ? property.default : undefined,
+                validation: {
+                    minLength: property.minLength,
+                    maxLength: property.maxLength,
+                    pattern: property.pattern,
+                    format: property.format
+                }
+            })
+        });
+    }
+    if (isRawIntegerObjectProperty(property)) {
+        return TypeReference.primitive({
+            v1: PrimitiveTypeV1.Integer,
+            v2: PrimitiveTypeV2.integer({
+                default: property.default != null ? property.default : undefined,
+                validation: {
+                    min: property.min,
+                    max: property.max,
+                    exclusiveMin: property.exclusiveMin,
+                    exclusiveMax: property.exclusiveMax,
+                    multipleOf: property.multipleOf
+                }
+            })
+        });
+    }
+    if (isRawDoubleObjectProperty(property)) {
+        return TypeReference.primitive({
+            v1: PrimitiveTypeV1.Double,
+            v2: PrimitiveTypeV2.double({
+                default: property.default != null ? property.default : undefined,
+                validation: {
+                    min: property.min,
+                    max: property.max,
+                    exclusiveMin: property.exclusiveMin,
+                    exclusiveMax: property.exclusiveMax,
+                    multipleOf: property.multipleOf
+                }
+            })
+        });
+    }
+    return typeReference;
+}
+
+function isRawStringObjectProperty(
+    rawObjectProperty: RawSchemas.ObjectPropertySchema
+): rawObjectProperty is RawSchemas.StringPropertySchema {
+    const stringPropertySchema = rawObjectProperty as RawSchemas.StringPropertySchema;
+    return (
+        stringPropertySchema.type === "string" &&
+        (stringPropertySchema.default != null ||
+            stringPropertySchema.minLength != null ||
+            stringPropertySchema.maxLength != null)
+    );
+}
+
+function isRawIntegerObjectProperty(
+    rawObjectProperty: RawSchemas.ObjectPropertySchema
+): rawObjectProperty is RawSchemas.IntegerPropertySchema {
+    const integerPropertySchema = rawObjectProperty as RawSchemas.IntegerPropertySchema;
+    return (
+        integerPropertySchema.type === "integer" &&
+        (integerPropertySchema.default != null ||
+            integerPropertySchema.min != null ||
+            integerPropertySchema.max != null ||
+            integerPropertySchema.exclusiveMax != null ||
+            integerPropertySchema.exclusiveMin != null ||
+            integerPropertySchema.multipleOf != null)
+    );
+}
+
+function isRawDoubleObjectProperty(
+    rawObjectProperty: RawSchemas.ObjectPropertySchema
+): rawObjectProperty is RawSchemas.DoublePropertySchema {
+    const doublePropertySchema = rawObjectProperty as RawSchemas.DoublePropertySchema;
+    return (
+        doublePropertySchema.type === "double" &&
+        (doublePropertySchema.default != null ||
+            doublePropertySchema.min != null ||
+            doublePropertySchema.max != null ||
+            doublePropertySchema.exclusiveMax != null ||
+            doublePropertySchema.exclusiveMin != null ||
+            doublePropertySchema.multipleOf != null)
+    );
 }
