@@ -6600,16 +6600,19 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fdr-sdk", "npm:0.94.3-b6c3996ce"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
+            ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@types/cors", "npm:2.8.17"],\
+            ["@types/decompress", "npm:4.2.7"],\
             ["@types/express", "npm:4.17.20"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:9.0.8"],\
             ["@types/xml2js", "npm:0.4.14"],\
             ["cors", "npm:2.8.5"],\
+            ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["express", "npm:4.19.2"],\

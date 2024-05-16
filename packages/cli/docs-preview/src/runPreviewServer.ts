@@ -4,6 +4,7 @@ import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import cors from "cors";
 import express from "express";
 import path from "path";
+import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 export async function runPreviewServer({
@@ -20,7 +21,8 @@ export async function runPreviewServer({
         context.failAndThrow("Failed to connect to the docs preview server. Please contact support@buildwithfern.com");
         return;
     }
-    await maybeDownloadDocsUI({ bucketUrl: url });
+
+    await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
 
     const app = express();
     app.use(cors());
@@ -44,10 +46,10 @@ export async function runPreviewServer({
     });
     app.listen(3000);
 
-    app.use("/_next", express.static(path.join(__dirname, "out/_next")));
+    app.use("/_next", express.static(path.join(getPathToBundleFolder(), "/_next")));
 
     app.use("*", async (_req, res) => {
-        return res.sendFile(path.join(__dirname, "out/[[...slug]].html"));
+        return res.sendFile(path.join(getPathToBundleFolder(), "/[[...slug]].html"));
     });
 
     context.logger.info("Running server on http://localhost:3000");

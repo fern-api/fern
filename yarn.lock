@@ -3561,16 +3561,19 @@ __metadata:
     "@fern-api/fdr-sdk": 0.94.3-b6c3996ce
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/logger": "workspace:*"
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/cors": ^2.8.13
+    "@types/decompress": ^4.2.7
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^9.0.8
     "@types/xml2js": ^0.4.14
     cors: ^2.8.5
+    decompress: ^4.2.1
     depcheck: ^1.4.6
     eslint: ^8.56.0
     express: ^4.19.2

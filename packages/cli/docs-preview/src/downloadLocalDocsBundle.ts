@@ -1,7 +1,10 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { Logger } from "@fern-api/logger";
+import decompress from "decompress";
 import { createWriteStream } from "fs";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { homedir } from "os";
+import path from "path";
 import { pipeline } from "stream/promises";
 import tmp from "tmp-promise";
 import xml2js from "xml2js";
@@ -11,7 +14,11 @@ const PREVIEW_FOLDER_NAME = "preview";
 const BUNDLE_FOLDER_NAME = "bundle";
 const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 
-function getPathToPreviewFolder(): AbsoluteFilePath {
+export function getLocalStorageFolder(): AbsoluteFilePath {
+    return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
+}
+
+export function getPathToPreviewFolder(): AbsoluteFilePath {
     return join(
         AbsoluteFilePath.of(homedir()),
         RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
@@ -19,15 +26,16 @@ function getPathToPreviewFolder(): AbsoluteFilePath {
     );
 }
 
-function getPathToBundleFolder(): AbsoluteFilePath {
+export function getPathToBundleFolder(): AbsoluteFilePath {
     return join(
         AbsoluteFilePath.of(homedir()),
         RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
-        RelativeFilePath.of(PREVIEW_FOLDER_NAME)
+        RelativeFilePath.of(PREVIEW_FOLDER_NAME),
+        RelativeFilePath.of(BUNDLE_FOLDER_NAME)
     );
 }
 
-function getPathToEtagFile(): AbsoluteFilePath {
+export function getPathToEtagFile(): AbsoluteFilePath {
     return join(
         AbsoluteFilePath.of(homedir()),
         RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
@@ -48,7 +56,16 @@ export declare namespace DownloadLocalBundle {
     }
 }
 
-export async function downloadBundle({ bucketUrl }: { bucketUrl: string }): Promise<DownloadLocalBundle.Result> {
+export async function downloadBundle({
+    bucketUrl,
+    logger,
+    preferCached
+}: {
+    bucketUrl: string;
+    logger: Logger;
+    preferCached: boolean;
+}): Promise<DownloadLocalBundle.Result> {
+    logger.debug("Setting up docs preview bundle...");
     const response = await fetch(bucketUrl);
     const body = await response.text();
     const parser = new xml2js.Parser();
@@ -57,38 +74,58 @@ export async function downloadBundle({ bucketUrl }: { bucketUrl: string }): Prom
     const key = parsedResponse?.ListBucketResult?.Contents?.[0]?.Key?.[0];
 
     const eTagFilepath = getPathToEtagFile();
-    const currentETag = (await doesPathExist(eTagFilepath)) ? (await readFile(eTagFilepath)).toString() : undefined;
-    if (currentETag != null && currentETag === eTag) {
-        // The bundle is already downloaded
-        return {
-            type: "success"
-        };
+    if (preferCached) {
+        const currentETagExists = await doesPathExist(eTagFilepath);
+        let currentETag = undefined;
+        if (currentETagExists) {
+            logger.debug("Reading existing ETag");
+            currentETag = (await readFile(eTagFilepath)).toString();
+        }
+        if (currentETag != null && currentETag === eTag) {
+            logger.debug("ETag matches. Using already downloaded bundle");
+            // The bundle is already downloaded
+            return {
+                type: "success"
+            };
+        } else {
+            logger.debug("ETag is different. Downloading latest preview bundle");
+        }
     }
 
     // create tmp directory
     const dir = await tmp.dir({ prefix: "fern" });
     const absoluteDirectoryToTmpDir = AbsoluteFilePath.of(dir.path);
+    logger.debug(`Created tmp directory ${absoluteDirectoryToTmpDir}`);
 
-    // download docs ui
-    const request = await fetch(`${bucketUrl}/${key}`);
+    // download docs bundle
+    const docsBundleZipResponse = await fetch(`${path.join(bucketUrl, key)}`);
     const outputZipPath = join(absoluteDirectoryToTmpDir, RelativeFilePath.of("output.zip"));
 
-    const contents = request.body;
+    const contents = docsBundleZipResponse.body;
     if (contents == null) {
         return {
             type: "failure"
         };
     }
-    await pipeline(contents, createWriteStream(outputZipPath));
+    await pipeline(contents as any, createWriteStream(outputZipPath));
+    logger.debug(`Wrote output.zip to ${outputZipPath}`);
 
     const absolutePathToPreviewFolder = getPathToPreviewFolder();
     if (await doesPathExist(absolutePathToPreviewFolder)) {
         await rm(absolutePathToPreviewFolder, { recursive: true });
     }
-    const absolutePathToTmpBundleFolder = join(absolutePathToPreviewFolder, RelativeFilePath.of(BUNDLE_FOLDER_NAME));
-    await mkdir(absolutePathToTmpBundleFolder, { recursive: true });
-    await decompress(outputZipPath, absolutePathToLocalOutput);
+    await mkdir(absolutePathToPreviewFolder, { recursive: true });
+    logger.debug(`rm -rf ${absolutePathToPreviewFolder}`);
+
+    const absolutePathToBundleFolder = getPathToBundleFolder();
+    await mkdir(absolutePathToBundleFolder, { recursive: true });
+    await decompress(outputZipPath, absolutePathToBundleFolder);
 
     // write etag
-    await writeFile(join(absoluteDirectoryToTmpDir, RelativeFilePath.of(ETAG_FILENAME)), eTag);
+    await writeFile(eTagFilepath, eTag);
+    logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
+
+    return {
+        type: "success"
+    };
 }
