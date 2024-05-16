@@ -154,9 +154,9 @@ types:
 
   PrimitiveType:
     properties:
-      category: PrimitiveTypeCategory
-      rules: optional<PrimitiveTypeRules>
-  PrimitiveTypeCategory:
+      v1: PrimitiveTypeV1
+      v2: optional<PrimitiveTypeV2>
+  PrimitiveTypeV1:
     enum:
       - INTEGER
       - DOUBLE
@@ -169,11 +169,13 @@ types:
       - UUID
       - BASE_64
       - BIG_INTEGER
-  PrimitiveTypeRules:
+  PrimitiveTypeV2:
     union:
-      integer: IntegerTypeRules
-      string: StringTypeRules
-  IntegerTypeRules:
+      integer: IntegerType
+      double: DoubleType
+      string: StringType
+
+  IntegerType:
     properties:
       default: optional<integer>
       validation: optional<IntegerValidationRules>
@@ -184,7 +186,18 @@ types:
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<integer>
-  StringTypeRules:
+  DoubleType:
+    properties:
+      default: optional<integer>
+      validation: optional<IntegerValidationRules>
+  DoubleValidationRules:
+    properties:
+      min: optional<double>
+      max: optional<double>
+      exclusiveMin: optional<boolean>
+      exclusiveMax: optional<boolean>
+      multipleOf: optional<double>
+  StringType:
     properties:
       default: optional<string>
       validation: optional<StringValidationRules>
