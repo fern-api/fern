@@ -2214,7 +2214,10 @@ exports[`generate IR from OpenAPI 1`] = `
                   "_type": "optional",
                   "optional": {
                     "_type": "primitive",
-                    "primitive": "BOOLEAN",
+                    "primitive": {
+                      "category": "BOOLEAN",
+                      "rules": null,
+                    },
                   },
                 },
               },
@@ -2824,7 +2827,10 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "DOUBLE",
+                  "primitive": {
+                    "category": "DOUBLE",
+                    "rules": null,
+                  },
                 },
               },
             },
@@ -2860,7 +2866,10 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "DOUBLE",
+                  "primitive": {
+                    "category": "DOUBLE",
+                    "rules": null,
+                  },
                 },
               },
             },
@@ -2896,7 +2905,10 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "DOUBLE",
+                  "primitive": {
+                    "category": "DOUBLE",
+                    "rules": null,
+                  },
                 },
               },
             },
@@ -3012,7 +3024,10 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "DOUBLE",
+                  "primitive": {
+                    "category": "DOUBLE",
+                    "rules": null,
+                  },
                 },
               },
             },
@@ -3048,7 +3063,10 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "STRING",
+                  "primitive": {
+                    "category": "STRING",
+                    "rules": null,
+                  },
                 },
               },
             },

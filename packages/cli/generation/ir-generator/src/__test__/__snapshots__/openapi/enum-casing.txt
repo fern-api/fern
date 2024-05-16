@@ -1051,7 +1051,10 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "STRING",
+                  "primitive": {
+                    "category": "STRING",
+                    "rules": null,
+                  },
                 },
               },
             },
@@ -1091,11 +1094,17 @@ exports[`generate IR from OpenAPI 1`] = `
                     "_type": "map",
                     "keyType": {
                       "_type": "primitive",
-                      "primitive": "STRING",
+                      "primitive": {
+                        "category": "STRING",
+                        "rules": null,
+                      },
                     },
                     "valueType": {
                       "_type": "primitive",
-                      "primitive": "STRING",
+                      "primitive": {
+                        "category": "STRING",
+                        "rules": null,
+                      },
                     },
                   },
                 },
