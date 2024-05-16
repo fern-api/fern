@@ -6,23 +6,21 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const PrimitiveTypeCategory: core.serialization.Schema<
-    serializers.PrimitiveTypeCategory.Raw,
-    FernIr.PrimitiveTypeCategory
-> = core.serialization.enum_([
-    "INTEGER",
-    "DOUBLE",
-    "STRING",
-    "BOOLEAN",
-    "LONG",
-    "DATE_TIME",
-    "DATE",
-    "UUID",
-    "BASE_64",
-    "BIG_INTEGER",
-]);
+export const PrimitiveTypeV1: core.serialization.Schema<serializers.PrimitiveTypeV1.Raw, FernIr.PrimitiveTypeV1> =
+    core.serialization.enum_([
+        "INTEGER",
+        "DOUBLE",
+        "STRING",
+        "BOOLEAN",
+        "LONG",
+        "DATE_TIME",
+        "DATE",
+        "UUID",
+        "BASE_64",
+        "BIG_INTEGER",
+    ]);
 
-export declare namespace PrimitiveTypeCategory {
+export declare namespace PrimitiveTypeV1 {
     type Raw =
         | "INTEGER"
         | "DOUBLE"

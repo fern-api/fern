@@ -5,6 +5,6 @@
 import * as FernIr from "../../..";
 
 export interface PrimitiveType {
-    category: FernIr.PrimitiveTypeCategory;
-    rules: FernIr.PrimitiveTypeRules | undefined;
+    v1: FernIr.PrimitiveTypeV1;
+    v2: FernIr.PrimitiveTypeV2 | undefined;
 }

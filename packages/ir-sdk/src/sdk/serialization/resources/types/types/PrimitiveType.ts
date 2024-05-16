@@ -8,13 +8,13 @@ import * as core from "../../../../core";
 
 export const PrimitiveType: core.serialization.ObjectSchema<serializers.PrimitiveType.Raw, FernIr.PrimitiveType> =
     core.serialization.objectWithoutOptionalProperties({
-        category: core.serialization.lazy(async () => (await import("../../..")).PrimitiveTypeCategory),
-        rules: core.serialization.lazy(async () => (await import("../../..")).PrimitiveTypeRules).optional(),
+        v1: core.serialization.lazy(async () => (await import("../../..")).PrimitiveTypeV1),
+        v2: core.serialization.lazy(async () => (await import("../../..")).PrimitiveTypeV2).optional(),
     });
 
 export declare namespace PrimitiveType {
     interface Raw {
-        category: serializers.PrimitiveTypeCategory.Raw;
-        rules?: serializers.PrimitiveTypeRules.Raw | null;
+        v1: serializers.PrimitiveTypeV1.Raw;
+        v2?: serializers.PrimitiveTypeV2.Raw | null;
     }
 }

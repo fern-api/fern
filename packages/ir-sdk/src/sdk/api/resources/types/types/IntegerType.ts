@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../..";
 
-export interface IntegerTypeRules {
+export interface IntegerType {
     default: number | undefined;
     validation: FernIr.IntegerValidationRules | undefined;
 }

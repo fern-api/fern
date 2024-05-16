@@ -6,7 +6,7 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const StringTypeRules: core.serialization.ObjectSchema<serializers.StringTypeRules.Raw, FernIr.StringTypeRules> =
+export const StringType: core.serialization.ObjectSchema<serializers.StringType.Raw, FernIr.StringType> =
     core.serialization.objectWithoutOptionalProperties({
         default: core.serialization.string().optional(),
         validation: core.serialization
@@ -14,7 +14,7 @@ export const StringTypeRules: core.serialization.ObjectSchema<serializers.String
             .optional(),
     });
 
-export declare namespace StringTypeRules {
+export declare namespace StringType {
     interface Raw {
         default?: string | null;
         validation?: serializers.StringValidationRules.Raw | null;

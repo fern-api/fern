@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../..";
 
-export interface StringTypeRules {
+export interface StringType {
     default: string | undefined;
     validation: FernIr.StringValidationRules | undefined;
 }
