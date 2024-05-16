@@ -7,6 +7,20 @@ dockerCommand:
 language: java
 generatorType: SDK
 defaultOutputMode: github
+#local:
+#  workingDirectory: generators/typescript
+#  buildCommand:
+#    - yarn workspace @fern-typescript/sdk-generator-cli compile
+#    - yarn workspace @fern-typescript/sdk-generator-cli build:node
+#  runCommand: node sdk/cli/dist/nodeCli.cjs
+#  env:
+#    NODE_ENV: test
+local:
+  workingDirectory: generators/java
+  buildCommand:
+    - ./gradlew build
+  runCommand: sh sdk/init.sh
+  env: {}
 fixtures:
   exhaustive:
     - customConfig: null
