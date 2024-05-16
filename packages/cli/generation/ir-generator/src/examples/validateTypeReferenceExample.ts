@@ -1,5 +1,12 @@
 import { assertNever, getDuplicates, isPlainObject } from "@fern-api/core-utils";
-import { Literal, PrimitiveType } from "@fern-api/ir-sdk";
+import {
+    IntegerValidationRules,
+    Literal,
+    PrimitiveType,
+    PrimitiveTypeCategory,
+    PrimitiveTypeRules,
+    StringValidationRules
+} from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
@@ -198,7 +205,24 @@ function validatePrimitiveExample({
     primitiveType: PrimitiveType;
     example: RawSchemas.ExampleTypeReferenceSchema;
 }): ExampleViolation[] {
-    return PrimitiveType._visit<ExampleViolation[]>(primitiveType, {
+    if (primitiveType.rules != null) {
+        return PrimitiveTypeRules._visit<ExampleViolation[]>(primitiveType.rules, {
+            integer: (rules) =>
+                validateIntegerWithRules({
+                    example,
+                    rules: rules.validation
+                }),
+            string: (rules) =>
+                validateStringWithRules({
+                    example,
+                    rules: rules.validation
+                }),
+            _other: () => {
+                throw new Error("Unknown primitive type rules: " + primitiveType.rules);
+            }
+        });
+    }
+    return PrimitiveTypeCategory._visit<ExampleViolation[]>(primitiveType.category, {
         string: () => validateString(example),
         integer: () => validateInteger(example),
         double: () => validateDouble(example),
@@ -208,10 +232,97 @@ function validatePrimitiveExample({
         dateTime: () => validateDateTime(example),
         date: () => validateString(example),
         base64: () => validateString(example),
+        bigInteger: () => validateString(example),
         _other: () => {
-            throw new Error("Unknown primitive type: " + primitiveType);
+            throw new Error("Unknown primitive type: " + primitiveType.category);
         }
     });
+}
+
+function validateIntegerWithRules({
+    example,
+    rules
+}: {
+    example: RawSchemas.ExampleTypeReferenceSchema;
+    rules: IntegerValidationRules | undefined;
+}): ExampleViolation[] {
+    const violations = validateInteger(example);
+    if (violations.length > 0 || rules == null) {
+        return violations;
+    }
+    const integer = example as number;
+    if (rules.min != null) {
+        if ((rules.exclusiveMin && integer <= rules.min) || (!rules.exclusiveMin && integer < rules.min)) {
+            return [
+                {
+                    message: `Expected integer to be greater than or equal to ${rules.min}. Example is ${example}.`
+                }
+            ];
+        }
+    }
+    if (rules.max != null) {
+        if ((rules.exclusiveMax && integer >= rules.max) || (!rules.exclusiveMax && integer > rules.max)) {
+            return [
+                {
+                    message: `Expected integer to be less than or equal to ${rules.max}. Example is ${example}.`
+                }
+            ];
+        }
+    }
+    if (rules.multipleOf != null) {
+        if (integer % rules.multipleOf !== 0) {
+            return [
+                {
+                    message: `Expected integer to be a multiple of ${rules.multipleOf}. Example is ${example}.`
+                }
+            ];
+        }
+    }
+    return [];
+}
+
+function validateStringWithRules({
+    example,
+    rules
+}: {
+    example: RawSchemas.ExampleTypeReferenceSchema;
+    rules: StringValidationRules | undefined;
+}): ExampleViolation[] {
+    const violations = validateInteger(example);
+    if (violations.length > 0 || rules == null) {
+        return violations;
+    }
+    const str = example as string;
+    if (rules.minLength != null) {
+        if (str.length < rules.minLength) {
+            return [
+                {
+                    message: `Expected string length to be greater than or equal to ${rules.minLength}. Example is ${example}, which is of length ${str.length}.`
+                }
+            ];
+        }
+    }
+    if (rules.maxLength != null) {
+        if (str.length > rules.maxLength) {
+            return [
+                {
+                    message: `Expected string length to be less than or equal to ${rules.maxLength}. Example is ${example}, which is of length ${str.length}.`
+                }
+            ];
+        }
+    }
+    if (rules.pattern != null) {
+        const regex = new RegExp(rules.pattern);
+        if (!regex.test(str)) {
+            return [
+                {
+                    message: `Expected string to match pattern ${rules.pattern}. Example is ${example}.`
+                }
+            ];
+        }
+    }
+    // TODO(amckinney): Add support for the supported OpenAPI formats listed here: https://swagger.io/docs/specification/data-models/data-types
+    return [];
 }
 
 const validateString = createValidator((example) => typeof example === "string", "a string");
