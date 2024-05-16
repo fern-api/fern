@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public class SyncPagingIterable<T> extends SyncPage<T> implements Iterable<T> {
 
-    public SyncPagingIterable(boolean hasNext, List<T> items, Supplier<SyncPage<T>> getNext) {
+    public SyncPagingIterable(boolean hasNext, List<T> items, Supplier<? extends SyncPage<T>> getNext) {
         super(hasNext, items, getNext);
     }
 

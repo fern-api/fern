@@ -83,16 +83,12 @@ public class UsersClient {
                     responseBody.string(), ListUsersPaginationResponse.class);
                 Optional<String> startingAfter = parsedResponse.getPage()
                     .flatMap(Page::getNext).map(NextPage::getStartingAfter);
-                Supplier<SyncPagingIterable<User>> runnable = null;
-                boolean hasNext = startingAfter.isPresent();
-                if (hasNext) {
-                    ListUsersCursorPaginationRequest nextRequest = ListUsersCursorPaginationRequest.builder()
-                        .from(request)
-                        .startingAfter(request.getStartingAfter())
-                        .build();
-                    runnable = () -> listWithCursorPagination(nextRequest, requestOptions);
-                }
-                return new SyncPagingIterable(hasNext, parsedResponse.getData(), runnable);
+                ListUsersCursorPaginationRequest nextRequest = ListUsersCursorPaginationRequest.builder()
+                    .from(request)
+                    .startingAfter(startingAfter)
+                    .build();
+                Supplier<SyncPagingIterable<User>> getNext = () -> listWithCursorPagination(nextRequest, requestOptions);
+                return new SyncPagingIterable<>(startingAfter.isPresent(), parsedResponse.getData(), getNext);
             }
             throw new ApiError(
                     response.code(),
