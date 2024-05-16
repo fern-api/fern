@@ -2215,8 +2215,8 @@ exports[`generate IR from OpenAPI 1`] = `
                   "optional": {
                     "_type": "primitive",
                     "primitive": {
-                      "category": "BOOLEAN",
-                      "rules": null,
+                      "v1": "BOOLEAN",
+                      "v2": null,
                     },
                   },
                 },
@@ -2828,8 +2828,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "DOUBLE",
-                    "rules": null,
+                    "v1": "DOUBLE",
+                    "v2": null,
                   },
                 },
               },
@@ -2867,8 +2867,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "DOUBLE",
-                    "rules": null,
+                    "v1": "DOUBLE",
+                    "v2": null,
                   },
                 },
               },
@@ -2906,8 +2906,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "DOUBLE",
-                    "rules": null,
+                    "v1": "DOUBLE",
+                    "v2": null,
                   },
                 },
               },
@@ -3025,8 +3025,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "DOUBLE",
-                    "rules": null,
+                    "v1": "DOUBLE",
+                    "v2": null,
                   },
                 },
               },
@@ -3064,8 +3064,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "STRING",
-                    "rules": null,
+                    "v1": "STRING",
+                    "v2": null,
                   },
                 },
               },

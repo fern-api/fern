@@ -759,8 +759,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "STRING",
-                    "rules": null,
+                    "v1": "STRING",
+                    "v2": null,
                   },
                 },
               },
@@ -838,8 +838,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "INTEGER",
-                    "rules": null,
+                    "v1": "INTEGER",
+                    "v2": null,
                   },
                 },
               },
@@ -877,8 +877,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "STRING",
-                    "rules": null,
+                    "v1": "STRING",
+                    "v2": null,
                   },
                 },
               },
@@ -956,8 +956,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "STRING",
-                    "rules": null,
+                    "v1": "STRING",
+                    "v2": null,
                   },
                 },
               },
@@ -995,8 +995,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "INTEGER",
-                    "rules": null,
+                    "v1": "INTEGER",
+                    "v2": null,
                   },
                 },
               },

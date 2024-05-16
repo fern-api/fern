@@ -1339,8 +1339,8 @@ axios.request(options).then(function (response) {
                   "optional": {
                     "_type": "primitive",
                     "primitive": {
-                      "category": "BOOLEAN",
-                      "rules": null,
+                      "v1": "BOOLEAN",
+                      "v2": null,
                     },
                   },
                 },
@@ -1532,8 +1532,8 @@ axios.request(options).then(function (response) {
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "DOUBLE",
-                    "rules": null,
+                    "v1": "DOUBLE",
+                    "v2": null,
                   },
                 },
               },
@@ -1571,8 +1571,8 @@ axios.request(options).then(function (response) {
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "DOUBLE",
-                    "rules": null,
+                    "v1": "DOUBLE",
+                    "v2": null,
                   },
                 },
               },
@@ -1610,8 +1610,8 @@ axios.request(options).then(function (response) {
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "DOUBLE",
-                    "rules": null,
+                    "v1": "DOUBLE",
+                    "v2": null,
                   },
                 },
               },
@@ -1691,8 +1691,8 @@ axios.request(options).then(function (response) {
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "DOUBLE",
-                    "rules": null,
+                    "v1": "DOUBLE",
+                    "v2": null,
                   },
                 },
               },
@@ -1730,8 +1730,8 @@ axios.request(options).then(function (response) {
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "STRING",
-                    "rules": null,
+                    "v1": "STRING",
+                    "v2": null,
                   },
                 },
               },

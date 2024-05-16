@@ -1052,8 +1052,8 @@ exports[`generate IR from OpenAPI 1`] = `
                 "optional": {
                   "_type": "primitive",
                   "primitive": {
-                    "category": "STRING",
-                    "rules": null,
+                    "v1": "STRING",
+                    "v2": null,
                   },
                 },
               },
@@ -1095,15 +1095,15 @@ exports[`generate IR from OpenAPI 1`] = `
                     "keyType": {
                       "_type": "primitive",
                       "primitive": {
-                        "category": "STRING",
-                        "rules": null,
+                        "v1": "STRING",
+                        "v2": null,
                       },
                     },
                     "valueType": {
                       "_type": "primitive",
                       "primitive": {
-                        "category": "STRING",
-                        "rules": null,
+                        "v1": "STRING",
+                        "v2": null,
                       },
                     },
                   },
