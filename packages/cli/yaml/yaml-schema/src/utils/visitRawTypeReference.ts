@@ -24,53 +24,53 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
     switch (type) {
         case RawPrimitiveType.integer:
             return visitor.primitive({
-                category: PrimitiveTypeV1.Integer,
-                rules: undefined // TODO: Add rules for integer.
+                v1: PrimitiveTypeV1.Integer,
+                v2: undefined // TODO: Add rules for integer.
             });
         case RawPrimitiveType.double:
             return visitor.primitive({
-                category: PrimitiveTypeV1.Double,
-                rules: undefined
+                v1: PrimitiveTypeV1.Double,
+                v2: undefined // TODO: Add rules for double.
             });
         case RawPrimitiveType.long:
             return visitor.primitive({
-                category: PrimitiveTypeV1.Long,
-                rules: undefined
+                v1: PrimitiveTypeV1.Long,
+                v2: undefined
             });
         case RawPrimitiveType.string:
             return visitor.primitive({
-                category: PrimitiveTypeV1.String,
-                rules: undefined // TODO: Add rules for string.
+                v1: PrimitiveTypeV1.String,
+                v2: undefined // TODO: Add rules for string.
             });
         case RawPrimitiveType.boolean:
             return visitor.primitive({
-                category: PrimitiveTypeV1.Boolean,
-                rules: undefined
+                v1: PrimitiveTypeV1.Boolean,
+                v2: undefined
             });
         case RawPrimitiveType.datetime:
             return visitor.primitive({
-                category: PrimitiveTypeV1.DateTime,
-                rules: undefined
+                v1: PrimitiveTypeV1.DateTime,
+                v2: undefined
             });
         case RawPrimitiveType.date:
             return visitor.primitive({
-                category: PrimitiveTypeV1.Date,
-                rules: undefined
+                v1: PrimitiveTypeV1.Date,
+                v2: undefined
             });
         case RawPrimitiveType.uuid:
             return visitor.primitive({
-                category: PrimitiveTypeV1.Uuid,
-                rules: undefined
+                v1: PrimitiveTypeV1.Uuid,
+                v2: undefined
             });
         case RawPrimitiveType.base64:
             return visitor.primitive({
-                category: PrimitiveTypeV1.Base64,
-                rules: undefined
+                v1: PrimitiveTypeV1.Base64,
+                v2: undefined
             });
         case RawPrimitiveType.bigint:
             return visitor.primitive({
-                category: PrimitiveTypeV1.BigInteger,
-                rules: undefined
+                v1: PrimitiveTypeV1.BigInteger,
+                v2: undefined
             });
         case RawPrimitiveType.unknown:
             return visitor.unknown();
