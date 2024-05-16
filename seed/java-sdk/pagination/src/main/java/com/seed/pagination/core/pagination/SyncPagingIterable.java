@@ -19,7 +19,7 @@ public class SyncPagingIterable<T> extends SyncPage<T> implements Iterable<T> {
 
             @Override
             public boolean hasNext() {
-                return currentIterator.hasNext() || (currentPage.hasNext());
+                return currentIterator.hasNext() || currentPage.hasNext();
             }
 
             @Override
