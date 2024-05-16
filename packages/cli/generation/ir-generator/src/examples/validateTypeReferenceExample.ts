@@ -353,7 +353,7 @@ function areResolvedTypesEquivalent({ expected, actual }: { expected: ResolvedTy
         return true;
     }
     if (expected._type === "primitive") {
-        return actual._type === "primitive" && expected.primitive === actual.primitive;
+        return actual._type === "primitive" && expected.primitive.category === actual.primitive.category;
     }
     if (expected._type === "container") {
         switch (expected.container._type) {
