@@ -1,15 +1,14 @@
 package com.fern.java.generators;
 
-import java.util.Optional;
-
 import com.fern.generator.exec.model.config.MavenCentralSignatureGithubInfo;
 import com.fern.java.output.GeneratedBuildGradle;
 import com.fern.java.output.RawGeneratedFile;
+import java.util.Optional;
 
 public final class GithubWorkflowGenerator {
 
-    public static RawGeneratedFile getGithubWorkflow(Optional<String> registryUrl,
-            Optional<MavenCentralSignatureGithubInfo> signatureGithubInfo) {
+    public static RawGeneratedFile getGithubWorkflow(
+            Optional<String> registryUrl, Optional<MavenCentralSignatureGithubInfo> signatureGithubInfo) {
         String contents = "name: ci\n"
                 + "\n"
                 + "on: [push]\n"
@@ -63,8 +62,8 @@ public final class GithubWorkflowGenerator {
                 + "\n";
     }
 
-    public static String getPublishWorkflow(String registryUrl,
-            Optional<MavenCentralSignatureGithubInfo> maybeSignatureGithubInfo) {
+    public static String getPublishWorkflow(
+            String registryUrl, Optional<MavenCentralSignatureGithubInfo> maybeSignatureGithubInfo) {
         String content = "  publish:\n"
                 + "    needs: [ compile, test ]\n"
                 + "    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')\n"
@@ -85,8 +84,7 @@ public final class GithubWorkflowGenerator {
                 + "        run: |\n";
 
         if (maybeSignatureGithubInfo.isPresent()) {
-            content = content
-                    + "          ./.publish/prepare.sh\n";
+            content = content + "          ./.publish/prepare.sh\n";
         }
         content = content
                 + "          ./gradlew  publish\n"
@@ -106,6 +104,5 @@ public final class GithubWorkflowGenerator {
         return content;
     }
 
-    private GithubWorkflowGenerator() {
-    }
+    private GithubWorkflowGenerator() {}
 }

@@ -1,7 +1,6 @@
 package com.fern.java.utils;
 
 import com.squareup.javapoet.CodeBlock;
-import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeName;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.node.Paragraph;
