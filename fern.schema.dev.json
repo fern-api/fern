@@ -60,11 +60,9 @@
                         "type": "object",
                         "additionalProperties": {
                           "anyOf": [
-                            { "type": "string" },
                             {
                               "type": "object",
                               "properties": {
-                                "type": { "type": "string" },
                                 "docs": {
                                   "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                 },
@@ -76,10 +74,105 @@
                                 },
                                 "name": {
                                   "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                },
+                                "type": { "type": "string", "const": "string" },
+                                "default": { "type": "string" },
+                                "minLength": { "type": "number" },
+                                "maxLength": { "type": "number" },
+                                "pattern": { "type": "string" },
+                                "format": { "type": "string" }
+                              },
+                              "required": ["type"],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "docs": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                },
+                                "availability": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                                },
+                                "audiences": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                                },
+                                "name": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                },
+                                "type": { "type": "string", "const": "integer" },
+                                "default": { "type": "number" },
+                                "min": { "type": "number" },
+                                "max": { "type": "number" },
+                                "exclusiveMin": { "type": "boolean" },
+                                "exclusiveMax": { "type": "boolean" },
+                                "multipleOf": { "type": "number" }
+                              },
+                              "required": ["type"],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "docs": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                },
+                                "availability": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                                },
+                                "audiences": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                                },
+                                "name": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                },
+                                "type": { "type": "string", "const": "double" },
+                                "default": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/default"
+                                },
+                                "min": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/min"
+                                },
+                                "max": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/max"
+                                },
+                                "exclusiveMin": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/exclusiveMin"
+                                },
+                                "exclusiveMax": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/exclusiveMax"
+                                },
+                                "multipleOf": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/multipleOf"
                                 }
                               },
                               "required": ["type"],
                               "additionalProperties": false
+                            },
+                            {
+                              "anyOf": [
+                                { "type": "string" },
+                                {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": { "type": "string" },
+                                    "docs": {
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                    },
+                                    "availability": {
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                                    },
+                                    "audiences": {
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                                    },
+                                    "name": {
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                    }
+                                  },
+                                  "required": ["type"],
+                                  "additionalProperties": false
+                                }
+                              ]
                             }
                           ]
                         }
