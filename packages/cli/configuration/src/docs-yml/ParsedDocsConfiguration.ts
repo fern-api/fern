@@ -113,7 +113,6 @@ export interface TypographyConfig {
     codeFont: FontConfig | undefined;
 }
 
-
 export type FilepathOrUrl = { type: "filepath"; value: AbsoluteFilePath } | { type: "url"; value: string };
 
 export interface UntabbedDocsNavigation {
