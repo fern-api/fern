@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/hello",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.hello"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedCodeSamples = new SeedCodeSamplesClient;\n",

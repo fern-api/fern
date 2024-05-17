@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/generate-stream",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate-stream"
             },
             "snippet": {
                 "type": "go",

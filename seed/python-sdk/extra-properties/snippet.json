@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/user",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedExtraProperties\n\nclient = SeedExtraProperties(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.create_user(\n    name=\"string\",\n)\n",

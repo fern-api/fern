@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_folder-a/service.getDirectThread"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_foo.find"
             },
             "snippet": {
                 "type": "go",

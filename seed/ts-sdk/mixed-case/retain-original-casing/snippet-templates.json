@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/resource/{ResourceID}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getResource"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedMixedCase = new SeedMixedCaseClient;\n",
@@ -59,7 +60,8 @@
         },
         "endpointId": {
             "path": "/resource",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.listResources"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedMixedCase = new SeedMixedCaseClient;\n",

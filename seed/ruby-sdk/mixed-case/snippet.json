@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/resource/{ResourceID}",
-                "method": "GET"
+                "method": "GET",
+                "identifierOverride": "endpoint_service.getResource"
             },
             "snippet": {
                 "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.get_resource(resource_id: \"rsc-xyz\")",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/resource",
-                "method": "GET"
+                "method": "GET",
+                "identifierOverride": "endpoint_service.listResources"
             },
             "snippet": {
                 "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/resource/{ResourceID}",
-                "method": "GET"
+                "method": "GET",
+                "identifierOverride": "endpoint_service.getResource"
             },
             "snippet": {
                 "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.get_resource(resource_id: \"rsc-xyz\")",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/resource",
-                "method": "GET"
+                "method": "GET",
+                "identifierOverride": "endpoint_service.listResources"
             },
             "snippet": {
                 "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))",

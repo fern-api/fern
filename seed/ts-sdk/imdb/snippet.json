@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/movies/create-movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_imdb.createMovie"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/movies/{movieId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.getMovie"
             },
             "snippet": {
                 "type": "typescript",

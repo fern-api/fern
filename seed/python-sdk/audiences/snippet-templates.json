@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_folder-a/service.getDirectThread"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedAudiences\n\nclient = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -44,7 +45,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_foo.find"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedAudiences\n\nclient = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

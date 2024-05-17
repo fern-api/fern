@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/inlined",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_inlined-request.send"
             },
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN, operand_or_color: RED)",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/inlined",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_inlined-request.send"
             },
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN, operand_or_color: RED)",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_path-param.send"
             },
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(\n  operand: GREATER_THAN,\n  maybe_operand: LESS_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_path-param.send"
             },
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(\n  operand: GREATER_THAN,\n  maybe_operand: LESS_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
@@ -43,7 +47,8 @@
         {
             "id": {
                 "path": "/query",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_query-param.send"
             },
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN)",
@@ -53,7 +58,8 @@
         {
             "id": {
                 "path": "/query",
-                "method": "POST"
+                "method": "POST",
+                "identifierOverride": "endpoint_query-param.send"
             },
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN)",
