@@ -104,7 +104,9 @@ class ReferencedAPICollector {
                 new SDKSnippetHolder({
                     snippetsConfigWithSdkId: {},
                     snippetsBySdkId: {},
-                    snippetTemplatesByEndpoint: {}
+                    snippetTemplatesByEndpoint: {},
+                    snippetTemplatesByEndpointId: {},
+                    snippetsBySdkIdAndEndpointId: {}
                 })
             );
             const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
