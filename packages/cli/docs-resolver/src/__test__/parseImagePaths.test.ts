@@ -38,7 +38,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            `"This is a test page with an image ![image](/Volume/git/path/to/image.png)"`
+            "\"This is a test page with an image ![image](/Volume/git/path/to/image.png)\""
         );
     });
 
@@ -129,7 +129,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            `"This is a test page with an image ![image](/Volume/git/fern/path/to/image.png)"`
+            "\"This is a test page with an image ![image](/Volume/git/fern/path/to/image.png)\""
         );
     });
 
@@ -138,7 +138,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            `"This is a test page with an image <img src='/Volume/git/fern/path/to/image.png' />"`
+            "\"This is a test page with an image <img src='/Volume/git/fern/path/to/image.png' />\""
         );
     });
 
@@ -147,7 +147,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            `"This is a test page with an image <img src={'/Volume/git/fern/path/to/image.png'} />"`
+            "\"This is a test page with an image <img src={'/Volume/git/fern/path/to/image.png'} />\""
         );
     });
 
@@ -160,7 +160,7 @@ describe("parseImagePaths", () => {
             "/Volume/git/fern/path/to/image2.png"
         ]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            `"This is a test page with an image <img src='/Volume/git/fern/path/to/image1.png' /> and another image <img src='/Volume/git/fern/path/to/image2.png' />"`
+            "\"This is a test page with an image <img src='/Volume/git/fern/path/to/image1.png' /> and another image <img src='/Volume/git/fern/path/to/image2.png' />\""
         );
     });
 
@@ -169,7 +169,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            `"This is a test page with an image <img src={'/Volume/git/fern/path/to/image.png'} alt='image' />"`
+            "\"This is a test page with an image <img src={'/Volume/git/fern/path/to/image.png'} alt='image' />\""
         );
     });
 
@@ -178,7 +178,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            `"This is a test page with an image <img style={{border: '1px'}} src={'/Volume/git/fern/path/to/image.png'} />"`
+            "\"This is a test page with an image <img style={{border: '1px'}} src={'/Volume/git/fern/path/to/image.png'} />\""
         );
     });
 
