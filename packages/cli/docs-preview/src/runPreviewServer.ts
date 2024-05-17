@@ -3,7 +3,13 @@ import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import cors from "cors";
 import express from "express";
+import http from "http";
+import next from "next";
+import WebSocket from "ws";
 import { getPreviewDocsDefinition } from "./previewDocs";
+
+// TODO: make port configurable, and automatically find an open port
+const PORT = 3000;
 
 export async function runPreviewServer({
     docsWorkspace,
@@ -15,6 +21,33 @@ export async function runPreviewServer({
     context: TaskContext;
 }): Promise<void> {
     const app = express();
+
+    // http server links the express server to the next.js server and allows for websocket connections
+    const httpServer = http.createServer(app);
+
+    const nextApp = next({
+        dev: true,
+        customServer: true,
+        hostname: "localhost",
+        port: PORT,
+        httpServer,
+        conf: {
+            env: {
+                PORT: PORT.toString()
+            }
+        },
+        dir: "/Volumes/git/fern-platform/packages/ui/local-preview-bundle"
+    });
+
+    // prepare the next.js server
+    await nextApp.prepare();
+
+    // prepare the websocket server
+    const wss = new WebSocket.Server({ server: httpServer });
+    wss.on("connection", (ws) => {
+        console.log("connected");
+    });
+
     app.use(cors());
 
     const docsDefinition = await getPreviewDocsDefinition({
@@ -34,9 +67,21 @@ export async function runPreviewServer({
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         res.send(response);
     });
-    app.listen(3000);
 
-    context.logger.info("Running server on https://localhost:3000");
+    app.get("*", (req, res) => {
+        if (req.headers.upgrade === "websocket") {
+            return wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
+                wss.emit("connection", ws, req);
+            });
+        }
+        const handler = nextApp.getRequestHandler();
+        return handler(req, res);
+        // return res.send("Hello World");
+    });
+
+    app.listen(PORT);
+
+    context.logger.info(`Running server on https://localhost:${PORT}`);
 
     // await infiinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
