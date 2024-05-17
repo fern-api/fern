@@ -6617,6 +6617,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:9.0.8"],\
+            ["@types/ws", "npm:8.5.10"],\
             ["@types/xml2js", "npm:0.4.14"],\
             ["cors", "npm:2.8.5"],\
             ["decompress", "npm:4.2.1"],\
@@ -6629,6 +6630,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["uuid", "npm:9.0.1"],\
+            ["ws", "virtual:390e69b5e7878e77fda38c4f9304f9fbc05122d3fb17b360b27020a194cd0a263fc1d949adeba19ed9774cde8a94e24c5cf738191bc4bd96b8bfc41b678cb012#npm:8.17.0"],\
             ["xml2js", "npm:0.6.2"]\
           ],\
           "linkType": "SOFT"\
@@ -11256,6 +11258,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-whatwg-mimetype-npm-3.0.2-cf2bd6921c-30e2599ae0.zip/node_modules/@types/whatwg-mimetype/",\
           "packageDependencies": [\
             ["@types/whatwg-mimetype", "npm:3.0.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/ws", [\
+        ["npm:8.5.10", {\
+          "packageLocation": "./.yarn/cache/@types-ws-npm-8.5.10-a877a38f71-3ec416ea2b.zip/node_modules/@types/ws/",\
+          "packageDependencies": [\
+            ["@types/ws", "npm:8.5.10"],\
+            ["@types/node", "npm:18.7.18"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -20373,7 +20385,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["whatwg-encoding", "npm:2.0.0"],\
             ["whatwg-mimetype", "npm:3.0.0"],\
             ["whatwg-url", "npm:11.0.0"],\
-            ["ws", "virtual:0502a75d94fcb40c2216b0976bd062b215720d26eccf7b261e3539e6e658223822fdcfbe98ef8f914a1b43d3b06b96850a2f621c4128f9b2910ee9f765835c34#npm:8.17.0"],\
+            ["ws", "virtual:390e69b5e7878e77fda38c4f9304f9fbc05122d3fb17b360b27020a194cd0a263fc1d949adeba19ed9774cde8a94e24c5cf738191bc4bd96b8bfc41b678cb012#npm:8.17.0"],\
             ["xml-name-validator", "npm:4.0.0"]\
           ],\
           "packagePeers": [\
@@ -29893,10 +29905,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:0502a75d94fcb40c2216b0976bd062b215720d26eccf7b261e3539e6e658223822fdcfbe98ef8f914a1b43d3b06b96850a2f621c4128f9b2910ee9f765835c34#npm:8.17.0", {\
-          "packageLocation": "./.yarn/__virtual__/ws-virtual-514efe7762/0/cache/ws-npm-8.17.0-05fb441faf-147ef9eab0.zip/node_modules/ws/",\
+        ["virtual:390e69b5e7878e77fda38c4f9304f9fbc05122d3fb17b360b27020a194cd0a263fc1d949adeba19ed9774cde8a94e24c5cf738191bc4bd96b8bfc41b678cb012#npm:8.17.0", {\
+          "packageLocation": "./.yarn/__virtual__/ws-virtual-1829670845/0/cache/ws-npm-8.17.0-05fb441faf-147ef9eab0.zip/node_modules/ws/",\
           "packageDependencies": [\
-            ["ws", "virtual:0502a75d94fcb40c2216b0976bd062b215720d26eccf7b261e3539e6e658223822fdcfbe98ef8f914a1b43d3b06b96850a2f621c4128f9b2910ee9f765835c34#npm:8.17.0"],\
+            ["ws", "virtual:390e69b5e7878e77fda38c4f9304f9fbc05122d3fb17b360b27020a194cd0a263fc1d949adeba19ed9774cde8a94e24c5cf738191bc4bd96b8bfc41b678cb012#npm:8.17.0"],\
             ["@types/bufferutil", null],\
             ["@types/utf-8-validate", null],\
             ["bufferutil", null],\

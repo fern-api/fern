@@ -44,6 +44,7 @@
     "express": "^4.19.2",
     "tmp-promise": "^3.0.3",
     "uuid": "^9.0.1",
+    "ws": "^8.17.0",
     "xml2js": "^0.6.2"
   },
   "devDependencies": {
@@ -52,6 +53,7 @@
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
     "@types/uuid": "^9.0.8",
+    "@types/ws": "^8.5.10",
     "@types/xml2js": "^0.4.14",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

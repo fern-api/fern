@@ -125,10 +125,14 @@ export function replaceImagePathsAndUrls(
         let replaced = original;
         if (node.type === "image") {
             const src = trimAnchor(node.url);
-            if (src != null) {
-                const fileId = fileIdsMap.get(AbsoluteFilePath.of(src));
-                if (fileId != null) {
-                    replaced = replaced.replace(src, `file:${fileId}`);
+            if (src != null && !isExternalUrl(src)) {
+                try {
+                    const fileId = fileIdsMap.get(AbsoluteFilePath.of(src));
+                    if (fileId != null) {
+                        replaced = replaced.replace(src, `file:${fileId}`);
+                    }
+                } catch (e) {
+                    // do nothing
                 }
             }
         }
@@ -139,10 +143,14 @@ export function replaceImagePathsAndUrls(
             let match;
             while ((match = srcRegex.exec(node.value)) != null) {
                 const pathToImage = trimAnchor(match[1]);
-                if (pathToImage != null) {
-                    const fileId = fileIdsMap.get(AbsoluteFilePath.of(pathToImage));
-                    if (fileId != null) {
-                        replaced = replaced.replaceAll(pathToImage, `file:${fileId}`);
+                if (pathToImage != null && !isExternalUrl(pathToImage)) {
+                    try {
+                        const fileId = fileIdsMap.get(AbsoluteFilePath.of(pathToImage));
+                        if (fileId != null) {
+                            replaced = replaced.replaceAll(pathToImage, `file:${fileId}`);
+                        }
+                    } catch (e) {
+                        // do nothing
                     }
                 }
             }

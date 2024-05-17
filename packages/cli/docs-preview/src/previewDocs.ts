@@ -52,7 +52,7 @@ export async function getPreviewDocsDefinition({
                 });
                 filesV2[fileId] = {
                     type: "url",
-                    url: `file://${file.absoluteFilePath}`
+                    url: `/_local${file.absoluteFilePath}`
                 };
             });
             return toRet;
