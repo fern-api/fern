@@ -1,6 +1,5 @@
 package com.fern.java.client.generators.visitors;
 
-
 import com.fern.irV42.model.http.FileProperty;
 import com.fern.irV42.model.http.FilePropertyArray;
 import com.fern.irV42.model.http.FilePropertySingle;

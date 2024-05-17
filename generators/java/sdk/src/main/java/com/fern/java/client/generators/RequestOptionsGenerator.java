@@ -35,11 +35,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -112,28 +108,19 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 "timeout",
                 Modifier.PRIVATE);
 
-        FieldSpec.Builder timeoutTimeUnitFieldBuilder = FieldSpec.builder(
-                ParameterizedTypeName.get(TimeUnit.class),
-                "timeoutTimeUnit",
-                Modifier.PRIVATE);
+        FieldSpec.Builder timeoutTimeUnitFieldBuilder =
+                FieldSpec.builder(ParameterizedTypeName.get(TimeUnit.class), "timeoutTimeUnit", Modifier.PRIVATE);
 
         // Add in the other (static) fields for request options
         createRequestOptionField(
-                "getTimeout",
-                timeoutFieldBuilder,
-                "null",
-                requestOptionsTypeSpec,
-                builderTypeSpec,
-                fields
-        );
+                "getTimeout", timeoutFieldBuilder, "null", requestOptionsTypeSpec, builderTypeSpec, fields);
         createRequestOptionField(
                 "getTimeoutTimeUnit",
                 timeoutTimeUnitFieldBuilder,
                 "TimeUnit.SECONDS",
                 requestOptionsTypeSpec,
                 builderTypeSpec,
-                fields
-        );
+                fields);
 
         FieldSpec timeoutField = timeoutFieldBuilder.build();
         FieldSpec timeUnitField = timeoutTimeUnitFieldBuilder.build();
@@ -155,7 +142,6 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .returns(builderClassName)
                 .build());
 
-
         String constructorArgs =
                 fields.stream().map(field -> field.builderField.name).collect(Collectors.joining(", "));
         builderTypeSpec.addMethod(MethodSpec.methodBuilder("build")
@@ -167,8 +153,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
                 .addParameters(fields.stream()
-                        .map(field -> ParameterSpec.builder(
-                                        field.builderField.type, field.builderField.name)
+                        .map(field -> ParameterSpec.builder(field.builderField.type, field.builderField.name)
                                 .build())
                         .collect(Collectors.toList()));
         for (RequestOption requestOption : fields) {
@@ -189,7 +174,6 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .build());
         requestOptionsTypeSpec.addType(builderTypeSpec.build());
 
-
         JavaFile requestOptionsFile = JavaFile.builder(className.packageName(), requestOptionsTypeSpec.build())
                 .build();
         return GeneratedJavaFile.builder()
@@ -204,20 +188,12 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
             String initializer,
             TypeSpec.Builder requestOptionsTypeSpec,
             TypeSpec.Builder builderTypeSpec,
-            List<RequestOption> fields
-    ) {
+            List<RequestOption> fields) {
         FieldSpec field = fieldSpecBuilder.build();
-        requestOptionsTypeSpec.addField(fieldSpecBuilder
-                .addModifiers(Modifier.FINAL)
-                .build());
-        fields.add(new RequestOption(
-                fieldSpecBuilder
-                        .initializer(initializer)
-                        .build(),
-                field
-        ));
-        FieldSpec builderField = FieldSpec.builder(
-                        field.type, field.name, Modifier.PRIVATE)
+        requestOptionsTypeSpec.addField(
+                fieldSpecBuilder.addModifiers(Modifier.FINAL).build());
+        fields.add(new RequestOption(fieldSpecBuilder.initializer(initializer).build(), field));
+        FieldSpec builderField = FieldSpec.builder(field.type, field.name, Modifier.PRIVATE)
                 .initializer(initializer)
                 .build();
         builderTypeSpec.addField(builderField);

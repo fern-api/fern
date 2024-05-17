@@ -88,10 +88,10 @@ public final class AuthToSpringParameterSpecConverter {
         @Override
         public ParameterSpec visitOauth(OAuthScheme oauth) {
             return ParameterSpec.builder(getTypeName(), parameterName)
-                .addAnnotation(AnnotationSpec.builder(RequestHeader.class)
-                    .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
-                    .build())
-                .build();
+                    .addAnnotation(AnnotationSpec.builder(RequestHeader.class)
+                            .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
+                            .build())
+                    .build();
         }
 
         @Override

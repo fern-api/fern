@@ -25,7 +25,6 @@ import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
