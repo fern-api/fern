@@ -5,7 +5,6 @@ import cors from "cors";
 import express from "express";
 import path from "path";
 import { getPreviewDocsDefinition } from "./previewDocs";
-// import staticFiles from "serve-static"
 
 export async function runPreviewServer({
     docsWorkspace,
@@ -16,6 +15,13 @@ export async function runPreviewServer({
     apiWorkspaces: APIWorkspace[];
     context: TaskContext;
 }): Promise<void> {
+    const url = process.env.DOCS_PREVIEW_BUCKET;
+    if (url == null) {
+        context.failAndThrow("Failed to connect to the docs preview server. Please contact support@buildwithfern.com");
+        return;
+    }
+    await maybeDownloadDocsUI({ bucketUrl: url });
+
     const app = express();
     app.use(cors());
 
@@ -43,10 +49,6 @@ export async function runPreviewServer({
     app.use("*", async (_req, res) => {
         return res.sendFile(path.join(__dirname, "out/[[...slug]].html"));
     });
-
-    // app.get("*", (req, res) => {
-    //     res.sendFile("/Users/dsinghvi/Git/fern-platform/packages/ui/local-preview-bundle/out/[[...slug]].html");
-    // });
 
     context.logger.info("Running server on http://localhost:3000");
 

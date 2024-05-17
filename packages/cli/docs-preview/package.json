@@ -38,7 +38,9 @@
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "serve-static": "^1.15.0",
-    "uuid": "^9.0.1"
+    "tmp-promise": "^3.0.3",
+    "uuid": "^9.0.1",
+    "xml2js": "^0.6.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
@@ -46,6 +48,7 @@
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
     "@types/uuid": "^9.0.8",
+    "@types/xml2js": "^0.4.14",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
