@@ -3,24 +3,23 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.18.2
+        version: 0.8.13
         output:
           location: local-file-system
           path: ../src/docs-yml/schemas/sdk
         config:
           outputSourceFiles: true
-          includeUtilsOnUnionMembers: true
+          includeUtilsOnUnionMembers: false
           noOptionalProperties: false
-          useBrandedStringAliases: true
-  # publish:
-  #   generators:
-  #     - name: fernapi/fern-typescript-node-sdk
-  #       version: 0.8.13
-  #       output:
-  #         location: npm
-  #         url: npm.buildwithfern.com
-  #         package-name: "@fern-fern/docs-config"
-  #       config:
-  #         outputSourceFiles: true
-  #         includeUtilsOnUnionMembers: false
-  #         noOptionalProperties: false
+  publish: 
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.8.13
+        output:
+          location: npm
+          url: npm.buildwithfern.com
+          package-name: "@fern-fern/docs-config"
+        config:
+          outputSourceFiles: true
+          includeUtilsOnUnionMembers: false
+          noOptionalProperties: false

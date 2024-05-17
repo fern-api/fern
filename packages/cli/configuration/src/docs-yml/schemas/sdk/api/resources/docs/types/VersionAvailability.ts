@@ -9,28 +9,4 @@ export const VersionAvailability = {
     Ga: "ga",
     Stable: "stable",
     Beta: "beta",
-    _visit: <R>(value: VersionAvailability, visitor: VersionAvailability.Visitor<R>) => {
-        switch (value) {
-            case VersionAvailability.Deprecated:
-                return visitor.deprecated();
-            case VersionAvailability.Ga:
-                return visitor.ga();
-            case VersionAvailability.Stable:
-                return visitor.stable();
-            case VersionAvailability.Beta:
-                return visitor.beta();
-            default:
-                return visitor._other();
-        }
-    },
 } as const;
-
-export declare namespace VersionAvailability {
-    interface Visitor<R> {
-        deprecated: () => R;
-        ga: () => R;
-        stable: () => R;
-        beta: () => R;
-        _other: () => R;
-    }
-}

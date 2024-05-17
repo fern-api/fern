@@ -7,22 +7,4 @@ export type FontStyle = "normal" | "italic";
 export const FontStyle = {
     Normal: "normal",
     Italic: "italic",
-    _visit: <R>(value: FontStyle, visitor: FontStyle.Visitor<R>) => {
-        switch (value) {
-            case FontStyle.Normal:
-                return visitor.normal();
-            case FontStyle.Italic:
-                return visitor.italic();
-            default:
-                return visitor._other();
-        }
-    },
 } as const;
-
-export declare namespace FontStyle {
-    interface Visitor<R> {
-        normal: () => R;
-        italic: () => R;
-        _other: () => R;
-    }
-}
