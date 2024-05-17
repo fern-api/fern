@@ -6656,9 +6656,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["gray-matter", "npm:4.0.3"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
+            ["mdast-util-from-markdown", "npm:2.0.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["unist-util-visit", "npm:5.0.0"],\
             ["url-join", "npm:5.0.0"]\
           ],\
           "linkType": "SOFT"\
@@ -7439,7 +7441,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-resolver", "workspace:packages/cli/docs-resolver"],\
-            ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
             ["@fern-api/fdr-sdk", "npm:0.94.3-b6c3996ce"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
@@ -7463,11 +7464,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["form-data", "npm:4.0.0"],\
-            ["gray-matter", "npm:4.0.3"],\
             ["image-size", "npm:1.1.1"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mdast-util-from-markdown", "npm:2.0.0"],\
             ["mime-types", "npm:2.1.35"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
@@ -7475,7 +7474,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["terminal-link", "npm:3.0.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["unist-util-visit", "npm:5.0.0"],\
             ["url-join", "npm:5.0.0"]\
           ],\
           "linkType": "SOFT"\
