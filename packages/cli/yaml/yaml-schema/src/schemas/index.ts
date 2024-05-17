@@ -62,11 +62,7 @@ export { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
 export { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscriminationSchema";
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
-export {
-    TypeReferenceSchema,
-    TypeReferenceWithDefaultAndValidationSchema,
-    TypeReferenceWithDocsSchema
-} from "./TypeReferenceSchema";
+export { TypeReferenceSchema, TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
 export { ValidationSchema } from "./ValidationSchema";
 export { VariableDeclarationSchema } from "./VariableDeclarationSchema";

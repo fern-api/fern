@@ -1,4 +1,37 @@
 types:
+  SmallInteger:
+    type: integer
+    validation:
+      exclusiveMin: true
+      exclusiveMax: true
+      min: 0
+      max: 10
+      multipleOf: 1
+
+  LargeInteger:
+    type: integer
+    validation:
+      min: 10000
+      max: 100000
+
+  Double:
+    type: double
+    validation:
+      min: 256.42
+      max: 512.84
+
+  Word:
+    type: string
+    validation:
+      minLength: 2
+      maxLength: 26
+
+  Sentence:
+    type: string
+    validation:
+      minLength: 4
+      maxLength: 256
+
   Type:
     docs: |
       Defines properties with default values and validation rules.

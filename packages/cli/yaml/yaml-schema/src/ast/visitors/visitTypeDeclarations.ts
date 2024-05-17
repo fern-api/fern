@@ -68,7 +68,8 @@ export async function visitTypeDeclaration({
                     docs: createDocsVisitor(visitor, nodePathForType),
                     availability: noop,
                     audiences: noop,
-                    examples: visitExamples
+                    examples: visitExamples,
+                    validation: noop
                 });
             }
         },
