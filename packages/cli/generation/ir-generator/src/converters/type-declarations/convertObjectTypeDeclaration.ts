@@ -66,4 +66,3 @@ export function getPropertyName({
         wasExplicitlySet: false
     };
 }
-
