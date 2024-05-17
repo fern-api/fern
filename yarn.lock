@@ -3587,6 +3587,35 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/docs-resolver@workspace:*, @fern-api/docs-resolver@workspace:packages/cli/docs-resolver":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/docs-resolver@workspace:packages/cli/docs-resolver"
+  dependencies:
+    "@fern-api/configuration": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fdr-sdk": 0.94.3-b6c3996ce
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/ir-sdk": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
+    "@fern-api/workspace-loader": "workspace:*"
+    "@types/diff": ^5.2.1
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.12
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    diff: ^5.2.0
+    eslint: ^8.56.0
+    gray-matter: ^4.0.3
+    jest: ^29.7.0
+    lodash-es: ^4.17.21
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    url-join: ^5.0.0
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/docs-validator@workspace:*, @fern-api/docs-validator@workspace:packages/cli/yaml/docs-validator":
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-validator@workspace:packages/cli/yaml/docs-validator"
@@ -4317,6 +4346,7 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/docs-resolver": "workspace:*"
     "@fern-api/docs-validator": "workspace:*"
     "@fern-api/fdr-sdk": 0.94.3-b6c3996ce
     "@fern-api/fs-utils": "workspace:*"
@@ -4329,7 +4359,6 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.542
     "@types/decompress": ^4.2.7
-    "@types/diff": ^5.2.0
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
     "@types/mime-types": ^2.1.4
@@ -4340,7 +4369,6 @@ __metadata:
     chalk: ^5.0.1
     decompress: ^4.2.1
     depcheck: ^1.4.6
-    diff: ^5.2.0
     eslint: ^8.56.0
     form-data: 4.0.0
     gray-matter: ^4.0.3
@@ -6978,10 +7006,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/diff@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "@types/diff@npm:5.2.0"
-  checksum: 07e20ba25d15b997758cc248628bb1e6459e7b396c868f176dee1e6a5d1dfcdf1e186fb5bf5e67128d7f55a11e989cff2ec656de089e15ed4a44e654c5c1fda3
+"@types/diff@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "@types/diff@npm:5.2.1"
+  checksum: 5983a323177bd691cb2194f5d55b960cd20a9c8fec653b4b038760c5809627cc9ea3578fdf10119ccbefefef193ea925f2817136eb97b17388f66b16c8480a8a
   languageName: node
   linkType: hard
 
@@ -7307,21 +7335,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash-es@npm:^4.17.12, @types/lodash-es@npm:^4.17.9":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 990a99e2243bebe9505cb5ad19fbc172beb4a8e00f9075c99fc06c46c2801ffdb40bc2867271cf580d5f48994fc9fb076ec92cd60a20e621603bf22114e5b077
+  languageName: node
+  linkType: hard
+
 "@types/lodash-es@npm:^4.17.6":
   version: 4.17.7
   resolution: "@types/lodash-es@npm:4.17.7"
   dependencies:
     "@types/lodash": "*"
   checksum: 4b1f39fd1d921311c37a846c0e0df9d1fa23e27448a6ad1efd7574e703abd2b2fa5e8f3b5037146000f167ba231d0d01e52747d902654151b4ceeff9f2a9b380
-  languageName: node
-  linkType: hard
-
-"@types/lodash-es@npm:^4.17.9":
-  version: 4.17.12
-  resolution: "@types/lodash-es@npm:4.17.12"
-  dependencies:
-    "@types/lodash": "*"
-  checksum: 990a99e2243bebe9505cb5ad19fbc172beb4a8e00f9075c99fc06c46c2801ffdb40bc2867271cf580d5f48994fc9fb076ec92cd60a20e621603bf22114e5b077
   languageName: node
   linkType: hard
 

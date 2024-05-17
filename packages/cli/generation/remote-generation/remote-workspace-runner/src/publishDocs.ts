@@ -2,6 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { isNonNullish, MediaType } from "@fern-api/core-utils";
+import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
@@ -15,8 +16,6 @@ import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
-import { DocsDefinitionResolver, UploadedFile } from "./resolver/DocsDefinitionResolversolver";
-import { wrapWithHttps } from "./wrapWithHttps";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;

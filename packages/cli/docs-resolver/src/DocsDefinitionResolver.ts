@@ -9,12 +9,12 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import matter from "gray-matter";
 import { last, orderBy } from "lodash-es";
 import urlJoin from "url-join";
-import { extractDatetimeFromChangelogTitle } from "../extractDatetimeFromChangelogTitle";
-import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths";
-import { wrapWithHttps } from "../wrapWithHttps";
+import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
 import { convertDocsSnippetsConfigToFdr } from "./convertDocsSnippetsConfigToFdr";
 import { convertIrToNavigation } from "./convertIrToNavigation";
 import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
+import { wrapWithHttps } from "./wrapWithHttps";
+import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
 
 export interface FilePathPair {
     absoluteFilePath: AbsoluteFilePath;
