@@ -6,6 +6,7 @@
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
     { "path": "../configuration" },
+    { "path": "../docs-resolver" },
     { "path": "../generation/ir-generator" },
     { "path": "../logger" },
     { "path": "../register" },

@@ -6602,6 +6602,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/docs-resolver", "workspace:packages/cli/docs-resolver"],\
             ["@fern-api/fdr-sdk", "npm:0.94.3-b6c3996ce"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\

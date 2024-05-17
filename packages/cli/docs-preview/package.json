@@ -29,6 +29,7 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/fdr-sdk": "0.94.3-b6c3996ce",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
