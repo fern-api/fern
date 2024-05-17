@@ -102,10 +102,10 @@ export function buildObjectTypeDeclaration({
                 });
             }
         }
-        const typeReference = buildObjectPropertyTypeReference({
-            property,
+        const typeReference = buildTypeReference({
+            schema: property.schema,
             context,
-            declarationFile
+            fileContainingReference: declarationFile
         });
         const audiences = property.audiences;
         const name = property.nameOverride;
@@ -208,61 +208,6 @@ export function buildObjectTypeDeclaration({
         name: schema.nameOverride ?? schema.generatedName,
         schema: objectTypeDeclaration
     };
-}
-
-function buildObjectPropertyTypeReference({
-    property,
-    context,
-    declarationFile
-}: {
-    property: ObjectProperty;
-    context: OpenApiIrConverterContext;
-    declarationFile: RelativeFilePath;
-}): RawSchemas.ObjectPropertySchema {
-    if (property.schema.type === "optional") {
-        // TODO: This doesn't handle optional types yet.
-    }
-    if (property.schema.type === "primitive") {
-        switch (property.schema.schema.type) {
-            case "string":
-                return {
-                    type: "string",
-                    docs: property.schema.description,
-                    default: property.schema.schema.default,
-                    minLength: property.schema.schema.minLength,
-                    maxLength: property.schema.schema.maxLength,
-                    pattern: property.schema.schema.pattern,
-                    format: property.schema.schema.format
-                };
-            case "int":
-                return {
-                    type: "integer",
-                    docs: property.schema.description,
-                    default: property.schema.schema.default,
-                    min: property.schema.schema.minimum,
-                    max: property.schema.schema.maximum,
-                    exclusiveMin: property.schema.schema.exclusiveMinimum,
-                    exclusiveMax: property.schema.schema.exclusiveMaximum,
-                    multipleOf: property.schema.schema.multipleOf
-                };
-            case "double":
-                return {
-                    type: "double",
-                    docs: property.schema.description,
-                    default: property.schema.schema.default,
-                    min: property.schema.schema.minimum,
-                    max: property.schema.schema.maximum,
-                    exclusiveMin: property.schema.schema.exclusiveMinimum,
-                    exclusiveMax: property.schema.schema.exclusiveMaximum,
-                    multipleOf: property.schema.schema.multipleOf
-                };
-        }
-    }
-    return buildTypeReference({
-        schema: property.schema,
-        context,
-        fileContainingReference: declarationFile
-    });
 }
 
 function getAllParentSchemasToInline({

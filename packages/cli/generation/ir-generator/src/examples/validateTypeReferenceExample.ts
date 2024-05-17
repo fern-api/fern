@@ -78,122 +78,133 @@ export function validateTypeReferenceExample({
         }
     }
 
-    return visitRawTypeReference(rawTypeReference, {
-        primitive: (primitiveType) => validatePrimitiveExample({ primitiveType, example }),
-        named: (referenceToNamedType) => {
-            const declaration = typeResolver.getDeclarationOfNamedType({
-                referenceToNamedType,
-                file
-            });
+    // TODO: We should be able to validate that default/validation rules are only available
+    // on the primitives. Thread it in thru the signature.
 
-            // type doesn't exist. this will be caught by other rules.
-            if (declaration == null) {
-                return [];
-            }
+    return visitRawTypeReference({
+        type: rawTypeReference,
+        _default: undefined,
+        validation: undefined,
+        visitor: {
+            primitive: (primitiveType) => validatePrimitiveExample({ primitiveType, example }),
+            named: (referenceToNamedType) => {
+                const declaration = typeResolver.getDeclarationOfNamedType({
+                    referenceToNamedType,
+                    file
+                });
 
-            return validateTypeExample({
-                typeName: declaration.typeName,
-                typeDeclaration: declaration.declaration,
-                file: declaration.file,
-                example,
-                typeResolver,
-                exampleResolver,
-                workspace
-            });
-        },
-        map: ({ keyType, valueType }) => {
-            if (!isPlainObject(example)) {
-                return getViolationsForMisshapenExample(example, "a map");
-            }
-            return Object.entries(example).flatMap(([exampleKey, exampleValue]) => [
-                ...validateTypeReferenceExample({
-                    rawTypeReference: keyType,
-                    example: exampleKey,
+                // type doesn't exist. this will be caught by other rules.
+                if (declaration == null) {
+                    return [];
+                }
+
+                return validateTypeExample({
+                    typeName: declaration.typeName,
+                    typeDeclaration: declaration.declaration,
+                    file: declaration.file,
+                    example,
                     typeResolver,
                     exampleResolver,
-                    file,
                     workspace
-                }),
-                ...validateTypeReferenceExample({
-                    rawTypeReference: valueType,
-                    example: exampleValue,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                })
-            ]);
-        },
-        list: (itemType) => {
-            if (!Array.isArray(example)) {
-                return getViolationsForMisshapenExample(example, "a list");
-            }
-            return example.flatMap((exampleItem) =>
-                validateTypeReferenceExample({
+                });
+            },
+            map: ({ keyType, valueType }) => {
+                if (!isPlainObject(example)) {
+                    return getViolationsForMisshapenExample(example, "a map");
+                }
+                return Object.entries(example).flatMap(([exampleKey, exampleValue]) => [
+                    ...validateTypeReferenceExample({
+                        rawTypeReference: keyType,
+                        example: exampleKey,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    }),
+                    ...validateTypeReferenceExample({
+                        rawTypeReference: valueType,
+                        example: exampleValue,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                ]);
+            },
+            list: (itemType) => {
+                if (!Array.isArray(example)) {
+                    return getViolationsForMisshapenExample(example, "a list");
+                }
+                return example.flatMap((exampleItem) =>
+                    validateTypeReferenceExample({
+                        rawTypeReference: itemType,
+                        example: exampleItem,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                );
+            },
+            set: (itemType) => {
+                if (!Array.isArray(example)) {
+                    return getViolationsForMisshapenExample(example, "a list");
+                }
+
+                const duplicates = getDuplicates(example);
+                if (duplicates.length > 0) {
+                    return [
+                        {
+                            severity: "error",
+                            message:
+                                "Set has duplicate elements:\n" +
+                                duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n")
+                        }
+                    ];
+                }
+
+                return example.flatMap((exampleItem) =>
+                    validateTypeReferenceExample({
+                        rawTypeReference: itemType,
+                        example: exampleItem,
+                        typeResolver,
+                        exampleResolver,
+                        file,
+                        workspace
+                    })
+                );
+            },
+            optional: (itemType) => {
+                if (example == null) {
+                    return [];
+                }
+                return validateTypeReferenceExample({
                     rawTypeReference: itemType,
-                    example: exampleItem,
+                    example,
                     typeResolver,
                     exampleResolver,
                     file,
                     workspace
-                })
-            );
-        },
-        set: (itemType) => {
-            if (!Array.isArray(example)) {
-                return getViolationsForMisshapenExample(example, "a list");
-            }
-
-            const duplicates = getDuplicates(example);
-            if (duplicates.length > 0) {
-                return [
-                    {
-                        severity: "error",
-                        message:
-                            "Set has duplicate elements:\n" +
-                            duplicates.map((item) => `  - ${JSON.stringify(item)}`).join("\n")
-                    }
-                ];
-            }
-
-            return example.flatMap((exampleItem) =>
-                validateTypeReferenceExample({
-                    rawTypeReference: itemType,
-                    example: exampleItem,
-                    typeResolver,
-                    exampleResolver,
-                    file,
-                    workspace
-                })
-            );
-        },
-        optional: (itemType) => {
-            if (example == null) {
+                });
+            },
+            unknown: () => {
                 return [];
-            }
-            return validateTypeReferenceExample({
-                rawTypeReference: itemType,
-                example,
-                typeResolver,
-                exampleResolver,
-                file,
-                workspace
-            });
-        },
-        unknown: () => {
-            return [];
-        },
-        literal: (expectedLiteral) => {
-            switch (expectedLiteral.type) {
-                case "boolean":
-                    return createValidator(
-                        (e) => e === expectedLiteral.boolean,
-                        expectedLiteral.boolean.toString()
-                    )(example);
-                case "string":
-                    return createValidator((e) => e === expectedLiteral.string, `"${expectedLiteral.string}"`)(example);
-                default:
-                    assertNever(expectedLiteral);
+            },
+            literal: (expectedLiteral) => {
+                switch (expectedLiteral.type) {
+                    case "boolean":
+                        return createValidator(
+                            (e) => e === expectedLiteral.boolean,
+                            expectedLiteral.boolean.toString()
+                        )(example);
+                    case "string":
+                        return createValidator(
+                            (e) => e === expectedLiteral.string,
+                            `"${expectedLiteral.string}"`
+                        )(example);
+                    default:
+                        assertNever(expectedLiteral);
+                }
             }
         }
     });

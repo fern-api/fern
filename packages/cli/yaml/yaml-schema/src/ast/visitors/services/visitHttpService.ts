@@ -125,7 +125,9 @@ async function visitEndpoint({
                                     await visitTypeReference(type, [...nodePathForQueryParameter, "type"]);
                                 },
                                 "allow-multiple": noop,
-                                audiences: noop
+                                audiences: noop,
+                                default: noop,
+                                validation: noop
                             });
                         }
                     }
@@ -186,7 +188,9 @@ async function visitEndpoint({
                                                     location: TypeReferenceLocation.InlinedRequestProperty
                                                 });
                                             },
-                                            audiences: noop
+                                            audiences: noop,
+                                            default: noop,
+                                            validation: noop
                                         });
                                     }
                                 }
@@ -468,7 +472,9 @@ export async function visitPathParameters({
                     docs: createDocsVisitor(visitor, nodePathForPathParameter),
                     type: async (type) => {
                         await visitTypeReference(type, [...nodePathForPathParameter, "type"]);
-                    }
+                    },
+                    default: noop,
+                    validation: noop
                 });
             }
         }
@@ -506,7 +512,9 @@ async function visitHeaders({
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
-                env: noop
+                env: noop,
+                default: noop,
+                validation: noop
             });
         }
     }

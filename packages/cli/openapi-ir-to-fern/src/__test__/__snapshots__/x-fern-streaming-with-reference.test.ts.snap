@@ -33,7 +33,17 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
             "request": {
               "body": {
                 "properties": {
-                  "prompt": "string",
+                  "prompt": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "stream": "literal<false>",
                 },
               },
@@ -55,7 +65,17 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
             "request": {
               "body": {
                 "properties": {
-                  "prompt": "string",
+                  "prompt": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "stream": "literal<true>",
                 },
               },
@@ -132,7 +152,17 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
             "request": {
               "body": {
                 "properties": {
-                  "prompt": "string",
+                  "prompt": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "stream": "literal<false>",
                 },
               },
@@ -154,7 +184,17 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
             "request": {
               "body": {
                 "properties": {
-                  "prompt": "string",
+                  "prompt": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "stream": "literal<true>",
                 },
               },

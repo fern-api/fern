@@ -82,7 +82,9 @@ export async function visitWebhooks({
                                         location: TypeReferenceLocation.InlinedRequestProperty
                                     });
                                 },
-                                audiences: noop
+                                audiences: noop,
+                                default: noop,
+                                validation: noop
                             });
                         }
                     }
@@ -126,7 +128,9 @@ async function visitHeaders({
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
-                env: noop
+                env: noop,
+                default: noop,
+                validation: noop
             });
         }
     }

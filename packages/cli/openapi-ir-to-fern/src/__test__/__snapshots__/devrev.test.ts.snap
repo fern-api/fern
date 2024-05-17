@@ -93,8 +93,15 @@ exports[`open api parser devrev docs 1`] = `
               "body": {
                 "properties": {
                   "file_name": {
+                    "default": undefined,
                     "docs": "The name of the file that's being uploaded.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -177,8 +184,15 @@ connections can not be deleted using this method.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "ID of the authentication connection to be deleted.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -279,8 +293,15 @@ disabled.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "ID of the authentication connection to be toggled.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "toggle": "optional<root.AuthConnectionToggle>",
                 },
@@ -661,13 +682,27 @@ organization.
               "body": {
                 "properties": {
                   "token_hint": {
+                    "default": undefined,
                     "docs": "A hint that identifies the token.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "token_id": {
+                    "default": undefined,
                     "docs": "The unique identifier of the token under a given Dev organization.
 ",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -896,8 +931,15 @@ used.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of the part to delete.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -1095,8 +1137,15 @@ organization.
                     "type": "optional<string>",
                   },
                   "display_name": {
+                    "default": undefined,
                     "docs": "Name of the Rev organization.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "domain": {
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
@@ -1158,8 +1207,15 @@ records.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of Rev organization to delete.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -1388,8 +1444,15 @@ records.
                     "type": "optional<string>",
                   },
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of Rev organization to update.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "tier": {
                     "docs": "The tier of the RevOrg.",
@@ -1471,9 +1534,16 @@ permitted.
                     "type": "optional<string>",
                   },
                   "name": {
+                    "default": undefined,
                     "docs": "The name for the tag, which must be unique across all tags.
 ",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -1519,8 +1589,15 @@ permitted.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of the tag to delete.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -1693,8 +1770,15 @@ used.
                     "type": "optional<string>",
                   },
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of the tag to update.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "name": {
                     "docs": "The updated name of the tag. The name must be unique across all
@@ -1926,8 +2010,15 @@ response.
                     "type": "optional<string>",
                   },
                   "url": {
+                    "default": undefined,
                     "docs": "The URL of the webhook endpoint.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -1973,8 +2064,15 @@ response.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "ID for the webhook.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -2124,8 +2222,15 @@ response.
                   "action": "optional<root.WebhooksUpdateAction>",
                   "event_types": "optional<root.WebhooksUpdateRequestEventTypes>",
                   "id": {
+                    "default": undefined,
                     "docs": "ID for the webhook.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "secret": {
                     "docs": "If provided, updates the secret that's used when verifying webhook
@@ -2224,8 +2329,15 @@ won't receive any object events until successfully verified.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The work's ID.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -4016,11 +4128,13 @@ organizations.
           "url": {
             "default": undefined,
             "docs": "The artifact's download URL.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4034,20 +4148,24 @@ organizations.
           "id": {
             "default": undefined,
             "docs": "The generated artifact's ID.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "url": {
             "default": undefined,
             "docs": "The URL that the file's data should be uploaded to.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4057,20 +4175,24 @@ organizations.
           "key": {
             "default": undefined,
             "docs": "Key of the form field.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "value": {
             "default": undefined,
             "docs": "Value corresponding to the key.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4089,11 +4211,13 @@ organizations.
           "id": {
             "default": undefined,
             "docs": "Globally unique object ID.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "modified_by": "optional<UserSummary>",
           "modified_date": {
@@ -4112,11 +4236,13 @@ organizations.
           "id": {
             "default": undefined,
             "docs": "Globally unique object ID.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4138,8 +4264,15 @@ login screen as a login option.
             "type": "optional<boolean>",
           },
           "id": {
+            "default": undefined,
             "docs": "ID of the authentication connection.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
         "discriminant": "type",
@@ -4394,11 +4527,13 @@ requested token type.
             "docs": "The issued JSON Web Token (JWT) corresponding to the requested
 token type.
 ",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "client_id": {
             "docs": "An identifier that represents the application which is requesting
@@ -4412,12 +4547,14 @@ application access token (AAT).
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
-            "exclusiveMax": undefined,
-            "exclusiveMin": undefined,
-            "max": undefined,
-            "min": undefined,
-            "multipleOf": undefined,
             "type": "integer",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "refresh_token": {
             "docs": "A token to refresh the issued token.",
@@ -4477,11 +4614,13 @@ issue a Rev session token.
           "user_ref": {
             "default": undefined,
             "docs": "An identifier which uniquely identifies a Rev user.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "user_traits": "optional<AuthTokensUserTraits>",
         },
@@ -4583,9 +4722,16 @@ it would appear on the login button as 'Log in to abclogin'.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "ID of the authentication connection which is to be updated.
 ",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
         "discriminant": "type",
@@ -4681,20 +4827,24 @@ sort order. If not set, then no prior elements exist.
           "field_name": {
             "default": undefined,
             "docs": "The field whose enum value is invalid.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "value": {
             "default": undefined,
             "docs": "The value that was received.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4704,11 +4854,13 @@ sort order. If not set, then no prior elements exist.
           "field_name": {
             "default": undefined,
             "docs": "The missing field's name.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4728,11 +4880,13 @@ sort order. If not set, then no prior elements exist.
           "field_name": {
             "default": undefined,
             "docs": "The field whose value is not permitted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "reason": {
             "docs": "The reason the value isn't permitted.",
@@ -4815,11 +4969,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the part that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4841,11 +4997,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the Rev organization that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4867,11 +5025,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the tag that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4893,11 +5053,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the timeline entry that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4919,11 +5081,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the webhook that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -4945,11 +5109,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the work that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -5046,11 +5212,13 @@ always be returned in the specified sort-by order.
           "name": {
             "default": undefined,
             "docs": "Name of the part.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "owned_by": {
             "docs": "The users that own the part.",
@@ -5071,11 +5239,13 @@ always be returned in the specified sort-by order.
           "name": {
             "default": undefined,
             "docs": "Name of the part.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -5105,8 +5275,15 @@ always be returned in the specified sort-by order.
             "type": "optional<string>",
           },
           "name": {
+            "default": undefined,
             "docs": "Name of the part.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "owned_by": {
             "docs": "The users that own the part.",
@@ -5197,8 +5374,15 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "The ID of the part to update.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "name": {
             "docs": "The updated name of the part.",
@@ -5341,11 +5525,13 @@ system-generated identifier will be assigned to the user.
           "id": {
             "default": undefined,
             "docs": "The ID of the tag.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "value": {
             "docs": "The value for the object's association with the tag. If specified,
@@ -5387,11 +5573,13 @@ the value must be one that's specified in the tag's allowed values.
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -5499,8 +5687,15 @@ will appear in the response.
       "TimelineEntriesCreateRequest": {
         "base-properties": {
           "object": {
+            "default": undefined,
             "docs": "The ID of the object to create the timeline entry for.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "visibility": "optional<TimelineEntryVisibility>",
         },
@@ -5565,8 +5760,15 @@ sort order. If not set, then no prior elements exist.
       "TimelineEntriesUpdateRequest": {
         "base-properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the timeline entry to update.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
         "discriminant": "type",
@@ -5719,11 +5921,13 @@ default visibility.
           "id": {
             "default": undefined,
             "docs": "The event's ID.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "part_created": "optional<EventPartCreated>",
           "part_deleted": "optional<EventPartDeleted>",
@@ -5752,11 +5956,13 @@ seconds.
           "webhook_id": {
             "default": undefined,
             "docs": "ID of the webhook for the event.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "webhook_updated": "optional<EventWebhookUpdated>",
           "work_created": "optional<EventWorkCreated>",
@@ -5805,11 +6011,13 @@ be set for other request types.
           "challenge": {
             "default": undefined,
             "docs": "The challenge that must be echoed in the response.",
-            "format": "byte",
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": "byte",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -5920,11 +6128,13 @@ event types. Note this is mutually exclusive with 'add' and
           "title": {
             "default": undefined,
             "docs": "Title of the work object.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -5937,11 +6147,18 @@ event types. Note this is mutually exclusive with 'add' and
       "WorksCreateRequest": {
         "base-properties": {
           "applies_to_part": {
+            "default": undefined,
             "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
 applies to. Specifying a part is required when creating tickets and
 issues.
 ",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "artifacts": {
             "docs": "The IDs of the artifacts to associate with the work item.
@@ -5970,8 +6187,15 @@ issues.
             "type": "optional<datetime>",
           },
           "title": {
+            "default": undefined,
             "docs": "Title of the work object.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
         "discriminant": "type",
@@ -6061,8 +6285,15 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "The work's ID.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "owned_by": "optional<WorksUpdateRequestOwnedBy>",
           "reported_by": "optional<WorksUpdateRequestReportedBy>",
@@ -6196,11 +6427,13 @@ empty.
           "name": {
             "default": undefined,
             "docs": "Current stage name of the work item.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -6229,11 +6462,13 @@ on the tag's purpose and usage.
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -6261,21 +6496,25 @@ unique.
           "secret": {
             "default": undefined,
             "docs": "The secret to use for verifying webhook events.",
-            "format": "byte",
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": "byte",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "status": "WebhookStatus",
           "url": {
             "default": undefined,
             "docs": "The URL of the webhook endpoint.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -6405,8 +6644,15 @@ exports[`open api parser devrev simple 1`] = `
               "body": {
                 "properties": {
                   "file_name": {
+                    "default": undefined,
                     "docs": "The name of the file that's being uploaded.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -6489,8 +6735,15 @@ connections can not be deleted using this method.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "ID of the authentication connection to be deleted.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -6591,8 +6844,15 @@ disabled.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "ID of the authentication connection to be toggled.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "toggle": "optional<root.AuthConnectionToggle>",
                 },
@@ -6973,13 +7233,27 @@ organization.
               "body": {
                 "properties": {
                   "token_hint": {
+                    "default": undefined,
                     "docs": "A hint that identifies the token.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "token_id": {
+                    "default": undefined,
                     "docs": "The unique identifier of the token under a given Dev organization.
 ",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -7208,8 +7482,15 @@ used.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of the part to delete.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -7407,8 +7688,15 @@ organization.
                     "type": "optional<string>",
                   },
                   "display_name": {
+                    "default": undefined,
                     "docs": "Name of the Rev organization.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "domain": {
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
@@ -7470,8 +7758,15 @@ records.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of Rev organization to delete.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -7700,8 +7995,15 @@ records.
                     "type": "optional<string>",
                   },
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of Rev organization to update.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "tier": {
                     "docs": "The tier of the RevOrg.",
@@ -7783,9 +8085,16 @@ permitted.
                     "type": "optional<string>",
                   },
                   "name": {
+                    "default": undefined,
                     "docs": "The name for the tag, which must be unique across all tags.
 ",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -7831,8 +8140,15 @@ permitted.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of the tag to delete.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -8005,8 +8321,15 @@ used.
                     "type": "optional<string>",
                   },
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of the tag to update.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "name": {
                     "docs": "The updated name of the tag. The name must be unique across all
@@ -8238,8 +8561,15 @@ response.
                     "type": "optional<string>",
                   },
                   "url": {
+                    "default": undefined,
                     "docs": "The URL of the webhook endpoint.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -8285,8 +8615,15 @@ response.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "ID for the webhook.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -8436,8 +8773,15 @@ response.
                   "action": "optional<root.WebhooksUpdateAction>",
                   "event_types": "optional<root.WebhooksUpdateRequestEventTypes>",
                   "id": {
+                    "default": undefined,
                     "docs": "ID for the webhook.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "secret": {
                     "docs": "If provided, updates the secret that's used when verifying webhook
@@ -8536,8 +8880,15 @@ won't receive any object events until successfully verified.
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The work's ID.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -8843,11 +9194,13 @@ organizations.
           "url": {
             "default": undefined,
             "docs": "The artifact's download URL.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -8861,20 +9214,24 @@ organizations.
           "id": {
             "default": undefined,
             "docs": "The generated artifact's ID.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "url": {
             "default": undefined,
             "docs": "The URL that the file's data should be uploaded to.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -8884,20 +9241,24 @@ organizations.
           "key": {
             "default": undefined,
             "docs": "Key of the form field.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "value": {
             "default": undefined,
             "docs": "Value corresponding to the key.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -8916,11 +9277,13 @@ organizations.
           "id": {
             "default": undefined,
             "docs": "Globally unique object ID.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "modified_by": "optional<UserSummary>",
           "modified_date": {
@@ -8939,11 +9302,13 @@ organizations.
           "id": {
             "default": undefined,
             "docs": "Globally unique object ID.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -8965,8 +9330,15 @@ login screen as a login option.
             "type": "optional<boolean>",
           },
           "id": {
+            "default": undefined,
             "docs": "ID of the authentication connection.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
         "discriminant": "type",
@@ -9221,11 +9593,13 @@ requested token type.
             "docs": "The issued JSON Web Token (JWT) corresponding to the requested
 token type.
 ",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "client_id": {
             "docs": "An identifier that represents the application which is requesting
@@ -9239,12 +9613,14 @@ application access token (AAT).
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
-            "exclusiveMax": undefined,
-            "exclusiveMin": undefined,
-            "max": undefined,
-            "min": undefined,
-            "multipleOf": undefined,
             "type": "integer",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "refresh_token": {
             "docs": "A token to refresh the issued token.",
@@ -9304,11 +9680,13 @@ issue a Rev session token.
           "user_ref": {
             "default": undefined,
             "docs": "An identifier which uniquely identifies a Rev user.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "user_traits": "optional<AuthTokensUserTraits>",
         },
@@ -9410,9 +9788,16 @@ it would appear on the login button as 'Log in to abclogin'.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "ID of the authentication connection which is to be updated.
 ",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
         "discriminant": "type",
@@ -9508,20 +9893,24 @@ sort order. If not set, then no prior elements exist.
           "field_name": {
             "default": undefined,
             "docs": "The field whose enum value is invalid.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "value": {
             "default": undefined,
             "docs": "The value that was received.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9531,11 +9920,13 @@ sort order. If not set, then no prior elements exist.
           "field_name": {
             "default": undefined,
             "docs": "The missing field's name.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9555,11 +9946,13 @@ sort order. If not set, then no prior elements exist.
           "field_name": {
             "default": undefined,
             "docs": "The field whose value is not permitted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "reason": {
             "docs": "The reason the value isn't permitted.",
@@ -9642,11 +10035,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the part that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9668,11 +10063,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the Rev organization that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9694,11 +10091,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the tag that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9720,11 +10119,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the timeline entry that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9746,11 +10147,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the webhook that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9772,11 +10175,13 @@ sort order. If not set, then no prior elements exist.
           "id": {
             "default": undefined,
             "docs": "The ID of the work that was deleted.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9873,11 +10278,13 @@ always be returned in the specified sort-by order.
           "name": {
             "default": undefined,
             "docs": "Name of the part.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "owned_by": {
             "docs": "The users that own the part.",
@@ -9898,11 +10305,13 @@ always be returned in the specified sort-by order.
           "name": {
             "default": undefined,
             "docs": "Name of the part.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -9932,8 +10341,15 @@ always be returned in the specified sort-by order.
             "type": "optional<string>",
           },
           "name": {
+            "default": undefined,
             "docs": "Name of the part.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "owned_by": {
             "docs": "The users that own the part.",
@@ -10024,8 +10440,15 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "The ID of the part to update.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "name": {
             "docs": "The updated name of the part.",
@@ -10168,11 +10591,13 @@ system-generated identifier will be assigned to the user.
           "id": {
             "default": undefined,
             "docs": "The ID of the tag.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "value": {
             "docs": "The value for the object's association with the tag. If specified,
@@ -10214,11 +10639,13 @@ the value must be one that's specified in the tag's allowed values.
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -10326,8 +10753,15 @@ will appear in the response.
       "TimelineEntriesCreateRequest": {
         "base-properties": {
           "object": {
+            "default": undefined,
             "docs": "The ID of the object to create the timeline entry for.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "visibility": "optional<TimelineEntryVisibility>",
         },
@@ -10392,8 +10826,15 @@ sort order. If not set, then no prior elements exist.
       "TimelineEntriesUpdateRequest": {
         "base-properties": {
           "id": {
+            "default": undefined,
             "docs": "The ID of the timeline entry to update.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
         "discriminant": "type",
@@ -10546,11 +10987,13 @@ default visibility.
           "id": {
             "default": undefined,
             "docs": "The event's ID.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "part_created": "optional<EventPartCreated>",
           "part_deleted": "optional<EventPartDeleted>",
@@ -10579,11 +11022,13 @@ seconds.
           "webhook_id": {
             "default": undefined,
             "docs": "ID of the webhook for the event.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "webhook_updated": "optional<EventWebhookUpdated>",
           "work_created": "optional<EventWorkCreated>",
@@ -10632,11 +11077,13 @@ be set for other request types.
           "challenge": {
             "default": undefined,
             "docs": "The challenge that must be echoed in the response.",
-            "format": "byte",
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": "byte",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -10747,11 +11194,13 @@ event types. Note this is mutually exclusive with 'add' and
           "title": {
             "default": undefined,
             "docs": "Title of the work object.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -10764,11 +11213,18 @@ event types. Note this is mutually exclusive with 'add' and
       "WorksCreateRequest": {
         "base-properties": {
           "applies_to_part": {
+            "default": undefined,
             "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
 applies to. Specifying a part is required when creating tickets and
 issues.
 ",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "artifacts": {
             "docs": "The IDs of the artifacts to associate with the work item.
@@ -10797,8 +11253,15 @@ issues.
             "type": "optional<datetime>",
           },
           "title": {
+            "default": undefined,
             "docs": "Title of the work object.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
         "discriminant": "type",
@@ -10888,8 +11351,15 @@ sort order. If not set, then no prior elements exist.
             "type": "optional<string>",
           },
           "id": {
+            "default": undefined,
             "docs": "The work's ID.",
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "owned_by": "optional<WorksUpdateRequestOwnedBy>",
           "reported_by": "optional<WorksUpdateRequestReportedBy>",
@@ -11023,11 +11493,13 @@ empty.
           "name": {
             "default": undefined,
             "docs": "Current stage name of the work item.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -11056,11 +11528,13 @@ on the tag's purpose and usage.
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -11088,21 +11562,25 @@ unique.
           "secret": {
             "default": undefined,
             "docs": "The secret to use for verifying webhook events.",
-            "format": "byte",
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": "byte",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "status": "WebhookStatus",
           "url": {
             "default": undefined,
             "docs": "The URL of the webhook endpoint.",
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },

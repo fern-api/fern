@@ -66,6 +66,46 @@ export function buildTypeReference({
 }
 
 export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): RawSchemas.TypeReferenceWithDocsSchema {
+    switch (primitiveSchema.schema.type) {
+        case "string":
+            return {
+                type: "string",
+                docs: primitiveSchema.description,
+                default: primitiveSchema.schema.default,
+                validation: {
+                    minLength: primitiveSchema.schema.minLength,
+                    maxLength: primitiveSchema.schema.maxLength,
+                    pattern: primitiveSchema.schema.pattern,
+                    format: primitiveSchema.schema.format
+                }
+            };
+        case "int":
+            return {
+                type: "integer",
+                docs: primitiveSchema.description,
+                default: primitiveSchema.schema.default,
+                validation: {
+                    min: primitiveSchema.schema.minimum,
+                    max: primitiveSchema.schema.maximum,
+                    exclusiveMin: primitiveSchema.schema.exclusiveMinimum,
+                    exclusiveMax: primitiveSchema.schema.exclusiveMaximum,
+                    multipleOf: primitiveSchema.schema.multipleOf
+                }
+            };
+        case "double":
+            return {
+                type: "double",
+                docs: primitiveSchema.description,
+                default: primitiveSchema.schema.default,
+                validation: {
+                    min: primitiveSchema.schema.minimum,
+                    max: primitiveSchema.schema.maximum,
+                    exclusiveMin: primitiveSchema.schema.exclusiveMinimum,
+                    exclusiveMax: primitiveSchema.schema.exclusiveMaximum,
+                    multipleOf: primitiveSchema.schema.multipleOf
+                }
+            };
+    }
     const typeReference = primitiveSchema.schema._visit({
         int: () => "integer",
         int64: () => "long",

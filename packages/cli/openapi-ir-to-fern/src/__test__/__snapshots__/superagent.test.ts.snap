@@ -40,10 +40,30 @@ exports[`open api parser superagent docs 1`] = `
                   "documentId": "optional<string>",
                   "has_memory": "optional<boolean>",
                   "llm": "optional<map<string, unknown>>",
-                  "name": "string",
+                  "name": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "promptId": "optional<string>",
                   "toolId": "optional<string>",
-                  "type": "string",
+                  "type": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -250,7 +270,17 @@ exports[`open api parser superagent docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "description": "string",
+                  "description": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -380,8 +410,28 @@ exports[`open api parser superagent docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "email": "string",
-                  "password": "string",
+                  "email": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "password": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -419,10 +469,30 @@ exports[`open api parser superagent docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "email": "string",
+                  "email": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "metadata": "optional<map<string, unknown>>",
                   "name": "optional<string>",
-                  "password": "string",
+                  "password": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -474,11 +544,41 @@ exports[`open api parser superagent docs 1`] = `
                 "properties": {
                   "authorization": "optional<map<string, unknown>>",
                   "from_page": "optional<integer>",
-                  "name": "string",
+                  "name": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "splitter": "optional<map<string, unknown>>",
                   "to_page": "optional<integer>",
-                  "type": "string",
-                  "url": "string",
+                  "type": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "url": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -610,8 +710,28 @@ exports[`open api parser superagent docs 1`] = `
               "body": {
                 "properties": {
                   "input_variables": "list<unknown>",
-                  "name": "string",
-                  "template": "string",
+                  "name": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "template": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -776,8 +896,28 @@ exports[`open api parser superagent docs 1`] = `
               "body": {
                 "properties": {
                   "authorization": "optional<map<string, unknown>>",
-                  "name": "string",
-                  "type": "string",
+                  "name": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "type": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -1087,20 +1227,24 @@ exports[`open api parser superagent docs 1`] = `
           "msg": {
             "default": undefined,
             "docs": undefined,
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "type": {
             "default": undefined,
             "docs": undefined,
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -1108,8 +1252,29 @@ exports[`open api parser superagent docs 1`] = `
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "string",
-          "integer",
+          {
+            "default": undefined,
+            "docs": undefined,
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          {
+            "default": undefined,
+            "docs": undefined,
+            "type": "integer",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
         ],
       },
     },
@@ -1177,10 +1342,30 @@ exports[`open api parser superagent simple 1`] = `
                   "documentId": "optional<string>",
                   "has_memory": "optional<boolean>",
                   "llm": "optional<map<string, unknown>>",
-                  "name": "string",
+                  "name": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "promptId": "optional<string>",
                   "toolId": "optional<string>",
-                  "type": "string",
+                  "type": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -1387,7 +1572,17 @@ exports[`open api parser superagent simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "description": "string",
+                  "description": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -1517,8 +1712,28 @@ exports[`open api parser superagent simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "email": "string",
-                  "password": "string",
+                  "email": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "password": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -1556,10 +1771,30 @@ exports[`open api parser superagent simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "email": "string",
+                  "email": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "metadata": "optional<map<string, unknown>>",
                   "name": "optional<string>",
-                  "password": "string",
+                  "password": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -1611,11 +1846,41 @@ exports[`open api parser superagent simple 1`] = `
                 "properties": {
                   "authorization": "optional<map<string, unknown>>",
                   "from_page": "optional<integer>",
-                  "name": "string",
+                  "name": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "splitter": "optional<map<string, unknown>>",
                   "to_page": "optional<integer>",
-                  "type": "string",
-                  "url": "string",
+                  "type": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "url": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -1747,8 +2012,28 @@ exports[`open api parser superagent simple 1`] = `
               "body": {
                 "properties": {
                   "input_variables": "list<unknown>",
-                  "name": "string",
-                  "template": "string",
+                  "name": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "template": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -1913,8 +2198,28 @@ exports[`open api parser superagent simple 1`] = `
               "body": {
                 "properties": {
                   "authorization": "optional<map<string, unknown>>",
-                  "name": "string",
-                  "type": "string",
+                  "name": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "type": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -2124,20 +2429,24 @@ exports[`open api parser superagent simple 1`] = `
           "msg": {
             "default": undefined,
             "docs": undefined,
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "type": {
             "default": undefined,
             "docs": undefined,
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
             "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -2145,8 +2454,29 @@ exports[`open api parser superagent simple 1`] = `
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "string",
-          "integer",
+          {
+            "default": undefined,
+            "docs": undefined,
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          {
+            "default": undefined,
+            "docs": undefined,
+            "type": "integer",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
         ],
       },
     },

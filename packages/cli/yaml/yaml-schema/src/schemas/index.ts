@@ -12,7 +12,6 @@ export { CasingOverridesSchema } from "./CasingOverridesSchema";
 export { CursorPaginationSchema } from "./CursorPaginationSchema";
 export { DeclarationSchema, DeclarationWithoutDocsSchema } from "./DeclarationSchema";
 export { DiscriminatedUnionSchema } from "./DiscriminatedUnionSchema";
-export { DoublePropertySchema } from "./DoublePropertySchema";
 export { EnumSchema } from "./EnumSchema";
 export { EnumValueSchema } from "./EnumValueSchema";
 export { EnvironmentSchema } from "./EnvironmentSchema";
@@ -44,7 +43,6 @@ export { HttpRequestSchema } from "./HttpRequestSchema";
 export { HttpResponseSchema } from "./HttpResponseSchema";
 export { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 export { HttpServiceSchema } from "./HttpServiceSchema";
-export { IntegerPropertySchema } from "./IntegerPropertySchema";
 export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlsEnvironmentSchema";
 export { OAuthAccessTokenRequestPropertiesSchema } from "./OAuthAccessTokenRequestPropertiesSchema";
 export { OAuthAccessTokenResponsePropertiesSchema } from "./OAuthAccessTokenResponsePropertiesSchema";
@@ -63,10 +61,14 @@ export { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema
 export { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
 export { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscriminationSchema";
-export { StringPropertySchema } from "./StringPropertySchema";
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
-export { TypeReferenceSchema, TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
+export {
+    TypeReferenceSchema,
+    TypeReferenceWithDefaultAndValidationSchema,
+    TypeReferenceWithDocsSchema
+} from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
+export { ValidationSchema } from "./ValidationSchema";
 export { VariableDeclarationSchema } from "./VariableDeclarationSchema";
 export { WebhookInlinedPayloadSchema } from "./WebhookInlinedPayloadSchema";
 export { WebhookPayloadSchema } from "./WebhookPayloadSchema";

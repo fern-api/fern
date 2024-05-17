@@ -6,25 +6,28 @@ types:
       decimal:
         type: double
         default: 1.1
-        exclusiveMin: true
-        exclusiveMax: false
-        min: 1.1
-        max: 2.2
-        multipleOf: 1.1
+        validation:
+          exclusiveMin: true
+          exclusiveMax: false
+          min: 1.1
+          max: 2.2
+          multipleOf: 1.1
       even:
         type: integer
         default: 42
-        exclusiveMin: false
-        exclusiveMax: true
-        min: 0
-        max: 100
-        multipleOf: 2
+        validation:
+          exclusiveMin: false
+          exclusiveMax: true
+          min: 0
+          max: 100
+          multipleOf: 2
       name:
         type: string
         default: fern
-        minLength: 3
-        maxLength: 10
-        pattern: ^[a-z]+$
+        validation:
+          minLength: 3
+          maxLength: 10
+          pattern: ^[a-z]+$
     examples:
       - name: First
         value:

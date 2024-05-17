@@ -38,13 +38,37 @@ exports[`open api parser suger docs 1`] = `
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of the API Client.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
-                  "organizationID": "string",
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "secret": {
+                    "default": undefined,
                     "docs": "The secret of the API Client.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -337,11 +361,39 @@ exports[`open api parser suger docs 1`] = `
               "body": {
                 "properties": {
                   "creditAmountIncrement": {
+                    "default": undefined,
                     "docs": "The amount to be added to the credit amount.",
                     "type": "double",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": undefined,
+                      "multipleOf": undefined,
+                    },
                   },
-                  "entitlementID": "string",
-                  "organizationID": "string",
+                  "entitlementID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -1323,7 +1375,17 @@ exports[`open api parser suger docs 1`] = `
                 "properties": {
                   "createdBy": "optional<string>",
                   "info": "root.SharedIntegrationInfo",
-                  "organizationID": "string",
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "partner": "SharedCreateIntegrationParamsPartner",
                   "service": "literal<"MARKETPLACE">",
                 },
@@ -1659,7 +1721,17 @@ exports[`open api parser suger docs 1`] = `
               "body": {
                 "properties": {
                   "info": "root.SharedIntegrationInfo",
-                  "organizationID": "string",
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "partner": {
                     "docs": undefined,
                     "name": "sharedUpdateIntegrationParamsPartner",
@@ -2432,7 +2504,17 @@ exports[`open api parser suger docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "entitlementID": "string",
+                  "entitlementID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "id": {
                     "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
                     "type": "optional<string>",
@@ -2441,7 +2523,17 @@ exports[`open api parser suger docs 1`] = `
                     "docs": "read-only, don't set it when reporting the usage record group.",
                     "type": "optional<root.SharedMeteringUsageRecordGroupMetaInfo>",
                   },
-                  "organizationID": "string",
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "records": "map<string, double>",
                 },
               },
@@ -3851,9 +3943,39 @@ exports[`open api parser suger docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "fulfillmentUrl": "string",
-                  "id": "string",
-                  "organizationID": "string",
+                  "fulfillmentUrl": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "id": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -3963,8 +4085,15 @@ exports[`open api parser suger docs 1`] = `
                     "type": "optional<string>",
                   },
                   "organizationID": {
+                    "default": undefined,
                     "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "partner": {
                     "docs": "Required.",
@@ -4042,8 +4171,28 @@ exports[`open api parser suger docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "entitlementID": "string",
-                  "organizationID": "string",
+                  "entitlementID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -7802,13 +7951,37 @@ exports[`open api parser suger simple 1`] = `
               "body": {
                 "properties": {
                   "id": {
+                    "default": undefined,
                     "docs": "The ID of the API Client.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
-                  "organizationID": "string",
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "secret": {
+                    "default": undefined,
                     "docs": "The secret of the API Client.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -8101,11 +8274,39 @@ exports[`open api parser suger simple 1`] = `
               "body": {
                 "properties": {
                   "creditAmountIncrement": {
+                    "default": undefined,
                     "docs": "The amount to be added to the credit amount.",
                     "type": "double",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": undefined,
+                      "min": undefined,
+                      "multipleOf": undefined,
+                    },
                   },
-                  "entitlementID": "string",
-                  "organizationID": "string",
+                  "entitlementID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -9087,7 +9288,17 @@ exports[`open api parser suger simple 1`] = `
                 "properties": {
                   "createdBy": "optional<string>",
                   "info": "root.SharedIntegrationInfo",
-                  "organizationID": "string",
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "partner": "SharedCreateIntegrationParamsPartner",
                   "service": "literal<"MARKETPLACE">",
                 },
@@ -9423,7 +9634,17 @@ exports[`open api parser suger simple 1`] = `
               "body": {
                 "properties": {
                   "info": "root.SharedIntegrationInfo",
-                  "organizationID": "string",
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "partner": {
                     "docs": undefined,
                     "name": "sharedUpdateIntegrationParamsPartner",
@@ -10196,7 +10417,17 @@ exports[`open api parser suger simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "entitlementID": "string",
+                  "entitlementID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "id": {
                     "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
                     "type": "optional<string>",
@@ -10205,7 +10436,17 @@ exports[`open api parser suger simple 1`] = `
                     "docs": "read-only, don't set it when reporting the usage record group.",
                     "type": "optional<root.SharedMeteringUsageRecordGroupMetaInfo>",
                   },
-                  "organizationID": "string",
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                   "records": "map<string, double>",
                 },
               },
@@ -11615,9 +11856,39 @@ exports[`open api parser suger simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "fulfillmentUrl": "string",
-                  "id": "string",
-                  "organizationID": "string",
+                  "fulfillmentUrl": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "id": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
@@ -11727,8 +11998,15 @@ exports[`open api parser suger simple 1`] = `
                     "type": "optional<string>",
                   },
                   "organizationID": {
+                    "default": undefined,
                     "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
                     "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "partner": {
                     "docs": "Required.",
@@ -11806,8 +12084,28 @@ exports[`open api parser suger simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "entitlementID": "string",
-                  "organizationID": "string",
+                  "entitlementID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
+                  "organizationID": {
+                    "default": undefined,
+                    "docs": undefined,
+                    "type": "string",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
+                  },
                 },
               },
               "headers": undefined,
