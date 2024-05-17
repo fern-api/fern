@@ -90,3 +90,80 @@ Fern supports the following pagination schemes:
 | Offset-based      | <Icon icon="check" color="#84B060" />            |
 | Cursor-based      | <Icon icon="check" color="#84B060" />            |
 | Link-based        |                                                  |
+
+#### Configuration
+
+Annotate the desired paginated endpoint with the `x-fern-pagination` extension.
+For these fields, you can simply specify the dot-access path to the related request or response property.
+
+For example, should the results of the following object be found in the subfield `inner_list`, you would specify `results: $response.my_nested_object.inner_list`.
+
+```yaml
+MyResponseObject:
+  type: object
+  properties:
+    my_nested_object:
+      type: object
+      properties:
+        inner_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/MyObject'
+```
+
+
+<Tabs>
+<Tab title="OpenAPI">
+<CodeBlocks>
+<CodeBlock>
+```yaml Offset
+...
+paths:
+  /path/to/my/endpoint:
+    x-fern-pagination:
+      offset: $request.page_number
+      results: $response.results
+...
+```
+</CodeBlock>
+<CodeBlock>
+```yaml Cursor
+...
+paths:
+  /path/to/my/endpoint:
+    x-fern-pagination:
+      cursor: $request.cursor
+      next_cursor: $response.next
+      results: $response.results
+...
+```
+</CodeBlock>
+</CodeBlocks>
+</Tab>
+
+<Tab title="Fern Definition">
+<CodeBlocks>
+<CodeBlock>
+```yaml Offset
+service:
+  endpoints:
+    listWithOffsetPagination:
+      pagination: 
+        offset: $request.page
+        results: $response.data
+```
+</CodeBlock>
+<CodeBlock>
+```yaml Cursor
+service:
+  endpoints:
+    listWithCursorPagination:
+      pagination: 
+        cursor: $request.starting_after
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+```
+</CodeBlock>
+</CodeBlocks>
+</Tab>
+</Tabs>
