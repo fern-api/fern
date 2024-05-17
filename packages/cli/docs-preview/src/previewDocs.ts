@@ -1,4 +1,4 @@
-import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver, UploadedFile } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -13,11 +13,7 @@ import {
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import {
-    APIWorkspace,
-    convertOpenApiWorkspaceToFernWorkspace,
-    DocsWorkspace,
-} from "@fern-api/workspace-loader";
+import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { v4 as uuidv4 } from "uuid";
 
 export async function getPreviewDocsDefinition({
@@ -37,13 +33,30 @@ export async function getPreviewDocsDefinition({
 
     const apiCollector = new ReferencedAPICollector();
 
+    const filesV2: Record<string, DocsV1Read.File_> = {};
+
     const resolver = new DocsDefinitionResolver(
         "localhost",
         docsWorkspace,
         fernWorkspaces,
         context,
         undefined,
-        async () => [],
+        async (files) => {
+            const toRet: UploadedFile[] = [];
+            files.forEach((file) => {
+                const fileId = uuidv4();
+                toRet.push({
+                    absoluteFilePath: file.absoluteFilePath,
+                    relativeFilePath: file.relativeFilePath,
+                    fileId
+                });
+                filesV2[fileId] = {
+                    type: "url",
+                    url: `file://${file.absoluteFilePath}`
+                };
+            });
+            return toRet;
+        },
         async (opts) => apiCollector.addReferencedAPI(opts)
     );
 
@@ -60,7 +73,7 @@ export async function getPreviewDocsDefinition({
         apis: apiCollector.getAPIsForDefinition(),
         config: readDocsConfig,
         files: {},
-        filesV2: {},
+        filesV2,
         pages: dbDocsDefinition.pages,
         search: { type: "legacyMultiAlgoliaIndex" }
     };
