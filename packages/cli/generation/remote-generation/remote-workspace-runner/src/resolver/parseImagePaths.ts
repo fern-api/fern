@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, dirname, doesPathExistSync, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import grayMatter from "gray-matter";
 import { fromMarkdown } from "mdast-util-from-markdown";
@@ -82,16 +82,16 @@ function resolvePath(
         return undefined;
     }
 
-    const filepath = join(
+    const filepath = resolve(
         pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMdx),
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     );
 
-    if (doesPathExistSync(filepath)) {
-        return filepath;
-    }
+    // if (doesPathExistSync(filepath)) {
+    //     return filepath;
+    // }
 
-    return undefined;
+    return filepath;
 }
 
 function isExternalUrl(url: string): boolean {

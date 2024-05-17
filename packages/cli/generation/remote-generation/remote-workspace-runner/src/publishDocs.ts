@@ -65,6 +65,7 @@ export async function publishDocs({
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
     const resolver = new DocsDefinitionResolver(
+        domain,
         docsWorkspace,
         fernWorkspaces,
         context,

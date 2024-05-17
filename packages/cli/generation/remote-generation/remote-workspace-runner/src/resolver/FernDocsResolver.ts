@@ -27,6 +27,7 @@ export interface UploadedFile extends FilePathPair {
 
 export class DocsDefinitionResolver {
     constructor(
+        private domain: string,
         private docsWorkspace: DocsWorkspace,
         private fernWorkspaces: FernWorkspace[],
         private taskContext: TaskContext,
@@ -160,13 +161,7 @@ export class DocsDefinitionResolver {
     }
 
     private getDocsBasePath(): string | undefined {
-        const instanceUrl = this.docsWorkspace.config.instances[0]?.url;
-
-        if (instanceUrl == null) {
-            return undefined;
-        }
-
-        const url = new URL(wrapWithHttps(instanceUrl));
+        const url = new URL(wrapWithHttps(this.domain));
         return url.pathname;
     }
 

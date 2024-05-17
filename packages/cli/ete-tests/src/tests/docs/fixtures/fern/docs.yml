@@ -1,0 +1,8 @@
+instances:
+  - url: https://abvthecity.docs.buildwithfern.com
+title: abvthecity | Documentation
+navigation:
+  - api: API Reference
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'
