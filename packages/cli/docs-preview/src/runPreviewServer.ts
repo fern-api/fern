@@ -1,11 +1,14 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV2Read } from "@fern-api/fdr-sdk";
+import { dirname } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
 import cors from "cors";
 import express from "express";
 import http from "http";
-import path, { dirname } from "path";
+import { debounce } from "lodash-es";
+import path from "path";
 import Watcher from "watcher";
 import { WebSocketServer, type WebSocket } from "ws";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
@@ -55,19 +58,35 @@ export async function runPreviewServer({
         context
     });
 
+    const reloadDocsDefinition = debounce(
+        () => {
+            context.logger.info("Reloading project and docs");
+            const startTime = Date.now();
+            docsDefinition = reloadProject()
+                .then((project) => {
+                    context.logger.info(`Reload project took ${Date.now() - startTime}ms`);
+                    return getPreviewDocsDefinition({
+                        domain: instance.host,
+                        project,
+                        context
+                    });
+                })
+                .then((newDocsDefinition) => {
+                    context.logger.info(`Reload project and docs completed in ${Date.now() - startTime}ms`);
+                    return newDocsDefinition;
+                });
+            return docsDefinition;
+        },
+        300,
+        { leading: false, trailing: true }
+    );
+
     const watcher = new Watcher(absoluteFilePathToFern, { recursive: true, ignoreInitial: true });
-    watcher.on("all", (_event: string, targetPath: string, _targetPathNext: string) => {
-        context.logger.info(`File ${targetPath} has changed. Reloading...`);
-        docsDefinition = reloadProject().then((project) =>
-            getPreviewDocsDefinition({
-                domain: instance.host,
-                project,
-                context
-            })
-        );
+    watcher.on("all", (event: string, targetPath: string, _targetPathNext: string) => {
+        context.logger.debug(chalk.dim(`[${event}] ${targetPath}`));
 
         // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
-        void docsDefinition.then(() => {
+        void reloadDocsDefinition()?.then(() => {
             for (const connection of connections) {
                 connection.send(
                     JSON.stringify({

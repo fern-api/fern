@@ -6618,6 +6618,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/uuid", "npm:9.0.8"],\
             ["@types/ws", "npm:8.5.10"],\
             ["@types/xml2js", "npm:0.4.14"],\
+            ["chalk", "npm:5.3.0"],\
             ["cors", "npm:2.8.5"],\
             ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\

@@ -36,7 +36,7 @@
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@types/decompress": "^4.2.7",
+    "chalk": "^5.3.0",
     "cors": "^2.8.5",
     "decompress": "^4.2.1",
     "express": "^4.19.2",
@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
+    "@types/decompress": "^4.2.7",
     "@types/express": "^4.17.20",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.12",
