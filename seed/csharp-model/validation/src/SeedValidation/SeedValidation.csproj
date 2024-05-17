@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="OneOf" Version="3.0.263" />
+      <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    </ItemGroup>
+
+</Project>
