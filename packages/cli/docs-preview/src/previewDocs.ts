@@ -17,7 +17,6 @@ import {
     APIWorkspace,
     convertOpenApiWorkspaceToFernWorkspace,
     DocsWorkspace,
-    FernWorkspace
 } from "@fern-api/workspace-loader";
 import { v4 as uuidv4 } from "uuid";
 
@@ -36,7 +35,7 @@ export async function getPreviewDocsDefinition({
         )
     );
 
-    const apiCollector = new ReferencedAPICollector(fernWorkspaces, context);
+    const apiCollector = new ReferencedAPICollector();
 
     const resolver = new DocsDefinitionResolver(
         "localhost",
@@ -72,7 +71,7 @@ type APIDefinitionID = string;
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
 
-    constructor(private readonly apiWorkspaces: FernWorkspace[], private readonly context: TaskContext) {}
+    constructor() {}
 
     public addReferencedAPI({
         ir,
