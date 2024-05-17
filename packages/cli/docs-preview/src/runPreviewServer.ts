@@ -1,14 +1,21 @@
+import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV2Read } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import cors from "cors";
 import express from "express";
-import { watch } from "fs";
 import http from "http";
+import { debounce } from "lodash-es";
 import path from "path";
+import Watcher from "watcher";
 import { WebSocketServer, type WebSocket } from "ws";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
+
+const debouncedGetPreviewDocsDefinition = debounce(getPreviewDocsDefinition, 300, {
+    leading: false,
+    trailing: true
+});
 
 export async function runPreviewServer({
     docsWorkspace,
@@ -43,41 +50,38 @@ export async function runPreviewServer({
 
     app.use(cors());
 
-    let docsDefinition = await getPreviewDocsDefinition({
+    const instance = new URL(wrapWithHttps(docsWorkspace.config.instances[0]?.url ?? "localhost:3000"));
+
+    let docsDefinition = getPreviewDocsDefinition({
+        domain: instance.host,
         docsWorkspace,
         apiWorkspaces,
         context
     });
 
-    let updates = 0;
-    const opts = { recursive: true };
-    watch(docsWorkspace.absoluteFilepath, opts, (_event, path) => {
-        const lock = ++updates;
-        context.logger.info(`File ${path} has been changed. Reloading...`);
-        void getPreviewDocsDefinition({
+    const watcher = new Watcher(docsWorkspace.absoluteFilepath, { recursive: true, ignoreInitial: true });
+    watcher.on("all", (_event: string, targetPath: string, _targetPathNext: string) => {
+        context.logger.info(`File ${targetPath} has changed. Reloading...`);
+        const promise = debouncedGetPreviewDocsDefinition({
+            domain: instance.host,
             docsWorkspace,
             apiWorkspaces,
             context
-        }).then((newDocsDefinition) => {
-            if (lock !== updates) {
-                return;
-            }
-            docsDefinition = newDocsDefinition;
-            connections.forEach((ws) => {
-                ws.send(JSON.stringify({ reload: true }));
-            });
-            context.logger.info("Docs reloaded");
         });
+        if (promise != null) {
+            docsDefinition = promise;
+        }
     });
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
+        const definition = await docsDefinition;
         const response: DocsV2Read.LoadDocsForUrlResponse = {
             baseUrl: {
-                domain: "localhost:3000",
-                basePath: ""
+                domain: instance.host,
+                basePath: instance.pathname
             },
-            definition: docsDefinition,
-            lightModeEnabled: docsDefinition.config.colorsV3?.type !== "dark"
+            definition,
+            lightModeEnabled: definition.config.colorsV3?.type !== "dark"
         };
         res.send(response);
     });

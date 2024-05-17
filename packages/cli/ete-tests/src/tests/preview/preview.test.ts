@@ -10,7 +10,11 @@ describe("fern preview", () => {
             cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
+<<<<<<< HEAD
         await sleep(20_000);
+=======
+        await sleep(5_000);
+>>>>>>> 6bac5f6244 (update file watcher, preview.test.ts)
 
         const response = await fetch("http://localhost:3000/v2/registry/docs/load-with-url", {
             method: "POST"
@@ -21,7 +25,7 @@ describe("fern preview", () => {
         expect(typeof responseBody === "object").toEqual(true);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled"]);
-    }, 180_000);
+    }, 30_000);
 });
 
 function sleep(ms: number) {

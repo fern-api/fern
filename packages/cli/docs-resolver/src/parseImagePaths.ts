@@ -104,8 +104,8 @@ function isExternalUrl(url: string): boolean {
  */
 export function replaceImagePathsAndUrls(
     markdown: string,
-    fileIdsMap: Map<AbsoluteFilePath, string>,
-    markdownFilesToPathName: Map<AbsoluteFilePath, string>,
+    fileIdsMap: ReadonlyMap<AbsoluteFilePath, string>,
+    markdownFilesToPathName: ReadonlyMap<AbsoluteFilePath, string>,
     metadata: AbsolutePathMetadata,
     context: TaskContext
 ): string {

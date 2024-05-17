@@ -4,7 +4,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 export function collectFilesFromDocsConfig(parsedDocsConfig: docsYml.ParsedDocsConfiguration): Set<AbsoluteFilePath> {
     const filepaths = new Set<AbsoluteFilePath>();
 
-    // branding images
+    /* branding images */
     if (parsedDocsConfig.logo?.dark != null) {
         filepaths.add(parsedDocsConfig.logo.dark);
     }
@@ -25,7 +25,7 @@ export function collectFilesFromDocsConfig(parsedDocsConfig: docsYml.ParsedDocsC
         filepaths.add(parsedDocsConfig.backgroundImage.light);
     }
 
-    // opengraph images
+    /* opengraph images */
     if (parsedDocsConfig.metadata?.["og:image"] != null && parsedDocsConfig.metadata["og:image"].type === "filepath") {
         filepaths.add(parsedDocsConfig.metadata["og:image"].value);
     }
@@ -41,7 +41,26 @@ export function collectFilesFromDocsConfig(parsedDocsConfig: docsYml.ParsedDocsC
         filepaths.add(parsedDocsConfig.metadata["twitter:image"].value);
     }
 
-    // javascript files
+    /* typography */
+    if (parsedDocsConfig.typography?.bodyFont != null) {
+        parsedDocsConfig.typography.bodyFont.variants.forEach((variant) => {
+            filepaths.add(variant.absolutePath);
+        });
+    }
+
+    if (parsedDocsConfig.typography?.headingsFont != null) {
+        parsedDocsConfig.typography.headingsFont.variants.forEach((variant) => {
+            filepaths.add(variant.absolutePath);
+        });
+    }
+
+    if (parsedDocsConfig.typography?.codeFont != null) {
+        parsedDocsConfig.typography.codeFont.variants.forEach((variant) => {
+            filepaths.add(variant.absolutePath);
+        });
+    }
+
+    /* javascript files */
     if (parsedDocsConfig.js != null) {
         parsedDocsConfig.js.files.forEach((file) => {
             filepaths.add(file.absolutePath);

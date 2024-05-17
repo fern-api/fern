@@ -1,4 +1,4 @@
-import { DocsDefinitionResolver, UploadedFile } from "@fern-api/docs-resolver";
+import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
     APIV1Write,
@@ -17,10 +17,12 @@ import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace, DocsWorkspace } f
 import { v4 as uuidv4 } from "uuid";
 
 export async function getPreviewDocsDefinition({
+    domain,
     docsWorkspace,
     apiWorkspaces,
     context
 }: {
+    domain: string;
     docsWorkspace: DocsWorkspace;
     apiWorkspaces: APIWorkspace[];
     context: TaskContext;
@@ -36,27 +38,24 @@ export async function getPreviewDocsDefinition({
     const filesV2: Record<string, DocsV1Read.File_> = {};
 
     const resolver = new DocsDefinitionResolver(
-        "localhost",
+        domain,
         docsWorkspace,
         fernWorkspaces,
         context,
         undefined,
-        async (files) => {
-            const toRet: UploadedFile[] = [];
-            files.forEach((file) => {
+        async (files) =>
+            files.map((file) => {
                 const fileId = uuidv4();
-                toRet.push({
-                    absoluteFilePath: file.absoluteFilePath,
-                    relativeFilePath: file.relativeFilePath,
-                    fileId
-                });
                 filesV2[fileId] = {
                     type: "url",
                     url: `/_local${file.absoluteFilePath}`
                 };
-            });
-            return toRet;
-        },
+                return {
+                    absoluteFilePath: file.absoluteFilePath,
+                    relativeFilePath: file.relativeFilePath,
+                    fileId
+                };
+            }),
         async (opts) => apiCollector.addReferencedAPI(opts)
     );
 

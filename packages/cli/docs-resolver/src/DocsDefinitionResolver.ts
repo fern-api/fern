@@ -432,7 +432,7 @@ export class DocsDefinitionResolver {
         }
         const fileId = this.collectedFileIds.get(filepath);
         if (fileId == null) {
-            return this.taskContext.failAndThrow("Failed to locate file after uploading");
+            return this.taskContext.failAndThrow("Failed to locate file after uploading: " + filepath);
         }
         return fileId;
     }

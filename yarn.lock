@@ -3569,6 +3569,7 @@ __metadata:
     "@types/decompress": ^4.2.7
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/uuid": ^9.0.8
     "@types/ws": ^8.5.10
@@ -3579,11 +3580,13 @@ __metadata:
     eslint: ^8.56.0
     express: ^4.19.2
     jest: ^29.7.0
+    lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     uuid: ^9.0.1
+    watcher: ^2.3.1
     ws: ^8.17.0
     xml2js: ^0.6.2
   languageName: unknown
@@ -10909,6 +10912,13 @@ __metadata:
   version: 3.1.0
   resolution: "detect-newline@npm:3.1.0"
   checksum: ae6cd429c41ad01b164c59ea36f264a2c479598e61cba7c99da24175a7ab80ddf066420f2bec9a1c57a6bead411b4655ff15ad7d281c000a89791f48cbe939e7
+  languageName: node
+  linkType: hard
+
+"dettle@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "dettle@npm:1.0.2"
+  checksum: 636cfc10e4594b93b21a3208bb2c1d02d5f2cb852871b8ff24471a70554abdcfdfe487dea8f8aaf9bebb04dc6be0d5103909e80de70450b513e4b6c4fb80ba8d
   languageName: node
   linkType: hard
 
@@ -19851,6 +19861,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"promise-make-naked@npm:^2.1.1":
+  version: 2.1.2
+  resolution: "promise-make-naked@npm:2.1.2"
+  checksum: 9466f72d574ef7f645042a3e8813cd4c1f439e311326078bae729c51f9d4a808720de0f3782355f9efcd132abde0de32ddb9924672d9bbf72c3951595c2fe81b
+  languageName: node
+  linkType: hard
+
 "promise-retry@npm:^1.1.1":
   version: 1.1.1
   resolution: "promise-retry@npm:1.1.1"
@@ -22259,6 +22276,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"stubborn-fs@npm:^1.2.5":
+  version: 1.2.5
+  resolution: "stubborn-fs@npm:1.2.5"
+  checksum: 28d197afec1ec21ce7ffb06a42f01db19beecdf491694c53393ff5d92ec8a300df9c357e09a16d5cf55747ee2a70bc3c788b9e5577696061ffb9ae279655a600
+  languageName: node
+  linkType: hard
+
 "style-search@npm:^0.1.0":
   version: 0.1.0
   resolution: "style-search@npm:0.1.0"
@@ -22810,6 +22834,15 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.3.1
   resolution: "tiny-invariant@npm:1.3.1"
   checksum: 872dbd1ff20a21303a2fd20ce3a15602cfa7fcf9b228bd694a52e2938224313b5385a1078cb667ed7375d1612194feaca81c4ecbe93121ca1baebe344de4f84c
+  languageName: node
+  linkType: hard
+
+"tiny-readdir@npm:^2.7.2":
+  version: 2.7.2
+  resolution: "tiny-readdir@npm:2.7.2"
+  dependencies:
+    promise-make-naked: ^2.1.1
+  checksum: 36139dc24af9eefc8cc06797300b4150a7351dd02dde424ed6176453b309c5faf7468034d84b725e49bd9bae250ccb0a99d01cbe228d8649363a8ccb09503272
   languageName: node
   linkType: hard
 
@@ -24066,6 +24099,17 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     makeerror: "npm:1.0.12"
   checksum: ad7a257ea1e662e57ef2e018f97b3c02a7240ad5093c392186ce0bcf1f1a60bbadd520d073b9beb921ed99f64f065efb63dfc8eec689a80e569f93c1c5d5e16c
+  languageName: node
+  linkType: hard
+
+"watcher@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "watcher@npm:2.3.1"
+  dependencies:
+    dettle: ^1.0.2
+    stubborn-fs: ^1.2.5
+    tiny-readdir: ^2.7.2
+  checksum: c9bd0e96cb1112fd9d6611637a43ec2557560a88354244d95fe2c2f466413914500d9861fd272c2541d390c9634e3857fa1e84ec757a0f1614502f7ef0c8fbd5
   languageName: node
   linkType: hard
 
