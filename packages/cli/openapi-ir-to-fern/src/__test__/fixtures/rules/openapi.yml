@@ -20,6 +20,13 @@ paths:
                         type: string
 components:
   schemas:
+    String:
+      type: string
+      default: fern
+      minLength: 3
+      maxLength: 10
+      pattern: "^[a-zA-Z0-9]*$"
+      format: custom
     Schema:
       type: object
       properties:
