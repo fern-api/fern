@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const NumberValidationSchema = z.object({
+export const NumberValidationSchema = z.strictObject({
     min: z.number().optional(),
     max: z.number().optional(),
     exclusiveMin: z.boolean().optional(),

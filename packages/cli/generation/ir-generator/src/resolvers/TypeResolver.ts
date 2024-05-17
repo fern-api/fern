@@ -91,7 +91,6 @@ export class TypeResolverImpl implements TypeResolver {
         };
     }
 
-    // TODO: Do we need to support retrieiving default values and validation from the TypeResolver?
     public resolveType({
         type,
         file,
@@ -269,7 +268,6 @@ export class TypeResolverImpl implements TypeResolver {
             });
         }
 
-        // TODO: Similar to the other note about resolving types without default/validation values.
         const parsedTypeReference = parseInlineType({
             type: referenceToNamedType,
             _default: undefined,

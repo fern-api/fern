@@ -78,9 +78,6 @@ export function validateTypeReferenceExample({
         }
     }
 
-    // TODO: We should be able to validate that default/validation rules are only available
-    // on the primitives. Thread it in thru the signature.
-
     return visitRawTypeReference({
         type: rawTypeReference,
         _default: undefined,

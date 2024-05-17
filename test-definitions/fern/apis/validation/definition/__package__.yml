@@ -27,10 +27,84 @@ types:
         validation:
           minLength: 3
           maxLength: 10
-          pattern: ^[a-z]+$
+          pattern: "^[a-z]+$"
+          format: custom
     examples:
       - name: First
         value:
           decimal: 1.1
           even: 2
           name: rules
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    create:
+      path: /create
+      method: POST
+      request:
+        name: CreateRequest
+        body:
+          properties:
+            decimal:
+              type: double
+              default: 1.1
+              validation:
+                exclusiveMin: true
+                exclusiveMax: false
+                min: 1.1
+                max: 2.2
+                multipleOf: 1.1
+            even:
+              type: integer
+              default: 42
+              validation:
+                exclusiveMin: false
+                exclusiveMax: true
+                min: 0
+                max: 100
+                multipleOf: 2
+            name:
+              type: string
+              default: fern
+              validation:
+                minLength: 3
+                maxLength: 10
+                pattern: "^[a-z]+$"
+                format: custom
+      response: Type
+
+    get:
+      path: ""
+      method: GET
+      request:
+        name: GetRequest
+        query-parameters:
+          decimal:
+            type: double
+            default: 1.1
+            validation:
+              exclusiveMin: true
+              exclusiveMax: false
+              min: 1.1
+              max: 2.2
+              multipleOf: 1.1
+          even:
+            type: integer
+            default: 42
+            validation:
+              exclusiveMin: false
+              exclusiveMax: true
+              min: 0
+              max: 100
+              multipleOf: 2
+          name:
+            type: string
+            default: fern
+            validation:
+              minLength: 3
+              maxLength: 10
+              pattern: "^[a-z]+$"
+              format: custom
+      response: Type
