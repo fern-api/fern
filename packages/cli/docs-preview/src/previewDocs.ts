@@ -84,8 +84,6 @@ type APIDefinitionID = string;
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
 
-    constructor() {}
-
     public addReferencedAPI({
         ir,
         snippetsConfig

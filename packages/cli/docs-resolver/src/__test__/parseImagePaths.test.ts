@@ -1,10 +1,10 @@
 /* eslint-disable jest/expect-expect */
-import { parseImagePaths, replaceImagePathsAndUrls } from "@fern-api/docs-resolver/src/parseImagePaths";
 import { AbsoluteFilePath, relative } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { diffLines } from "diff";
 import fs from "fs";
 import { resolve } from "path";
+import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths";
 
 const CONTEXT = createMockTaskContext();
 

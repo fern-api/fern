@@ -84,12 +84,21 @@ export async function publishDocs({
 
             const measuredImages = await measureImageSizes(imagesToMeasure, MEASURE_IMAGE_BATCH_SIZE, context);
 
-            const images = [...measuredImages.values()].map((image) => ({
-                filePath: filesMap.get(image.filePath)!.relativeFilePath,
-                width: image.width,
-                height: image.height,
-                blurDataUrl: image.blurDataUrl
-            }));
+            const images: DocsV2Write.ImageFilePath[] = [];
+
+            [...measuredImages.values()].forEach((image) => {
+                const filePath = filesMap.get(image.filePath);
+                if (filePath == null) {
+                    return;
+                }
+                const imageFilePath = {
+                    filePath: filePath.relativeFilePath,
+                    width: image.width,
+                    height: image.height,
+                    blurDataUrl: image.blurDataUrl
+                };
+                images.push(imageFilePath);
+            });
 
             const filepaths = files
                 .filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath))

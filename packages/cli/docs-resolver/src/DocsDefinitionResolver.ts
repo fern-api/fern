@@ -9,12 +9,12 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import matter from "gray-matter";
 import { last, orderBy } from "lodash-es";
 import urlJoin from "url-join";
-import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
 import { convertDocsSnippetsConfigToFdr } from "./convertDocsSnippetsConfigToFdr";
 import { convertIrToNavigation } from "./convertIrToNavigation";
-import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
-import { wrapWithHttps } from "./wrapWithHttps";
 import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
+import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
+import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
+import { wrapWithHttps } from "./wrapWithHttps";
 
 export interface FilePathPair {
     absoluteFilePath: AbsoluteFilePath;
@@ -220,7 +220,7 @@ export class DocsDefinitionResolver {
             case "tabbed": {
                 return this.convertTabbedNavigation(this.parsedDocsConfig.navigation.items, this.parsedDocsConfig.tabs);
             }
-            case "versioned":
+            case "versioned": {
                 const versions = await Promise.all(
                     this.parsedDocsConfig.navigation.versions.map(
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
@@ -242,6 +242,7 @@ export class DocsDefinitionResolver {
                     )
                 );
                 return { versions };
+            }
             default:
                 assertNever(this.parsedDocsConfig.navigation);
         }

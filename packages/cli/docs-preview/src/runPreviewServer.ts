@@ -7,6 +7,8 @@ import path from "path";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
+const PATH_TO_NEXT = "/Volumes/git/fern-platform/packages/ui/local-preview-bundle/out";
+
 export async function runPreviewServer({
     docsWorkspace,
     apiWorkspaces,
@@ -44,6 +46,13 @@ export async function runPreviewServer({
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         res.send(response);
     });
+
+    app.use("/_next", express.static(path.join(PATH_TO_NEXT, "_next")));
+
+    app.use("*", async (_req, res) => {
+        return res.sendFile(path.join(PATH_TO_NEXT, "[[...slug]].html"));
+    });
+
     app.listen(3000);
 
     app.use("/_next", express.static(path.join(getPathToBundleFolder(), "/_next")));
