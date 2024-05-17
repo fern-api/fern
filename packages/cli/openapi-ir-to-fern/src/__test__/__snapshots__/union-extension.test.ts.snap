@@ -8,72 +8,22 @@ exports[`union-extension union-extension docs 1`] = `
       "CounterPartyAccount": {
         "docs": undefined,
         "properties": {
-          "currency": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "iban": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "currency": "optional<string>",
+          "iban": "optional<string>",
           "other": "optional<Other>",
         },
       },
       "IbanField": {
         "docs": undefined,
         "properties": {
-          "iban": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "iban": "optional<string>",
         },
       },
       "Other": {
         "docs": undefined,
         "properties": {
-          "identification": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "schemeNameCone": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "identification": "optional<string>",
+          "schemeNameCone": "optional<string>",
         },
       },
       "OtherField": {
@@ -110,72 +60,22 @@ exports[`union-extension union-extension simple 1`] = `
       "CounterPartyAccount": {
         "docs": undefined,
         "properties": {
-          "currency": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "iban": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "currency": "optional<string>",
+          "iban": "optional<string>",
           "other": "optional<Other>",
         },
       },
       "IbanField": {
         "docs": undefined,
         "properties": {
-          "iban": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "iban": "optional<string>",
         },
       },
       "Other": {
         "docs": undefined,
         "properties": {
-          "identification": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "schemeNameCone": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "identification": "optional<string>",
+          "schemeNameCone": "optional<string>",
         },
       },
       "OtherField": {

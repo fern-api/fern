@@ -56,28 +56,8 @@ exports[`application-json application-json docs 1`] = `
       "Data": {
         "docs": undefined,
         "properties": {
-          "bar": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "foo": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "bar": "optional<string>",
+          "foo": "optional<string>",
         },
       },
     },
@@ -148,28 +128,8 @@ exports[`application-json application-json simple 1`] = `
       "Data": {
         "docs": undefined,
         "properties": {
-          "bar": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "foo": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "bar": "optional<string>",
+          "foo": "optional<string>",
         },
       },
     },

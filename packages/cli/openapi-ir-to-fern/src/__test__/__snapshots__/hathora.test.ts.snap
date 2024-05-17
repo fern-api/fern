@@ -289,17 +289,7 @@ exports[`open api parser hathora docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "idToken": {
-                    "default": undefined,
-                    "docs": undefined,
-                    "type": "string",
-                    "validation": {
-                      "format": undefined,
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
-                  },
+                  "idToken": "string",
                 },
               },
               "headers": undefined,
@@ -341,17 +331,7 @@ exports[`open api parser hathora docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "nickname": {
-                    "default": undefined,
-                    "docs": undefined,
-                    "type": "string",
-                    "validation": {
-                      "format": undefined,
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
-                  },
+                  "nickname": "string",
                 },
               },
               "headers": undefined,
@@ -369,49 +349,19 @@ exports[`open api parser hathora docs 1`] = `
         "LoginAnonymousResponse": {
           "docs": undefined,
           "properties": {
-            "token": {
-              "default": undefined,
-              "docs": undefined,
-              "type": "string",
-              "validation": {
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "pattern": undefined,
-              },
-            },
+            "token": "string",
           },
         },
         "LoginGoogleResponse": {
           "docs": undefined,
           "properties": {
-            "token": {
-              "default": undefined,
-              "docs": undefined,
-              "type": "string",
-              "validation": {
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "pattern": undefined,
-              },
-            },
+            "token": "string",
           },
         },
         "LoginNicknameResponse": {
           "docs": undefined,
           "properties": {
-            "token": {
-              "default": undefined,
-              "docs": undefined,
-              "type": "string",
-              "validation": {
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "pattern": undefined,
-              },
-            },
+            "token": "string",
           },
         },
       },
@@ -2464,29 +2414,8 @@ exports[`open api parser hathora docs 1`] = `
       "ActiveConnectionInfo": {
         "docs": undefined,
         "properties": {
-          "host": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "port": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "host": "string",
+          "port": "double",
           "roomId": "RoomId",
           "transportType": "TransportType",
         },
@@ -2519,90 +2448,21 @@ exports[`open api parser hathora docs 1`] = `
       "AppConfigAuthConfigurationGoogle": {
         "docs": undefined,
         "properties": {
-          "clientId": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "clientId": "string",
         },
       },
-      "AppId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
+      "AppId": "string",
       "Application": {
         "docs": undefined,
         "properties": {
-          "appId": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "appName": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "appSecret": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "appId": "string",
+          "appName": "string",
+          "appSecret": "string",
           "authConfiguration": "ApplicationAuthConfiguration",
           "createdAt": "datetime",
-          "createdBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "createdBy": "string",
           "deletedAt": "optional<datetime>",
-          "deletedBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "deletedBy": "optional<string>",
           "orgId": "OrgId",
         },
       },
@@ -2617,17 +2477,7 @@ exports[`open api parser hathora docs 1`] = `
       "ApplicationAuthConfigurationGoogle": {
         "docs": undefined,
         "properties": {
-          "clientId": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "clientId": "string",
         },
       },
       "ApplicationWithDeployment": {
@@ -2645,61 +2495,20 @@ exports[`open api parser hathora docs 1`] = `
           "appId": "AppId",
           "buildId": "BuildId",
           "createdAt": "datetime",
-          "createdBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "createdBy": "string",
           "deletedAt": "optional<datetime>",
           "finishedAt": "optional<datetime>",
-          "imageSize": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "imageSize": "double",
           "regionalContainerTags": "list<BuildRegionalContainerTagsItem>",
           "startedAt": "optional<datetime>",
           "status": "BuildStatus",
         },
       },
-      "BuildId": {
-        "docs": undefined,
-        "type": "double",
-        "validation": {
-          "exclusiveMax": undefined,
-          "exclusiveMin": undefined,
-          "max": undefined,
-          "min": undefined,
-          "multipleOf": undefined,
-        },
-      },
+      "BuildId": "double",
       "BuildRegionalContainerTagsItem": {
         "docs": undefined,
         "properties": {
-          "containerTag": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "containerTag": "string",
           "region": "Region",
         },
       },
@@ -2729,42 +2538,10 @@ exports[`open api parser hathora docs 1`] = `
           "appId": "AppId",
           "buildId": "BuildId",
           "createdAt": "datetime",
-          "createdBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "createdBy": "string",
           "deploymentId": "DeploymentId",
-          "requestedCPU": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
-          "requestedMemoryMB": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "requestedCPU": "double",
+          "requestedMemoryMB": "double",
         },
       },
       "DeploymentConfig": {
@@ -2826,44 +2603,13 @@ exports[`open api parser hathora docs 1`] = `
           },
         },
       },
-      "DeploymentId": {
-        "docs": undefined,
-        "type": "double",
-        "validation": {
-          "exclusiveMax": undefined,
-          "exclusiveMin": undefined,
-          "max": undefined,
-          "min": undefined,
-          "multipleOf": undefined,
-        },
-      },
+      "DeploymentId": "double",
       "DiscoveryResponse": "list<DiscoveryResponseItem>",
       "DiscoveryResponseItem": {
         "docs": undefined,
         "properties": {
-          "host": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "port": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "host": "string",
+          "port": "double",
           "region": "Region",
         },
       },
@@ -2872,17 +2618,7 @@ exports[`open api parser hathora docs 1`] = `
         "properties": {
           "appId": "AppId",
           "createdAt": "datetime",
-          "createdBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "createdBy": "string",
           "initialConfig": "map<string, unknown>",
           "local": "boolean",
           "region": "Region",
@@ -2909,30 +2645,8 @@ exports[`open api parser hathora docs 1`] = `
       "MetricValue": {
         "docs": undefined,
         "properties": {
-          "timestamp": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
-          "value": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "timestamp": "double",
+          "value": "double",
         },
       },
       "MetricsResponse": "RecordPartialMetricNameMetricValueArray",
@@ -2940,16 +2654,7 @@ exports[`open api parser hathora docs 1`] = `
         "docs": "Construct a type with the properties of T except for those in type K.",
         "type": "PickRoomExcludeKeyofRoomAllocations",
       },
-      "OrgId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
+      "OrgId": "string",
       "PickRoomExcludeKeyofRoomAllocations": {
         "docs": "From T, pick a set of properties whose keys are in the union K",
         "properties": {
@@ -2970,99 +2675,25 @@ exports[`open api parser hathora docs 1`] = `
       "Process": {
         "docs": undefined,
         "properties": {
-          "activeConnections": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "activeConnections": "double",
           "appId": "AppId",
           "deploymentId": "DeploymentId",
           "draining": "boolean",
-          "egressedBytes": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
-          "host": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "egressedBytes": "double",
+          "host": "string",
           "idleSince": "optional<datetime>",
-          "port": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "port": "double",
           "processId": "ProcessId",
           "region": "Region",
-          "roomSlotsAvailable": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
-          "roomsPerProcess": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "roomSlotsAvailable": "double",
+          "roomsPerProcess": "double",
           "startedAt": "optional<datetime>",
           "startingAt": "datetime",
           "stoppingAt": "optional<datetime>",
           "terminatedAt": "optional<datetime>",
         },
       },
-      "ProcessId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
+      "ProcessId": "string",
       "ProcessWithRooms": {
         "docs": undefined,
         "extends": [
@@ -3070,18 +2701,7 @@ exports[`open api parser hathora docs 1`] = `
         ],
         "properties": {
           "rooms": "list<RoomWithoutAllocations>",
-          "totalRooms": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "totalRooms": "double",
         },
       },
       "RecordPartialMetricNameMetricValueArray": {
@@ -3130,26 +2750,8 @@ exports[`open api parser hathora docs 1`] = `
           "unscheduledAt": "optional<datetime>",
         },
       },
-      "RoomAllocationId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
-      "RoomId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
+      "RoomAllocationId": "string",
+      "RoomId": "string",
       "RoomStatus": {
         "enum": [
           "scheduling",
@@ -3494,17 +3096,7 @@ exports[`open api parser hathora simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "idToken": {
-                    "default": undefined,
-                    "docs": undefined,
-                    "type": "string",
-                    "validation": {
-                      "format": undefined,
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
-                  },
+                  "idToken": "string",
                 },
               },
               "headers": undefined,
@@ -3546,17 +3138,7 @@ exports[`open api parser hathora simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "nickname": {
-                    "default": undefined,
-                    "docs": undefined,
-                    "type": "string",
-                    "validation": {
-                      "format": undefined,
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
-                  },
+                  "nickname": "string",
                 },
               },
               "headers": undefined,
@@ -3574,49 +3156,19 @@ exports[`open api parser hathora simple 1`] = `
         "LoginAnonymousResponse": {
           "docs": undefined,
           "properties": {
-            "token": {
-              "default": undefined,
-              "docs": undefined,
-              "type": "string",
-              "validation": {
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "pattern": undefined,
-              },
-            },
+            "token": "string",
           },
         },
         "LoginGoogleResponse": {
           "docs": undefined,
           "properties": {
-            "token": {
-              "default": undefined,
-              "docs": undefined,
-              "type": "string",
-              "validation": {
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "pattern": undefined,
-              },
-            },
+            "token": "string",
           },
         },
         "LoginNicknameResponse": {
           "docs": undefined,
           "properties": {
-            "token": {
-              "default": undefined,
-              "docs": undefined,
-              "type": "string",
-              "validation": {
-                "format": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "pattern": undefined,
-              },
-            },
+            "token": "string",
           },
         },
       },
@@ -5294,29 +4846,8 @@ exports[`open api parser hathora simple 1`] = `
       "ActiveConnectionInfo": {
         "docs": undefined,
         "properties": {
-          "host": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "port": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "host": "string",
+          "port": "double",
           "roomId": "RoomId",
           "transportType": "TransportType",
         },
@@ -5349,90 +4880,21 @@ exports[`open api parser hathora simple 1`] = `
       "AppConfigAuthConfigurationGoogle": {
         "docs": undefined,
         "properties": {
-          "clientId": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "clientId": "string",
         },
       },
-      "AppId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
+      "AppId": "string",
       "Application": {
         "docs": undefined,
         "properties": {
-          "appId": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "appName": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "appSecret": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "appId": "string",
+          "appName": "string",
+          "appSecret": "string",
           "authConfiguration": "ApplicationAuthConfiguration",
           "createdAt": "datetime",
-          "createdBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "createdBy": "string",
           "deletedAt": "optional<datetime>",
-          "deletedBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "deletedBy": "optional<string>",
           "orgId": "OrgId",
         },
       },
@@ -5447,17 +4909,7 @@ exports[`open api parser hathora simple 1`] = `
       "ApplicationAuthConfigurationGoogle": {
         "docs": undefined,
         "properties": {
-          "clientId": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "clientId": "string",
         },
       },
       "ApplicationWithDeployment": {
@@ -5475,61 +4927,20 @@ exports[`open api parser hathora simple 1`] = `
           "appId": "AppId",
           "buildId": "BuildId",
           "createdAt": "datetime",
-          "createdBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "createdBy": "string",
           "deletedAt": "optional<datetime>",
           "finishedAt": "optional<datetime>",
-          "imageSize": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "imageSize": "double",
           "regionalContainerTags": "list<BuildRegionalContainerTagsItem>",
           "startedAt": "optional<datetime>",
           "status": "BuildStatus",
         },
       },
-      "BuildId": {
-        "docs": undefined,
-        "type": "double",
-        "validation": {
-          "exclusiveMax": undefined,
-          "exclusiveMin": undefined,
-          "max": undefined,
-          "min": undefined,
-          "multipleOf": undefined,
-        },
-      },
+      "BuildId": "double",
       "BuildRegionalContainerTagsItem": {
         "docs": undefined,
         "properties": {
-          "containerTag": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "containerTag": "string",
           "region": "Region",
         },
       },
@@ -5559,42 +4970,10 @@ exports[`open api parser hathora simple 1`] = `
           "appId": "AppId",
           "buildId": "BuildId",
           "createdAt": "datetime",
-          "createdBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "createdBy": "string",
           "deploymentId": "DeploymentId",
-          "requestedCPU": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
-          "requestedMemoryMB": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "requestedCPU": "double",
+          "requestedMemoryMB": "double",
         },
       },
       "DeploymentConfig": {
@@ -5656,44 +5035,13 @@ exports[`open api parser hathora simple 1`] = `
           },
         },
       },
-      "DeploymentId": {
-        "docs": undefined,
-        "type": "double",
-        "validation": {
-          "exclusiveMax": undefined,
-          "exclusiveMin": undefined,
-          "max": undefined,
-          "min": undefined,
-          "multipleOf": undefined,
-        },
-      },
+      "DeploymentId": "double",
       "DiscoveryResponse": "list<DiscoveryResponseItem>",
       "DiscoveryResponseItem": {
         "docs": undefined,
         "properties": {
-          "host": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
-          "port": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "host": "string",
+          "port": "double",
           "region": "Region",
         },
       },
@@ -5702,17 +5050,7 @@ exports[`open api parser hathora simple 1`] = `
         "properties": {
           "appId": "AppId",
           "createdAt": "datetime",
-          "createdBy": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "createdBy": "string",
           "initialConfig": "map<string, unknown>",
           "local": "boolean",
           "region": "Region",
@@ -5739,30 +5077,8 @@ exports[`open api parser hathora simple 1`] = `
       "MetricValue": {
         "docs": undefined,
         "properties": {
-          "timestamp": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
-          "value": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "timestamp": "double",
+          "value": "double",
         },
       },
       "MetricsResponse": "RecordPartialMetricNameMetricValueArray",
@@ -5770,16 +5086,7 @@ exports[`open api parser hathora simple 1`] = `
         "docs": "Construct a type with the properties of T except for those in type K.",
         "type": "PickRoomExcludeKeyofRoomAllocations",
       },
-      "OrgId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
+      "OrgId": "string",
       "PickRoomExcludeKeyofRoomAllocations": {
         "docs": "From T, pick a set of properties whose keys are in the union K",
         "properties": {
@@ -5800,99 +5107,25 @@ exports[`open api parser hathora simple 1`] = `
       "Process": {
         "docs": undefined,
         "properties": {
-          "activeConnections": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "activeConnections": "double",
           "appId": "AppId",
           "deploymentId": "DeploymentId",
           "draining": "boolean",
-          "egressedBytes": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
-          "host": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "string",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "egressedBytes": "double",
+          "host": "string",
           "idleSince": "optional<datetime>",
-          "port": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "port": "double",
           "processId": "ProcessId",
           "region": "Region",
-          "roomSlotsAvailable": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
-          "roomsPerProcess": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "roomSlotsAvailable": "double",
+          "roomsPerProcess": "double",
           "startedAt": "optional<datetime>",
           "startingAt": "datetime",
           "stoppingAt": "optional<datetime>",
           "terminatedAt": "optional<datetime>",
         },
       },
-      "ProcessId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
+      "ProcessId": "string",
       "ProcessWithRooms": {
         "docs": undefined,
         "extends": [
@@ -5900,18 +5133,7 @@ exports[`open api parser hathora simple 1`] = `
         ],
         "properties": {
           "rooms": "list<RoomWithoutAllocations>",
-          "totalRooms": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "double",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": undefined,
-              "min": undefined,
-              "multipleOf": undefined,
-            },
-          },
+          "totalRooms": "double",
         },
       },
       "RecordPartialMetricNameMetricValueArray": {
@@ -5960,26 +5182,8 @@ exports[`open api parser hathora simple 1`] = `
           "unscheduledAt": "optional<datetime>",
         },
       },
-      "RoomAllocationId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
-      "RoomId": {
-        "docs": undefined,
-        "type": "string",
-        "validation": {
-          "format": undefined,
-          "maxLength": undefined,
-          "minLength": undefined,
-          "pattern": undefined,
-        },
-      },
+      "RoomAllocationId": "string",
+      "RoomId": "string",
       "RoomStatus": {
         "enum": [
           "scheduling",

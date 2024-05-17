@@ -40,17 +40,7 @@ exports[`open api parser enum-casing docs 1`] = `
         "docs": undefined,
         "properties": {
           "custom_fields": "optional<map<string, string>>",
-          "message": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "message": "optional<string>",
           "status": "optional<ExampleResponseStatus>",
         },
       },
@@ -124,17 +114,7 @@ exports[`open api parser enum-casing simple 1`] = `
         "docs": undefined,
         "properties": {
           "custom_fields": "optional<map<string, string>>",
-          "message": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "message": "optional<string>",
           "status": "optional<ExampleResponseStatus>",
         },
       },

@@ -22,17 +22,7 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
           "request": {
             "body": {
               "properties": {
-                "private_property": {
-                  "default": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                  "validation": {
-                    "format": undefined,
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "pattern": undefined,
-                  },
-                },
+                "private_property": "optional<string>",
                 "public_property": {
                   "audiences": [
                     "public",
@@ -103,17 +93,7 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
           "request": {
             "body": {
               "properties": {
-                "private_property": {
-                  "default": undefined,
-                  "docs": undefined,
-                  "type": "optional<string>",
-                  "validation": {
-                    "format": undefined,
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "pattern": undefined,
-                  },
-                },
+                "private_property": "optional<string>",
                 "public_property": {
                   "audiences": [
                     "public",

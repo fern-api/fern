@@ -17,17 +17,7 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "prompt": {
-                    "default": undefined,
-                    "docs": undefined,
-                    "type": "string",
-                    "validation": {
-                      "format": undefined,
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
-                  },
+                  "prompt": "string",
                   "stream": "optional<boolean>",
                 },
               },
@@ -50,33 +40,13 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse docs 1`] = `
       "Completion": {
         "docs": undefined,
         "properties": {
-          "text": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "text": "optional<string>",
         },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
-          "text": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "text": "optional<string>",
         },
       },
     },
@@ -108,17 +78,7 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "prompt": {
-                    "default": undefined,
-                    "docs": undefined,
-                    "type": "string",
-                    "validation": {
-                      "format": undefined,
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
-                    },
-                  },
+                  "prompt": "string",
                   "stream": "optional<boolean>",
                 },
               },
@@ -141,33 +101,13 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse simple 1`] = `
       "Completion": {
         "docs": undefined,
         "properties": {
-          "text": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "text": "optional<string>",
         },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
-          "text": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "text": "optional<string>",
         },
       },
     },

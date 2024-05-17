@@ -45,17 +45,7 @@ exports[`rules rules docs 1`] = `
       "GetExampleResponseMessage": {
         "docs": undefined,
         "properties": {
-          "message": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "message": "optional<string>",
         },
       },
       "Schema": {
@@ -165,17 +155,7 @@ exports[`rules rules simple 1`] = `
       "GetExampleResponseMessage": {
         "docs": undefined,
         "properties": {
-          "message": {
-            "default": undefined,
-            "docs": undefined,
-            "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
-          },
+          "message": "optional<string>",
         },
       },
       "Schema": {

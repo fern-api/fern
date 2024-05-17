@@ -54,7 +54,11 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "prefix": "ApiKey",
@@ -356,7 +360,11 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -753,14 +761,22 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -1386,7 +1402,11 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 },
                                 "docs": null
@@ -1477,7 +1497,11 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "INTEGER",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "integer",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 },
                                 "docs": null
@@ -8958,7 +8982,11 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                             "_type": "primitive",
                                             "primitive": {
                                                 "v1": "STRING",
-                                                "v2": null
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
                                             }
                                         },
                                         "valueType": {
@@ -9229,14 +9257,22 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -10590,14 +10626,22 @@ exports[`ir {"name":"packages"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -10680,14 +10724,22 @@ exports[`ir {"name":"packages"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -11036,14 +11088,22 @@ exports[`ir {"name":"packages"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -11793,7 +11853,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -11904,7 +11968,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -12259,7 +12327,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "contentType": null,
@@ -12274,7 +12346,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 },
                                 "contentType": null,
@@ -12731,7 +12807,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "contentType": null,
@@ -12746,7 +12826,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 },
                                 "contentType": null,
@@ -12871,7 +12955,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                                         "_type": "primitive",
                                         "primitive": {
                                             "v1": "STRING",
-                                            "v2": null
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
                                         }
                                     },
                                     "availability": null,
@@ -13151,7 +13239,11 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         "_type": "primitive",
                         "primitive": {
                             "v1": "STRING",
-                            "v2": null
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
                         }
                     }
                 }
@@ -13260,7 +13352,11 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -13598,7 +13694,11 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                 "_type": "primitive",
                                 "primitive": {
                                     "v1": "STRING",
-                                    "v2": null
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
                                 }
                             },
                             "location": "ROOT",
@@ -13783,7 +13883,11 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 },
                                 "docs": null
@@ -14519,7 +14623,11 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                 "_type": "primitive",
                 "primitive": {
                     "v1": "STRING",
-                    "v2": null
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
                 }
             },
             "location": "ROOT",
@@ -14787,7 +14895,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         "_type": "primitive",
                         "primitive": {
                             "v1": "STRING",
-                            "v2": null
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
                         }
                     }
                 }
@@ -14896,7 +15008,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -14982,14 +15098,22 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -15136,7 +15260,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -15173,7 +15301,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "DOUBLE",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "double",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 }
                             }
@@ -15677,7 +15809,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 "_type": "primitive",
                                 "primitive": {
                                     "v1": "STRING",
-                                    "v2": null
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
                                 }
                             },
                             "location": "ROOT",
@@ -18429,7 +18565,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                 "_type": "primitive",
                 "primitive": {
                     "v1": "STRING",
-                    "v2": null
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
                 }
             },
             "location": "ROOT",
@@ -18699,7 +18839,11 @@ exports[`ir {"name":"simple"} 1`] = `
                         "_type": "primitive",
                         "primitive": {
                             "v1": "STRING",
-                            "v2": null
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
                         }
                     }
                 }
@@ -18808,7 +18952,11 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -18919,7 +19067,11 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -19007,7 +19159,11 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "docs": null
@@ -19021,7 +19177,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 }
                             }
@@ -19033,7 +19193,11 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "INTEGER",
-                                "v2": null
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "docs": null
@@ -19051,7 +19215,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                             "_type": "primitive",
                                             "primitive": {
                                                 "v1": "INTEGER",
-                                                "v2": null
+                                                "v2": {
+                                                    "type": "integer",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
                                             }
                                         }
                                     }
@@ -19164,7 +19332,11 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -19650,14 +19822,22 @@ exports[`ir {"name":"simple"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "INTEGER",
-                        "v2": null
+                        "v2": {
+                            "type": "integer",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "INTEGER",
-                        "v2": null
+                        "v2": {
+                            "type": "integer",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -19963,14 +20143,22 @@ exports[`ir {"name":"simple"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -20072,14 +20260,22 @@ exports[`ir {"name":"simple"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -20201,14 +20397,22 @@ exports[`ir {"name":"simple"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -20406,7 +20610,11 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -20439,7 +20647,11 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "DOUBLE",
-                                "v2": null
+                                "v2": {
+                                    "type": "double",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -20942,7 +21154,11 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": {
                                 "v1": "STRING",
-                                "v2": null
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
                             }
                         },
                         "availability": null,
@@ -20979,7 +21195,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "DOUBLE",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "double",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 }
                             }
@@ -24885,7 +25105,11 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "primitive",
                 "primitive": {
                     "v1": "STRING",
-                    "v2": null
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
                 }
             },
             "examples": [],
@@ -25013,7 +25237,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "primitive",
                                 "primitive": {
                                     "v1": "STRING",
-                                    "v2": null
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
                                 }
                             },
                             "location": "ROOT",
@@ -25198,7 +25426,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 },
                                 "docs": null
@@ -25890,7 +26122,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "primitive",
                                 "primitive": {
                                     "v1": "STRING",
-                                    "v2": null
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
                                 }
                             },
                             "location": "ROOT",
@@ -28698,7 +28934,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "primitive",
                                 "primitive": {
                                     "v1": "STRING",
-                                    "v2": null
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
                                 }
                             },
                             "location": "ROOT",
@@ -28824,7 +29064,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "primitive",
                                 "primitive": {
                                     "v1": "STRING",
-                                    "v2": null
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
                                 }
                             },
                             "allowMultiple": true,
@@ -31659,7 +31903,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "primitive",
                                 "primitive": {
                                     "v1": "STRING",
-                                    "v2": null
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
                                 }
                             },
                             "location": "ROOT",
@@ -32338,7 +32586,11 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "primitive",
                 "primitive": {
                     "v1": "STRING",
-                    "v2": null
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
                 }
             },
             "location": "ROOT",
@@ -32788,7 +33040,11 @@ exports[`ir {"name":"streaming"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 },
                                 "terminator": null,
@@ -33018,7 +33274,11 @@ exports[`ir {"name":"streaming"} 1`] = `
                                     "_type": "primitive",
                                     "primitive": {
                                         "v1": "STRING",
-                                        "v2": null
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
                                     }
                                 },
                                 "terminator": "[DONE]",
@@ -33372,14 +33632,22 @@ exports[`ir {"name":"variables"} 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -34579,7 +34847,11 @@ exports[`ir {"name":"webhooks"} 1`] = `
                                 "_type": "primitive",
                                 "primitive": {
                                     "v1": "STRING",
-                                    "v2": null
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
                                 }
                             },
                             "docs": null

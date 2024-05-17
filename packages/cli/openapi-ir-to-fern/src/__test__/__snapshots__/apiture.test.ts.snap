@@ -4094,12 +4094,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A human-readable explanation specific to this occurrence of the problem.
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "id": {
             "default": undefined,
@@ -4149,12 +4144,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "type": {
             "default": undefined,
@@ -8376,12 +8366,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A human-readable explanation specific to this occurrence of the problem.
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "id": {
             "default": undefined,
@@ -8431,12 +8416,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
+            "validation": undefined,
           },
           "type": {
             "default": undefined,

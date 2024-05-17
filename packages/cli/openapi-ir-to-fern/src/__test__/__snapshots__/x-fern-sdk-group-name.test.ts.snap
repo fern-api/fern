@@ -41,30 +41,12 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
     },
     "ids/person.yml": {
       "types": {
-        "PersonId": {
-          "docs": undefined,
-          "type": "string",
-          "validation": {
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
-          },
-        },
+        "PersonId": "string",
       },
     },
     "ids/user.yml": {
       "types": {
-        "UserId": {
-          "docs": undefined,
-          "type": "string",
-          "validation": {
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
-          },
-        },
+        "UserId": "string",
       },
     },
     "user.yml": {
@@ -163,30 +145,12 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
     },
     "ids/person.yml": {
       "types": {
-        "PersonId": {
-          "docs": undefined,
-          "type": "string",
-          "validation": {
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
-          },
-        },
+        "PersonId": "string",
       },
     },
     "ids/user.yml": {
       "types": {
-        "UserId": {
-          "docs": undefined,
-          "type": "string",
-          "validation": {
-            "format": undefined,
-            "maxLength": undefined,
-            "minLength": undefined,
-            "pattern": undefined,
-          },
-        },
+        "UserId": "string",
       },
     },
     "user.yml": {

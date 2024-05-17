@@ -1056,12 +1056,7 @@ exports[`generate IR from OpenAPI 1`] = `
                     "v2": {
                       "default": null,
                       "type": "string",
-                      "validation": {
-                        "format": null,
-                        "maxLength": null,
-                        "minLength": null,
-                        "pattern": null,
-                      },
+                      "validation": null,
                     },
                   },
                 },
