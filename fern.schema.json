@@ -60,119 +60,52 @@
                         "type": "object",
                         "additionalProperties": {
                           "anyOf": [
+                            { "type": "string" },
                             {
                               "type": "object",
                               "properties": {
-                                "docs": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
-                                },
-                                "availability": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
-                                },
-                                "audiences": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
-                                },
-                                "name": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
-                                },
-                                "type": { "type": "string", "const": "string" },
-                                "default": { "type": "string" },
-                                "minLength": { "type": "number" },
-                                "maxLength": { "type": "number" },
-                                "pattern": { "type": "string" },
-                                "format": { "type": "string" }
-                              },
-                              "required": ["type"],
-                              "additionalProperties": false
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "docs": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
-                                },
-                                "availability": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
-                                },
-                                "audiences": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
-                                },
-                                "name": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
-                                },
-                                "type": { "type": "string", "const": "integer" },
-                                "default": { "type": "number" },
-                                "min": { "type": "number" },
-                                "max": { "type": "number" },
-                                "exclusiveMin": { "type": "boolean" },
-                                "exclusiveMax": { "type": "boolean" },
-                                "multipleOf": { "type": "number" }
-                              },
-                              "required": ["type"],
-                              "additionalProperties": false
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "docs": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
-                                },
-                                "availability": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
-                                },
-                                "audiences": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
-                                },
-                                "name": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
-                                },
-                                "type": { "type": "string", "const": "double" },
-                                "default": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/default"
-                                },
-                                "min": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/min"
-                                },
-                                "max": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/max"
-                                },
-                                "exclusiveMin": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/exclusiveMin"
-                                },
-                                "exclusiveMax": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/exclusiveMax"
-                                },
-                                "multipleOf": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/multipleOf"
-                                }
-                              },
-                              "required": ["type"],
-                              "additionalProperties": false
-                            },
-                            {
-                              "anyOf": [
-                                { "type": "string" },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "type": { "type": "string" },
-                                    "docs": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                "type": { "type": "string" },
+                                "default": {},
+                                "validation": {
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "minLength": { "type": "number" },
+                                        "maxLength": { "type": "number" },
+                                        "pattern": { "type": "string" },
+                                        "format": { "type": "string" }
+                                      },
+                                      "additionalProperties": false
                                     },
-                                    "availability": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
-                                    },
-                                    "audiences": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
-                                    },
-                                    "name": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "min": { "type": "number" },
+                                        "max": { "type": "number" },
+                                        "exclusiveMin": { "type": "boolean" },
+                                        "exclusiveMax": { "type": "boolean" },
+                                        "multipleOf": { "type": "number" }
+                                      },
+                                      "additionalProperties": false
                                     }
-                                  },
-                                  "required": ["type"],
-                                  "additionalProperties": false
+                                  ]
+                                },
+                                "docs": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                },
+                                "availability": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                                },
+                                "audiences": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                                },
+                                "name": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                                 }
-                              ]
+                              },
+                              "required": ["type"],
+                              "additionalProperties": false
                             }
                           ]
                         }
@@ -303,7 +236,10 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
-                  "type": { "type": "string" }
+                  "type": { "type": "string" },
+                  "validation": {
+                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                  }
                 },
                 "required": ["type"],
                 "additionalProperties": false
@@ -415,6 +351,10 @@
                         "type": "object",
                         "properties": {
                           "type": { "type": "string" },
+                          "default": {},
+                          "validation": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                          },
                           "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" }
                         },
                         "required": ["type"],
@@ -445,6 +385,10 @@
                     "type": "object",
                     "properties": {
                       "type": { "type": "string" },
+                      "default": {},
+                      "validation": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                      },
                       "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                       "availability": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
@@ -506,6 +450,10 @@
                                   "type": "object",
                                   "properties": {
                                     "type": { "type": "string" },
+                                    "default": {},
+                                    "validation": {
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                                    },
                                     "docs": {
                                       "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                     },
