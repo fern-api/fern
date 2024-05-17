@@ -30,8 +30,7 @@ async function main() {
             "process.env.LOCAL_STORAGE_FOLDER": getEnvironmentVariable("LOCAL_STORAGE_FOLDER"),
             "process.env.POSTHOG_API_KEY": getEnvironmentVariable("POSTHOG_API_KEY"),
             "process.env.DOCS_DOMAIN_SUFFIX": getEnvironmentVariable("DOCS_DOMAIN_SUFFIX")
-        },
-        minify: true
+        }
     };
 
     function getEnvironmentVariable(environmentVariable) {
