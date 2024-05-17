@@ -347,7 +347,7 @@ function validateStringWithRules({
     example: RawSchemas.ExampleTypeReferenceSchema;
     rules: StringValidationRules | undefined;
 }): ExampleViolation[] {
-    const violations = validateInteger(example);
+    const violations = validateString(example);
     if (violations.length > 0 || rules == null) {
         return violations;
     }
