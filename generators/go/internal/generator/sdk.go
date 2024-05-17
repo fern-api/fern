@@ -1570,7 +1570,7 @@ func endpointToIdentifier(endpoint *ir.HttpEndpoint) *generatorexec.EndpointIden
 	return &generatorexec.EndpointIdentifier{
 		Path:   fullPathForEndpoint(endpoint),
 		Method: irMethodToGeneratorExecMethod(endpoint.Method),
-		IdentifierOverride: endpoint.id
+		IdentifierOverride: &endpoint.Id,
 	}
 }
 
