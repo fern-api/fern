@@ -14,7 +14,6 @@
     { "path": "../../../register" },
     { "path": "../../../task-context" },
     { "path": "../../../workspace-loader" },
-    { "path": "../../../yaml/docs-validator" },
     { "path": "../../ir-generator" },
     { "path": "../../ir-migrations" }
   ]
