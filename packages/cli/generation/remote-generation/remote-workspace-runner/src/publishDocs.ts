@@ -15,7 +15,7 @@ import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
-import { DocsDefinitionResolver, UploadedFile } from "./resolver/FernDocsResolver";
+import { DocsDefinitionResolver, UploadedFile } from "./resolver/DocsDefinitionResolversolver";
 import { wrapWithHttps } from "./wrapWithHttps";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
