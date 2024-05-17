@@ -42,7 +42,6 @@ export async function publishDocs({
     customDomains,
     fernWorkspaces,
     context,
-    version,
     preview,
     editThisPage,
     isPrivate = false
@@ -54,7 +53,6 @@ export async function publishDocs({
     customDomains: string[];
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
-    version: string | undefined;
     preview: boolean;
     // TODO: implement audience support in generateIR
     audiences: docsYml.RawSchemas.FernDocsConfig.AudiencesConfig | undefined;

@@ -59,7 +59,6 @@ export async function runRemoteGenerationForDocsWorkspace({
             organization,
             context,
             fernWorkspaces,
-            version: "",
             preview,
             audiences: maybeInstance.audiences,
             editThisPage: maybeInstance.editThisPage,
