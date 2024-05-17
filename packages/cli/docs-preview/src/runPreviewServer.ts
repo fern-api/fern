@@ -1,23 +1,23 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV2Read } from "@fern-api/fdr-sdk";
+import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import cors from "cors";
 import express from "express";
 import http from "http";
-import path from "path";
+import path, { dirname } from "path";
 import Watcher from "watcher";
 import { WebSocketServer, type WebSocket } from "ws";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 export async function runPreviewServer({
-    docsWorkspace,
-    apiWorkspaces,
+    initialProject,
+    reloadProject,
     context
 }: {
-    docsWorkspace: DocsWorkspace;
-    apiWorkspaces: APIWorkspace[];
+    initialProject: Project;
+    reloadProject: () => Promise<Project>;
     context: TaskContext;
 }): Promise<void> {
     const url = process.env.DOCS_PREVIEW_BUCKET;
@@ -27,6 +27,7 @@ export async function runPreviewServer({
     }
 
     await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+    const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     const app = express();
     const httpServer = http.createServer(app);
@@ -44,25 +45,28 @@ export async function runPreviewServer({
 
     app.use(cors());
 
-    const instance = new URL(wrapWithHttps(docsWorkspace.config.instances[0]?.url ?? "localhost:3000"));
+    const instance = new URL(
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? "localhost:3000")
+    );
 
     let docsDefinition = getPreviewDocsDefinition({
         domain: instance.host,
-        docsWorkspace,
-        apiWorkspaces,
+        project: initialProject,
         context
     });
 
-    const watcher = new Watcher(docsWorkspace.absoluteFilepath, { recursive: true, ignoreInitial: true });
+    const watcher = new Watcher(absoluteFilePathToFern, { recursive: true, ignoreInitial: true });
     watcher.on("all", (_event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(`File ${targetPath} has changed. Reloading...`);
-        docsDefinition = getPreviewDocsDefinition({
-            domain: instance.host,
-            docsWorkspace,
-            apiWorkspaces,
-            context
-        });
+        docsDefinition = reloadProject().then((project) =>
+            getPreviewDocsDefinition({
+                domain: instance.host,
+                project,
+                context
+            })
+        );
 
+        // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
         void docsDefinition.then(() => {
             for (const connection of connections) {
                 connection.send(
@@ -75,16 +79,21 @@ export async function runPreviewServer({
     });
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
-        const definition = await docsDefinition;
-        const response: DocsV2Read.LoadDocsForUrlResponse = {
-            baseUrl: {
-                domain: instance.host,
-                basePath: instance.pathname
-            },
-            definition,
-            lightModeEnabled: definition.config.colorsV3?.type !== "dark"
-        };
-        res.send(response);
+        try {
+            const definition = await docsDefinition;
+            const response: DocsV2Read.LoadDocsForUrlResponse = {
+                baseUrl: {
+                    domain: instance.host,
+                    basePath: instance.pathname
+                },
+                definition,
+                lightModeEnabled: definition.config.colorsV3?.type !== "dark"
+            };
+            res.send(response);
+        } catch (error) {
+            context.logger.error("Error loading docs", (error as Error).message);
+            res.status(500).send();
+        }
     });
 
     app.get(/^\/_local\/(.*)/, (req, res) => {

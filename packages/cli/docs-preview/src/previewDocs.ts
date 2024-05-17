@@ -11,22 +11,27 @@ import {
     SDKSnippetHolder
 } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace, convertOpenApiWorkspaceToFernWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
+import { convertOpenApiWorkspaceToFernWorkspace } from "@fern-api/workspace-loader";
 import { v4 as uuidv4 } from "uuid";
 
 export async function getPreviewDocsDefinition({
     domain,
-    docsWorkspace,
-    apiWorkspaces,
+    project,
     context
 }: {
     domain: string;
-    docsWorkspace: DocsWorkspace;
-    apiWorkspaces: APIWorkspace[];
+    project: Project;
     context: TaskContext;
 }): Promise<DocsV1Read.DocsDefinition> {
+    const docsWorkspace = project.docsWorkspaces;
+    const apiWorkspaces = project.apiWorkspaces;
+    if (docsWorkspace == null) {
+        throw new Error("No docs workspace found in project");
+    }
+
     const fernWorkspaces = await Promise.all(
         apiWorkspaces.map((workspace) =>
             workspace.type === "oss" ? convertOpenApiWorkspaceToFernWorkspace(workspace, context) : workspace
