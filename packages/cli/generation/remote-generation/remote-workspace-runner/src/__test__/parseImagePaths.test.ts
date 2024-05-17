@@ -4,7 +4,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { diffLines } from "diff";
 import fs from "fs";
 import { resolve } from "path";
-import { parseImagePaths, replaceImagePathsAndUrls } from "../resolver/parseImagePaths";
+import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths";
 
 const CONTEXT = createMockTaskContext();
 

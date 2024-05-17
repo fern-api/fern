@@ -1,33 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 
-// interface AbsoluteImageFilePath {
-//     filePath: AbsoluteFilePath;
-//     width: number;
-//     height: number;
-//     blurDataUrl: string | undefined;
-// }
-
-// type ImageFile = ImageFileAbsoluteFilePath | ImageFileMetadata;
-
-// interface ImageFileAbsoluteFilePath {
-//     type: "filepath";
-//     value: AbsoluteFilePath;
-// }
-// function isFilePath(imageFile: ImageFile): imageFile is ImageFileAbsoluteFilePath {
-//     return imageFile.type === "filepath";
-// }
-
-// interface ImageFileMetadata {
-//     type: "image";
-//     value: AbsoluteImageFilePath;
-// }
-// function isImage(imageFile: ImageFile): imageFile is ImageFileMetadata {
-//     return imageFile.type === "image";
-// }
-
-// const sizeOf = promisify(imageSize);
-
 export function collectFilesFromDocsConfig(parsedDocsConfig: docsYml.ParsedDocsConfiguration): Set<AbsoluteFilePath> {
     const filepaths = new Set<AbsoluteFilePath>();
 
@@ -76,33 +49,4 @@ export function collectFilesFromDocsConfig(parsedDocsConfig: docsYml.ParsedDocsC
     }
 
     return filepaths;
-
-    // // measure the size of the images, 10 at a time
-    // const filepathChunks = chunk([...filepaths], 10);
-    // const imageFilepathsAndSizesToUpload: ImageFile[] = [];
-    // for (const filepaths of filepathChunks) {
-    //     const chunk: ImageFile[] = await Promise.all(
-    //         filepaths.map(async (filePath): Promise<ImageFile> => {
-    //             try {
-    //                 const size = await sizeOf(filePath);
-    //                 if (size == null || size.height == null || size.width == null) {
-    //                     return { type: "filepath", value: filePath };
-    //                 }
-    //                 return {
-    //                     type: "image",
-    //                     value: { filePath, width: size.width, height: size.height, blurDataUrl: undefined }
-    //                 };
-    //             } catch (e) {
-    //                 return { type: "filepath", value: filePath };
-    //             }
-    //         })
-    //     );
-
-    //     imageFilepathsAndSizesToUpload.push(...chunk);
-    // }
-
-    // const imagesWithSize = imageFilepathsAndSizesToUpload.filter(isImage).map((image) => image.value);
-    // const imagesWithoutSize = imageFilepathsAndSizesToUpload.filter(isFilePath).map((image) => image.value);
-
-    // return [imagesWithSize, imagesWithoutSize];
 }

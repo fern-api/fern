@@ -10,11 +10,11 @@ import matter from "gray-matter";
 import { last, orderBy } from "lodash-es";
 import urlJoin from "url-join";
 import { extractDatetimeFromChangelogTitle } from "../extractDatetimeFromChangelogTitle";
+import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths";
 import { wrapWithHttps } from "../wrapWithHttps";
 import { convertDocsSnippetsConfigToFdr } from "./convertDocsSnippetsConfigToFdr";
 import { convertIrToNavigation } from "./convertIrToNavigation";
 import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
-import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
 
 export interface FilePathPair {
     absoluteFilePath: AbsoluteFilePath;
