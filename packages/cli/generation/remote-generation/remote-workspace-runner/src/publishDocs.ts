@@ -221,7 +221,7 @@ async function measureImageSizes(
     const filepathChunks = chunk(imageFilePaths, batchSize);
     const imageFilesWithMetadata: AbsoluteImageFilePath[] = [];
     for (const filepaths of filepathChunks) {
-        const chunk: Array<AbsoluteImageFilePath | undefined> = await Promise.all(
+        const chunk: (AbsoluteImageFilePath | undefined)[] = await Promise.all(
             filepaths.map(async (filePath): Promise<AbsoluteImageFilePath | undefined> => {
                 try {
                     const size = await sizeOf(filePath);

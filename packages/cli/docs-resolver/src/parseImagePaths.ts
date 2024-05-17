@@ -53,7 +53,7 @@ export function parseImagePaths(
 
             let match;
             while ((match = srcRegex.exec(node.value)) != null) {
-                let pathToImage = trimAnchor(match[1]);
+                const pathToImage = trimAnchor(match[1]);
                 const resolvedPath = resolvePath(pathToImage, metadata);
                 if (pathToImage != null && resolvedPath != null) {
                     filepaths.add(resolvedPath);
