@@ -9170,7 +9170,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "AgreementsParamLimit": {
-        "default": "50",
         "docs": "Maximum number of records to return. This is supposed to be an integer but query parameters are string. Maximum is 50.",
         "type": "string",
         "validation": {
@@ -9181,7 +9180,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "AgreementsParamOffset": {
-        "default": "0",
         "docs": "Offset/index of record for the next page of records to return. This is supposed to be an integer but query parameters are string.",
         "type": "string",
         "validation": {
@@ -10556,7 +10554,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "ContractPreview": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -11307,7 +11304,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "CountryCode": {
-        "default": undefined,
         "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code.",
         "type": "string",
         "validation": {
@@ -11437,7 +11433,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "CurrencyCode": {
-        "default": undefined,
         "docs": "Currency code.",
         "type": "string",
         "validation": {
@@ -11449,7 +11444,6 @@ exports[`open api parser deel docs 1`] = `
       },
       "CurrencyCodeList": "list<CurrencyCodeRequired>",
       "CurrencyCodeRequired": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -11478,7 +11472,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "DateStringDefaultNow": {
-        "default": undefined,
         "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31. Defaults to current date",
         "type": "string",
         "validation": {
@@ -11489,7 +11482,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "DateStringRequired": {
-        "default": undefined,
         "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
         "type": "string",
         "validation": {
@@ -11523,7 +11515,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "EmailTypeRequired": {
-        "default": undefined,
         "docs": "Worker's email address.",
         "type": "string",
         "validation": {
@@ -15272,7 +15263,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "LegalEntitySubType": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -15555,7 +15545,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "NoticePeriod": {
-        "default": 0,
         "docs": "Days before to notice the termination of contract for eather party.",
         "type": "double",
         "validation": {
@@ -18169,7 +18158,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "UrlTypeRequired": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -25015,7 +25003,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "AgreementsParamLimit": {
-        "default": "50",
         "docs": "Maximum number of records to return. This is supposed to be an integer but query parameters are string. Maximum is 50.",
         "type": "string",
         "validation": {
@@ -25026,7 +25013,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "AgreementsParamOffset": {
-        "default": "0",
         "docs": "Offset/index of record for the next page of records to return. This is supposed to be an integer but query parameters are string.",
         "type": "string",
         "validation": {
@@ -26401,7 +26387,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "ContractPreview": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -27152,7 +27137,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "CountryCode": {
-        "default": undefined,
         "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code.",
         "type": "string",
         "validation": {
@@ -27282,7 +27266,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "CurrencyCode": {
-        "default": undefined,
         "docs": "Currency code.",
         "type": "string",
         "validation": {
@@ -27294,7 +27277,6 @@ exports[`open api parser deel simple 1`] = `
       },
       "CurrencyCodeList": "list<CurrencyCodeRequired>",
       "CurrencyCodeRequired": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -27323,7 +27305,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "DateStringDefaultNow": {
-        "default": undefined,
         "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31. Defaults to current date",
         "type": "string",
         "validation": {
@@ -27334,7 +27315,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "DateStringRequired": {
-        "default": undefined,
         "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
         "type": "string",
         "validation": {
@@ -27368,7 +27348,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "EmailTypeRequired": {
-        "default": undefined,
         "docs": "Worker's email address.",
         "type": "string",
         "validation": {
@@ -31117,7 +31096,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "LegalEntitySubType": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -31400,7 +31378,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "NoticePeriod": {
-        "default": 0,
         "docs": "Days before to notice the termination of contract for eather party.",
         "type": "double",
         "validation": {
@@ -34014,7 +33991,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "UrlTypeRequired": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {

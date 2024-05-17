@@ -2533,7 +2533,6 @@ exports[`open api parser hathora docs 1`] = `
         },
       },
       "AppId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -2677,7 +2676,6 @@ exports[`open api parser hathora docs 1`] = `
         },
       },
       "BuildId": {
-        "default": undefined,
         "docs": undefined,
         "type": "double",
         "validation": {
@@ -2829,7 +2827,6 @@ exports[`open api parser hathora docs 1`] = `
         },
       },
       "DeploymentId": {
-        "default": undefined,
         "docs": undefined,
         "type": "double",
         "validation": {
@@ -2944,7 +2941,6 @@ exports[`open api parser hathora docs 1`] = `
         "type": "PickRoomExcludeKeyofRoomAllocations",
       },
       "OrgId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3058,7 +3054,6 @@ exports[`open api parser hathora docs 1`] = `
         },
       },
       "ProcessId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3136,7 +3131,6 @@ exports[`open api parser hathora docs 1`] = `
         },
       },
       "RoomAllocationId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3147,7 +3141,6 @@ exports[`open api parser hathora docs 1`] = `
         },
       },
       "RoomId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3173,7 +3166,6 @@ exports[`open api parser hathora docs 1`] = `
         },
       },
       "TailLines": {
-        "default": undefined,
         "docs": undefined,
         "type": "integer",
         "validation": {
@@ -5371,7 +5363,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "AppId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5515,7 +5506,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "BuildId": {
-        "default": undefined,
         "docs": undefined,
         "type": "double",
         "validation": {
@@ -5667,7 +5657,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "DeploymentId": {
-        "default": undefined,
         "docs": undefined,
         "type": "double",
         "validation": {
@@ -5782,7 +5771,6 @@ exports[`open api parser hathora simple 1`] = `
         "type": "PickRoomExcludeKeyofRoomAllocations",
       },
       "OrgId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5896,7 +5884,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "ProcessId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5974,7 +5961,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "RoomAllocationId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5985,7 +5971,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "RoomId": {
-        "default": undefined,
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -6011,7 +5996,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "TailLines": {
-        "default": undefined,
         "docs": undefined,
         "type": "integer",
         "validation": {

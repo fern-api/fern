@@ -98,6 +98,16 @@ exports[`rules rules docs 1`] = `
           },
         },
       },
+      "String": {
+        "docs": undefined,
+        "type": "string",
+        "validation": {
+          "format": "custom",
+          "maxLength": 10,
+          "minLength": 3,
+          "pattern": "^[a-zA-Z0-9]*$",
+        },
+      },
     },
   },
   "rootApiFile": {
@@ -206,6 +216,16 @@ exports[`rules rules simple 1`] = `
               "multipleOf": 1.1,
             },
           },
+        },
+      },
+      "String": {
+        "docs": undefined,
+        "type": "string",
+        "validation": {
+          "format": "custom",
+          "maxLength": 10,
+          "minLength": 3,
+          "pattern": "^[a-zA-Z0-9]*$",
         },
       },
     },

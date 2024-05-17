@@ -42,7 +42,6 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
     "ids/person.yml": {
       "types": {
         "PersonId": {
-          "default": undefined,
           "docs": undefined,
           "type": "string",
           "validation": {
@@ -57,7 +56,6 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
     "ids/user.yml": {
       "types": {
         "UserId": {
-          "default": undefined,
           "docs": undefined,
           "type": "string",
           "validation": {
@@ -166,7 +164,6 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
     "ids/person.yml": {
       "types": {
         "PersonId": {
-          "default": undefined,
           "docs": undefined,
           "type": "string",
           "validation": {
@@ -181,7 +178,6 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
     "ids/user.yml": {
       "types": {
         "UserId": {
-          "default": undefined,
           "docs": undefined,
           "type": "string",
           "validation": {

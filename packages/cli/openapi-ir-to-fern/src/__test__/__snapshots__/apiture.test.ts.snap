@@ -3770,7 +3770,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         ],
       },
       "AccountNickname": {
-        "default": undefined,
         "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
         "type": "string",
         "validation": {
@@ -3814,7 +3813,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "AccountRoutingNumber": {
-        "default": undefined,
         "docs": "An account ABA routing and transit number.",
         "type": "string",
         "validation": {
@@ -4073,7 +4071,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "AmountRange": {
-        "default": undefined,
         "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
         "type": "string",
         "validation": {
@@ -4229,7 +4226,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         ],
       },
       "ChallengePromptId": {
-        "default": undefined,
         "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
         "type": "string",
         "validation": {
@@ -4269,7 +4265,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "ChallengeToken": {
-        "default": undefined,
         "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
         "type": "string",
         "validation": {
@@ -4284,7 +4279,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "type": "PositiveIntegerRange",
       },
       "CreditOrDebitValue": {
-        "default": undefined,
         "docs": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
         "type": "string",
         "validation": {
@@ -4376,7 +4370,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "DateRange": {
-        "default": undefined,
         "docs": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
         "type": "string",
         "validation": {
@@ -4478,7 +4471,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
       },
       "FullAccountNumber": {
-        "default": undefined,
         "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
         "type": "string",
         "validation": {
@@ -4553,7 +4545,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "InstitutionId": {
-        "default": undefined,
         "docs": "The unique immutable identifier of a financial institution.",
         "type": "string",
         "validation": {
@@ -4699,7 +4690,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "MaskedAccountNumber": {
-        "default": undefined,
         "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
         "type": "string",
         "validation": {
@@ -4710,7 +4700,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "MonetaryValue": {
-        "default": undefined,
         "docs": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
         "type": "string",
         "validation": {
@@ -4775,7 +4764,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "PositiveIntegerRange": {
-        "default": undefined,
         "docs": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
         "type": "string",
         "validation": {
@@ -4908,7 +4896,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "ResourceId": {
-        "default": undefined,
         "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
         "type": "string",
         "validation": {
@@ -4954,7 +4941,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "TimeZoneId": {
-        "default": undefined,
         "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
         "type": "string",
         "validation": {
@@ -5018,7 +5004,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "TransactionCategoryLabel": {
-        "default": undefined,
         "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
         "type": "string",
         "validation": {
@@ -8067,7 +8052,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         ],
       },
       "AccountNickname": {
-        "default": undefined,
         "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
         "type": "string",
         "validation": {
@@ -8111,7 +8095,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "AccountRoutingNumber": {
-        "default": undefined,
         "docs": "An account ABA routing and transit number.",
         "type": "string",
         "validation": {
@@ -8370,7 +8353,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "AmountRange": {
-        "default": undefined,
         "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
         "type": "string",
         "validation": {
@@ -8526,7 +8508,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         ],
       },
       "ChallengePromptId": {
-        "default": undefined,
         "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
         "type": "string",
         "validation": {
@@ -8566,7 +8547,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         },
       },
       "ChallengeToken": {
-        "default": undefined,
         "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
         "type": "string",
         "validation": {
@@ -8581,7 +8561,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "type": "PositiveIntegerRange",
       },
       "CreditOrDebitValue": {
-        "default": undefined,
         "docs": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
         "type": "string",
         "validation": {
@@ -8673,7 +8652,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "DateRange": {
-        "default": undefined,
         "docs": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
         "type": "string",
         "validation": {
@@ -8775,7 +8753,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
       },
       "FullAccountNumber": {
-        "default": undefined,
         "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
         "type": "string",
         "validation": {
@@ -8850,7 +8827,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "InstitutionId": {
-        "default": undefined,
         "docs": "The unique immutable identifier of a financial institution.",
         "type": "string",
         "validation": {
@@ -8996,7 +8972,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "MaskedAccountNumber": {
-        "default": undefined,
         "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
         "type": "string",
         "validation": {
@@ -9007,7 +8982,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "MonetaryValue": {
-        "default": undefined,
         "docs": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
         "type": "string",
         "validation": {
@@ -9072,7 +9046,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "PositiveIntegerRange": {
-        "default": undefined,
         "docs": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
         "type": "string",
         "validation": {
@@ -9205,7 +9178,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "ResourceId": {
-        "default": undefined,
         "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
         "type": "string",
         "validation": {
@@ -9251,7 +9223,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "TimeZoneId": {
-        "default": undefined,
         "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
         "type": "string",
         "validation": {
@@ -9315,7 +9286,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         },
       },
       "TransactionCategoryLabel": {
-        "default": undefined,
         "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
         "type": "string",
         "validation": {

@@ -10495,7 +10495,6 @@ exports[`open api parser hookdeck docs 1`] = `
         ],
       },
       "IssueTriggerBackpressureDelay": {
-        "default": undefined,
         "docs": "The minimum delay (backpressure) to open the issue for min of 1 minute (60000) and max of 1 day (86400000)",
         "type": "integer",
         "validation": {
@@ -21959,7 +21958,6 @@ exports[`open api parser hookdeck simple 1`] = `
         ],
       },
       "IssueTriggerBackpressureDelay": {
-        "default": undefined,
         "docs": "The minimum delay (backpressure) to open the issue for min of 1 minute (60000) and max of 1 day (86400000)",
         "type": "integer",
         "validation": {

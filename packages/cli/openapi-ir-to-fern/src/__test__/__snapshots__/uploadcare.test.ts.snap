@@ -3382,7 +3382,6 @@ to the value of the \`check_URL_duplicates\` parameter.
     },
     "types": {
       "AccountBlockedError": {
-        "default": "Account has been blocked.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3393,7 +3392,6 @@ to the value of the \`check_URL_duplicates\` parameter.
         },
       },
       "AccountLimitsExceededError": {
-        "default": "Account has reached its limits.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3404,7 +3402,6 @@ to the value of the \`check_URL_duplicates\` parameter.
         },
       },
       "AccountUnpaidError": {
-        "default": "Account has been blocked for non payment.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3415,7 +3412,6 @@ to the value of the \`check_URL_duplicates\` parameter.
         },
       },
       "AutoStoreDisabledError": {
-        "default": "Autostore is disabled.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3547,7 +3543,6 @@ to the value of the \`check_URL_duplicates\` parameter.
         ],
       },
       "ExpireType": {
-        "default": undefined,
         "docs": "\`expire\` must be sent along with your upload request if you would like to use signed uploads.
 The parameter defines the time during which your signature is valid. It's a UNIX timestamp.
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
@@ -3562,7 +3557,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileIdInvalidError": {
-        "default": "file_id is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3573,7 +3567,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileIdRequiredError": {
-        "default": "file_id is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3584,7 +3577,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileInfectedError": {
-        "default": "The file is infected by <VIRUS-NAME> virus.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3595,7 +3587,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeyDuplicatedError": {
-        "default": "File's metadata key \`<KEY>\` has a duplicate.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3606,7 +3597,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeyEmptyError": {
-        "default": "File's metadata key can not be empty.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3617,7 +3607,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeyForbiddenError": {
-        "default": "File's metadata key \`<KEY>\` contains symbols not allowed by the metadata key format.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3628,7 +3617,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeyLengthTooBigError": {
-        "default": "Length of file metadata key \`<KEY>\` can not be more than <LENGTH> symbols.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3639,7 +3627,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeysNumberTooBigError": {
-        "default": "A file can not have more than <NUMBER> metadata keys.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3650,7 +3637,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataValueEmptyError": {
-        "default": "Value of the file metadata key \`<KEY>\` can not be empty.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3661,7 +3647,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataValueForbiddenError": {
-        "default": "Value of file metadata key \`<KEY>\` contains symbols not allowed by the metadata value format.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3672,7 +3657,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataValueLengthTooBigError": {
-        "default": "Value of file metadata's key \`<KEY>\` can not be more than <LENGTH> symbols in length.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3683,7 +3667,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileNotFoundError": {
-        "default": "File is not found.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3694,7 +3677,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileSizeLimitExceededError": {
-        "default": "File is too large.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -3705,7 +3687,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileTypeForbiddenError": {
-        "default": "Uploading of these file types is not allowed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4004,7 +3985,6 @@ that are tool old (or that have not been created at all).
         ],
       },
       "FilesRequiredError": {
-        "default": "Request does not contain files.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4077,7 +4057,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupFileUrlParsingFailedError": {
-        "default": "No files[N] parameters found.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4088,7 +4067,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupFilesInvalidError": {
-        "default": "This is not valid file url: %s.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4099,7 +4077,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupFilesNotFoundError": {
-        "default": "Some files not found.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4110,7 +4087,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupIdRequiredError": {
-        "default": "group_id is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4190,7 +4166,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupNotFoundError": {
-        "default": "group_id is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4201,7 +4176,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "HostnameNotFoundError": {
-        "default": "Host does not exist.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4508,7 +4482,6 @@ that are tool old (or that have not been created at all).
         "validation": undefined,
       },
       "MetadataValue": {
-        "default": undefined,
         "docs": "Arbitrary metadata associated with the file.
 See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-refs/rest-api/v0.7.0/#tag/File-metadata) for more information.
 ",
@@ -4521,7 +4494,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileAlreadyUploadedError": {
-        "default": "File is already uploaded.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4532,7 +4504,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileCompletionFailedError": {
-        "default": "Can not complete upload. Wrong parts size?",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4543,7 +4514,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileIdRequiredError": {
-        "default": "uuid is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4554,7 +4524,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileSizeLimitExceededError": {
-        "default": "File size exceeds project limit.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4565,7 +4534,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileSizeTooSmallError": {
-        "default": "File size can not be less than <SIZE> bytes. Please use direct upload instead of multipart.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4644,7 +4612,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         ],
       },
       "MultipartPartSizeInvalidError": {
-        "default": "Multipart Upload Part Size should be an integer.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4655,7 +4622,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartPartSizeTooBigError": {
-        "default": "Multipart Upload Part Size can not be more than <SIZE> bytes.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4666,7 +4632,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartPartSizeTooSmallError": {
-        "default": "Multipart Upload Part Size can not be less than <SIZE> bytes.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4677,7 +4642,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartSizeInvalidError": {
-        "default": "size should be integer.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4688,7 +4652,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartUploadSizeTooLargeError": {
-        "default": "Uploaded size is more than expected.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4699,7 +4662,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartUploadSizeTooSmallError": {
-        "default": "File size mismatch. Not all parts uploaded?",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4710,7 +4672,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "NullCharactersForbiddenError": {
-        "default": "Null characters are not allowed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4721,7 +4682,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "PostRequestParserFailedError": {
-        "default": "HTTP POST request parsing failed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4732,7 +4692,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "ProjectPublicKeyRemovedError": {
-        "default": "Project <PUB-KEY> is marked as removed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4743,7 +4702,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "ProjectPublicKeyType": {
-        "default": undefined,
         "docs": "Public key identifying an Uploadcare project your uploads will go to.",
         "type": "string",
         "validation": {
@@ -4754,7 +4712,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "PublicKeyInvalidError": {
-        "default": "pub_key is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4765,7 +4722,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "PublicKeyRequiredError": {
-        "default": "pub_key is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4776,7 +4732,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "RequestFiledsNumberLimitExceededError": {
-        "default": "The request contains too many HTTP POST fields.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4787,7 +4742,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "RequestParamRequiredError": {
-        "default": "<PARAMETER-NAME> is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4921,7 +4875,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureExpirationError": {
-        "default": "Expired signature.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4932,7 +4885,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureExpirationInvalidError": {
-        "default": "\`expire\` must be a UNIX timestamp.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4943,7 +4895,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureExpirationRequiredError": {
-        "default": "\`expire\` is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4954,7 +4905,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureInvalidError": {
-        "default": "Invalid signature.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4965,7 +4915,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureRequiredError": {
-        "default": "\`signature\` is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -4976,7 +4925,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureType": {
-        "default": undefined,
         "docs": "\`signature\` must be sent along with your upload request if you would like to use signed uploads.
 The signature should be generated on your backend.
 **Note**: the process requires knowledge of your Uploadcare Project's Secret key.
@@ -4991,7 +4939,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "SourceUrlRequiredError": {
-        "default": "source_url is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5033,7 +4980,6 @@ change the value to \`auto\`.
         ],
       },
       "TokenRequiredError": {
-        "default": "token is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5044,7 +4990,6 @@ change the value to \`auto\`.
         },
       },
       "UploadFailedError": {
-        "default": "Upload failed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5055,7 +5000,6 @@ change the value to \`auto\`.
         },
       },
       "UploadcarePublicKeyInvalidError": {
-        "default": "UPLOADCARE_PUB_KEY is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5066,7 +5010,6 @@ change the value to \`auto\`.
         },
       },
       "UploadcarePublicKeyRequiredError": {
-        "default": "UPLOADCARE_PUB_KEY is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5077,7 +5020,6 @@ change the value to \`auto\`.
         },
       },
       "UrlBlacklistedError": {
-        "default": "Source is blacklisted.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5088,7 +5030,6 @@ change the value to \`auto\`.
         },
       },
       "UrlHostMalformedError": {
-        "default": "URL host is malformed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5099,7 +5040,6 @@ change the value to \`auto\`.
         },
       },
       "UrlHostPrivateIpForbiddenError": {
-        "default": "Only public IPs are allowed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5110,7 +5050,6 @@ change the value to \`auto\`.
         },
       },
       "UrlHostRequiredError": {
-        "default": "No URL host supplied.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5121,7 +5060,6 @@ change the value to \`auto\`.
         },
       },
       "UrlParsingFailedError": {
-        "default": "Failed to parse URL.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5132,7 +5070,6 @@ change the value to \`auto\`.
         },
       },
       "UrlSchemeInvalidError": {
-        "default": "Invalid URL scheme.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5143,7 +5080,6 @@ change the value to \`auto\`.
         },
       },
       "UrlSchemeRequiredError": {
-        "default": "No URL scheme supplied.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -5154,7 +5090,6 @@ change the value to \`auto\`.
         },
       },
       "UuidInvalidError": {
-        "default": "uuid is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -7984,7 +7919,6 @@ to the value of the \`check_URL_duplicates\` parameter.
     },
     "types": {
       "AccountBlockedError": {
-        "default": "Account has been blocked.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -7995,7 +7929,6 @@ to the value of the \`check_URL_duplicates\` parameter.
         },
       },
       "AccountLimitsExceededError": {
-        "default": "Account has reached its limits.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8006,7 +7939,6 @@ to the value of the \`check_URL_duplicates\` parameter.
         },
       },
       "AccountUnpaidError": {
-        "default": "Account has been blocked for non payment.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8017,7 +7949,6 @@ to the value of the \`check_URL_duplicates\` parameter.
         },
       },
       "AutoStoreDisabledError": {
-        "default": "Autostore is disabled.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8087,7 +8018,6 @@ to the value of the \`check_URL_duplicates\` parameter.
         },
       },
       "ExpireType": {
-        "default": undefined,
         "docs": "\`expire\` must be sent along with your upload request if you would like to use signed uploads.
 The parameter defines the time during which your signature is valid. It's a UNIX timestamp.
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
@@ -8102,7 +8032,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileIdInvalidError": {
-        "default": "file_id is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8113,7 +8042,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileIdRequiredError": {
-        "default": "file_id is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8124,7 +8052,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileInfectedError": {
-        "default": "The file is infected by <VIRUS-NAME> virus.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8135,7 +8062,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeyDuplicatedError": {
-        "default": "File's metadata key \`<KEY>\` has a duplicate.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8146,7 +8072,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeyEmptyError": {
-        "default": "File's metadata key can not be empty.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8157,7 +8082,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeyForbiddenError": {
-        "default": "File's metadata key \`<KEY>\` contains symbols not allowed by the metadata key format.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8168,7 +8092,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeyLengthTooBigError": {
-        "default": "Length of file metadata key \`<KEY>\` can not be more than <LENGTH> symbols.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8179,7 +8102,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataKeysNumberTooBigError": {
-        "default": "A file can not have more than <NUMBER> metadata keys.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8190,7 +8112,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataValueEmptyError": {
-        "default": "Value of the file metadata key \`<KEY>\` can not be empty.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8201,7 +8122,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataValueForbiddenError": {
-        "default": "Value of file metadata key \`<KEY>\` contains symbols not allowed by the metadata value format.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8212,7 +8132,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileMetadataValueLengthTooBigError": {
-        "default": "Value of file metadata's key \`<KEY>\` can not be more than <LENGTH> symbols in length.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8223,7 +8142,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileNotFoundError": {
-        "default": "File is not found.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8234,7 +8152,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileSizeLimitExceededError": {
-        "default": "File is too large.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8245,7 +8162,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "FileTypeForbiddenError": {
-        "default": "Uploading of these file types is not allowed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8511,7 +8427,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "FilesRequiredError": {
-        "default": "Request does not contain files.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8547,7 +8462,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupFileUrlParsingFailedError": {
-        "default": "No files[N] parameters found.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8558,7 +8472,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupFilesInvalidError": {
-        "default": "This is not valid file url: %s.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8569,7 +8482,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupFilesNotFoundError": {
-        "default": "Some files not found.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8580,7 +8492,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupIdRequiredError": {
-        "default": "group_id is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8660,7 +8571,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupNotFoundError": {
-        "default": "group_id is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8671,7 +8581,6 @@ that are tool old (or that have not been created at all).
         },
       },
       "HostnameNotFoundError": {
-        "default": "Host does not exist.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -8978,7 +8887,6 @@ that are tool old (or that have not been created at all).
         "validation": undefined,
       },
       "MetadataValue": {
-        "default": undefined,
         "docs": "Arbitrary metadata associated with the file.
 See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-refs/rest-api/v0.7.0/#tag/File-metadata) for more information.
 ",
@@ -8991,7 +8899,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileAlreadyUploadedError": {
-        "default": "File is already uploaded.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9002,7 +8909,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileCompletionFailedError": {
-        "default": "Can not complete upload. Wrong parts size?",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9013,7 +8919,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileIdRequiredError": {
-        "default": "uuid is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9024,7 +8929,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileSizeLimitExceededError": {
-        "default": "File size exceeds project limit.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9035,7 +8939,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileSizeTooSmallError": {
-        "default": "File size can not be less than <SIZE> bytes. Please use direct upload instead of multipart.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9046,7 +8949,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartPartSizeInvalidError": {
-        "default": "Multipart Upload Part Size should be an integer.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9057,7 +8959,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartPartSizeTooBigError": {
-        "default": "Multipart Upload Part Size can not be more than <SIZE> bytes.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9068,7 +8969,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartPartSizeTooSmallError": {
-        "default": "Multipart Upload Part Size can not be less than <SIZE> bytes.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9079,7 +8979,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartSizeInvalidError": {
-        "default": "size should be integer.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9090,7 +8989,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartUploadSizeTooLargeError": {
-        "default": "Uploaded size is more than expected.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9101,7 +8999,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartUploadSizeTooSmallError": {
-        "default": "File size mismatch. Not all parts uploaded?",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9112,7 +9009,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "NullCharactersForbiddenError": {
-        "default": "Null characters are not allowed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9123,7 +9019,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "PostRequestParserFailedError": {
-        "default": "HTTP POST request parsing failed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9134,7 +9029,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "ProjectPublicKeyRemovedError": {
-        "default": "Project <PUB-KEY> is marked as removed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9145,7 +9039,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "ProjectPublicKeyType": {
-        "default": undefined,
         "docs": "Public key identifying an Uploadcare project your uploads will go to.",
         "type": "string",
         "validation": {
@@ -9156,7 +9049,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "PublicKeyInvalidError": {
-        "default": "pub_key is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9167,7 +9059,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "PublicKeyRequiredError": {
-        "default": "pub_key is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9178,7 +9069,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "RequestFiledsNumberLimitExceededError": {
-        "default": "The request contains too many HTTP POST fields.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9189,7 +9079,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "RequestParamRequiredError": {
-        "default": "<PARAMETER-NAME> is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9323,7 +9212,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureExpirationError": {
-        "default": "Expired signature.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9334,7 +9222,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureExpirationInvalidError": {
-        "default": "\`expire\` must be a UNIX timestamp.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9345,7 +9232,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureExpirationRequiredError": {
-        "default": "\`expire\` is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9356,7 +9242,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureInvalidError": {
-        "default": "Invalid signature.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9367,7 +9252,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureRequiredError": {
-        "default": "\`signature\` is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9378,7 +9262,6 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "SignatureType": {
-        "default": undefined,
         "docs": "\`signature\` must be sent along with your upload request if you would like to use signed uploads.
 The signature should be generated on your backend.
 **Note**: the process requires knowledge of your Uploadcare Project's Secret key.
@@ -9393,7 +9276,6 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         },
       },
       "SourceUrlRequiredError": {
-        "default": "source_url is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9435,7 +9317,6 @@ change the value to \`auto\`.
         ],
       },
       "TokenRequiredError": {
-        "default": "token is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9446,7 +9327,6 @@ change the value to \`auto\`.
         },
       },
       "UploadFailedError": {
-        "default": "Upload failed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9457,7 +9337,6 @@ change the value to \`auto\`.
         },
       },
       "UploadcarePublicKeyInvalidError": {
-        "default": "UPLOADCARE_PUB_KEY is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9468,7 +9347,6 @@ change the value to \`auto\`.
         },
       },
       "UploadcarePublicKeyRequiredError": {
-        "default": "UPLOADCARE_PUB_KEY is required.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9479,7 +9357,6 @@ change the value to \`auto\`.
         },
       },
       "UrlBlacklistedError": {
-        "default": "Source is blacklisted.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9490,7 +9367,6 @@ change the value to \`auto\`.
         },
       },
       "UrlHostMalformedError": {
-        "default": "URL host is malformed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9501,7 +9377,6 @@ change the value to \`auto\`.
         },
       },
       "UrlHostPrivateIpForbiddenError": {
-        "default": "Only public IPs are allowed.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9512,7 +9387,6 @@ change the value to \`auto\`.
         },
       },
       "UrlHostRequiredError": {
-        "default": "No URL host supplied.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9523,7 +9397,6 @@ change the value to \`auto\`.
         },
       },
       "UrlParsingFailedError": {
-        "default": "Failed to parse URL.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9534,7 +9407,6 @@ change the value to \`auto\`.
         },
       },
       "UrlSchemeInvalidError": {
-        "default": "Invalid URL scheme.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9545,7 +9417,6 @@ change the value to \`auto\`.
         },
       },
       "UrlSchemeRequiredError": {
-        "default": "No URL scheme supplied.",
         "docs": undefined,
         "type": "string",
         "validation": {
@@ -9556,7 +9427,6 @@ change the value to \`auto\`.
         },
       },
       "UuidInvalidError": {
-        "default": "uuid is invalid.",
         "docs": undefined,
         "type": "string",
         "validation": {
