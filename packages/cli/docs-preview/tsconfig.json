@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
+    { "path": "../../ir-sdk" },
     { "path": "../configuration" },
     { "path": "../docs-resolver" },
     { "path": "../generation/ir-generator" },
