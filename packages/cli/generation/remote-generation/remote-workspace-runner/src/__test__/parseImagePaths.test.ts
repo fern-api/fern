@@ -3,7 +3,7 @@ import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils
 import { diffLines } from "diff";
 import fs from "fs";
 import { resolve } from "path";
-import { parseImagePaths, replaceImagePaths } from "../parseImagePaths";
+import { parseImagePaths, replaceImagePaths } from "../resolver/parseImagePaths";
 
 const MDX_PATH = RelativeFilePath.of("my/docs/folder/file.mdx");
 

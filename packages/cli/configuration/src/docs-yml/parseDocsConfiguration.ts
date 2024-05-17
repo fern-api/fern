@@ -13,7 +13,6 @@ import {
     DocsNavigationItem,
     FilepathOrUrl,
     FontConfig,
-    ImageReference,
     JavascriptConfig,
     ParsedApiNavigationItem,
     ParsedDocsConfiguration,
@@ -81,10 +80,7 @@ export async function parseDocsConfiguration({
 
     const logo = convertLogoReference(rawLogo, absoluteFilepathToDocsConfig);
 
-    const favicon =
-        faviconRef != null
-            ? convertImageReference({ rawImageReference: faviconRef, absoluteFilepathToDocsConfig })
-            : undefined;
+    const favicon = resolveFilepath(faviconRef, absoluteFilepathToDocsConfig);
 
     const backgroundImage = convertBackgroundImage(rawBackgroundImage, absoluteFilepathToDocsConfig);
 
@@ -112,7 +108,7 @@ export async function parseDocsConfiguration({
 
     return {
         title,
-        absoluteFilepath: absoluteFilepathToDocsConfig,
+        // absoluteFilepath: absoluteFilepathToDocsConfig,
         instances,
 
         /* filepath of page to contents */
@@ -151,20 +147,8 @@ function convertLogoReference(
 ): ParsedDocsConfiguration["logo"] {
     return rawLogo != null
         ? {
-              dark:
-                  rawLogo.dark != null
-                      ? convertImageReference({
-                            rawImageReference: rawLogo.dark,
-                            absoluteFilepathToDocsConfig
-                        })
-                      : undefined,
-              light:
-                  rawLogo.light != null
-                      ? convertImageReference({
-                            rawImageReference: rawLogo.light,
-                            absoluteFilepathToDocsConfig
-                        })
-                      : undefined,
+              dark: resolveFilepath(rawLogo.dark, absoluteFilepathToDocsConfig),
+              light: resolveFilepath(rawLogo.light, absoluteFilepathToDocsConfig),
               height: rawLogo.height,
               href: rawLogo.href != null ? rawLogo.href : undefined
           }
@@ -178,27 +162,12 @@ function convertBackgroundImage(
     if (rawBackgroundImage == null) {
         return undefined;
     } else if (typeof rawBackgroundImage === "string") {
-        const image = convertImageReference({
-            rawImageReference: rawBackgroundImage,
-            absoluteFilepathToDocsConfig
-        });
+        const image = resolveFilepath(rawBackgroundImage, absoluteFilepathToDocsConfig);
 
         return { dark: image, light: image };
     } else {
-        const dark =
-            rawBackgroundImage.dark != null
-                ? convertImageReference({
-                      rawImageReference: rawBackgroundImage.dark,
-                      absoluteFilepathToDocsConfig
-                  })
-                : undefined;
-        const light =
-            rawBackgroundImage.light != null
-                ? convertImageReference({
-                      rawImageReference: rawBackgroundImage.light,
-                      absoluteFilepathToDocsConfig
-                  })
-                : undefined;
+        const dark = resolveFilepath(rawBackgroundImage.dark, absoluteFilepathToDocsConfig);
+        const light = resolveFilepath(rawBackgroundImage.light, absoluteFilepathToDocsConfig);
 
         return { dark, light };
     }
@@ -215,12 +184,7 @@ async function convertCssConfig(
     return {
         inline: await Promise.all(
             cssFilePaths.map(async (cssFilePath) => {
-                const content = await readFile(
-                    resolveFilepath({
-                        rawUnresolvedFilepath: cssFilePath,
-                        absolutePath: absoluteFilepathToDocsConfig
-                    })
-                );
+                const content = await readFile(resolveFilepath(cssFilePath, absoluteFilepathToDocsConfig));
                 return content.toString();
             })
         )
@@ -254,19 +218,13 @@ async function convertJsConfig(
     for (const config of configs) {
         if (typeof config === "string") {
             files.push({
-                absolutePath: resolveFilepath({
-                    rawUnresolvedFilepath: config,
-                    absolutePath: absoluteFilepathToDocsConfig
-                })
+                absolutePath: resolveFilepath(config, absoluteFilepathToDocsConfig)
             });
         } else if (isRemoteJsConfig(config)) {
             remote.push(config);
         } else if (isFileJsConfig(config)) {
             files.push({
-                absolutePath: resolveFilepath({
-                    rawUnresolvedFilepath: config.path,
-                    absolutePath: absoluteFilepathToDocsConfig
-                }),
+                absolutePath: resolveFilepath(config.path, absoluteFilepathToDocsConfig),
                 strategy: config.strategy
             });
         }
@@ -459,10 +417,7 @@ function constructVariants(
 
     return Promise.all(
         variants.map(async (rawVariant) => ({
-            absolutePath: resolveFilepath({
-                absolutePath: absoluteFilepathToDocsConfig,
-                rawUnresolvedFilepath: rawVariant.path
-            }),
+            absolutePath: resolveFilepath(rawVariant.path, absoluteFilepathToDocsConfig),
             weight: parseWeight(rawVariant.weight),
             style: rawVariant.style
         }))
@@ -547,10 +502,7 @@ async function convertNavigationItem({
         return {
             type: "page",
             title: rawConfig.page,
-            absolutePath: resolveFilepath({
-                absolutePath: absolutePathToConfig,
-                rawUnresolvedFilepath: rawConfig.path
-            }),
+            absolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
             slug: rawConfig.slug,
             icon: rawConfig.icon,
             hidden: rawConfig.hidden
@@ -586,13 +538,7 @@ async function convertNavigationItem({
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
             navigation: rawConfig.layout?.flatMap((item) => parseApiNavigationItem(item, absolutePathToConfig)) ?? [],
-            summaryAbsolutePath:
-                rawConfig.summary != null
-                    ? resolveFilepath({
-                          absolutePath: absolutePathToConfig,
-                          rawUnresolvedFilepath: rawConfig.summary
-                      })
-                    : undefined,
+            summaryAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             hidden: rawConfig.hidden ?? undefined,
             slug: rawConfig.slug,
             skipUrlSlug: rawConfig.skipSlug ?? false,
@@ -623,10 +569,7 @@ function parseApiNavigationItem(
             {
                 type: "page",
                 title: item.page,
-                absolutePath: resolveFilepath({
-                    absolutePath: absolutePathToConfig,
-                    rawUnresolvedFilepath: item.path
-                }),
+                absolutePath: resolveFilepath(item.path, absolutePathToConfig),
                 slug: item.slug,
                 icon: item.icon,
                 hidden: item.hidden
@@ -676,30 +619,19 @@ function isRawLinkConfig(item: RawDocs.NavigationItem): item is RawDocs.LinkConf
     return (item as RawDocs.LinkConfiguration).link != null;
 }
 
-export function convertImageReference({
-    rawImageReference,
-    absoluteFilepathToDocsConfig
-}: {
-    rawImageReference: string;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
-}): ImageReference {
-    return {
-        filepath: resolveFilepath({
-            absolutePath: absoluteFilepathToDocsConfig,
-            rawUnresolvedFilepath: rawImageReference
-        })
-    };
-}
-
-function resolveFilepath({
-    rawUnresolvedFilepath,
-    absolutePath
-}: {
-    rawUnresolvedFilepath: string;
-    absolutePath: AbsoluteFilePath;
-}): AbsoluteFilePath {
-    const resolved = resolve(dirname(absolutePath), rawUnresolvedFilepath);
-    return resolved;
+export function resolveFilepath(unresolvedFilepath: string, absolutePath: AbsoluteFilePath): AbsoluteFilePath;
+export function resolveFilepath(
+    unresolvedFilepath: string | undefined,
+    absolutePath: AbsoluteFilePath
+): AbsoluteFilePath | undefined;
+export function resolveFilepath(
+    unresolvedFilepath: string | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): AbsoluteFilePath | undefined {
+    if (unresolvedFilepath == null) {
+        return undefined;
+    }
+    return resolve(dirname(absoluteFilepathToDocsConfig), unresolvedFilepath);
 }
 
 function isTabbedNavigationConfig(
@@ -792,10 +724,7 @@ async function convertFilepathOrUrl(
         return { type: "url", value };
     }
 
-    const filepath = convertImageReference({
-        rawImageReference: value,
-        absoluteFilepathToDocsConfig
-    }).filepath;
+    const filepath = resolveFilepath(value, absoluteFilepathToDocsConfig);
 
     if (await doesPathExist(filepath)) {
         return { type: "filepath", value: filepath };
