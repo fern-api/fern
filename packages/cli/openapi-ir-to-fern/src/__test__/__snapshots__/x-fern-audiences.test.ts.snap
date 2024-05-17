@@ -22,7 +22,17 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
           "request": {
             "body": {
               "properties": {
-                "private_property": "optional<string>",
+                "private_property": {
+                  "default": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
                 "public_property": {
                   "audiences": [
                     "public",
@@ -47,7 +57,15 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
             "audiences": [
               "public",
             ],
+            "default": undefined,
+            "docs": undefined,
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -85,7 +103,17 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
           "request": {
             "body": {
               "properties": {
-                "private_property": "optional<string>",
+                "private_property": {
+                  "default": undefined,
+                  "docs": undefined,
+                  "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
+                },
                 "public_property": {
                   "audiences": [
                     "public",
@@ -110,7 +138,15 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
             "audiences": [
               "public",
             ],
+            "default": undefined,
+            "docs": undefined,
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },

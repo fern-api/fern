@@ -22,7 +22,12 @@ import {
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import {
+    getDefaultFromTypeReference,
+    getDocsFromTypeReference,
+    getTypeFromTypeReference,
+    getValidationFromTypeReference
+} from "./utils/getTypeFromTypeReference";
 
 export function buildTypeReference({
     schema,
@@ -38,8 +43,9 @@ export function buildTypeReference({
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     switch (schema.type) {
-        case "primitive":
+        case "primitive": {
             return buildPrimitiveTypeReference(schema);
+        }
         case "array":
             return buildArrayTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "map":
@@ -230,13 +236,17 @@ export function buildOptionalTypeReference({
     });
     const itemType = getTypeFromTypeReference(itemTypeReference);
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
+    const itemDefault = getDefaultFromTypeReference(itemTypeReference);
+    const itemValidation = getValidationFromTypeReference(itemTypeReference);
     const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
-    if (schema.description == null && itemDocs == null) {
+    if (schema.description == null && itemDocs == null && itemDefault == null && itemValidation == null) {
         return type;
     }
     return {
+        type,
         docs: schema.description ?? itemDocs,
-        type
+        default: itemDefault,
+        validation: itemValidation
     };
 }
 

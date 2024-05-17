@@ -146,20 +146,31 @@ exports[`open api parser hume docs 1`] = `
             "body": {
               "properties": {
                 "callback_url": {
+                  "default": undefined,
                   "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": "url",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "models": "optional<Models>",
                 "notify": {
+                  "default": undefined,
                   "docs": "Whether to send an email notification to the user upon job failure.",
                   "type": "optional<boolean>",
+                  "validation": undefined,
                 },
                 "transcription": "optional<Transcription>",
                 "urls": {
+                  "default": undefined,
                   "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
                   "type": "optional<list<string>>",
+                  "validation": undefined,
                 },
               },
             },
@@ -464,24 +475,52 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "descriptions": "optional<Empty>",
           "facs": "optional<Empty>",
           "fps_pred": {
+            "default": 3,
             "docs": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "identify_faces": {
+            "default": undefined,
             "docs": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
           "min_face_size": {
+            "default": 60,
             "docs": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
             "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "prob_threshold": {
+            "default": 0.99,
             "docs": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 1,
+              "min": 0,
+              "multipleOf": undefined,
+            },
           },
           "save_faces": {
+            "default": undefined,
             "docs": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
         },
       },
@@ -490,16 +529,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "box": "BoundingBox",
           "descriptions": {
+            "default": undefined,
             "docs": "Modality-specific descriptive features and their scores.",
             "type": "optional<list<DescriptionsScore>>",
+            "validation": undefined,
           },
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
           "facs": {
+            "default": undefined,
             "docs": "FACS 2.0 features and their scores.",
             "type": "optional<list<FacsScore>>",
+            "validation": undefined,
           },
           "frame": {
             "default": undefined,
@@ -631,12 +674,26 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "content_type": {
+            "default": undefined,
             "docs": "The content type of the file.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "filename": {
+            "default": undefined,
             "docs": "The name of the file.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "md5sum": {
             "default": undefined,
@@ -841,8 +898,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "granularity": "optional<Granularity>",
           "identify_speakers": {
+            "default": undefined,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
           "sentiment": "optional<Empty>",
           "toxicity": "optional<Empty>",
@@ -852,8 +911,16 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
@@ -861,14 +928,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "position": "PositionInterval",
           "sentiment": {
+            "default": undefined,
             "docs": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from \`1\` (negative) to \`9\` (positive).
 
 Compared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of \`5\`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of \`5\`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
             "type": "optional<list<SentimentScore>>",
+            "validation": undefined,
           },
           "speaker_confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "text": {
             "default": undefined,
@@ -883,8 +960,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "time": "optional<TimeInterval>",
           "toxicity": {
+            "default": undefined,
             "docs": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
             "type": "optional<list<ToxicityScore>>",
+            "validation": undefined,
           },
         },
       },
@@ -914,8 +993,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "identify_speakers": {
+            "default": undefined,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
         },
       },
@@ -923,8 +1004,16 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
@@ -966,8 +1055,16 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "position": "PositionInterval",
           "speaker_confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "support": {
             "default": undefined,
@@ -1092,8 +1189,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "properties": {
           "granularity": "optional<Granularity>",
           "identify_speakers": {
+            "default": undefined,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
           "window": "optional<Window>",
         },
@@ -1102,20 +1201,43 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
           "speaker_confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "text": {
+            "default": undefined,
             "docs": "A segment of text (like a word or a sentence).",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "time": "TimeInterval",
         },
@@ -1141,21 +1263,32 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "callback_url": {
+            "default": undefined,
             "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
             "type": "optional<string>",
+            "validation": {
+              "format": "url",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "files": "list<File>",
           "models": "optional<Models>",
           "notify": {
+            "default": undefined,
             "docs": "Whether to send an email notification to the user upon job completion/failure.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
           "transcription": "optional<Transcription>",
           "urls": {
+            "default": undefined,
             "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
             "type": "optional<list<string>>",
+            "validation": undefined,
           },
         },
       },
@@ -1220,8 +1353,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "error": {
+            "default": undefined,
             "docs": "An error message.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "results": "optional<Results>",
           "source": "Source",
@@ -1387,12 +1527,28 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "length": {
+            "default": 4,
             "docs": "The length of the sliding window.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": 0.5,
+              "multipleOf": undefined,
+            },
           },
           "step": {
+            "default": 1,
             "docs": "The step size of the sliding window.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": 0.5,
+              "multipleOf": undefined,
+            },
           },
         },
       },
@@ -1566,20 +1722,31 @@ exports[`open api parser hume simple 1`] = `
             "body": {
               "properties": {
                 "callback_url": {
+                  "default": undefined,
                   "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": "url",
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "models": "optional<Models>",
                 "notify": {
+                  "default": undefined,
                   "docs": "Whether to send an email notification to the user upon job failure.",
                   "type": "optional<boolean>",
+                  "validation": undefined,
                 },
                 "transcription": "optional<Transcription>",
                 "urls": {
+                  "default": undefined,
                   "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
                   "type": "optional<list<string>>",
+                  "validation": undefined,
                 },
               },
             },
@@ -1884,24 +2051,52 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "descriptions": "optional<Empty>",
           "facs": "optional<Empty>",
           "fps_pred": {
+            "default": 3,
             "docs": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "identify_faces": {
+            "default": undefined,
             "docs": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
           "min_face_size": {
+            "default": 60,
             "docs": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
             "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "prob_threshold": {
+            "default": 0.99,
             "docs": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 1,
+              "min": 0,
+              "multipleOf": undefined,
+            },
           },
           "save_faces": {
+            "default": undefined,
             "docs": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
         },
       },
@@ -1910,16 +2105,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "box": "BoundingBox",
           "descriptions": {
+            "default": undefined,
             "docs": "Modality-specific descriptive features and their scores.",
             "type": "optional<list<DescriptionsScore>>",
+            "validation": undefined,
           },
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
           "facs": {
+            "default": undefined,
             "docs": "FACS 2.0 features and their scores.",
             "type": "optional<list<FacsScore>>",
+            "validation": undefined,
           },
           "frame": {
             "default": undefined,
@@ -2051,12 +2250,26 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "content_type": {
+            "default": undefined,
             "docs": "The content type of the file.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "filename": {
+            "default": undefined,
             "docs": "The name of the file.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "md5sum": {
             "default": undefined,
@@ -2261,8 +2474,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "properties": {
           "granularity": "optional<Granularity>",
           "identify_speakers": {
+            "default": undefined,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
           "sentiment": "optional<Empty>",
           "toxicity": "optional<Empty>",
@@ -2272,8 +2487,16 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
@@ -2281,14 +2504,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "position": "PositionInterval",
           "sentiment": {
+            "default": undefined,
             "docs": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from \`1\` (negative) to \`9\` (positive).
 
 Compared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of \`5\`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of \`5\`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
             "type": "optional<list<SentimentScore>>",
+            "validation": undefined,
           },
           "speaker_confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "text": {
             "default": undefined,
@@ -2303,8 +2536,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "time": "optional<TimeInterval>",
           "toxicity": {
+            "default": undefined,
             "docs": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
             "type": "optional<list<ToxicityScore>>",
+            "validation": undefined,
           },
         },
       },
@@ -2334,8 +2569,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "identify_speakers": {
+            "default": undefined,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
         },
       },
@@ -2343,8 +2580,16 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
@@ -2386,8 +2631,16 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
           "position": "PositionInterval",
           "speaker_confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "support": {
             "default": undefined,
@@ -2512,8 +2765,10 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "properties": {
           "granularity": "optional<Granularity>",
           "identify_speakers": {
+            "default": undefined,
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
           "window": "optional<Window>",
         },
@@ -2522,20 +2777,43 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "emotions": {
             "docs": "A high-dimensional embedding in emotion space.",
             "type": "list<EmotionScore>",
           },
           "speaker_confidence": {
+            "default": undefined,
             "docs": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
           },
           "text": {
+            "default": undefined,
             "docs": "A segment of text (like a word or a sentence).",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "time": "TimeInterval",
         },
@@ -2561,21 +2839,32 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "docs": undefined,
         "properties": {
           "callback_url": {
+            "default": undefined,
             "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
             "type": "optional<string>",
+            "validation": {
+              "format": "url",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "files": "list<File>",
           "models": "optional<Models>",
           "notify": {
+            "default": undefined,
             "docs": "Whether to send an email notification to the user upon job completion/failure.",
             "type": "optional<boolean>",
+            "validation": undefined,
           },
           "transcription": "optional<Transcription>",
           "urls": {
+            "default": undefined,
             "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
             "type": "optional<list<string>>",
+            "validation": undefined,
           },
         },
       },
@@ -2640,8 +2929,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "error": {
+            "default": undefined,
             "docs": "An error message.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "results": "optional<Results>",
           "source": "Source",
@@ -2807,12 +3103,28 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "docs": undefined,
         "properties": {
           "length": {
+            "default": 4,
             "docs": "The length of the sliding window.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": 0.5,
+              "multipleOf": undefined,
+            },
           },
           "step": {
+            "default": 1,
             "docs": "The step size of the sliding window.",
             "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": 0.5,
+              "multipleOf": undefined,
+            },
           },
         },
       },

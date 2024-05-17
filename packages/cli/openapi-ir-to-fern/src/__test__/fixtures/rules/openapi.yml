@@ -24,6 +24,7 @@ components:
       type: object
       properties:
         id:
+          description: The unique ID of the type.
           type: integer
           default: 50
           minimum: 10
@@ -32,6 +33,7 @@ components:
           exclusiveMaximum: false
           multipleOf: 10
         name:
+          description: The unique name of the type.
           type: string
           default: type
           minLength: 3
@@ -39,6 +41,7 @@ components:
           pattern: "^[a-zA-Z0-9]*$"
           format: custom
         value:
+          description: The value of the type.
           type: number
           format: double
           default: 1.1

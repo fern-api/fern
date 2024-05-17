@@ -93,7 +93,17 @@ exports[`open api parser axle docs 1`] = `
                 "pattern": undefined,
               },
             },
-            "email": "optional<string>",
+            "email": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "firstName": {
               "default": undefined,
               "docs": undefined,
@@ -138,7 +148,17 @@ exports[`open api parser axle docs 1`] = `
                 "pattern": undefined,
               },
             },
-            "phone": "optional<string>",
+            "phone": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "policies": "list<string>",
             "refreshedAt": {
               "default": undefined,
@@ -435,17 +455,33 @@ exports[`open api parser axle docs 1`] = `
               "body": {
                 "properties": {
                   "metadata": {
+                    "default": undefined,
                     "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
                     "type": "optional<map<string, unknown>>",
+                    "validation": undefined,
                   },
                   "redirectUri": {
+                    "default": undefined,
                     "docs": "The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "user": "optional<root.User>",
                   "webhookUri": {
+                    "default": undefined,
                     "docs": "The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -736,12 +772,72 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Address": {
         "docs": undefined,
         "properties": {
-          "addressLine1": "optional<string>",
-          "addressLine2": "optional<string>",
-          "city": "optional<string>",
-          "country": "optional<string>",
-          "postalCode": "optional<string>",
-          "state": "optional<string>",
+          "addressLine1": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "addressLine2": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "city": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "country": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "postalCode": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "state": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Carrier": {
@@ -770,7 +866,17 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "pattern": undefined,
             },
           },
-          "logoUrl": "optional<string>",
+          "logoUrl": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "modifiedAt": {
             "default": undefined,
             "docs": undefined,
@@ -810,7 +916,18 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "code": "CoverageCode",
-          "deductible": "optional<integer>",
+          "deductible": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
           "label": {
             "default": undefined,
             "docs": undefined,
@@ -822,9 +939,41 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "pattern": undefined,
             },
           },
-          "limitPerAccident": "optional<integer>",
-          "limitPerPerson": "optional<integer>",
-          "property": "optional<string>",
+          "limitPerAccident": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
+          "limitPerPerson": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
+          "property": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "CoverageCode": {
@@ -843,8 +992,15 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "message": {
+            "default": undefined,
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "success": "optional<Success>",
         },
@@ -852,8 +1008,28 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Insured": {
         "docs": undefined,
         "properties": {
-          "dateOfBirth": "optional<string>",
-          "dateOfBirthYear": "optional<string>",
+          "dateOfBirth": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "dateOfBirthYear": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "firstName": {
             "default": undefined,
             "docs": undefined,
@@ -876,11 +1052,61 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "pattern": undefined,
             },
           },
-          "licenseNo": "optional<string>",
-          "licenseState": "optional<string>",
-          "licenseStatus": "optional<string>",
-          "property": "optional<string>",
-          "type": "optional<string>",
+          "licenseNo": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "licenseState": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "licenseStatus": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "property": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "type": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Property": {
@@ -920,7 +1146,17 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "pattern": undefined,
             },
           },
-          "property": "optional<string>",
+          "property": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "type": "ThirdPartyType",
         },
       },
@@ -935,12 +1171,26 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
+            "default": undefined,
             "docs": "User's email address.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "firstName": {
+            "default": undefined,
             "docs": "User's first name.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "id": {
             "default": undefined,
@@ -954,19 +1204,43 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             },
           },
           "lastName": {
+            "default": undefined,
             "docs": "User's last name.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "phone": {
+            "default": undefined,
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
       "Vehicle": {
         "docs": undefined,
         "properties": {
-          "bodyStyle": "optional<string>",
+          "bodyStyle": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "make": {
             "default": undefined,
             "docs": undefined,
@@ -1143,7 +1417,17 @@ exports[`open api parser axle simple 1`] = `
                 "pattern": undefined,
               },
             },
-            "email": "optional<string>",
+            "email": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "firstName": {
               "default": undefined,
               "docs": undefined,
@@ -1188,7 +1472,17 @@ exports[`open api parser axle simple 1`] = `
                 "pattern": undefined,
               },
             },
-            "phone": "optional<string>",
+            "phone": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "policies": "list<string>",
             "refreshedAt": {
               "default": undefined,
@@ -1485,17 +1779,33 @@ exports[`open api parser axle simple 1`] = `
               "body": {
                 "properties": {
                   "metadata": {
+                    "default": undefined,
                     "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
                     "type": "optional<map<string, unknown>>",
+                    "validation": undefined,
                   },
                   "redirectUri": {
+                    "default": undefined,
                     "docs": "The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "user": "optional<root.User>",
                   "webhookUri": {
+                    "default": undefined,
                     "docs": "The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
+                    "validation": {
+                      "format": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -1786,12 +2096,72 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Address": {
         "docs": undefined,
         "properties": {
-          "addressLine1": "optional<string>",
-          "addressLine2": "optional<string>",
-          "city": "optional<string>",
-          "country": "optional<string>",
-          "postalCode": "optional<string>",
-          "state": "optional<string>",
+          "addressLine1": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "addressLine2": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "city": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "country": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "postalCode": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "state": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Carrier": {
@@ -1820,7 +2190,17 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "pattern": undefined,
             },
           },
-          "logoUrl": "optional<string>",
+          "logoUrl": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "modifiedAt": {
             "default": undefined,
             "docs": undefined,
@@ -1860,7 +2240,18 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "code": "CoverageCode",
-          "deductible": "optional<integer>",
+          "deductible": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
           "label": {
             "default": undefined,
             "docs": undefined,
@@ -1872,9 +2263,41 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "pattern": undefined,
             },
           },
-          "limitPerAccident": "optional<integer>",
-          "limitPerPerson": "optional<integer>",
-          "property": "optional<string>",
+          "limitPerAccident": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
+          "limitPerPerson": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
+          "property": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "CoverageCode": {
@@ -1893,8 +2316,15 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": undefined,
         "properties": {
           "message": {
+            "default": undefined,
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "success": "optional<Success>",
         },
@@ -1902,8 +2332,28 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "Insured": {
         "docs": undefined,
         "properties": {
-          "dateOfBirth": "optional<string>",
-          "dateOfBirthYear": "optional<string>",
+          "dateOfBirth": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "dateOfBirthYear": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "firstName": {
             "default": undefined,
             "docs": undefined,
@@ -1926,11 +2376,61 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "pattern": undefined,
             },
           },
-          "licenseNo": "optional<string>",
-          "licenseState": "optional<string>",
-          "licenseStatus": "optional<string>",
-          "property": "optional<string>",
-          "type": "optional<string>",
+          "licenseNo": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "licenseState": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "licenseStatus": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "property": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "type": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Property": {
@@ -1970,7 +2470,17 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "pattern": undefined,
             },
           },
-          "property": "optional<string>",
+          "property": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "type": "ThirdPartyType",
         },
       },
@@ -1985,12 +2495,26 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
+            "default": undefined,
             "docs": "User's email address.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "firstName": {
+            "default": undefined,
             "docs": "User's first name.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "id": {
             "default": undefined,
@@ -2004,19 +2528,43 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             },
           },
           "lastName": {
+            "default": undefined,
             "docs": "User's last name.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "phone": {
+            "default": undefined,
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
       "Vehicle": {
         "docs": undefined,
         "properties": {
-          "bodyStyle": "optional<string>",
+          "bodyStyle": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "make": {
             "default": undefined,
             "docs": undefined,

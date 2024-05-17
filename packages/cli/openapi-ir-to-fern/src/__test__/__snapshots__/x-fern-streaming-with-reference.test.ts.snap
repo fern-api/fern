@@ -98,13 +98,33 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
       "Completion": {
         "docs": undefined,
         "properties": {
-          "text": "optional<string>",
+          "text": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
-          "text": "optional<string>",
+          "text": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },
@@ -217,13 +237,33 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
       "Completion": {
         "docs": undefined,
         "properties": {
-          "text": "optional<string>",
+          "text": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
-          "text": "optional<string>",
+          "text": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },

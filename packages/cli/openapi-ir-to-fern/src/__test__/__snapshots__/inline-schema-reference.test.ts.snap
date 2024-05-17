@@ -45,27 +45,89 @@ exports[`open api parser inline-schema-reference docs 1`] = `
       "GetExampleResponseMessage": {
         "docs": undefined,
         "properties": {
-          "message": "optional<string>",
+          "message": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "NotFound": {
         "docs": undefined,
         "properties": {
-          "message": "optional<string>",
+          "message": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Schema1": {
         "docs": undefined,
         "properties": {
-          "id": "optional<integer>",
-          "name": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Schema2": {
         "docs": undefined,
         "properties": {
-          "age": "optional<integer>",
-          "email": "optional<string>",
+          "age": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
+          "email": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },
@@ -125,27 +187,89 @@ exports[`open api parser inline-schema-reference simple 1`] = `
       "GetExampleResponseMessage": {
         "docs": undefined,
         "properties": {
-          "message": "optional<string>",
+          "message": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "NotFound": {
         "docs": undefined,
         "properties": {
-          "message": "optional<string>",
+          "message": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Schema1": {
         "docs": undefined,
         "properties": {
-          "id": "optional<integer>",
-          "name": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Schema2": {
         "docs": undefined,
         "properties": {
-          "age": "optional<integer>",
-          "email": "optional<string>",
+          "age": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": undefined,
+            },
+          },
+          "email": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },

@@ -45,15 +45,57 @@ exports[`rules rules docs 1`] = `
       "GetExampleResponseMessage": {
         "docs": undefined,
         "properties": {
-          "message": "optional<string>",
+          "message": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Schema": {
         "docs": undefined,
         "properties": {
-          "id": "optional<integer>",
-          "name": "optional<string>",
-          "value": "optional<double>",
+          "id": {
+            "default": 50,
+            "docs": "The unique ID of the type.",
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": false,
+              "exclusiveMin": true,
+              "max": 100,
+              "min": 10,
+              "multipleOf": 10,
+            },
+          },
+          "name": {
+            "default": "type",
+            "docs": "The unique name of the type.",
+            "type": "optional<string>",
+            "validation": {
+              "format": "custom",
+              "maxLength": 10,
+              "minLength": 3,
+              "pattern": "^[a-zA-Z0-9]*$",
+            },
+          },
+          "value": {
+            "default": 1.1,
+            "docs": "The value of the type.",
+            "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 2.2,
+              "min": 1.1,
+              "multipleOf": 1.1,
+            },
+          },
         },
       },
     },
@@ -113,15 +155,57 @@ exports[`rules rules simple 1`] = `
       "GetExampleResponseMessage": {
         "docs": undefined,
         "properties": {
-          "message": "optional<string>",
+          "message": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "Schema": {
         "docs": undefined,
         "properties": {
-          "id": "optional<integer>",
-          "name": "optional<string>",
-          "value": "optional<double>",
+          "id": {
+            "default": 50,
+            "docs": "The unique ID of the type.",
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": false,
+              "exclusiveMin": true,
+              "max": 100,
+              "min": 10,
+              "multipleOf": 10,
+            },
+          },
+          "name": {
+            "default": "type",
+            "docs": "The unique name of the type.",
+            "type": "optional<string>",
+            "validation": {
+              "format": "custom",
+              "maxLength": 10,
+              "minLength": 3,
+              "pattern": "^[a-zA-Z0-9]*$",
+            },
+          },
+          "value": {
+            "default": 1.1,
+            "docs": "The value of the type.",
+            "type": "optional<double>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 2.2,
+              "min": 1.1,
+              "multipleOf": 1.1,
+            },
+          },
         },
       },
     },

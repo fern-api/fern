@@ -30,8 +30,15 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<false>",
               },
@@ -55,8 +62,15 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<true>",
               },
@@ -95,8 +109,15 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<false>",
               },
@@ -120,8 +141,15 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<true>",
               },
@@ -159,8 +187,15 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<false>",
               },
@@ -184,8 +219,15 @@ exports[`open api parser streaming docs 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<true>",
               },
@@ -206,42 +248,122 @@ exports[`open api parser streaming docs 1`] = `
       "StreamUser": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "StreamUser2": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
-          "name": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "streamed": "optional<literal<true>>",
         },
       },
       "User": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "User2": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
-          "name": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "streamed": "optional<literal<false>>",
         },
       },
       "UserV3Response": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "inline": "optional<boolean>",
         },
       },
       "UserV3StreamResponse": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "inline": "optional<boolean>",
           "streamed": "optional<boolean>",
         },
@@ -288,8 +410,15 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<false>",
               },
@@ -313,8 +442,15 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<true>",
               },
@@ -353,8 +489,15 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<false>",
               },
@@ -378,8 +521,15 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<true>",
               },
@@ -417,8 +567,15 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<false>",
               },
@@ -442,8 +599,15 @@ exports[`open api parser streaming simple 1`] = `
             "body": {
               "properties": {
                 "id": {
+                  "default": undefined,
                   "docs": "",
                   "type": "optional<string>",
+                  "validation": {
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                  },
                 },
                 "stream": "literal<true>",
               },
@@ -464,42 +628,122 @@ exports[`open api parser streaming simple 1`] = `
       "StreamUser": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "StreamUser2": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
-          "name": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "streamed": "optional<literal<true>>",
         },
       },
       "User": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
       "User2": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
-          "name": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "streamed": "optional<literal<false>>",
         },
       },
       "UserV3Response": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "inline": "optional<boolean>",
         },
       },
       "UserV3StreamResponse": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "inline": "optional<boolean>",
           "streamed": "optional<boolean>",
         },

@@ -763,7 +763,12 @@ exports[`generate IR from OpenAPI 1`] = `
                     "v2": {
                       "default": null,
                       "type": "string",
-                      "validation": null,
+                      "validation": {
+                        "format": null,
+                        "maxLength": null,
+                        "minLength": null,
+                        "pattern": null,
+                      },
                     },
                   },
                 },
@@ -846,7 +851,13 @@ exports[`generate IR from OpenAPI 1`] = `
                     "v2": {
                       "default": null,
                       "type": "integer",
-                      "validation": null,
+                      "validation": {
+                        "exclusiveMax": null,
+                        "exclusiveMin": null,
+                        "max": null,
+                        "min": null,
+                        "multipleOf": null,
+                      },
                     },
                   },
                 },
@@ -889,7 +900,12 @@ exports[`generate IR from OpenAPI 1`] = `
                     "v2": {
                       "default": null,
                       "type": "string",
-                      "validation": null,
+                      "validation": {
+                        "format": null,
+                        "maxLength": null,
+                        "minLength": null,
+                        "pattern": null,
+                      },
                     },
                   },
                 },
@@ -972,7 +988,12 @@ exports[`generate IR from OpenAPI 1`] = `
                     "v2": {
                       "default": null,
                       "type": "string",
-                      "validation": null,
+                      "validation": {
+                        "format": null,
+                        "maxLength": null,
+                        "minLength": null,
+                        "pattern": null,
+                      },
                     },
                   },
                 },
@@ -1015,7 +1036,13 @@ exports[`generate IR from OpenAPI 1`] = `
                     "v2": {
                       "default": null,
                       "type": "integer",
-                      "validation": null,
+                      "validation": {
+                        "exclusiveMax": null,
+                        "exclusiveMin": null,
+                        "max": null,
+                        "min": null,
+                        "multipleOf": null,
+                      },
                     },
                   },
                 },
