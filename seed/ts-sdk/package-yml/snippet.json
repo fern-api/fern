@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/{id}/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/{id}/{nestedId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.nop"
             },
             "snippet": {
                 "type": "typescript",

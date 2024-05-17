@@ -8,7 +8,7 @@
         "endpointId": {
             "path": "/",
             "method": "POST",
-            "identifierOverride": "__root__='endpoint_service.post'"
+            "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -452,7 +452,7 @@
         "endpointId": {
             "path": "/just-file",
             "method": "POST",
-            "identifierOverride": "__root__='endpoint_service.justFile'"
+            "identifierOverride": "endpoint_service.justFile"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -524,7 +524,7 @@
         "endpointId": {
             "path": "/just-file-with-query-params",
             "method": "POST",
-            "identifierOverride": "__root__='endpoint_service.justFileWithQueryParams'"
+            "identifierOverride": "endpoint_service.justFileWithQueryParams"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedFileUpload\n\nclient = SeedFileUpload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
