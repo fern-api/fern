@@ -7,7 +7,6 @@ import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
 export interface ParsedDocsConfiguration {
     instances: DocsInstances[];
     title: string | undefined;
-    // absoluteFilepath: AbsoluteFilePath;
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
@@ -114,9 +113,6 @@ export interface TypographyConfig {
     codeFont: FontConfig | undefined;
 }
 
-// export interface ImageReference {
-//     filepath: AbsoluteFilePath;
-// }
 
 export type FilepathOrUrl = { type: "filepath"; value: AbsoluteFilePath } | { type: "url"; value: string };
 
