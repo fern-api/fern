@@ -38,7 +38,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            "\"This is a test page with an image ![image](/Volume/git/path/to/image.png)\""
+            '"This is a test page with an image ![image](/Volume/git/path/to/image.png)"'
         );
     });
 
@@ -129,7 +129,7 @@ describe("parseImagePaths", () => {
         const result = parseImagePaths(page, PATHS);
         expect(result.filepaths).toEqual(["/Volume/git/fern/path/to/image.png"]);
         expect(result.markdown.trim()).toMatchInlineSnapshot(
-            "\"This is a test page with an image ![image](/Volume/git/fern/path/to/image.png)\""
+            '"This is a test page with an image ![image](/Volume/git/fern/path/to/image.png)"'
         );
     });
 

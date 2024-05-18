@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { isNonNullish, MediaType } from "@fern-api/core-utils";
+import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
@@ -11,21 +11,13 @@ import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
-import { imageSize } from "image-size";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
-import { promisify } from "util";
+import { measureImageSizes } from "./measureImageSizes";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
-
-interface AbsoluteImageFilePath {
-    filePath: AbsoluteFilePath;
-    width: number;
-    height: number;
-    blurDataUrl: string | undefined;
-}
 
 interface FileWithMimeType {
     mediaType: string;
@@ -212,42 +204,17 @@ export async function publishDocs({
     }
 }
 
-const sizeOf = promisify(imageSize);
-async function measureImageSizes(
-    imageFilePaths: AbsoluteFilePath[],
-    batchSize: number,
-    context: TaskContext
-): Promise<Map<AbsoluteFilePath, AbsoluteImageFilePath>> {
-    const filepathChunks = chunk(imageFilePaths, batchSize);
-    const imageFilesWithMetadata: AbsoluteImageFilePath[] = [];
-    for (const filepaths of filepathChunks) {
-        const chunk: (AbsoluteImageFilePath | undefined)[] = await Promise.all(
-            filepaths.map(async (filePath): Promise<AbsoluteImageFilePath | undefined> => {
-                try {
-                    const size = await sizeOf(filePath);
-                    if (size == null || size.height == null || size.width == null) {
-                        return undefined;
-                    }
-                    return { filePath, width: size.width, height: size.height, blurDataUrl: undefined };
-                } catch (e) {
-                    context.logger.error(`Failed to measure image size for ${filePath}. ${(e as Error)?.message}`);
-                    return undefined;
-                }
-            })
-        );
-
-        imageFilesWithMetadata.push(...chunk.filter(isNonNullish));
-    }
-    return new Map(imageFilesWithMetadata.map((file) => [file.filePath, file]));
-}
-
 async function uploadFiles(
     filesToUpload: Record<string, DocsV1Write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath,
     context: TaskContext,
     batchSize: number
 ): Promise<void> {
+    const startTime = Date.now();
+    const totalFiles = Object.keys(filesToUpload).length;
+    context.logger.debug(`Start uploading ${totalFiles} files...`);
     const chunkedFilepathsToUpload = chunk(Object.entries(filesToUpload), batchSize);
+    let filesUploaded = 0;
     for (const chunkedFilepaths of chunkedFilepathsToUpload) {
         await Promise.all(
             chunkedFilepaths.map(async ([key, { uploadUrl }]) => {
@@ -266,7 +233,12 @@ async function uploadFiles(
                 }
             })
         );
+        const endTime = Date.now();
+        filesUploaded += chunkedFilepaths.length;
+        context.logger.debug(`Uploaded ${filesUploaded}/${totalFiles} files in ${endTime - startTime}ms`);
     }
+    const endTime = Date.now();
+    context.logger.debug(`Finished uploading ${totalFiles} files in ${endTime - startTime}ms`);
 }
 
 function convertToFilePathPairs(
