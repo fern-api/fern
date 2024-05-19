@@ -3569,7 +3569,6 @@ __metadata:
     "@types/decompress": ^4.2.7
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/uuid": ^9.0.8
     "@types/ws": ^8.5.10
@@ -3581,7 +3580,6 @@ __metadata:
     eslint: ^8.56.0
     express: ^4.19.2
     jest: ^29.7.0
-    lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
