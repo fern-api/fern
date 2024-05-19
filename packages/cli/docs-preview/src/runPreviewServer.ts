@@ -16,11 +16,13 @@ import { getPreviewDocsDefinition } from "./previewDocs";
 export async function runPreviewServer({
     initialProject,
     reloadProject,
+    validateProject,
     context,
     port
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
+    validateProject: (project: Project) => Promise<void>;
     context: TaskContext;
     port: number;
 }): Promise<void> {
@@ -53,6 +55,7 @@ export async function runPreviewServer({
         wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
     );
 
+    let project = initialProject;
     let docsDefinition = await getPreviewDocsDefinition({
         domain: instance.host,
         project: initialProject,
@@ -60,17 +63,22 @@ export async function runPreviewServer({
     });
 
     const reloadDocsDefinition = async () => {
-        context.logger.info("Reloading project and docs");
+        context.logger.info("Reloading docs");
         const startTime = Date.now();
-        const project = await reloadProject();
-        context.logger.info(`Reload project took ${Date.now() - startTime}ms`);
-        const newDocsDefinition = await getPreviewDocsDefinition({
-            domain: instance.host,
-            project,
-            context
-        });
-        context.logger.info(`Reload project and docs completed in ${Date.now() - startTime}ms`);
-        return newDocsDefinition;
+        try {
+            project = await reloadProject();
+            const newDocsDefinition = await getPreviewDocsDefinition({
+                domain: instance.host,
+                project,
+                context
+            });
+            context.logger.info(`Reload docs completed in ${Date.now() - startTime}ms`);
+            return newDocsDefinition;
+        } catch (err) {
+            context.logger.error(`Failed to reload docs because of validation errors: `);
+            await validateProject(project);
+            return docsDefinition;
+        }
     };
 
     const watcher = new Watcher(absoluteFilePathToFern, { recursive: true, ignoreInitial: true });
