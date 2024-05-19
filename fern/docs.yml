@@ -198,12 +198,15 @@ navigation:
           - page: Quickstart
             slug: quickstart
             path: ./pages/docs/introduction/quickstart.mdx
-          - page: Project Structure 
-            slug: project-structure
-            path: ./pages/docs/introduction/project-structure.mdx
           - page: Showcase 
             slug: showcase
             path: ./pages/docs/introduction/showcase.mdx
+          - page: Local Development
+            slug: development
+            path: ./pages/docs/introduction/development.mdx
+          - page: Project Structure 
+            slug: project-structure
+            path: ./pages/docs/introduction/project-structure.mdx
       - section: Configuration
         slug: config
         contents:

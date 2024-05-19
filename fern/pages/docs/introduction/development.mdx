@@ -1,0 +1,70 @@
+---
+title: 'Development'
+excerpt: 'Preview changes before deploying to production'
+---
+
+## Local Development
+
+<Info>
+**Prerequisite**: Please install Node.js (version 18) before proceeding.
+</Info>
+
+The Fern CLI supports locally previewing your documentation and hot-reloading as you make changes. Follow the 
+steps below to setup your local development server. 
+
+<Steps>
+
+### Intall the Fern CLI
+
+<CodeGroup>
+  ```bash npm
+  npm i -g fern-api
+  ```
+  ```bash yarn
+  yarn global add fern-api
+  ```
+</CodeGroup>
+
+### Run `fern docs dev`
+
+Navigate to your `fern` folder (where `docs.yml` is located) and execute the following command:
+
+```bash
+fern docs dev
+```
+
+A local preview of your documentation will be available at `http://localhost:3000`.
+
+</Steps>
+
+## Preview links
+
+Preview links allow you to preview changes to your documentation in a live deployment. To generate 
+a preview link follow the steps below: 
+
+<Steps>
+
+### Intall the Fern CLI
+
+<CodeGroup>
+  ```bash npm
+  npm i -g fern-api
+  ```
+  ```bash yarn
+  yarn global add fern-api
+  ```
+</CodeGroup>
+
+### Run `fern generate --docs --preview`
+
+Navigate to your `fern` folder (where `docs.yml` is located) and execute the following command:
+
+```bash
+fern generate --docs --preview
+```
+
+This will output a preview link which you can share with others. 
+
+</Steps>
+
+
