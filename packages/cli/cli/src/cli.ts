@@ -889,10 +889,11 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
         (yargs) => yargs,
         async () => {
             await previewDocsWorkspace({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    defaultToAllApiWorkspaces: true,
-                    commandLineApiWorkspace: undefined
-                }),
+                loadProject: () =>
+                    loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        defaultToAllApiWorkspaces: true,
+                        commandLineApiWorkspace: undefined
+                    }),
                 cliContext
             });
         }

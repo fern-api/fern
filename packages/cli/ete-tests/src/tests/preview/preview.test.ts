@@ -21,7 +21,7 @@ describe("fern preview", () => {
         expect(typeof responseBody === "object").toEqual(true);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         expect(Object.keys(responseBody as any)).toEqual(["baseUrl", "definition", "lightModeEnabled"]);
-    }, 180_000);
+    }, 30_000);
 });
 
 function sleep(ms: number) {

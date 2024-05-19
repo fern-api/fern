@@ -8,7 +8,7 @@ export type Workspace = DocsWorkspace | APIWorkspace;
 export interface DocsWorkspace {
     type: "docs";
     workspaceName: string | undefined;
-    absoluteFilepath: AbsoluteFilePath;
+    absoluteFilepath: AbsoluteFilePath; // path to the fern folder (dirname(absoluteFilepathToDocsConfig))
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     config: docsYml.RawSchemas.DocsConfiguration;
 }

@@ -1,19 +1,26 @@
+import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV2Read } from "@fern-api/fdr-sdk";
+import { dirname } from "@fern-api/fs-utils";
+import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
+import chalk from "chalk";
 import cors from "cors";
 import express from "express";
+import http from "http";
+import { debounce } from "lodash-es";
 import path from "path";
+import Watcher from "watcher";
+import { WebSocketServer, type WebSocket } from "ws";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
 export async function runPreviewServer({
-    docsWorkspace,
-    apiWorkspaces,
+    initialProject,
+    reloadProject,
     context
 }: {
-    docsWorkspace: DocsWorkspace;
-    apiWorkspaces: APIWorkspace[];
+    initialProject: Project;
+    reloadProject: () => Promise<Project>;
     context: TaskContext;
 }): Promise<void> {
     const url = process.env.DOCS_PREVIEW_BUCKET;
@@ -23,34 +30,111 @@ export async function runPreviewServer({
     }
 
     await downloadBundle({ bucketUrl: url, logger: context.logger, preferCached: true });
+    const absoluteFilePathToFern = dirname(initialProject.config._absolutePath);
 
     const app = express();
+    const httpServer = http.createServer(app);
+    const wss = new WebSocketServer({ server: httpServer });
+
+    const connections = new Set<WebSocket>();
+
+    wss.on("connection", function connection(ws) {
+        connections.add(ws);
+
+        ws.on("close", function close() {
+            connections.delete(ws);
+        });
+    });
+
     app.use(cors());
 
-    const docsDefinition = await getPreviewDocsDefinition({
-        docsWorkspace,
-        apiWorkspaces,
+    const instance = new URL(
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? "localhost:3000")
+    );
+
+    let docsDefinition = getPreviewDocsDefinition({
+        domain: instance.host,
+        project: initialProject,
         context
     });
-    const response: DocsV2Read.LoadDocsForUrlResponse = {
-        baseUrl: {
-            domain: "localhost:3000",
-            basePath: ""
+
+    const reloadDocsDefinition = debounce(
+        () => {
+            context.logger.info("Reloading project and docs");
+            const startTime = Date.now();
+            docsDefinition = reloadProject()
+                .then((project) => {
+                    context.logger.info(`Reload project took ${Date.now() - startTime}ms`);
+                    return getPreviewDocsDefinition({
+                        domain: instance.host,
+                        project,
+                        context
+                    });
+                })
+                .then((newDocsDefinition) => {
+                    context.logger.info(`Reload project and docs completed in ${Date.now() - startTime}ms`);
+                    return newDocsDefinition;
+                });
+            return docsDefinition;
         },
-        definition: docsDefinition,
-        lightModeEnabled: docsDefinition.config.colorsV3?.type !== "dark"
-    };
+        300,
+        { leading: false, trailing: true }
+    );
+
+    const watcher = new Watcher(absoluteFilePathToFern, { recursive: true, ignoreInitial: true });
+    watcher.on("all", (event: string, targetPath: string, _targetPathNext: string) => {
+        context.logger.debug(chalk.dim(`[${event}] ${targetPath}`));
+
+        // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
+        void reloadDocsDefinition()?.then(() => {
+            for (const connection of connections) {
+                connection.send(
+                    JSON.stringify({
+                        reload: true
+                    })
+                );
+            }
+        });
+    });
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
-        res.send(response);
+        try {
+            const definition = await docsDefinition;
+            const response: DocsV2Read.LoadDocsForUrlResponse = {
+                baseUrl: {
+                    domain: instance.host,
+                    basePath: instance.pathname
+                },
+                definition,
+                lightModeEnabled: definition.config.colorsV3?.type !== "dark"
+            };
+            res.send(response);
+        } catch (error) {
+            context.logger.error("Error loading docs", (error as Error).message);
+            res.status(500).send();
+        }
     });
-    app.listen(3000);
+
+    app.get(/^\/_local\/(.*)/, (req, res) => {
+        return res.sendFile(`/${req.params[0]}`);
+    });
+
+    app.get("/", (req, _res, next) => {
+        if (req.headers.upgrade === "websocket") {
+            return wss.handleUpgrade(req, req.socket, Buffer.alloc(0), (ws) => {
+                wss.emit("connection", ws, req);
+            });
+        }
+        return next();
+    });
 
     app.use("/_next", express.static(path.join(getPathToBundleFolder(), "/_next")));
 
     app.use("*", async (_req, res) => {
         return res.sendFile(path.join(getPathToBundleFolder(), "/[[...slug]].html"));
     });
+
+    app.listen(3000);
 
     context.logger.info("Running server on http://localhost:3000");
 

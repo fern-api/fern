@@ -4,12 +4,13 @@ import { CliContext } from "../../cli-context/CliContext";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function previewDocsWorkspace({
-    project,
+    loadProject,
     cliContext
 }: {
-    project: Project;
+    loadProject: () => Promise<Project>;
     cliContext: CliContext;
 }): Promise<void> {
+    const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
         return;
@@ -24,9 +25,9 @@ export async function previewDocsWorkspace({
         await validateDocsWorkspaceAndLogIssues({ workspace: docsWorkspace, context, logWarnings: false });
 
         await runPreviewServer({
-            docsWorkspace,
-            context,
-            apiWorkspaces: project.apiWorkspaces
+            initialProject: project,
+            reloadProject: loadProject,
+            context
         });
     });
 }

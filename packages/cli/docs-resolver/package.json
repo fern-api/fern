@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/ir-generator",
+  "name": "@fern-api/docs-resolver",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/generation/ir-generator"
+    "directory": "packages/cli/docs-resolver"
   },
   "private": true,
   "files": [
@@ -19,38 +19,39 @@
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "test": "yarn compile && jest --passWithNoTests",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck"
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fdr-sdk": "0.94.3-b6c3996ce",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
-    "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/yaml-schema": "workspace:*",
+    "gray-matter": "^4.0.3",
     "lodash-es": "^4.17.21",
-    "prettier": "^2.7.1",
+    "mdast-util-from-markdown": "^2.0.0",
+    "unist-util-visit": "^5.0.0",
     "url-join": "^5.0.0"
   },
   "devDependencies": {
+    "@types/diff": "^5.2.1",
     "@types/jest": "^29.0.3",
-    "@types/jest-specific-snapshot": "^0.5.7",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
-    "@types/prettier": "^2.7.1",
-    "@types/url-join": "4.0.1",
     "depcheck": "^1.4.6",
+    "diff": "^5.2.0",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
-    "jest-specific-snapshot": "^8.0.0",
     "organize-imports-cli": "^0.10.0",
+    "prettier": "^2.7.1",
     "typescript": "4.6.4"
   }
 }

@@ -3,12 +3,11 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
+    { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
     { "path": "../../ir-sdk" },
-    { "path": "../docs-resolver" },
-    { "path": "../logger" },
-    { "path": "../project-loader" },
-    { "path": "../register" },
+    { "path": "../configuration" },
+    { "path": "../generation/ir-generator" },
     { "path": "../task-context" },
     { "path": "../workspace-loader" }
   ]

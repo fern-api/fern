@@ -8,7 +8,7 @@ export function convertIrToNavigation(
     rootSummaryAbsolutePath: AbsoluteFilePath | undefined,
     navigation: docsYml.ParsedApiNavigationItem[] | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath,
-    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>
+    fullSlugs: Map<AbsoluteFilePath, string>
 ): DocsV1Write.ApiNavigationConfigRoot | undefined {
     if (navigation == null) {
         return undefined;
@@ -110,7 +110,7 @@ function visitAndSortNavigationSchema(
     defaultItems: DocsV1Write.ApiNavigationConfigItem[],
     ir: IntermediateRepresentation,
     absoluteFilepathToDocsConfig: AbsoluteFilePath,
-    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>
+    fullSlugs: Map<AbsoluteFilePath, string>
 ): DocsV1Write.ApiNavigationConfigItem[] {
     const items: DocsV1Write.ApiNavigationConfigItem[] = [];
     for (const navigationItem of navigationItems) {
@@ -134,7 +134,7 @@ function visitAndSortNavigationSchema(
                 icon: undefined,
                 hidden: undefined,
                 urlSlugOverride: navigationItem.slug,
-                fullSlug: fullSlugs[navigationItem.absolutePath]?.fullSlug?.split("/")
+                fullSlug: fullSlugs.get(navigationItem.absolutePath)?.split("/")
             });
         } else {
             // item must be a collection of subpackages
