@@ -1,5 +1,5 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV2Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { dirname } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
@@ -13,14 +13,31 @@ import { WebSocketServer, type WebSocket } from "ws";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
 
+const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
+    pages: {},
+    apis: {},
+    files: {},
+    filesV2: {},
+    config: {
+        navigation: {
+            items: []
+        }
+    },
+    search: {
+        type: "legacyMultiAlgoliaIndex"
+    }
+};
+
 export async function runPreviewServer({
     initialProject,
     reloadProject,
+    validateProject,
     context,
     port
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
+    validateProject: (project: Project) => Promise<void>;
     context: TaskContext;
     port: number;
 }): Promise<void> {
@@ -53,29 +70,39 @@ export async function runPreviewServer({
         wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
     );
 
-    let docsDefinition = await getPreviewDocsDefinition({
-        domain: instance.host,
-        project: initialProject,
-        context
-    });
+    let project = initialProject;
+    let docsDefinition: DocsV1Read.DocsDefinition | undefined;
 
     const reloadDocsDefinition = async () => {
-        context.logger.info("Reloading project and docs");
+        context.logger.info("Reloading docs");
         const startTime = Date.now();
-        const project = await reloadProject();
-        context.logger.info(`Reload project took ${Date.now() - startTime}ms`);
-        const newDocsDefinition = await getPreviewDocsDefinition({
-            domain: instance.host,
-            project,
-            context
-        });
-        context.logger.info(`Reload project and docs completed in ${Date.now() - startTime}ms`);
-        return newDocsDefinition;
+        try {
+            project = await reloadProject();
+            const newDocsDefinition = await getPreviewDocsDefinition({
+                domain: instance.host,
+                project,
+                context
+            });
+            context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
+            return newDocsDefinition;
+        } catch (err) {
+            context.logger.error("Failed to reload because of validation errors: ");
+            await validateProject(project);
+            return docsDefinition;
+        }
     };
 
-    const watcher = new Watcher(absoluteFilePathToFern, { recursive: true, ignoreInitial: true });
+    // initialize docs definition
+    docsDefinition = await reloadDocsDefinition();
+
+    const watcher = new Watcher(absoluteFilePathToFern, {
+        recursive: true,
+        ignoreInitial: true,
+        debounce: 1000,
+        renameDetection: true
+    });
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        context.logger.debug(chalk.dim(`[${event}] ${targetPath}`));
+        context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
         // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
         const reloadedDocsDefinition = await reloadDocsDefinition();
         if (reloadedDocsDefinition != null) {
@@ -92,7 +119,8 @@ export async function runPreviewServer({
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
-            const definition = docsDefinition;
+            // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
+            const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
             const response: DocsV2Read.LoadDocsForUrlResponse = {
                 baseUrl: {
                     domain: instance.host,
