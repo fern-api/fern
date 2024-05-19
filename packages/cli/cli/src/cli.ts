@@ -886,7 +886,13 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
     cli.command(
         "docs dev",
         "Run a local development server to preview your docs",
-        (yargs) => yargs,
+        (yargs) => {
+            // yargs.option("port", {
+            //     number: true,
+            //     description: "Run the development server on the following port"
+            // }),
+            return yargs;
+        },
         async () => {
             await previewDocsWorkspace({
                 loadProject: () =>
@@ -894,7 +900,8 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                         defaultToAllApiWorkspaces: true,
                         commandLineApiWorkspace: undefined
                     }),
-                cliContext
+                cliContext,
+                port: 3000
             });
         }
     );

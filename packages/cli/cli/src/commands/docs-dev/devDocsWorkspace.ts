@@ -5,10 +5,12 @@ import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorks
 
 export async function previewDocsWorkspace({
     loadProject,
-    cliContext
+    cliContext,
+    port
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
+    port: number;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -18,16 +20,19 @@ export async function previewDocsWorkspace({
 
     cliContext.instrumentPostHogEvent({
         orgId: project.config.organization,
-        command: "fern preview --docs"
+        command: "fern docs dev"
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         await validateDocsWorkspaceAndLogIssues({ workspace: docsWorkspace, context, logWarnings: false });
 
+        context.logger.info(`Starting server on port ${port}`);
+
         await runPreviewServer({
             initialProject: project,
             reloadProject: loadProject,
-            context
+            context,
+            port
         });
     });
 }

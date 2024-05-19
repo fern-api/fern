@@ -16,11 +16,13 @@ import { getPreviewDocsDefinition } from "./previewDocs";
 export async function runPreviewServer({
     initialProject,
     reloadProject,
-    context
+    context,
+    port
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
     context: TaskContext;
+    port: number;
 }): Promise<void> {
     const url = process.env.DOCS_PREVIEW_BUCKET;
     if (url == null) {
@@ -48,7 +50,7 @@ export async function runPreviewServer({
     app.use(cors());
 
     const instance = new URL(
-        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? "localhost:3000")
+        wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? `localhost:${port}`)
     );
 
     let docsDefinition = await getPreviewDocsDefinition({
@@ -125,9 +127,9 @@ export async function runPreviewServer({
         return res.sendFile(path.join(getPathToBundleFolder(), "/[[...slug]].html"));
     });
 
-    app.listen(3000);
+    app.listen(port);
 
-    context.logger.info("Running server on http://localhost:3000");
+    context.logger.info(`Running server on http://localhost:${port}`);
 
     // await infiinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
