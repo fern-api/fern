@@ -107,6 +107,7 @@ export async function downloadBundle({
             type: "failure"
         };
     }
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     await pipeline(contents as any, createWriteStream(outputZipPath));
     logger.debug(`Wrote output.zip to ${outputZipPath}`);
 

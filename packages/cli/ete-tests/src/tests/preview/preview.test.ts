@@ -6,7 +6,7 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 
 describe("fern preview", () => {
     it("preview basic docs", async () => {
-        void runFernCli(["preview"], {
+        void runFernCli(["docs", "preview"], {
             cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
