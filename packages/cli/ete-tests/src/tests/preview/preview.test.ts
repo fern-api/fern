@@ -10,7 +10,7 @@ describe("fern preview", () => {
             cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
-        await sleep(5000);
+        await sleep(20_000);
 
         const response = await fetch("http://localhost:3000/v2/registry/docs/load-with-url", {
             method: "POST"
