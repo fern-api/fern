@@ -141,7 +141,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
-    addPreviewCommand(cli, cliContext);
+    addDocsPreviewCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -882,9 +882,9 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
     );
 }
 
-function addPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "preview",
+        "docs preview",
         false, // hide from help message
         (yargs) => yargs,
         async () => {
