@@ -26,7 +26,7 @@ import { writeOverridesForWorkspaces } from "./commands/generate-overrides/write
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
-import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
+import { previewDocsWorkspace } from "./commands/docs-dev/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { testOutput } from "./commands/test/testOutput";
@@ -884,8 +884,8 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 
 function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "docs preview",
-        false, // hide from help message
+        "docs dev",
+        "Run a local development server to preview your docs",
         (yargs) => yargs,
         async () => {
             await previewDocsWorkspace({

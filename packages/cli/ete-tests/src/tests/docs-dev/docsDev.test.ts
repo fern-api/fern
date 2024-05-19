@@ -4,9 +4,9 @@ import { runFernCli } from "../../utils/runFernCli";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
-describe("fern preview", () => {
-    it("preview basic docs", async () => {
-        void runFernCli(["docs", "preview"], {
+describe("fern docs dev", () => {
+    it("dev basic docs", async () => {
+        void runFernCli(["docs", "dev"], {
             cwd: join(fixturesDir, RelativeFilePath.of("simple"))
         });
 
