@@ -7,7 +7,7 @@ export async function validateDocsWorkspaceWithoutExiting({
     workspace,
     context,
     logWarnings,
-    logSummary = true,
+    logSummary = true
 }: {
     workspace: DocsWorkspace;
     context: TaskContext;
