@@ -7,7 +7,6 @@ import chalk from "chalk";
 import cors from "cors";
 import express from "express";
 import http from "http";
-import { debounce } from "lodash-es";
 import path from "path";
 import Watcher from "watcher";
 import { WebSocketServer, type WebSocket } from "ws";
@@ -52,54 +51,46 @@ export async function runPreviewServer({
         wrapWithHttps(initialProject.docsWorkspaces?.config.instances[0]?.url ?? "localhost:3000")
     );
 
-    let docsDefinition = getPreviewDocsDefinition({
+    let docsDefinition = await getPreviewDocsDefinition({
         domain: instance.host,
         project: initialProject,
         context
     });
 
-    const reloadDocsDefinition = debounce(
-        () => {
-            context.logger.info("Reloading project and docs");
-            const startTime = Date.now();
-            docsDefinition = reloadProject()
-                .then((project) => {
-                    context.logger.info(`Reload project took ${Date.now() - startTime}ms`);
-                    return getPreviewDocsDefinition({
-                        domain: instance.host,
-                        project,
-                        context
-                    });
-                })
-                .then((newDocsDefinition) => {
-                    context.logger.info(`Reload project and docs completed in ${Date.now() - startTime}ms`);
-                    return newDocsDefinition;
-                });
-            return docsDefinition;
-        },
-        300,
-        { leading: false, trailing: true }
-    );
+    const reloadDocsDefinition = async () => {
+        context.logger.info("Reloading project and docs");
+        const startTime = Date.now();
+        const project = await reloadProject();
+        context.logger.info(`Reload project took ${Date.now() - startTime}ms`);
+        const newDocsDefinition = await getPreviewDocsDefinition({
+            domain: instance.host,
+            project,
+            context
+        });
+        context.logger.info(`Reload project and docs completed in ${Date.now() - startTime}ms`);
+        return newDocsDefinition;
+    };
 
     const watcher = new Watcher(absoluteFilePathToFern, { recursive: true, ignoreInitial: true });
-    watcher.on("all", (event: string, targetPath: string, _targetPathNext: string) => {
+    watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.debug(chalk.dim(`[${event}] ${targetPath}`));
-
         // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
-        void reloadDocsDefinition()?.then(() => {
-            for (const connection of connections) {
-                connection.send(
-                    JSON.stringify({
-                        reload: true
-                    })
-                );
-            }
-        });
+        const reloadedDocsDefinition = await reloadDocsDefinition();
+        if (reloadedDocsDefinition != null) {
+            docsDefinition = reloadedDocsDefinition;
+        }
+        for (const connection of connections) {
+            connection.send(
+                JSON.stringify({
+                    reload: true
+                })
+            );
+        }
     });
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
-            const definition = await docsDefinition;
+            const definition = docsDefinition;
             const response: DocsV2Read.LoadDocsForUrlResponse = {
                 baseUrl: {
                     domain: instance.host,
