@@ -6,7 +6,6 @@
     { "path": "../../commons/fs-utils" },
     { "path": "../../ir-sdk" },
     { "path": "../docs-resolver" },
-    { "path": "../generation/ir-generator" },
     { "path": "../logger" },
     { "path": "../project-loader" },
     { "path": "../register" },
