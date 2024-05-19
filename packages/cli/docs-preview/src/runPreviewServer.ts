@@ -1,5 +1,6 @@
 import { wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV2Read } from "@fern-api/fdr-sdk";
+import { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
+import { DocsDefinition } from "@fern-api/fdr-sdk/dist/client/generated/api/resources/docs/resources/v1/resources/read";
 import { dirname } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
@@ -12,6 +13,21 @@ import Watcher from "watcher";
 import { WebSocketServer, type WebSocket } from "ws";
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
 import { getPreviewDocsDefinition } from "./previewDocs";
+
+const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
+    pages: {},
+    apis: {},
+    files: {},
+    filesV2: {},
+    config: {
+        navigation: {
+            items: []
+        }
+    },
+    search: {
+        type: "legacyMultiAlgoliaIndex"
+    }
+};
 
 export async function runPreviewServer({
     initialProject,
@@ -56,11 +72,7 @@ export async function runPreviewServer({
     );
 
     let project = initialProject;
-    let docsDefinition = await getPreviewDocsDefinition({
-        domain: instance.host,
-        project: initialProject,
-        context
-    });
+    let docsDefinition: DocsDefinition | undefined;
 
     const reloadDocsDefinition = async () => {
         context.logger.info("Reloading docs");
@@ -72,18 +84,26 @@ export async function runPreviewServer({
                 project,
                 context
             });
-            context.logger.info(`Reload docs completed in ${Date.now() - startTime}ms`);
+            context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
             return newDocsDefinition;
         } catch (err) {
-            context.logger.error("Failed to reload docs because of validation errors: ");
+            context.logger.error("Failed to reload because of validation errors: ");
             await validateProject(project);
             return docsDefinition;
         }
     };
 
-    const watcher = new Watcher(absoluteFilePathToFern, { recursive: true, ignoreInitial: true });
+    // initialize docs definition
+    docsDefinition = await reloadDocsDefinition();
+
+    const watcher = new Watcher(absoluteFilePathToFern, {
+        recursive: true,
+        ignoreInitial: true,
+        debounce: 1000,
+        renameDetection: true
+    });
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
-        context.logger.debug(chalk.dim(`[${event}] ${targetPath}`));
+        context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
         // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
         const reloadedDocsDefinition = await reloadDocsDefinition();
         if (reloadedDocsDefinition != null) {
@@ -100,13 +120,14 @@ export async function runPreviewServer({
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         try {
-            const definition = docsDefinition;
+            // set to empty in case docsDefinition is null which happens when the initial docs definition is invalid
+            const definition = docsDefinition ?? EMPTY_DOCS_DEFINITION;
             const response: DocsV2Read.LoadDocsForUrlResponse = {
                 baseUrl: {
                     domain: instance.host,
                     basePath: instance.pathname
                 },
-                definition,
+                definition: definition,
                 lightModeEnabled: definition.config.colorsV3?.type !== "dark"
             };
             res.send(response);

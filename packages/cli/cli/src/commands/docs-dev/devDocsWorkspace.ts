@@ -1,10 +1,7 @@
 import { runPreviewServer } from "@fern-api/docs-preview";
 import { Project } from "@fern-api/project-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import {
-    validateDocsWorkspaceAndLogIssues,
-    validateDocsWorkspaceWithoutExiting
-} from "../validate/validateDocsWorkspaceAndLogIssues";
+import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function previewDocsWorkspace({
     loadProject,
@@ -27,8 +24,6 @@ export async function previewDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-        await validateDocsWorkspaceAndLogIssues({ workspace: docsWorkspace, context, logWarnings: false });
-
         context.logger.info(`Starting server on port ${port}`);
 
         await runPreviewServer({
@@ -42,7 +37,8 @@ export async function previewDocsWorkspace({
                 await validateDocsWorkspaceWithoutExiting({
                     workspace: docsWorkspace,
                     context,
-                    logWarnings: false
+                    logWarnings: false,
+                    logSummary: false
                 });
             },
             context,
