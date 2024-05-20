@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/token",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_auth.getTokenWithClientCredentials"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedOauthClientCredentials\n\nclient = SeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",
@@ -142,7 +143,8 @@
         },
         "endpointId": {
             "path": "/token",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_auth.refreshToken"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedOauthClientCredentials\n\nclient = SeedOauthClientCredentials(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)",

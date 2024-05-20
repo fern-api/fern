@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_folder-a/service.getDirectThread"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedAudiences = new SeedAudiencesClient;\n",
@@ -30,7 +31,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_foo.find"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedAudiences = new SeedAudiencesClient;\n",

@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/apiKey",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getWithApiKey"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
@@ -30,7 +31,8 @@
         },
         "endpointId": {
             "path": "/apiKeyInHeader",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getWithHeader"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",

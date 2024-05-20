@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/generate-stream",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_dummy.generate-stream"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedStreaming\n\nclient = SeedStreaming(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nresponse = client.dummy.generate_stream(\n    num_events=1,\n)\nfor chunk in response:\n    yield chunk\n",

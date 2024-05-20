@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/users/{userId}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_user.getUser"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedMultiLineDocs = new SeedMultiLineDocsClient;\n",
@@ -59,7 +60,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedMultiLineDocs = new SeedMultiLineDocsClient;\n",

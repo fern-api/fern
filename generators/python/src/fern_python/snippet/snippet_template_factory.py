@@ -628,6 +628,7 @@ class SnippetTemplateFactory:
         return EndpointIdentifier(
             path=EndpointPath(self._full_path_for_endpoint(endpoint)),
             method=self._ir_method_to_fdr_method(endpoint.method),
+            identifierOverride=endpoint.id.get_as_str(),
         )
 
     def _full_path_for_endpoint(

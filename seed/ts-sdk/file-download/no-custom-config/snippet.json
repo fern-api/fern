@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.downloadFile"
             },
             "snippet": {
                 "type": "typescript",

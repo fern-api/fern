@@ -23,7 +23,9 @@ service:
       method: POST
       path: /create-movie
       request: CreateMovieRequest
-      response: MovieId
+      response: 
+        type: MovieId
+        status-code: 201
 
     getMovie:
       method: GET

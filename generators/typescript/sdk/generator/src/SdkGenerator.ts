@@ -770,7 +770,8 @@ export class SdkGenerator {
                             }),
                             endpointId: {
                                 path: endpointPath,
-                                method: endpoint.method
+                                method: endpoint.method,
+                                identifierOverride: endpoint.id
                             },
                             snippetTemplate
                         });
@@ -797,7 +798,8 @@ export class SdkGenerator {
                         this.endpointSnippets.push({
                             id: {
                                 path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                                method: endpoint.method
+                                method: endpoint.method,
+                                identifierOverride: endpoint.id
                             },
                             snippet: FernGeneratorExec.EndpointSnippet.typescript({
                                 client: snippet
