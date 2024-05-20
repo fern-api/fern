@@ -48,7 +48,8 @@ export async function convertGeneratorsConfiguration({
                           convertGroup({
                               absolutePathToGeneratorsConfiguration,
                               groupName,
-                              group
+                              group,
+                              maybeTopLevelMetadata
                           })
                       )
                   )
