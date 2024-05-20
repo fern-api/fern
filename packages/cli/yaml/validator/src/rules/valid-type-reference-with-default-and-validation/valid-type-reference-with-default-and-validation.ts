@@ -1,5 +1,5 @@
 import { constructFernFileContext, ResolvedType, TypeResolverImpl } from "@fern-api/ir-generator";
-import { isRawTextType, parseRawBytesType, parseRawFileType, RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -13,22 +13,6 @@ export const ValidTypeReferenceWithDefaultAndValidationRule: Rule = {
                     { typeReference, _default, validation, location },
                     { relativeFilepath, contents: definitionFile }
                 ) => {
-                    // The 'file', 'bytes', and 'text' types are not supported by the TypeResolver, so
-                    // we explicitly check for them upfront.
-                    const parsedRawFileType = parseRawFileType(typeReference);
-                    if (parsedRawFileType != null) {
-                        return [];
-                    }
-
-                    const parsedBytesType = parseRawBytesType(typeReference);
-                    if (parsedBytesType != null) {
-                        return [];
-                    }
-
-                    if (isRawTextType(typeReference)) {
-                        return [];
-                    }
-
                     const file = constructFernFileContext({
                         relativeFilepath,
                         definitionFile,
@@ -36,10 +20,15 @@ export const ValidTypeReferenceWithDefaultAndValidationRule: Rule = {
                         rootApiFile: workspace.definition.rootApiFile.contents
                     });
 
-                    const resolvedType = typeResolver.resolveTypeOrThrow({
+                    const resolvedType = typeResolver.resolveType({
                         type: typeReference,
                         file
                     });
+
+                    if (resolvedType == null) {
+                        // This error is caught by another rule.
+                        return [];
+                    }
 
                     return validateResolvedType({
                         resolvedType,
