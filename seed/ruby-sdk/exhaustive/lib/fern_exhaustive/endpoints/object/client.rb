@@ -104,6 +104,7 @@ module SeedExhaustiveClient
         SeedExhaustiveClient::Types::Object::NestedObjectWithOptionalField.from_json(json_object: response.body)
       end
 
+      # @param string [String]
       # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField, as a Hash
       #   * :string (String)
       #   * :nested_object (Hash)
@@ -121,13 +122,13 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
-      def get_and_return_nested_with_required_field(request:, request_options: nil)
+      def get_and_return_nested_with_required_field(string:, request:, request_options: nil)
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-          req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field"
+          req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field/#{string}"
         end
         SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField.from_json(json_object: response.body)
       end
@@ -263,6 +264,7 @@ module SeedExhaustiveClient
         end
       end
 
+      # @param string [String]
       # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField, as a Hash
       #   * :string (String)
       #   * :nested_object (Hash)
@@ -280,14 +282,14 @@ module SeedExhaustiveClient
       #     * :map (Hash{Integer => String})
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
-      def get_and_return_nested_with_required_field(request:, request_options: nil)
+      def get_and_return_nested_with_required_field(string:, request:, request_options: nil)
         Async do
           response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
-            req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field"
+            req.url "#{@request_client.get_url(request_options: request_options)}/object/get-and-return-nested-with-required-field/#{string}"
           end
           SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField.from_json(json_object: response.body)
         end

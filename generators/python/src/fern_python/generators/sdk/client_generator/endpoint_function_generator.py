@@ -79,6 +79,44 @@ class EndpointFunctionGenerator:
             self._endpoint.pagination if self._context.generator_config.generate_paginated_clients else None
         )
 
+        self._named_parameter_names: List[str] = []
+        request_body_parameters: Optional[AbstractRequestBodyParameters] = (
+            self._endpoint.request_body.visit(
+                inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
+                    endpoint=self._endpoint,
+                    request_body=inlined_request_body,
+                    context=self._context,
+                ),
+                reference=lambda referenced_request_body: ReferencedRequestBodyParameters(
+                    endpoint=self._endpoint,
+                    request_body=referenced_request_body,
+                    context=self._context,
+                ),
+                file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
+                    endpoint=self._endpoint, request=file_upload_request, context=self._context
+                ),
+                bytes=lambda bytes_request: BytesRequestBodyParameters(
+                    endpoint=self._endpoint, request=bytes_request, context=self._context
+                ),
+            )
+            if self._endpoint.request_body is not None
+            else None
+        )
+        self._named_parameters = self._get_endpoint_named_parameters(
+            service=self._service,
+            endpoint=self._endpoint,
+            request_body_parameters=request_body_parameters,
+            idempotency_headers=self._idempotency_headers,
+        )
+
+        self._path_parameter_names = dict()
+        _named_parameter_names: List[str] = [param.name for param in self._named_parameters]
+        for path_parameter in self._endpoint.all_path_parameters:
+            if not self._is_type_literal(path_parameter.value_type):
+                name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
+                _named_parameter_names.append(name)
+                self._path_parameter_names[path_parameter.name] = name
+
     def generate(self) -> GeneratedEndpointFunction:
         is_primitive: bool = (
             self._endpoint.request_body.visit(
@@ -115,12 +153,7 @@ class EndpointFunctionGenerator:
             if self._endpoint.request_body is not None
             else None
         )
-        named_parameters = self._get_endpoint_named_parameters(
-            service=self._service,
-            endpoint=self._endpoint,
-            request_body_parameters=request_body_parameters,
-            idempotency_headers=self._idempotency_headers,
-        )
+        named_parameters = self._named_parameters
         endpoint_snippet = self._generate_endpoint_snippet(
             package=self._package,
             service=self._service,
@@ -173,15 +206,19 @@ class EndpointFunctionGenerator:
             else self._context.core_utilities.get_paginator_type(return_type, is_async=self._is_async)
         )
 
-    def _get_endpoint_path_parameters(
-        self,
-    ) -> List[AST.FunctionParameter]:
+    def deconflict_parameter_name(self, name: str, used_names: List[str]) -> str:
+        while name in used_names:
+            name += "_"
+        return name
+
+    def _get_endpoint_path_parameters(self) -> List[AST.FunctionParameter]:
         parameters: List[AST.FunctionParameter] = []
         for path_parameter in self._endpoint.all_path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
+                name = self._path_parameter_names[path_parameter.name]
                 parameters.append(
                     AST.FunctionParameter(
-                        name=get_parameter_name(path_parameter.name),
+                        name=name,
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                             path_parameter.value_type,
                             in_endpoint=True,
@@ -488,6 +525,7 @@ class EndpointFunctionGenerator:
             service=service,
             endpoint=endpoint,
             example=example,
+            path_parameter_names=self._path_parameter_names,
         )
 
         endpoint_snippet = endpoint_snippet_generator.generate_snippet()
@@ -540,9 +578,10 @@ class EndpointFunctionGenerator:
         named_parameters: List[AST.NamedFunctionParameter] = []
         for path_parameter in path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
+                name = self._path_parameter_names[path_parameter.name]
                 named_parameters.append(
                     AST.NamedFunctionParameter(
-                        name=get_parameter_name(path_parameter.name),
+                        name=name,
                         docs=path_parameter.docs,
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                             path_parameter.value_type,
@@ -572,11 +611,9 @@ class EndpointFunctionGenerator:
                     writer.write_node(
                         self._context.core_utilities.jsonable_encoder(
                             AST.Expression(
-                                get_parameter_name(
-                                    self._get_path_parameter_from_name(
-                                        endpoint=endpoint,
-                                        path_parameter_name=part.path_parameter,
-                                    ).name,
+                                self._get_path_parameter_from_name(
+                                    endpoint=endpoint,
+                                    path_parameter_name=part.path_parameter,
                                 )
                             )
                         )
@@ -592,10 +629,10 @@ class EndpointFunctionGenerator:
         *,
         endpoint: ir_types.HttpEndpoint,
         path_parameter_name: str,
-    ) -> ir_types.PathParameter:
+    ) -> str:
         for path_parameter in endpoint.all_path_parameters:
             if path_parameter.name.original_name == path_parameter_name:
-                return path_parameter
+                return self._path_parameter_names[path_parameter.name]
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
     def _get_property_type_off_object(self) -> AST.TypeHint:
@@ -1016,12 +1053,14 @@ class EndpointFunctionSnippetGenerator:
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         example: ir_types.HttpEndpointExample,
+        path_parameter_names: Dict[ir_types.Name, str],
     ):
         self.context = context
         self.snippet_writer = snippet_writer
         self.service = service
         self.endpoint = endpoint
         self.example = example.get_as_union()
+        self.path_parameter_names = path_parameter_names
 
     # TODO: It should be sufficient for this to just take in the example and client
     def generate_snippet(self) -> AST.Expression:
@@ -1038,7 +1077,7 @@ class EndpointFunctionSnippetGenerator:
             if not self._is_path_literal(path_parameter.name.original_name):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=get_parameter_name(path_parameter.name),
+                        parameter_name=self.path_parameter_names[path_parameter.name],
                         # If there's no value put a None in place as path parameters are unnamed and cannot be skipped
                         value=path_parameter_value
                         if path_parameter_value is not None
