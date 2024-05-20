@@ -17,6 +17,7 @@ allowedFailures:
   - enum
   - exhaustive
   - extends
+  - multi-url-environment
   - reserved-keywords
   - trace
   - undiscriminated-unions

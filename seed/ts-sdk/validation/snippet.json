@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/create",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_.create"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_.get"
             },
             "snippet": {
                 "type": "typescript",

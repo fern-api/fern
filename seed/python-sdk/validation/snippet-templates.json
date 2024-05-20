@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/create",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_.create"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedValidation\n\nclient = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -142,7 +143,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_.get"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedValidation\n\nclient = SeedValidation(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

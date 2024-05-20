@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/create",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_.create"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedValidation = new SeedValidationClient;\n",
@@ -91,7 +92,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_.get"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedValidation = new SeedValidationClient;\n",
