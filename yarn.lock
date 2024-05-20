@@ -3404,6 +3404,7 @@ __metadata:
     "@fern-fern/fiddle-sdk": ^0.0.542
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
+    "@types/get-port": ^4.2.0
     "@types/is-ci": ^3.0.2
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3422,6 +3423,7 @@ __metadata:
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
     eslint: ^8.56.0
+    get-port: ^7.1.0
     immer: ^9.0.15
     is-ci: ^3.0.1
     jest: ^29.7.0
@@ -7116,6 +7118,15 @@ __metadata:
     "@types/jsonfile": "*"
     "@types/node": "*"
   checksum: 3e930346e5d84f419deb8ced1c582beef8cb20d0bd8a0eb145a37d75bab0572a1895f0e48a0d681d386b3a58b9a992b2d2acecc464bcaec2548f53ea00718651
+  languageName: node
+  linkType: hard
+
+"@types/get-port@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "@types/get-port@npm:4.2.0"
+  dependencies:
+    get-port: "*"
+  checksum: 0c084e946089d310b2cfe130b0e4b8c25124800dfba069b756a4477a2e9cb9fabf4f5f59747d987492cbf25b72a24692f6bf1aee1fbfdc47411916221075eba3
   languageName: node
   linkType: hard
 
@@ -13344,6 +13355,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 0.1.0
   resolution: "get-package-type@npm:0.1.0"
   checksum: bba0811116d11e56d702682ddef7c73ba3481f114590e705fc549f4d868972263896af313c57a25c076e3c0d567e11d919a64ba1b30c879be985fc9d44f96148
+  languageName: node
+  linkType: hard
+
+"get-port@npm:*, get-port@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "get-port@npm:7.1.0"
+  checksum: f4d23b43026124007663a899578cc87ff37bfcf645c5c72651e9810ebafc759857784e409fb8e0ada9b90e5c5db089b0ae2f5f6b49fba1ce2e0aff86094ab17d
   languageName: node
   linkType: hard
 
