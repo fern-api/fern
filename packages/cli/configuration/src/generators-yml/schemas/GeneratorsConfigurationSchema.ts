@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { APIConfigurationSchema, APIDefinitionSettingsSchema } from "./APIConfigurationSchema";
 import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
+import { GeneratorMetadataSchema } from "./GeneratorMetadataSchema";
 import { GeneratorsOpenAPISchema } from "./GeneratorsOpenAPISchema";
 import { WhitelabelConfigurationSchema } from "./WhitelabelConfigurationSchema";
 
@@ -15,6 +16,8 @@ export const GeneratorsConfigurationSchema = z.strictObject({
     api: z.optional(APIConfigurationSchema),
 
     whitelabel: z.optional(WhitelabelConfigurationSchema),
+
+    metadata: z.optional(GeneratorMetadataSchema),
 
     [DEFAULT_GROUP_GENERATORS_CONFIG_KEY]: z.optional(z.string()),
     groups: z.optional(z.record(GeneratorGroupSchema)),

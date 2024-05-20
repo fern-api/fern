@@ -28,7 +28,7 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "^0.0.816",
+    "@fern-fern/generator-exec-sdk": "^0.0.830",
     "@fern-fern/ir-sdk": "^43.0.0",
     "@fern-fern/snippet-sdk": "^0.0.5434",
     "@fern-typescript/commons": "workspace:*",
