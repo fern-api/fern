@@ -289,7 +289,7 @@ class CsProj {
             result.push(`<Version>${this.version}</Version>`);
         }
 
-        result.push(`<PackageReadmeFile>README.md</PackageReadmeFile>`);
+        result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
 
         if (this.license != null) {
             result.push(`<PackageLicenseFile>${this.license}</PackageLicenseFile>`);
