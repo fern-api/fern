@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "PATCH"
+                "method": "PATCH",
+                "identifier_override": "endpoint_union.update"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/{id}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_union.get"
             },
             "snippet": {
                 "type": "go",

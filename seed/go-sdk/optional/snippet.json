@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/send-optional-body",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalBody"
             },
             "snippet": {
                 "type": "go",

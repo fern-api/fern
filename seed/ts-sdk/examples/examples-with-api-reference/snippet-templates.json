@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_.echo"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
@@ -58,7 +59,8 @@
         },
         "endpointId": {
             "path": "/file/notification/{notificationId}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_file/notification/service.getException"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
@@ -110,7 +112,8 @@
         },
         "endpointId": {
             "path": "/file/{filename}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_file/service.getFile"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
@@ -162,7 +165,8 @@
         },
         "endpointId": {
             "path": "/check/{id}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_health/service.check"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
@@ -214,7 +218,8 @@
         },
         "endpointId": {
             "path": "/ping",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_health/service.ping"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
@@ -237,7 +242,8 @@
         },
         "endpointId": {
             "path": "/movie/{movieId}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
@@ -289,7 +295,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.createMovie"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
@@ -489,7 +496,8 @@
         },
         "endpointId": {
             "path": "/metadata",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getMetadata"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",
@@ -573,7 +581,8 @@
         },
         "endpointId": {
             "path": "/response",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getResponse"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\n",

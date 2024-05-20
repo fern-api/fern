@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithCursorPagination"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetPagination"
             },
             "snippet": {
                 "type": "typescript",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResults"
             },
             "snippet": {
                 "type": "typescript",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listUsernames"
             },
             "snippet": {
                 "type": "typescript",
@@ -43,7 +47,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithGlobalConfig"
             },
             "snippet": {
                 "type": "typescript",

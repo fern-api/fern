@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/ec2/boot",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_ec2.bootInstance"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedMultiUrlEnvironment\n\nclient = SeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nclient.ec_2.boot_instance(\n    size=\"string\",\n)\n",
@@ -15,7 +16,8 @@
         {
             "id": {
                 "path": "/s3/presigned-url",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_s3.getPresignedUrl"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedMultiUrlEnvironment\n\nclient = SeedMultiUrlEnvironment(\n    token=\"YOUR_TOKEN\",\n)\nclient.s_3.get_presigned_url(\n    s_3_key=\"string\",\n)\n",

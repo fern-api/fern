@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/headers",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_headers.send"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
@@ -59,7 +60,8 @@
         },
         "endpointId": {
             "path": "/inlined",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_inlined.send"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
@@ -127,7 +129,8 @@
         },
         "endpointId": {
             "path": "/path/{id}",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_path.send"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
@@ -150,7 +153,8 @@
         },
         "endpointId": {
             "path": "/query",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_query.send"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
@@ -202,7 +206,8 @@
         },
         "endpointId": {
             "path": "/reference",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_reference.send"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
