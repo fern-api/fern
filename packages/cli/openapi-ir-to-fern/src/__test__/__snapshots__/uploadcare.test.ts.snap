@@ -1200,7 +1200,6 @@ to the value of the \`check_URL_duplicates\` parameter.
                   },
                   "signature": "optional<root.SignatureType>",
                   "source_url": {
-                    "default": undefined,
                     "docs": "Source URL of the file to fetch and upload.
 
 **Note**: The URL should point to a resource publicly available via HTTP/HTTPS.
@@ -2051,7 +2050,6 @@ Log.d("TAG", file.toString())
                 "properties": {
                   "UPLOADCARE_PUB_KEY": "root.ProjectPublicKeyType",
                   "uuid": {
-                    "default": undefined,
                     "docs": "File's UUID from the \`/multipart/start/\` endpoint.",
                     "type": "string",
                     "validation": {
@@ -2357,17 +2355,13 @@ Log.d("TAG", file.toString())
                   "UPLOADCARE_PUB_KEY": "root.ProjectPublicKeyType",
                   "UPLOADCARE_STORE": "optional<root.StoreType>",
                   "content_type": {
-                    "default": undefined,
                     "docs": "File's MIME-type.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "expire": "optional<root.ExpireType>",
                   "filename": {
-                    "default": undefined,
                     "docs": "Original file name of the uploaded file",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "part_size": {
@@ -2391,12 +2385,10 @@ to us as a value of the \`part_size\` parameter (in bytes).
                   },
                   "signature": "optional<root.SignatureType>",
                   "size": {
-                    "default": undefined,
                     "docs": "Precise file size of the uploaded file (in bytes).
 **Note**: The size should not exceed max file size cap for your project.
 ",
                     "type": "integer",
-                    "validation": undefined,
                   },
                 },
               },
@@ -2487,7 +2479,6 @@ to the value of the \`check_URL_duplicates\` parameter.
           "properties": {
             "parts": "list<string>",
             "uuid": {
-              "default": undefined,
               "docs": "File's UUID.",
               "type": "string",
               "validation": {
@@ -3361,24 +3352,16 @@ to the value of the \`check_URL_duplicates\` parameter.
     },
     "types": {
       "AccountBlockedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "AccountLimitsExceededError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "AccountUnpaidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "AutoStoreDisabledError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "BaseUploadRequestBadRequestErrorBody": {
         "discriminated": false,
@@ -3437,22 +3420,16 @@ to the value of the \`check_URL_duplicates\` parameter.
         "docs": "MIME type.",
         "properties": {
           "mime": {
-            "default": undefined,
             "docs": "Full MIME type.",
             "type": "string",
-            "validation": undefined,
           },
           "subtype": {
-            "default": undefined,
             "docs": "Subtype of MIME type.",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "Type of MIME type.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -3492,90 +3469,58 @@ The parameter defines the time during which your signature is valid. It's a UNIX
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
 ",
         "type": "double",
-        "validation": undefined,
       },
       "FileIdInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileIdRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileInfectedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeyDuplicatedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeyEmptyError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeyForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeyLengthTooBigError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeysNumberTooBigError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataValueEmptyError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataValueForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataValueLengthTooBigError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileNotFoundError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileSizeLimitExceededError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileTypeForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileUploadInfo": {
         "docs": "Information about an uploaded file.",
         "properties": {
           "content_info": "optional<ContentInfo>",
           "done": {
-            "default": undefined,
             "docs": "Same as \`size\`.",
             "type": "integer",
-            "validation": undefined,
           },
           "file_id": {
-            "default": undefined,
             "docs": "Same as \`uuid\`",
             "type": "string",
             "validation": {
@@ -3586,10 +3531,8 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             },
           },
           "filename": {
-            "default": undefined,
             "docs": "Sanitized \`original_filename\`.",
             "type": "string",
-            "validation": undefined,
           },
           "image_info": "optional<ImageInfo>",
           "is_image": {
@@ -3606,16 +3549,12 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
           "metadata": "optional<Metadata>",
           "mime_type": {
-            "default": undefined,
             "docs": "File's MIME-type.",
             "type": "string",
-            "validation": undefined,
           },
           "original_filename": {
-            "default": undefined,
             "docs": "Original file of the uploaded file.",
             "type": "string",
-            "validation": undefined,
           },
           "s3_bucket": {
             "default": undefined,
@@ -3624,19 +3563,14 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "validation": undefined,
           },
           "size": {
-            "default": undefined,
             "docs": "File's size in bytes.",
             "type": "integer",
-            "validation": undefined,
           },
           "total": {
-            "default": undefined,
             "docs": "Same as \`size\`.",
             "type": "integer",
-            "validation": undefined,
           },
           "uuid": {
-            "default": undefined,
             "docs": "File's unique ID.",
             "type": "string",
             "validation": {
@@ -3793,9 +3727,7 @@ that are tool old (or that have not been created at all).
         ],
       },
       "FilesRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FromUrlUploadRequestBadRequestErrorBody": {
         "discriminated": false,
@@ -3860,24 +3792,16 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupFileUrlParsingFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "GroupFilesInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "GroupFilesNotFoundError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "GroupIdRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "GroupInfo": {
         "docs": "File group information object.",
@@ -3938,14 +3862,10 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupNotFoundError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "HostnameNotFoundError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "ImageInfo": {
         "docs": "Image metadata.",
@@ -3967,10 +3887,8 @@ that are tool old (or that have not been created at all).
             "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Image format.",
             "type": "string",
-            "validation": undefined,
           },
           "geo_location": {
             "default": undefined,
@@ -3979,10 +3897,8 @@ that are tool old (or that have not been created at all).
             "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Image height in pixels.",
             "type": "integer",
-            "validation": undefined,
           },
           "orientation": {
             "default": undefined,
@@ -4001,10 +3917,8 @@ that are tool old (or that have not been created at all).
             "type": "boolean",
           },
           "width": {
-            "default": undefined,
             "docs": "Image width in pixels.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -4028,16 +3942,12 @@ that are tool old (or that have not been created at all).
         "docs": "Geo-location of image from EXIF.",
         "properties": {
           "latitude": {
-            "default": undefined,
             "docs": "Location latitude.",
             "type": "double",
-            "validation": undefined,
           },
           "longitude": {
-            "default": undefined,
             "docs": "Location longitude.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -4159,29 +4069,19 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileAlreadyUploadedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileCompletionFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileIdRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileSizeLimitExceededError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileSizeTooSmallError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileUploadCompleteRequestBadRequestErrorBody": {
         "discriminated": false,
@@ -4252,74 +4152,47 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         ],
       },
       "MultipartPartSizeInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartPartSizeTooBigError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartPartSizeTooSmallError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartSizeInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartUploadSizeTooLargeError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartUploadSizeTooSmallError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "NullCharactersForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "PostRequestParserFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "ProjectPublicKeyRemovedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "ProjectPublicKeyType": {
         "docs": "Public key identifying an Uploadcare project your uploads will go to.",
         "type": "string",
-        "validation": undefined,
       },
       "PublicKeyInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "PublicKeyRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "RequestFiledsNumberLimitExceededError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "RequestParamRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SchemasImageInfo": {
         "docs": "Image metadata.",
@@ -4341,10 +4214,8 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Image format.",
             "type": "string",
-            "validation": undefined,
           },
           "geo_location": {
             "default": undefined,
@@ -4353,10 +4224,8 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Image height in pixels.",
             "type": "integer",
-            "validation": undefined,
           },
           "orientation": {
             "default": undefined,
@@ -4375,10 +4244,8 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "boolean",
           },
           "width": {
-            "default": undefined,
             "docs": "Image width in pixels.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -4402,43 +4269,29 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         "docs": "Geo-location of image from EXIF.",
         "properties": {
           "latitude": {
-            "default": undefined,
             "docs": "Location latitude.",
             "type": "double",
-            "validation": undefined,
           },
           "longitude": {
-            "default": undefined,
             "docs": "Location longitude.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
       "SignatureExpirationError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureExpirationInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureExpirationRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureType": {
         "docs": "\`signature\` must be sent along with your upload request if you would like to use signed uploads.
@@ -4447,12 +4300,9 @@ The signature should be generated on your backend.
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
 ",
         "type": "string",
-        "validation": undefined,
       },
       "SourceUrlRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "StoreType": {
         "docs": "Determines if an uploaded file should be marked as temporary or permanent.
@@ -4486,64 +4336,40 @@ change the value to \`auto\`.
         ],
       },
       "TokenRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UploadFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UploadcarePublicKeyInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UploadcarePublicKeyRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlBlacklistedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlHostMalformedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlHostPrivateIpForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlHostRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlParsingFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlSchemeInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlSchemeRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UuidInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "VideoInfo": {
         "docs": "Video metadata.",
@@ -4562,10 +4388,8 @@ change the value to \`auto\`.
             "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Video file's format.",
             "type": "string",
-            "validation": undefined,
           },
           "video": "list<VideoInfoVideoItem>",
         },
@@ -4615,22 +4439,16 @@ change the value to \`auto\`.
             "validation": undefined,
           },
           "frame_rate": {
-            "default": undefined,
             "docs": "Video stream's frame rate.",
             "type": "double",
-            "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Video stream's image height.",
             "type": "integer",
-            "validation": undefined,
           },
           "width": {
-            "default": undefined,
             "docs": "Video stream's image width.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -5850,7 +5668,6 @@ to the value of the \`check_URL_duplicates\` parameter.
                   },
                   "signature": "optional<root.SignatureType>",
                   "source_url": {
-                    "default": undefined,
                     "docs": "Source URL of the file to fetch and upload.
 
 **Note**: The URL should point to a resource publicly available via HTTP/HTTPS.
@@ -6701,7 +6518,6 @@ Log.d("TAG", file.toString())
                 "properties": {
                   "UPLOADCARE_PUB_KEY": "root.ProjectPublicKeyType",
                   "uuid": {
-                    "default": undefined,
                     "docs": "File's UUID from the \`/multipart/start/\` endpoint.",
                     "type": "string",
                     "validation": {
@@ -7007,17 +6823,13 @@ Log.d("TAG", file.toString())
                   "UPLOADCARE_PUB_KEY": "root.ProjectPublicKeyType",
                   "UPLOADCARE_STORE": "optional<root.StoreType>",
                   "content_type": {
-                    "default": undefined,
                     "docs": "File's MIME-type.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "expire": "optional<root.ExpireType>",
                   "filename": {
-                    "default": undefined,
                     "docs": "Original file name of the uploaded file",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "part_size": {
@@ -7041,12 +6853,10 @@ to us as a value of the \`part_size\` parameter (in bytes).
                   },
                   "signature": "optional<root.SignatureType>",
                   "size": {
-                    "default": undefined,
                     "docs": "Precise file size of the uploaded file (in bytes).
 **Note**: The size should not exceed max file size cap for your project.
 ",
                     "type": "integer",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7137,7 +6947,6 @@ to the value of the \`check_URL_duplicates\` parameter.
           "properties": {
             "parts": "list<string>",
             "uuid": {
-              "default": undefined,
               "docs": "File's UUID.",
               "type": "string",
               "validation": {
@@ -7275,24 +7084,16 @@ to the value of the \`check_URL_duplicates\` parameter.
     },
     "types": {
       "AccountBlockedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "AccountLimitsExceededError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "AccountUnpaidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "AutoStoreDisabledError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "BadRequestErrorBody": {
         "discriminated": false,
@@ -7319,22 +7120,16 @@ to the value of the \`check_URL_duplicates\` parameter.
         "docs": "MIME type.",
         "properties": {
           "mime": {
-            "default": undefined,
             "docs": "Full MIME type.",
             "type": "string",
-            "validation": undefined,
           },
           "subtype": {
-            "default": undefined,
             "docs": "Subtype of MIME type.",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "Type of MIME type.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -7344,90 +7139,58 @@ The parameter defines the time during which your signature is valid. It's a UNIX
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
 ",
         "type": "double",
-        "validation": undefined,
       },
       "FileIdInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileIdRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileInfectedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeyDuplicatedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeyEmptyError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeyForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeyLengthTooBigError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataKeysNumberTooBigError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataValueEmptyError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataValueForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileMetadataValueLengthTooBigError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileNotFoundError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileSizeLimitExceededError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileTypeForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "FileUploadInfo": {
         "docs": "Information about an uploaded file.",
         "properties": {
           "content_info": "optional<ContentInfo>",
           "done": {
-            "default": undefined,
             "docs": "Same as \`size\`.",
             "type": "integer",
-            "validation": undefined,
           },
           "file_id": {
-            "default": undefined,
             "docs": "Same as \`uuid\`",
             "type": "string",
             "validation": {
@@ -7438,10 +7201,8 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             },
           },
           "filename": {
-            "default": undefined,
             "docs": "Sanitized \`original_filename\`.",
             "type": "string",
-            "validation": undefined,
           },
           "image_info": "optional<ImageInfo>",
           "is_image": {
@@ -7458,16 +7219,12 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
           "metadata": "optional<Metadata>",
           "mime_type": {
-            "default": undefined,
             "docs": "File's MIME-type.",
             "type": "string",
-            "validation": undefined,
           },
           "original_filename": {
-            "default": undefined,
             "docs": "Original file of the uploaded file.",
             "type": "string",
-            "validation": undefined,
           },
           "s3_bucket": {
             "default": undefined,
@@ -7476,19 +7233,14 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "validation": undefined,
           },
           "size": {
-            "default": undefined,
             "docs": "File's size in bytes.",
             "type": "integer",
-            "validation": undefined,
           },
           "total": {
-            "default": undefined,
             "docs": "Same as \`size\`.",
             "type": "integer",
-            "validation": undefined,
           },
           "uuid": {
-            "default": undefined,
             "docs": "File's unique ID.",
             "type": "string",
             "validation": {
@@ -7612,9 +7364,7 @@ that are tool old (or that have not been created at all).
         },
       },
       "FilesRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "ForbiddenErrorBody": {
         "discriminated": false,
@@ -7642,24 +7392,16 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupFileUrlParsingFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "GroupFilesInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "GroupFilesNotFoundError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "GroupIdRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "GroupInfo": {
         "docs": "File group information object.",
@@ -7720,14 +7462,10 @@ that are tool old (or that have not been created at all).
         },
       },
       "GroupNotFoundError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "HostnameNotFoundError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "ImageInfo": {
         "docs": "Image metadata.",
@@ -7749,10 +7487,8 @@ that are tool old (or that have not been created at all).
             "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Image format.",
             "type": "string",
-            "validation": undefined,
           },
           "geo_location": {
             "default": undefined,
@@ -7761,10 +7497,8 @@ that are tool old (or that have not been created at all).
             "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Image height in pixels.",
             "type": "integer",
-            "validation": undefined,
           },
           "orientation": {
             "default": undefined,
@@ -7783,10 +7517,8 @@ that are tool old (or that have not been created at all).
             "type": "boolean",
           },
           "width": {
-            "default": undefined,
             "docs": "Image width in pixels.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -7810,16 +7542,12 @@ that are tool old (or that have not been created at all).
         "docs": "Geo-location of image from EXIF.",
         "properties": {
           "latitude": {
-            "default": undefined,
             "docs": "Location latitude.",
             "type": "double",
-            "validation": undefined,
           },
           "longitude": {
-            "default": undefined,
             "docs": "Location longitude.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -7941,99 +7669,62 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         },
       },
       "MultipartFileAlreadyUploadedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileCompletionFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileIdRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileSizeLimitExceededError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartFileSizeTooSmallError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartPartSizeInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartPartSizeTooBigError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartPartSizeTooSmallError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartSizeInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartUploadSizeTooLargeError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "MultipartUploadSizeTooSmallError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "NullCharactersForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "PostRequestParserFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "ProjectPublicKeyRemovedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "ProjectPublicKeyType": {
         "docs": "Public key identifying an Uploadcare project your uploads will go to.",
         "type": "string",
-        "validation": undefined,
       },
       "PublicKeyInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "PublicKeyRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "RequestFiledsNumberLimitExceededError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "RequestParamRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SchemasImageInfo": {
         "docs": "Image metadata.",
@@ -8055,10 +7746,8 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Image format.",
             "type": "string",
-            "validation": undefined,
           },
           "geo_location": {
             "default": undefined,
@@ -8067,10 +7756,8 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Image height in pixels.",
             "type": "integer",
-            "validation": undefined,
           },
           "orientation": {
             "default": undefined,
@@ -8089,10 +7776,8 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "boolean",
           },
           "width": {
-            "default": undefined,
             "docs": "Image width in pixels.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -8116,43 +7801,29 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
         "docs": "Geo-location of image from EXIF.",
         "properties": {
           "latitude": {
-            "default": undefined,
             "docs": "Location latitude.",
             "type": "double",
-            "validation": undefined,
           },
           "longitude": {
-            "default": undefined,
             "docs": "Location longitude.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
       "SignatureExpirationError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureExpirationInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureExpirationRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "SignatureType": {
         "docs": "\`signature\` must be sent along with your upload request if you would like to use signed uploads.
@@ -8161,12 +7832,9 @@ The signature should be generated on your backend.
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
 ",
         "type": "string",
-        "validation": undefined,
       },
       "SourceUrlRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "StoreType": {
         "docs": "Determines if an uploaded file should be marked as temporary or permanent.
@@ -8200,64 +7868,40 @@ change the value to \`auto\`.
         ],
       },
       "TokenRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UploadFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UploadcarePublicKeyInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UploadcarePublicKeyRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlBlacklistedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlHostMalformedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlHostPrivateIpForbiddenError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlHostRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlParsingFailedError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlSchemeInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UrlSchemeRequiredError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "UuidInvalidError": {
-        "docs": undefined,
         "type": "string",
-        "validation": undefined,
       },
       "VideoInfo": {
         "docs": "Video metadata.",
@@ -8276,10 +7920,8 @@ change the value to \`auto\`.
             "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Video file's format.",
             "type": "string",
-            "validation": undefined,
           },
           "video": "list<VideoInfoVideoItem>",
         },
@@ -8329,22 +7971,16 @@ change the value to \`auto\`.
             "validation": undefined,
           },
           "frame_rate": {
-            "default": undefined,
             "docs": "Video stream's frame rate.",
             "type": "double",
-            "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Video stream's image height.",
             "type": "integer",
-            "validation": undefined,
           },
           "width": {
-            "default": undefined,
             "docs": "Video stream's image width.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },

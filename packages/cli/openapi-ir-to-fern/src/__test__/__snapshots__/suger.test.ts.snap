@@ -38,17 +38,13 @@ exports[`open api parser suger docs 1`] = `
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the API Client.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "organizationID": "string",
                   "secret": {
-                    "default": undefined,
                     "docs": "The secret of the API Client.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -341,10 +337,8 @@ exports[`open api parser suger docs 1`] = `
               "body": {
                 "properties": {
                   "creditAmountIncrement": {
-                    "default": undefined,
                     "docs": "The amount to be added to the credit amount.",
                     "type": "double",
-                    "validation": undefined,
                   },
                   "entitlementID": "string",
                   "organizationID": "string",
@@ -3977,10 +3971,8 @@ exports[`open api parser suger docs 1`] = `
                     "validation": undefined,
                   },
                   "organizationID": {
-                    "default": undefined,
                     "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "partner": {
                     "docs": "Required.",
@@ -8387,17 +8379,13 @@ exports[`open api parser suger simple 1`] = `
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the API Client.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "organizationID": "string",
                   "secret": {
-                    "default": undefined,
                     "docs": "The secret of the API Client.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8690,10 +8678,8 @@ exports[`open api parser suger simple 1`] = `
               "body": {
                 "properties": {
                   "creditAmountIncrement": {
-                    "default": undefined,
                     "docs": "The amount to be added to the credit amount.",
                     "type": "double",
-                    "validation": undefined,
                   },
                   "entitlementID": "string",
                   "organizationID": "string",
@@ -12326,10 +12312,8 @@ exports[`open api parser suger simple 1`] = `
                     "validation": undefined,
                   },
                   "organizationID": {
-                    "default": undefined,
                     "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "partner": {
                     "docs": "Required.",

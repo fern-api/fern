@@ -287,10 +287,8 @@ The LLM response data, as well as any context provided in the original request w
                 ],
                 "properties": {
                   "prompt": {
-                    "default": undefined,
                     "docs": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -416,7 +414,6 @@ The parameter should map to a JSON encoded list of strings.
               "body": {
                 "properties": {
                   "expires_in": {
-                    "default": undefined,
                     "docs": "The amount of time until the token expires in seconds.",
                     "type": "integer",
                     "validation": {
@@ -676,10 +673,8 @@ The parameter should map to a JSON encoded list of strings.
                 ],
                 "properties": {
                   "audio_url": {
-                    "default": undefined,
                     "docs": "The URL of the audio or video file to transcribe.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -2009,10 +2004,8 @@ The parameter should map to a JSON encoded list of strings.
         "docs": undefined,
         "properties": {
           "audio_data": {
-            "default": undefined,
             "docs": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2027,20 +2020,16 @@ The parameter should map to a JSON encoded list of strings.
         "docs": undefined,
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The total number of times the key phrase appears in the audio file",
             "type": "integer",
-            "validation": undefined,
           },
           "rank": {
             "docs": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
             "type": "double",
           },
           "text": {
-            "default": undefined,
             "docs": "The text itself of the key phrase",
             "type": "string",
-            "validation": undefined,
           },
           "timestamps": {
             "docs": "The timestamp of the of the key phrase",
@@ -2063,34 +2052,24 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         "docs": "Chapter of the audio file",
         "properties": {
           "end": {
-            "default": undefined,
             "docs": "The starting time, in milliseconds, for the chapter",
             "type": "integer",
-            "validation": undefined,
           },
           "gist": {
-            "default": undefined,
             "docs": "An ultra-short summary (just a few words) of the content spoken in the chapter",
             "type": "string",
-            "validation": undefined,
           },
           "headline": {
-            "default": undefined,
             "docs": "A single sentence summary of the content spoken during the chapter",
             "type": "string",
-            "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "The starting time, in milliseconds, for the chapter",
             "type": "integer",
-            "validation": undefined,
           },
           "summary": {
-            "default": undefined,
             "docs": "A one paragraph summary of the content spoken during the chapter",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2098,7 +2077,6 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
             "docs": "The confidence score for the topic being discussed, from 0 to 1",
             "type": "double",
             "validation": {
@@ -2110,13 +2088,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             },
           },
           "label": {
-            "default": undefined,
             "docs": "The label of the sensitive topic",
             "type": "string",
-            "validation": undefined,
           },
           "severity": {
-            "default": undefined,
             "docs": "How severely the topic is discussed in the section, from 0 to 1",
             "type": "double",
             "validation": {
@@ -2137,16 +2112,12 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "type": "list<ContentSafetyLabel>",
           },
           "sentences_idx_end": {
-            "default": undefined,
             "docs": "The sentence index at which the section ends",
             "type": "integer",
-            "validation": undefined,
           },
           "sentences_idx_start": {
-            "default": undefined,
             "docs": "The sentence index at which the section begins",
             "type": "integer",
-            "validation": undefined,
           },
           "severity_score_summary": {
             "docs": "A summary of the Content Moderation severity results for the entire audio file",
@@ -2157,10 +2128,8 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "type": "map<string, double>",
           },
           "text": {
-            "default": undefined,
             "docs": "The transcript of the section flagged by the Content Moderation model",
             "type": "string",
-            "validation": undefined,
           },
           "timestamp": {
             "docs": "Timestamp information for the section",
@@ -2385,26 +2354,20 @@ Valid values are in the range [0, 1] inclusive.
         "docs": "A detected entity",
         "properties": {
           "end": {
-            "default": undefined,
             "docs": "The ending time, in milliseconds, for the detected entity in the audio file",
             "type": "integer",
-            "validation": undefined,
           },
           "entity_type": {
             "docs": "The type of entity for the detected entity",
             "type": "EntityType",
           },
           "start": {
-            "default": undefined,
             "docs": "The starting time, in milliseconds, at which the detected entity appears in the audio file",
             "type": "integer",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text for the detected entity",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2536,10 +2499,8 @@ Valid values are in the range [0, 1] inclusive.
         "docs": undefined,
         "properties": {
           "error": {
-            "default": undefined,
             "docs": "Error message",
             "type": "string",
-            "validation": undefined,
           },
           "status": "optional<literal<"error">>",
         },
@@ -2572,10 +2533,8 @@ Valid values are in the range [0, 1] inclusive.
         ],
         "properties": {
           "response": {
-            "default": undefined,
             "docs": "The response generated by LeMUR.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2622,10 +2581,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "request_id": {
-            "default": undefined,
             "docs": "The ID of the LeMUR request",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2661,10 +2618,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "validation": undefined,
           },
           "question": {
-            "default": undefined,
             "docs": "The question you wish to ask. For more complex questions use default model.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2672,16 +2627,12 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "An answer generated by LeMUR and its question.",
         "properties": {
           "answer": {
-            "default": undefined,
             "docs": "The answer generated by LeMUR.",
             "type": "string",
-            "validation": undefined,
           },
           "question": {
-            "default": undefined,
             "docs": "The question for LeMUR to answer.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2712,10 +2663,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         ],
         "properties": {
           "response": {
-            "default": undefined,
             "docs": "The response generated by LeMUR.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2726,10 +2675,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         ],
         "properties": {
           "response": {
-            "default": undefined,
             "docs": "The response generated by LeMUR.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2756,8 +2703,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "properties": {
           "audio_duration": "double",
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -2822,16 +2767,12 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "boolean",
           },
           "request_id": {
-            "default": undefined,
             "docs": "The ID of the LeMUR request",
             "type": "string",
-            "validation": undefined,
           },
           "request_id_to_purge": {
-            "default": undefined,
             "docs": "The ID of the deletion request of the LeMUR request",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2848,19 +2789,14 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "audio_end": {
-            "default": undefined,
             "docs": "End time of audio sample relative to session start, in milliseconds.",
             "type": "integer",
-            "validation": undefined,
           },
           "audio_start": {
-            "default": undefined,
             "docs": "Start time of audio sample relative to session start, in milliseconds.",
             "type": "integer",
-            "validation": undefined,
           },
           "confidence": {
-            "default": undefined,
             "docs": "The confidence score of the entire transcription, between 0 and 1.",
             "type": "double",
             "validation": {
@@ -2876,10 +2812,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "datetime",
           },
           "text": {
-            "default": undefined,
             "docs": "The partial transcript for your audio.",
             "type": "string",
-            "validation": undefined,
           },
           "words": {
             "docs": "An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).",
@@ -2908,10 +2842,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "token": {
-            "default": undefined,
             "docs": "The temporary authentication token for real-time transcription",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2933,10 +2865,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "redacted_audio_url": {
-            "default": undefined,
             "docs": "The URL of the redacted audio file",
             "type": "string",
-            "validation": undefined,
           },
           "status": {
             "docs": "The status of the redacted audio",
@@ -2953,8 +2883,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "properties": {
           "audio_duration": "double",
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -2979,7 +2907,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "The result of the sentiment analysis model.",
         "properties": {
           "confidence": {
-            "default": undefined,
             "docs": "The confidence score for the detected sentiment of the sentence, from 0 to 1",
             "type": "double",
             "validation": {
@@ -2991,10 +2918,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "end": {
-            "default": undefined,
             "docs": "The ending time, in milliseconds, of the sentence",
             "type": "integer",
-            "validation": undefined,
           },
           "sentiment": {
             "docs": "The detected sentiment for the sentence, one of POSITIVE, NEUTRAL, NEGATIVE",
@@ -3007,16 +2932,12 @@ Can be any value between 0.0 and 1.0 inclusive.
             "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "The starting time, in milliseconds, of the sentence",
             "type": "integer",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The transcript of the sentence",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -3032,10 +2953,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "literal<"SessionBegins">",
           },
           "session_id": {
-            "default": undefined,
             "docs": "Unique identifier for the established session.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -3052,8 +2971,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "high": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -3064,8 +2981,6 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "low": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -3076,8 +2991,6 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "medium": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -3137,16 +3050,12 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "Timestamp containing a start and end property in milliseconds.",
         "properties": {
           "end": {
-            "default": undefined,
             "docs": "The end time in milliseconds",
             "type": "integer",
-            "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "The start time in milliseconds",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -3155,10 +3064,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "properties": {
           "labels": "optional<list<TopicDetectionResultLabelsItem>>",
           "text": {
-            "default": undefined,
             "docs": "The text in the transcript in which a detected topic occurs",
             "type": "string",
-            "validation": undefined,
           },
           "timestamp": "optional<Timestamp>",
         },
@@ -3167,13 +3074,10 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "label": {
-            "default": undefined,
             "docs": "The IAB taxonomical label for the label of the detected topic, where > denotes supertopic/subtopic relationship",
             "type": "string",
-            "validation": undefined,
           },
           "relevance": {
-            "default": undefined,
             "docs": "How relevant the detected topic is of a detected topic",
             "type": "double",
             "validation": {
@@ -3190,10 +3094,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "A transcript object",
         "properties": {
           "acoustic_model": {
-            "default": undefined,
             "docs": "The acoustic model that was used for the transcription",
             "type": "string",
-            "validation": undefined,
           },
           "audio_duration": {
             "default": undefined,
@@ -3214,10 +3116,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "validation": undefined,
           },
           "audio_url": {
-            "default": undefined,
             "docs": "The URL of the media that was transcribed",
             "type": "string",
-            "validation": undefined,
           },
           "auto_chapters": {
             "default": undefined,
@@ -3346,10 +3246,8 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The unique identifier of your transcription",
             "type": "string",
-            "validation": undefined,
           },
           "language_code": {
             "default": undefined,
@@ -3367,10 +3265,8 @@ The default value is 'en_us'.
             "validation": undefined,
           },
           "language_model": {
-            "default": undefined,
             "docs": "The language model that was used for the transcription",
             "type": "string",
-            "validation": undefined,
           },
           "punctuate": {
             "default": undefined,
@@ -3572,10 +3468,8 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "type": "list<string>",
           },
           "to": {
-            "default": undefined,
             "docs": "Word or phrase to replace with",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -3699,8 +3593,6 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -3720,8 +3612,6 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -3763,8 +3653,6 @@ The default value is 'en_us'.
         "properties": {
           "channel": "string",
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -3784,8 +3672,6 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -3805,10 +3691,8 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "upload_url": {
-            "default": undefined,
             "docs": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -3816,7 +3700,6 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
             "docs": "Confidence score of the word",
             "type": "double",
             "validation": {
@@ -3828,22 +3711,16 @@ The default value is 'en_us'.
             },
           },
           "end": {
-            "default": undefined,
             "docs": "End time of the word in milliseconds",
             "type": "integer",
-            "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "Start time of the word in milliseconds",
             "type": "integer",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The word itself",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -3851,20 +3728,16 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The total amount of times the word is in the transcript",
             "type": "integer",
-            "validation": undefined,
           },
           "indexes": {
             "docs": "An array of all index locations for that word within the \`words\` array of the completed transcript",
             "type": "list<integer>",
           },
           "text": {
-            "default": undefined,
             "docs": "The matched word",
             "type": "string",
-            "validation": undefined,
           },
           "timestamps": {
             "docs": "An array of timestamps",
@@ -3876,20 +3749,16 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the transcript",
             "type": "string",
-            "validation": undefined,
           },
           "matches": {
             "docs": "The matches of the search",
             "type": "list<WordSearchMatch>",
           },
           "total_count": {
-            "default": undefined,
             "docs": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -4208,10 +4077,8 @@ The LLM response data, as well as any context provided in the original request w
                 ],
                 "properties": {
                   "prompt": {
-                    "default": undefined,
                     "docs": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -4337,7 +4204,6 @@ The parameter should map to a JSON encoded list of strings.
               "body": {
                 "properties": {
                   "expires_in": {
-                    "default": undefined,
                     "docs": "The amount of time until the token expires in seconds.",
                     "type": "integer",
                     "validation": {
@@ -4597,10 +4463,8 @@ The parameter should map to a JSON encoded list of strings.
                 ],
                 "properties": {
                   "audio_url": {
-                    "default": undefined,
                     "docs": "The URL of the audio or video file to transcribe.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -5405,10 +5269,8 @@ The parameter should map to a JSON encoded list of strings.
         "docs": undefined,
         "properties": {
           "audio_data": {
-            "default": undefined,
             "docs": "Raw audio data, base64 encoded. This can be the raw data recorded directly from a microphone or read from an audio file.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5423,20 +5285,16 @@ The parameter should map to a JSON encoded list of strings.
         "docs": undefined,
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The total number of times the key phrase appears in the audio file",
             "type": "integer",
-            "validation": undefined,
           },
           "rank": {
             "docs": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
             "type": "double",
           },
           "text": {
-            "default": undefined,
             "docs": "The text itself of the key phrase",
             "type": "string",
-            "validation": undefined,
           },
           "timestamps": {
             "docs": "The timestamp of the of the key phrase",
@@ -5459,34 +5317,24 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         "docs": "Chapter of the audio file",
         "properties": {
           "end": {
-            "default": undefined,
             "docs": "The starting time, in milliseconds, for the chapter",
             "type": "integer",
-            "validation": undefined,
           },
           "gist": {
-            "default": undefined,
             "docs": "An ultra-short summary (just a few words) of the content spoken in the chapter",
             "type": "string",
-            "validation": undefined,
           },
           "headline": {
-            "default": undefined,
             "docs": "A single sentence summary of the content spoken during the chapter",
             "type": "string",
-            "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "The starting time, in milliseconds, for the chapter",
             "type": "integer",
-            "validation": undefined,
           },
           "summary": {
-            "default": undefined,
             "docs": "A one paragraph summary of the content spoken during the chapter",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5494,7 +5342,6 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
             "docs": "The confidence score for the topic being discussed, from 0 to 1",
             "type": "double",
             "validation": {
@@ -5506,13 +5353,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             },
           },
           "label": {
-            "default": undefined,
             "docs": "The label of the sensitive topic",
             "type": "string",
-            "validation": undefined,
           },
           "severity": {
-            "default": undefined,
             "docs": "How severely the topic is discussed in the section, from 0 to 1",
             "type": "double",
             "validation": {
@@ -5533,16 +5377,12 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "type": "list<ContentSafetyLabel>",
           },
           "sentences_idx_end": {
-            "default": undefined,
             "docs": "The sentence index at which the section ends",
             "type": "integer",
-            "validation": undefined,
           },
           "sentences_idx_start": {
-            "default": undefined,
             "docs": "The sentence index at which the section begins",
             "type": "integer",
-            "validation": undefined,
           },
           "severity_score_summary": {
             "docs": "A summary of the Content Moderation severity results for the entire audio file",
@@ -5553,10 +5393,8 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "type": "map<string, double>",
           },
           "text": {
-            "default": undefined,
             "docs": "The transcript of the section flagged by the Content Moderation model",
             "type": "string",
-            "validation": undefined,
           },
           "timestamp": {
             "docs": "Timestamp information for the section",
@@ -5781,26 +5619,20 @@ Valid values are in the range [0, 1] inclusive.
         "docs": "A detected entity",
         "properties": {
           "end": {
-            "default": undefined,
             "docs": "The ending time, in milliseconds, for the detected entity in the audio file",
             "type": "integer",
-            "validation": undefined,
           },
           "entity_type": {
             "docs": "The type of entity for the detected entity",
             "type": "EntityType",
           },
           "start": {
-            "default": undefined,
             "docs": "The starting time, in milliseconds, at which the detected entity appears in the audio file",
             "type": "integer",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text for the detected entity",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5932,10 +5764,8 @@ Valid values are in the range [0, 1] inclusive.
         "docs": undefined,
         "properties": {
           "error": {
-            "default": undefined,
             "docs": "Error message",
             "type": "string",
-            "validation": undefined,
           },
           "status": "optional<literal<"error">>",
         },
@@ -5968,10 +5798,8 @@ Valid values are in the range [0, 1] inclusive.
         ],
         "properties": {
           "response": {
-            "default": undefined,
             "docs": "The response generated by LeMUR.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6018,10 +5846,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "request_id": {
-            "default": undefined,
             "docs": "The ID of the LeMUR request",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6057,10 +5883,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "validation": undefined,
           },
           "question": {
-            "default": undefined,
             "docs": "The question you wish to ask. For more complex questions use default model.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6068,16 +5892,12 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "An answer generated by LeMUR and its question.",
         "properties": {
           "answer": {
-            "default": undefined,
             "docs": "The answer generated by LeMUR.",
             "type": "string",
-            "validation": undefined,
           },
           "question": {
-            "default": undefined,
             "docs": "The question for LeMUR to answer.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6108,10 +5928,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         ],
         "properties": {
           "response": {
-            "default": undefined,
             "docs": "The response generated by LeMUR.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6122,10 +5940,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         ],
         "properties": {
           "response": {
-            "default": undefined,
             "docs": "The response generated by LeMUR.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6152,8 +5968,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "properties": {
           "audio_duration": "double",
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -6218,16 +6032,12 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "boolean",
           },
           "request_id": {
-            "default": undefined,
             "docs": "The ID of the LeMUR request",
             "type": "string",
-            "validation": undefined,
           },
           "request_id_to_purge": {
-            "default": undefined,
             "docs": "The ID of the deletion request of the LeMUR request",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6244,19 +6054,14 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "audio_end": {
-            "default": undefined,
             "docs": "End time of audio sample relative to session start, in milliseconds.",
             "type": "integer",
-            "validation": undefined,
           },
           "audio_start": {
-            "default": undefined,
             "docs": "Start time of audio sample relative to session start, in milliseconds.",
             "type": "integer",
-            "validation": undefined,
           },
           "confidence": {
-            "default": undefined,
             "docs": "The confidence score of the entire transcription, between 0 and 1.",
             "type": "double",
             "validation": {
@@ -6272,10 +6077,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "datetime",
           },
           "text": {
-            "default": undefined,
             "docs": "The partial transcript for your audio.",
             "type": "string",
-            "validation": undefined,
           },
           "words": {
             "docs": "An array of objects, with the information for each word in the transcription text. Includes the start/end time (in milliseconds) of the word, the confidence score of the word, and the text (i.e. the word itself).",
@@ -6304,10 +6107,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "token": {
-            "default": undefined,
             "docs": "The temporary authentication token for real-time transcription",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6329,10 +6130,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "redacted_audio_url": {
-            "default": undefined,
             "docs": "The URL of the redacted audio file",
             "type": "string",
-            "validation": undefined,
           },
           "status": {
             "docs": "The status of the redacted audio",
@@ -6349,8 +6148,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "properties": {
           "audio_duration": "double",
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -6375,7 +6172,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "The result of the sentiment analysis model.",
         "properties": {
           "confidence": {
-            "default": undefined,
             "docs": "The confidence score for the detected sentiment of the sentence, from 0 to 1",
             "type": "double",
             "validation": {
@@ -6387,10 +6183,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "end": {
-            "default": undefined,
             "docs": "The ending time, in milliseconds, of the sentence",
             "type": "integer",
-            "validation": undefined,
           },
           "sentiment": {
             "docs": "The detected sentiment for the sentence, one of POSITIVE, NEUTRAL, NEGATIVE",
@@ -6403,16 +6197,12 @@ Can be any value between 0.0 and 1.0 inclusive.
             "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "The starting time, in milliseconds, of the sentence",
             "type": "integer",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The transcript of the sentence",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6428,10 +6218,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "literal<"SessionBegins">",
           },
           "session_id": {
-            "default": undefined,
             "docs": "Unique identifier for the established session.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6448,8 +6236,6 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "high": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -6460,8 +6246,6 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "low": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -6472,8 +6256,6 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
           "medium": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -6533,16 +6315,12 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "Timestamp containing a start and end property in milliseconds.",
         "properties": {
           "end": {
-            "default": undefined,
             "docs": "The end time in milliseconds",
             "type": "integer",
-            "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "The start time in milliseconds",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -6551,10 +6329,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "properties": {
           "labels": "optional<list<TopicDetectionResultLabelsItem>>",
           "text": {
-            "default": undefined,
             "docs": "The text in the transcript in which a detected topic occurs",
             "type": "string",
-            "validation": undefined,
           },
           "timestamp": "optional<Timestamp>",
         },
@@ -6563,13 +6339,10 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": undefined,
         "properties": {
           "label": {
-            "default": undefined,
             "docs": "The IAB taxonomical label for the label of the detected topic, where > denotes supertopic/subtopic relationship",
             "type": "string",
-            "validation": undefined,
           },
           "relevance": {
-            "default": undefined,
             "docs": "How relevant the detected topic is of a detected topic",
             "type": "double",
             "validation": {
@@ -6586,10 +6359,8 @@ Can be any value between 0.0 and 1.0 inclusive.
         "docs": "A transcript object",
         "properties": {
           "acoustic_model": {
-            "default": undefined,
             "docs": "The acoustic model that was used for the transcription",
             "type": "string",
-            "validation": undefined,
           },
           "audio_duration": {
             "default": undefined,
@@ -6610,10 +6381,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "validation": undefined,
           },
           "audio_url": {
-            "default": undefined,
             "docs": "The URL of the media that was transcribed",
             "type": "string",
-            "validation": undefined,
           },
           "auto_chapters": {
             "default": undefined,
@@ -6742,10 +6511,8 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The unique identifier of your transcription",
             "type": "string",
-            "validation": undefined,
           },
           "language_code": {
             "default": undefined,
@@ -6763,10 +6530,8 @@ The default value is 'en_us'.
             "validation": undefined,
           },
           "language_model": {
-            "default": undefined,
             "docs": "The language model that was used for the transcription",
             "type": "string",
-            "validation": undefined,
           },
           "punctuate": {
             "default": undefined,
@@ -6968,10 +6733,8 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "type": "list<string>",
           },
           "to": {
-            "default": undefined,
             "docs": "Word or phrase to replace with",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -7095,8 +6858,6 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -7116,8 +6877,6 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -7159,8 +6918,6 @@ The default value is 'en_us'.
         "properties": {
           "channel": "string",
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -7180,8 +6937,6 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -7201,10 +6956,8 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "upload_url": {
-            "default": undefined,
             "docs": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -7212,7 +6965,6 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "confidence": {
-            "default": undefined,
             "docs": "Confidence score of the word",
             "type": "double",
             "validation": {
@@ -7224,22 +6976,16 @@ The default value is 'en_us'.
             },
           },
           "end": {
-            "default": undefined,
             "docs": "End time of the word in milliseconds",
             "type": "integer",
-            "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "Start time of the word in milliseconds",
             "type": "integer",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The word itself",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -7247,20 +6993,16 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The total amount of times the word is in the transcript",
             "type": "integer",
-            "validation": undefined,
           },
           "indexes": {
             "docs": "An array of all index locations for that word within the \`words\` array of the completed transcript",
             "type": "list<integer>",
           },
           "text": {
-            "default": undefined,
             "docs": "The matched word",
             "type": "string",
-            "validation": undefined,
           },
           "timestamps": {
             "docs": "An array of timestamps",
@@ -7272,20 +7014,16 @@ The default value is 'en_us'.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the transcript",
             "type": "string",
-            "validation": undefined,
           },
           "matches": {
             "docs": "The matches of the search",
             "type": "list<WordSearchMatch>",
           },
           "total_count": {
-            "default": undefined,
             "docs": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },

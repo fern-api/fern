@@ -1154,7 +1154,6 @@ You will be assigned as owner of the new app automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the app.",
                     "type": "string",
                     "validation": {
@@ -1242,7 +1241,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the client.",
                     "type": "string",
                     "validation": {
@@ -1388,7 +1386,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "language": {
-                    "default": undefined,
                     "docs": "The language to add.",
                     "type": "string",
                     "validation": {
@@ -1470,7 +1467,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The role name.",
                     "type": "string",
                     "validation": {
@@ -1556,7 +1552,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the workflow.",
                     "type": "string",
                     "validation": {
@@ -2296,7 +2291,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "initial": {
-                    "default": undefined,
                     "docs": "The initial step.",
                     "type": "string",
                     "validation": {
@@ -3284,7 +3278,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "folderName": {
-                    "default": undefined,
                     "docs": "The name of the folder.",
                     "type": "string",
                     "validation": {
@@ -3672,7 +3665,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "folderName": {
-                    "default": undefined,
                     "docs": "The name of the folder.",
                     "type": "string",
                     "validation": {
@@ -3895,7 +3887,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "tagName": {
-                    "default": undefined,
                     "docs": "The new name for the tag.",
                     "type": "string",
                     "validation": {
@@ -4164,7 +4155,6 @@ The client secret is auto generated on the server and returned. The client does 
                     },
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "The url to the restore file.",
                     "type": "string",
                     "validation": {
@@ -6087,7 +6077,6 @@ The client secret is auto generated on the server and returned. The client does 
                     "validation": undefined,
                   },
                   "status": {
-                    "default": undefined,
                     "docs": "The new status.",
                     "type": "string",
                     "validation": {
@@ -9020,7 +9009,6 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "boolean",
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the schema.",
                     "type": "string",
                     "validation": {
@@ -11292,7 +11280,6 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the team.",
                     "type": "string",
                     "validation": {
@@ -11362,7 +11349,6 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the team.",
                     "type": "string",
                     "validation": {
@@ -11534,7 +11520,6 @@ You will be assigned as owner of the new team automatically.",
                     "validation": undefined,
                   },
                   "targetLanguage": {
-                    "default": undefined,
                     "docs": "The target language.",
                     "type": "string",
                     "validation": {
@@ -11545,7 +11530,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                   },
                   "text": {
-                    "default": undefined,
                     "docs": "The text to translate.",
                     "type": "string",
                     "validation": {
@@ -11810,7 +11794,6 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "displayName": {
-                    "default": undefined,
                     "docs": "The display name (usually first name and last name) of the user.",
                     "type": "string",
                     "validation": {
@@ -11821,7 +11804,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                   },
                   "email": {
-                    "default": undefined,
                     "docs": "The email of the user. Unique value.",
                     "type": "string",
                     "validation": {
@@ -11832,7 +11814,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                   },
                   "password": {
-                    "default": undefined,
                     "docs": "The password of the user.",
                     "type": "string",
                     "validation": {
@@ -11911,7 +11892,6 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "displayName": {
-                    "default": undefined,
                     "docs": "The display name (usually first name and last name) of the user.",
                     "type": "string",
                     "validation": {
@@ -11922,7 +11902,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                   },
                   "email": {
-                    "default": undefined,
                     "docs": "The email of the user. Unique value.",
                     "type": "string",
                     "validation": {
@@ -14499,7 +14478,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -14525,7 +14503,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "apiKey": {
-            "default": undefined,
             "docs": "The API key to grant access to Squidex.",
             "type": "string",
             "validation": {
@@ -14536,7 +14513,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "appId": {
-            "default": undefined,
             "docs": "The application ID.",
             "type": "string",
             "validation": {
@@ -14547,19 +14523,14 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "delete": {
-            "default": undefined,
             "docs": "The condition when to delete the entry.",
             "type": "string",
-            "validation": undefined,
           },
           "document": {
-            "default": undefined,
             "docs": "The optional custom document.",
             "type": "string",
-            "validation": undefined,
           },
           "indexName": {
-            "default": undefined,
             "docs": "The name of the index.",
             "type": "string",
             "validation": {
@@ -14638,10 +14609,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the app.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
             "default": undefined,
@@ -14654,7 +14623,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the app.",
             "type": "string",
             "validation": {
@@ -14685,10 +14653,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the app.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -14699,10 +14665,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "englishName": {
-            "default": undefined,
             "docs": "The english name of the language.",
             "type": "string",
-            "validation": undefined,
           },
           "fallback": {
             "docs": "The fallback languages.",
@@ -14717,10 +14681,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "iso2Code": {
-            "default": undefined,
             "docs": "The iso code of the language.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -14759,10 +14721,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<PatternDto>",
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the app.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -14817,10 +14777,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "createdBy": {
-            "default": undefined,
             "docs": "The user that has created the schema.",
             "type": "string",
-            "validation": undefined,
           },
           "editToken": {
             "default": undefined,
@@ -14835,34 +14793,24 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "fileName": {
-            "default": undefined,
             "docs": "The file name.",
             "type": "string",
-            "validation": undefined,
           },
           "fileSize": {
-            "default": undefined,
             "docs": "The size of the file in bytes.",
             "type": "integer",
-            "validation": undefined,
           },
           "fileType": {
-            "default": undefined,
             "docs": "The file type.",
             "type": "string",
-            "validation": undefined,
           },
           "fileVersion": {
-            "default": undefined,
             "docs": "The version of the file.",
             "type": "integer",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the asset.",
             "type": "string",
-            "validation": undefined,
           },
           "isImage": {
             "docs": "Determines of the created file is an image.",
@@ -14877,32 +14825,24 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "lastModifiedBy": {
-            "default": undefined,
             "docs": "The user that has updated the asset.",
             "type": "string",
-            "validation": undefined,
           },
           "metadata": {
             "docs": "The asset metadata.",
             "type": "map<string, unknown>",
           },
           "metadataText": {
-            "default": undefined,
             "docs": "The formatted text representation of the metadata.",
             "type": "string",
-            "validation": undefined,
           },
           "mimeType": {
-            "default": undefined,
             "docs": "The mime type.",
             "type": "string",
-            "validation": undefined,
           },
           "parentId": {
-            "default": undefined,
             "docs": "The ID of the parent folder. Empty for files without parent.",
             "type": "string",
-            "validation": undefined,
           },
           "pixelHeight": {
             "default": undefined,
@@ -14917,10 +14857,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "slug": {
-            "default": undefined,
             "docs": "The slug.",
             "type": "string",
-            "validation": undefined,
           },
           "tags": {
             "default": undefined,
@@ -14933,10 +14871,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "AssetType",
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the asset.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -14947,28 +14883,20 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "folderName": {
-            "default": undefined,
             "docs": "The folder name.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the asset.",
             "type": "string",
-            "validation": undefined,
           },
           "parentId": {
-            "default": undefined,
             "docs": "The ID of the parent folder. Empty for files without parent.",
             "type": "string",
-            "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the asset folder.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -14995,10 +14923,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<AssetFolderDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of assets.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -15006,10 +14932,8 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "isDuplicate": {
-            "default": undefined,
             "docs": "Indicates whether the asset is a duplicate.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -15070,10 +14994,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the app.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -15097,10 +15019,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<AssetDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of assets.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -15229,7 +15149,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "contributorId": {
-            "default": undefined,
             "docs": "The id or email of the user to add to the app.",
             "type": "string",
             "validation": {
@@ -15257,7 +15176,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "connectionString": {
-            "default": undefined,
             "docs": "The connection string to the storage account.",
             "type": "string",
             "validation": {
@@ -15268,13 +15186,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "payload": {
-            "default": undefined,
             "docs": "Leave it empty to use the full event as body.",
             "type": "string",
-            "validation": undefined,
           },
           "queue": {
-            "default": undefined,
             "docs": "The name of the queue.",
             "type": "string",
             "validation": {
@@ -15293,22 +15208,16 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "handledAssets": {
-            "default": undefined,
             "docs": "The number of handled assets.",
             "type": "integer",
-            "validation": undefined,
           },
           "handledEvents": {
-            "default": undefined,
             "docs": "The number of handled events.",
             "type": "integer",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the backup job.",
             "type": "string",
-            "validation": undefined,
           },
           "started": {
             "docs": "The time when the job has been started.",
@@ -15392,10 +15301,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "jobIndex": {
-            "default": undefined,
             "docs": "The index of the bulk job where the result belongs to. The order can change.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -15559,56 +15466,40 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "allowedBytes": {
-            "default": undefined,
             "docs": "The included API traffic.",
             "type": "integer",
-            "validation": undefined,
           },
           "allowedCalls": {
-            "default": undefined,
             "docs": "The included API calls.",
             "type": "integer",
-            "validation": undefined,
           },
           "averageElapsedMs": {
-            "default": undefined,
             "docs": "The average duration in milliseconds.",
             "type": "double",
-            "validation": undefined,
           },
           "blockingApiCalls": {
-            "default": undefined,
             "docs": "The amount of calls that will block the app.",
             "type": "integer",
-            "validation": undefined,
           },
           "details": {
             "docs": "The statistics by date and group.",
             "type": "map<string, list<CallsUsagePerDateDto>>",
           },
           "monthBytes": {
-            "default": undefined,
             "docs": "The total number of bytes transferred this month.",
             "type": "integer",
-            "validation": undefined,
           },
           "monthCalls": {
-            "default": undefined,
             "docs": "The total number of API calls this month.",
             "type": "integer",
-            "validation": undefined,
           },
           "totalBytes": {
-            "default": undefined,
             "docs": "The total number of bytes transferred.",
             "type": "integer",
-            "validation": undefined,
           },
           "totalCalls": {
-            "default": undefined,
             "docs": "The total number of API calls.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -15616,13 +15507,10 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "averageElapsedMs": {
-            "default": undefined,
             "docs": "The average duration in milliseconds.",
             "type": "double",
-            "validation": undefined,
           },
           "date": {
-            "default": undefined,
             "docs": "The date when the usage was tracked.",
             "type": "string",
             "validation": {
@@ -15633,16 +15521,12 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "totalBytes": {
-            "default": undefined,
             "docs": "The total number of bytes transferred.",
             "type": "integer",
-            "validation": undefined,
           },
           "totalCalls": {
-            "default": undefined,
             "docs": "The total number of API calls.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -15650,7 +15534,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "planId": {
-            "default": undefined,
             "docs": "The new plan id.",
             "type": "string",
             "validation": {
@@ -15673,28 +15556,20 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "apiCallsLimit": {
-            "default": undefined,
             "docs": "The number of allowed api calls per month for this client.",
             "type": "integer",
-            "validation": undefined,
           },
           "apiTrafficLimit": {
-            "default": undefined,
             "docs": "The number of allowed api traffic bytes per month for this client.",
             "type": "integer",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The client id.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The client name.",
             "type": "string",
-            "validation": undefined,
           },
           "role": {
             "default": undefined,
@@ -15703,10 +15578,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "secret": {
-            "default": undefined,
             "docs": "The client secret.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -15726,16 +15599,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the comment.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text of the comment.",
             "type": "string",
-            "validation": undefined,
           },
           "time": {
             "docs": "The time when the comment was created or updated last.",
@@ -15753,10 +15622,8 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "user": {
-            "default": undefined,
             "docs": "The user who created or updated the comment.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -15764,13 +15631,10 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "client": {
-            "default": undefined,
             "docs": "An optional client name.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The comment text.",
             "type": "string",
             "validation": {
@@ -15815,10 +15679,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The current version.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -15896,10 +15758,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "createdBy": {
-            "default": undefined,
             "docs": "The user that has created the content item.",
             "type": "string",
-            "validation": undefined,
           },
           "data": "unknown",
           "editToken": {
@@ -15909,10 +15769,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The if of the content item.",
             "type": "string",
-            "validation": undefined,
           },
           "isDeleted": {
             "docs": "Indicates whether the content is deleted.",
@@ -15923,10 +15781,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "lastModifiedBy": {
-            "default": undefined,
             "docs": "The user that has updated the content item.",
             "type": "string",
-            "validation": undefined,
           },
           "newStatus": {
             "default": undefined,
@@ -15965,10 +15821,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "schemaId": {
-            "default": undefined,
             "docs": "The ID of the schema.",
             "type": "string",
-            "validation": undefined,
           },
           "schemaName": {
             "default": undefined,
@@ -15977,22 +15831,16 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The status of the content.",
             "type": "string",
-            "validation": undefined,
           },
           "statusColor": {
-            "default": undefined,
             "docs": "The color of the status.",
             "type": "string",
-            "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the content.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -16012,10 +15860,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<StatusInfoDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of content items.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -16026,22 +15872,16 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "contributorEmail": {
-            "default": undefined,
             "docs": "The email address.",
             "type": "string",
-            "validation": undefined,
           },
           "contributorId": {
-            "default": undefined,
             "docs": "The ID of the user that contributes to the app.",
             "type": "string",
-            "validation": undefined,
           },
           "contributorName": {
-            "default": undefined,
             "docs": "The display name.",
             "type": "string",
-            "validation": undefined,
           },
           "role": {
             "default": undefined,
@@ -16068,10 +15908,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<ContributorDto>",
           },
           "maxContributors": {
-            "default": undefined,
             "docs": "The maximum number of allowed contributors.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -16079,10 +15917,8 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "isInvited": {
-            "default": undefined,
             "docs": "Indicates whether the user has been invited.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -16090,13 +15926,10 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "client": {
-            "default": undefined,
             "docs": "An optional client name.",
             "type": "string",
-            "validation": undefined,
           },
           "data": {
-            "default": undefined,
             "docs": "The content data.",
             "type": "string",
             "validation": {
@@ -16111,7 +15944,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "schema": {
-            "default": undefined,
             "docs": "The name of the schema.",
             "type": "string",
             "validation": {
@@ -16140,16 +15972,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "maxAllowed": {
-            "default": undefined,
             "docs": "The maximum allowed asset size.",
             "type": "integer",
-            "validation": undefined,
           },
           "size": {
-            "default": undefined,
             "docs": "The size in bytes.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -16216,7 +16044,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "apiKey": {
-            "default": undefined,
             "docs": "The api key to authenticate to your discourse server.",
             "type": "string",
             "validation": {
@@ -16227,7 +16054,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "apiUsername": {
-            "default": undefined,
             "docs": "The api username to authenticate to your discourse server.",
             "type": "string",
             "validation": {
@@ -16244,7 +16070,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text as markdown.",
             "type": "string",
             "validation": {
@@ -16255,10 +16080,8 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "title": {
-            "default": undefined,
             "docs": "The optional title when creating new topics.",
             "type": "string",
-            "validation": undefined,
           },
           "topic": {
             "default": undefined,
@@ -16267,7 +16090,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The url to the discourse server.",
             "type": "string",
             "validation": {
@@ -16283,16 +16105,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the editor.",
             "type": "string",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The url to the editor.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -16300,19 +16118,14 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "delete": {
-            "default": undefined,
             "docs": "The condition when to delete the document.",
             "type": "string",
-            "validation": undefined,
           },
           "document": {
-            "default": undefined,
             "docs": "The optional custom document.",
             "type": "string",
-            "validation": undefined,
           },
           "host": {
-            "default": undefined,
             "docs": "The url to the instance or cluster.",
             "type": "string",
             "validation": {
@@ -16323,7 +16136,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "indexName": {
-            "default": undefined,
             "docs": "The name of the index.",
             "type": "string",
             "validation": {
@@ -16334,16 +16146,12 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "password": {
-            "default": undefined,
             "docs": "The optional password.",
             "type": "string",
-            "validation": undefined,
           },
           "username": {
-            "default": undefined,
             "docs": "The optional username.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -16351,7 +16159,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "messageBody": {
-            "default": undefined,
             "docs": "The message body.",
             "type": "string",
             "validation": {
@@ -16362,7 +16169,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "messageFrom": {
-            "default": undefined,
             "docs": "The email sending address.",
             "type": "string",
             "validation": {
@@ -16373,7 +16179,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "messageSubject": {
-            "default": undefined,
             "docs": "The subject line for this email message.",
             "type": "string",
             "validation": {
@@ -16384,7 +16189,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "messageTo": {
-            "default": undefined,
             "docs": "The email message will be sent to.",
             "type": "string",
             "validation": {
@@ -16395,7 +16199,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "serverHost": {
-            "default": undefined,
             "docs": "The IP address or host to the SMTP server.",
             "type": "string",
             "validation": {
@@ -16406,7 +16209,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "serverPassword": {
-            "default": undefined,
             "docs": "The password for the SMTP server.",
             "type": "string",
             "validation": {
@@ -16417,13 +16219,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "serverPort": {
-            "default": undefined,
             "docs": "The port to the SMTP server.",
             "type": "integer",
-            "validation": undefined,
           },
           "serverUsername": {
-            "default": undefined,
             "docs": "The username for the SMTP server.",
             "type": "string",
             "validation": {
@@ -16451,7 +16250,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "message": {
-            "default": undefined,
             "docs": "Error message.",
             "type": "string",
             "validation": {
@@ -16462,10 +16260,8 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "statusCode": {
-            "default": undefined,
             "docs": "Status code of the http response.",
             "type": "integer",
-            "validation": undefined,
           },
           "traceId": {
             "default": undefined,
@@ -16488,10 +16284,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The number of handled events.",
             "type": "integer",
-            "validation": undefined,
           },
           "error": {
             "default": undefined,
@@ -16508,7 +16302,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the event consumer.",
             "type": "string",
             "validation": {
@@ -16543,7 +16336,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "apiKey": {
-            "default": undefined,
             "docs": "The API key to grant access to Squidex.",
             "type": "string",
             "validation": {
@@ -16554,7 +16346,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "serviceId": {
-            "default": undefined,
             "docs": "The ID of the fastly service.",
             "type": "string",
             "validation": {
@@ -16570,16 +16361,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the feature.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The description text.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -16591,10 +16378,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<FeatureDto>",
           },
           "version": {
-            "default": undefined,
             "docs": "The recent version.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -16605,10 +16390,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "fieldId": {
-            "default": undefined,
             "docs": "The ID of the field.",
             "type": "integer",
-            "validation": undefined,
           },
           "isDisabled": {
             "docs": "Defines if the field is disabled.",
@@ -16623,7 +16406,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -16640,7 +16422,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "partitioning": {
-            "default": undefined,
             "docs": "Defines the partitioning of the field.",
             "type": "string",
             "validation": {
@@ -16756,7 +16537,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "field": {
-            "default": undefined,
             "docs": "The field to update.",
             "type": "string",
             "validation": {
@@ -16785,38 +16565,28 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "actor": {
-            "default": undefined,
             "docs": "The user who called the action.",
             "type": "string",
-            "validation": undefined,
           },
           "created": {
             "docs": "The time when the event happened.",
             "type": "datetime",
           },
           "eventId": {
-            "default": undefined,
             "docs": "Gets a unique id for the event.",
             "type": "string",
-            "validation": undefined,
           },
           "eventType": {
-            "default": undefined,
             "docs": "The type of the original event.",
             "type": "string",
-            "validation": undefined,
           },
           "message": {
-            "default": undefined,
             "docs": "The message for the event.",
             "type": "string",
-            "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version identifier.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -16857,22 +16627,16 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "englishName": {
-            "default": undefined,
             "docs": "The english name of the language.",
             "type": "string",
-            "validation": undefined,
           },
           "iso2Code": {
-            "default": undefined,
             "docs": "The iso code of the language.",
             "type": "string",
-            "validation": undefined,
           },
           "nativeName": {
-            "default": undefined,
             "docs": "The native name of the language.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -16900,7 +16664,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "accessToken": {
-            "default": undefined,
             "docs": "The self issued access token.",
             "type": "string",
             "validation": {
@@ -16911,13 +16674,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "canonicalUrl": {
-            "default": undefined,
             "docs": "The original home of this content, if it was originally published elsewhere.",
             "type": "string",
-            "validation": undefined,
           },
           "content": {
-            "default": undefined,
             "docs": "The content, either html or markdown.",
             "type": "string",
             "validation": {
@@ -16932,19 +16692,14 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "publicationId": {
-            "default": undefined,
             "docs": "Optional publication id.",
             "type": "string",
-            "validation": undefined,
           },
           "tags": {
-            "default": undefined,
             "docs": "The optional comma separated list of tags.",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "The title, used for the url.",
             "type": "string",
             "validation": {
@@ -16963,10 +16718,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "fieldId": {
-            "default": undefined,
             "docs": "The ID of the field.",
             "type": "integer",
-            "validation": undefined,
           },
           "isDisabled": {
             "docs": "Defines if the field is disabled.",
@@ -16981,7 +16734,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -17001,13 +16753,10 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "client": {
-            "default": undefined,
             "docs": "An optional client name.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text to send.",
             "type": "string",
             "validation": {
@@ -17018,13 +16767,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "url": {
-            "default": undefined,
             "docs": "The optional url to attach to the notification.",
             "type": "string",
-            "validation": undefined,
           },
           "user": {
-            "default": undefined,
             "docs": "The user id or email.",
             "type": "string",
             "validation": {
@@ -17096,19 +16842,14 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "delete": {
-            "default": undefined,
             "docs": "The condition when to delete the document.",
             "type": "string",
-            "validation": undefined,
           },
           "document": {
-            "default": undefined,
             "docs": "The optional custom document.",
             "type": "string",
-            "validation": undefined,
           },
           "host": {
-            "default": undefined,
             "docs": "The url to the instance or cluster.",
             "type": "string",
             "validation": {
@@ -17119,7 +16860,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "indexName": {
-            "default": undefined,
             "docs": "The name of the index.",
             "type": "string",
             "validation": {
@@ -17130,16 +16870,12 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "password": {
-            "default": undefined,
             "docs": "The optional password.",
             "type": "string",
-            "validation": undefined,
           },
           "username": {
-            "default": undefined,
             "docs": "The optional username.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -17153,16 +16889,12 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the suggestion.",
             "type": "string",
-            "validation": undefined,
           },
           "regex": {
-            "default": undefined,
             "docs": "The regex pattern.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -17187,46 +16919,32 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "costs": {
-            "default": undefined,
             "docs": "The monthly costs of the plan.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the plan.",
             "type": "string",
-            "validation": undefined,
           },
           "maxApiBytes": {
-            "default": undefined,
             "docs": "The maximum number of API traffic.",
             "type": "integer",
-            "validation": undefined,
           },
           "maxApiCalls": {
-            "default": undefined,
             "docs": "The maximum number of API calls.",
             "type": "integer",
-            "validation": undefined,
           },
           "maxAssetSize": {
-            "default": undefined,
             "docs": "The maximum allowed asset size.",
             "type": "integer",
-            "validation": undefined,
           },
           "maxContributors": {
-            "default": undefined,
             "docs": "The maximum number of contributors.",
             "type": "integer",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the plan.",
             "type": "string",
-            "validation": undefined,
           },
           "yearlyConfirmText": {
             "default": undefined,
@@ -17303,7 +17021,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "token": {
-            "default": undefined,
             "docs": "The prerender token from your account.",
             "type": "string",
             "validation": {
@@ -17314,7 +17031,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "url": {
-            "default": undefined,
             "docs": "The url to recache.",
             "type": "string",
             "validation": {
@@ -17466,7 +17182,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "href": {
-            "default": undefined,
             "docs": "The link url.",
             "type": "string",
             "validation": {
@@ -17483,7 +17198,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "method": {
-            "default": undefined,
             "docs": "The link method.",
             "type": "string",
             "validation": {
@@ -17524,7 +17238,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The uri to load from.",
             "type": "string",
             "validation": {
@@ -17547,22 +17260,16 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The role name.",
             "type": "string",
-            "validation": undefined,
           },
           "numClients": {
-            "default": undefined,
             "docs": "The number of clients with this role.",
             "type": "integer",
-            "validation": undefined,
           },
           "numContributors": {
-            "default": undefined,
             "docs": "The number of contributors with this role.",
             "type": "integer",
-            "validation": undefined,
           },
           "permissions": {
             "docs": "Associated list of permissions.",
@@ -17626,16 +17333,12 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "createdBy": {
-            "default": undefined,
             "docs": "The user that has created the rule.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the rule.",
             "type": "string",
-            "validation": undefined,
           },
           "isEnabled": {
             "docs": "Determines if the rule is enabled.",
@@ -17652,10 +17355,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "lastModifiedBy": {
-            "default": undefined,
             "docs": "The user that has updated the rule.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
             "default": undefined,
@@ -17664,26 +17365,20 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "numFailed": {
-            "default": undefined,
             "docs": "The number of failed executions.",
             "type": "integer",
-            "validation": undefined,
           },
           "numSucceeded": {
-            "default": undefined,
             "docs": "The number of completed executions.",
             "type": "integer",
-            "validation": undefined,
           },
           "trigger": {
             "docs": "The trigger properties.",
             "type": "RuleTriggerDto",
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the rule.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -17691,16 +17386,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "description": {
-            "default": undefined,
             "docs": "Describes the action or trigger type.",
             "type": "string",
-            "validation": undefined,
           },
           "display": {
-            "default": undefined,
             "docs": "The label for the action or trigger type.",
             "type": "string",
-            "validation": undefined,
           },
           "iconColor": {
             "default": undefined,
@@ -17742,10 +17433,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "display": {
-            "default": undefined,
             "docs": "The label to use.",
             "type": "string",
-            "validation": undefined,
           },
           "editor": {
             "docs": "The html editor.",
@@ -17760,10 +17449,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the editor.",
             "type": "string",
-            "validation": undefined,
           },
           "options": {
             "default": undefined,
@@ -17784,22 +17471,16 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "description": {
-            "default": undefined,
             "docs": "The description.",
             "type": "string",
-            "validation": undefined,
           },
           "eventName": {
-            "default": undefined,
             "docs": "The name of the event.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the event.",
             "type": "string",
-            "validation": undefined,
           },
           "jobResult": {
             "docs": "The result of the job.",
@@ -17818,10 +17499,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "numCalls": {
-            "default": undefined,
             "docs": "The number of calls.",
             "type": "integer",
-            "validation": undefined,
           },
           "result": {
             "docs": "The result of the event.",
@@ -17840,10 +17519,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<RuleEventDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of rule events.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -17915,32 +17592,24 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "color": {
-            "default": undefined,
             "docs": "The color of the scheduled status.",
             "type": "string",
-            "validation": undefined,
           },
           "dueTime": {
             "docs": "The target date and time when the content should be scheduled.",
             "type": "datetime",
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the schedule job.",
             "type": "string",
-            "validation": undefined,
           },
           "scheduledBy": {
-            "default": undefined,
             "docs": "The user who schedule the content.",
             "type": "string",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The new status.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -17979,7 +17648,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "createdBy": {
-            "default": undefined,
             "docs": "The user that has created the schema.",
             "type": "string",
             "validation": {
@@ -18006,10 +17674,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<string>",
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the schema.",
             "type": "string",
-            "validation": undefined,
           },
           "isPublished": {
             "docs": "Indicates if the schema is published.",
@@ -18024,7 +17690,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "lastModifiedBy": {
-            "default": undefined,
             "docs": "The user that has updated the schema.",
             "type": "string",
             "validation": {
@@ -18035,7 +17700,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the schema. Unique within the app.",
             "type": "string",
             "validation": {
@@ -18062,10 +17726,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "SchemaType",
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the schema.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -18189,7 +17851,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "script": {
-            "default": undefined,
             "docs": "The script to render.",
             "type": "string",
             "validation": {
@@ -18214,10 +17875,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the search result.",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
             "docs": "The type of the search result.",
@@ -18246,7 +17905,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "ActionTypeEnum",
           },
           "connectionString": {
-            "default": undefined,
             "docs": "The connection string to the Azure SignalR.",
             "type": "string",
             "validation": {
@@ -18257,7 +17915,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "hubName": {
-            "default": undefined,
             "docs": "The name of the hub.",
             "type": "string",
             "validation": {
@@ -18268,22 +17925,16 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "methodName": {
-            "default": undefined,
             "docs": "Set the Name of the hub method received by the customer.",
             "type": "string",
-            "validation": undefined,
           },
           "payload": {
-            "default": undefined,
             "docs": "Leave it empty to use the full event as body.",
             "type": "string",
-            "validation": undefined,
           },
           "target": {
-            "default": undefined,
             "docs": "Define target users or groups by id or name. One item per line. Not needed for Broadcast action.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -18311,7 +17962,6 @@ You will be assigned as owner of the new team automatically.",
           },
           "event": "unknown",
           "eventId": {
-            "default": undefined,
             "docs": "The unique event id.",
             "type": "string",
             "validation": {
@@ -18322,7 +17972,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "eventName": {
-            "default": undefined,
             "docs": "The name of the event.",
             "type": "string",
             "validation": {
@@ -18337,7 +17986,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<SkipReason>",
           },
           "uniqueId": {
-            "default": undefined,
             "docs": "The the unique id of the simulated event.",
             "type": "string",
             "validation": {
@@ -18360,10 +18008,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<SimulatedRuleEventDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of simulated rule events.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -18387,7 +18033,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "text": {
-            "default": undefined,
             "docs": "The text that is sent as message to slack.",
             "type": "string",
             "validation": {
@@ -18398,7 +18043,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "webhookUrl": {
-            "default": undefined,
             "docs": "The slack webhook url.",
             "type": "string",
             "validation": {
@@ -18428,16 +18072,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "color": {
-            "default": undefined,
             "docs": "The color of the status.",
             "type": "string",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The name of the status.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -18445,7 +18085,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "date": {
-            "default": undefined,
             "docs": "The date when the usage was tracked.",
             "type": "string",
             "validation": {
@@ -18456,16 +18095,12 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "totalCount": {
-            "default": undefined,
             "docs": "The number of assets.",
             "type": "integer",
-            "validation": undefined,
           },
           "totalSize": {
-            "default": undefined,
             "docs": "The size in bytes.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -18661,20 +18296,16 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the team.",
             "type": "string",
-            "validation": undefined,
           },
           "lastModified": {
             "docs": "The timestamp when the team has been modified last.",
             "type": "datetime",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the team.",
             "type": "string",
-            "validation": undefined,
           },
           "roleName": {
             "default": undefined,
@@ -18683,10 +18314,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the team.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -18697,10 +18326,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "details": {
-            "default": undefined,
             "docs": "The details of the template.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -18711,26 +18338,20 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "description": {
-            "default": undefined,
             "docs": "The description of the template.",
             "type": "string",
-            "validation": undefined,
           },
           "isStarter": {
             "docs": "True, if the template is a starter.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the template.",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "The title of the template.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -18776,7 +18397,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "accessSecret": {
-            "default": undefined,
             "docs": " The generated access secret.",
             "type": "string",
             "validation": {
@@ -18787,7 +18407,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "accessToken": {
-            "default": undefined,
             "docs": " The generated access token.",
             "type": "string",
             "validation": {
@@ -18798,7 +18417,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "text": {
-            "default": undefined,
             "docs": "The text that is sent as tweet to twitter.",
             "type": "string",
             "validation": {
@@ -18814,7 +18432,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "apiKey": {
-            "default": undefined,
             "docs": "The api key.",
             "type": "string",
             "validation": {
@@ -18825,19 +18442,14 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "delete": {
-            "default": undefined,
             "docs": "The condition when to delete the document.",
             "type": "string",
-            "validation": undefined,
           },
           "document": {
-            "default": undefined,
             "docs": "The optional custom document.",
             "type": "string",
-            "validation": undefined,
           },
           "host": {
-            "default": undefined,
             "docs": "The url to the instance or cluster.",
             "type": "string",
             "validation": {
@@ -18848,7 +18460,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "indexName": {
-            "default": undefined,
             "docs": "The name of the index.",
             "type": "string",
             "validation": {
@@ -18905,7 +18516,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "text": {
-            "default": undefined,
             "docs": "The comment text.",
             "type": "string",
             "validation": {
@@ -19001,7 +18611,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -19045,7 +18654,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -19065,10 +18673,8 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "limit": {
-            "default": undefined,
             "docs": "The number of monthly api calls.",
             "type": "integer",
-            "validation": undefined,
           },
           "numDays": {
             "default": undefined,
@@ -19091,22 +18697,16 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "displayName": {
-            "default": undefined,
             "docs": "The display name (usually first name and last name) of the user.",
             "type": "string",
-            "validation": undefined,
           },
           "email": {
-            "default": undefined,
             "docs": "The email of the user. Unique value.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the user.",
             "type": "string",
-            "validation": undefined,
           },
           "isLocked": {
             "docs": "Determines if the user is locked.",
@@ -19122,8 +18722,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -19133,8 +18731,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "value": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -19156,10 +18752,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<UserDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of users.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -19177,35 +18771,26 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "headers": {
-            "default": undefined,
             "docs": "The message headers in the format '[Key]=[Value]', one entry per line.",
             "type": "string",
-            "validation": undefined,
           },
           "method": {
             "docs": "The type of the request.",
             "type": "WebhookMethod",
           },
           "payload": {
-            "default": undefined,
             "docs": "Leave it empty to use the full event as body.",
             "type": "string",
-            "validation": undefined,
           },
           "payloadType": {
-            "default": undefined,
             "docs": "The mime type of the payload.",
             "type": "string",
-            "validation": undefined,
           },
           "sharedSecret": {
-            "default": undefined,
             "docs": "The shared secret that is used to calculate the payload signature.",
             "type": "string",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The url to the webhook.",
             "type": "string",
             "validation": {
@@ -20511,7 +20096,6 @@ You will be assigned as owner of the new app automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the app.",
                     "type": "string",
                     "validation": {
@@ -20599,7 +20183,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the client.",
                     "type": "string",
                     "validation": {
@@ -20745,7 +20328,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "language": {
-                    "default": undefined,
                     "docs": "The language to add.",
                     "type": "string",
                     "validation": {
@@ -20827,7 +20409,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The role name.",
                     "type": "string",
                     "validation": {
@@ -20913,7 +20494,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the workflow.",
                     "type": "string",
                     "validation": {
@@ -21653,7 +21233,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "initial": {
-                    "default": undefined,
                     "docs": "The initial step.",
                     "type": "string",
                     "validation": {
@@ -22641,7 +22220,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "folderName": {
-                    "default": undefined,
                     "docs": "The name of the folder.",
                     "type": "string",
                     "validation": {
@@ -23029,7 +22607,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "folderName": {
-                    "default": undefined,
                     "docs": "The name of the folder.",
                     "type": "string",
                     "validation": {
@@ -23252,7 +22829,6 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "tagName": {
-                    "default": undefined,
                     "docs": "The new name for the tag.",
                     "type": "string",
                     "validation": {
@@ -23521,7 +23097,6 @@ The client secret is auto generated on the server and returned. The client does 
                     },
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "The url to the restore file.",
                     "type": "string",
                     "validation": {
@@ -25444,7 +25019,6 @@ The client secret is auto generated on the server and returned. The client does 
                     "validation": undefined,
                   },
                   "status": {
-                    "default": undefined,
                     "docs": "The new status.",
                     "type": "string",
                     "validation": {
@@ -28377,7 +27951,6 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "boolean",
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the schema.",
                     "type": "string",
                     "validation": {
@@ -30649,7 +30222,6 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the team.",
                     "type": "string",
                     "validation": {
@@ -30719,7 +30291,6 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "default": undefined,
                     "docs": "The name of the team.",
                     "type": "string",
                     "validation": {
@@ -30891,7 +30462,6 @@ You will be assigned as owner of the new team automatically.",
                     "validation": undefined,
                   },
                   "targetLanguage": {
-                    "default": undefined,
                     "docs": "The target language.",
                     "type": "string",
                     "validation": {
@@ -30902,7 +30472,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                   },
                   "text": {
-                    "default": undefined,
                     "docs": "The text to translate.",
                     "type": "string",
                     "validation": {
@@ -31167,7 +30736,6 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "displayName": {
-                    "default": undefined,
                     "docs": "The display name (usually first name and last name) of the user.",
                     "type": "string",
                     "validation": {
@@ -31178,7 +30746,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                   },
                   "email": {
-                    "default": undefined,
                     "docs": "The email of the user. Unique value.",
                     "type": "string",
                     "validation": {
@@ -31189,7 +30756,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                   },
                   "password": {
-                    "default": undefined,
                     "docs": "The password of the user.",
                     "type": "string",
                     "validation": {
@@ -31268,7 +30834,6 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "displayName": {
-                    "default": undefined,
                     "docs": "The display name (usually first name and last name) of the user.",
                     "type": "string",
                     "validation": {
@@ -31279,7 +30844,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                   },
                   "email": {
-                    "default": undefined,
                     "docs": "The email of the user. Unique value.",
                     "type": "string",
                     "validation": {
@@ -31571,7 +31135,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -31597,7 +31160,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "apiKey": {
-            "default": undefined,
             "docs": "The API key to grant access to Squidex.",
             "type": "string",
             "validation": {
@@ -31608,7 +31170,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "appId": {
-            "default": undefined,
             "docs": "The application ID.",
             "type": "string",
             "validation": {
@@ -31619,19 +31180,14 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "delete": {
-            "default": undefined,
             "docs": "The condition when to delete the entry.",
             "type": "string",
-            "validation": undefined,
           },
           "document": {
-            "default": undefined,
             "docs": "The optional custom document.",
             "type": "string",
-            "validation": undefined,
           },
           "indexName": {
-            "default": undefined,
             "docs": "The name of the index.",
             "type": "string",
             "validation": {
@@ -31710,10 +31266,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the app.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
             "default": undefined,
@@ -31726,7 +31280,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the app.",
             "type": "string",
             "validation": {
@@ -31757,10 +31310,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the app.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -31771,10 +31322,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "englishName": {
-            "default": undefined,
             "docs": "The english name of the language.",
             "type": "string",
-            "validation": undefined,
           },
           "fallback": {
             "docs": "The fallback languages.",
@@ -31789,10 +31338,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "iso2Code": {
-            "default": undefined,
             "docs": "The iso code of the language.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -31831,10 +31378,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<PatternDto>",
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the app.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -31889,10 +31434,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "createdBy": {
-            "default": undefined,
             "docs": "The user that has created the schema.",
             "type": "string",
-            "validation": undefined,
           },
           "editToken": {
             "default": undefined,
@@ -31907,34 +31450,24 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "fileName": {
-            "default": undefined,
             "docs": "The file name.",
             "type": "string",
-            "validation": undefined,
           },
           "fileSize": {
-            "default": undefined,
             "docs": "The size of the file in bytes.",
             "type": "integer",
-            "validation": undefined,
           },
           "fileType": {
-            "default": undefined,
             "docs": "The file type.",
             "type": "string",
-            "validation": undefined,
           },
           "fileVersion": {
-            "default": undefined,
             "docs": "The version of the file.",
             "type": "integer",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the asset.",
             "type": "string",
-            "validation": undefined,
           },
           "isImage": {
             "docs": "Determines of the created file is an image.",
@@ -31949,32 +31482,24 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "lastModifiedBy": {
-            "default": undefined,
             "docs": "The user that has updated the asset.",
             "type": "string",
-            "validation": undefined,
           },
           "metadata": {
             "docs": "The asset metadata.",
             "type": "map<string, unknown>",
           },
           "metadataText": {
-            "default": undefined,
             "docs": "The formatted text representation of the metadata.",
             "type": "string",
-            "validation": undefined,
           },
           "mimeType": {
-            "default": undefined,
             "docs": "The mime type.",
             "type": "string",
-            "validation": undefined,
           },
           "parentId": {
-            "default": undefined,
             "docs": "The ID of the parent folder. Empty for files without parent.",
             "type": "string",
-            "validation": undefined,
           },
           "pixelHeight": {
             "default": undefined,
@@ -31989,10 +31514,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "slug": {
-            "default": undefined,
             "docs": "The slug.",
             "type": "string",
-            "validation": undefined,
           },
           "tags": {
             "default": undefined,
@@ -32005,10 +31528,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "AssetType",
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the asset.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32019,28 +31540,20 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "folderName": {
-            "default": undefined,
             "docs": "The folder name.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the asset.",
             "type": "string",
-            "validation": undefined,
           },
           "parentId": {
-            "default": undefined,
             "docs": "The ID of the parent folder. Empty for files without parent.",
             "type": "string",
-            "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the asset folder.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32067,10 +31580,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<AssetFolderDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of assets.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32078,10 +31589,8 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "isDuplicate": {
-            "default": undefined,
             "docs": "Indicates whether the asset is a duplicate.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -32142,10 +31651,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the app.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32169,10 +31676,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<AssetDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of assets.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32301,7 +31806,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "contributorId": {
-            "default": undefined,
             "docs": "The id or email of the user to add to the app.",
             "type": "string",
             "validation": {
@@ -32329,7 +31833,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "connectionString": {
-            "default": undefined,
             "docs": "The connection string to the storage account.",
             "type": "string",
             "validation": {
@@ -32340,13 +31843,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "payload": {
-            "default": undefined,
             "docs": "Leave it empty to use the full event as body.",
             "type": "string",
-            "validation": undefined,
           },
           "queue": {
-            "default": undefined,
             "docs": "The name of the queue.",
             "type": "string",
             "validation": {
@@ -32365,22 +31865,16 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "handledAssets": {
-            "default": undefined,
             "docs": "The number of handled assets.",
             "type": "integer",
-            "validation": undefined,
           },
           "handledEvents": {
-            "default": undefined,
             "docs": "The number of handled events.",
             "type": "integer",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the backup job.",
             "type": "string",
-            "validation": undefined,
           },
           "started": {
             "docs": "The time when the job has been started.",
@@ -32464,10 +31958,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "jobIndex": {
-            "default": undefined,
             "docs": "The index of the bulk job where the result belongs to. The order can change.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32631,56 +32123,40 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "allowedBytes": {
-            "default": undefined,
             "docs": "The included API traffic.",
             "type": "integer",
-            "validation": undefined,
           },
           "allowedCalls": {
-            "default": undefined,
             "docs": "The included API calls.",
             "type": "integer",
-            "validation": undefined,
           },
           "averageElapsedMs": {
-            "default": undefined,
             "docs": "The average duration in milliseconds.",
             "type": "double",
-            "validation": undefined,
           },
           "blockingApiCalls": {
-            "default": undefined,
             "docs": "The amount of calls that will block the app.",
             "type": "integer",
-            "validation": undefined,
           },
           "details": {
             "docs": "The statistics by date and group.",
             "type": "map<string, list<CallsUsagePerDateDto>>",
           },
           "monthBytes": {
-            "default": undefined,
             "docs": "The total number of bytes transferred this month.",
             "type": "integer",
-            "validation": undefined,
           },
           "monthCalls": {
-            "default": undefined,
             "docs": "The total number of API calls this month.",
             "type": "integer",
-            "validation": undefined,
           },
           "totalBytes": {
-            "default": undefined,
             "docs": "The total number of bytes transferred.",
             "type": "integer",
-            "validation": undefined,
           },
           "totalCalls": {
-            "default": undefined,
             "docs": "The total number of API calls.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32688,13 +32164,10 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "averageElapsedMs": {
-            "default": undefined,
             "docs": "The average duration in milliseconds.",
             "type": "double",
-            "validation": undefined,
           },
           "date": {
-            "default": undefined,
             "docs": "The date when the usage was tracked.",
             "type": "string",
             "validation": {
@@ -32705,16 +32178,12 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "totalBytes": {
-            "default": undefined,
             "docs": "The total number of bytes transferred.",
             "type": "integer",
-            "validation": undefined,
           },
           "totalCalls": {
-            "default": undefined,
             "docs": "The total number of API calls.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32722,7 +32191,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "planId": {
-            "default": undefined,
             "docs": "The new plan id.",
             "type": "string",
             "validation": {
@@ -32745,28 +32213,20 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "apiCallsLimit": {
-            "default": undefined,
             "docs": "The number of allowed api calls per month for this client.",
             "type": "integer",
-            "validation": undefined,
           },
           "apiTrafficLimit": {
-            "default": undefined,
             "docs": "The number of allowed api traffic bytes per month for this client.",
             "type": "integer",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The client id.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The client name.",
             "type": "string",
-            "validation": undefined,
           },
           "role": {
             "default": undefined,
@@ -32775,10 +32235,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "secret": {
-            "default": undefined,
             "docs": "The client secret.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -32798,16 +32256,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the comment.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text of the comment.",
             "type": "string",
-            "validation": undefined,
           },
           "time": {
             "docs": "The time when the comment was created or updated last.",
@@ -32825,10 +32279,8 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "user": {
-            "default": undefined,
             "docs": "The user who created or updated the comment.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -32836,13 +32288,10 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "client": {
-            "default": undefined,
             "docs": "An optional client name.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The comment text.",
             "type": "string",
             "validation": {
@@ -32887,10 +32336,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The current version.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -32968,10 +32415,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "createdBy": {
-            "default": undefined,
             "docs": "The user that has created the content item.",
             "type": "string",
-            "validation": undefined,
           },
           "data": "unknown",
           "editToken": {
@@ -32981,10 +32426,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The if of the content item.",
             "type": "string",
-            "validation": undefined,
           },
           "isDeleted": {
             "docs": "Indicates whether the content is deleted.",
@@ -32995,10 +32438,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "lastModifiedBy": {
-            "default": undefined,
             "docs": "The user that has updated the content item.",
             "type": "string",
-            "validation": undefined,
           },
           "newStatus": {
             "default": undefined,
@@ -33037,10 +32478,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "schemaId": {
-            "default": undefined,
             "docs": "The ID of the schema.",
             "type": "string",
-            "validation": undefined,
           },
           "schemaName": {
             "default": undefined,
@@ -33049,22 +32488,16 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The status of the content.",
             "type": "string",
-            "validation": undefined,
           },
           "statusColor": {
-            "default": undefined,
             "docs": "The color of the status.",
             "type": "string",
-            "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the content.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -33084,10 +32517,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<StatusInfoDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of content items.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -33098,22 +32529,16 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "contributorEmail": {
-            "default": undefined,
             "docs": "The email address.",
             "type": "string",
-            "validation": undefined,
           },
           "contributorId": {
-            "default": undefined,
             "docs": "The ID of the user that contributes to the app.",
             "type": "string",
-            "validation": undefined,
           },
           "contributorName": {
-            "default": undefined,
             "docs": "The display name.",
             "type": "string",
-            "validation": undefined,
           },
           "role": {
             "default": undefined,
@@ -33140,10 +32565,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<ContributorDto>",
           },
           "maxContributors": {
-            "default": undefined,
             "docs": "The maximum number of allowed contributors.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -33151,10 +32574,8 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "isInvited": {
-            "default": undefined,
             "docs": "Indicates whether the user has been invited.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -33162,13 +32583,10 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "client": {
-            "default": undefined,
             "docs": "An optional client name.",
             "type": "string",
-            "validation": undefined,
           },
           "data": {
-            "default": undefined,
             "docs": "The content data.",
             "type": "string",
             "validation": {
@@ -33183,7 +32601,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "schema": {
-            "default": undefined,
             "docs": "The name of the schema.",
             "type": "string",
             "validation": {
@@ -33212,16 +32629,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "maxAllowed": {
-            "default": undefined,
             "docs": "The maximum allowed asset size.",
             "type": "integer",
-            "validation": undefined,
           },
           "size": {
-            "default": undefined,
             "docs": "The size in bytes.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -33288,7 +32701,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "apiKey": {
-            "default": undefined,
             "docs": "The api key to authenticate to your discourse server.",
             "type": "string",
             "validation": {
@@ -33299,7 +32711,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "apiUsername": {
-            "default": undefined,
             "docs": "The api username to authenticate to your discourse server.",
             "type": "string",
             "validation": {
@@ -33316,7 +32727,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text as markdown.",
             "type": "string",
             "validation": {
@@ -33327,10 +32737,8 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "title": {
-            "default": undefined,
             "docs": "The optional title when creating new topics.",
             "type": "string",
-            "validation": undefined,
           },
           "topic": {
             "default": undefined,
@@ -33339,7 +32747,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The url to the discourse server.",
             "type": "string",
             "validation": {
@@ -33355,16 +32762,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the editor.",
             "type": "string",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The url to the editor.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -33372,19 +32775,14 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "delete": {
-            "default": undefined,
             "docs": "The condition when to delete the document.",
             "type": "string",
-            "validation": undefined,
           },
           "document": {
-            "default": undefined,
             "docs": "The optional custom document.",
             "type": "string",
-            "validation": undefined,
           },
           "host": {
-            "default": undefined,
             "docs": "The url to the instance or cluster.",
             "type": "string",
             "validation": {
@@ -33395,7 +32793,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "indexName": {
-            "default": undefined,
             "docs": "The name of the index.",
             "type": "string",
             "validation": {
@@ -33406,16 +32803,12 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "password": {
-            "default": undefined,
             "docs": "The optional password.",
             "type": "string",
-            "validation": undefined,
           },
           "username": {
-            "default": undefined,
             "docs": "The optional username.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -33423,7 +32816,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "messageBody": {
-            "default": undefined,
             "docs": "The message body.",
             "type": "string",
             "validation": {
@@ -33434,7 +32826,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "messageFrom": {
-            "default": undefined,
             "docs": "The email sending address.",
             "type": "string",
             "validation": {
@@ -33445,7 +32836,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "messageSubject": {
-            "default": undefined,
             "docs": "The subject line for this email message.",
             "type": "string",
             "validation": {
@@ -33456,7 +32846,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "messageTo": {
-            "default": undefined,
             "docs": "The email message will be sent to.",
             "type": "string",
             "validation": {
@@ -33467,7 +32856,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "serverHost": {
-            "default": undefined,
             "docs": "The IP address or host to the SMTP server.",
             "type": "string",
             "validation": {
@@ -33478,7 +32866,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "serverPassword": {
-            "default": undefined,
             "docs": "The password for the SMTP server.",
             "type": "string",
             "validation": {
@@ -33489,13 +32876,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "serverPort": {
-            "default": undefined,
             "docs": "The port to the SMTP server.",
             "type": "integer",
-            "validation": undefined,
           },
           "serverUsername": {
-            "default": undefined,
             "docs": "The username for the SMTP server.",
             "type": "string",
             "validation": {
@@ -33523,7 +32907,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "message": {
-            "default": undefined,
             "docs": "Error message.",
             "type": "string",
             "validation": {
@@ -33534,10 +32917,8 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "statusCode": {
-            "default": undefined,
             "docs": "Status code of the http response.",
             "type": "integer",
-            "validation": undefined,
           },
           "traceId": {
             "default": undefined,
@@ -33560,10 +32941,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The number of handled events.",
             "type": "integer",
-            "validation": undefined,
           },
           "error": {
             "default": undefined,
@@ -33580,7 +32959,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the event consumer.",
             "type": "string",
             "validation": {
@@ -33615,7 +32993,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "apiKey": {
-            "default": undefined,
             "docs": "The API key to grant access to Squidex.",
             "type": "string",
             "validation": {
@@ -33626,7 +33003,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "serviceId": {
-            "default": undefined,
             "docs": "The ID of the fastly service.",
             "type": "string",
             "validation": {
@@ -33642,16 +33018,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the feature.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The description text.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -33663,10 +33035,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<FeatureDto>",
           },
           "version": {
-            "default": undefined,
             "docs": "The recent version.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -33677,10 +33047,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "fieldId": {
-            "default": undefined,
             "docs": "The ID of the field.",
             "type": "integer",
-            "validation": undefined,
           },
           "isDisabled": {
             "docs": "Defines if the field is disabled.",
@@ -33695,7 +33063,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -33712,7 +33079,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "partitioning": {
-            "default": undefined,
             "docs": "Defines the partitioning of the field.",
             "type": "string",
             "validation": {
@@ -33828,7 +33194,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "field": {
-            "default": undefined,
             "docs": "The field to update.",
             "type": "string",
             "validation": {
@@ -33857,38 +33222,28 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "actor": {
-            "default": undefined,
             "docs": "The user who called the action.",
             "type": "string",
-            "validation": undefined,
           },
           "created": {
             "docs": "The time when the event happened.",
             "type": "datetime",
           },
           "eventId": {
-            "default": undefined,
             "docs": "Gets a unique id for the event.",
             "type": "string",
-            "validation": undefined,
           },
           "eventType": {
-            "default": undefined,
             "docs": "The type of the original event.",
             "type": "string",
-            "validation": undefined,
           },
           "message": {
-            "default": undefined,
             "docs": "The message for the event.",
             "type": "string",
-            "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version identifier.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -33929,22 +33284,16 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "englishName": {
-            "default": undefined,
             "docs": "The english name of the language.",
             "type": "string",
-            "validation": undefined,
           },
           "iso2Code": {
-            "default": undefined,
             "docs": "The iso code of the language.",
             "type": "string",
-            "validation": undefined,
           },
           "nativeName": {
-            "default": undefined,
             "docs": "The native name of the language.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -33972,7 +33321,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "accessToken": {
-            "default": undefined,
             "docs": "The self issued access token.",
             "type": "string",
             "validation": {
@@ -33983,13 +33331,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "canonicalUrl": {
-            "default": undefined,
             "docs": "The original home of this content, if it was originally published elsewhere.",
             "type": "string",
-            "validation": undefined,
           },
           "content": {
-            "default": undefined,
             "docs": "The content, either html or markdown.",
             "type": "string",
             "validation": {
@@ -34004,19 +33349,14 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "publicationId": {
-            "default": undefined,
             "docs": "Optional publication id.",
             "type": "string",
-            "validation": undefined,
           },
           "tags": {
-            "default": undefined,
             "docs": "The optional comma separated list of tags.",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "The title, used for the url.",
             "type": "string",
             "validation": {
@@ -34035,10 +33375,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "fieldId": {
-            "default": undefined,
             "docs": "The ID of the field.",
             "type": "integer",
-            "validation": undefined,
           },
           "isDisabled": {
             "docs": "Defines if the field is disabled.",
@@ -34053,7 +33391,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -34073,13 +33410,10 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "client": {
-            "default": undefined,
             "docs": "An optional client name.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text to send.",
             "type": "string",
             "validation": {
@@ -34090,13 +33424,10 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "url": {
-            "default": undefined,
             "docs": "The optional url to attach to the notification.",
             "type": "string",
-            "validation": undefined,
           },
           "user": {
-            "default": undefined,
             "docs": "The user id or email.",
             "type": "string",
             "validation": {
@@ -34168,19 +33499,14 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "delete": {
-            "default": undefined,
             "docs": "The condition when to delete the document.",
             "type": "string",
-            "validation": undefined,
           },
           "document": {
-            "default": undefined,
             "docs": "The optional custom document.",
             "type": "string",
-            "validation": undefined,
           },
           "host": {
-            "default": undefined,
             "docs": "The url to the instance or cluster.",
             "type": "string",
             "validation": {
@@ -34191,7 +33517,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "indexName": {
-            "default": undefined,
             "docs": "The name of the index.",
             "type": "string",
             "validation": {
@@ -34202,16 +33527,12 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "password": {
-            "default": undefined,
             "docs": "The optional password.",
             "type": "string",
-            "validation": undefined,
           },
           "username": {
-            "default": undefined,
             "docs": "The optional username.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -34225,16 +33546,12 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the suggestion.",
             "type": "string",
-            "validation": undefined,
           },
           "regex": {
-            "default": undefined,
             "docs": "The regex pattern.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -34259,46 +33576,32 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "costs": {
-            "default": undefined,
             "docs": "The monthly costs of the plan.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the plan.",
             "type": "string",
-            "validation": undefined,
           },
           "maxApiBytes": {
-            "default": undefined,
             "docs": "The maximum number of API traffic.",
             "type": "integer",
-            "validation": undefined,
           },
           "maxApiCalls": {
-            "default": undefined,
             "docs": "The maximum number of API calls.",
             "type": "integer",
-            "validation": undefined,
           },
           "maxAssetSize": {
-            "default": undefined,
             "docs": "The maximum allowed asset size.",
             "type": "integer",
-            "validation": undefined,
           },
           "maxContributors": {
-            "default": undefined,
             "docs": "The maximum number of contributors.",
             "type": "integer",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the plan.",
             "type": "string",
-            "validation": undefined,
           },
           "yearlyConfirmText": {
             "default": undefined,
@@ -34375,7 +33678,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "token": {
-            "default": undefined,
             "docs": "The prerender token from your account.",
             "type": "string",
             "validation": {
@@ -34386,7 +33688,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "url": {
-            "default": undefined,
             "docs": "The url to recache.",
             "type": "string",
             "validation": {
@@ -34538,7 +33839,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "href": {
-            "default": undefined,
             "docs": "The link url.",
             "type": "string",
             "validation": {
@@ -34555,7 +33855,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "method": {
-            "default": undefined,
             "docs": "The link method.",
             "type": "string",
             "validation": {
@@ -34596,7 +33895,6 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The uri to load from.",
             "type": "string",
             "validation": {
@@ -34619,22 +33917,16 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The role name.",
             "type": "string",
-            "validation": undefined,
           },
           "numClients": {
-            "default": undefined,
             "docs": "The number of clients with this role.",
             "type": "integer",
-            "validation": undefined,
           },
           "numContributors": {
-            "default": undefined,
             "docs": "The number of contributors with this role.",
             "type": "integer",
-            "validation": undefined,
           },
           "permissions": {
             "docs": "Associated list of permissions.",
@@ -34698,16 +33990,12 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "createdBy": {
-            "default": undefined,
             "docs": "The user that has created the rule.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the rule.",
             "type": "string",
-            "validation": undefined,
           },
           "isEnabled": {
             "docs": "Determines if the rule is enabled.",
@@ -34724,10 +34012,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "lastModifiedBy": {
-            "default": undefined,
             "docs": "The user that has updated the rule.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
             "default": undefined,
@@ -34736,26 +34022,20 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "numFailed": {
-            "default": undefined,
             "docs": "The number of failed executions.",
             "type": "integer",
-            "validation": undefined,
           },
           "numSucceeded": {
-            "default": undefined,
             "docs": "The number of completed executions.",
             "type": "integer",
-            "validation": undefined,
           },
           "trigger": {
             "docs": "The trigger properties.",
             "type": "RuleTriggerDto",
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the rule.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -34763,16 +34043,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "description": {
-            "default": undefined,
             "docs": "Describes the action or trigger type.",
             "type": "string",
-            "validation": undefined,
           },
           "display": {
-            "default": undefined,
             "docs": "The label for the action or trigger type.",
             "type": "string",
-            "validation": undefined,
           },
           "iconColor": {
             "default": undefined,
@@ -34814,10 +34090,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "display": {
-            "default": undefined,
             "docs": "The label to use.",
             "type": "string",
-            "validation": undefined,
           },
           "editor": {
             "docs": "The html editor.",
@@ -34832,10 +34106,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the editor.",
             "type": "string",
-            "validation": undefined,
           },
           "options": {
             "default": undefined,
@@ -34856,22 +34128,16 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "description": {
-            "default": undefined,
             "docs": "The description.",
             "type": "string",
-            "validation": undefined,
           },
           "eventName": {
-            "default": undefined,
             "docs": "The name of the event.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the event.",
             "type": "string",
-            "validation": undefined,
           },
           "jobResult": {
             "docs": "The result of the job.",
@@ -34890,10 +34156,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "numCalls": {
-            "default": undefined,
             "docs": "The number of calls.",
             "type": "integer",
-            "validation": undefined,
           },
           "result": {
             "docs": "The result of the event.",
@@ -34912,10 +34176,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<RuleEventDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of rule events.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -34987,32 +34249,24 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "color": {
-            "default": undefined,
             "docs": "The color of the scheduled status.",
             "type": "string",
-            "validation": undefined,
           },
           "dueTime": {
             "docs": "The target date and time when the content should be scheduled.",
             "type": "datetime",
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the schedule job.",
             "type": "string",
-            "validation": undefined,
           },
           "scheduledBy": {
-            "default": undefined,
             "docs": "The user who schedule the content.",
             "type": "string",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The new status.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -35051,7 +34305,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "createdBy": {
-            "default": undefined,
             "docs": "The user that has created the schema.",
             "type": "string",
             "validation": {
@@ -35078,10 +34331,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<string>",
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the schema.",
             "type": "string",
-            "validation": undefined,
           },
           "isPublished": {
             "docs": "Indicates if the schema is published.",
@@ -35096,7 +34347,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "lastModifiedBy": {
-            "default": undefined,
             "docs": "The user that has updated the schema.",
             "type": "string",
             "validation": {
@@ -35107,7 +34357,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the schema. Unique within the app.",
             "type": "string",
             "validation": {
@@ -35134,10 +34383,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "SchemaType",
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the schema.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -35261,7 +34508,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "script": {
-            "default": undefined,
             "docs": "The script to render.",
             "type": "string",
             "validation": {
@@ -35286,10 +34532,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the search result.",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
             "docs": "The type of the search result.",
@@ -35318,7 +34562,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "ActionTypeEnum",
           },
           "connectionString": {
-            "default": undefined,
             "docs": "The connection string to the Azure SignalR.",
             "type": "string",
             "validation": {
@@ -35329,7 +34572,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "hubName": {
-            "default": undefined,
             "docs": "The name of the hub.",
             "type": "string",
             "validation": {
@@ -35340,22 +34582,16 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "methodName": {
-            "default": undefined,
             "docs": "Set the Name of the hub method received by the customer.",
             "type": "string",
-            "validation": undefined,
           },
           "payload": {
-            "default": undefined,
             "docs": "Leave it empty to use the full event as body.",
             "type": "string",
-            "validation": undefined,
           },
           "target": {
-            "default": undefined,
             "docs": "Define target users or groups by id or name. One item per line. Not needed for Broadcast action.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -35383,7 +34619,6 @@ You will be assigned as owner of the new team automatically.",
           },
           "event": "unknown",
           "eventId": {
-            "default": undefined,
             "docs": "The unique event id.",
             "type": "string",
             "validation": {
@@ -35394,7 +34629,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "eventName": {
-            "default": undefined,
             "docs": "The name of the event.",
             "type": "string",
             "validation": {
@@ -35409,7 +34643,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<SkipReason>",
           },
           "uniqueId": {
-            "default": undefined,
             "docs": "The the unique id of the simulated event.",
             "type": "string",
             "validation": {
@@ -35432,10 +34665,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<SimulatedRuleEventDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of simulated rule events.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -35459,7 +34690,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "text": {
-            "default": undefined,
             "docs": "The text that is sent as message to slack.",
             "type": "string",
             "validation": {
@@ -35470,7 +34700,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "webhookUrl": {
-            "default": undefined,
             "docs": "The slack webhook url.",
             "type": "string",
             "validation": {
@@ -35500,16 +34729,12 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "color": {
-            "default": undefined,
             "docs": "The color of the status.",
             "type": "string",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The name of the status.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -35517,7 +34742,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "date": {
-            "default": undefined,
             "docs": "The date when the usage was tracked.",
             "type": "string",
             "validation": {
@@ -35528,16 +34752,12 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "totalCount": {
-            "default": undefined,
             "docs": "The number of assets.",
             "type": "integer",
-            "validation": undefined,
           },
           "totalSize": {
-            "default": undefined,
             "docs": "The size in bytes.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -35733,20 +34953,16 @@ You will be assigned as owner of the new team automatically.",
             "type": "datetime",
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the team.",
             "type": "string",
-            "validation": undefined,
           },
           "lastModified": {
             "docs": "The timestamp when the team has been modified last.",
             "type": "datetime",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the team.",
             "type": "string",
-            "validation": undefined,
           },
           "roleName": {
             "default": undefined,
@@ -35755,10 +34971,8 @@ You will be assigned as owner of the new team automatically.",
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the team.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -35769,10 +34983,8 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "details": {
-            "default": undefined,
             "docs": "The details of the template.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -35783,26 +34995,20 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "description": {
-            "default": undefined,
             "docs": "The description of the template.",
             "type": "string",
-            "validation": undefined,
           },
           "isStarter": {
             "docs": "True, if the template is a starter.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the template.",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "The title of the template.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -35848,7 +35054,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "accessSecret": {
-            "default": undefined,
             "docs": " The generated access secret.",
             "type": "string",
             "validation": {
@@ -35859,7 +35064,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "accessToken": {
-            "default": undefined,
             "docs": " The generated access token.",
             "type": "string",
             "validation": {
@@ -35870,7 +35074,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "text": {
-            "default": undefined,
             "docs": "The text that is sent as tweet to twitter.",
             "type": "string",
             "validation": {
@@ -35886,7 +35089,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "apiKey": {
-            "default": undefined,
             "docs": "The api key.",
             "type": "string",
             "validation": {
@@ -35897,19 +35099,14 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "delete": {
-            "default": undefined,
             "docs": "The condition when to delete the document.",
             "type": "string",
-            "validation": undefined,
           },
           "document": {
-            "default": undefined,
             "docs": "The optional custom document.",
             "type": "string",
-            "validation": undefined,
           },
           "host": {
-            "default": undefined,
             "docs": "The url to the instance or cluster.",
             "type": "string",
             "validation": {
@@ -35920,7 +35117,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "indexName": {
-            "default": undefined,
             "docs": "The name of the index.",
             "type": "string",
             "validation": {
@@ -35977,7 +35173,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "text": {
-            "default": undefined,
             "docs": "The comment text.",
             "type": "string",
             "validation": {
@@ -36073,7 +35268,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -36117,7 +35311,6 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the field. Must be unique within the schema.",
             "type": "string",
             "validation": {
@@ -36137,10 +35330,8 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "limit": {
-            "default": undefined,
             "docs": "The number of monthly api calls.",
             "type": "integer",
-            "validation": undefined,
           },
           "numDays": {
             "default": undefined,
@@ -36163,22 +35354,16 @@ You will be assigned as owner of the new team automatically.",
         ],
         "properties": {
           "displayName": {
-            "default": undefined,
             "docs": "The display name (usually first name and last name) of the user.",
             "type": "string",
-            "validation": undefined,
           },
           "email": {
-            "default": undefined,
             "docs": "The email of the user. Unique value.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the user.",
             "type": "string",
-            "validation": undefined,
           },
           "isLocked": {
             "docs": "Determines if the user is locked.",
@@ -36194,8 +35379,6 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -36205,8 +35388,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "value": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -36228,10 +35409,8 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<UserDto>",
           },
           "total": {
-            "default": undefined,
             "docs": "The total number of users.",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -36249,35 +35428,26 @@ You will be assigned as owner of the new team automatically.",
         "docs": undefined,
         "properties": {
           "headers": {
-            "default": undefined,
             "docs": "The message headers in the format '[Key]=[Value]', one entry per line.",
             "type": "string",
-            "validation": undefined,
           },
           "method": {
             "docs": "The type of the request.",
             "type": "WebhookMethod",
           },
           "payload": {
-            "default": undefined,
             "docs": "Leave it empty to use the full event as body.",
             "type": "string",
-            "validation": undefined,
           },
           "payloadType": {
-            "default": undefined,
             "docs": "The mime type of the payload.",
             "type": "string",
-            "validation": undefined,
           },
           "sharedSecret": {
-            "default": undefined,
             "docs": "The shared secret that is used to calculate the payload signature.",
             "type": "string",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The url to the webhook.",
             "type": "string",
             "validation": {

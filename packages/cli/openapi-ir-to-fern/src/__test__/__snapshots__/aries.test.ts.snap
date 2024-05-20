@@ -2262,10 +2262,8 @@ exports[`open api parser aries docs 1`] = `
                   },
                   "did_doc~attach": "optional<root.DidxRequestDidDocAttach>",
                   "label": {
-                    "default": undefined,
                     "docs": "Label for DID exchange request",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -3689,7 +3687,6 @@ exports[`open api parser aries docs 1`] = `
                     "validation": undefined,
                   },
                   "cred_def_id": {
-                    "default": undefined,
                     "docs": "Credential definition identifier",
                     "type": "string",
                     "validation": {
@@ -4925,7 +4922,6 @@ exports[`open api parser aries docs 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -5201,7 +5197,6 @@ exports[`open api parser aries docs 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -5212,7 +5207,6 @@ exports[`open api parser aries docs 1`] = `
                     },
                   },
                   "cred_def_id": {
-                    "default": undefined,
                     "docs": "Credential definition identifier",
                     "type": "string",
                     "validation": {
@@ -5425,7 +5419,6 @@ exports[`open api parser aries docs 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -8118,7 +8111,6 @@ exports[`open api parser aries docs 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -8605,7 +8597,6 @@ exports[`open api parser aries docs 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -8972,10 +8963,8 @@ exports[`open api parser aries docs 1`] = `
                 "properties": {
                   "doc": "root.Doc",
                   "verkey": {
-                    "default": undefined,
                     "docs": "Verkey to use for signing",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -12006,7 +11995,6 @@ exports[`open api parser aries docs 1`] = `
                   },
                   "comment": "optional<string>",
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -12241,7 +12229,6 @@ exports[`open api parser aries docs 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -13745,7 +13732,6 @@ exports[`open api parser aries docs 1`] = `
                   },
                   "comment": "optional<string>",
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -13954,7 +13940,6 @@ exports[`open api parser aries docs 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -15647,7 +15632,6 @@ exports[`open api parser aries docs 1`] = `
               "body": {
                 "properties": {
                   "tails_public_uri": {
-                    "default": undefined,
                     "docs": "Public URI to the tails file",
                     "type": "string",
                     "validation": {
@@ -15903,13 +15887,10 @@ exports[`open api parser aries docs 1`] = `
                     "type": "list<string>",
                   },
                   "schema_name": {
-                    "default": undefined,
                     "docs": "Schema name",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "schema_version": {
-                    "default": undefined,
                     "docs": "Schema version",
                     "type": "string",
                     "validation": {
@@ -16454,7 +16435,6 @@ exports[`open api parser aries docs 1`] = `
               "body": {
                 "properties": {
                   "did": {
-                    "default": undefined,
                     "docs": "DID of interest",
                     "type": "string",
                     "validation": {
@@ -16871,7 +16851,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "signature": {
-            "default": undefined,
             "docs": "signature",
             "type": "string",
             "validation": {
@@ -16921,7 +16900,6 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "kid": {
-            "default": undefined,
             "docs": "Key identifier, in W3C did:key or DID URL format",
             "type": "string",
             "validation": {
@@ -17291,7 +17269,6 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "my_did": {
-            "default": undefined,
             "docs": "Local DID",
             "type": "string",
             "validation": {
@@ -17302,7 +17279,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "my_endpoint": {
-            "default": undefined,
             "docs": "My URL endpoint",
             "type": "string",
             "validation": {
@@ -17313,7 +17289,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "my_verkey": {
-            "default": undefined,
             "docs": "My verification key",
             "type": "string",
             "validation": {
@@ -17325,7 +17300,6 @@ exports[`open api parser aries docs 1`] = `
           },
           "record": "ConnRecord",
           "their_did": {
-            "default": undefined,
             "docs": "Remote DID",
             "type": "string",
             "validation": {
@@ -17336,7 +17310,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "their_verkey": {
-            "default": undefined,
             "docs": "Remote verification key",
             "type": "string",
             "validation": {
@@ -17446,10 +17419,8 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "wallet_id": {
-            "default": undefined,
             "docs": "Wallet record ID",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -17485,16 +17456,12 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "Attribute value: base64-encode if MIME type is present",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -17646,7 +17613,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "issuanceDate": {
-            "default": undefined,
             "docs": "The issuance date",
             "type": "string",
             "validation": {
@@ -17870,10 +17836,8 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "type": {
-            "default": undefined,
             "docs": "Credential status method type to use for the credential. Should match status method registered in the Verifiable Credential Extension Registry",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -17946,7 +17910,6 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "did": {
-            "default": undefined,
             "docs": "DID of interest",
             "type": "string",
             "validation": {
@@ -18185,10 +18148,8 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "endorser_did": {
-            "default": undefined,
             "docs": "Endorser DID",
             "type": "string",
-            "validation": undefined,
           },
           "endorser_name": {
             "default": undefined,
@@ -18394,7 +18355,6 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "encoded": {
-            "default": undefined,
             "docs": "Attribute encoded value",
             "type": "string",
             "validation": {
@@ -18405,10 +18365,8 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "raw": {
-            "default": undefined,
             "docs": "Attribute raw value",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -18416,7 +18374,6 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "cred_def_id": {
-            "default": undefined,
             "docs": "Credential definition identifier",
             "type": "string",
             "validation": {
@@ -18428,7 +18385,6 @@ exports[`open api parser aries docs 1`] = `
           },
           "key_correctness_proof": "IndyCredAbstractKeyCorrectnessProof",
           "nonce": {
-            "default": undefined,
             "docs": "Nonce in credential abstract",
             "type": "string",
             "validation": {
@@ -18439,7 +18395,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "schema_id": {
-            "default": undefined,
             "docs": "Schema identifier",
             "type": "string",
             "validation": {
@@ -18544,7 +18499,6 @@ exports[`open api parser aries docs 1`] = `
             "type": "IndyCredRequestBlindedMsCorrectnessProof",
           },
           "cred_def_id": {
-            "default": undefined,
             "docs": "Credential definition identifier",
             "type": "string",
             "validation": {
@@ -18555,7 +18509,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "nonce": {
-            "default": undefined,
             "docs": "Nonce in credential request",
             "type": "string",
             "validation": {
@@ -18566,7 +18519,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "prover_did": {
-            "default": undefined,
             "docs": "Prover DID",
             "type": "string",
             "validation": {
@@ -18590,7 +18542,6 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "cred_def_id": {
-            "default": undefined,
             "docs": "Credential definition identifier",
             "type": "string",
             "validation": {
@@ -18618,7 +18569,6 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "schema_id": {
-            "default": undefined,
             "docs": "Schema identifier",
             "type": "string",
             "validation": {
@@ -18778,7 +18728,6 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "c": {
-            "default": undefined,
             "docs": "c in key correctness proof",
             "type": "string",
             "validation": {
@@ -18793,7 +18742,6 @@ exports[`open api parser aries docs 1`] = `
             "type": "list<list<string>>",
           },
           "xz_cap": {
-            "default": undefined,
             "docs": "xz_cap in key correctness proof",
             "type": "string",
             "validation": {
@@ -18862,10 +18810,8 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "referent": {
             "default": undefined,
@@ -18896,20 +18842,16 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "predicate": {
             "docs": "Predicate type ('<', '<=', '>=', or '>')",
             "type": "IndyPresPredSpecPredicate",
           },
           "threshold": {
-            "default": undefined,
             "docs": "Threshold value",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -19154,10 +19096,8 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "non_revoked": "optional<IndyProofReqPredSpecNonRevoked>",
           "p_type": {
@@ -19165,10 +19105,8 @@ exports[`open api parser aries docs 1`] = `
             "type": "IndyProofReqPredSpecPType",
           },
           "p_value": {
-            "default": undefined,
             "docs": "Threshold value",
             "type": "integer",
-            "validation": undefined,
           },
           "restrictions": {
             "default": undefined,
@@ -19402,10 +19340,8 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "cred_id": {
-            "default": undefined,
             "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
             "type": "string",
-            "validation": undefined,
           },
           "revealed": {
             "default": undefined,
@@ -19419,10 +19355,8 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "cred_id": {
-            "default": undefined,
             "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
             "type": "string",
-            "validation": undefined,
           },
           "timestamp": {
             "default": undefined,
@@ -20065,7 +19999,6 @@ exports[`open api parser aries docs 1`] = `
             "type": "KeylistUpdateRuleAction",
           },
           "recipient_key": {
-            "default": undefined,
             "docs": "Key to remove or add",
             "type": "string",
             "validation": {
@@ -20125,10 +20058,8 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "proofType": {
-            "default": undefined,
             "docs": "The proof type used for the proof. Should match suites registered in the Linked Data Cryptographic Suite Registry",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -20196,7 +20127,6 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "created": {
-            "default": undefined,
             "docs": "The string value of an ISO8601 combined date and time string generated by the Signature Algorithm",
             "type": "string",
             "validation": {
@@ -20230,10 +20160,8 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "proofPurpose": {
-            "default": undefined,
             "docs": "Proof purpose",
             "type": "string",
-            "validation": undefined,
           },
           "proofValue": {
             "default": undefined,
@@ -20242,13 +20170,10 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "Identifies the digital signature suite that was used to create the signature",
             "type": "string",
-            "validation": undefined,
           },
           "verificationMethod": {
-            "default": undefined,
             "docs": "Information used for proof verification",
             "type": "string",
             "validation": {
@@ -20438,10 +20363,8 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Menu parameter name",
             "type": "string",
-            "validation": undefined,
           },
           "required": {
             "default": undefined,
@@ -20450,10 +20373,8 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Menu parameter title",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
             "default": undefined,
@@ -20507,16 +20428,12 @@ exports[`open api parser aries docs 1`] = `
           },
           "form": "optional<MenuForm>",
           "name": {
-            "default": undefined,
             "docs": "Menu option name (unique identifier)",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Menu option title",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -20548,17 +20465,13 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "invi_msg_id": {
-            "default": undefined,
             "docs": "Invitation message identifier",
             "type": "string",
-            "validation": undefined,
           },
           "invitation": "InvitationRecordInvitation",
           "oob_id": {
-            "default": undefined,
             "docs": "Oob record identifier",
             "type": "string",
-            "validation": undefined,
           },
           "our_recipient_key": {
             "default": undefined,
@@ -20785,10 +20698,8 @@ exports[`open api parser aries docs 1`] = `
             "type": "QueryItemFeatureType",
           },
           "match": {
-            "default": undefined,
             "docs": "match",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -21038,7 +20949,6 @@ exports[`open api parser aries docs 1`] = `
         "properties": {
           "schema": "optional<SchemaSendResultSchema>",
           "schema_id": {
-            "default": undefined,
             "docs": "Schema identifier",
             "type": "string",
             "validation": {
@@ -21090,10 +21000,8 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "serviceEndpoint": {
-            "default": undefined,
             "docs": "Service endpoint at which to reach this agent",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -21878,16 +21786,12 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "Attribute value: base64-encode if MIME type is present",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -21915,7 +21819,6 @@ exports[`open api parser aries docs 1`] = `
             "validation": undefined,
           },
           "connection_id": {
-            "default": undefined,
             "docs": "Connection identifier",
             "type": "string",
             "validation": {
@@ -22387,16 +22290,12 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "attach_id": {
-            "default": undefined,
             "docs": "Attachment identifier",
             "type": "string",
-            "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Attachment format specifier",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22864,16 +22763,12 @@ exports[`open api parser aries docs 1`] = `
         "docs": undefined,
         "properties": {
           "attach_id": {
-            "default": undefined,
             "docs": "Attachment identifier",
             "type": "string",
-            "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Attachment format specifier",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -23093,10 +22988,8 @@ exports[`open api parser aries docs 1`] = `
             },
           },
           "wallet_id": {
-            "default": undefined,
             "docs": "Wallet record ID",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -25455,10 +25348,8 @@ exports[`open api parser aries simple 1`] = `
                   },
                   "did_doc~attach": "optional<root.DidxRequestDidDocAttach>",
                   "label": {
-                    "default": undefined,
                     "docs": "Label for DID exchange request",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -26882,7 +26773,6 @@ exports[`open api parser aries simple 1`] = `
                     "validation": undefined,
                   },
                   "cred_def_id": {
-                    "default": undefined,
                     "docs": "Credential definition identifier",
                     "type": "string",
                     "validation": {
@@ -28118,7 +28008,6 @@ exports[`open api parser aries simple 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -28394,7 +28283,6 @@ exports[`open api parser aries simple 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -28405,7 +28293,6 @@ exports[`open api parser aries simple 1`] = `
                     },
                   },
                   "cred_def_id": {
-                    "default": undefined,
                     "docs": "Credential definition identifier",
                     "type": "string",
                     "validation": {
@@ -28618,7 +28505,6 @@ exports[`open api parser aries simple 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -31311,7 +31197,6 @@ exports[`open api parser aries simple 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -31798,7 +31683,6 @@ exports[`open api parser aries simple 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -32165,10 +32049,8 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "doc": "root.Doc",
                   "verkey": {
-                    "default": undefined,
                     "docs": "Verkey to use for signing",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -35199,7 +35081,6 @@ exports[`open api parser aries simple 1`] = `
                   },
                   "comment": "optional<string>",
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -35434,7 +35315,6 @@ exports[`open api parser aries simple 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -36938,7 +36818,6 @@ exports[`open api parser aries simple 1`] = `
                   },
                   "comment": "optional<string>",
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -37147,7 +37026,6 @@ exports[`open api parser aries simple 1`] = `
                     "validation": undefined,
                   },
                   "connection_id": {
-                    "default": undefined,
                     "docs": "Connection identifier",
                     "type": "string",
                     "validation": {
@@ -38840,7 +38718,6 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "tails_public_uri": {
-                    "default": undefined,
                     "docs": "Public URI to the tails file",
                     "type": "string",
                     "validation": {
@@ -39096,13 +38973,10 @@ exports[`open api parser aries simple 1`] = `
                     "type": "list<string>",
                   },
                   "schema_name": {
-                    "default": undefined,
                     "docs": "Schema name",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "schema_version": {
-                    "default": undefined,
                     "docs": "Schema version",
                     "type": "string",
                     "validation": {
@@ -39647,7 +39521,6 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "did": {
-                    "default": undefined,
                     "docs": "DID of interest",
                     "type": "string",
                     "validation": {
@@ -40064,7 +39937,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "signature": {
-            "default": undefined,
             "docs": "signature",
             "type": "string",
             "validation": {
@@ -40114,7 +39986,6 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "kid": {
-            "default": undefined,
             "docs": "Key identifier, in W3C did:key or DID URL format",
             "type": "string",
             "validation": {
@@ -40484,7 +40355,6 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "my_did": {
-            "default": undefined,
             "docs": "Local DID",
             "type": "string",
             "validation": {
@@ -40495,7 +40365,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "my_endpoint": {
-            "default": undefined,
             "docs": "My URL endpoint",
             "type": "string",
             "validation": {
@@ -40506,7 +40375,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "my_verkey": {
-            "default": undefined,
             "docs": "My verification key",
             "type": "string",
             "validation": {
@@ -40518,7 +40386,6 @@ exports[`open api parser aries simple 1`] = `
           },
           "record": "ConnRecord",
           "their_did": {
-            "default": undefined,
             "docs": "Remote DID",
             "type": "string",
             "validation": {
@@ -40529,7 +40396,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "their_verkey": {
-            "default": undefined,
             "docs": "Remote verification key",
             "type": "string",
             "validation": {
@@ -40639,10 +40505,8 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "wallet_id": {
-            "default": undefined,
             "docs": "Wallet record ID",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -40678,16 +40542,12 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "Attribute value: base64-encode if MIME type is present",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -40839,7 +40699,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "issuanceDate": {
-            "default": undefined,
             "docs": "The issuance date",
             "type": "string",
             "validation": {
@@ -41063,10 +40922,8 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "type": {
-            "default": undefined,
             "docs": "Credential status method type to use for the credential. Should match status method registered in the Verifiable Credential Extension Registry",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -41139,7 +40996,6 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "did": {
-            "default": undefined,
             "docs": "DID of interest",
             "type": "string",
             "validation": {
@@ -41378,10 +41234,8 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "endorser_did": {
-            "default": undefined,
             "docs": "Endorser DID",
             "type": "string",
-            "validation": undefined,
           },
           "endorser_name": {
             "default": undefined,
@@ -41587,7 +41441,6 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "encoded": {
-            "default": undefined,
             "docs": "Attribute encoded value",
             "type": "string",
             "validation": {
@@ -41598,10 +41451,8 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "raw": {
-            "default": undefined,
             "docs": "Attribute raw value",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -41609,7 +41460,6 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "cred_def_id": {
-            "default": undefined,
             "docs": "Credential definition identifier",
             "type": "string",
             "validation": {
@@ -41621,7 +41471,6 @@ exports[`open api parser aries simple 1`] = `
           },
           "key_correctness_proof": "IndyCredAbstractKeyCorrectnessProof",
           "nonce": {
-            "default": undefined,
             "docs": "Nonce in credential abstract",
             "type": "string",
             "validation": {
@@ -41632,7 +41481,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "schema_id": {
-            "default": undefined,
             "docs": "Schema identifier",
             "type": "string",
             "validation": {
@@ -41737,7 +41585,6 @@ exports[`open api parser aries simple 1`] = `
             "type": "IndyCredRequestBlindedMsCorrectnessProof",
           },
           "cred_def_id": {
-            "default": undefined,
             "docs": "Credential definition identifier",
             "type": "string",
             "validation": {
@@ -41748,7 +41595,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "nonce": {
-            "default": undefined,
             "docs": "Nonce in credential request",
             "type": "string",
             "validation": {
@@ -41759,7 +41605,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "prover_did": {
-            "default": undefined,
             "docs": "Prover DID",
             "type": "string",
             "validation": {
@@ -41783,7 +41628,6 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "cred_def_id": {
-            "default": undefined,
             "docs": "Credential definition identifier",
             "type": "string",
             "validation": {
@@ -41811,7 +41655,6 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "schema_id": {
-            "default": undefined,
             "docs": "Schema identifier",
             "type": "string",
             "validation": {
@@ -41971,7 +41814,6 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "c": {
-            "default": undefined,
             "docs": "c in key correctness proof",
             "type": "string",
             "validation": {
@@ -41986,7 +41828,6 @@ exports[`open api parser aries simple 1`] = `
             "type": "list<list<string>>",
           },
           "xz_cap": {
-            "default": undefined,
             "docs": "xz_cap in key correctness proof",
             "type": "string",
             "validation": {
@@ -42055,10 +41896,8 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "referent": {
             "default": undefined,
@@ -42089,20 +41928,16 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "predicate": {
             "docs": "Predicate type ('<', '<=', '>=', or '>')",
             "type": "IndyPresPredSpecPredicate",
           },
           "threshold": {
-            "default": undefined,
             "docs": "Threshold value",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -42347,10 +42182,8 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "non_revoked": "optional<IndyProofReqPredSpecNonRevoked>",
           "p_type": {
@@ -42358,10 +42191,8 @@ exports[`open api parser aries simple 1`] = `
             "type": "IndyProofReqPredSpecPType",
           },
           "p_value": {
-            "default": undefined,
             "docs": "Threshold value",
             "type": "integer",
-            "validation": undefined,
           },
           "restrictions": {
             "default": undefined,
@@ -42595,10 +42426,8 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "cred_id": {
-            "default": undefined,
             "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
             "type": "string",
-            "validation": undefined,
           },
           "revealed": {
             "default": undefined,
@@ -42612,10 +42441,8 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "cred_id": {
-            "default": undefined,
             "docs": "Wallet credential identifier (typically but not necessarily a UUID)",
             "type": "string",
-            "validation": undefined,
           },
           "timestamp": {
             "default": undefined,
@@ -43258,7 +43085,6 @@ exports[`open api parser aries simple 1`] = `
             "type": "KeylistUpdateRuleAction",
           },
           "recipient_key": {
-            "default": undefined,
             "docs": "Key to remove or add",
             "type": "string",
             "validation": {
@@ -43318,10 +43144,8 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "proofType": {
-            "default": undefined,
             "docs": "The proof type used for the proof. Should match suites registered in the Linked Data Cryptographic Suite Registry",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -43389,7 +43213,6 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "created": {
-            "default": undefined,
             "docs": "The string value of an ISO8601 combined date and time string generated by the Signature Algorithm",
             "type": "string",
             "validation": {
@@ -43423,10 +43246,8 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "proofPurpose": {
-            "default": undefined,
             "docs": "Proof purpose",
             "type": "string",
-            "validation": undefined,
           },
           "proofValue": {
             "default": undefined,
@@ -43435,13 +43256,10 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "Identifies the digital signature suite that was used to create the signature",
             "type": "string",
-            "validation": undefined,
           },
           "verificationMethod": {
-            "default": undefined,
             "docs": "Information used for proof verification",
             "type": "string",
             "validation": {
@@ -43631,10 +43449,8 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Menu parameter name",
             "type": "string",
-            "validation": undefined,
           },
           "required": {
             "default": undefined,
@@ -43643,10 +43459,8 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Menu parameter title",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
             "default": undefined,
@@ -43700,16 +43514,12 @@ exports[`open api parser aries simple 1`] = `
           },
           "form": "optional<MenuForm>",
           "name": {
-            "default": undefined,
             "docs": "Menu option name (unique identifier)",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Menu option title",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -43741,17 +43551,13 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "invi_msg_id": {
-            "default": undefined,
             "docs": "Invitation message identifier",
             "type": "string",
-            "validation": undefined,
           },
           "invitation": "InvitationRecordInvitation",
           "oob_id": {
-            "default": undefined,
             "docs": "Oob record identifier",
             "type": "string",
-            "validation": undefined,
           },
           "our_recipient_key": {
             "default": undefined,
@@ -43978,10 +43784,8 @@ exports[`open api parser aries simple 1`] = `
             "type": "QueryItemFeatureType",
           },
           "match": {
-            "default": undefined,
             "docs": "match",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -44231,7 +44035,6 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "schema": "optional<SchemaSendResultSchema>",
           "schema_id": {
-            "default": undefined,
             "docs": "Schema identifier",
             "type": "string",
             "validation": {
@@ -44283,10 +44086,8 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "serviceEndpoint": {
-            "default": undefined,
             "docs": "Service endpoint at which to reach this agent",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -45071,16 +44872,12 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Attribute name",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "Attribute value: base64-encode if MIME type is present",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -45108,7 +44905,6 @@ exports[`open api parser aries simple 1`] = `
             "validation": undefined,
           },
           "connection_id": {
-            "default": undefined,
             "docs": "Connection identifier",
             "type": "string",
             "validation": {
@@ -45580,16 +45376,12 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "attach_id": {
-            "default": undefined,
             "docs": "Attachment identifier",
             "type": "string",
-            "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Attachment format specifier",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -46057,16 +45849,12 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "attach_id": {
-            "default": undefined,
             "docs": "Attachment identifier",
             "type": "string",
-            "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Attachment format specifier",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -46286,10 +46074,8 @@ exports[`open api parser aries simple 1`] = `
             },
           },
           "wallet_id": {
-            "default": undefined,
             "docs": "Wallet record ID",
             "type": "string",
-            "validation": undefined,
           },
         },
       },

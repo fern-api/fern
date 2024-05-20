@@ -6032,10 +6032,8 @@ exports[`open api parser deel docs 1`] = `
                     "type": "PatchWebhookRequestStatus",
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "Endpoint to receive webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -6155,10 +6153,8 @@ exports[`open api parser deel docs 1`] = `
               "body": {
                 "properties": {
                   "api_version": {
-                    "default": undefined,
                     "docs": "Deel API version. Currently Deel only has one version: v1.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "description": {
                     "default": undefined,
@@ -6187,10 +6183,8 @@ exports[`open api parser deel docs 1`] = `
                     "type": "CreateWebhookRequestStatus",
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "Endpoint to receive webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -9034,12 +9028,10 @@ exports[`open api parser deel docs 1`] = `
       "AgreementsParamLimit": {
         "docs": "Maximum number of records to return. This is supposed to be an integer but query parameters are string. Maximum is 50.",
         "type": "string",
-        "validation": undefined,
       },
       "AgreementsParamOffset": {
         "docs": "Offset/index of record for the next page of records to return. This is supposed to be an integer but query parameters are string.",
         "type": "string",
-        "validation": undefined,
       },
       "AgreementsSearchForm": {
         "docs": "Convenient model to encapsulate query parameters to get a list of agreements.",
@@ -9143,8 +9135,6 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -9161,8 +9151,6 @@ exports[`open api parser deel docs 1`] = `
           "status": "ContractStatusEnum",
           "termination_date": "optional<DateTimeString>",
           "title": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -9234,8 +9222,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9246,8 +9232,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "hours": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9258,8 +9242,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "minutes": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9270,8 +9252,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "weeks": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9297,8 +9277,6 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "id": "double",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -9314,8 +9292,6 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "id": "double",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -9345,16 +9321,12 @@ exports[`open api parser deel docs 1`] = `
           "scale": "optional<string>",
           "status": "optional<TimesheetStatusEnum>",
           "total_amount": {
-            "default": undefined,
             "docs": "is equal to quantity times rate of active work statement + bonus in this record",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "Deprecated - it is always "work"",
             "type": "string",
-            "validation": undefined,
           },
           "worksheet": "optional<BasicTimesheetWorksheet>",
         },
@@ -9394,8 +9366,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9406,8 +9376,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "hours": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9418,8 +9386,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "minutes": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9430,8 +9396,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "weeks": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9510,7 +9474,6 @@ exports[`open api parser deel docs 1`] = `
           },
           "currency_code": "CurrencyCodeRequired",
           "cycle_end": {
-            "default": undefined,
             "docs": "Date invoice cycle ends.",
             "type": "double",
             "validation": {
@@ -9544,8 +9507,6 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "payment_due_days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -9573,8 +9534,6 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -9595,8 +9554,6 @@ exports[`open api parser deel docs 1`] = `
           "status": "ContractStatusEnum",
           "termination_date": "optional<DateTimeString>",
           "title": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -9770,10 +9727,8 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "external_id": {
-            "default": undefined,
             "docs": "A unique identifier for the object provided by an external system.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9789,7 +9744,6 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "email": "EmailTypeRequired",
           "message": {
-            "default": undefined,
             "docs": "Message for the worker.",
             "type": "string",
             "validation": {
@@ -9926,7 +9880,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "client_signature": {
-            "default": undefined,
             "docs": "Signature of client.",
             "type": "string",
             "validation": {
@@ -9979,16 +9932,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of a contract template",
             "type": "double",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of a contract template",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10046,7 +9995,6 @@ exports[`open api parser deel docs 1`] = `
           },
           "currency_code": "CurrencyCodeRequired",
           "cycle_end": {
-            "default": undefined,
             "docs": "Date invoice cycle ends.",
             "type": "double",
             "validation": {
@@ -10080,8 +10028,6 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "payment_due_days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -10116,7 +10062,6 @@ exports[`open api parser deel docs 1`] = `
           },
           "currency_code": "CurrencyCodeRequired",
           "cycle_end": {
-            "default": undefined,
             "docs": "Date invoice cycle ends.",
             "type": "double",
             "validation": {
@@ -10150,8 +10095,6 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "payment_due_days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -10229,10 +10172,8 @@ exports[`open api parser deel docs 1`] = `
           },
           "termination_date": "optional<DateString>",
           "title": {
-            "default": undefined,
             "docs": "The title of the contract.",
             "type": "string",
-            "validation": undefined,
           },
           "who_reports": "optional<ContractWhoReportsEnum>",
           "worker": {
@@ -10380,9 +10321,7 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "name": {
             "default": "",
-            "docs": undefined,
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10404,7 +10343,6 @@ exports[`open api parser deel docs 1`] = `
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "Country name.",
             "type": "string",
             "validation": {
@@ -10524,8 +10462,6 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "code": "CurrencyCodeRequired",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -10548,7 +10484,6 @@ exports[`open api parser deel docs 1`] = `
       },
       "CurrencyCodeList": "list<CurrencyCodeRequired>",
       "CurrencyCodeRequired": {
-        "docs": undefined,
         "type": "string",
         "validation": {
           "format": undefined,
@@ -11168,22 +11103,16 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "first_name": {
-            "default": undefined,
             "docs": "Employee's first name.",
             "type": "string",
-            "validation": undefined,
           },
           "last_name": {
-            "default": undefined,
             "docs": "Employee's last name.",
             "type": "string",
-            "validation": undefined,
           },
           "nationality": {
-            "default": undefined,
             "docs": "Employee's nationality.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -11942,16 +11871,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": "This object is used for linking file attachments to your records.",
         "properties": {
           "filename": {
-            "default": undefined,
             "docs": "Original filename you used to upload using attachments end-point.",
             "type": "string",
-            "validation": undefined,
           },
           "key": {
-            "default": undefined,
             "docs": "You can call attachments end-point, get key and URL to upload your file.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -12004,38 +11929,30 @@ exports[`open api parser deel docs 1`] = `
             "type": "FinalPaymentCalculatedCalculationType",
           },
           "daily_rate": {
-            "default": undefined,
             "docs": "The daily rate paid.",
             "type": "string",
-            "validation": undefined,
           },
           "last_cycle": {
             "docs": "The last payment cycle.",
             "type": "FinalPaymentCalculatedLastCycle",
           },
           "remaining_days": {
-            "default": undefined,
             "docs": "Dais remaining to end the contract.",
             "type": "string",
-            "validation": undefined,
           },
           "total": {
-            "default": undefined,
             "docs": "Total amount to pay.",
             "type": "string",
-            "validation": undefined,
           },
           "workweek_end": {
             "default": 5,
             "docs": "The day the work week starts, 0 to 6",
             "type": "double",
-            "validation": undefined,
           },
           "workweek_start": {
             "default": 1,
             "docs": "The day the work week starts, 0 to 6",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -12254,8 +12171,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "currency": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -12271,10 +12186,8 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "contract_oid": {
-            "default": undefined,
             "docs": "The Hris Direct employee contract ID",
             "type": "string",
-            "validation": undefined,
           },
           "employee_number": "optional<double>",
           "end_date": "optional<DateString>",
@@ -12295,7 +12208,6 @@ exports[`open api parser deel docs 1`] = `
         ],
         "properties": {
           "part_time_percentage": {
-            "default": undefined,
             "docs": "required if employmentType is "PART_TIME"",
             "type": "double",
             "validation": {
@@ -12338,8 +12250,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "country": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -12349,8 +12259,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "email": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -12360,8 +12268,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -12371,8 +12277,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -12382,8 +12286,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "nationality": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -12404,8 +12306,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "work_email": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -12442,8 +12342,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "vacation_accrual_start_date": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": "date",
@@ -12453,8 +12351,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "vacation_yearly_policy": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -12513,10 +12409,8 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "agreement_id": {
-            "default": undefined,
             "docs": "MSA contract id (agreement).",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -12547,16 +12441,12 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of the invoice.",
             "type": "double",
-            "validation": undefined,
           },
           "invoice_id": {
-            "default": undefined,
             "docs": "Unique oid of the invoice.",
             "type": "string",
-            "validation": undefined,
           },
           "is_offcycle": {
             "default": undefined,
@@ -12583,10 +12473,8 @@ exports[`open api parser deel docs 1`] = `
           "payment_processed_at": "optional<DateTimeString>",
           "status": "InvoiceStatusEnum",
           "total": {
-            "default": undefined,
             "docs": "Total invoice amount including Fee and VAT.",
             "type": "double",
-            "validation": undefined,
           },
           "vat_percentage": {
             "default": undefined,
@@ -12773,7 +12661,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": "Details of invoice adjustment to create.",
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid. Must be a positive number.",
             "type": "double",
             "validation": {
@@ -12785,10 +12672,8 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "contract_id": {
-            "default": undefined,
             "docs": "Id of a Deel contract.",
             "type": "string",
-            "validation": undefined,
           },
           "date_submitted": "DateStringRequired",
           "description": {
@@ -12887,16 +12772,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "contract_type": {
-            "default": undefined,
             "docs": "Type of Deel contract.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of a Deel contract.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
             "default": undefined,
@@ -12998,16 +12879,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique identifier for the job title in Deel platform.",
             "type": "double",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Job title.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -13023,10 +12900,8 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "cursor": {
-            "default": undefined,
             "docs": "Use for pagination to get next set of records after the given cursor.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -13059,10 +12934,8 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid for the milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "approval_requested": {
             "docs": "Indicates if the contractor has requested the approval for the milestone.",
@@ -13070,16 +12943,12 @@ exports[`open api parser deel docs 1`] = `
           },
           "created_at": "optional<DateTimeString>",
           "description": {
-            "default": undefined,
             "docs": "Description of milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier for the milestone.",
             "type": "double",
-            "validation": undefined,
           },
           "reported_by": {
             "docs": "Milestone creator.",
@@ -13092,16 +12961,12 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "Current status of milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of milestone.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -13122,22 +12987,16 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid for the milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "Description of milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of milestone.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -13145,16 +13004,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": "Milestone creator.",
         "properties": {
           "full_name": {
-            "default": undefined,
             "docs": "Reporter's full name.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Reporter's unique Deel id.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -13175,16 +13030,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": "Reviewer's information.",
         "properties": {
           "full_name": {
-            "default": undefined,
             "docs": "Reviewer's full name.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Reviewer's unique Deel id.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -13316,19 +13167,15 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount of off-cycle payment.",
             "type": "string",
-            "validation": undefined,
           },
           "created_at": "optional<DateTimeStringRequired>",
           "currency_code": "CurrencyCodeRequired",
           "date_submitted": "optional<DateTimeStringRequired>",
           "description": {
-            "default": undefined,
             "docs": "Description of the off-cycle payment entry.",
             "type": "string",
-            "validation": undefined,
           },
           "id": "UniqueObjectIdentifier",
           "public_id": "optional<PublicId>",
@@ -13354,16 +13201,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "full_name": {
-            "default": undefined,
             "docs": "Full name of the creator.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Profile id of the creator.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -13371,28 +13214,20 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "full_name": {
-            "default": undefined,
             "docs": "Full name of the reviewer.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Profile if of the reviewer.",
             "type": "double",
-            "validation": undefined,
           },
           "remarks": {
-            "default": undefined,
             "docs": "Remarks made during review process.",
             "type": "string",
-            "validation": undefined,
           },
           "reviewed_at": {
-            "default": undefined,
             "docs": "Date of review.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -13400,7 +13235,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": "Details of invoice adjustment to create.",
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid. Must be a positive number.",
             "type": "double",
             "validation": {
@@ -13461,8 +13295,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "items_per_page": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -13473,8 +13305,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "offset": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -13495,10 +13325,8 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<DateTimeString>",
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of the payment.",
             "type": "double",
-            "validation": undefined,
           },
           "label": "string",
           "paid_at": {
@@ -13509,10 +13337,8 @@ exports[`open api parser deel docs 1`] = `
           "payment_method": "PaymentMethod",
           "status": "PaymentStatusEnum",
           "total": {
-            "default": undefined,
             "docs": "Total paid.",
             "type": "double",
-            "validation": undefined,
           },
           "workers": "PaymentWorkerList",
         },
@@ -13677,7 +13503,6 @@ exports[`open api parser deel docs 1`] = `
             "default": "",
             "docs": "Worker's full name.",
             "type": "string",
-            "validation": undefined,
           },
           "picUrl": {
             "default": undefined,
@@ -14034,24 +13859,18 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Fixed rate for this task.",
             "type": "string",
-            "validation": undefined,
           },
           "attachment": "optional<FileAttachmentInfo>",
           "date_submitted": "DateStringRequired",
           "description": {
-            "default": undefined,
             "docs": "Task description.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of the task.",
             "type": "double",
-            "validation": undefined,
           },
           "status": "optional<TimesheetStatusEnum>",
         },
@@ -14105,7 +13924,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Fixed rate for this task.",
             "type": "string",
             "validation": {
@@ -14146,16 +13964,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "calculated_premium": {
-            "default": undefined,
             "docs": "Cost for Deel Premium.",
             "type": "double",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Deel Premium plan id.",
             "type": "string",
-            "validation": undefined,
           },
           "misclassification_guarantee": "PremiumResultAddedMisclassificationGuarantee",
           "penalties": "PremiumResultAddedPenalties",
@@ -14337,10 +14151,8 @@ exports[`open api parser deel docs 1`] = `
         "docs": "Seniority describes level of expertise at a job e.g. junior",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique identifier for seniority record",
             "type": "double",
-            "validation": undefined,
           },
           "level": {
             "default": undefined,
@@ -14349,7 +14161,6 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2)",
             "type": "string",
             "validation": {
@@ -14372,19 +14183,14 @@ exports[`open api parser deel docs 1`] = `
         "docs": "Seniority describes level of expertise at a job e.g. junior",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique identifier for seniority record.",
             "type": "double",
-            "validation": undefined,
           },
           "level": {
-            "default": undefined,
             "docs": "Level of seniority level e.g. 2",
             "type": "double",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2)",
             "type": "string",
             "validation": {
@@ -14401,10 +14207,8 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "client_signed_at": "optional<DateTimeString>",
           "worker_signature": {
-            "default": undefined,
             "docs": "Worker's signature.",
             "type": "string",
-            "validation": undefined,
           },
           "worker_signed_at": "optional<DateTimeString>",
         },
@@ -14413,18 +14217,14 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "client_signature": {
-            "default": undefined,
             "docs": "normally name of client is used as signature",
             "type": "string",
-            "validation": undefined,
           },
           "client_signed_at": "optional<DateTimeString>",
           "signed_at": "optional<DateTimeString>",
           "worker_signature": {
-            "default": undefined,
             "docs": "Signatures of client representative.",
             "type": "string",
-            "validation": undefined,
           },
           "worker_signed_at": "optional<DateTimeString>",
         },
@@ -14439,7 +14239,6 @@ exports[`open api parser deel docs 1`] = `
         "docs": "It may be called states, provinces, prefectures or regions, or none at all",
         "properties": {
           "code": {
-            "default": undefined,
             "docs": "Territory code.",
             "type": "string",
             "validation": {
@@ -14450,7 +14249,6 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "name": {
-            "default": undefined,
             "docs": "Territory name.",
             "type": "string",
             "validation": {
@@ -14514,16 +14312,12 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique reference of a team",
             "type": "double",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of a team",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -14777,23 +14571,17 @@ exports[`open api parser deel docs 1`] = `
         "docs": "Details of timesheet to create; a client, contractor or EOR may create a timesheet",
         "properties": {
           "contract_id": {
-            "default": undefined,
             "docs": "Id of a Deel contract.",
             "type": "string",
-            "validation": undefined,
           },
           "date_submitted": "DateStringRequired",
           "description": {
             "default": "",
-            "docs": undefined,
             "type": "string",
-            "validation": undefined,
           },
           "quantity": {
-            "default": undefined,
             "docs": "this is based on the scale of work statement of contract agreed e.g. 2 weeks",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -14846,7 +14634,6 @@ exports[`open api parser deel docs 1`] = `
         },
       },
       "UrlTypeRequired": {
-        "docs": undefined,
         "type": "string",
         "validation": {
           "format": "uri",
@@ -14862,13 +14649,10 @@ exports[`open api parser deel docs 1`] = `
             "default": "v1",
             "docs": "Deel API version. Currently Deel only has one version: v1.",
             "type": "string",
-            "validation": undefined,
           },
           "created_at": {
-            "default": undefined,
             "docs": "Time at which the webhook was created.",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
             "default": undefined,
@@ -14887,10 +14671,8 @@ exports[`open api parser deel docs 1`] = `
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Webhook subscription's unique identifier.",
             "type": "double",
-            "validation": undefined,
           },
           "name": {
             "default": undefined,
@@ -14909,16 +14691,12 @@ exports[`open api parser deel docs 1`] = `
             "type": "WebhookItemStatus",
           },
           "updated_at": {
-            "default": undefined,
             "docs": "Time at which the webhook was updated.",
             "type": "string",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "Endpoint to receive webhook.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -15030,8 +14808,6 @@ exports[`open api parser deel docs 1`] = `
           "alternate_email": "optional<AlternateEmailList>",
           "email": "optional<EmailType>",
           "full_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -21162,10 +20938,8 @@ exports[`open api parser deel simple 1`] = `
                     "type": "PatchWebhookRequestStatus",
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "Endpoint to receive webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -21285,10 +21059,8 @@ exports[`open api parser deel simple 1`] = `
               "body": {
                 "properties": {
                   "api_version": {
-                    "default": undefined,
                     "docs": "Deel API version. Currently Deel only has one version: v1.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "description": {
                     "default": undefined,
@@ -21317,10 +21089,8 @@ exports[`open api parser deel simple 1`] = `
                     "type": "CreateWebhookRequestStatus",
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "Endpoint to receive webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -21489,12 +21259,10 @@ exports[`open api parser deel simple 1`] = `
       "AgreementsParamLimit": {
         "docs": "Maximum number of records to return. This is supposed to be an integer but query parameters are string. Maximum is 50.",
         "type": "string",
-        "validation": undefined,
       },
       "AgreementsParamOffset": {
         "docs": "Offset/index of record for the next page of records to return. This is supposed to be an integer but query parameters are string.",
         "type": "string",
-        "validation": undefined,
       },
       "AgreementsSearchForm": {
         "docs": "Convenient model to encapsulate query parameters to get a list of agreements.",
@@ -21598,8 +21366,6 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -21616,8 +21382,6 @@ exports[`open api parser deel simple 1`] = `
           "status": "ContractStatusEnum",
           "termination_date": "optional<DateTimeString>",
           "title": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -21689,8 +21453,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -21701,8 +21463,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "hours": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -21713,8 +21473,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "minutes": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -21725,8 +21483,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "weeks": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -21752,8 +21508,6 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "id": "double",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -21769,8 +21523,6 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "id": "double",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -21800,16 +21552,12 @@ exports[`open api parser deel simple 1`] = `
           "scale": "optional<string>",
           "status": "optional<TimesheetStatusEnum>",
           "total_amount": {
-            "default": undefined,
             "docs": "is equal to quantity times rate of active work statement + bonus in this record",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "Deprecated - it is always "work"",
             "type": "string",
-            "validation": undefined,
           },
           "worksheet": "optional<BasicTimesheetWorksheet>",
         },
@@ -21849,8 +21597,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -21861,8 +21607,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "hours": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -21873,8 +21617,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "minutes": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -21885,8 +21627,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "weeks": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -21965,7 +21705,6 @@ exports[`open api parser deel simple 1`] = `
           },
           "currency_code": "CurrencyCodeRequired",
           "cycle_end": {
-            "default": undefined,
             "docs": "Date invoice cycle ends.",
             "type": "double",
             "validation": {
@@ -21999,8 +21738,6 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "payment_due_days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -22028,8 +21765,6 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -22050,8 +21785,6 @@ exports[`open api parser deel simple 1`] = `
           "status": "ContractStatusEnum",
           "termination_date": "optional<DateTimeString>",
           "title": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -22225,10 +21958,8 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "external_id": {
-            "default": undefined,
             "docs": "A unique identifier for the object provided by an external system.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22244,7 +21975,6 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "email": "EmailTypeRequired",
           "message": {
-            "default": undefined,
             "docs": "Message for the worker.",
             "type": "string",
             "validation": {
@@ -22381,7 +22111,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "client_signature": {
-            "default": undefined,
             "docs": "Signature of client.",
             "type": "string",
             "validation": {
@@ -22434,16 +22163,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of a contract template",
             "type": "double",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of a contract template",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22501,7 +22226,6 @@ exports[`open api parser deel simple 1`] = `
           },
           "currency_code": "CurrencyCodeRequired",
           "cycle_end": {
-            "default": undefined,
             "docs": "Date invoice cycle ends.",
             "type": "double",
             "validation": {
@@ -22535,8 +22259,6 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "payment_due_days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -22571,7 +22293,6 @@ exports[`open api parser deel simple 1`] = `
           },
           "currency_code": "CurrencyCodeRequired",
           "cycle_end": {
-            "default": undefined,
             "docs": "Date invoice cycle ends.",
             "type": "double",
             "validation": {
@@ -22605,8 +22326,6 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "payment_due_days": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -22684,10 +22403,8 @@ exports[`open api parser deel simple 1`] = `
           },
           "termination_date": "optional<DateString>",
           "title": {
-            "default": undefined,
             "docs": "The title of the contract.",
             "type": "string",
-            "validation": undefined,
           },
           "who_reports": "optional<ContractWhoReportsEnum>",
           "worker": {
@@ -22835,9 +22552,7 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "name": {
             "default": "",
-            "docs": undefined,
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22859,7 +22574,6 @@ exports[`open api parser deel simple 1`] = `
             "type": "boolean",
           },
           "name": {
-            "default": undefined,
             "docs": "Country name.",
             "type": "string",
             "validation": {
@@ -22979,8 +22693,6 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "code": "CurrencyCodeRequired",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -23003,7 +22715,6 @@ exports[`open api parser deel simple 1`] = `
       },
       "CurrencyCodeList": "list<CurrencyCodeRequired>",
       "CurrencyCodeRequired": {
-        "docs": undefined,
         "type": "string",
         "validation": {
           "format": undefined,
@@ -23623,22 +23334,16 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "first_name": {
-            "default": undefined,
             "docs": "Employee's first name.",
             "type": "string",
-            "validation": undefined,
           },
           "last_name": {
-            "default": undefined,
             "docs": "Employee's last name.",
             "type": "string",
-            "validation": undefined,
           },
           "nationality": {
-            "default": undefined,
             "docs": "Employee's nationality.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -24397,16 +24102,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": "This object is used for linking file attachments to your records.",
         "properties": {
           "filename": {
-            "default": undefined,
             "docs": "Original filename you used to upload using attachments end-point.",
             "type": "string",
-            "validation": undefined,
           },
           "key": {
-            "default": undefined,
             "docs": "You can call attachments end-point, get key and URL to upload your file.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -24459,38 +24160,30 @@ exports[`open api parser deel simple 1`] = `
             "type": "FinalPaymentCalculatedCalculationType",
           },
           "daily_rate": {
-            "default": undefined,
             "docs": "The daily rate paid.",
             "type": "string",
-            "validation": undefined,
           },
           "last_cycle": {
             "docs": "The last payment cycle.",
             "type": "FinalPaymentCalculatedLastCycle",
           },
           "remaining_days": {
-            "default": undefined,
             "docs": "Dais remaining to end the contract.",
             "type": "string",
-            "validation": undefined,
           },
           "total": {
-            "default": undefined,
             "docs": "Total amount to pay.",
             "type": "string",
-            "validation": undefined,
           },
           "workweek_end": {
             "default": 5,
             "docs": "The day the work week starts, 0 to 6",
             "type": "double",
-            "validation": undefined,
           },
           "workweek_start": {
             "default": 1,
             "docs": "The day the work week starts, 0 to 6",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -24709,8 +24402,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "currency": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -24726,10 +24417,8 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "contract_oid": {
-            "default": undefined,
             "docs": "The Hris Direct employee contract ID",
             "type": "string",
-            "validation": undefined,
           },
           "employee_number": "optional<double>",
           "end_date": "optional<DateString>",
@@ -24750,7 +24439,6 @@ exports[`open api parser deel simple 1`] = `
         ],
         "properties": {
           "part_time_percentage": {
-            "default": undefined,
             "docs": "required if employmentType is "PART_TIME"",
             "type": "double",
             "validation": {
@@ -24793,8 +24481,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "country": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -24804,8 +24490,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "email": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -24815,8 +24499,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -24826,8 +24508,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -24837,8 +24517,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "nationality": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -24859,8 +24537,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "work_email": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -24897,8 +24573,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "vacation_accrual_start_date": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": "date",
@@ -24908,8 +24582,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "vacation_yearly_policy": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -24968,10 +24640,8 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "agreement_id": {
-            "default": undefined,
             "docs": "MSA contract id (agreement).",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -25002,16 +24672,12 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of the invoice.",
             "type": "double",
-            "validation": undefined,
           },
           "invoice_id": {
-            "default": undefined,
             "docs": "Unique oid of the invoice.",
             "type": "string",
-            "validation": undefined,
           },
           "is_offcycle": {
             "default": undefined,
@@ -25038,10 +24704,8 @@ exports[`open api parser deel simple 1`] = `
           "payment_processed_at": "optional<DateTimeString>",
           "status": "InvoiceStatusEnum",
           "total": {
-            "default": undefined,
             "docs": "Total invoice amount including Fee and VAT.",
             "type": "double",
-            "validation": undefined,
           },
           "vat_percentage": {
             "default": undefined,
@@ -25228,7 +24892,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Details of invoice adjustment to create.",
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid. Must be a positive number.",
             "type": "double",
             "validation": {
@@ -25240,10 +24903,8 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "contract_id": {
-            "default": undefined,
             "docs": "Id of a Deel contract.",
             "type": "string",
-            "validation": undefined,
           },
           "date_submitted": "DateStringRequired",
           "description": {
@@ -25342,16 +25003,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "contract_type": {
-            "default": undefined,
             "docs": "Type of Deel contract.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of a Deel contract.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
             "default": undefined,
@@ -25453,16 +25110,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique identifier for the job title in Deel platform.",
             "type": "double",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Job title.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -25478,10 +25131,8 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "cursor": {
-            "default": undefined,
             "docs": "Use for pagination to get next set of records after the given cursor.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -25514,10 +25165,8 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid for the milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "approval_requested": {
             "docs": "Indicates if the contractor has requested the approval for the milestone.",
@@ -25525,16 +25174,12 @@ exports[`open api parser deel simple 1`] = `
           },
           "created_at": "optional<DateTimeString>",
           "description": {
-            "default": undefined,
             "docs": "Description of milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier for the milestone.",
             "type": "double",
-            "validation": undefined,
           },
           "reported_by": {
             "docs": "Milestone creator.",
@@ -25547,16 +25192,12 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "Current status of milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of milestone.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -25577,22 +25218,16 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid for the milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "Description of milestone.",
             "type": "string",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of milestone.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -25600,16 +25235,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Milestone creator.",
         "properties": {
           "full_name": {
-            "default": undefined,
             "docs": "Reporter's full name.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Reporter's unique Deel id.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -25630,16 +25261,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Reviewer's information.",
         "properties": {
           "full_name": {
-            "default": undefined,
             "docs": "Reviewer's full name.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Reviewer's unique Deel id.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -25771,19 +25398,15 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount of off-cycle payment.",
             "type": "string",
-            "validation": undefined,
           },
           "created_at": "optional<DateTimeStringRequired>",
           "currency_code": "CurrencyCodeRequired",
           "date_submitted": "optional<DateTimeStringRequired>",
           "description": {
-            "default": undefined,
             "docs": "Description of the off-cycle payment entry.",
             "type": "string",
-            "validation": undefined,
           },
           "id": "UniqueObjectIdentifier",
           "public_id": "optional<PublicId>",
@@ -25809,16 +25432,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "full_name": {
-            "default": undefined,
             "docs": "Full name of the creator.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Profile id of the creator.",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -25826,28 +25445,20 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "full_name": {
-            "default": undefined,
             "docs": "Full name of the reviewer.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Profile if of the reviewer.",
             "type": "double",
-            "validation": undefined,
           },
           "remarks": {
-            "default": undefined,
             "docs": "Remarks made during review process.",
             "type": "string",
-            "validation": undefined,
           },
           "reviewed_at": {
-            "default": undefined,
             "docs": "Date of review.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -25855,7 +25466,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Details of invoice adjustment to create.",
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid. Must be a positive number.",
             "type": "double",
             "validation": {
@@ -25916,8 +25526,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "items_per_page": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -25928,8 +25536,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "offset": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -25950,10 +25556,8 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<DateTimeString>",
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of the payment.",
             "type": "double",
-            "validation": undefined,
           },
           "label": "string",
           "paid_at": {
@@ -25964,10 +25568,8 @@ exports[`open api parser deel simple 1`] = `
           "payment_method": "PaymentMethod",
           "status": "PaymentStatusEnum",
           "total": {
-            "default": undefined,
             "docs": "Total paid.",
             "type": "double",
-            "validation": undefined,
           },
           "workers": "PaymentWorkerList",
         },
@@ -26132,7 +25734,6 @@ exports[`open api parser deel simple 1`] = `
             "default": "",
             "docs": "Worker's full name.",
             "type": "string",
-            "validation": undefined,
           },
           "picUrl": {
             "default": undefined,
@@ -26489,24 +26090,18 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Fixed rate for this task.",
             "type": "string",
-            "validation": undefined,
           },
           "attachment": "optional<FileAttachmentInfo>",
           "date_submitted": "DateStringRequired",
           "description": {
-            "default": undefined,
             "docs": "Task description.",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier of the task.",
             "type": "double",
-            "validation": undefined,
           },
           "status": "optional<TimesheetStatusEnum>",
         },
@@ -26560,7 +26155,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "Fixed rate for this task.",
             "type": "string",
             "validation": {
@@ -26601,16 +26195,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "calculated_premium": {
-            "default": undefined,
             "docs": "Cost for Deel Premium.",
             "type": "double",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Deel Premium plan id.",
             "type": "string",
-            "validation": undefined,
           },
           "misclassification_guarantee": "PremiumResultAddedMisclassificationGuarantee",
           "penalties": "PremiumResultAddedPenalties",
@@ -26792,10 +26382,8 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Seniority describes level of expertise at a job e.g. junior",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique identifier for seniority record",
             "type": "double",
-            "validation": undefined,
           },
           "level": {
             "default": undefined,
@@ -26804,7 +26392,6 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2)",
             "type": "string",
             "validation": {
@@ -26827,19 +26414,14 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Seniority describes level of expertise at a job e.g. junior",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique identifier for seniority record.",
             "type": "double",
-            "validation": undefined,
           },
           "level": {
-            "default": undefined,
             "docs": "Level of seniority level e.g. 2",
             "type": "double",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2)",
             "type": "string",
             "validation": {
@@ -26856,10 +26438,8 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "client_signed_at": "optional<DateTimeString>",
           "worker_signature": {
-            "default": undefined,
             "docs": "Worker's signature.",
             "type": "string",
-            "validation": undefined,
           },
           "worker_signed_at": "optional<DateTimeString>",
         },
@@ -26868,18 +26448,14 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "client_signature": {
-            "default": undefined,
             "docs": "normally name of client is used as signature",
             "type": "string",
-            "validation": undefined,
           },
           "client_signed_at": "optional<DateTimeString>",
           "signed_at": "optional<DateTimeString>",
           "worker_signature": {
-            "default": undefined,
             "docs": "Signatures of client representative.",
             "type": "string",
-            "validation": undefined,
           },
           "worker_signed_at": "optional<DateTimeString>",
         },
@@ -26894,7 +26470,6 @@ exports[`open api parser deel simple 1`] = `
         "docs": "It may be called states, provinces, prefectures or regions, or none at all",
         "properties": {
           "code": {
-            "default": undefined,
             "docs": "Territory code.",
             "type": "string",
             "validation": {
@@ -26905,7 +26480,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "name": {
-            "default": undefined,
             "docs": "Territory name.",
             "type": "string",
             "validation": {
@@ -26969,16 +26543,12 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Unique reference of a team",
             "type": "double",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of a team",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27232,23 +26802,17 @@ exports[`open api parser deel simple 1`] = `
         "docs": "Details of timesheet to create; a client, contractor or EOR may create a timesheet",
         "properties": {
           "contract_id": {
-            "default": undefined,
             "docs": "Id of a Deel contract.",
             "type": "string",
-            "validation": undefined,
           },
           "date_submitted": "DateStringRequired",
           "description": {
             "default": "",
-            "docs": undefined,
             "type": "string",
-            "validation": undefined,
           },
           "quantity": {
-            "default": undefined,
             "docs": "this is based on the scale of work statement of contract agreed e.g. 2 weeks",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -27301,7 +26865,6 @@ exports[`open api parser deel simple 1`] = `
         },
       },
       "UrlTypeRequired": {
-        "docs": undefined,
         "type": "string",
         "validation": {
           "format": "uri",
@@ -27317,13 +26880,10 @@ exports[`open api parser deel simple 1`] = `
             "default": "v1",
             "docs": "Deel API version. Currently Deel only has one version: v1.",
             "type": "string",
-            "validation": undefined,
           },
           "created_at": {
-            "default": undefined,
             "docs": "Time at which the webhook was created.",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
             "default": undefined,
@@ -27342,10 +26902,8 @@ exports[`open api parser deel simple 1`] = `
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Webhook subscription's unique identifier.",
             "type": "double",
-            "validation": undefined,
           },
           "name": {
             "default": undefined,
@@ -27364,16 +26922,12 @@ exports[`open api parser deel simple 1`] = `
             "type": "WebhookItemStatus",
           },
           "updated_at": {
-            "default": undefined,
             "docs": "Time at which the webhook was updated.",
             "type": "string",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "Endpoint to receive webhook.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27485,8 +27039,6 @@ exports[`open api parser deel simple 1`] = `
           "alternate_email": "optional<AlternateEmailList>",
           "email": "optional<EmailType>",
           "full_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,

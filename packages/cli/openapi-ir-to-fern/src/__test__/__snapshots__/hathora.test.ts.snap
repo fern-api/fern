@@ -2424,8 +2424,6 @@ exports[`open api parser hathora docs 1`] = `
         "docs": undefined,
         "properties": {
           "appName": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -2548,8 +2546,6 @@ exports[`open api parser hathora docs 1`] = `
         "docs": undefined,
         "properties": {
           "containerPort": {
-            "default": undefined,
-            "docs": undefined,
             "type": "integer",
             "validation": {
               "exclusiveMax": undefined,
@@ -2562,8 +2558,6 @@ exports[`open api parser hathora docs 1`] = `
           "env": "list<DeploymentConfigEnvItem>",
           "planName": "PlanName",
           "roomsPerProcess": {
-            "default": undefined,
-            "docs": undefined,
             "type": "integer",
             "validation": {
               "exclusiveMax": undefined,
@@ -2580,8 +2574,6 @@ exports[`open api parser hathora docs 1`] = `
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -2591,8 +2583,6 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "value": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -2768,7 +2758,6 @@ exports[`open api parser hathora docs 1`] = `
         },
       },
       "TailLines": {
-        "docs": undefined,
         "type": "integer",
         "validation": {
           "exclusiveMax": undefined,
@@ -4856,8 +4845,6 @@ exports[`open api parser hathora simple 1`] = `
         "docs": undefined,
         "properties": {
           "appName": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -4980,8 +4967,6 @@ exports[`open api parser hathora simple 1`] = `
         "docs": undefined,
         "properties": {
           "containerPort": {
-            "default": undefined,
-            "docs": undefined,
             "type": "integer",
             "validation": {
               "exclusiveMax": undefined,
@@ -4994,8 +4979,6 @@ exports[`open api parser hathora simple 1`] = `
           "env": "list<DeploymentConfigEnvItem>",
           "planName": "PlanName",
           "roomsPerProcess": {
-            "default": undefined,
-            "docs": undefined,
             "type": "integer",
             "validation": {
               "exclusiveMax": undefined,
@@ -5012,8 +4995,6 @@ exports[`open api parser hathora simple 1`] = `
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -5023,8 +5004,6 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "value": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -5200,7 +5179,6 @@ exports[`open api parser hathora simple 1`] = `
         },
       },
       "TailLines": {
-        "docs": undefined,
         "type": "integer",
         "validation": {
           "exclusiveMax": undefined,

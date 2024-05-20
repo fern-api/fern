@@ -89,7 +89,6 @@ exports[`rules rules docs 1`] = `
         },
       },
       "String": {
-        "docs": undefined,
         "type": "string",
         "validation": {
           "format": "custom",
@@ -199,7 +198,6 @@ exports[`rules rules simple 1`] = `
         },
       },
       "String": {
-        "docs": undefined,
         "type": "string",
         "validation": {
           "format": "custom",

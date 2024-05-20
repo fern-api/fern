@@ -216,7 +216,6 @@ Creates a new document index.",
                     "type": "map<string, unknown>",
                   },
                   "label": {
-                    "default": undefined,
                     "docs": "A human-readable label for the document index",
                     "type": "string",
                     "validation": {
@@ -227,7 +226,6 @@ Creates a new document index.",
                     },
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "A name that uniquely identifies this index within its workspace",
                     "type": "string",
                     "validation": {
@@ -392,7 +390,6 @@ Upload a document to be indexed and used for search.
                     "validation": undefined,
                   },
                   "label": {
-                    "default": undefined,
                     "docs": "A human-friendly name for this document. Typically the filename.",
                     "type": "string",
                     "validation": {
@@ -643,7 +640,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "body": {
                 "properties": {
                   "label": {
-                    "default": undefined,
                     "docs": "A human-friendly label for corresponding entities created in Vellum.",
                     "type": "string",
                     "validation": {
@@ -660,7 +656,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     "validation": undefined,
                   },
                   "model": {
-                    "default": undefined,
                     "docs": "The initial model to use for this prompt",
                     "type": "string",
                     "validation": {
@@ -671,7 +666,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     },
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "A uniquely-identifying name for corresponding entities created in Vellum.",
                     "type": "string",
                     "validation": {
@@ -1429,7 +1423,6 @@ Perform a search against a document index.
                   "validation": undefined,
                 },
                 "query": {
-                  "default": undefined,
                   "docs": "The query to search for.",
                   "type": "string",
                   "validation": {
@@ -1603,8 +1596,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": "uuid",
@@ -1614,7 +1605,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "label": {
-            "default": undefined,
             "docs": "A human-readable label for the deployment",
             "type": "string",
             "validation": {
@@ -1633,7 +1623,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "ModelTypeEnum",
           },
           "name": {
-            "default": undefined,
             "docs": "A name that uniquely identifies this deployment within its workspace",
             "type": "string",
             "validation": {
@@ -1680,7 +1669,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the document.",
             "type": "string",
             "validation": {
@@ -1691,7 +1679,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable name for the document.",
             "type": "string",
             "validation": {
@@ -1707,7 +1694,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "document_index_id": {
-            "default": undefined,
             "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
             "type": "string",
             "validation": {
@@ -1718,7 +1704,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Vellum-generated ID that uniquely identifies this link.",
             "type": "string",
             "validation": {
@@ -1757,8 +1742,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": "uuid",
@@ -1772,7 +1755,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "map<string, unknown>",
           },
           "label": {
-            "default": undefined,
             "docs": "A human-readable label for the document index",
             "type": "string",
             "validation": {
@@ -1783,7 +1765,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "name": {
-            "default": undefined,
             "docs": "A name that uniquely identifies this index within its workspace",
             "type": "string",
             "validation": {
@@ -1832,7 +1813,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The Vellum-generated ID of the completion.",
             "type": "string",
             "validation": {
@@ -1849,16 +1829,12 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "model_version_id": {
-            "default": undefined,
             "docs": "The ID of the model version used to generate this completion.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text generated by the LLM.",
             "type": "string",
-            "validation": undefined,
           },
           "type": "optional<ContentType>",
         },
@@ -1909,10 +1885,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "detail": {
-            "default": undefined,
             "docs": "Details about why the request failed.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -1990,10 +1964,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "message": {
-            "default": undefined,
             "docs": "The error message returned by the LLM provider.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2052,10 +2024,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "base_model": {
-            "default": undefined,
             "docs": "The name of the base model used to create this model version, as identified by the LLM provider.",
             "type": "string",
-            "validation": undefined,
           },
           "sandbox_snapshot": {
             "default": undefined,
@@ -2078,7 +2048,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "num_tokens": {
-            "default": undefined,
             "docs": "The approximate number of tokens used by the compiled prompt.",
             "type": "integer",
             "validation": {
@@ -2090,10 +2059,8 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "text": {
-            "default": undefined,
             "docs": "The fully compiled prompt in normalized ChatML syntax after all variable substitutions and templating functions are applied.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2147,7 +2114,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "ModelVersionExecConfig",
           },
           "external_id": {
-            "default": undefined,
             "docs": "The unique id of this model version as it exists in the above provider's system.",
             "type": "string",
             "validation": {
@@ -2158,7 +2124,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Vellum-generated ID that uniquely identifies this model version.",
             "type": "string",
             "validation": {
@@ -2169,7 +2134,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "label": {
-            "default": undefined,
             "docs": "Human-friendly name for this model version.",
             "type": "string",
             "validation": {
@@ -2218,10 +2182,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the sandbox snapshot.",
             "type": "string",
-            "validation": undefined,
           },
           "prompt_id": {
             "default": undefined,
@@ -2392,8 +2354,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "properties": {
           "block_type": "BlockTypeEnum",
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -2409,10 +2369,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "key": {
-            "default": undefined,
             "docs": "The name of the input variable.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2420,7 +2378,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "key": {
-            "default": undefined,
             "docs": "The name of the input variable.",
             "type": "string",
             "validation": {
@@ -2456,10 +2413,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "detail": {
-            "default": undefined,
             "docs": "Details about why the request failed.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2480,16 +2435,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated prompt.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "A human-friendly label for the generated prompt.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2538,22 +2489,16 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated deployment.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "A human-friendly label for the generated deployment.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "A uniquely-identifying name for generated deployment.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2561,16 +2506,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated model version.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "A human-friendly label for the generated model version.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2578,16 +2519,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated sandbox.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "A human-friendly label for the generated sandbox.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2595,10 +2532,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated sandbox snapshot.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2632,10 +2567,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The id of the scenario",
             "type": "string",
-            "validation": undefined,
           },
           "inputs": {
             "docs": "The inputs for the scenario",
@@ -2664,8 +2597,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "properties": {
           "chat_history": "optional<list<ChatMessageRequest>>",
           "key": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -2690,10 +2621,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "detail": {
-            "default": undefined,
             "docs": "Details about why the request failed.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2770,16 +2699,12 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "keywords": "list<string>",
           "score": {
-            "default": undefined,
             "docs": "A score representing how well the chunk matches the search query.",
             "type": "double",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text of the chunk that matched the search query.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -2796,16 +2721,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "keywords": {
-            "default": undefined,
             "docs": "The relative weight to give to keyword matches",
             "type": "double",
-            "validation": undefined,
           },
           "semantic_similarity": {
-            "default": undefined,
             "docs": "The relative weight to give to semantic similarity",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -2825,7 +2746,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Vellum-generated ID that uniquely identifies this document.",
             "type": "string",
             "validation": {
@@ -2842,7 +2762,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "Human-friendly name for this document.",
             "type": "string",
             "validation": {
@@ -2950,10 +2869,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The unique name given to the terminal node that produced this output.",
             "type": "string",
-            "validation": undefined,
           },
           "value": "list<ChatMessage>",
         },
@@ -2962,10 +2879,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The unique name given to the terminal node that produced this output.",
             "type": "string",
-            "validation": undefined,
           },
           "value": "map<string, unknown>",
         },
@@ -2996,10 +2911,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The unique name given to the terminal node that produced this output.",
             "type": "string",
-            "validation": undefined,
           },
           "value": "string",
         },
@@ -3039,7 +2952,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "document_id": {
-            "default": undefined,
             "docs": "The ID of the newly created document.",
             "type": "string",
             "validation": {
@@ -3123,7 +3035,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The variable's name, as defined in the Workflow.",
             "type": "string",
             "validation": {
@@ -3150,7 +3061,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The variable's name, as defined in the Workflow.",
             "type": "string",
             "validation": {
@@ -3167,7 +3077,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The variable's name, as defined in the Workflow.",
             "type": "string",
             "validation": {
@@ -3505,7 +3414,6 @@ Creates a new document index.",
                     "type": "map<string, unknown>",
                   },
                   "label": {
-                    "default": undefined,
                     "docs": "A human-readable label for the document index",
                     "type": "string",
                     "validation": {
@@ -3516,7 +3424,6 @@ Creates a new document index.",
                     },
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "A name that uniquely identifies this index within its workspace",
                     "type": "string",
                     "validation": {
@@ -3681,7 +3588,6 @@ Upload a document to be indexed and used for search.
                     "validation": undefined,
                   },
                   "label": {
-                    "default": undefined,
                     "docs": "A human-friendly name for this document. Typically the filename.",
                     "type": "string",
                     "validation": {
@@ -3932,7 +3838,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "body": {
                 "properties": {
                   "label": {
-                    "default": undefined,
                     "docs": "A human-friendly label for corresponding entities created in Vellum.",
                     "type": "string",
                     "validation": {
@@ -3949,7 +3854,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     "validation": undefined,
                   },
                   "model": {
-                    "default": undefined,
                     "docs": "The initial model to use for this prompt",
                     "type": "string",
                     "validation": {
@@ -3960,7 +3864,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     },
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "A uniquely-identifying name for corresponding entities created in Vellum.",
                     "type": "string",
                     "validation": {
@@ -4650,7 +4553,6 @@ Perform a search against a document index.
                   "validation": undefined,
                 },
                 "query": {
-                  "default": undefined,
                   "docs": "The query to search for.",
                   "type": "string",
                   "validation": {
@@ -4824,8 +4726,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": "uuid",
@@ -4835,7 +4735,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "label": {
-            "default": undefined,
             "docs": "A human-readable label for the deployment",
             "type": "string",
             "validation": {
@@ -4854,7 +4753,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "ModelTypeEnum",
           },
           "name": {
-            "default": undefined,
             "docs": "A name that uniquely identifies this deployment within its workspace",
             "type": "string",
             "validation": {
@@ -4901,7 +4799,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the document.",
             "type": "string",
             "validation": {
@@ -4912,7 +4809,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable name for the document.",
             "type": "string",
             "validation": {
@@ -4928,7 +4824,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "document_index_id": {
-            "default": undefined,
             "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
             "type": "string",
             "validation": {
@@ -4939,7 +4834,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Vellum-generated ID that uniquely identifies this link.",
             "type": "string",
             "validation": {
@@ -4978,8 +4872,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": "uuid",
@@ -4993,7 +4885,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "map<string, unknown>",
           },
           "label": {
-            "default": undefined,
             "docs": "A human-readable label for the document index",
             "type": "string",
             "validation": {
@@ -5004,7 +4895,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "name": {
-            "default": undefined,
             "docs": "A name that uniquely identifies this index within its workspace",
             "type": "string",
             "validation": {
@@ -5053,7 +4943,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The Vellum-generated ID of the completion.",
             "type": "string",
             "validation": {
@@ -5070,16 +4959,12 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "model_version_id": {
-            "default": undefined,
             "docs": "The ID of the model version used to generate this completion.",
             "type": "string",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text generated by the LLM.",
             "type": "string",
-            "validation": undefined,
           },
           "type": "optional<ContentType>",
         },
@@ -5130,10 +5015,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "detail": {
-            "default": undefined,
             "docs": "Details about why the request failed.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5211,10 +5094,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "message": {
-            "default": undefined,
             "docs": "The error message returned by the LLM provider.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5273,10 +5154,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "base_model": {
-            "default": undefined,
             "docs": "The name of the base model used to create this model version, as identified by the LLM provider.",
             "type": "string",
-            "validation": undefined,
           },
           "sandbox_snapshot": {
             "default": undefined,
@@ -5299,7 +5178,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "num_tokens": {
-            "default": undefined,
             "docs": "The approximate number of tokens used by the compiled prompt.",
             "type": "integer",
             "validation": {
@@ -5311,10 +5189,8 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "text": {
-            "default": undefined,
             "docs": "The fully compiled prompt in normalized ChatML syntax after all variable substitutions and templating functions are applied.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5368,7 +5244,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "ModelVersionExecConfig",
           },
           "external_id": {
-            "default": undefined,
             "docs": "The unique id of this model version as it exists in the above provider's system.",
             "type": "string",
             "validation": {
@@ -5379,7 +5254,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Vellum-generated ID that uniquely identifies this model version.",
             "type": "string",
             "validation": {
@@ -5390,7 +5264,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "label": {
-            "default": undefined,
             "docs": "Human-friendly name for this model version.",
             "type": "string",
             "validation": {
@@ -5439,10 +5312,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the sandbox snapshot.",
             "type": "string",
-            "validation": undefined,
           },
           "prompt_id": {
             "default": undefined,
@@ -5613,8 +5484,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "properties": {
           "block_type": "BlockTypeEnum",
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -5630,10 +5499,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "key": {
-            "default": undefined,
             "docs": "The name of the input variable.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5641,7 +5508,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "key": {
-            "default": undefined,
             "docs": "The name of the input variable.",
             "type": "string",
             "validation": {
@@ -5677,10 +5543,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "detail": {
-            "default": undefined,
             "docs": "Details about why the request failed.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5701,16 +5565,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated prompt.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "A human-friendly label for the generated prompt.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5759,22 +5619,16 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated deployment.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "A human-friendly label for the generated deployment.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "A uniquely-identifying name for generated deployment.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5782,16 +5636,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated model version.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "A human-friendly label for the generated model version.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5799,16 +5649,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated sandbox.",
             "type": "string",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "A human-friendly label for the generated sandbox.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5816,10 +5662,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the generated sandbox snapshot.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5853,10 +5697,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The id of the scenario",
             "type": "string",
-            "validation": undefined,
           },
           "inputs": {
             "docs": "The inputs for the scenario",
@@ -5885,8 +5727,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "properties": {
           "chat_history": "optional<list<ChatMessageRequest>>",
           "key": {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -5911,10 +5751,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "detail": {
-            "default": undefined,
             "docs": "Details about why the request failed.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5991,16 +5829,12 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "keywords": "list<string>",
           "score": {
-            "default": undefined,
             "docs": "A score representing how well the chunk matches the search query.",
             "type": "double",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The text of the chunk that matched the search query.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6017,16 +5851,12 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "keywords": {
-            "default": undefined,
             "docs": "The relative weight to give to keyword matches",
             "type": "double",
-            "validation": undefined,
           },
           "semantic_similarity": {
-            "default": undefined,
             "docs": "The relative weight to give to semantic similarity",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -6046,7 +5876,6 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Vellum-generated ID that uniquely identifies this document.",
             "type": "string",
             "validation": {
@@ -6063,7 +5892,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "Human-friendly name for this document.",
             "type": "string",
             "validation": {
@@ -6171,10 +5999,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The unique name given to the terminal node that produced this output.",
             "type": "string",
-            "validation": undefined,
           },
           "value": "list<ChatMessage>",
         },
@@ -6183,10 +6009,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The unique name given to the terminal node that produced this output.",
             "type": "string",
-            "validation": undefined,
           },
           "value": "map<string, unknown>",
         },
@@ -6217,10 +6041,8 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The unique name given to the terminal node that produced this output.",
             "type": "string",
-            "validation": undefined,
           },
           "value": "string",
         },
@@ -6260,7 +6082,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "document_id": {
-            "default": undefined,
             "docs": "The ID of the newly created document.",
             "type": "string",
             "validation": {
@@ -6344,7 +6165,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The variable's name, as defined in the Workflow.",
             "type": "string",
             "validation": {
@@ -6371,7 +6191,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The variable's name, as defined in the Workflow.",
             "type": "string",
             "validation": {
@@ -6388,7 +6207,6 @@ Used to submit feedback regarding the quality of previously generated completion
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The variable's name, as defined in the Workflow.",
             "type": "string",
             "validation": {

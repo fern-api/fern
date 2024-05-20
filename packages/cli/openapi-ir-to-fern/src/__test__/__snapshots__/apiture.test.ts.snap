@@ -3673,7 +3673,6 @@ This error response may have one of the following \`type\` values:
             "type": "ReadOnlyResourceId",
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "string",
             "validation": {
@@ -3736,7 +3735,6 @@ This error response may have one of the following \`type\` values:
         "properties": {
           "id": "ReadOnlyResourceId",
           "name": {
-            "default": undefined,
             "docs": "The full name of the joint owner.",
             "type": "string",
             "validation": {
@@ -3987,7 +3985,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         ],
         "properties": {
           "postalCode": {
-            "default": undefined,
             "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
             "type": "string",
             "validation": {
@@ -4025,7 +4022,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "Properties of a simple address, used to compose other addresses.",
         "properties": {
           "address1": {
-            "default": undefined,
             "docs": "The first line of the postal address. In the US, this typically includes the building number and street name.",
             "type": "string",
             "validation": {
@@ -4047,7 +4043,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "countryCode": {
-            "default": undefined,
             "docs": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
             "type": "string",
             "validation": {
@@ -4058,7 +4053,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "locality": {
-            "default": undefined,
             "docs": "The city/town/municipality of the address.",
             "type": "string",
             "validation": {
@@ -4233,7 +4227,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "ChallengePromptId",
           },
           "prompt": {
-            "default": undefined,
             "docs": "The text prompt of this security question.",
             "type": "string",
             "validation": {
@@ -4282,7 +4275,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "A representation of a cutoff time for a money movement process at a financial institution.",
         "properties": {
           "time": {
-            "default": undefined,
             "docs": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
             "type": "string",
             "validation": {
@@ -4393,7 +4385,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "maximumOverdraftAccounts": {
-            "default": undefined,
             "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "type": "integer",
             "validation": {
@@ -4501,7 +4492,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "list<AccountBalance>",
           },
           "retryCount": {
-            "default": undefined,
             "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
             "type": "integer",
             "validation": {
@@ -4521,7 +4511,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "retryCount": {
-            "default": undefined,
             "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
             "type": "integer",
             "validation": {
@@ -4623,7 +4612,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "validation": undefined,
           },
           "emailAddress": {
-            "default": undefined,
             "docs": "The invitee's email address.",
             "type": "string",
             "validation": {
@@ -4634,7 +4622,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "firstName": {
-            "default": undefined,
             "docs": "The invitee's first name.",
             "type": "string",
             "validation": {
@@ -4645,7 +4632,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "lastName": {
-            "default": undefined,
             "docs": "The invitee's last name name.",
             "type": "string",
             "validation": {
@@ -4656,7 +4642,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "sharedSecret": {
-            "default": undefined,
             "docs": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
             "type": "string",
             "validation": {
@@ -4734,7 +4719,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "maximumOverdraftAccounts": {
-            "default": undefined,
             "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "type": "integer",
             "validation": {
@@ -4775,7 +4759,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A reference to a banking product.",
         "properties": {
           "code": {
-            "default": undefined,
             "docs": "The product's product code. Codes are unique to the financial institution.",
             "type": "string",
             "validation": {
@@ -4786,7 +4769,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "description": {
-            "default": undefined,
             "docs": "A human-readable description of this banking product.",
             "type": "string",
             "validation": {
@@ -4797,7 +4779,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "label": {
-            "default": undefined,
             "docs": "A human-readable label for this banking product.",
             "type": "string",
             "validation": {
@@ -4903,7 +4884,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "Address",
           },
           "locator": {
-            "default": undefined,
             "docs": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
             "type": "string",
             "validation": {
@@ -4918,7 +4898,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "InstitutionLocatorType",
           },
           "name": {
-            "default": undefined,
             "docs": "The financial institution's name.",
             "type": "string",
             "validation": {
@@ -4970,7 +4949,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "The transaction categorization.",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The unique ID of this transaction's category.",
             "type": "string",
             "validation": {
@@ -5056,7 +5034,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "number": {
-            "default": undefined,
             "docs": "The check number.",
             "type": "integer",
             "validation": {
@@ -5112,7 +5089,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "id": {
-            "default": undefined,
             "docs": "This transaction's unique identifier.",
             "type": "string",
             "validation": {
@@ -5135,7 +5111,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "merchant": "optional<TransactionMerchant>",
           "occurredOn": {
-            "default": undefined,
             "docs": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "type": "string",
             "validation": {
@@ -5369,7 +5344,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "occursOn": {
-            "default": undefined,
             "docs": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
             "type": "string",
             "validation": {
@@ -5754,7 +5728,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         "docs": "Summary representation of a transfer schedule resource in transfer schedule list.",
         "properties": {
           "effectiveOn": {
-            "default": undefined,
             "docs": "The effective date of the recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is \`credit\` and adjusted to after the scheduled date when the transfer direction is \`debit\`.",
             "type": "string",
             "validation": {
@@ -5765,7 +5738,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
           "scheduledOn": {
-            "default": undefined,
             "docs": "The scheduled date of the calculated calendar recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
             "type": "string",
             "validation": {
@@ -7945,7 +7917,6 @@ This error response may have one of the following \`type\` values:
             "type": "ReadOnlyResourceId",
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "string",
             "validation": {
@@ -8008,7 +7979,6 @@ This error response may have one of the following \`type\` values:
         "properties": {
           "id": "ReadOnlyResourceId",
           "name": {
-            "default": undefined,
             "docs": "The full name of the joint owner.",
             "type": "string",
             "validation": {
@@ -8259,7 +8229,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         ],
         "properties": {
           "postalCode": {
-            "default": undefined,
             "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
             "type": "string",
             "validation": {
@@ -8297,7 +8266,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "Properties of a simple address, used to compose other addresses.",
         "properties": {
           "address1": {
-            "default": undefined,
             "docs": "The first line of the postal address. In the US, this typically includes the building number and street name.",
             "type": "string",
             "validation": {
@@ -8319,7 +8287,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "countryCode": {
-            "default": undefined,
             "docs": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
             "type": "string",
             "validation": {
@@ -8330,7 +8297,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "locality": {
-            "default": undefined,
             "docs": "The city/town/municipality of the address.",
             "type": "string",
             "validation": {
@@ -8505,7 +8471,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "ChallengePromptId",
           },
           "prompt": {
-            "default": undefined,
             "docs": "The text prompt of this security question.",
             "type": "string",
             "validation": {
@@ -8554,7 +8519,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "A representation of a cutoff time for a money movement process at a financial institution.",
         "properties": {
           "time": {
-            "default": undefined,
             "docs": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
             "type": "string",
             "validation": {
@@ -8665,7 +8629,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "maximumOverdraftAccounts": {
-            "default": undefined,
             "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "type": "integer",
             "validation": {
@@ -8773,7 +8736,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "list<AccountBalance>",
           },
           "retryCount": {
-            "default": undefined,
             "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
             "type": "integer",
             "validation": {
@@ -8793,7 +8755,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "retryCount": {
-            "default": undefined,
             "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
             "type": "integer",
             "validation": {
@@ -8895,7 +8856,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "validation": undefined,
           },
           "emailAddress": {
-            "default": undefined,
             "docs": "The invitee's email address.",
             "type": "string",
             "validation": {
@@ -8906,7 +8866,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "firstName": {
-            "default": undefined,
             "docs": "The invitee's first name.",
             "type": "string",
             "validation": {
@@ -8917,7 +8876,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "lastName": {
-            "default": undefined,
             "docs": "The invitee's last name name.",
             "type": "string",
             "validation": {
@@ -8928,7 +8886,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "sharedSecret": {
-            "default": undefined,
             "docs": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
             "type": "string",
             "validation": {
@@ -9006,7 +8963,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "maximumOverdraftAccounts": {
-            "default": undefined,
             "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "type": "integer",
             "validation": {
@@ -9047,7 +9003,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "A reference to a banking product.",
         "properties": {
           "code": {
-            "default": undefined,
             "docs": "The product's product code. Codes are unique to the financial institution.",
             "type": "string",
             "validation": {
@@ -9058,7 +9013,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "description": {
-            "default": undefined,
             "docs": "A human-readable description of this banking product.",
             "type": "string",
             "validation": {
@@ -9069,7 +9023,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "label": {
-            "default": undefined,
             "docs": "A human-readable label for this banking product.",
             "type": "string",
             "validation": {
@@ -9175,7 +9128,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "Address",
           },
           "locator": {
-            "default": undefined,
             "docs": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
             "type": "string",
             "validation": {
@@ -9190,7 +9142,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "InstitutionLocatorType",
           },
           "name": {
-            "default": undefined,
             "docs": "The financial institution's name.",
             "type": "string",
             "validation": {
@@ -9242,7 +9193,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "The transaction categorization.",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The unique ID of this transaction's category.",
             "type": "string",
             "validation": {
@@ -9328,7 +9278,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "number": {
-            "default": undefined,
             "docs": "The check number.",
             "type": "integer",
             "validation": {
@@ -9384,7 +9333,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "id": {
-            "default": undefined,
             "docs": "This transaction's unique identifier.",
             "type": "string",
             "validation": {
@@ -9407,7 +9355,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "merchant": "optional<TransactionMerchant>",
           "occurredOn": {
-            "default": undefined,
             "docs": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "type": "string",
             "validation": {
@@ -9641,7 +9588,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "occursOn": {
-            "default": undefined,
             "docs": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
             "type": "string",
             "validation": {
@@ -10026,7 +9972,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         "docs": "Summary representation of a transfer schedule resource in transfer schedule list.",
         "properties": {
           "effectiveOn": {
-            "default": undefined,
             "docs": "The effective date of the recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is \`credit\` and adjusted to after the scheduled date when the transfer direction is \`debit\`.",
             "type": "string",
             "validation": {
@@ -10037,7 +9982,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
           "scheduledOn": {
-            "default": undefined,
             "docs": "The scheduled date of the calculated calendar recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
             "type": "string",
             "validation": {

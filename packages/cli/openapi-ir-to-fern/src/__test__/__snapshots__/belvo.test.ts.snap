@@ -2828,7 +2828,6 @@ client.balances.list(params: {
                     },
                   },
                   "date_from": {
-                    "default": undefined,
                     "docs": "Date from which you want to start receiving balances, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.",
@@ -2841,7 +2840,6 @@ client.balances.list(params: {
                     },
                   },
                   "date_to": {
-                    "default": undefined,
                     "docs": "Date that you want to stop receiving balances, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_to\` cannot be greater than today's date (in other words, no future dates).",
@@ -2854,7 +2852,6 @@ client.balances.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.",
                     "type": "string",
                     "validation": {
@@ -3663,10 +3660,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "body": {
                 "properties": {
                   "language": {
-                    "default": undefined,
                     "docs": "Two-letter ISO 639-1 code for the language of the transaction.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "transactions": {
                     "docs": "An array of transaction objects that you want categorized.
@@ -4535,7 +4530,6 @@ At the moment, the employment records resource is available for:
                     "validation": undefined,
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` you want to retrieve employment records for.",
                     "type": "string",
                     "validation": {
@@ -4724,10 +4718,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     },
                   },
                   "language": {
-                    "default": undefined,
                     "docs": "Two-letter ISO 639-1 code for the language of the transaction.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "minimum_confidence_level": "optional<root.EnumIncomeMinimumConfidenceLevelRequest>",
                   "transactions": {
@@ -5200,7 +5192,6 @@ client.incomes.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.",
                     "type": "string",
                     "validation": {
@@ -8305,7 +8296,6 @@ client.invoices.list(params: {
                     "validation": undefined,
                   },
                   "date_from": {
-                    "default": undefined,
                     "docs": "The date from which you want to start getting invoices for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.
@@ -8319,7 +8309,6 @@ client.invoices.list(params: {
                     },
                   },
                   "date_to": {
-                    "default": undefined,
                     "docs": "The date you want to stop getting invoices for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The number of days between \`date_from\` and \`date_to\` cannot be over 365.
@@ -8335,7 +8324,6 @@ client.invoices.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The fiscal \`link.id\` to use.",
                     "type": "string",
                     "validation": {
@@ -8919,7 +8907,6 @@ If we identify that the identifier contains PII, we will force a \`null\` value.
                     "validation": undefined,
                   },
                   "institution": {
-                    "default": undefined,
                     "docs": "The Belvo name for the institution.",
                     "type": "string",
                     "validation": {
@@ -8966,10 +8953,8 @@ We do not recommend sending the authentication token in the same request as regi
                     "validation": undefined,
                   },
                   "username": {
-                    "default": undefined,
                     "docs": "The end-user's username (or ID) used to log in to the institution.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "username2": {
                     "default": undefined,
@@ -9119,10 +9104,8 @@ Belvo supports a base64 encoded \`certificate\`. If the \`certificate\` paramete
                     "validation": undefined,
                   },
                   "password": {
-                    "default": undefined,
                     "docs": "The end-user's password used to log in to the institution.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "password2": {
                     "default": undefined,
@@ -9866,7 +9849,6 @@ A payment intent captures all payment information (such as the amount to be char
                     "type": "CreatePaymentIntentPseAmount",
                   },
                   "customer": {
-                    "default": undefined,
                     "docs": "Belvo's unique ID to reference the customer.
 ",
                     "type": "string",
@@ -9878,11 +9860,9 @@ A payment intent captures all payment information (such as the amount to be char
                     },
                   },
                   "description": {
-                    "default": undefined,
                     "docs": "The description of the payment.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "metadata": {
                     "default": undefined,
@@ -10108,8 +10088,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
 ",
           "union": [
             {
-              "default": undefined,
-              "docs": undefined,
               "type": "string",
               "validation": {
                 "format": undefined,
@@ -10119,8 +10097,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
               },
             },
             {
-              "default": undefined,
-              "docs": undefined,
               "type": "integer",
               "validation": {
                 "exclusiveMax": undefined,
@@ -10813,16 +10789,12 @@ You can use the Payment Transactions resource in order to get useful information
                     "validation": undefined,
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "The name you want to provide to identify the webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "The URL where webhook events should be sent to.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -11185,7 +11157,6 @@ You can use the Payment Transactions resource in order to get useful information
               "body": {
                 "properties": {
                   "date_from": {
-                    "default": undefined,
                     "docs": "The date from which you want to start getting transactions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.",
@@ -11198,7 +11169,6 @@ You can use the Payment Transactions resource in order to get useful information
                     },
                   },
                   "date_to": {
-                    "default": undefined,
                     "docs": "The date you want to stop getting transactions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_to\` cannot be greater than today's date (in other words, no future dates).",
@@ -11211,7 +11181,6 @@ You can use the Payment Transactions resource in order to get useful information
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.",
                     "type": "string",
                     "validation": {
@@ -11830,7 +11799,6 @@ client. recurring_expenses.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.",
                     "type": "string",
                     "validation": {
@@ -13317,7 +13285,6 @@ client.tax_compliance_status.list(params: {
                     "validation": undefined,
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The fiscal \`link.id\` to use.",
                     "type": "string",
                     "validation": {
@@ -13836,7 +13803,6 @@ At the moment, the Tax Declaration resource is available for:
                     "validation": undefined,
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The fiscal \`link.id\` you want specific tax declaration information for.",
                     "type": "string",
                     "validation": {
@@ -13854,18 +13820,14 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "validation": undefined,
                   },
                   "year_from": {
-                    "default": undefined,
                     "docs": "The starting year you want to get tax declaration for, in \`YYYY\` format.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "year_to": {
-                    "default": undefined,
                     "docs": "The year you want to stop getting tax declaration for, in \`YYYY\` format.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -14284,7 +14246,6 @@ client.tax_retentions.list(params: {
                     "validation": undefined,
                   },
                   "date_from": {
-                    "default": undefined,
                     "docs": "The date from which you want to start getting tax retentions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.
@@ -14298,7 +14259,6 @@ client.tax_retentions.list(params: {
                     },
                   },
                   "date_to": {
-                    "default": undefined,
                     "docs": "The date you want to stop getting tax retentions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The number of days between \`date_from\` and \`date_to\` cannot be over 365.
@@ -14312,7 +14272,6 @@ client.tax_retentions.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.
 ",
                     "type": "string",
@@ -18238,7 +18197,6 @@ client.tax_status.list(params: {
                     "validation": undefined,
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The fiscal \`link.id\` to use.",
                     "type": "string",
                     "validation": {
@@ -21924,10 +21882,8 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The type of identification number for the fund.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
             "default": undefined,
@@ -22418,7 +22374,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the bank account.",
             "type": "string",
             "validation": {
@@ -22446,7 +22401,6 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
           },
           "holder": "Business",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current bank account.",
             "type": "string",
             "validation": {
@@ -22477,11 +22431,9 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             "validation": undefined,
           },
           "number": {
-            "default": undefined,
             "docs": "The bank account number of the payment beneficiary.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22490,17 +22442,13 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "properties": {
           "account_type": "EnumBankAccountPixAccountTypeOfpi",
           "agency": {
-            "default": undefined,
             "docs": "The agency (branch number) of the institution where the account was created.",
             "type": "string",
-            "validation": undefined,
           },
           "country": "EnumPaymentsCountry",
           "number": {
-            "default": undefined,
             "docs": "The bank account number.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22509,10 +22457,8 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "properties": {
           "country": "EnumPaymentsCountry",
           "pix_key": {
-            "default": undefined,
             "docs": "The PIX key identifier of the bank account.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22521,17 +22467,13 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "properties": {
           "account_type": "EnumBankAccountPixAccountTypeOfpi",
           "agency": {
-            "default": undefined,
             "docs": "The agency (branch number) of the institution where the account was created.",
             "type": "string",
-            "validation": undefined,
           },
           "country": "EnumPaymentsCountry",
           "number": {
-            "default": undefined,
             "docs": "The bank account number.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22540,10 +22482,8 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "properties": {
           "country": "EnumPaymentsCountry",
           "pix_key": {
-            "default": undefined,
             "docs": "The PIX key identifier of the bank account.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -22585,7 +22525,6 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the bank account.",
             "type": "string",
             "validation": {
@@ -22610,7 +22549,6 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
           "details": "BankAccountOfpiResponseDetails",
           "holder": "OFPI",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current bank account.",
             "type": "string",
             "validation": {
@@ -22691,7 +22629,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the bank account.",
             "type": "string",
             "validation": {
@@ -22704,7 +22641,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "details": "optional<BeneficiaryBankAccountOfpiDetails>",
           "holder": "OFPI",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the beneficiary bank account.",
             "type": "string",
             "validation": {
@@ -22782,17 +22718,13 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "account_category": "EnumCategorizationAccountCategory",
           "account_holder_id": {
-            "default": undefined,
             "docs": "The unique ID for the account holder in your system.",
             "type": "string",
-            "validation": undefined,
           },
           "account_holder_type": "EnumCategorizationAccountHolderType",
           "account_id": {
-            "default": undefined,
             "docs": "The unique ID for the account where the transaction occurred in your system.",
             "type": "string",
-            "validation": undefined,
           },
           "amount": {
             "docs": "The transaction amount.",
@@ -22800,27 +22732,21 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "category": "optional<EnumCategorizationTransactionCategory>",
           "currency": {
-            "default": undefined,
             "docs": "The currency of the account, in ISO-4217 format. For example:
 - 🇧🇷 BRL (Brazilian Real)
 - 🇨🇴 COP (Colombian Peso)
 - 🇲🇽 MXN (Mexican Peso)",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the transaction.",
             "type": "string",
-            "validation": undefined,
           },
           "institution": {
-            "default": undefined,
             "docs": "The institution where the account is registered.
 
 >**Note:** This is the name that you use in your system to identify an institution.",
             "type": "string",
-            "validation": undefined,
           },
           "mcc": {
             "default": undefined,
@@ -22831,14 +22757,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "merchant": "optional<CategorizationMerchantData>",
           "subcategory": "optional<EnumCategorizationTransactionSubcategory>",
           "transaction_id": {
-            "default": undefined,
             "docs": "The unique ID for the transaction in your system.",
             "type": "string",
-            "validation": undefined,
           },
           "type": "EnumCategorizationTransactionType",
           "value_date": {
-            "default": undefined,
             "docs": "The date when the transaction occurred, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -22855,41 +22778,31 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "account_category": "EnumCategorizationAccountCategory",
           "account_holder_id": {
-            "default": undefined,
             "docs": "Your unique ID for the account holder.",
             "type": "string",
-            "validation": undefined,
           },
           "account_holder_type": "EnumCategorizationAccountHolderType",
           "account_id": {
-            "default": undefined,
             "docs": "Your unique ID for the account where the transaction occurred.",
             "type": "string",
-            "validation": undefined,
           },
           "amount": {
             "docs": "The transaction amount.",
             "type": "double",
           },
           "currency": {
-            "default": undefined,
             "docs": "The currency of the account, in ISO-4217 format. For example: - 🇧🇷 BRL (Brazilian Real) - 🇨🇴 COP (Colombian Peso) - 🇲🇽 MXN (Mexican Peso)",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the transaction.",
             "type": "string",
-            "validation": undefined,
           },
           "institution": {
-            "default": undefined,
             "docs": "The institution where the account is registered.
 
 >**Note:** This is the name that you use in your system to identify an institution.",
             "type": "string",
-            "validation": undefined,
           },
           "mcc": {
             "default": undefined,
@@ -22898,14 +22811,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "transaction_id": {
-            "default": undefined,
             "docs": "Your unique ID for the transaction.",
             "type": "string",
-            "validation": undefined,
           },
           "type": "EnumCategorizationTransactionType",
           "value_date": {
-            "default": undefined,
             "docs": "The date when the transaction occurred, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -22952,7 +22862,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "beneficiary": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary’s bank account.",
             "type": "string",
             "validation": {
@@ -23011,7 +22920,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current charge.",
             "type": "string",
             "validation": {
@@ -23145,7 +23053,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "OFPI",
           },
           "institution": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the institution that the bank account is created in.",
             "type": "string",
             "validation": {
@@ -23181,11 +23088,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "number": {
-            "default": undefined,
             "docs": "The bank account number of the payment beneficiary.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "providers": {
             "docs": "Information about the payment service provider, required in order to establish a connection and process requests. For PSE, the value must be \`payments_way\`.",
@@ -23206,14 +23111,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "country": "EnumPaymentsCountry",
           "customer_type": "EnumCustomerType",
           "email": {
-            "default": undefined,
             "docs": "The customer's email address.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "identifier": {
-            "default": undefined,
             "docs": "The document number of the customer's ID.
 ",
             "type": "string",
@@ -23226,7 +23128,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "identifier_type": "EnumCustomerIdentifierTypeOfpi",
           "name": {
-            "default": undefined,
             "docs": "The full name of the customer you want to create.
 ",
             "type": "string",
@@ -23259,14 +23160,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "country": "EnumPaymentsCountry",
           "customer_type": "EnumCustomerType",
           "email": {
-            "default": undefined,
             "docs": "The customer's email address.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "identifier": {
-            "default": undefined,
             "docs": "The document number of the customer's ID.
 ",
             "type": "string",
@@ -23279,7 +23177,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "identifier_type": "EnumCustomerIdentifierTypePse",
           "name": {
-            "default": undefined,
             "docs": "The full name of the customer you want to create.
 ",
             "type": "string",
@@ -23315,18 +23212,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "callback_urls": "optional<PaymentLinkCallbackUrls>",
           "customer": {
-            "default": undefined,
             "docs": "Belvo's unique ID to reference the customer.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "expires_in": {
             "default": "7d",
@@ -23357,8 +23250,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
         "union": [
           {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -23388,18 +23279,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "callback_urls": "optional<PaymentLinkCallbackUrls>",
           "customer": {
-            "default": undefined,
             "docs": "Belvo's unique ID to reference the customer.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "expires_in": {
             "default": "7d",
@@ -23430,8 +23317,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
         "union": [
           {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -23441,8 +23326,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           {
-            "default": undefined,
-            "docs": undefined,
             "type": "integer",
             "validation": {
               "exclusiveMax": undefined,
@@ -23475,7 +23358,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the customer.",
             "type": "string",
             "validation": {
@@ -23487,14 +23369,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "customer_type": "EnumCustomerType",
           "email": {
-            "default": undefined,
             "docs": "The customer's email address.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current customer.",
             "type": "string",
             "validation": {
@@ -23505,15 +23384,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "identifier": {
-            "default": undefined,
             "docs": "The document number of the customer's ID.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "identifier_type": "EnumCustomerIdentifierTypeOfpi",
           "name": {
-            "default": undefined,
             "docs": "The full name of the customer.
 ",
             "type": "string",
@@ -23597,7 +23473,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the customer.",
             "type": "string",
             "validation": {
@@ -23609,14 +23484,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "customer_type": "EnumCustomerType",
           "email": {
-            "default": undefined,
             "docs": "The customer's email address.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current customer.",
             "type": "string",
             "validation": {
@@ -23627,15 +23499,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "identifier": {
-            "default": undefined,
             "docs": "The document number of the customer's ID.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "identifier_type": "EnumCustomerIdentifierTypePse",
           "name": {
-            "default": undefined,
             "docs": "The full name of the customer.
 ",
             "type": "string",
@@ -23759,16 +23628,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing information about the ID document of the tax payer.",
         "properties": {
           "document_number": {
-            "default": undefined,
             "docs": "The number of the ID document.",
             "type": "string",
-            "validation": undefined,
           },
           "document_type": {
-            "default": undefined,
             "docs": "The type of ID document.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -23776,16 +23641,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing information about the ID document of the tax payer.",
         "properties": {
           "document_number": {
-            "default": undefined,
             "docs": "The number of the ID document.",
             "type": "string",
-            "validation": undefined,
           },
           "document_type": {
-            "default": undefined,
             "docs": "The type of ID document.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -23793,22 +23654,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing detailed information about the fiscal document.",
         "properties": {
           "form_number": {
-            "default": undefined,
             "docs": "The institution-provided identifier for the tax declaration.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the tax document.",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "The type of tax declaration form. For DIAN, this will be either \`110\` or \`210\`.",
             "type": "string",
-            "validation": undefined,
           },
           "year": {
             "default": undefined,
@@ -23823,22 +23678,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing detailed information about the fiscal document.",
         "properties": {
           "form_number": {
-            "default": undefined,
             "docs": "Institution-provided identifier for the tax declaration.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the tax document.",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "The type of tax declaration form. For DIAN, this will be either \`110\` or \`210\`.",
             "type": "string",
-            "validation": undefined,
           },
           "year": {
             "default": undefined,
@@ -25257,7 +25106,6 @@ We return one of the following enum values:
         "properties": {
           "account_category": "EnumIncomeVerificationAccountCategory",
           "account_holder_id": {
-            "default": undefined,
             "docs": "Your unique ID for the account holder, in UUID format.",
             "type": "string",
             "validation": {
@@ -25269,48 +25117,37 @@ We return one of the following enum values:
           },
           "account_holder_type": "EnumIncomeVerificationAccountHolderType",
           "account_id": {
-            "default": undefined,
             "docs": "Your unique ID for the account where the transaction occurred.",
             "type": "string",
-            "validation": undefined,
           },
           "amount": {
             "docs": "The income amount.",
             "type": "double",
           },
           "currency": {
-            "default": undefined,
             "docs": "The three-letter currency code of the income. For example:
 
   • 🇧🇷 BRL (Brazilian Real)
   • 🇨🇴 COP (Colombian Peso)
   • 🇲🇽 MXN (Mexican Peso)",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the income.",
             "type": "string",
-            "validation": undefined,
           },
           "institution": {
-            "default": undefined,
             "docs": "The institution where the account is registered.
 
 **Note:** This is the name that you use in your system to identify the institution. For example BBVA Retail.",
             "type": "string",
-            "validation": undefined,
           },
           "transaction_id": {
-            "default": undefined,
             "docs": "Your unique ID for the income.",
             "type": "string",
-            "validation": undefined,
           },
           "type": "optional<EnumIncomeVerificationType>",
           "value_date": {
-            "default": undefined,
             "docs": "The date when the income transaction occurred, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -25401,7 +25238,6 @@ We return one of the following enum values:
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique identifier for the current income.",
             "type": "string",
             "validation": {
@@ -25417,7 +25253,6 @@ We return one of the following enum values:
             "type": "list<IncomeStreamsBody>",
           },
           "last_transaction_date": {
-            "default": undefined,
             "docs": "The date when when the last transaction occurred, in \`YYYY-MM-DD\` format.
 ",
             "type": "string",
@@ -25429,7 +25264,6 @@ We return one of the following enum values:
             },
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` the account belongs to.",
             "type": "string",
             "validation": {
@@ -25470,11 +25304,9 @@ We return one of the following enum values:
             "type": "double",
           },
           "number_of_income_streams": {
-            "default": undefined,
             "docs": "Number of total income streams analized.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "total_high_confidence": {
             "docs": "Total amount of income for the specific user with \`HIGH\` confidence.
@@ -25520,10 +25352,8 @@ For each income stream, we provide additional insights such as:
 ",
         "properties": {
           "account_id": {
-            "default": undefined,
             "docs": "Unique ID for the bank account to be verified for income streams.",
             "type": "string",
-            "validation": undefined,
           },
           "average_income_amount": {
             "docs": "The average income transaction amount from the source.
@@ -25532,24 +25362,20 @@ For each income stream, we provide additional insights such as:
           },
           "confidence": "EnumIncomeStreamConfidence",
           "currency": {
-            "default": undefined,
             "docs": "The three-letter currency code of the income. For example:
 
   • 🇧🇷 BRL (Brazilian Real)
   • 🇨🇴 COP (Colombian Peso)
   • 🇲🇽 MXN (Mexican Peso)",
             "type": "string",
-            "validation": undefined,
           },
           "frequency": "EnumIncomeStreamFrequency",
           "full_periods": {
-            "default": undefined,
             "docs": "Number of period units (based on *rolling months*) with data to perform calculations.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "income_type": "EnumIncomeStreamType",
           "last_income_amount": {
@@ -25558,7 +25384,6 @@ For each income stream, we provide additional insights such as:
             "type": "double",
           },
           "last_income_date": {
-            "default": undefined,
             "docs": "The date when the most recent income from the stream was received, in \`YYYY-MM-DD\` format.
 ",
             "type": "string",
@@ -25571,13 +25396,11 @@ For each income stream, we provide additional insights such as:
           },
           "last_income_description": "unknown",
           "lookback_periods": {
-            "default": undefined,
             "docs": "Number of period units (based on *rolling months*) used to generate insights and calculations.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "monthly_average": {
             "docs": "The average amount of income received from the source over \`lookback_periods\`.
@@ -25585,20 +25408,16 @@ For each income stream, we provide additional insights such as:
             "type": "double",
           },
           "number_of_incomes": {
-            "default": undefined,
             "docs": "Number of income transactions over the \`lookback_periods\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "periods_with_income": {
-            "default": undefined,
             "docs": "Number of period units (based on *rolling months*) with at least one income available.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "regularity": {
             "default": undefined,
@@ -26208,7 +26027,6 @@ For \`invalid_period\` errors, the description is:
             "validation": undefined,
           },
           "currency": {
-            "default": undefined,
             "docs": "The currency of the portfolio. For example:
 
 
@@ -26220,7 +26038,6 @@ For \`invalid_period\` errors, the description is:
 Please note that other currencies other than in the list above may be returned.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
             "default": undefined,
@@ -26240,11 +26057,9 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the portfolio, as given in the institution.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "type": "EnumInvestmentPortfolioType",
         },
@@ -26271,7 +26086,6 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "currency": {
-            "default": undefined,
             "docs": "The currency of the instrument. For example:
 
 - 🇧🇷 BRL (Brazilian Real)
@@ -26283,7 +26097,6 @@ Please note that other currencies other than in the list above may be returned.
 Please note that other currencies other than in the list above may be returned.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "fees": {
             "default": undefined,
@@ -26309,10 +26122,8 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the instrument, as given by the institution.",
             "type": "string",
-            "validation": undefined,
           },
           "open_date": {
             "default": undefined,
@@ -26371,10 +26182,8 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
         "docs": undefined,
         "properties": {
           "type": {
-            "default": undefined,
             "docs": "The fee type incurred when making the purchase of the instrument.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
             "docs": "The value of \`fees.type\`. The currency of the fee is the same as the currency of the instrument.",
@@ -26392,10 +26201,8 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
             "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "How often the interest rate is calculated on the instrument.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
             "docs": "The interest rate for the instrument, in percent.
@@ -26411,16 +26218,12 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
         "docs": "The public identifiers for the instrument.",
         "properties": {
           "type": {
-            "default": undefined,
             "docs": "The type of public identifier for the instrument.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "The value of the \`public_id.type\`.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -26428,16 +26231,12 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
         "docs": undefined,
         "properties": {
           "type": {
-            "default": undefined,
             "docs": "The name of the redemption condition.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "The value of \`redemption_conditions.type\`.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27751,7 +27550,6 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "payment_date": {
-            "default": undefined,
             "docs": "The payment date.
 ",
             "type": "string",
@@ -27772,11 +27570,9 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the payroll object.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27892,16 +27688,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the credentials that your customer provides are incorrect.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`invalid_credentials\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27909,16 +27701,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the MFA token your customer provides is invalid.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`invalid_token\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27926,16 +27714,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_credentials_required\` next step.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`login_error\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27943,16 +27727,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened during the payment intent process.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`payment_error\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27960,16 +27740,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error occurs when you try to send a PATCH request after the session has already expired (the session expires after 10 minutes).",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`session_expired\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -27977,16 +27753,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_token_required\` next step.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`login_two_factor_error\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -28374,7 +28146,6 @@ For \`not_found\` errors, the description is:
         "docs": "Details about the organization's bank account that will receive the payment.",
         "properties": {
           "beneficiary_bank_account": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
             "type": "string",
             "validation": {
@@ -28604,7 +28375,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "A JSON object containing a session UUID and a MFA token",
         "properties": {
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` you want to resume. Must be the same \`link.id\` as the one you receive in the 428 Token Required response that contains the \`session\` ID.",
             "type": "string",
             "validation": {
@@ -28622,7 +28392,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "validation": undefined,
           },
           "session": {
-            "default": undefined,
             "docs": "The session you want to resume. You need to use the \`session\` value that is provided in the 428 Token Required response that you receive after you make your POST request.",
             "type": "string",
             "validation": {
@@ -28644,7 +28413,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "docs": "A JSON object containing a session UUID and a MFA token",
         "properties": {
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` you want to resume. Must be the same \`link.id\` as the one you receive in the 428 Token Required response that contains the \`session\` ID.",
             "type": "string",
             "validation": {
@@ -28655,7 +28423,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "session": {
-            "default": undefined,
             "docs": "The session you want to resume. You need to use the \`session\` value that is provided in the 428 Token Required response that you receive after you make your POST request.",
             "type": "string",
             "validation": {
@@ -28814,11 +28581,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "type": "list<string>",
           },
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid by your customer.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "charges": {
             "default": undefined,
@@ -28833,7 +28598,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created this payment intent.",
             "type": "string",
             "validation": {
@@ -28845,7 +28609,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "currency": "EnumPaymentsCurrency",
           "customer": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the customer related to this payment intent.",
             "type": "string",
             "validation": {
@@ -28856,11 +28619,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "failure_code": {
             "default": undefined,
@@ -28877,7 +28638,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment intent.",
             "type": "string",
             "validation": {
@@ -28968,7 +28728,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Payment method type selected.",
         "properties": {
           "beneficiary_bank_account": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
             "type": "string",
             "validation": {
@@ -28979,10 +28738,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "callback_url": {
-            "default": undefined,
             "docs": "The callback URL that your user will be redirected to after confirming the payment in their banking application.",
             "type": "string",
-            "validation": undefined,
           },
           "cpf": {
             "default": undefined,
@@ -28993,7 +28750,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "payer_institution": {
-            "default": undefined,
             "docs": "Belvo's unique ID to reference the payer's institution.",
             "type": "string",
             "validation": {
@@ -29009,7 +28765,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Payment method type selected.",
         "properties": {
           "beneficiary_bank_account": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
             "type": "string",
             "validation": {
@@ -29020,10 +28775,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "callback_url": {
-            "default": undefined,
             "docs": "The callback URL that your user will be redirected to after confirming the payment in their banking application.",
             "type": "string",
-            "validation": undefined,
           },
           "cpf": {
             "default": undefined,
@@ -29034,7 +28787,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "payer_institution": {
-            "default": undefined,
             "docs": "Belvo's unique ID to reference the payer's institution.",
             "type": "string",
             "validation": {
@@ -29054,7 +28806,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "boolean",
           },
           "beneficiary_bank_account": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary’s bank account.",
             "type": "string",
             "validation": {
@@ -29065,10 +28816,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "callback_url": {
-            "default": undefined,
             "docs": "The callback URL that your user will be redirected to after confirming the payment in their banking application.",
             "type": "string",
-            "validation": undefined,
           },
           "password": {
             "default": undefined,
@@ -29114,11 +28863,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "list<EnumPaymentLinkAllowedPaymentMethod>",
           },
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid by your customer.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "charges": {
             "default": undefined,
@@ -29133,7 +28880,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created this payment intent.",
             "type": "string",
             "validation": {
@@ -29145,7 +28891,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "currency": "EnumPaymentsCurrency",
           "customer": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the customer related to this payment intent.",
             "type": "string",
             "validation": {
@@ -29156,11 +28901,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "failure_code": {
             "default": undefined,
@@ -29177,7 +28920,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment intent.",
             "type": "string",
             "validation": {
@@ -29293,7 +29035,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment link.",
             "type": "string",
             "validation": {
@@ -29309,7 +29050,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The payment link expiration time.  ",
             "type": "string",
             "validation": {
@@ -29320,7 +29060,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
             "validation": {
@@ -29342,10 +29081,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_url": {
-            "default": undefined,
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
-            "validation": undefined,
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
@@ -29374,7 +29111,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment link.",
             "type": "string",
             "validation": {
@@ -29390,7 +29126,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The payment link expiration time.  ",
             "type": "string",
             "validation": {
@@ -29401,7 +29136,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
             "validation": {
@@ -29423,10 +29157,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_url": {
-            "default": undefined,
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
-            "validation": undefined,
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
@@ -29455,7 +29187,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment link.",
             "type": "string",
             "validation": {
@@ -29471,7 +29202,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The payment link expiration time.  ",
             "type": "string",
             "validation": {
@@ -29482,7 +29212,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
             "validation": {
@@ -29494,10 +29223,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "payment_intent": "optional<PaymentIntentOfpi>",
           "payment_url": {
-            "default": undefined,
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
-            "validation": undefined,
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
@@ -29566,7 +29293,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment link.",
             "type": "string",
             "validation": {
@@ -29582,7 +29308,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The payment link expiration time. ",
             "type": "string",
             "validation": {
@@ -29593,7 +29318,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
             "validation": {
@@ -29605,10 +29329,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "payment_intent": "optional<PaymentIntentPse>",
           "payment_url": {
-            "default": undefined,
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
-            "validation": undefined,
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
@@ -29724,17 +29446,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "The transaction amount.
 
 
 **Note**: The amount displayed is always positive as we indicate the direction of the transaction in \`transaction_type\` parameter.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "beneficiary": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
             "type": "string",
             "validation": {
@@ -29749,7 +29468,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment.",
             "type": "string",
             "validation": {
@@ -29772,14 +29490,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo’s unique ID to reference the transaction.",
             "type": "string",
             "validation": {
@@ -29833,7 +29548,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID of the user that created the webhook.",
             "type": "string",
             "validation": {
@@ -29844,7 +29558,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the webhook.",
             "type": "string",
             "validation": {
@@ -29856,10 +29569,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "name": "unknown",
           "url": {
-            "default": undefined,
             "docs": "The URL where webhook events should be sent to.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -29931,20 +29642,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "form_id": {
-            "default": undefined,
             "docs": "Your unique Payments Way form ID.
 
 **Note:** Belvo provides you with the Payments Way form ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
             "type": "integer",
-            "validation": undefined,
           },
           "terminal_id": {
-            "default": undefined,
             "docs": "Your unique Payments Way terminal ID.
 
 **Note:** Belvo provides you with the Payments Way terminal ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -30006,7 +29713,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "currency": {
-            "default": undefined,
             "docs": "The currency of the transaction. For example:
 - 🇧🇷 BRL (Brazilian Real)
 - 🇨🇴 COP (Colombian Peso)
@@ -30014,7 +29720,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 
  Please note that currencies other than those listed above may be returned.",
             "type": "string",
-            "validation": undefined,
           },
           "fees": "list<RecevablesTransactionFees>",
           "gross_amount": {
@@ -30024,7 +29729,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current receivable transaction.",
             "type": "string",
             "validation": {
@@ -30035,11 +29739,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "institution_transaction_id": {
-            "default": undefined,
             "docs": "Internal identification number that the acquirer uses to identify the transaction.
 ℹ️ **Note**: For Brazil, this number is the NSU.",
             "type": "string",
-            "validation": undefined,
           },
           "net_amount": {
             "default": undefined,
@@ -30051,7 +29753,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "status": "optional<EnumReceivableTransactionStatus>",
           "type": "optional<EnumReceivableTransactionType>",
           "value_date": {
-            "default": undefined,
             "docs": "The date that the transactions occurred, according to the institution, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -30062,10 +29763,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "value_hour": {
-            "default": undefined,
             "docs": "The time that the transaction occurred, according to the institution, in \`HH:MM\` format.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -30073,7 +29772,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Basic information about the account associated with the transaction.",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the account associated with the transaction.",
             "type": "string",
             "validation": {
@@ -30159,7 +29857,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "value_date": {
-            "default": undefined,
             "docs": "The date when the transaction occurred, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -30185,13 +29882,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "category": "EnumRecurringExpenseCategory",
           "days_since_last_transaction": {
-            "default": undefined,
             "docs": "Number of days since the last recurring expense occurred.
 
 Based on the frequency, you can infer how many days until the next charge will occur.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "frequency": "EnumRecurringExpenseFrequency",
           "id": {
@@ -30261,16 +29956,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing information about where the tax payer reports their income.",
         "properties": {
           "reporting_type": {
-            "default": undefined,
             "docs": "The type of reporting ID. For DIAN, this is the sectional address code (*Codigo Dirrecion Seccional*)",
             "type": "string",
-            "validation": undefined,
           },
           "reporting_value": {
-            "default": undefined,
             "docs": "The value of the reporting ID.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -30352,7 +30043,6 @@ For \`request_timeout\` errors, the description is:
           },
           "credit_cards_metrics": "optional<RiskInsightsCreditCardMetrics>",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the risk insights request.",
             "type": "string",
             "validation": {
@@ -30363,7 +30053,6 @@ For \`request_timeout\` errors, the description is:
             },
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` the risk insights analysis belongs to.",
             "type": "string",
             "validation": {
@@ -30561,7 +30250,6 @@ However, internal transfers (transfers between accounts belonging to the same li
         "docs": "Aggregated metrics calculated based on the link's credit card accounts.",
         "properties": {
           "num_accounts": {
-            "default": undefined,
             "docs": "Number of credit cards accounts associated to the link.
 ",
             "type": "integer",
@@ -30593,11 +30281,9 @@ However, internal transfers (transfers between accounts belonging to the same li
         "docs": "Aggregated metrics calculated based on the user's loan accounts.",
         "properties": {
           "num_accounts": {
-            "default": undefined,
             "docs": "Number of loan accounts associated with the link.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "sum_loans_monthly_payment": {
             "default": undefined,
@@ -30750,7 +30436,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_incoming_transactions_1w": {
             "default": 0,
@@ -30761,7 +30446,6 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_incoming_transactions_3m": {
             "default": 0,
@@ -30772,7 +30456,6 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_outgoing_transactions_1m": {
             "default": 0,
@@ -30783,7 +30466,6 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_outgoing_transactions_1w": {
             "default": 0,
@@ -30794,7 +30476,6 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_outgoing_transactions_3m": {
             "default": 0,
@@ -30805,28 +30486,24 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_transactions_1m": {
             "default": 0,
             "docs": "The total number of transactions analyzed to determine the risk insights for the last month (incoming and outgoing).
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_transactions_1w": {
             "default": 0,
             "docs": "The total number of transactions analyzed to determine the risk insights for the last week (incoming and outgoing).
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_transactions_3m": {
             "default": 0,
             "docs": "The total number of transactions analyzed to determine the risk insights for the last three months (incoming and outgoing).
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "sum_incoming_amount_1m": {
             "default": undefined,
@@ -30881,7 +30558,6 @@ If the account has not been open long enough to have the transaction data for a 
             "type": "datetime",
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the Payments API \`secretId\`.",
             "type": "string",
             "validation": {
@@ -30897,10 +30573,8 @@ If the account has not been open long enough to have the transaction data for a 
             "type": "datetime",
           },
           "password": {
-            "default": undefined,
             "docs": "Your Payments API \`secretPassword\`. This value is obfuscated.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -30974,7 +30648,6 @@ For \`session_expired\` errors, the description is:
         "docs": undefined,
         "properties": {
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` that you want to get information for.",
             "type": "string",
             "validation": {
@@ -31183,7 +30856,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "date_issued": {
-            "default": undefined,
             "docs": "The date the tax declaration was issued by the fiscal institution.",
             "type": "string",
             "validation": {
@@ -31196,7 +30868,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "document_information": "DocumentInformationBusiness",
           "equity_statement": "EquityStatementBusiness",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current tax declaration.",
             "type": "string",
             "validation": {
@@ -31207,7 +30878,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "link": {
-            "default": undefined,
             "docs": "Belvo's unique ID of the user that this tax declaration is associated with.",
             "type": "string",
             "validation": {
@@ -31272,7 +30942,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "date_issued": {
-            "default": undefined,
             "docs": "The date the tax declaration was issued by the fiscal institution.",
             "type": "string",
             "validation": {
@@ -31285,7 +30954,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "document_information": "DocumentInformationIndividual",
           "equity_statement": "EquityStatementIndividual",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current tax declaration.",
             "type": "string",
             "validation": {
@@ -31296,7 +30964,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "link": {
-            "default": undefined,
             "docs": "Belvo's unique ID of the user that this tax declaration is associated with.",
             "type": "string",
             "validation": {
@@ -31353,10 +31020,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing information about the tax payer.",
         "properties": {
           "company_name": {
-            "default": undefined,
             "docs": "The name of the company, as registered at the institution.",
             "type": "string",
-            "validation": undefined,
           },
           "document_id": "DocumentIdBusiness",
           "first_last_name": {
@@ -31372,10 +31037,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "main_economic_activity": {
-            "default": undefined,
             "docs": "The main economic activity the tax payer is involved in.",
             "type": "string",
-            "validation": undefined,
           },
           "other_names": {
             "default": undefined,
@@ -31397,35 +31060,25 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "document_id": "DocumentIdIndividual",
           "first_last_name": {
-            "default": undefined,
             "docs": "The tax payer's first last name.",
             "type": "string",
-            "validation": undefined,
           },
           "first_name": {
-            "default": undefined,
             "docs": "The tax payer's first name.",
             "type": "string",
-            "validation": undefined,
           },
           "main_economic_activity": {
-            "default": undefined,
             "docs": "The main economic activity the tax payer is involved in.",
             "type": "string",
-            "validation": undefined,
           },
           "other_names": {
-            "default": undefined,
             "docs": "Additional names of the tax payer.",
             "type": "string",
-            "validation": undefined,
           },
           "reporting_id": "ReportingId",
           "second_last_name": {
-            "default": undefined,
             "docs": "The tax payer's second last name.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -31991,10 +31644,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "type": {
-            "default": undefined,
             "docs": "The type of tax return. Can be either monthly or annual.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -32072,23 +31723,18 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "date_from": {
-            "default": undefined,
             "docs": "The starting date you want to get tax returns for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.",
             "type": "string",
-            "validation": undefined,
           },
           "date_to": {
-            "default": undefined,
             "docs": "The date you want to stop getting tax returns for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_to\` cannot be greater than today's date (in other words, no future dates).",
             "type": "string",
-            "validation": undefined,
           },
           "link": {
-            "default": undefined,
             "docs": "The fiscal \`link.id\` you want specific tax return information for.",
             "type": "string",
             "validation": {
@@ -32110,7 +31756,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "docs": "The type of tax return to return. For monthly tax returns, this field must be set to \`monthly\`.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -32188,7 +31833,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "link": {
-            "default": undefined,
             "docs": "The fiscal \`link.id\` you want specific tax return information for.",
             "type": "string",
             "validation": {
@@ -32212,21 +31856,16 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
 By default, Belvo returns the yearly (annual) tax returns.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "year_from": {
-            "default": undefined,
             "docs": "The starting year you want to get tax returns for, in \`YYYY\` format.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "year_to": {
-            "default": undefined,
             "docs": "The year you want to stop getting tax returns for, in \`YYYY\` format.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -32439,7 +32078,6 @@ By default, Belvo returns the yearly (annual) tax returns.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier created by Belvo used to reference the current Tax Status.",
             "type": "string",
             "validation": {
@@ -32457,7 +32095,6 @@ By default, Belvo returns the yearly (annual) tax returns.
             "validation": undefined,
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` that the tax status is associated with.",
             "type": "string",
             "validation": {
@@ -32846,7 +32483,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier created by Belvo used to reference the current Tax Status.",
             "type": "string",
             "validation": {
@@ -32864,7 +32500,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` that the tax status is associated with.",
             "type": "string",
             "validation": {
@@ -33488,7 +33123,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "date_from": {
-            "default": undefined,
             "docs": "The date from which you want to start getting transactions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.",
@@ -33501,7 +33135,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "date_to": {
-            "default": undefined,
             "docs": "The date you want to stop getting transactions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_to\` cannot be greater than today's date (in other words, no future dates).",
@@ -33514,7 +33147,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` that you want to get information for.",
             "type": "string",
             "validation": {
@@ -36575,7 +36207,6 @@ client.balances.list(params: {
                     },
                   },
                   "date_from": {
-                    "default": undefined,
                     "docs": "Date from which you want to start receiving balances, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.",
@@ -36588,7 +36219,6 @@ client.balances.list(params: {
                     },
                   },
                   "date_to": {
-                    "default": undefined,
                     "docs": "Date that you want to stop receiving balances, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_to\` cannot be greater than today's date (in other words, no future dates).",
@@ -36601,7 +36231,6 @@ client.balances.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.",
                     "type": "string",
                     "validation": {
@@ -37410,10 +37039,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "body": {
                 "properties": {
                   "language": {
-                    "default": undefined,
                     "docs": "Two-letter ISO 639-1 code for the language of the transaction.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "transactions": {
                     "docs": "An array of transaction objects that you want categorized.
@@ -38282,7 +37909,6 @@ At the moment, the employment records resource is available for:
                     "validation": undefined,
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` you want to retrieve employment records for.",
                     "type": "string",
                     "validation": {
@@ -38471,10 +38097,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     },
                   },
                   "language": {
-                    "default": undefined,
                     "docs": "Two-letter ISO 639-1 code for the language of the transaction.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "minimum_confidence_level": "optional<root.EnumIncomeMinimumConfidenceLevelRequest>",
                   "transactions": {
@@ -38947,7 +38571,6 @@ client.incomes.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.",
                     "type": "string",
                     "validation": {
@@ -42052,7 +41675,6 @@ client.invoices.list(params: {
                     "validation": undefined,
                   },
                   "date_from": {
-                    "default": undefined,
                     "docs": "The date from which you want to start getting invoices for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.
@@ -42066,7 +41688,6 @@ client.invoices.list(params: {
                     },
                   },
                   "date_to": {
-                    "default": undefined,
                     "docs": "The date you want to stop getting invoices for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The number of days between \`date_from\` and \`date_to\` cannot be over 365.
@@ -42082,7 +41703,6 @@ client.invoices.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The fiscal \`link.id\` to use.",
                     "type": "string",
                     "validation": {
@@ -42666,7 +42286,6 @@ If we identify that the identifier contains PII, we will force a \`null\` value.
                     "validation": undefined,
                   },
                   "institution": {
-                    "default": undefined,
                     "docs": "The Belvo name for the institution.",
                     "type": "string",
                     "validation": {
@@ -42713,10 +42332,8 @@ We do not recommend sending the authentication token in the same request as regi
                     "validation": undefined,
                   },
                   "username": {
-                    "default": undefined,
                     "docs": "The end-user's username (or ID) used to log in to the institution.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "username2": {
                     "default": undefined,
@@ -42866,10 +42483,8 @@ Belvo supports a base64 encoded \`certificate\`. If the \`certificate\` paramete
                     "validation": undefined,
                   },
                   "password": {
-                    "default": undefined,
                     "docs": "The end-user's password used to log in to the institution.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "password2": {
                     "default": undefined,
@@ -43613,7 +43228,6 @@ A payment intent captures all payment information (such as the amount to be char
                     "type": "CreatePaymentIntentPseAmount",
                   },
                   "customer": {
-                    "default": undefined,
                     "docs": "Belvo's unique ID to reference the customer.
 ",
                     "type": "string",
@@ -43625,11 +43239,9 @@ A payment intent captures all payment information (such as the amount to be char
                     },
                   },
                   "description": {
-                    "default": undefined,
                     "docs": "The description of the payment.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "metadata": {
                     "default": undefined,
@@ -43855,8 +43467,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
 ",
           "union": [
             {
-              "default": undefined,
-              "docs": undefined,
               "type": "string",
               "validation": {
                 "format": undefined,
@@ -43866,8 +43476,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
               },
             },
             {
-              "default": undefined,
-              "docs": undefined,
               "type": "integer",
               "validation": {
                 "exclusiveMax": undefined,
@@ -44560,16 +44168,12 @@ You can use the Payment Transactions resource in order to get useful information
                     "validation": undefined,
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "The name you want to provide to identify the webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "The URL where webhook events should be sent to.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -44932,7 +44536,6 @@ You can use the Payment Transactions resource in order to get useful information
               "body": {
                 "properties": {
                   "date_from": {
-                    "default": undefined,
                     "docs": "The date from which you want to start getting transactions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.",
@@ -44945,7 +44548,6 @@ You can use the Payment Transactions resource in order to get useful information
                     },
                   },
                   "date_to": {
-                    "default": undefined,
                     "docs": "The date you want to stop getting transactions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_to\` cannot be greater than today's date (in other words, no future dates).",
@@ -44958,7 +44560,6 @@ You can use the Payment Transactions resource in order to get useful information
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.",
                     "type": "string",
                     "validation": {
@@ -45577,7 +45178,6 @@ client. recurring_expenses.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.",
                     "type": "string",
                     "validation": {
@@ -47064,7 +46664,6 @@ client.tax_compliance_status.list(params: {
                     "validation": undefined,
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The fiscal \`link.id\` to use.",
                     "type": "string",
                     "validation": {
@@ -47583,7 +47182,6 @@ At the moment, the Tax Declaration resource is available for:
                     "validation": undefined,
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The fiscal \`link.id\` you want specific tax declaration information for.",
                     "type": "string",
                     "validation": {
@@ -47601,18 +47199,14 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "validation": undefined,
                   },
                   "year_from": {
-                    "default": undefined,
                     "docs": "The starting year you want to get tax declaration for, in \`YYYY\` format.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "year_to": {
-                    "default": undefined,
                     "docs": "The year you want to stop getting tax declaration for, in \`YYYY\` format.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -48031,7 +47625,6 @@ client.tax_retentions.list(params: {
                     "validation": undefined,
                   },
                   "date_from": {
-                    "default": undefined,
                     "docs": "The date from which you want to start getting tax retentions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.
@@ -48045,7 +47638,6 @@ client.tax_retentions.list(params: {
                     },
                   },
                   "date_to": {
-                    "default": undefined,
                     "docs": "The date you want to stop getting tax retentions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The number of days between \`date_from\` and \`date_to\` cannot be over 365.
@@ -48059,7 +47651,6 @@ client.tax_retentions.list(params: {
                     },
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The \`link.id\` that you want to get information for.
 ",
                     "type": "string",
@@ -51985,7 +51576,6 @@ client.tax_status.list(params: {
                     "validation": undefined,
                   },
                   "link": {
-                    "default": undefined,
                     "docs": "The fiscal \`link.id\` to use.",
                     "type": "string",
                     "validation": {
@@ -54296,10 +53886,8 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
         "docs": undefined,
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The type of identification number for the fund.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
             "default": undefined,
@@ -54790,7 +54378,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the bank account.",
             "type": "string",
             "validation": {
@@ -54818,7 +54405,6 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
           },
           "holder": "Business",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current bank account.",
             "type": "string",
             "validation": {
@@ -54849,11 +54435,9 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             "validation": undefined,
           },
           "number": {
-            "default": undefined,
             "docs": "The bank account number of the payment beneficiary.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -54862,17 +54446,13 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "properties": {
           "account_type": "EnumBankAccountPixAccountTypeOfpi",
           "agency": {
-            "default": undefined,
             "docs": "The agency (branch number) of the institution where the account was created.",
             "type": "string",
-            "validation": undefined,
           },
           "country": "EnumPaymentsCountry",
           "number": {
-            "default": undefined,
             "docs": "The bank account number.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -54881,10 +54461,8 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "properties": {
           "country": "EnumPaymentsCountry",
           "pix_key": {
-            "default": undefined,
             "docs": "The PIX key identifier of the bank account.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -54893,17 +54471,13 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "properties": {
           "account_type": "EnumBankAccountPixAccountTypeOfpi",
           "agency": {
-            "default": undefined,
             "docs": "The agency (branch number) of the institution where the account was created.",
             "type": "string",
-            "validation": undefined,
           },
           "country": "EnumPaymentsCountry",
           "number": {
-            "default": undefined,
             "docs": "The bank account number.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -54912,10 +54486,8 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         "properties": {
           "country": "EnumPaymentsCountry",
           "pix_key": {
-            "default": undefined,
             "docs": "The PIX key identifier of the bank account.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -54957,7 +54529,6 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the bank account.",
             "type": "string",
             "validation": {
@@ -54982,7 +54553,6 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
           "details": "BankAccountOfpiResponseDetails",
           "holder": "OFPI",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current bank account.",
             "type": "string",
             "validation": {
@@ -55063,7 +54633,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the bank account.",
             "type": "string",
             "validation": {
@@ -55076,7 +54645,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "details": "optional<BeneficiaryBankAccountOfpiDetails>",
           "holder": "OFPI",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the beneficiary bank account.",
             "type": "string",
             "validation": {
@@ -55154,17 +54722,13 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "account_category": "EnumCategorizationAccountCategory",
           "account_holder_id": {
-            "default": undefined,
             "docs": "The unique ID for the account holder in your system.",
             "type": "string",
-            "validation": undefined,
           },
           "account_holder_type": "EnumCategorizationAccountHolderType",
           "account_id": {
-            "default": undefined,
             "docs": "The unique ID for the account where the transaction occurred in your system.",
             "type": "string",
-            "validation": undefined,
           },
           "amount": {
             "docs": "The transaction amount.",
@@ -55172,27 +54736,21 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "category": "optional<EnumCategorizationTransactionCategory>",
           "currency": {
-            "default": undefined,
             "docs": "The currency of the account, in ISO-4217 format. For example:
 - 🇧🇷 BRL (Brazilian Real)
 - 🇨🇴 COP (Colombian Peso)
 - 🇲🇽 MXN (Mexican Peso)",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the transaction.",
             "type": "string",
-            "validation": undefined,
           },
           "institution": {
-            "default": undefined,
             "docs": "The institution where the account is registered.
 
 >**Note:** This is the name that you use in your system to identify an institution.",
             "type": "string",
-            "validation": undefined,
           },
           "mcc": {
             "default": undefined,
@@ -55203,14 +54761,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "merchant": "optional<CategorizationMerchantData>",
           "subcategory": "optional<EnumCategorizationTransactionSubcategory>",
           "transaction_id": {
-            "default": undefined,
             "docs": "The unique ID for the transaction in your system.",
             "type": "string",
-            "validation": undefined,
           },
           "type": "EnumCategorizationTransactionType",
           "value_date": {
-            "default": undefined,
             "docs": "The date when the transaction occurred, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -55227,41 +54782,31 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "account_category": "EnumCategorizationAccountCategory",
           "account_holder_id": {
-            "default": undefined,
             "docs": "Your unique ID for the account holder.",
             "type": "string",
-            "validation": undefined,
           },
           "account_holder_type": "EnumCategorizationAccountHolderType",
           "account_id": {
-            "default": undefined,
             "docs": "Your unique ID for the account where the transaction occurred.",
             "type": "string",
-            "validation": undefined,
           },
           "amount": {
             "docs": "The transaction amount.",
             "type": "double",
           },
           "currency": {
-            "default": undefined,
             "docs": "The currency of the account, in ISO-4217 format. For example: - 🇧🇷 BRL (Brazilian Real) - 🇨🇴 COP (Colombian Peso) - 🇲🇽 MXN (Mexican Peso)",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the transaction.",
             "type": "string",
-            "validation": undefined,
           },
           "institution": {
-            "default": undefined,
             "docs": "The institution where the account is registered.
 
 >**Note:** This is the name that you use in your system to identify an institution.",
             "type": "string",
-            "validation": undefined,
           },
           "mcc": {
             "default": undefined,
@@ -55270,14 +54815,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "transaction_id": {
-            "default": undefined,
             "docs": "Your unique ID for the transaction.",
             "type": "string",
-            "validation": undefined,
           },
           "type": "EnumCategorizationTransactionType",
           "value_date": {
-            "default": undefined,
             "docs": "The date when the transaction occurred, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -55324,7 +54866,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "beneficiary": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary’s bank account.",
             "type": "string",
             "validation": {
@@ -55383,7 +54924,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current charge.",
             "type": "string",
             "validation": {
@@ -55517,7 +55057,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "OFPI",
           },
           "institution": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the institution that the bank account is created in.",
             "type": "string",
             "validation": {
@@ -55553,11 +55092,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "number": {
-            "default": undefined,
             "docs": "The bank account number of the payment beneficiary.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "providers": {
             "docs": "Information about the payment service provider, required in order to establish a connection and process requests. For PSE, the value must be \`payments_way\`.",
@@ -55578,14 +55115,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "country": "EnumPaymentsCountry",
           "customer_type": "EnumCustomerType",
           "email": {
-            "default": undefined,
             "docs": "The customer's email address.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "identifier": {
-            "default": undefined,
             "docs": "The document number of the customer's ID.
 ",
             "type": "string",
@@ -55598,7 +55132,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "identifier_type": "EnumCustomerIdentifierTypeOfpi",
           "name": {
-            "default": undefined,
             "docs": "The full name of the customer you want to create.
 ",
             "type": "string",
@@ -55631,14 +55164,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "country": "EnumPaymentsCountry",
           "customer_type": "EnumCustomerType",
           "email": {
-            "default": undefined,
             "docs": "The customer's email address.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "identifier": {
-            "default": undefined,
             "docs": "The document number of the customer's ID.
 ",
             "type": "string",
@@ -55651,7 +55181,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "identifier_type": "EnumCustomerIdentifierTypePse",
           "name": {
-            "default": undefined,
             "docs": "The full name of the customer you want to create.
 ",
             "type": "string",
@@ -55687,18 +55216,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "callback_urls": "optional<PaymentLinkCallbackUrls>",
           "customer": {
-            "default": undefined,
             "docs": "Belvo's unique ID to reference the customer.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "expires_in": {
             "default": "7d",
@@ -55729,8 +55254,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
         "union": [
           {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -55760,18 +55283,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "callback_urls": "optional<PaymentLinkCallbackUrls>",
           "customer": {
-            "default": undefined,
             "docs": "Belvo's unique ID to reference the customer.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "expires_in": {
             "default": "7d",
@@ -55802,8 +55321,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
         "union": [
           {
-            "default": undefined,
-            "docs": undefined,
             "type": "string",
             "validation": {
               "format": undefined,
@@ -55813,8 +55330,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           {
-            "default": undefined,
-            "docs": undefined,
             "type": "integer",
             "validation": {
               "exclusiveMax": undefined,
@@ -55847,7 +55362,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the customer.",
             "type": "string",
             "validation": {
@@ -55859,14 +55373,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "customer_type": "EnumCustomerType",
           "email": {
-            "default": undefined,
             "docs": "The customer's email address.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current customer.",
             "type": "string",
             "validation": {
@@ -55877,15 +55388,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "identifier": {
-            "default": undefined,
             "docs": "The document number of the customer's ID.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "identifier_type": "EnumCustomerIdentifierTypeOfpi",
           "name": {
-            "default": undefined,
             "docs": "The full name of the customer.
 ",
             "type": "string",
@@ -55969,7 +55477,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the customer.",
             "type": "string",
             "validation": {
@@ -55981,14 +55488,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "customer_type": "EnumCustomerType",
           "email": {
-            "default": undefined,
             "docs": "The customer's email address.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current customer.",
             "type": "string",
             "validation": {
@@ -55999,15 +55503,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "identifier": {
-            "default": undefined,
             "docs": "The document number of the customer's ID.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "identifier_type": "EnumCustomerIdentifierTypePse",
           "name": {
-            "default": undefined,
             "docs": "The full name of the customer.
 ",
             "type": "string",
@@ -56131,16 +55632,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing information about the ID document of the tax payer.",
         "properties": {
           "document_number": {
-            "default": undefined,
             "docs": "The number of the ID document.",
             "type": "string",
-            "validation": undefined,
           },
           "document_type": {
-            "default": undefined,
             "docs": "The type of ID document.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -56148,16 +55645,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing information about the ID document of the tax payer.",
         "properties": {
           "document_number": {
-            "default": undefined,
             "docs": "The number of the ID document.",
             "type": "string",
-            "validation": undefined,
           },
           "document_type": {
-            "default": undefined,
             "docs": "The type of ID document.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -56165,22 +55658,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing detailed information about the fiscal document.",
         "properties": {
           "form_number": {
-            "default": undefined,
             "docs": "The institution-provided identifier for the tax declaration.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the tax document.",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "The type of tax declaration form. For DIAN, this will be either \`110\` or \`210\`.",
             "type": "string",
-            "validation": undefined,
           },
           "year": {
             "default": undefined,
@@ -56195,22 +55682,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing detailed information about the fiscal document.",
         "properties": {
           "form_number": {
-            "default": undefined,
             "docs": "Institution-provided identifier for the tax declaration.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the tax document.",
             "type": "string",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "The type of tax declaration form. For DIAN, this will be either \`110\` or \`210\`.",
             "type": "string",
-            "validation": undefined,
           },
           "year": {
             "default": undefined,
@@ -57629,7 +57110,6 @@ We return one of the following enum values:
         "properties": {
           "account_category": "EnumIncomeVerificationAccountCategory",
           "account_holder_id": {
-            "default": undefined,
             "docs": "Your unique ID for the account holder, in UUID format.",
             "type": "string",
             "validation": {
@@ -57641,48 +57121,37 @@ We return one of the following enum values:
           },
           "account_holder_type": "EnumIncomeVerificationAccountHolderType",
           "account_id": {
-            "default": undefined,
             "docs": "Your unique ID for the account where the transaction occurred.",
             "type": "string",
-            "validation": undefined,
           },
           "amount": {
             "docs": "The income amount.",
             "type": "double",
           },
           "currency": {
-            "default": undefined,
             "docs": "The three-letter currency code of the income. For example:
 
   • 🇧🇷 BRL (Brazilian Real)
   • 🇨🇴 COP (Colombian Peso)
   • 🇲🇽 MXN (Mexican Peso)",
             "type": "string",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the income.",
             "type": "string",
-            "validation": undefined,
           },
           "institution": {
-            "default": undefined,
             "docs": "The institution where the account is registered.
 
 **Note:** This is the name that you use in your system to identify the institution. For example BBVA Retail.",
             "type": "string",
-            "validation": undefined,
           },
           "transaction_id": {
-            "default": undefined,
             "docs": "Your unique ID for the income.",
             "type": "string",
-            "validation": undefined,
           },
           "type": "optional<EnumIncomeVerificationType>",
           "value_date": {
-            "default": undefined,
             "docs": "The date when the income transaction occurred, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -57773,7 +57242,6 @@ We return one of the following enum values:
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique identifier for the current income.",
             "type": "string",
             "validation": {
@@ -57789,7 +57257,6 @@ We return one of the following enum values:
             "type": "list<IncomeStreamsBody>",
           },
           "last_transaction_date": {
-            "default": undefined,
             "docs": "The date when when the last transaction occurred, in \`YYYY-MM-DD\` format.
 ",
             "type": "string",
@@ -57801,7 +57268,6 @@ We return one of the following enum values:
             },
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` the account belongs to.",
             "type": "string",
             "validation": {
@@ -57842,11 +57308,9 @@ We return one of the following enum values:
             "type": "double",
           },
           "number_of_income_streams": {
-            "default": undefined,
             "docs": "Number of total income streams analized.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "total_high_confidence": {
             "docs": "Total amount of income for the specific user with \`HIGH\` confidence.
@@ -57892,10 +57356,8 @@ For each income stream, we provide additional insights such as:
 ",
         "properties": {
           "account_id": {
-            "default": undefined,
             "docs": "Unique ID for the bank account to be verified for income streams.",
             "type": "string",
-            "validation": undefined,
           },
           "average_income_amount": {
             "docs": "The average income transaction amount from the source.
@@ -57904,24 +57366,20 @@ For each income stream, we provide additional insights such as:
           },
           "confidence": "EnumIncomeStreamConfidence",
           "currency": {
-            "default": undefined,
             "docs": "The three-letter currency code of the income. For example:
 
   • 🇧🇷 BRL (Brazilian Real)
   • 🇨🇴 COP (Colombian Peso)
   • 🇲🇽 MXN (Mexican Peso)",
             "type": "string",
-            "validation": undefined,
           },
           "frequency": "EnumIncomeStreamFrequency",
           "full_periods": {
-            "default": undefined,
             "docs": "Number of period units (based on *rolling months*) with data to perform calculations.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "income_type": "EnumIncomeStreamType",
           "last_income_amount": {
@@ -57930,7 +57388,6 @@ For each income stream, we provide additional insights such as:
             "type": "double",
           },
           "last_income_date": {
-            "default": undefined,
             "docs": "The date when the most recent income from the stream was received, in \`YYYY-MM-DD\` format.
 ",
             "type": "string",
@@ -57943,13 +57400,11 @@ For each income stream, we provide additional insights such as:
           },
           "last_income_description": "unknown",
           "lookback_periods": {
-            "default": undefined,
             "docs": "Number of period units (based on *rolling months*) used to generate insights and calculations.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "monthly_average": {
             "docs": "The average amount of income received from the source over \`lookback_periods\`.
@@ -57957,20 +57412,16 @@ For each income stream, we provide additional insights such as:
             "type": "double",
           },
           "number_of_incomes": {
-            "default": undefined,
             "docs": "Number of income transactions over the \`lookback_periods\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "periods_with_income": {
-            "default": undefined,
             "docs": "Number of period units (based on *rolling months*) with at least one income available.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "regularity": {
             "default": undefined,
@@ -58580,7 +58031,6 @@ For \`invalid_period\` errors, the description is:
             "validation": undefined,
           },
           "currency": {
-            "default": undefined,
             "docs": "The currency of the portfolio. For example:
 
 
@@ -58592,7 +58042,6 @@ For \`invalid_period\` errors, the description is:
 Please note that other currencies other than in the list above may be returned.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
             "default": undefined,
@@ -58612,11 +58061,9 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the portfolio, as given in the institution.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "type": "EnumInvestmentPortfolioType",
         },
@@ -58643,7 +58090,6 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "currency": {
-            "default": undefined,
             "docs": "The currency of the instrument. For example:
 
 - 🇧🇷 BRL (Brazilian Real)
@@ -58655,7 +58101,6 @@ Please note that other currencies other than in the list above may be returned.
 Please note that other currencies other than in the list above may be returned.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "fees": {
             "default": undefined,
@@ -58681,10 +58126,8 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the instrument, as given by the institution.",
             "type": "string",
-            "validation": undefined,
           },
           "open_date": {
             "default": undefined,
@@ -58743,10 +58186,8 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
         "docs": undefined,
         "properties": {
           "type": {
-            "default": undefined,
             "docs": "The fee type incurred when making the purchase of the instrument.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
             "docs": "The value of \`fees.type\`. The currency of the fee is the same as the currency of the instrument.",
@@ -58764,10 +58205,8 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
             "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "How often the interest rate is calculated on the instrument.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
             "docs": "The interest rate for the instrument, in percent.
@@ -58783,16 +58222,12 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
         "docs": "The public identifiers for the instrument.",
         "properties": {
           "type": {
-            "default": undefined,
             "docs": "The type of public identifier for the instrument.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "The value of the \`public_id.type\`.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -58800,16 +58235,12 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
         "docs": undefined,
         "properties": {
           "type": {
-            "default": undefined,
             "docs": "The name of the redemption condition.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "The value of \`redemption_conditions.type\`.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -60123,7 +59554,6 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "payment_date": {
-            "default": undefined,
             "docs": "The payment date.
 ",
             "type": "string",
@@ -60144,11 +59574,9 @@ Please note that other currencies other than in the list above may be returned.
             "validation": undefined,
           },
           "version": {
-            "default": undefined,
             "docs": "The version of the payroll object.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -60264,16 +59692,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the credentials that your customer provides are incorrect.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`invalid_credentials\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -60281,16 +59705,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the MFA token your customer provides is invalid.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`invalid_token\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -60298,16 +59718,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_credentials_required\` next step.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`login_error\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -60315,16 +59731,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened during the payment intent process.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`payment_error\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -60332,16 +59744,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error occurs when you try to send a PATCH request after the session has already expired (the session expires after 10 minutes).",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`session_expired\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -60349,16 +59757,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_token_required\` next step.",
         "properties": {
           "error_code": {
-            "default": undefined,
             "docs": "A unique error code (\`login_two_factor_error\`) that allows you to classify and handle the error programmatically.",
             "type": "string",
-            "validation": undefined,
           },
           "error_message": {
-            "default": undefined,
             "docs": "A short description of the error.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -60746,7 +60150,6 @@ For \`not_found\` errors, the description is:
         "docs": "Details about the organization's bank account that will receive the payment.",
         "properties": {
           "beneficiary_bank_account": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
             "type": "string",
             "validation": {
@@ -60976,7 +60379,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "A JSON object containing a session UUID and a MFA token",
         "properties": {
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` you want to resume. Must be the same \`link.id\` as the one you receive in the 428 Token Required response that contains the \`session\` ID.",
             "type": "string",
             "validation": {
@@ -60994,7 +60396,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "validation": undefined,
           },
           "session": {
-            "default": undefined,
             "docs": "The session you want to resume. You need to use the \`session\` value that is provided in the 428 Token Required response that you receive after you make your POST request.",
             "type": "string",
             "validation": {
@@ -61016,7 +60417,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "docs": "A JSON object containing a session UUID and a MFA token",
         "properties": {
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` you want to resume. Must be the same \`link.id\` as the one you receive in the 428 Token Required response that contains the \`session\` ID.",
             "type": "string",
             "validation": {
@@ -61027,7 +60427,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "session": {
-            "default": undefined,
             "docs": "The session you want to resume. You need to use the \`session\` value that is provided in the 428 Token Required response that you receive after you make your POST request.",
             "type": "string",
             "validation": {
@@ -61186,11 +60585,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "type": "list<string>",
           },
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid by your customer.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "charges": {
             "default": undefined,
@@ -61205,7 +60602,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created this payment intent.",
             "type": "string",
             "validation": {
@@ -61217,7 +60613,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "currency": "EnumPaymentsCurrency",
           "customer": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the customer related to this payment intent.",
             "type": "string",
             "validation": {
@@ -61228,11 +60623,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "failure_code": {
             "default": undefined,
@@ -61249,7 +60642,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment intent.",
             "type": "string",
             "validation": {
@@ -61340,7 +60732,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Payment method type selected.",
         "properties": {
           "beneficiary_bank_account": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
             "type": "string",
             "validation": {
@@ -61351,10 +60742,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "callback_url": {
-            "default": undefined,
             "docs": "The callback URL that your user will be redirected to after confirming the payment in their banking application.",
             "type": "string",
-            "validation": undefined,
           },
           "cpf": {
             "default": undefined,
@@ -61365,7 +60754,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "payer_institution": {
-            "default": undefined,
             "docs": "Belvo's unique ID to reference the payer's institution.",
             "type": "string",
             "validation": {
@@ -61381,7 +60769,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Payment method type selected.",
         "properties": {
           "beneficiary_bank_account": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
             "type": "string",
             "validation": {
@@ -61392,10 +60779,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "callback_url": {
-            "default": undefined,
             "docs": "The callback URL that your user will be redirected to after confirming the payment in their banking application.",
             "type": "string",
-            "validation": undefined,
           },
           "cpf": {
             "default": undefined,
@@ -61406,7 +60791,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "payer_institution": {
-            "default": undefined,
             "docs": "Belvo's unique ID to reference the payer's institution.",
             "type": "string",
             "validation": {
@@ -61426,7 +60810,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "boolean",
           },
           "beneficiary_bank_account": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary’s bank account.",
             "type": "string",
             "validation": {
@@ -61437,10 +60820,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "callback_url": {
-            "default": undefined,
             "docs": "The callback URL that your user will be redirected to after confirming the payment in their banking application.",
             "type": "string",
-            "validation": undefined,
           },
           "password": {
             "default": undefined,
@@ -61486,11 +60867,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "list<EnumPaymentLinkAllowedPaymentMethod>",
           },
           "amount": {
-            "default": undefined,
             "docs": "Amount to be paid by your customer.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "charges": {
             "default": undefined,
@@ -61505,7 +60884,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created this payment intent.",
             "type": "string",
             "validation": {
@@ -61517,7 +60895,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "currency": "EnumPaymentsCurrency",
           "customer": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the customer related to this payment intent.",
             "type": "string",
             "validation": {
@@ -61528,11 +60905,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "failure_code": {
             "default": undefined,
@@ -61549,7 +60924,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment intent.",
             "type": "string",
             "validation": {
@@ -61665,7 +61039,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment link.",
             "type": "string",
             "validation": {
@@ -61681,7 +61054,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The payment link expiration time.  ",
             "type": "string",
             "validation": {
@@ -61692,7 +61064,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
             "validation": {
@@ -61714,10 +61085,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_url": {
-            "default": undefined,
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
-            "validation": undefined,
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
@@ -61746,7 +61115,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment link.",
             "type": "string",
             "validation": {
@@ -61762,7 +61130,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The payment link expiration time.  ",
             "type": "string",
             "validation": {
@@ -61773,7 +61140,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
             "validation": {
@@ -61795,10 +61161,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "payment_url": {
-            "default": undefined,
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
-            "validation": undefined,
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
@@ -61827,7 +61191,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment link.",
             "type": "string",
             "validation": {
@@ -61843,7 +61206,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The payment link expiration time.  ",
             "type": "string",
             "validation": {
@@ -61854,7 +61216,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
             "validation": {
@@ -61866,10 +61227,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "payment_intent": "optional<PaymentIntentOfpi>",
           "payment_url": {
-            "default": undefined,
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
-            "validation": undefined,
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
@@ -61938,7 +61297,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment link.",
             "type": "string",
             "validation": {
@@ -61954,7 +61312,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The payment link expiration time. ",
             "type": "string",
             "validation": {
@@ -61965,7 +61322,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current payment link.",
             "type": "string",
             "validation": {
@@ -61977,10 +61333,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "payment_intent": "optional<PaymentIntentPse>",
           "payment_url": {
-            "default": undefined,
             "docs": "The URL for the hosted-widget that will guide your user through the payments process.",
             "type": "string",
-            "validation": undefined,
           },
           "status": "EnumPaymentLinksStatus",
           "updated_at": {
@@ -62096,17 +61450,14 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "The transaction amount.
 
 
 **Note**: The amount displayed is always positive as we indicate the direction of the transaction in \`transaction_type\` parameter.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "beneficiary": {
-            "default": undefined,
             "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
             "type": "string",
             "validation": {
@@ -62121,7 +61472,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the user that created the payment.",
             "type": "string",
             "validation": {
@@ -62144,14 +61494,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "description": {
-            "default": undefined,
             "docs": "The description of the payment.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo’s unique ID to reference the transaction.",
             "type": "string",
             "validation": {
@@ -62205,7 +61552,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "created_by": {
-            "default": undefined,
             "docs": "Belvo's unique ID of the user that created the webhook.",
             "type": "string",
             "validation": {
@@ -62216,7 +61562,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the webhook.",
             "type": "string",
             "validation": {
@@ -62228,10 +61573,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "name": "unknown",
           "url": {
-            "default": undefined,
             "docs": "The URL where webhook events should be sent to.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -62303,20 +61646,16 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": undefined,
         "properties": {
           "form_id": {
-            "default": undefined,
             "docs": "Your unique Payments Way form ID.
 
 **Note:** Belvo provides you with the Payments Way form ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
             "type": "integer",
-            "validation": undefined,
           },
           "terminal_id": {
-            "default": undefined,
             "docs": "Your unique Payments Way terminal ID.
 
 **Note:** Belvo provides you with the Payments Way terminal ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
             "type": "integer",
-            "validation": undefined,
           },
         },
       },
@@ -62378,7 +61717,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "currency": {
-            "default": undefined,
             "docs": "The currency of the transaction. For example:
 - 🇧🇷 BRL (Brazilian Real)
 - 🇨🇴 COP (Colombian Peso)
@@ -62386,7 +61724,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 
  Please note that currencies other than those listed above may be returned.",
             "type": "string",
-            "validation": undefined,
           },
           "fees": "list<RecevablesTransactionFees>",
           "gross_amount": {
@@ -62396,7 +61733,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current receivable transaction.",
             "type": "string",
             "validation": {
@@ -62407,11 +61743,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "institution_transaction_id": {
-            "default": undefined,
             "docs": "Internal identification number that the acquirer uses to identify the transaction.
 ℹ️ **Note**: For Brazil, this number is the NSU.",
             "type": "string",
-            "validation": undefined,
           },
           "net_amount": {
             "default": undefined,
@@ -62423,7 +61757,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "status": "optional<EnumReceivableTransactionStatus>",
           "type": "optional<EnumReceivableTransactionType>",
           "value_date": {
-            "default": undefined,
             "docs": "The date that the transactions occurred, according to the institution, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -62434,10 +61767,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "value_hour": {
-            "default": undefined,
             "docs": "The time that the transaction occurred, according to the institution, in \`HH:MM\` format.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -62445,7 +61776,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Basic information about the account associated with the transaction.",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the account associated with the transaction.",
             "type": "string",
             "validation": {
@@ -62531,7 +61861,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "value_date": {
-            "default": undefined,
             "docs": "The date when the transaction occurred, in \`YYYY-MM-DD\` format.",
             "type": "string",
             "validation": {
@@ -62557,13 +61886,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "category": "EnumRecurringExpenseCategory",
           "days_since_last_transaction": {
-            "default": undefined,
             "docs": "Number of days since the last recurring expense occurred.
 
 Based on the frequency, you can infer how many days until the next charge will occur.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "frequency": "EnumRecurringExpenseFrequency",
           "id": {
@@ -62633,16 +61960,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing information about where the tax payer reports their income.",
         "properties": {
           "reporting_type": {
-            "default": undefined,
             "docs": "The type of reporting ID. For DIAN, this is the sectional address code (*Codigo Dirrecion Seccional*)",
             "type": "string",
-            "validation": undefined,
           },
           "reporting_value": {
-            "default": undefined,
             "docs": "The value of the reporting ID.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -62724,7 +62047,6 @@ For \`request_timeout\` errors, the description is:
           },
           "credit_cards_metrics": "optional<RiskInsightsCreditCardMetrics>",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the risk insights request.",
             "type": "string",
             "validation": {
@@ -62735,7 +62057,6 @@ For \`request_timeout\` errors, the description is:
             },
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` the risk insights analysis belongs to.",
             "type": "string",
             "validation": {
@@ -62933,7 +62254,6 @@ However, internal transfers (transfers between accounts belonging to the same li
         "docs": "Aggregated metrics calculated based on the link's credit card accounts.",
         "properties": {
           "num_accounts": {
-            "default": undefined,
             "docs": "Number of credit cards accounts associated to the link.
 ",
             "type": "integer",
@@ -62965,11 +62285,9 @@ However, internal transfers (transfers between accounts belonging to the same li
         "docs": "Aggregated metrics calculated based on the user's loan accounts.",
         "properties": {
           "num_accounts": {
-            "default": undefined,
             "docs": "Number of loan accounts associated with the link.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "sum_loans_monthly_payment": {
             "default": undefined,
@@ -63122,7 +62440,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_incoming_transactions_1w": {
             "default": 0,
@@ -63133,7 +62450,6 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_incoming_transactions_3m": {
             "default": 0,
@@ -63144,7 +62460,6 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_outgoing_transactions_1m": {
             "default": 0,
@@ -63155,7 +62470,6 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_outgoing_transactions_1w": {
             "default": 0,
@@ -63166,7 +62480,6 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_outgoing_transactions_3m": {
             "default": 0,
@@ -63177,28 +62490,24 @@ If the account has not been open long enough to have the transaction data for a 
 If the account has not been open long enough to have the transaction data for a given period, we return \`null\`. For example, if the account has only been open for five days, we return values for \`_1w\` and \`_1m\`, however, the value for \`_3m\` will be \`null\`.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_transactions_1m": {
             "default": 0,
             "docs": "The total number of transactions analyzed to determine the risk insights for the last month (incoming and outgoing).
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_transactions_1w": {
             "default": 0,
             "docs": "The total number of transactions analyzed to determine the risk insights for the last week (incoming and outgoing).
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "num_transactions_3m": {
             "default": 0,
             "docs": "The total number of transactions analyzed to determine the risk insights for the last three months (incoming and outgoing).
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "sum_incoming_amount_1m": {
             "default": undefined,
@@ -63253,7 +62562,6 @@ If the account has not been open long enough to have the transaction data for a 
             "type": "datetime",
           },
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the Payments API \`secretId\`.",
             "type": "string",
             "validation": {
@@ -63269,10 +62577,8 @@ If the account has not been open long enough to have the transaction data for a 
             "type": "datetime",
           },
           "password": {
-            "default": undefined,
             "docs": "Your Payments API \`secretPassword\`. This value is obfuscated.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -63346,7 +62652,6 @@ For \`session_expired\` errors, the description is:
         "docs": undefined,
         "properties": {
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` that you want to get information for.",
             "type": "string",
             "validation": {
@@ -63555,7 +62860,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "date_issued": {
-            "default": undefined,
             "docs": "The date the tax declaration was issued by the fiscal institution.",
             "type": "string",
             "validation": {
@@ -63568,7 +62872,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "document_information": "DocumentInformationBusiness",
           "equity_statement": "EquityStatementBusiness",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current tax declaration.",
             "type": "string",
             "validation": {
@@ -63579,7 +62882,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "link": {
-            "default": undefined,
             "docs": "Belvo's unique ID of the user that this tax declaration is associated with.",
             "type": "string",
             "validation": {
@@ -63644,7 +62946,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "datetime",
           },
           "date_issued": {
-            "default": undefined,
             "docs": "The date the tax declaration was issued by the fiscal institution.",
             "type": "string",
             "validation": {
@@ -63657,7 +62958,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "document_information": "DocumentInformationIndividual",
           "equity_statement": "EquityStatementIndividual",
           "id": {
-            "default": undefined,
             "docs": "Belvo's unique ID for the current tax declaration.",
             "type": "string",
             "validation": {
@@ -63668,7 +62968,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "link": {
-            "default": undefined,
             "docs": "Belvo's unique ID of the user that this tax declaration is associated with.",
             "type": "string",
             "validation": {
@@ -63725,10 +63024,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "docs": "Object containing information about the tax payer.",
         "properties": {
           "company_name": {
-            "default": undefined,
             "docs": "The name of the company, as registered at the institution.",
             "type": "string",
-            "validation": undefined,
           },
           "document_id": "DocumentIdBusiness",
           "first_last_name": {
@@ -63744,10 +63041,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "main_economic_activity": {
-            "default": undefined,
             "docs": "The main economic activity the tax payer is involved in.",
             "type": "string",
-            "validation": undefined,
           },
           "other_names": {
             "default": undefined,
@@ -63769,35 +63064,25 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "document_id": "DocumentIdIndividual",
           "first_last_name": {
-            "default": undefined,
             "docs": "The tax payer's first last name.",
             "type": "string",
-            "validation": undefined,
           },
           "first_name": {
-            "default": undefined,
             "docs": "The tax payer's first name.",
             "type": "string",
-            "validation": undefined,
           },
           "main_economic_activity": {
-            "default": undefined,
             "docs": "The main economic activity the tax payer is involved in.",
             "type": "string",
-            "validation": undefined,
           },
           "other_names": {
-            "default": undefined,
             "docs": "Additional names of the tax payer.",
             "type": "string",
-            "validation": undefined,
           },
           "reporting_id": "ReportingId",
           "second_last_name": {
-            "default": undefined,
             "docs": "The tax payer's second last name.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -64363,10 +63648,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "type": {
-            "default": undefined,
             "docs": "The type of tax return. Can be either monthly or annual.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -64444,23 +63727,18 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "date_from": {
-            "default": undefined,
             "docs": "The starting date you want to get tax returns for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.",
             "type": "string",
-            "validation": undefined,
           },
           "date_to": {
-            "default": undefined,
             "docs": "The date you want to stop getting tax returns for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_to\` cannot be greater than today's date (in other words, no future dates).",
             "type": "string",
-            "validation": undefined,
           },
           "link": {
-            "default": undefined,
             "docs": "The fiscal \`link.id\` you want specific tax return information for.",
             "type": "string",
             "validation": {
@@ -64482,7 +63760,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "docs": "The type of tax return to return. For monthly tax returns, this field must be set to \`monthly\`.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -64560,7 +63837,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "link": {
-            "default": undefined,
             "docs": "The fiscal \`link.id\` you want specific tax return information for.",
             "type": "string",
             "validation": {
@@ -64584,21 +63860,16 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
 By default, Belvo returns the yearly (annual) tax returns.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "year_from": {
-            "default": undefined,
             "docs": "The starting year you want to get tax returns for, in \`YYYY\` format.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "year_to": {
-            "default": undefined,
             "docs": "The year you want to stop getting tax returns for, in \`YYYY\` format.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -64811,7 +64082,6 @@ By default, Belvo returns the yearly (annual) tax returns.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier created by Belvo used to reference the current Tax Status.",
             "type": "string",
             "validation": {
@@ -64829,7 +64099,6 @@ By default, Belvo returns the yearly (annual) tax returns.
             "validation": undefined,
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` that the tax status is associated with.",
             "type": "string",
             "validation": {
@@ -65218,7 +64487,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Unique identifier created by Belvo used to reference the current Tax Status.",
             "type": "string",
             "validation": {
@@ -65236,7 +64504,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "validation": undefined,
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` that the tax status is associated with.",
             "type": "string",
             "validation": {
@@ -65860,7 +65127,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "date_from": {
-            "default": undefined,
             "docs": "The date from which you want to start getting transactions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_from\` cannot be greater than \`date_to\`.",
@@ -65873,7 +65139,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "date_to": {
-            "default": undefined,
             "docs": "The date you want to stop getting transactions for, in \`YYYY-MM-DD\` format.
 
 ⚠️ The value of \`date_to\` cannot be greater than today's date (in other words, no future dates).",
@@ -65886,7 +65151,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
           },
           "link": {
-            "default": undefined,
             "docs": "The \`link.id\` that you want to get information for.",
             "type": "string",
             "validation": {

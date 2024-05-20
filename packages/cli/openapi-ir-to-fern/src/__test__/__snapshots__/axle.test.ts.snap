@@ -318,16 +318,12 @@ exports[`open api parser axle docs 1`] = `
           "docs": undefined,
           "properties": {
             "ignitionToken": {
-              "default": undefined,
               "docs": "The unique ID for the ignition session.",
               "type": "string",
-              "validation": undefined,
             },
             "ignitionUri": {
-              "default": undefined,
               "docs": "The url you should direct the user to to link their account.",
               "type": "string",
-              "validation": undefined,
             },
           },
         },
@@ -502,10 +498,8 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "body": {
                 "properties": {
                   "authCode": {
-                    "default": undefined,
                     "docs": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -532,16 +526,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "docs": undefined,
           "properties": {
             "accessToken": {
-              "default": undefined,
               "docs": "The token required for access to the requested Account and Policy objects.",
               "type": "string",
-              "validation": undefined,
             },
             "account": {
-              "default": undefined,
               "docs": "The unique id for the Account object.",
               "type": "string",
-              "validation": undefined,
             },
             "policies": {
               "docs": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
@@ -670,10 +660,8 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Your application's unique user id.",
             "type": "string",
-            "validation": undefined,
           },
           "lastName": {
             "default": undefined,
@@ -1054,16 +1042,12 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "ignitionToken": {
-              "default": undefined,
               "docs": "The unique ID for the ignition session.",
               "type": "string",
-              "validation": undefined,
             },
             "ignitionUri": {
-              "default": undefined,
               "docs": "The url you should direct the user to to link their account.",
               "type": "string",
-              "validation": undefined,
             },
           },
         },
@@ -1238,10 +1222,8 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "body": {
                 "properties": {
                   "authCode": {
-                    "default": undefined,
                     "docs": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1268,16 +1250,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "docs": undefined,
           "properties": {
             "accessToken": {
-              "default": undefined,
               "docs": "The token required for access to the requested Account and Policy objects.",
               "type": "string",
-              "validation": undefined,
             },
             "account": {
-              "default": undefined,
               "docs": "The unique id for the Account object.",
               "type": "string",
-              "validation": undefined,
             },
             "policies": {
               "docs": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
@@ -1406,10 +1384,8 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Your application's unique user id.",
             "type": "string",
-            "validation": undefined,
           },
           "lastName": {
             "default": undefined,

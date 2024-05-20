@@ -1168,7 +1168,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "validation": undefined,
                 },
                 "timestamp": {
-                  "default": undefined,
                   "docs": "Timestamp of the event",
                   "type": "double",
                   "validation": {
@@ -1181,7 +1180,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
                 "updatedBusinessUserAttributes": "optional<BusinessOptional>",
                 "userId": {
-                  "default": undefined,
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
                   "validation": {
@@ -1610,7 +1608,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "validation": undefined,
                 },
                 "timestamp": {
-                  "default": undefined,
                   "docs": "Timestamp of the event",
                   "type": "double",
                   "validation": {
@@ -1622,7 +1619,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 "transactionId": {
-                  "default": undefined,
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
                   "validation": {
@@ -1854,7 +1850,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "validation": undefined,
                 },
                 "timestamp": {
-                  "default": undefined,
                   "docs": "Timestamp of the event",
                   "type": "double",
                   "validation": {
@@ -1867,7 +1862,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
                 "updatedConsumerUserAttributes": "optional<UserOptional>",
                 "userId": {
-                  "default": undefined,
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
                   "validation": {
@@ -1965,7 +1959,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "list<unknown>",
           },
           "city": {
-            "default": undefined,
             "docs": "City of the user's residence address",
             "type": "string",
             "validation": {
@@ -1976,7 +1969,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "country": {
-            "default": undefined,
             "docs": "User's country of residence",
             "type": "string",
             "validation": {
@@ -1987,7 +1979,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "postcode": {
-            "default": undefined,
             "docs": "Post code of the user's residence address",
             "type": "string",
             "validation": {
@@ -2037,10 +2028,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "amountCurrency": "CurrencyCode",
           "amountValue": {
-            "default": undefined,
             "docs": "Numerical value of the transaction",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -2056,7 +2045,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for a business user base fields",
         "properties": {
           "createdTimestamp": {
-            "default": undefined,
             "docs": "Timestamp when the user was created",
             "type": "double",
             "validation": {
@@ -2068,7 +2056,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "userId": {
-            "default": undefined,
             "docs": "Unique user ID for the user",
             "type": "string",
             "validation": {
@@ -2140,7 +2127,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for business user risk score response",
         "properties": {
           "userId": {
-            "default": undefined,
             "docs": "user ID the risk score pertains to",
             "type": "string",
             "validation": {
@@ -2327,7 +2313,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "timestamp": {
-            "default": undefined,
             "docs": "Timestamp of the event",
             "type": "double",
             "validation": {
@@ -2432,7 +2417,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "legalName": {
-            "default": undefined,
             "docs": "Legal name of the company",
             "type": "string",
             "validation": {
@@ -2496,7 +2480,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "registrationCountry": "CountryCode",
           "registrationIdentifier": {
-            "default": undefined,
             "docs": "Commercial registry registration number for the company in its registration country",
             "type": "string",
             "validation": {
@@ -2524,7 +2507,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for a generic consumer name",
         "properties": {
           "firstName": {
-            "default": undefined,
             "docs": "First name of the user",
             "type": "string",
             "validation": {
@@ -2562,7 +2544,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for consumer user risk score response",
         "properties": {
           "userId": {
-            "default": undefined,
             "docs": "user ID the risk score pertains to",
             "type": "string",
             "validation": {
@@ -3147,22 +3128,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for date",
         "properties": {
           "day": {
-            "default": undefined,
             "docs": "Day of date",
             "type": "double",
-            "validation": undefined,
           },
           "month": {
-            "default": undefined,
             "docs": "Month of date",
             "type": "double",
-            "validation": undefined,
           },
           "year": {
-            "default": undefined,
             "docs": "Year of date",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -3279,7 +3254,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "nature": "optional<RuleNature>",
           "ruleAction": "RuleAction",
           "ruleDescription": {
-            "default": undefined,
             "docs": "Description of the rule",
             "type": "string",
             "validation": {
@@ -3292,7 +3266,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "ruleHit": "boolean",
           "ruleHitMeta": "optional<RuleHitMeta>",
           "ruleId": {
-            "default": undefined,
             "docs": "Unique rule identifier",
             "type": "string",
             "validation": {
@@ -3304,7 +3277,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleInstanceId": "string",
           "ruleName": {
-            "default": undefined,
             "docs": "Name of the rule",
             "type": "string",
             "validation": {
@@ -3321,7 +3293,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "failureException": "RuleFailureException",
           "ruleDescription": {
-            "default": undefined,
             "docs": "Description of the rule",
             "type": "string",
             "validation": {
@@ -3332,7 +3303,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "ruleId": {
-            "default": undefined,
             "docs": "Unique rule identifier",
             "type": "string",
             "validation": {
@@ -3343,7 +3313,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "ruleName": {
-            "default": undefined,
             "docs": "Name of the rule",
             "type": "string",
             "validation": {
@@ -3426,7 +3395,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "nature": "optional<RuleNature>",
           "ruleAction": "RuleAction",
           "ruleDescription": {
-            "default": undefined,
             "docs": "Description of the rule",
             "type": "string",
             "validation": {
@@ -3438,7 +3406,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleHitMeta": "optional<RuleHitMeta>",
           "ruleId": {
-            "default": undefined,
             "docs": "Unique rule identifier",
             "type": "string",
             "validation": {
@@ -3450,7 +3417,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleInstanceId": "string",
           "ruleName": {
-            "default": undefined,
             "docs": "Name of the rule",
             "type": "string",
             "validation": {
@@ -3549,7 +3515,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "documentNumber": {
-            "default": undefined,
             "docs": "User's unique identity document number such as passport number",
             "type": "string",
             "validation": {
@@ -3560,7 +3525,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "documentType": {
-            "default": undefined,
             "docs": "User's identity document type such as passport, national ID etc.",
             "type": "string",
             "validation": {
@@ -3681,10 +3645,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "code": {
-            "default": undefined,
             "docs": "Merchant code",
             "type": "double",
-            "validation": undefined,
           },
           "description": {
             "default": undefined,
@@ -3698,7 +3660,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for Mpesa payment method",
         "properties": {
           "businessShortCode": {
-            "default": undefined,
             "docs": "Business code",
             "type": "string",
             "validation": {
@@ -3709,10 +3670,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "phoneNumber": {
-            "default": undefined,
             "docs": "Contact Number of the account holder",
             "type": "string",
-            "validation": undefined,
           },
           "transactionType": {
             "docs": "Type of transaction",
@@ -3792,7 +3751,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "message": "optional<string>",
           "userId": {
-            "default": undefined,
             "docs": "user ID the risk score pertains to",
             "type": "string",
             "validation": {
@@ -3821,7 +3779,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "message": "optional<string>",
           "userId": {
-            "default": undefined,
             "docs": "user ID the risk score pertains to",
             "type": "string",
             "validation": {
@@ -3852,16 +3809,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "kycRiskScore": {
-            "default": undefined,
             "docs": "Quantified KYC risk score",
             "type": "double",
-            "validation": undefined,
           },
           "transactionRiskScore": {
-            "default": undefined,
             "docs": "Quantified action risk score",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -3878,7 +3831,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "exceptionDescription": {
-            "default": undefined,
             "docs": "Name of the rule",
             "type": "string",
             "validation": {
@@ -3889,7 +3841,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "exceptionName": {
-            "default": undefined,
             "docs": "Unique rule identifier",
             "type": "string",
             "validation": {
@@ -4037,7 +3988,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
         "properties": {
           "key": {
-            "default": undefined,
             "docs": "Key value when you are creating a custom variable",
             "type": "string",
             "validation": {
@@ -4048,7 +3998,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "value": {
-            "default": undefined,
             "docs": "Value for a given key when you are creating a custom variable",
             "type": "string",
             "validation": {
@@ -4079,10 +4028,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "country": "optional<CountryCode>",
           "transactionAmount": {
-            "default": undefined,
             "docs": "Amount of the transaction",
             "type": "double",
-            "validation": undefined,
           },
           "transactionCurrency": "CurrencyCode",
         },
@@ -4112,7 +4059,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "timestamp": {
-            "default": undefined,
             "docs": "Timestamp of when transaction took place",
             "type": "double",
             "validation": {
@@ -4124,7 +4070,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "transactionId": {
-            "default": undefined,
             "docs": "Unique transaction identifier",
             "type": "string",
             "validation": {
@@ -4197,10 +4142,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
         "properties": {
           "transactionId": {
-            "default": undefined,
             "docs": "Transaction ID that the results pertain to",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4357,7 +4300,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "upiID": {
-            "default": undefined,
             "docs": "UPI Id number",
             "type": "string",
             "validation": {
@@ -4385,7 +4327,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for User details",
         "properties": {
           "createdTimestamp": {
-            "default": undefined,
             "docs": "Timestamp when userId is created",
             "type": "double",
             "validation": {
@@ -4398,7 +4339,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "userDetails": "optional<UserDetails>",
           "userId": {
-            "default": undefined,
             "docs": "Unique user ID",
             "type": "string",
             "validation": {
@@ -4450,10 +4390,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
         "properties": {
           "userId": {
-            "default": undefined,
             "docs": "User ID that the results pertain to",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4561,10 +4499,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "walletType": {
-            "default": undefined,
             "docs": "Wallet type if there are various types of wallets belonging to the same user. E.g. Checking, savings, vault, different currency wallets etc.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4576,8 +4512,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "createdTimestamp": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,
@@ -5686,7 +5620,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "validation": undefined,
                 },
                 "timestamp": {
-                  "default": undefined,
                   "docs": "Timestamp of the event",
                   "type": "double",
                   "validation": {
@@ -5699,7 +5632,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
                 "updatedBusinessUserAttributes": "optional<BusinessOptional>",
                 "userId": {
-                  "default": undefined,
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
                   "validation": {
@@ -6128,7 +6060,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "validation": undefined,
                 },
                 "timestamp": {
-                  "default": undefined,
                   "docs": "Timestamp of the event",
                   "type": "double",
                   "validation": {
@@ -6140,7 +6071,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                 },
                 "transactionId": {
-                  "default": undefined,
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
                   "validation": {
@@ -6372,7 +6302,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "validation": undefined,
                 },
                 "timestamp": {
-                  "default": undefined,
                   "docs": "Timestamp of the event",
                   "type": "double",
                   "validation": {
@@ -6385,7 +6314,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
                 "updatedConsumerUserAttributes": "optional<UserOptional>",
                 "userId": {
-                  "default": undefined,
                   "docs": "Transaction ID the event pertains to",
                   "type": "string",
                   "validation": {
@@ -6483,7 +6411,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "type": "list<unknown>",
           },
           "city": {
-            "default": undefined,
             "docs": "City of the user's residence address",
             "type": "string",
             "validation": {
@@ -6494,7 +6421,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "country": {
-            "default": undefined,
             "docs": "User's country of residence",
             "type": "string",
             "validation": {
@@ -6505,7 +6431,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "postcode": {
-            "default": undefined,
             "docs": "Post code of the user's residence address",
             "type": "string",
             "validation": {
@@ -6555,10 +6480,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "amountCurrency": "CurrencyCode",
           "amountValue": {
-            "default": undefined,
             "docs": "Numerical value of the transaction",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -6574,7 +6497,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for a business user base fields",
         "properties": {
           "createdTimestamp": {
-            "default": undefined,
             "docs": "Timestamp when the user was created",
             "type": "double",
             "validation": {
@@ -6586,7 +6508,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "userId": {
-            "default": undefined,
             "docs": "Unique user ID for the user",
             "type": "string",
             "validation": {
@@ -6658,7 +6579,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for business user risk score response",
         "properties": {
           "userId": {
-            "default": undefined,
             "docs": "user ID the risk score pertains to",
             "type": "string",
             "validation": {
@@ -6845,7 +6765,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "timestamp": {
-            "default": undefined,
             "docs": "Timestamp of the event",
             "type": "double",
             "validation": {
@@ -6950,7 +6869,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "legalName": {
-            "default": undefined,
             "docs": "Legal name of the company",
             "type": "string",
             "validation": {
@@ -7014,7 +6932,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "registrationCountry": "CountryCode",
           "registrationIdentifier": {
-            "default": undefined,
             "docs": "Commercial registry registration number for the company in its registration country",
             "type": "string",
             "validation": {
@@ -7042,7 +6959,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for a generic consumer name",
         "properties": {
           "firstName": {
-            "default": undefined,
             "docs": "First name of the user",
             "type": "string",
             "validation": {
@@ -7080,7 +6996,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for consumer user risk score response",
         "properties": {
           "userId": {
-            "default": undefined,
             "docs": "user ID the risk score pertains to",
             "type": "string",
             "validation": {
@@ -7665,22 +7580,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for date",
         "properties": {
           "day": {
-            "default": undefined,
             "docs": "Day of date",
             "type": "double",
-            "validation": undefined,
           },
           "month": {
-            "default": undefined,
             "docs": "Month of date",
             "type": "double",
-            "validation": undefined,
           },
           "year": {
-            "default": undefined,
             "docs": "Year of date",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -7797,7 +7706,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "nature": "optional<RuleNature>",
           "ruleAction": "RuleAction",
           "ruleDescription": {
-            "default": undefined,
             "docs": "Description of the rule",
             "type": "string",
             "validation": {
@@ -7810,7 +7718,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "ruleHit": "boolean",
           "ruleHitMeta": "optional<RuleHitMeta>",
           "ruleId": {
-            "default": undefined,
             "docs": "Unique rule identifier",
             "type": "string",
             "validation": {
@@ -7822,7 +7729,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleInstanceId": "string",
           "ruleName": {
-            "default": undefined,
             "docs": "Name of the rule",
             "type": "string",
             "validation": {
@@ -7839,7 +7745,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "failureException": "RuleFailureException",
           "ruleDescription": {
-            "default": undefined,
             "docs": "Description of the rule",
             "type": "string",
             "validation": {
@@ -7850,7 +7755,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "ruleId": {
-            "default": undefined,
             "docs": "Unique rule identifier",
             "type": "string",
             "validation": {
@@ -7861,7 +7765,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "ruleName": {
-            "default": undefined,
             "docs": "Name of the rule",
             "type": "string",
             "validation": {
@@ -7944,7 +7847,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "nature": "optional<RuleNature>",
           "ruleAction": "RuleAction",
           "ruleDescription": {
-            "default": undefined,
             "docs": "Description of the rule",
             "type": "string",
             "validation": {
@@ -7956,7 +7858,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleHitMeta": "optional<RuleHitMeta>",
           "ruleId": {
-            "default": undefined,
             "docs": "Unique rule identifier",
             "type": "string",
             "validation": {
@@ -7968,7 +7869,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "ruleInstanceId": "string",
           "ruleName": {
-            "default": undefined,
             "docs": "Name of the rule",
             "type": "string",
             "validation": {
@@ -8067,7 +7967,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "documentNumber": {
-            "default": undefined,
             "docs": "User's unique identity document number such as passport number",
             "type": "string",
             "validation": {
@@ -8078,7 +7977,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "documentType": {
-            "default": undefined,
             "docs": "User's identity document type such as passport, national ID etc.",
             "type": "string",
             "validation": {
@@ -8199,10 +8097,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "code": {
-            "default": undefined,
             "docs": "Merchant code",
             "type": "double",
-            "validation": undefined,
           },
           "description": {
             "default": undefined,
@@ -8216,7 +8112,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for Mpesa payment method",
         "properties": {
           "businessShortCode": {
-            "default": undefined,
             "docs": "Business code",
             "type": "string",
             "validation": {
@@ -8227,10 +8122,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "phoneNumber": {
-            "default": undefined,
             "docs": "Contact Number of the account holder",
             "type": "string",
-            "validation": undefined,
           },
           "transactionType": {
             "docs": "Type of transaction",
@@ -8310,7 +8203,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "message": "optional<string>",
           "userId": {
-            "default": undefined,
             "docs": "user ID the risk score pertains to",
             "type": "string",
             "validation": {
@@ -8339,7 +8231,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "message": "optional<string>",
           "userId": {
-            "default": undefined,
             "docs": "user ID the risk score pertains to",
             "type": "string",
             "validation": {
@@ -8370,16 +8261,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "kycRiskScore": {
-            "default": undefined,
             "docs": "Quantified KYC risk score",
             "type": "double",
-            "validation": undefined,
           },
           "transactionRiskScore": {
-            "default": undefined,
             "docs": "Quantified action risk score",
             "type": "double",
-            "validation": undefined,
           },
         },
       },
@@ -8396,7 +8283,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "exceptionDescription": {
-            "default": undefined,
             "docs": "Name of the rule",
             "type": "string",
             "validation": {
@@ -8407,7 +8293,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "exceptionName": {
-            "default": undefined,
             "docs": "Unique rule identifier",
             "type": "string",
             "validation": {
@@ -8555,7 +8440,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
         "properties": {
           "key": {
-            "default": undefined,
             "docs": "Key value when you are creating a custom variable",
             "type": "string",
             "validation": {
@@ -8566,7 +8450,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "value": {
-            "default": undefined,
             "docs": "Value for a given key when you are creating a custom variable",
             "type": "string",
             "validation": {
@@ -8597,10 +8480,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "country": "optional<CountryCode>",
           "transactionAmount": {
-            "default": undefined,
             "docs": "Amount of the transaction",
             "type": "double",
-            "validation": undefined,
           },
           "transactionCurrency": "CurrencyCode",
         },
@@ -8630,7 +8511,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "timestamp": {
-            "default": undefined,
             "docs": "Timestamp of when transaction took place",
             "type": "double",
             "validation": {
@@ -8642,7 +8522,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "transactionId": {
-            "default": undefined,
             "docs": "Unique transaction identifier",
             "type": "string",
             "validation": {
@@ -8715,10 +8594,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
         "properties": {
           "transactionId": {
-            "default": undefined,
             "docs": "Transaction ID that the results pertain to",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -8875,7 +8752,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "upiID": {
-            "default": undefined,
             "docs": "UPI Id number",
             "type": "string",
             "validation": {
@@ -8903,7 +8779,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for User details",
         "properties": {
           "createdTimestamp": {
-            "default": undefined,
             "docs": "Timestamp when userId is created",
             "type": "double",
             "validation": {
@@ -8916,7 +8791,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "userDetails": "optional<UserDetails>",
           "userId": {
-            "default": undefined,
             "docs": "Unique user ID",
             "type": "string",
             "validation": {
@@ -8968,10 +8842,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
         "properties": {
           "userId": {
-            "default": undefined,
             "docs": "User ID that the results pertain to",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9079,10 +8951,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "validation": undefined,
           },
           "walletType": {
-            "default": undefined,
             "docs": "Wallet type if there are various types of wallets belonging to the same user. E.g. Checking, savings, vault, different currency wallets etc.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9094,8 +8964,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": undefined,
         "properties": {
           "createdTimestamp": {
-            "default": undefined,
-            "docs": undefined,
             "type": "double",
             "validation": {
               "exclusiveMax": undefined,

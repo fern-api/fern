@@ -93,10 +93,8 @@ exports[`open api parser devrev docs 1`] = `
               "body": {
                 "properties": {
                   "file_name": {
-                    "default": undefined,
                     "docs": "The name of the file that's being uploaded.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -179,10 +177,8 @@ connections can not be deleted using this method.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "ID of the authentication connection to be deleted.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -283,10 +279,8 @@ disabled.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "ID of the authentication connection to be toggled.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "toggle": "optional<root.AuthConnectionToggle>",
                 },
@@ -681,17 +675,13 @@ organization.
               "body": {
                 "properties": {
                   "token_hint": {
-                    "default": undefined,
                     "docs": "A hint that identifies the token.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "token_id": {
-                    "default": undefined,
                     "docs": "The unique identifier of the token under a given Dev organization.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -920,10 +910,8 @@ used.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the part to delete.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1123,10 +1111,8 @@ organization.
                     "validation": undefined,
                   },
                   "display_name": {
-                    "default": undefined,
                     "docs": "Name of the Rev organization.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "domain": {
                     "default": undefined,
@@ -1194,10 +1180,8 @@ records.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of Rev organization to delete.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1434,10 +1418,8 @@ records.
                     "validation": undefined,
                   },
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of Rev organization to update.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "tier": {
                     "default": undefined,
@@ -1525,11 +1507,9 @@ permitted.
                     "validation": undefined,
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "The name for the tag, which must be unique across all tags.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1575,10 +1555,8 @@ permitted.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the tag to delete.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1753,10 +1731,8 @@ used.
                     "validation": undefined,
                   },
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the tag to update.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "name": {
                     "default": undefined,
@@ -1999,10 +1975,8 @@ response.
                     },
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "The URL of the webhook endpoint.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -2048,10 +2022,8 @@ response.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "ID for the webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -2201,10 +2173,8 @@ response.
                   "action": "optional<root.WebhooksUpdateAction>",
                   "event_types": "optional<root.WebhooksUpdateRequestEventTypes>",
                   "id": {
-                    "default": undefined,
                     "docs": "ID for the webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "secret": {
                     "default": undefined,
@@ -2312,10 +2282,8 @@ won't receive any object events until successfully verified.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The work's ID.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -4106,10 +4074,8 @@ organizations.
             "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The artifact's download URL.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4121,16 +4087,12 @@ organizations.
             "type": "list<ArtifactsPrepareResponseFormData>",
           },
           "id": {
-            "default": undefined,
             "docs": "The generated artifact's ID.",
             "type": "string",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The URL that the file's data should be uploaded to.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4138,16 +4100,12 @@ organizations.
         "docs": undefined,
         "properties": {
           "key": {
-            "default": undefined,
             "docs": "Key of the form field.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "Value corresponding to the key.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4168,10 +4126,8 @@ organizations.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Globally unique object ID.",
             "type": "string",
-            "validation": undefined,
           },
           "modified_by": "optional<UserSummary>",
           "modified_date": {
@@ -4192,10 +4148,8 @@ organizations.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Globally unique object ID.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4221,10 +4175,8 @@ login screen as a login option.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "ID of the authentication connection.",
             "type": "string",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
@@ -4509,12 +4461,10 @@ requested token type.
 ",
         "properties": {
           "access_token": {
-            "default": undefined,
             "docs": "The issued JSON Web Token (JWT) corresponding to the requested
 token type.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "client_id": {
             "default": undefined,
@@ -4526,12 +4476,10 @@ application access token (AAT).
             "validation": undefined,
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "refresh_token": {
             "default": undefined,
@@ -4601,10 +4549,8 @@ issue a Rev session token.
             "validation": undefined,
           },
           "user_ref": {
-            "default": undefined,
             "docs": "An identifier which uniquely identifies a Rev user.",
             "type": "string",
-            "validation": undefined,
           },
           "user_traits": "optional<AuthTokensUserTraits>",
         },
@@ -4716,11 +4662,9 @@ it would appear on the login button as 'Log in to abclogin'.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "ID of the authentication connection which is to be updated.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
@@ -4820,16 +4764,12 @@ sort order. If not set, then no prior elements exist.
             "type": "list<string>",
           },
           "field_name": {
-            "default": undefined,
             "docs": "The field whose enum value is invalid.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "The value that was received.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4837,10 +4777,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "field_name": {
-            "default": undefined,
             "docs": "The missing field's name.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4858,10 +4796,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "field_name": {
-            "default": undefined,
             "docs": "The field whose value is not permitted.",
             "type": "string",
-            "validation": undefined,
           },
           "reason": {
             "default": undefined,
@@ -4946,10 +4882,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the part that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4969,10 +4903,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the Rev organization that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -4992,10 +4924,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the tag that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5015,10 +4945,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the timeline entry that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5038,10 +4966,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the webhook that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5061,10 +4987,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the work that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5167,10 +5091,8 @@ always be returned in the specified sort-by order.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of the part.",
             "type": "string",
-            "validation": undefined,
           },
           "owned_by": {
             "docs": "The users that own the part.",
@@ -5191,10 +5113,8 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "Name of the part.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5226,10 +5146,8 @@ always be returned in the specified sort-by order.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of the part.",
             "type": "string",
-            "validation": undefined,
           },
           "owned_by": {
             "docs": "The users that own the part.",
@@ -5328,10 +5246,8 @@ sort order. If not set, then no prior elements exist.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the part to update.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
             "default": undefined,
@@ -5490,10 +5406,8 @@ system-generated identifier will be assigned to the user.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the tag.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
             "default": undefined,
@@ -5536,13 +5450,11 @@ the value must be one that's specified in the tag's allowed values.
         ],
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -5664,10 +5576,8 @@ will appear in the response.
       "TimelineEntriesCreateRequest": {
         "base-properties": {
           "object": {
-            "default": undefined,
             "docs": "The ID of the object to create the timeline entry for.",
             "type": "string",
-            "validation": undefined,
           },
           "visibility": "optional<TimelineEntryVisibility>",
         },
@@ -5742,10 +5652,8 @@ sort order. If not set, then no prior elements exist.
       "TimelineEntriesUpdateRequest": {
         "base-properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the timeline entry to update.",
             "type": "string",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
@@ -5920,10 +5828,8 @@ default visibility.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The event's ID.",
             "type": "string",
-            "validation": undefined,
           },
           "part_created": "optional<EventPartCreated>",
           "part_deleted": "optional<EventPartDeleted>",
@@ -5952,10 +5858,8 @@ seconds.
           "webhook_created": "optional<EventWebhookCreated>",
           "webhook_deleted": "optional<EventWebhookDeleted>",
           "webhook_id": {
-            "default": undefined,
             "docs": "ID of the webhook for the event.",
             "type": "string",
-            "validation": undefined,
           },
           "webhook_updated": "optional<EventWebhookUpdated>",
           "work_created": "optional<EventWorkCreated>",
@@ -6009,7 +5913,6 @@ be set for other request types.
         "docs": undefined,
         "properties": {
           "challenge": {
-            "default": undefined,
             "docs": "The challenge that must be echoed in the response.",
             "type": "string",
             "validation": {
@@ -6142,10 +6045,8 @@ event types. Note this is mutually exclusive with 'add' and
             "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of the work object.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6158,13 +6059,11 @@ event types. Note this is mutually exclusive with 'add' and
       "WorksCreateRequest": {
         "base-properties": {
           "applies_to_part": {
-            "default": undefined,
             "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
 applies to. Specifying a part is required when creating tickets and
 issues.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "artifacts": {
             "default": undefined,
@@ -6203,10 +6102,8 @@ issues.
             "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of the work object.",
             "type": "string",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
@@ -6310,10 +6207,8 @@ sort order. If not set, then no prior elements exist.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The work's ID.",
             "type": "string",
-            "validation": undefined,
           },
           "owned_by": "optional<WorksUpdateRequestOwnedBy>",
           "reported_by": "optional<WorksUpdateRequestReportedBy>",
@@ -6465,10 +6360,8 @@ empty.
         "docs": "Describes the current stage of a work item.",
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "Current stage name of the work item.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6496,13 +6389,11 @@ on the tag's purpose and usage.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6530,7 +6421,6 @@ unique.
             "validation": undefined,
           },
           "secret": {
-            "default": undefined,
             "docs": "The secret to use for verifying webhook events.",
             "type": "string",
             "validation": {
@@ -6542,10 +6432,8 @@ unique.
           },
           "status": "WebhookStatus",
           "url": {
-            "default": undefined,
             "docs": "The URL of the webhook endpoint.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -6675,10 +6563,8 @@ exports[`open api parser devrev simple 1`] = `
               "body": {
                 "properties": {
                   "file_name": {
-                    "default": undefined,
                     "docs": "The name of the file that's being uploaded.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -6761,10 +6647,8 @@ connections can not be deleted using this method.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "ID of the authentication connection to be deleted.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -6865,10 +6749,8 @@ disabled.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "ID of the authentication connection to be toggled.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "toggle": "optional<root.AuthConnectionToggle>",
                 },
@@ -7263,17 +7145,13 @@ organization.
               "body": {
                 "properties": {
                   "token_hint": {
-                    "default": undefined,
                     "docs": "A hint that identifies the token.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "token_id": {
-                    "default": undefined,
                     "docs": "The unique identifier of the token under a given Dev organization.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7502,10 +7380,8 @@ used.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the part to delete.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7705,10 +7581,8 @@ organization.
                     "validation": undefined,
                   },
                   "display_name": {
-                    "default": undefined,
                     "docs": "Name of the Rev organization.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "domain": {
                     "default": undefined,
@@ -7776,10 +7650,8 @@ records.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of Rev organization to delete.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8016,10 +7888,8 @@ records.
                     "validation": undefined,
                   },
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of Rev organization to update.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "tier": {
                     "default": undefined,
@@ -8107,11 +7977,9 @@ permitted.
                     "validation": undefined,
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "The name for the tag, which must be unique across all tags.
 ",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8157,10 +8025,8 @@ permitted.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the tag to delete.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8335,10 +8201,8 @@ used.
                     "validation": undefined,
                   },
                   "id": {
-                    "default": undefined,
                     "docs": "The ID of the tag to update.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "name": {
                     "default": undefined,
@@ -8581,10 +8445,8 @@ response.
                     },
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "The URL of the webhook endpoint.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8630,10 +8492,8 @@ response.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "ID for the webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8783,10 +8643,8 @@ response.
                   "action": "optional<root.WebhooksUpdateAction>",
                   "event_types": "optional<root.WebhooksUpdateRequestEventTypes>",
                   "id": {
-                    "default": undefined,
                     "docs": "ID for the webhook.",
                     "type": "string",
-                    "validation": undefined,
                   },
                   "secret": {
                     "default": undefined,
@@ -8894,10 +8752,8 @@ won't receive any object events until successfully verified.
               "body": {
                 "properties": {
                   "id": {
-                    "default": undefined,
                     "docs": "The work's ID.",
                     "type": "string",
-                    "validation": undefined,
                   },
                 },
               },
@@ -9203,10 +9059,8 @@ organizations.
             "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The artifact's download URL.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9218,16 +9072,12 @@ organizations.
             "type": "list<ArtifactsPrepareResponseFormData>",
           },
           "id": {
-            "default": undefined,
             "docs": "The generated artifact's ID.",
             "type": "string",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "The URL that the file's data should be uploaded to.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9235,16 +9085,12 @@ organizations.
         "docs": undefined,
         "properties": {
           "key": {
-            "default": undefined,
             "docs": "Key of the form field.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "Value corresponding to the key.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9265,10 +9111,8 @@ organizations.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Globally unique object ID.",
             "type": "string",
-            "validation": undefined,
           },
           "modified_by": "optional<UserSummary>",
           "modified_date": {
@@ -9289,10 +9133,8 @@ organizations.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Globally unique object ID.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9318,10 +9160,8 @@ login screen as a login option.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "ID of the authentication connection.",
             "type": "string",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
@@ -9606,12 +9446,10 @@ requested token type.
 ",
         "properties": {
           "access_token": {
-            "default": undefined,
             "docs": "The issued JSON Web Token (JWT) corresponding to the requested
 token type.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "client_id": {
             "default": undefined,
@@ -9623,12 +9461,10 @@ application access token (AAT).
             "validation": undefined,
           },
           "expires_in": {
-            "default": undefined,
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
             "type": "integer",
-            "validation": undefined,
           },
           "refresh_token": {
             "default": undefined,
@@ -9698,10 +9534,8 @@ issue a Rev session token.
             "validation": undefined,
           },
           "user_ref": {
-            "default": undefined,
             "docs": "An identifier which uniquely identifies a Rev user.",
             "type": "string",
-            "validation": undefined,
           },
           "user_traits": "optional<AuthTokensUserTraits>",
         },
@@ -9813,11 +9647,9 @@ it would appear on the login button as 'Log in to abclogin'.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "ID of the authentication connection which is to be updated.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
@@ -9917,16 +9749,12 @@ sort order. If not set, then no prior elements exist.
             "type": "list<string>",
           },
           "field_name": {
-            "default": undefined,
             "docs": "The field whose enum value is invalid.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
-            "default": undefined,
             "docs": "The value that was received.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9934,10 +9762,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "field_name": {
-            "default": undefined,
             "docs": "The missing field's name.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -9955,10 +9781,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "field_name": {
-            "default": undefined,
             "docs": "The field whose value is not permitted.",
             "type": "string",
-            "validation": undefined,
           },
           "reason": {
             "default": undefined,
@@ -10043,10 +9867,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the part that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10066,10 +9888,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the Rev organization that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10089,10 +9909,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the tag that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10112,10 +9930,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the timeline entry that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10135,10 +9951,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the webhook that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10158,10 +9972,8 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the work that was deleted.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10264,10 +10076,8 @@ always be returned in the specified sort-by order.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of the part.",
             "type": "string",
-            "validation": undefined,
           },
           "owned_by": {
             "docs": "The users that own the part.",
@@ -10288,10 +10098,8 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "Name of the part.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10323,10 +10131,8 @@ always be returned in the specified sort-by order.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "Name of the part.",
             "type": "string",
-            "validation": undefined,
           },
           "owned_by": {
             "docs": "The users that own the part.",
@@ -10425,10 +10231,8 @@ sort order. If not set, then no prior elements exist.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The ID of the part to update.",
             "type": "string",
-            "validation": undefined,
           },
           "name": {
             "default": undefined,
@@ -10587,10 +10391,8 @@ system-generated identifier will be assigned to the user.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the tag.",
             "type": "string",
-            "validation": undefined,
           },
           "value": {
             "default": undefined,
@@ -10633,13 +10435,11 @@ the value must be one that's specified in the tag's allowed values.
         ],
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -10761,10 +10561,8 @@ will appear in the response.
       "TimelineEntriesCreateRequest": {
         "base-properties": {
           "object": {
-            "default": undefined,
             "docs": "The ID of the object to create the timeline entry for.",
             "type": "string",
-            "validation": undefined,
           },
           "visibility": "optional<TimelineEntryVisibility>",
         },
@@ -10839,10 +10637,8 @@ sort order. If not set, then no prior elements exist.
       "TimelineEntriesUpdateRequest": {
         "base-properties": {
           "id": {
-            "default": undefined,
             "docs": "The ID of the timeline entry to update.",
             "type": "string",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
@@ -11017,10 +10813,8 @@ default visibility.
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The event's ID.",
             "type": "string",
-            "validation": undefined,
           },
           "part_created": "optional<EventPartCreated>",
           "part_deleted": "optional<EventPartDeleted>",
@@ -11049,10 +10843,8 @@ seconds.
           "webhook_created": "optional<EventWebhookCreated>",
           "webhook_deleted": "optional<EventWebhookDeleted>",
           "webhook_id": {
-            "default": undefined,
             "docs": "ID of the webhook for the event.",
             "type": "string",
-            "validation": undefined,
           },
           "webhook_updated": "optional<EventWebhookUpdated>",
           "work_created": "optional<EventWorkCreated>",
@@ -11106,7 +10898,6 @@ be set for other request types.
         "docs": undefined,
         "properties": {
           "challenge": {
-            "default": undefined,
             "docs": "The challenge that must be echoed in the response.",
             "type": "string",
             "validation": {
@@ -11239,10 +11030,8 @@ event types. Note this is mutually exclusive with 'add' and
             "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of the work object.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -11255,13 +11044,11 @@ event types. Note this is mutually exclusive with 'add' and
       "WorksCreateRequest": {
         "base-properties": {
           "applies_to_part": {
-            "default": undefined,
             "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
 applies to. Specifying a part is required when creating tickets and
 issues.
 ",
             "type": "string",
-            "validation": undefined,
           },
           "artifacts": {
             "default": undefined,
@@ -11300,10 +11087,8 @@ issues.
             "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Title of the work object.",
             "type": "string",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
@@ -11407,10 +11192,8 @@ sort order. If not set, then no prior elements exist.
             "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The work's ID.",
             "type": "string",
-            "validation": undefined,
           },
           "owned_by": "optional<WorksUpdateRequestOwnedBy>",
           "reported_by": "optional<WorksUpdateRequestReportedBy>",
@@ -11562,10 +11345,8 @@ empty.
         "docs": "Describes the current stage of a work item.",
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "Current stage name of the work item.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -11593,13 +11374,11 @@ on the tag's purpose and usage.
             "validation": undefined,
           },
           "name": {
-            "default": undefined,
             "docs": "The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
             "type": "string",
-            "validation": undefined,
           },
         },
       },
@@ -11627,7 +11406,6 @@ unique.
             "validation": undefined,
           },
           "secret": {
-            "default": undefined,
             "docs": "The secret to use for verifying webhook events.",
             "type": "string",
             "validation": {
@@ -11639,10 +11417,8 @@ unique.
           },
           "status": "WebhookStatus",
           "url": {
-            "default": undefined,
             "docs": "The URL of the webhook endpoint.",
             "type": "string",
-            "validation": undefined,
           },
         },
       },

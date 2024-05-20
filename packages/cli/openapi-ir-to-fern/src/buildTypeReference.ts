@@ -126,12 +126,19 @@ function buildStringTypeReference({
     if (description == null && schema.default == null && validation == null) {
         return type;
     }
-    return {
-        type,
-        docs: description,
-        default: schema.default,
-        validation
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
     };
+    if (description != null) {
+        result.docs = description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default;
+    }
+    if (validation != null) {
+        result.validation = validation;
+    }
+    return result;
 }
 
 function buildIntegerTypeReference({
@@ -146,12 +153,19 @@ function buildIntegerTypeReference({
     if (description == null && schema.default == null && validation == null) {
         return type;
     }
-    return {
-        type,
-        docs: description,
-        default: schema.default,
-        validation
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
     };
+    if (description != null) {
+        result.docs = description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default;
+    }
+    if (validation != null) {
+        result.validation = validation;
+    }
+    return result;
 }
 
 function buildDoubleTypeReference({
@@ -166,12 +180,19 @@ function buildDoubleTypeReference({
     if (description == null && schema.default == null && validation == null) {
         return type;
     }
-    return {
-        type,
-        docs: description,
-        default: schema.default,
-        validation
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
     };
+    if (description != null) {
+        result.docs = description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default;
+    }
+    if (validation != null) {
+        result.validation = validation;
+    }
+    return result;
 }
 
 function maybeStringValidation(
