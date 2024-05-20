@@ -7,7 +7,6 @@ import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
 export interface ParsedDocsConfiguration {
     instances: DocsInstances[];
     title: string | undefined;
-    absoluteFilepath: AbsoluteFilePath;
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
@@ -24,7 +23,7 @@ export interface ParsedDocsConfiguration {
 
     /* branding */
     logo: Logo | undefined;
-    favicon: ImageReference | undefined;
+    favicon: AbsoluteFilePath | undefined;
     backgroundImage: BackgroundImage | undefined;
     colors: DocsV1Write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
@@ -72,15 +71,15 @@ export type ColorConfiguration =
       };
 
 export interface Logo {
-    dark: ImageReference | undefined;
-    light: ImageReference | undefined;
+    dark: AbsoluteFilePath | undefined;
+    light: AbsoluteFilePath | undefined;
     height: DocsV1Write.Height | undefined;
     href: DocsV1Write.Url | undefined;
 }
 
 export interface BackgroundImage {
-    dark: ImageReference | undefined;
-    light: ImageReference | undefined;
+    dark: AbsoluteFilePath | undefined;
+    light: AbsoluteFilePath | undefined;
 }
 
 export interface FontConfig {
@@ -112,10 +111,6 @@ export interface TypographyConfig {
      * code snippets in the documentation site.
      */
     codeFont: FontConfig | undefined;
-}
-
-export interface ImageReference {
-    filepath: AbsoluteFilePath;
 }
 
 export type FilepathOrUrl = { type: "filepath"; value: AbsoluteFilePath } | { type: "url"; value: string };

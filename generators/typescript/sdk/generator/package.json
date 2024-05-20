@@ -59,7 +59,7 @@
     "@babel/preset-typescript": "^7.24.1",
     "@types/jest": "^29.0.3",
     "@types/jest-specific-snapshot": "^0.5.7",
-    "@types/lodash-es": "^4.17.9",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.6",

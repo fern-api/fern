@@ -9,6 +9,7 @@
     { "path": "../../../../ir-sdk" },
     { "path": "../../../auth" },
     { "path": "../../../configuration" },
+    { "path": "../../../docs-resolver" },
     { "path": "../../../logger" },
     { "path": "../../../register" },
     { "path": "../../../task-context" },

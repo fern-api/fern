@@ -3408,7 +3408,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/latest-version": ^4.0.1
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/tar": ^6.1.11
     "@types/validate-npm-package-name": ^4.0.0
@@ -3448,7 +3448,7 @@ __metadata:
   resolution: "@fern-api/configuration@workspace:packages/cli/configuration"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": ^0.94.3-cb0d2d2ff
+    "@fern-api/fdr-sdk": ^0.94.3-f360549d9
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.542
@@ -3495,7 +3495,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
-    "@fern-api/fdr-sdk": ^0.94.3-cb0d2d2ff
+    "@fern-api/fdr-sdk": ^0.94.3-f360549d9
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fdr-test-sdk": ^0.0.5297
     "@fern-fern/fiddle-sdk": ^0.0.542
@@ -3520,7 +3520,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -3558,26 +3558,69 @@ __metadata:
   dependencies:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": ^0.94.3-cb0d2d2ff
+    "@fern-api/docs-resolver": "workspace:*"
+    "@fern-api/fdr-sdk": ^0.94.3-f360549d9
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/ir-sdk": "workspace:*"
+    "@fern-api/logger": "workspace:*"
+    "@fern-api/project-loader": "workspace:*"
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/cors": ^2.8.13
+    "@types/decompress": ^4.2.7
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/uuid": ^9.0.8
+    "@types/ws": ^8.5.10
+    "@types/xml2js": ^0.4.14
+    chalk: ^5.0.1
     cors: ^2.8.5
+    decompress: ^4.2.1
     depcheck: ^1.4.6
     eslint: ^8.56.0
     express: ^4.19.2
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    tmp-promise: ^3.0.3
     typescript: 4.6.4
     uuid: ^9.0.1
+    watcher: ^2.3.1
+    ws: ^8.17.0
+    xml2js: ^0.6.2
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/docs-resolver@workspace:*, @fern-api/docs-resolver@workspace:packages/cli/docs-resolver":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/docs-resolver@workspace:packages/cli/docs-resolver"
+  dependencies:
+    "@fern-api/configuration": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fdr-sdk": ^0.94.3-f360549d9
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/ir-sdk": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
+    "@fern-api/workspace-loader": "workspace:*"
+    "@types/diff": ^5.2.1
+    "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.12
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    diff: ^5.2.0
+    eslint: ^8.56.0
+    gray-matter: ^4.0.3
+    jest: ^29.7.0
+    lodash-es: ^4.17.21
+    mdast-util-from-markdown: ^2.0.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    unist-util-visit: ^5.0.0
+    url-join: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -3634,9 +3677,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fdr-sdk@npm:^0.94.3-cb0d2d2ff":
+"@fern-api/fdr-sdk@npm:^0.94.3-f360549d9":
   version: 0.94.3-fe8b208d5
-  resolution: "@fern-api/fdr-sdk@npm:0.94.3-cb0d2d2ff"
+  resolution: "@fern-api/fdr-sdk@npm:0.94.3-fe8b208d5"
   dependencies:
     form-data: 4.0.0
     js-base64: 3.7.7
@@ -3646,7 +3689,7 @@ __metadata:
     qs: 6.12.0
     tinycolor2: ^1.6.0
     url-join: 4.0.1
-  checksum: 813c904186c1ca9ca18ba5d8bf8e42f0d06137e948b89855acfc64d7b7259dd7d4a7ea967ca8f82171605db341e8a4301a0b061c296c361a91d0211f9d69f0a0
+  checksum: 2c740f48fade5e6056982a80f463a91fec683b4806857bc4c2374b7f82da50e6104662da9ba4078df1b8a26d3055c4ad9617ddb249490ef39d96eb056f5fe718
   languageName: node
   linkType: hard
 
@@ -3687,7 +3730,7 @@ __metadata:
     "@fern-fern/generator-exec-sdk": ^0.0.816
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
@@ -3819,7 +3862,7 @@ __metadata:
     "@types/fs-extra": ^11.0.1
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     axios: ^0.28.0
     chalk: ^5.0.1
@@ -3850,7 +3893,7 @@ __metadata:
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/jest-specific-snapshot": ^0.5.7
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/prettier": ^2.7.1
     "@types/url-join": 4.0.1
@@ -3924,7 +3967,7 @@ __metadata:
     "@fern-fern/ir-v8-model": 0.0.1
     "@fern-fern/ir-v9-model": 0.0.1
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4089,7 +4132,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/url-join": 4.0.1
     depcheck: ^1.4.6
@@ -4113,7 +4156,7 @@ __metadata:
     "@fern-fern/ir-sdk": 0.0.2828
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
@@ -4161,7 +4204,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4187,7 +4230,7 @@ __metadata:
     "@redocly/openapi-core": ^1.4.1
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/swagger2openapi": ^7.0.4
     depcheck: ^1.4.6
@@ -4285,13 +4328,13 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": ^0.94.3-cb0d2d2ff
+    "@fern-api/fdr-sdk": ^0.94.3-f360549d9
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4311,8 +4354,9 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/docs-resolver": "workspace:*"
     "@fern-api/docs-validator": "workspace:*"
-    "@fern-api/fdr-sdk": ^0.94.3-cb0d2d2ff
+    "@fern-api/fdr-sdk": ^0.94.3-f360549d9
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
@@ -4323,9 +4367,8 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.542
     "@types/decompress": ^4.2.7
-    "@types/diff": ^5.2.0
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/mime-types": ^2.1.4
     "@types/node": ^18.7.18
     "@types/tar": ^6.1.11
@@ -4334,14 +4377,11 @@ __metadata:
     chalk: ^5.0.1
     decompress: ^4.2.1
     depcheck: ^1.4.6
-    diff: ^5.2.0
     eslint: ^8.56.0
     form-data: 4.0.0
-    gray-matter: ^4.0.3
     image-size: ^1.1.1
     jest: ^29.7.0
     lodash-es: ^4.17.21
-    mdast-util-from-markdown: ^2.0.0
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -4349,7 +4389,6 @@ __metadata:
     terminal-link: ^3.0.0
     tmp-promise: ^3.0.3
     typescript: 4.6.4
-    unist-util-visit: ^5.0.0
     url-join: ^5.0.0
   languageName: unknown
   linkType: soft
@@ -4362,7 +4401,7 @@ __metadata:
     "@fern-fern/generator-exec-sdk": ^0.0.816
     "@fern-fern/ir-sdk": ^32
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4404,7 +4443,7 @@ __metadata:
     "@fern-api/json-schema": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.28
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -4443,7 +4482,7 @@ __metadata:
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/pretty-ms": ^5.0.1
     "@types/yargs": ^17.0.28
@@ -4514,7 +4553,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     chalk: ^5.0.1
     depcheck: ^1.4.6
@@ -4557,7 +4596,7 @@ __metadata:
     "@fern-fern/fiddle-sdk": ^0.0.542
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/tar": ^6.1.11
     axios: ^0.28.0
@@ -5348,7 +5387,7 @@ __metadata:
     "@fern-typescript/express-generator": "workspace:*"
     "@ts-morph/common": ^0.23.0
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.4
     depcheck: ^1.4.6
@@ -5445,7 +5484,7 @@ __metadata:
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5674,7 +5713,7 @@ __metadata:
     "@fern-typescript/sdk-generator": "workspace:*"
     "@ts-morph/common": ^0.23.0
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.4
     depcheck: ^1.4.6
@@ -5719,7 +5758,7 @@ __metadata:
     "@fern-typescript/type-schema-generator": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/jest-specific-snapshot": ^0.5.7
-    "@types/lodash-es": ^4.17.9
+    "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/url-join": 4.0.1
     "@types/uuid": ^9.0.8
@@ -6960,10 +6999,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/diff@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "@types/diff@npm:5.2.0"
-  checksum: 07e20ba25d15b997758cc248628bb1e6459e7b396c868f176dee1e6a5d1dfcdf1e186fb5bf5e67128d7f55a11e989cff2ec656de089e15ed4a44e654c5c1fda3
+"@types/diff@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "@types/diff@npm:5.2.1"
+  checksum: 5983a323177bd691cb2194f5d55b960cd20a9c8fec653b4b038760c5809627cc9ea3578fdf10119ccbefefef193ea925f2817136eb97b17388f66b16c8480a8a
   languageName: node
   linkType: hard
 
@@ -7289,21 +7328,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash-es@npm:^4.17.12":
+  version: 4.17.12
+  resolution: "@types/lodash-es@npm:4.17.12"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 990a99e2243bebe9505cb5ad19fbc172beb4a8e00f9075c99fc06c46c2801ffdb40bc2867271cf580d5f48994fc9fb076ec92cd60a20e621603bf22114e5b077
+  languageName: node
+  linkType: hard
+
 "@types/lodash-es@npm:^4.17.6":
   version: 4.17.7
   resolution: "@types/lodash-es@npm:4.17.7"
   dependencies:
     "@types/lodash": "*"
   checksum: 4b1f39fd1d921311c37a846c0e0df9d1fa23e27448a6ad1efd7574e703abd2b2fa5e8f3b5037146000f167ba231d0d01e52747d902654151b4ceeff9f2a9b380
-  languageName: node
-  linkType: hard
-
-"@types/lodash-es@npm:^4.17.9":
-  version: 4.17.12
-  resolution: "@types/lodash-es@npm:4.17.12"
-  dependencies:
-    "@types/lodash": "*"
-  checksum: 990a99e2243bebe9505cb5ad19fbc172beb4a8e00f9075c99fc06c46c2801ffdb40bc2867271cf580d5f48994fc9fb076ec92cd60a20e621603bf22114e5b077
   languageName: node
   linkType: hard
 
@@ -7686,6 +7725,24 @@ __metadata:
   version: 3.0.2
   resolution: "@types/whatwg-mimetype@npm:3.0.2"
   checksum: 30e2599ae02c539a6dd08b58de255aad24a41cdabeebc0293814884f1301f1328443b9915f2e990e4f484fa7f226ca8718991b63d2d387287f898c36390ef856
+  languageName: node
+  linkType: hard
+
+"@types/ws@npm:^8.5.10":
+  version: 8.5.10
+  resolution: "@types/ws@npm:8.5.10"
+  dependencies:
+    "@types/node": "*"
+  checksum: 3ec416ea2be24042ebd677932a462cf16d2080393d8d7d0b1b3f5d6eaa4a7387aaf0eefb99193c0bfd29444857cf2e0c3ac89899e130550dc6c14ada8a46d25e
+  languageName: node
+  linkType: hard
+
+"@types/xml2js@npm:^0.4.14":
+  version: 0.4.14
+  resolution: "@types/xml2js@npm:0.4.14"
+  dependencies:
+    "@types/node": "*"
+  checksum: df9f106b9953dcdec7ba3304ebc56d6c2f61d49bf556d600bed439f94a1733f73ca0bf2d0f64330b402191622862d9d6058bab9d7e3dcb5b0fe51ebdc4372aac
   languageName: node
   linkType: hard
 
@@ -10845,6 +10902,13 @@ __metadata:
   version: 3.1.0
   resolution: "detect-newline@npm:3.1.0"
   checksum: ae6cd429c41ad01b164c59ea36f264a2c479598e61cba7c99da24175a7ab80ddf066420f2bec9a1c57a6bead411b4655ff15ad7d281c000a89791f48cbe939e7
+  languageName: node
+  linkType: hard
+
+"dettle@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "dettle@npm:1.0.2"
+  checksum: 636cfc10e4594b93b21a3208bb2c1d02d5f2cb852871b8ff24471a70554abdcfdfe487dea8f8aaf9bebb04dc6be0d5103909e80de70450b513e4b6c4fb80ba8d
   languageName: node
   linkType: hard
 
@@ -19787,6 +19851,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"promise-make-naked@npm:^2.1.1":
+  version: 2.1.2
+  resolution: "promise-make-naked@npm:2.1.2"
+  checksum: 9466f72d574ef7f645042a3e8813cd4c1f439e311326078bae729c51f9d4a808720de0f3782355f9efcd132abde0de32ddb9924672d9bbf72c3951595c2fe81b
+  languageName: node
+  linkType: hard
+
 "promise-retry@npm:^1.1.1":
   version: 1.1.1
   resolution: "promise-retry@npm:1.1.1"
@@ -21120,6 +21191,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"sax@npm:>=0.6.0":
+  version: 1.3.0
+  resolution: "sax@npm:1.3.0"
+  checksum: 238ab3a9ba8c8f8aaf1c5ea9120386391f6ee0af52f1a6a40bbb6df78241dd05d782f2359d614ac6aae08c4c4125208b456548a6cf68625aa4fe178486e63ecd
+  languageName: node
+  linkType: hard
+
 "saxes@npm:^6.0.0":
   version: 6.0.0
   resolution: "saxes@npm:6.0.0"
@@ -22188,6 +22266,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"stubborn-fs@npm:^1.2.5":
+  version: 1.2.5
+  resolution: "stubborn-fs@npm:1.2.5"
+  checksum: 28d197afec1ec21ce7ffb06a42f01db19beecdf491694c53393ff5d92ec8a300df9c357e09a16d5cf55747ee2a70bc3c788b9e5577696061ffb9ae279655a600
+  languageName: node
+  linkType: hard
+
 "style-search@npm:^0.1.0":
   version: 0.1.0
   resolution: "style-search@npm:0.1.0"
@@ -22739,6 +22824,15 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.3.1
   resolution: "tiny-invariant@npm:1.3.1"
   checksum: 872dbd1ff20a21303a2fd20ce3a15602cfa7fcf9b228bd694a52e2938224313b5385a1078cb667ed7375d1612194feaca81c4ecbe93121ca1baebe344de4f84c
+  languageName: node
+  linkType: hard
+
+"tiny-readdir@npm:^2.7.2":
+  version: 2.7.2
+  resolution: "tiny-readdir@npm:2.7.2"
+  dependencies:
+    promise-make-naked: ^2.1.1
+  checksum: 36139dc24af9eefc8cc06797300b4150a7351dd02dde424ed6176453b309c5faf7468034d84b725e49bd9bae250ccb0a99d01cbe228d8649363a8ccb09503272
   languageName: node
   linkType: hard
 
@@ -23998,6 +24092,17 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"watcher@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "watcher@npm:2.3.1"
+  dependencies:
+    dettle: ^1.0.2
+    stubborn-fs: ^1.2.5
+    tiny-readdir: ^2.7.2
+  checksum: c9bd0e96cb1112fd9d6611637a43ec2557560a88354244d95fe2c2f466413914500d9861fd272c2541d390c9634e3857fa1e84ec757a0f1614502f7ef0c8fbd5
+  languageName: node
+  linkType: hard
+
 "wcwidth@npm:^1.0.0, wcwidth@npm:^1.0.1":
   version: 1.0.1
   resolution: "wcwidth@npm:1.0.1"
@@ -24325,7 +24430,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.11.0":
+"ws@npm:^8.11.0, ws@npm:^8.17.0":
   version: 8.17.0
   resolution: "ws@npm:8.17.0"
   peerDependencies:
@@ -24351,6 +24456,23 @@ env-cmd@toddbluhm/env-cmd:
   version: 4.0.0
   resolution: "xml-name-validator@npm:4.0.0"
   checksum: af100b79c29804f05fa35aa3683e29a321db9b9685d5e5febda3fa1e40f13f85abc40f45a6b2bf7bee33f68a1dc5e8eaef4cec100a304a9db565e6061d4cb5ad
+  languageName: node
+  linkType: hard
+
+"xml2js@npm:^0.6.2":
+  version: 0.6.2
+  resolution: "xml2js@npm:0.6.2"
+  dependencies:
+    sax: ">=0.6.0"
+    xmlbuilder: ~11.0.0
+  checksum: 458a83806193008edff44562c0bdb982801d61ee7867ae58fd35fab781e69e17f40dfeb8fc05391a4648c9c54012066d3955fe5d993ffbe4dc63399023f32ac2
+  languageName: node
+  linkType: hard
+
+"xmlbuilder@npm:~11.0.0":
+  version: 11.0.1
+  resolution: "xmlbuilder@npm:11.0.1"
+  checksum: 7152695e16f1a9976658215abab27e55d08b1b97bca901d58b048d2b6e106b5af31efccbdecf9b07af37c8377d8e7e821b494af10b3a68b0ff4ae60331b415b0
   languageName: node
   linkType: hard
 

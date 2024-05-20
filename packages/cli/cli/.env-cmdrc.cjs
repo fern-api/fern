@@ -9,6 +9,7 @@ module.exports = {
         LOCAL_STORAGE_FOLDER: ".fern",
         POSTHOG_API_KEY: process.env.POSTHOG_API_KEY,
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
+        DOCS_PREVIEW_BUCKET: 'https://prod-local-preview-bundle2.s3.amazonaws.com/'
     },
     dev: {
         AUTH0_DOMAIN: "fern-dev.us.auth0.com",
@@ -20,6 +21,7 @@ module.exports = {
         LOCAL_STORAGE_FOLDER: ".fern-dev",
         POSTHOG_API_KEY: null,
         DOCS_DOMAIN_SUFFIX: "dev.docs.buildwithfern.com",
+        DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle2.s3.amazonaws.com/'
     },
     local: {
         AUTH0_DOMAIN: "fern-dev.us.auth0.com",
@@ -31,5 +33,6 @@ module.exports = {
         LOCAL_STORAGE_FOLDER: ".fern-local",
         POSTHOG_API_KEY: null,
         DOCS_DOMAIN_SUFFIX: "dev.docs.buildwithfern.com",
+        DOCS_PREVIEW_BUCKET: 'https://dev2-local-preview-bundle2.s3.amazonaws.com/'
     },
 };
