@@ -1,9 +1,7 @@
 from dataclasses import dataclass
-from os import path
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
-from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import NamedFunctionParameter
 from typing_extensions import Never
 
 from fern_python.codegen import AST
@@ -81,7 +79,7 @@ class EndpointFunctionGenerator:
             self._endpoint.pagination if self._context.generator_config.generate_paginated_clients else None
         )
 
-        self._named_parameter_names = []
+        self._named_parameter_names: List[str] = []
         request_body_parameters: Optional[AbstractRequestBodyParameters] = (
             self._endpoint.request_body.visit(
                 inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
@@ -112,7 +110,7 @@ class EndpointFunctionGenerator:
         )
 
         self._path_parameter_names = dict()
-        _named_parameter_names = [param.name for param in self._named_parameters]
+        _named_parameter_names: List[str] = [param.name for param in self._named_parameters]
         for path_parameter in self._endpoint.all_path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
@@ -207,15 +205,13 @@ class EndpointFunctionGenerator:
             if not self.is_paginated
             else self._context.core_utilities.get_paginator_type(return_type, is_async=self._is_async)
         )
-    
+
     def deconflict_parameter_name(self, name: str, used_names: List[str]) -> str:
-        while(name in used_names):
+        while name in used_names:
             name += "_"
         return name
 
-    def _get_endpoint_path_parameters(
-        self
-    ) -> List[AST.FunctionParameter]:
+    def _get_endpoint_path_parameters(self) -> List[AST.FunctionParameter]:
         parameters: List[AST.FunctionParameter] = []
         for path_parameter in self._endpoint.all_path_parameters:
             if not self._is_type_literal(path_parameter.value_type):

@@ -433,12 +433,16 @@ class SnippetTestFactory:
                 continue
 
             example = successful_examples[0]
+            _path_parameter_names = dict()
+            for path_parameter in endpoint.all_path_parameters:
+                _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
             endpoint_snippet = EndpointFunctionSnippetGenerator(
                 context=self._context,
                 snippet_writer=snippet_writer,
                 service=service,
                 endpoint=endpoint,
                 example=example,
+                path_parameter_names=_path_parameter_names,
             ).generate_snippet()
 
             sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
