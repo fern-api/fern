@@ -6378,7 +6378,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/qs", "npm:6.9.8"],\
             ["@types/react", "npm:18.2.57"],\
             ["@types/react-dom", "npm:18.2.19"],\
-            ["@types/url-join", "npm:4.0.1"],\
+            ["@types/url-join", "npm:4.0.3"],\
             ["@vitejs/plugin-react", "virtual:aaf5cae93349a2cb5a8448703c58e7147e7f1b4c785816d0d3153785fa0e582fbabc70b2fb4e172f3605685b0f81cd3db404d997c060feb327d058028f9183fd#npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6953,7 +6953,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/prettier", "npm:2.7.3"],\
-            ["@types/url-join", "npm:4.0.1"],\
+            ["@types/url-join", "npm:4.0.3"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
@@ -7209,7 +7209,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/url-join", "npm:4.0.1"],\
+            ["@types/url-join", "npm:4.0.3"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["express", "npm:4.19.2"],\
@@ -8464,7 +8464,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/url-join", "npm:4.0.1"],\
+            ["@types/url-join", "npm:4.0.3"],\
             ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -9006,7 +9006,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest-specific-snapshot", "npm:0.5.7"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/url-join", "npm:4.0.1"],\
+            ["@types/url-join", "npm:4.0.3"],\
             ["@types/uuid", "npm:9.0.8"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -11231,6 +11231,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-url-join-npm-4.0.1-996120d4f1-29444b90e1.zip/node_modules/@types/url-join/",\
           "packageDependencies": [\
             ["@types/url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:4.0.3", {\
+          "packageLocation": "./.yarn/cache/@types-url-join-npm-4.0.3-919616b7dd-21b5145159.zip/node_modules/@types/url-join/",\
+          "packageDependencies": [\
+            ["@types/url-join", "npm:4.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
