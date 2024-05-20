@@ -33,7 +33,7 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"pydantic_v1", "deep_union_pydantic_dicts"},
+            exports={"pydantic_v1", "deep_union_pydantic_dicts", "parse_obj_as", "UniversalBaseModel"},
         )
 
         if self._allow_skipping_validation:
@@ -78,7 +78,7 @@ class CoreUtilities:
             ),
         )
 
-    def get_unchecked_pydantic_base_model(self, version: PydanticVersionCompatibility) -> AST.ClassReference:
+    def get_unchecked_pydantic_base_model(self) -> AST.ClassReference:
         return (
             AST.ClassReference(
                 qualified_name_excluding_import=(),
@@ -88,7 +88,7 @@ class CoreUtilities:
                 ),
             )
             if self._allow_skipping_validation
-            else Pydantic.BaseModel(version)
+            else self.get_universal_base_model()
         )
 
     def get_construct_type(self) -> AST.Reference:
@@ -123,7 +123,7 @@ class CoreUtilities:
         return (
             self._construct_type(type_of_obj, obj)
             if self._allow_skipping_validation
-            else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+            else self.get_parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
         )
 
     def get_pydantic_version_import(self) -> AST.Reference:
@@ -141,4 +141,39 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "pydantic_utilities"),
                 named_import="deep_union_pydantic_dicts",
             ),
+        )
+    
+    def get_universal_base_model(self) -> AST.ClassReference:
+        return AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "unchecked_base_model"),
+                    named_import="UncheckedBaseModel",
+                ),
+            )
+
+    def get_parse_obj_as(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_obj_as"
+                    ),
+                ),
+                args=[AST.Expression(type_of_obj), obj],
+            )
+        )
+    
+    def get_is_pydantic_v2(self) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
+                    ),
+                ),
+                args=[],
+            )
         )

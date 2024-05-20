@@ -53,7 +53,6 @@ class PydanticModel:
         )
         self._has_aliases = False
         self._version = version
-        self._root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
         self._extra_fields = extra_fields
         self._frozen = frozen
@@ -131,27 +130,6 @@ class PydanticModel:
                 initializer=initializer,
             )
         )
-
-    def set_root_type(self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None) -> None:
-        if self._root_type is not None:
-            raise RuntimeError("__root__ was already added")
-        self._root_type = root_type
-
-        root_type_with_annotation = (
-            AST.TypeHint.annotated(
-                type=root_type,
-                annotation=AST.Expression(annotation),
-            )
-            if annotation is not None
-            else root_type
-        )
-
-        self._class_declaration.add_statement(
-            AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation)
-        )
-
-    def get_root_type(self) -> Optional[AST.TypeHint]:
-        return self._root_type
 
     def add_method(
         self,

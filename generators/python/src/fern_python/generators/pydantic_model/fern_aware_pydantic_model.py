@@ -45,6 +45,7 @@ class FernAwarePydanticModel:
         extends: Sequence[ir_types.DeclaredTypeName] = None,
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
+        base_models: Sequence[AST.ClassReference] = None,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -57,18 +58,16 @@ class FernAwarePydanticModel:
             name=class_name,
             source_file=source_file,
             should_export=should_export,
-            base_models=[context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
+            base_models=base_models if base_models is not None else [context.get_class_reference_for_type_id(extended.type_id) for extended in extends]
             if extends is not None
-            else None,
+            else [],
             docstring=docstring,
             snippet=snippet,
             extra_fields="forbid" if custom_config.forbid_extra_fields else custom_config.extra_fields,
             frozen=custom_config.frozen,
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,
-            pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
-                self._custom_config.version
-            ),
+            pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(),
             require_optional_fields=custom_config.require_optional_fields,
         )
         self._pydantic_model.add_json_encoder(
@@ -175,25 +174,6 @@ class FernAwarePydanticModel:
     ) -> AST.FunctionDeclaration:
         return self._pydantic_model.add_method(declaration=declaration, decorator=decorator)
 
-    def set_root_type(
-        self,
-        root_type: ir_types.TypeReference,
-        annotation: Optional[AST.Expression] = None,
-        is_forward_ref: bool = False,
-    ) -> None:
-        self.set_root_type_unsafe(
-            root_type=self.get_type_hint_for_type_reference(root_type),
-            annotation=annotation,
-            is_forward_ref=is_forward_ref,
-        )
-
-    def set_root_type_unsafe(
-        self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None, is_forward_ref: bool = False
-    ) -> None:
-        self._pydantic_model.set_root_type(root_type=root_type, annotation=annotation)
-        if is_forward_ref:
-            self._model_contains_forward_refs = True
-
     def add_ghost_reference(self, type_id: ir_types.TypeId) -> None:
         self._pydantic_model.add_ghost_reference(
             self.get_class_reference_for_type_id(type_id),
@@ -201,11 +181,8 @@ class FernAwarePydanticModel:
 
     def finish(self) -> None:
         if self._custom_config.include_validators:
-            if self._pydantic_model._root_type is None:
-                self._pydantic_model.add_partial_class()
+            self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
-        self._override_json()
-        self._override_dict()
         if self._model_contains_forward_refs:
             self._pydantic_model.update_forward_refs()
         self._pydantic_model.finish()
@@ -269,57 +246,7 @@ class FernAwarePydanticModel:
             type_hint=type_hint,
             json_field_name=json_field_name,
             description=description,
-            default_value=default_value,
-        )
-
-    def _override_json(self) -> None:
-        def write_json_body(writer: AST.NodeWriter) -> None:
-            writer.write("kwargs_with_defaults: ")
-            writer.write_node(AST.TypeHint.any())
-            writer.write(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
-            writer.write_line()
-            writer.write_line("return super().json(**kwargs_with_defaults)")
-
-        self._pydantic_model.add_method(
-            AST.FunctionDeclaration(
-                name="json",
-                signature=AST.FunctionSignature(
-                    return_type=AST.TypeHint.str_(),
-                    include_kwargs=True,
-                ),
-                body=AST.CodeWriter(write_json_body),
-            )
-        )
-
-    def _override_dict(self) -> None:
-        def write_dict_body(writer: AST.NodeWriter) -> None:
-            writer.write("kwargs_with_defaults_exclude_unset: ")
-            writer.write_node(AST.TypeHint.any())
-            writer.write_line(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
-            writer.write("kwargs_with_defaults_exclude_none: ")
-            writer.write_node(AST.TypeHint.any())
-            writer.write_line(' = { "by_alias": True, "exclude_none": True, **kwargs }')
-            writer.write_line()
-
-            function_invocation = AST.FunctionInvocation(
-                function_definition=self._context.core_utilities.get_pydantic_deep_union_import(),
-                args=[
-                    AST.Expression("super().dict(**kwargs_with_defaults_exclude_unset)"),
-                    AST.Expression("super().dict(**kwargs_with_defaults_exclude_none)"),
-                ],
-            )
-            writer.write("return ")
-            writer.write_node(AST.Expression(function_invocation))
-
-        self._pydantic_model.add_method(
-            AST.FunctionDeclaration(
-                name="dict",
-                signature=AST.FunctionSignature(
-                    return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any()),
-                    include_kwargs=True,
-                ),
-                body=AST.CodeWriter(write_dict_body),
-            )
+            default_value=fallback_default_value,
         )
 
     def __enter__(self) -> FernAwarePydanticModel:

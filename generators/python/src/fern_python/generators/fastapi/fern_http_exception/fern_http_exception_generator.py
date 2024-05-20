@@ -99,6 +99,7 @@ class FernHTTPExceptionGenerator:
             version=self._custom_config.pydantic_config.version,
             smart_union=False,
             require_optional_fields=self._custom_config.pydantic_config.require_optional_fields,
+            pydantic_base_model=self._context.core_utilities.get_universal_base_model(),
         ) as body_pydantic_model:
             body_pydantic_model.add_field(
                 PydanticField(
