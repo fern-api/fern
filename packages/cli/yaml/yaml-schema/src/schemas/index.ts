@@ -44,6 +44,7 @@ export { HttpResponseSchema } from "./HttpResponseSchema";
 export { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 export { HttpServiceSchema } from "./HttpServiceSchema";
 export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlsEnvironmentSchema";
+export { NumberValidationSchema } from "./NumberValidationSchema";
 export { OAuthAccessTokenRequestPropertiesSchema } from "./OAuthAccessTokenRequestPropertiesSchema";
 export { OAuthAccessTokenResponsePropertiesSchema } from "./OAuthAccessTokenResponsePropertiesSchema";
 export { OAuthClientCredentialsSchema } from "./OAuthClientCredentialsSchema";
@@ -61,6 +62,7 @@ export { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema
 export { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
 export { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscriminationSchema";
+export { StringValidationSchema } from "./StringValidationSchema";
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema, TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
