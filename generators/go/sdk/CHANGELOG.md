@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.21.3 - 2024-05-17]
+
+- Internal: The generator now uses the latest FDR SDK.
+
 ## [0.21.2 - 2024-05-07]
 
 - Fix: In-lined request body properties no longer include a non-empty `url` struct tag. This previously caused

@@ -1,5 +1,5 @@
 name: oauth-client-credentials-environment-variables
-imports: 
+imports:
   auth: auth.yml
 
 auth: OAuthScheme

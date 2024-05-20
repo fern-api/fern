@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/apiKey",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithApiKey"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/apiKeyInHeader",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithHeader"
             },
             "snippet": {
                 "type": "typescript",

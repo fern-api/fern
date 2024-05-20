@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",
@@ -240,7 +241,8 @@
         },
         "endpointId": {
             "path": "/just-file",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.justFile"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",
@@ -294,7 +296,8 @@
         },
         "endpointId": {
             "path": "/just-file-with-query-params",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.justFileWithQueryParams"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",

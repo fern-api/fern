@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/resource/{ResourceID}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getResource"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedMixedCase\n\nclient = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -78,7 +79,8 @@
         },
         "endpointId": {
             "path": "/resource",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.listResources"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedMixedCase\n\nclient = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

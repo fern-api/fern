@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithCursorPagination"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_with_cursor_pagination(\n    page=1,\n    per_page=1,\n    order=\"asc\",\n    starting_after=\"string\",\n)\n",
@@ -15,7 +16,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetPagination"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_with_offset_pagination(\n    page=1,\n    per_page=1,\n    order=\"asc\",\n    starting_after=\"string\",\n)\n",
@@ -26,7 +28,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithExtendedResults"
             },
             "snippet": {
                 "sync_client": "import uuid\n\nfrom seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_with_extended_results(\n    cursor=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n)\n",
@@ -37,7 +40,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listUsernames"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_usernames(\n    starting_after=\"string\",\n)\n",
@@ -48,7 +52,8 @@
         {
             "id": {
                 "path": "/users",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithGlobalConfig"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_with_global_config(\n    offset=1,\n)\n",

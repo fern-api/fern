@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/users/{userId}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_user.getUser"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedMultiLineDocs\n\nclient = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -78,7 +79,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedMultiLineDocs\n\nclient = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
