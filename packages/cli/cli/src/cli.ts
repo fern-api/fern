@@ -11,6 +11,7 @@ import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
+import getPort from "get-port";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
@@ -39,6 +40,7 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
+
 interface GlobalCliOptions {
     "log-level": LogLevel;
 }
@@ -886,14 +888,18 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
     cli.command(
         "docs dev",
         "Run a local development server to preview your docs",
-        (yargs) => {
-            // yargs.option("port", {
-            //     number: true,
-            //     description: "Run the development server on the following port"
-            // }),
-            return yargs;
-        },
-        async () => {
+        (yargs) =>
+            yargs.option("port", {
+                number: true,
+                description: "Run the development server on the following port"
+            }),
+        async (argv) => {
+            let port: number;
+            if (argv.port != null) {
+                port = argv.port;
+            } else {
+                port = await getPort({ port: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 3010] });
+            }
             await previewDocsWorkspace({
                 loadProject: () =>
                     loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -901,7 +907,7 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
                         commandLineApiWorkspace: undefined
                     }),
                 cliContext,
-                port: 3000
+                port
             });
         }
     );
