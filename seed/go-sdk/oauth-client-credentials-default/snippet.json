@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/token",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
                 "type": "go",

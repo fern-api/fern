@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/custom-auth",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_custom-auth.getWithCustomAuth"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedCustomAuth\n\nclient = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.custom_auth.get_with_custom_auth()\n",
@@ -15,7 +16,8 @@
         {
             "id": {
                 "path": "/custom-auth",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_custom-auth.postWithCustomAuth"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedCustomAuth\n\nclient = SeedCustomAuth(\n    custom_auth_scheme=\"YOUR_CUSTOM_AUTH_SCHEME\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.custom_auth.post_with_custom_auth(\n    request={\"key\": \"value\"},\n)\n",

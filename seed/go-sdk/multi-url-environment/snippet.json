@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/ec2/boot",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_ec2.bootInstance"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/s3/presigned-url",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_s3.getPresignedUrl"
             },
             "snippet": {
                 "type": "go",

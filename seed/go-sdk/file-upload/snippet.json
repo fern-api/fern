@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.post"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/just-file-with-query-params",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFileWithQueryParams"
             },
             "snippet": {
                 "type": "go",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/just-file",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFile"
             },
             "snippet": {
                 "type": "go",

@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/hello",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.hello"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedCodeSamples\n\nclient = SeedCodeSamples(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

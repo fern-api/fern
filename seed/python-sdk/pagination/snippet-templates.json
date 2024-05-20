@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithCursorPagination"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -176,7 +177,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithOffsetPagination"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -345,7 +347,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithExtendedResults"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -416,7 +419,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listUsernames"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -487,7 +491,8 @@
         },
         "endpointId": {
             "path": "/users",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_users.listWithGlobalConfig"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

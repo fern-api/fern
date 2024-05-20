@@ -9,7 +9,8 @@
         {
             "id": {
                 "path": "/resource/{ResourceID}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.getResource"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedMixedCase\n\nclient = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.get_resource(\n    resource_id=\"rsc-xyz\",\n)\n",
@@ -20,7 +21,8 @@
         {
             "id": {
                 "path": "/resource",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.listResources"
             },
             "snippet": {
                 "sync_client": "import datetime\n\nfrom seed.client import SeedMixedCase\n\nclient = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.list_resources(\n    page_limit=10,\n    before_date=datetime.date.fromisoformat(\n        \"2023-01-01\",\n    ),\n)\n",
