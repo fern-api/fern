@@ -141,3 +141,28 @@ service:
               pattern: "^[a-z]+$"
               format: custom
       response: Type
+
+    upload:
+      path: ""
+      method: POST
+      request:
+        name: UploadRequest
+        body:
+          properties:
+            file: file
+      response: Type
+    
+    uploadRaw:
+      path: ""
+      method: POST
+      request:
+        name: UploadRequest
+        body:
+          properties:
+            bytes: bytes
+      response: Type
+    
+    getPlain:
+      path: ""
+      method: GET
+      response: text
