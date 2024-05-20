@@ -2779,7 +2779,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/object/get-and-return-nested-with-required-field",
+            "path": "/object/get-and-return-nested-with-required-field/{string}",
             "method": "POST"
         },
         "snippetTemplate": {
@@ -2789,6 +2789,22 @@
                 "isOptional": true,
                 "templateString": "client.endpoints.object.get_and_return_nested_with_required_field(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "string=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "string",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
                     {
                         "type": "template",
                         "value": {
@@ -3045,6 +3061,22 @@
                     "isOptional": true,
                     "templateString": "await client.endpoints.object.get_and_return_nested_with_required_field(\n\t$FERN_INPUT\n)",
                     "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "string=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "PATH",
+                                        "path": "string",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        },
                         {
                             "type": "template",
                             "value": {
