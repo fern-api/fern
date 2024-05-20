@@ -3,15 +3,19 @@ import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ArraySchema,
+    DoubleSchema,
     EnumSchema,
+    IntSchema,
     LiteralSchema,
     MapSchema,
     ObjectSchema,
     OneOfSchema,
     OptionalSchema,
     PrimitiveSchema,
+    PrimitiveSchemaValue,
     ReferencedSchema,
-    Schema
+    Schema,
+    StringSchema
 } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase } from "lodash-es";
@@ -22,7 +26,12 @@ import {
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import {
+    getDefaultFromTypeReference,
+    getDocsFromTypeReference,
+    getTypeFromTypeReference,
+    getValidationFromTypeReference
+} from "./utils/getTypeFromTypeReference";
 
 export function buildTypeReference({
     schema,
@@ -38,8 +47,9 @@ export function buildTypeReference({
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     switch (schema.type) {
-        case "primitive":
+        case "primitive": {
             return buildPrimitiveTypeReference(schema);
+        }
         case "array":
             return buildArrayTypeReference({ schema, fileContainingReference, context, declarationFile });
         case "map":
@@ -66,6 +76,23 @@ export function buildTypeReference({
 }
 
 export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): RawSchemas.TypeReferenceWithDocsSchema {
+    switch (primitiveSchema.schema.type) {
+        case "string":
+            return buildStringTypeReference({
+                description: primitiveSchema.description,
+                schema: primitiveSchema.schema
+            });
+        case "int":
+            return buildIntegerTypeReference({
+                description: primitiveSchema.description,
+                schema: primitiveSchema.schema
+            });
+        case "double":
+            return buildDoubleTypeReference({
+                description: primitiveSchema.description,
+                schema: primitiveSchema.schema
+            });
+    }
     const typeReference = primitiveSchema.schema._visit({
         int: () => "integer",
         int64: () => "long",
@@ -85,6 +112,130 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
         };
     }
     return typeReference;
+}
+
+function buildStringTypeReference({
+    description,
+    schema
+}: {
+    description: string | undefined;
+    schema: PrimitiveSchemaValue.String;
+}): RawSchemas.TypeReferenceWithDocsSchema {
+    const type = "string";
+    const validation = maybeStringValidation(schema);
+    if (description == null && schema.default == null && validation == null) {
+        return type;
+    }
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
+    };
+    if (description != null) {
+        result.docs = description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default;
+    }
+    if (validation != null) {
+        result.validation = validation;
+    }
+    return result;
+}
+
+function buildIntegerTypeReference({
+    description,
+    schema
+}: {
+    description: string | undefined;
+    schema: PrimitiveSchemaValue.Int;
+}): RawSchemas.TypeReferenceWithDocsSchema {
+    const type = "integer";
+    const validation = maybeNumberValidation(schema);
+    if (description == null && schema.default == null && validation == null) {
+        return type;
+    }
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
+    };
+    if (description != null) {
+        result.docs = description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default;
+    }
+    if (validation != null) {
+        result.validation = validation;
+    }
+    return result;
+}
+
+function buildDoubleTypeReference({
+    description,
+    schema
+}: {
+    description: string | undefined;
+    schema: PrimitiveSchemaValue.Double;
+}): RawSchemas.TypeReferenceWithDocsSchema {
+    const type = "double";
+    const validation = maybeNumberValidation(schema);
+    if (description == null && schema.default == null && validation == null) {
+        return type;
+    }
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
+    };
+    if (description != null) {
+        result.docs = description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default;
+    }
+    if (validation != null) {
+        result.validation = validation;
+    }
+    return result;
+}
+
+function maybeStringValidation(
+    schema: Omit<StringSchema, "default"> | undefined
+): RawSchemas.ValidationSchema | undefined {
+    if (schema == null) {
+        return undefined;
+    }
+    const { format, pattern, minLength, maxLength } = schema;
+    if (format == null && pattern == null && minLength == null && maxLength == null) {
+        return undefined;
+    }
+    return {
+        format,
+        pattern,
+        minLength,
+        maxLength
+    };
+}
+
+function maybeNumberValidation(
+    schema: Omit<IntSchema, "default"> | Omit<DoubleSchema, "default"> | undefined
+): RawSchemas.ValidationSchema | undefined {
+    if (schema == null) {
+        return undefined;
+    }
+    const { minimum, maximum, exclusiveMinimum, exclusiveMaximum, multipleOf } = schema;
+    if (
+        minimum == null &&
+        maximum == null &&
+        exclusiveMinimum == null &&
+        exclusiveMaximum == null &&
+        multipleOf == null
+    ) {
+        return undefined;
+    }
+    return {
+        min: minimum,
+        max: maximum,
+        exclusiveMin: exclusiveMinimum,
+        exclusiveMax: exclusiveMaximum,
+        multipleOf
+    };
 }
 
 export function buildReferenceTypeReference({
@@ -190,13 +341,17 @@ export function buildOptionalTypeReference({
     });
     const itemType = getTypeFromTypeReference(itemTypeReference);
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
+    const itemDefault = getDefaultFromTypeReference(itemTypeReference);
+    const itemValidation = getValidationFromTypeReference(itemTypeReference);
     const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
-    if (schema.description == null && itemDocs == null) {
+    if (schema.description == null && itemDocs == null && itemDefault == null && itemValidation == null) {
         return type;
     }
     return {
+        type,
         docs: schema.description ?? itemDocs,
-        type
+        default: itemDefault,
+        validation: itemValidation
     };
 }
 

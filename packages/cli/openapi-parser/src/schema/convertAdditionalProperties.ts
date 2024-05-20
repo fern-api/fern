@@ -41,10 +41,12 @@ export function convertAdditionalProperties({
                 generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
+                    default: undefined,
+                    pattern: undefined,
+                    format: undefined,
                     minLength: undefined,
                     maxLength: undefined,
-                    example: undefined,
-                    format: undefined
+                    example: undefined
                 }),
                 groupName: undefined
             },
@@ -69,10 +71,12 @@ export function convertAdditionalProperties({
             generatedName: `${generatedName}Key`,
             description: undefined,
             schema: PrimitiveSchemaValueWithExample.string({
+                default: undefined,
+                pattern: undefined,
+                format: undefined,
                 minLength: undefined,
                 maxLength: undefined,
-                example: undefined,
-                format: undefined
+                example: undefined
             }),
             groupName: undefined
         },

@@ -269,6 +269,12 @@ types:
 
   IntWithExample:
     properties:
+      default: optional<integer>
+      minimum: optional<integer>
+      maximum: optional<integer>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<integer>
       example: optional<integer>
 
   Int64WithExample:
@@ -281,10 +287,18 @@ types:
 
   DoubleWithExample:
     properties:
+      default: optional<double>
+      minimum: optional<double>
+      maximum: optional<double>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<double>
       example: optional<double>
 
   StringSchemaWithExample:
     properties:
+      default: optional<string>
+      pattern: optional<string>
       format: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>

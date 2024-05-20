@@ -105,14 +105,22 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -193,14 +201,22 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "INTEGER",
-                        "v2": null
+                        "v2": {
+                            "type": "integer",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "INTEGER",
-                        "v2": null
+                        "v2": {
+                            "type": "integer",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -320,14 +336,22 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 },
                 "resolvedType": {
                     "_type": "primitive",
                     "primitive": {
                         "v1": "STRING",
-                        "v2": null
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
                     }
                 }
             },
@@ -815,4 +839,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2671214`;
+exports[`dependencies file dependencies 1`] = `2695212`;

@@ -1053,7 +1053,11 @@ exports[`generate IR from OpenAPI 1`] = `
                   "_type": "primitive",
                   "primitive": {
                     "v1": "STRING",
-                    "v2": null,
+                    "v2": {
+                      "default": null,
+                      "type": "string",
+                      "validation": null,
+                    },
                   },
                 },
               },
@@ -1096,14 +1100,22 @@ exports[`generate IR from OpenAPI 1`] = `
                       "_type": "primitive",
                       "primitive": {
                         "v1": "STRING",
-                        "v2": null,
+                        "v2": {
+                          "default": null,
+                          "type": "string",
+                          "validation": null,
+                        },
                       },
                     },
                     "valueType": {
                       "_type": "primitive",
                       "primitive": {
                         "v1": "STRING",
-                        "v2": null,
+                        "v2": {
+                          "default": null,
+                          "type": "string",
+                          "validation": null,
+                        },
                       },
                     },
                   },
