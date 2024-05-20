@@ -10174,15 +10174,83 @@
                     "headers": [],
                     "baseUrl": null,
                     "path": {
-                        "head": "/get-and-return-nested-with-required-field",
-                        "parts": []
+                        "head": "/get-and-return-nested-with-required-field/",
+                        "parts": [
+                            {
+                                "pathParameter": "string",
+                                "tail": ""
+                            }
+                        ]
                     },
                     "fullPath": {
-                        "head": "/object/get-and-return-nested-with-required-field",
-                        "parts": []
+                        "head": "/object/get-and-return-nested-with-required-field/",
+                        "parts": [
+                            {
+                                "pathParameter": "string",
+                                "tail": ""
+                            }
+                        ]
                     },
-                    "pathParameters": [],
-                    "allPathParameters": [],
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "string",
+                                "camelCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string_"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string_"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STRING",
+                                    "safeName": "STRING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "String",
+                                    "safeName": "String"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "string",
+                                "camelCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string_"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string_"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STRING",
+                                    "safeName": "STRING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "String",
+                                    "safeName": "String"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
                     "queryParameters": [],
                     "requestBody": {
                         "type": "reference",

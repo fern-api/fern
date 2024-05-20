@@ -101,7 +101,7 @@ describe("Object_", () => {
     });
 
     test("getAndReturnNestedWithRequiredField", async () => {
-        const response = await client.endpoints.object.getAndReturnNestedWithRequiredField({
+        const response = await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
             string: "string",
             nestedObject: {
                 string: "string",
