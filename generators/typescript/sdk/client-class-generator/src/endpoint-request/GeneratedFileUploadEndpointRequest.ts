@@ -37,6 +37,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        wrapFileProperties: boolean;
         importsManager: ImportsManager;
     }
 }
@@ -55,6 +56,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
+    private wrapFileProperties: boolean;
 
     constructor({
         ir,
@@ -65,6 +67,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         generatedSdkClientClass,
         targetRuntime,
         retainOriginalCasing,
+        wrapFileProperties,
         importsManager
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
@@ -74,8 +77,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.wrapFileProperties = wrapFileProperties;
         this.importsManager = importsManager;
         if (
+            this.wrapFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
             endpoint.queryParameters.length > 0
         ) {
@@ -109,15 +114,17 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [];
-        for (const property of this.requestBody.properties) {
-            if (property.type === "file") {
-                const createReadStream = context.externalDependencies.fs.createReadStream(
-                    ts.factory.createStringLiteral("/path/to/your/file")
-                );
-                if (property.value.type === "fileArray") {
-                    result.push(ts.factory.createArrayLiteralExpression([createReadStream]));
-                } else {
-                    result.push(createReadStream);
+        if (!context.wrapFileProperties) {
+            for (const property of this.requestBody.properties) {
+                if (property.type === "file") {
+                    const createReadStream = context.externalDependencies.fs.createReadStream(
+                        ts.factory.createStringLiteral("/path/to/your/file")
+                    );
+                    if (property.value.type === "fileArray") {
+                        result.push(ts.factory.createArrayLiteralExpression([createReadStream]));
+                    } else {
+                        result.push(createReadStream);
+                    }
                 }
             }
         }
@@ -151,15 +158,19 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
-        for (const property of this.requestBody.properties) {
-            if (property.type === "file") {
-                parameters.push({
-                    name: getParameterNameForFile({
-                        property: property.value,
-                        retainOriginalCasing: context.retainOriginalCasing
-                    }),
-                    type: getTextOfTsNode(this.getFileParameterType(property.value, context))
-                });
+        if (!context.wrapFileProperties) {
+            for (const property of this.requestBody.properties) {
+                if (property.type === "file") {
+                    parameters.push({
+                        name: getParameterNameForFile({
+                            property: property.value,
+                            wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
+                            retainOriginalCasing: context.retainOriginalCasing,
+                            wrapFileProperties: context.wrapFileProperties
+                        }),
+                        type: getTextOfTsNode(this.getFileParameterType(property.value, context))
+                    });
+                }
             }
         }
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
@@ -251,6 +262,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     referenceToFormData: ts.factory.createIdentifier(
                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                     ),
+                    wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
                     requestParameter: this.requestParameter
                 })
             );

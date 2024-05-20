@@ -74,6 +74,12 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-reponse-headers
+  file-upload:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        wrapFileProperties: true
+      outputFolder: wrap-file-properties
   unknown:
     - customConfig: null
       outputFolder: no-custom-config

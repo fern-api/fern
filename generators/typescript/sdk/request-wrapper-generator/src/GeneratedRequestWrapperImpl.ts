@@ -1,6 +1,7 @@
 import { noop } from "@fern-api/core-utils";
 import {
     ExampleEndpointCall,
+    FileProperty,
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpHeader,
@@ -12,7 +13,13 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getExampleEndpointCalls, getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
+import {
+    getExampleEndpointCalls,
+    getTextOfTsNode,
+    maybeAddDocs,
+    PackageId,
+    visitJavaScriptRuntime
+} from "@fern-typescript/commons";
 import {
     GeneratedRequestWrapper,
     GeneratedRequestWrapperExample,
@@ -30,6 +37,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         packageId: PackageId;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        wrapFileProperties: boolean;
     }
 }
 
@@ -42,6 +50,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private packageId: PackageId;
     protected includeSerdeLayer: boolean;
     protected retainOriginalCasing: boolean;
+    protected wrapFileProperties: boolean;
 
     constructor({
         service,
@@ -49,7 +58,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         wrapperName,
         packageId,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        wrapFileProperties
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -57,6 +67,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.packageId = packageId;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.wrapFileProperties = wrapFileProperties;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -119,7 +130,16 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
                         FileUploadRequestProperty._visit(property, {
-                            file: noop,
+                            file: (fileProperty) => {
+                                if (!this.wrapFileProperties) {
+                                    return;
+                                }
+                                requestInterface.addProperty({
+                                    name: this.getParameterNameForFile({ fileProperty }),
+                                    type: getTextOfTsNode(this.getFileParameterType(fileProperty, context)),
+                                    hasQuestionToken: fileProperty.isOptional
+                                });
+                            },
                             bodyProperty: (inlinedProperty) => {
                                 requestInterface.addProperty(this.getInlineProperty(inlinedProperty, context));
                             },
@@ -242,11 +262,20 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getNonBodyKeys(context: SdkContext): RequestWrapperNonBodyProperty[] {
-        return [
+        const properties = [
             ...this.getAllQueryParameters().map((queryParameter) =>
                 this.getPropertyNameOfQueryParameter(queryParameter)
             ),
             ...this.getAllNonLiteralHeaders(context).map((header) => this.getPropertyNameOfNonLiteralHeader(header))
+        ];
+        if (!this.wrapFileProperties) {
+            return properties;
+        }
+        return [
+            ...this.getAllFileUploadProperties().map((fileProperty) =>
+                this.getPropertyNameOfFileProperty(fileProperty)
+            ),
+            ...properties
         ];
     }
 
@@ -295,8 +324,12 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 fileUpload: (fileUploadRequest) => {
                     for (const property of fileUploadRequest.properties) {
                         const isPropertyRequired = FileUploadRequestProperty._visit(property, {
-                            // not present in the body
-                            file: () => false,
+                            file: (fileProperty) => {
+                                if (!this.wrapFileProperties) {
+                                    return false;
+                                }
+                                return !fileProperty.isOptional;
+                            },
                             bodyProperty: ({ valueType }) => !this.isTypeOptional(valueType, context),
                             _other: () => {
                                 throw new Error(
@@ -329,6 +362,13 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return resolvedType.type === "container" && resolvedType.container.type === "optional";
     }
 
+    public getPropertyNameOfFileProperty(fileProperty: FileProperty): RequestWrapperNonBodyProperty {
+        return {
+            safeName: fileProperty.key.name.camelCase.safeName,
+            propertyName: this.getParameterNameForFile({ fileProperty })
+        };
+    }
+
     public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): RequestWrapperNonBodyProperty {
         return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
@@ -355,6 +395,25 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     public getAllQueryParameters(): QueryParameter[] {
         return this.endpoint.queryParameters;
+    }
+
+    public getAllFileUploadProperties(): FileProperty[] {
+        if (this.endpoint.requestBody == null || this.endpoint.requestBody.type !== "fileUpload") {
+            return [];
+        }
+        const fileProperties: FileProperty[] = [];
+        for (const property of this.endpoint.requestBody.properties) {
+            FileUploadRequestProperty._visit(property, {
+                file: (fileProperty) => {
+                    fileProperties.push(fileProperty);
+                },
+                bodyProperty: noop,
+                _other: () => {
+                    throw new Error("Unknown FileUploadRequestProperty: " + this.endpoint.requestBody?.type);
+                }
+            });
+        }
+        return fileProperties;
     }
 
     private getAllNonLiteralPropertiesFromInlinedRequest({
@@ -389,5 +448,49 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.retainOriginalCasing
             ? this.endpoint.sdkRequest.shape.bodyKey.originalName
             : this.endpoint.sdkRequest.shape.bodyKey.camelCase.unsafeName;
+    }
+
+    private getParameterNameForFile({ fileProperty }: { fileProperty: FileProperty }): string {
+        return this.retainOriginalCasing
+            ? fileProperty.key.name.originalName
+            : fileProperty.key.name.camelCase.unsafeName;
+    }
+
+    private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
+        const types: ts.TypeNode[] = [
+            this.maybeWrapFileArray({
+                property,
+                value: ts.factory.createTypeReferenceNode("File")
+            })
+        ];
+
+        visitJavaScriptRuntime(context.targetRuntime, {
+            node: () => {
+                types.push(
+                    this.maybeWrapFileArray({
+                        property,
+                        value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                    })
+                );
+            },
+            browser: () => {
+                types.push(
+                    this.maybeWrapFileArray({
+                        property,
+                        value: ts.factory.createTypeReferenceNode("Blob")
+                    })
+                );
+            }
+        });
+
+        if (property.isOptional) {
+            types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
+        }
+
+        return ts.factory.createUnionTypeNode(types);
+    }
+
+    private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
+        return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
     }
 }

@@ -20,6 +20,7 @@ export declare namespace SdkClientClassGenerator {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        wrapFileProperties: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 
@@ -47,6 +48,7 @@ export class SdkClientClassGenerator {
     private includeContentHeadersOnFileDownloadResponse: boolean;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private wrapFileProperties: boolean;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
     constructor({
@@ -63,6 +65,7 @@ export class SdkClientClassGenerator {
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
+        wrapFileProperties,
         oauthTokenProviderGenerator
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
@@ -78,6 +81,7 @@ export class SdkClientClassGenerator {
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.wrapFileProperties = wrapFileProperties;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
     }
 
@@ -105,6 +109,7 @@ export class SdkClientClassGenerator {
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
+            wrapFileProperties: this.wrapFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
         });
     }

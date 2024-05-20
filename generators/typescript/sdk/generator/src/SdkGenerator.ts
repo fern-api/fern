@@ -107,6 +107,7 @@ export declare namespace SdkGenerator {
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
         writeUnitTests: boolean;
+        wrapFileProperties: boolean;
         executionEnvironment: "local" | "dev" | "prod";
         organization: string;
         apiName: string;
@@ -316,6 +317,7 @@ export class SdkGenerator {
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
+            wrapFileProperties: config.wrapFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
@@ -1060,6 +1062,7 @@ export class SdkGenerator {
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
             targetRuntime: this.config.targetRuntime,
+            wrapFileProperties: this.config.wrapFileProperties,
             generateOAuthClients: this.generateOAuthClients
         });
     }

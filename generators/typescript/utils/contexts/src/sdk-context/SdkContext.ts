@@ -29,4 +29,5 @@ export interface SdkContext extends ModelContext {
     includeSerdeLayer: boolean;
     retainOriginalCasing: boolean;
     generateOAuthClients: boolean;
+    wrapFileProperties: boolean;
 }

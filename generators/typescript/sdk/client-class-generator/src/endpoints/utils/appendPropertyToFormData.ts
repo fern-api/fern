@@ -8,11 +8,13 @@ export function appendPropertyToFormData({
     property,
     context,
     referenceToFormData,
+    wrapperName,
     requestParameter
 }: {
     property: FileUploadRequestProperty;
     context: SdkContext;
     referenceToFormData: ts.Expression;
+    wrapperName: string;
     requestParameter: FileUploadRequestParameter | undefined;
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
@@ -25,7 +27,9 @@ export function appendPropertyToFormData({
                 value: ts.factory.createIdentifier(
                     getParameterNameForFile({
                         property,
-                        retainOriginalCasing: context.retainOriginalCasing
+                        wrapperName,
+                        retainOriginalCasing: context.retainOriginalCasing,
+                        wrapFileProperties: context.wrapFileProperties
                     })
                 )
             });
@@ -47,7 +51,9 @@ export function appendPropertyToFormData({
                     ts.factory.createIdentifier(
                         getParameterNameForFile({
                             property,
-                            retainOriginalCasing: context.retainOriginalCasing
+                            wrapperName,
+                            retainOriginalCasing: context.retainOriginalCasing,
+                            wrapFileProperties: context.wrapFileProperties
                         })
                     ),
                     ts.factory.createBlock(
@@ -69,7 +75,9 @@ export function appendPropertyToFormData({
                         ts.factory.createIdentifier(
                             getParameterNameForFile({
                                 property,
-                                retainOriginalCasing: context.retainOriginalCasing
+                                wrapperName,
+                                retainOriginalCasing: context.retainOriginalCasing,
+                                wrapFileProperties: context.wrapFileProperties
                             })
                         ),
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),

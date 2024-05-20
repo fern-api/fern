@@ -544,6 +544,7 @@ export class TemplateGenerator {
         return template != null ? this.getTemplateInputFromTemplate(template) : template;
     }
 
+    // TODO: If wrapFileProperties is enabled, the generated snippet templates need to be updated.
     private getFileUploadRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
         const frp: FdrSnippetTemplate.TemplateInput[] = [];
         const rbpt = this.endpoint.requestBody?._visit<(FdrSnippetTemplate.TemplateInput | undefined)[] | undefined>({
