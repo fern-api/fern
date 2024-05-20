@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2.test"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/admin/store-test-submission-status/{submissionId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateTestSubmissionStatus"
             },
             "snippet": {
                 "type": "typescript",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/admin/store-test-submission-status-v2/{submissionId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendTestSubmissionUpdate"
             },
             "snippet": {
                 "type": "typescript",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/admin/store-workspace-submission-status/{submissionId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateWorkspaceSubmissionStatus"
             },
             "snippet": {
                 "type": "typescript",
@@ -43,7 +47,8 @@
         {
             "id": {
                 "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendWorkspaceSubmissionUpdate"
             },
             "snippet": {
                 "type": "typescript",
@@ -53,7 +58,8 @@
         {
             "id": {
                 "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCase"
             },
             "snippet": {
                 "type": "typescript",
@@ -63,7 +69,8 @@
         {
             "id": {
                 "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCaseV2"
             },
             "snippet": {
                 "type": "typescript",
@@ -73,7 +80,8 @@
         {
             "id": {
                 "path": "/admin/store-workspace-trace/submission/{submissionId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspace"
             },
             "snippet": {
                 "type": "typescript",
@@ -83,7 +91,8 @@
         {
             "id": {
                 "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspaceV2"
             },
             "snippet": {
                 "type": "typescript",
@@ -93,7 +102,8 @@
         {
             "id": {
                 "path": "/homepage-problems",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_homepage.getHomepageProblems"
             },
             "snippet": {
                 "type": "typescript",
@@ -103,7 +113,8 @@
         {
             "id": {
                 "path": "/homepage-problems",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_homepage.setHomepageProblems"
             },
             "snippet": {
                 "type": "typescript",
@@ -113,7 +124,8 @@
         {
             "id": {
                 "path": "/migration-info/all",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_migration.getAttemptedMigrations"
             },
             "snippet": {
                 "type": "typescript",
@@ -123,7 +135,8 @@
         {
             "id": {
                 "path": "/v2/playlist/{serviceParam}/create",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_playlist.createPlaylist"
             },
             "snippet": {
                 "type": "typescript",
@@ -133,7 +146,8 @@
         {
             "id": {
                 "path": "/v2/playlist/{serviceParam}/all",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylists"
             },
             "snippet": {
                 "type": "typescript",
@@ -143,7 +157,8 @@
         {
             "id": {
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylist"
             },
             "snippet": {
                 "type": "typescript",
@@ -153,7 +168,8 @@
         {
             "id": {
                 "path": "/v2/playlist/{serviceParam}/{playlistId}",
-                "method": "PUT"
+                "method": "PUT",
+                "identifier_override": "endpoint_playlist.updatePlaylist"
             },
             "snippet": {
                 "type": "typescript",
@@ -163,7 +179,8 @@
         {
             "id": {
                 "path": "/v2/playlist/{serviceParam}/{playlist_id}",
-                "method": "DELETE"
+                "method": "DELETE",
+                "identifier_override": "endpoint_playlist.deletePlaylist"
             },
             "snippet": {
                 "type": "typescript",
@@ -173,7 +190,8 @@
         {
             "id": {
                 "path": "/problem-crud/create",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_problem.createProblem"
             },
             "snippet": {
                 "type": "typescript",
@@ -183,7 +201,8 @@
         {
             "id": {
                 "path": "/problem-crud/update/{problemId}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_problem.updateProblem"
             },
             "snippet": {
                 "type": "typescript",
@@ -193,7 +212,8 @@
         {
             "id": {
                 "path": "/problem-crud/delete/{problemId}",
-                "method": "DELETE"
+                "method": "DELETE",
+                "identifier_override": "endpoint_problem.deleteProblem"
             },
             "snippet": {
                 "type": "typescript",
@@ -203,7 +223,8 @@
         {
             "id": {
                 "path": "/problem-crud/default-starter-files",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_problem.getDefaultStarterFiles"
             },
             "snippet": {
                 "type": "typescript",
@@ -213,7 +234,8 @@
         {
             "id": {
                 "path": "/sessions/create-session/{language}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_submission.createExecutionSession"
             },
             "snippet": {
                 "type": "typescript",
@@ -223,7 +245,8 @@
         {
             "id": {
                 "path": "/sessions/{sessionId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSession"
             },
             "snippet": {
                 "type": "typescript",
@@ -233,7 +256,8 @@
         {
             "id": {
                 "path": "/sessions/stop/{sessionId}",
-                "method": "DELETE"
+                "method": "DELETE",
+                "identifier_override": "endpoint_submission.stopExecutionSession"
             },
             "snippet": {
                 "type": "typescript",
@@ -243,7 +267,8 @@
         {
             "id": {
                 "path": "/sessions/execution-sessions-state",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSessionsState"
             },
             "snippet": {
                 "type": "typescript",
@@ -253,7 +278,8 @@
         {
             "id": {
                 "path": "/sysprop/num-warm-instances/{language}/{numWarmInstances}",
-                "method": "PUT"
+                "method": "PUT",
+                "identifier_override": "endpoint_sysprop.setNumWarmInstances"
             },
             "snippet": {
                 "type": "typescript",
@@ -263,7 +289,8 @@
         {
             "id": {
                 "path": "/sysprop/num-warm-instances",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_sysprop.getNumWarmInstances"
             },
             "snippet": {
                 "type": "typescript",
@@ -273,7 +300,8 @@
         {
             "id": {
                 "path": "/problems-v2/lightweight-problem-info",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLightweightProblems"
             },
             "snippet": {
                 "type": "typescript",
@@ -283,7 +311,8 @@
         {
             "id": {
                 "path": "/problems-v2/problem-info",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblems"
             },
             "snippet": {
                 "type": "typescript",
@@ -293,7 +322,8 @@
         {
             "id": {
                 "path": "/problems-v2/problem-info/{problemId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLatestProblem"
             },
             "snippet": {
                 "type": "typescript",
@@ -303,7 +333,8 @@
         {
             "id": {
                 "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblemVersion"
             },
             "snippet": {
                 "type": "typescript",
@@ -313,7 +344,8 @@
         {
             "id": {
                 "path": "/problems-v2/lightweight-problem-info",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLightweightProblems"
             },
             "snippet": {
                 "type": "typescript",
@@ -323,7 +355,8 @@
         {
             "id": {
                 "path": "/problems-v2/problem-info",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblems"
             },
             "snippet": {
                 "type": "typescript",
@@ -333,7 +366,8 @@
         {
             "id": {
                 "path": "/problems-v2/problem-info/{problemId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLatestProblem"
             },
             "snippet": {
                 "type": "typescript",
@@ -343,7 +377,8 @@
         {
             "id": {
                 "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblemVersion"
             },
             "snippet": {
                 "type": "typescript",

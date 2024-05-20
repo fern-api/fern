@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/movies/create-movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_imdb.createMovie"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedApi = new SeedApiClient({ token: \"YOUR_TOKEN\" });\n",
@@ -87,7 +88,8 @@
         },
         "endpointId": {
             "path": "/movies/{movieId}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_imdb.getMovie"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedApi = new SeedApiClient({ token: \"YOUR_TOKEN\" });\n",

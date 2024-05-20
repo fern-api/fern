@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/dummy",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_dummy.getDummy"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedNoEnvironment = new SeedNoEnvironmentClient({ token: \"YOUR_TOKEN\" });\n",

@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/apiKey",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithBearerToken"
             },
             "snippet": {
                 "type": "typescript",

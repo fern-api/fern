@@ -101,7 +101,8 @@ export class ExampleGenerator {
             this.endpointSnippets.push({
                 id: {
                     path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                    method: endpoint.method
+                    method: endpoint.method,
+                    identifierOverride: endpoint.id
                 },
                 snippet: FernGeneratorExec.EndpointSnippet.ruby({
                     client: exampleNode.write({ startingTabSpaces: 0 })

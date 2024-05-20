@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/user",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUsername"
             },
             "snippet": {
                 "type": "go",

@@ -18,6 +18,7 @@ import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/load
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
+import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
@@ -26,7 +27,6 @@ import { writeOverridesForWorkspaces } from "./commands/generate-overrides/write
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
-import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { testOutput } from "./commands/test/testOutput";
@@ -141,7 +141,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
-    addPreviewCommand(cli, cliContext);
+    addDocsPreviewCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
@@ -882,18 +882,26 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
     );
 }
 
-function addPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "preview",
-        false, // hide from help message
-        (yargs) => yargs,
+        "docs dev",
+        "Run a local development server to preview your docs",
+        (yargs) => {
+            // yargs.option("port", {
+            //     number: true,
+            //     description: "Run the development server on the following port"
+            // }),
+            return yargs;
+        },
         async () => {
             await previewDocsWorkspace({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    defaultToAllApiWorkspaces: true,
-                    commandLineApiWorkspace: undefined
-                }),
-                cliContext
+                loadProject: () =>
+                    loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        defaultToAllApiWorkspaces: true,
+                        commandLineApiWorkspace: undefined
+                    }),
+                cliContext,
+                port: 3000
             });
         }
     );

@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/upload-content",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.upload"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedBytes\n\nclient = SeedBytes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

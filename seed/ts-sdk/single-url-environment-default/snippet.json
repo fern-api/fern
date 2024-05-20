@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/dummy",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_dummy.getDummy"
             },
             "snippet": {
                 "type": "typescript",

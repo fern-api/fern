@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
@@ -58,7 +59,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getMovieDocs"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
@@ -109,7 +111,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getMovieName"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
@@ -160,7 +163,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getMovieMetadata"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
@@ -211,7 +215,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getOptionalMovie"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
@@ -262,7 +267,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getOptionalMovieDocs"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
@@ -313,7 +319,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getOptionalMovieName"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",

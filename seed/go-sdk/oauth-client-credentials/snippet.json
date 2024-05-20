@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/token",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/token",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
             },
             "snippet": {
                 "type": "go",

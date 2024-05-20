@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.18.3] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
 ## [0.18.2] - 2024-05-15
 
 - Fix: If OAuth is configured, the generated `getAuthorizationHeader` helper now treats the

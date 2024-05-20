@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_.foo"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_a/b.foo"
             },
             "snippet": {
                 "type": "typescript",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_a/c.foo"
             },
             "snippet": {
                 "type": "typescript",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_folder.foo"
             },
             "snippet": {
                 "type": "typescript",
@@ -43,7 +47,8 @@
         {
             "id": {
                 "path": "/service",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_folder/service.endpoint"
             },
             "snippet": {
                 "type": "typescript",
@@ -53,7 +58,8 @@
         {
             "id": {
                 "path": "/service",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_folder/service.unknownRequest"
             },
             "snippet": {
                 "type": "typescript",
