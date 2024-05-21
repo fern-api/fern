@@ -1,8 +1,8 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
-import { generatorsYml } from "@fern-api/configuration";
 
 export interface CasingsGenerator {
     generateName(name: string, opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema }): Name;
@@ -165,6 +165,7 @@ const COMMON_ITIALISMS = new Set<string>([
     "RAM",
     "RHS",
     "RPC",
+    "SAML",
     "SLA",
     "SMTP",
     "SQL",
