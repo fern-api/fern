@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { GeneratorMetadataSchema } from "./GeneratorMetadataSchema";
+import { OutputMetadataSchema } from "./OutputMetadataSchema";
 
-export const PypiGeneratorMetadataSchema = GeneratorMetadataSchema.extend({
+export const PypiOutputMetadataSchema = OutputMetadataSchema.extend({
     keywords: z.optional(z.array(z.string())),
     documentationLink: z.optional(z.string()),
     homepageLink: z.optional(z.string())
 });
 
-export type PypiGeneratorMetadataSchema = z.infer<typeof PypiGeneratorMetadataSchema>;
+export type PypiOutputMetadataSchema = z.infer<typeof PypiOutputMetadataSchema>;

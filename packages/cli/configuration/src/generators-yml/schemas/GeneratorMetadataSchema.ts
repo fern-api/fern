@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-const GeneratorMetadataAuthorSchema = z.strictObject({
+const OutputMetadataAuthorSchema = z.strictObject({
     name: z.string(),
     email: z.string()
 });
 
-export const GeneratorMetadataSchema = z.strictObject({
+export const OutputMetadataSchema = z.strictObject({
     description: z.optional(z.string()),
-    authors: z.optional(z.array(GeneratorMetadataAuthorSchema))
+    authors: z.optional(z.array(OutputMetadataAuthorSchema))
 });
 
-export type GeneratorMetadataSchema = z.infer<typeof GeneratorMetadataSchema>;
+export type OutputMetadataSchema = z.infer<typeof OutputMetadataSchema>;

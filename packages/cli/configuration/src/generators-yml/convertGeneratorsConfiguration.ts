@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { GeneratorMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
+import { OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
@@ -14,7 +14,6 @@ import {
 } from "./GeneratorsConfiguration";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
-import { GeneratorMetadataSchema } from "./schemas/GeneratorMetadataSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import {
     API_ORIGIN_LOCATION_KEY,
@@ -26,7 +25,8 @@ import {
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
-import { PypiGeneratorMetadataSchema } from "./schemas/PypiGeneratorMetadataSchema";
+import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
+import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -35,7 +35,7 @@ export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): Promise<GeneratorsConfiguration> {
-    const maybeTopLevelMetadata = getGeneratorMetadata(rawGeneratorsConfiguration.metadata);
+    const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: await parseAPIConfiguration(rawGeneratorsConfiguration),
@@ -157,10 +157,10 @@ async function convertGroup({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
-    maybeTopLevelMetadata: GeneratorMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
 }): Promise<GeneratorGroup> {
-    const groupLevelMetadata = getGeneratorMetadata(group.metadata);
-    const mergedMetadata = mergeGeneratorMetadata(maybeTopLevelMetadata, groupLevelMetadata);
+    const groupLevelMetadata = getOutputMetadata(group.metadata);
+    const mergedMetadata = mergeOutputMetadata(maybeTopLevelMetadata, groupLevelMetadata);
     return {
         groupName,
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
@@ -172,10 +172,10 @@ async function convertGroup({
     };
 }
 
-function mergeGeneratorMetadata(
-    preceedingMetadata: GeneratorMetadata | undefined,
-    priorityMetadata: GeneratorMetadata | undefined
-): GeneratorMetadata | undefined {
+function mergeOutputMetadata(
+    preceedingMetadata: OutputMetadata | undefined,
+    priorityMetadata: OutputMetadata | undefined
+): OutputMetadata | undefined {
     if (preceedingMetadata == null || priorityMetadata == null) {
         return priorityMetadata ?? priorityMetadata;
     } else if (preceedingMetadata.description == null && preceedingMetadata.authors == null) {
@@ -195,7 +195,7 @@ async function convertGenerator({
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
-    mergedMetadata: GeneratorMetadata | undefined;
+    mergedMetadata: OutputMetadata | undefined;
 }): Promise<GeneratorInvocation> {
     return {
         name: generator.name,
@@ -249,7 +249,7 @@ async function convertOutputMode({
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
-    mergedMetadata: GeneratorMetadata | undefined;
+    mergedMetadata: OutputMetadata | undefined;
 }): Promise<FernFiddle.OutputMode> {
     let maybePyPiMetadata: PypiMetadata | undefined;
     if (generator.output != null && generator.output.location === "pypi") {
@@ -258,7 +258,7 @@ async function convertOutputMode({
             description: maybePyPiMetadata?.description,
             authors: maybePyPiMetadata?.authors
         };
-        const finalMergedMetadata = mergeGeneratorMetadata(mergedMetadata, generatorSpecificMetadata);
+        const finalMergedMetadata = mergeOutputMetadata(mergedMetadata, generatorSpecificMetadata);
 
         maybePyPiMetadata = { ...maybePyPiMetadata, ...finalMergedMetadata };
     }
@@ -529,7 +529,7 @@ function getGithubLicenseSchema(generator: GeneratorInvocationSchema): GithubLic
     return generator.github?.license;
 }
 
-function getGeneratorMetadata(metadata: GeneratorMetadataSchema | undefined): GeneratorMetadata | undefined {
+function getOutputMetadata(metadata: OutputMetadataSchema | undefined): OutputMetadata | undefined {
     return metadata != null
         ? {
               description: metadata.description,
@@ -538,7 +538,7 @@ function getGeneratorMetadata(metadata: GeneratorMetadataSchema | undefined): Ge
         : undefined;
 }
 
-function getPyPiMetadata(metadata: PypiGeneratorMetadataSchema | undefined): PypiMetadata | undefined {
+function getPyPiMetadata(metadata: PypiOutputMetadataSchema | undefined): PypiMetadata | undefined {
     return metadata != null
         ? {
               description: metadata.description,

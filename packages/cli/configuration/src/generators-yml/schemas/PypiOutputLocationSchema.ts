@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PypiGeneratorMetadataSchema } from "./PypiGeneratorMetadataSchema";
+import { PypiOutputMetadataSchema } from "./PypiOutputMetadataSchema";
 
 export const PypiOutputLocationSchema = z.strictObject({
     location: z.literal("pypi"),
@@ -8,7 +8,7 @@ export const PypiOutputLocationSchema = z.strictObject({
     token: z.optional(z.string()),
     username: z.optional(z.string()),
     password: z.optional(z.string()),
-    metadata: z.optional(PypiGeneratorMetadataSchema)
+    metadata: z.optional(PypiOutputMetadataSchema)
 });
 
 export type PypiOutputLocationSchema = z.infer<typeof PypiOutputLocationSchema>;
