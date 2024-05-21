@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2024-05-21
+
+- Improvement: Users can now specify information that will appear in their pypi record.
+
+```yaml
+generators:
+  - name: fernapi/fern-python-sdk
+    metadata:
+      description: this is the desc for my package
+      keywords:
+        - science
+        - data analysis
+      documentationLink: "https://buildwithfern.com/learn"
+      homepageLink: "https://buildwithfern.com/"
+      authors:
+        - email: support@buildwithfern.com
+          name: Armando
+```
+
 ## [2.2.2] - 2024-05-20
 
 - Fix: Inline request parameters now deconflict in naming with the unnamed path parameter arguments. Previously, when inlining request parameters into the method signature, we would not deconflict naming with the unnamed args preceeding them. Now, conflicting unnamed parameters are post-fixed with an "\_".
