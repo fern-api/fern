@@ -275,6 +275,10 @@ class CsProj {
     </PropertyGroup>
 
     <ItemGroup>
+        <None Include="..\\..\\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+    <ItemGroup>
       <PackageReference Include="OneOf" Version="3.0.263" />
       <PackageReference Include="System.Text.Json" Version="8.0.3" />
     </ItemGroup>
