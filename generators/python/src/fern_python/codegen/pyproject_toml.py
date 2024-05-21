@@ -4,9 +4,11 @@ import json
 import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Optional, Set
+from typing import List, Optional, Set, cast
 
 from fern.generator_exec.resources import (
+    BasicLicense,
+    CustomLicense,
     GithubOutputMode,
     LicenseConfig,
     LicenseId,
@@ -90,9 +92,9 @@ name = "{self.name}"'''
                 s += "\n" + f'version = "{self.version}"'
 
             description = ""
-            authors = []
-            keywords = []
-            project_urls = []
+            authors: List[str] = []
+            keywords: List[str] = []
+            project_urls: List[str] = []
             classifiers = [
                 "Intended Audience :: Developers",
                 "Programming Language :: Python",
@@ -128,7 +130,7 @@ name = "{self.name}"'''
 
             if self.license_ is not None:
                 if self.license_.get_as_union().type == "basic":
-                    license_id = self.license_.get_as_union().id
+                    license_id = cast(BasicLicense, self.license_.get_as_union()).id
                     if license_id == LicenseId.MIT:
                         license_evaluated = 'license = "MIT"'
                         classifiers.append("License :: OSI Approved :: MIT License")
@@ -136,7 +138,7 @@ name = "{self.name}"'''
                         license_evaluated = 'license = "Apache-2.0"'
                         classifiers.append("License :: OSI Approved :: Apache Software License")
                 else:
-                    license_filename = self.license_.get_as_union().filename
+                    license_filename = cast(CustomLicense, self.license_.get_as_union()).filename
                     license_evaluated = f"license = {{ file = '{license_filename}' }}"
 
             if self.github_output_mode is not None:

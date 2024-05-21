@@ -2,13 +2,14 @@ from __future__ import annotations
 
 import os
 from abc import ABC, abstractmethod
-from typing import Optional, Sequence, Tuple
+from typing import Optional, Sequence, Tuple, cast
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig, PypiMetadata
 from fern.generator_exec.resources.config import (
     GeneratorPublishConfig,
     GithubOutputMode,
+    PypiGithubPublishInfo,
 )
 
 from fern_python.codegen.project import Project, ProjectConfig
@@ -110,7 +111,7 @@ class AbstractGenerator(ABC):
         return generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda publish: publish.registries_v_2.pypi.pypi_metadata,
-            github=lambda github: github.publish_info.get_as_union().pypi_metadata
+            github=lambda github: cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
             if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
             else None,
         )
