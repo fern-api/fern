@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * @param {File[] | fs.ReadStream[]} fileList
     * @param {File | fs.ReadStream | undefined} maybeFile
     * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
-    * @param {SeedFileUpload.MyRequest} request
+    * @param {Acme.MyRequest} request
     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
     *
     * @example
@@ -37,8 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       fileList: File[] | fs.ReadStream[],
       maybeFile: File | fs.ReadStream | undefined,
       maybeFileList: File[] | fs.ReadStream[] | undefined,
-      request: SeedFileUpload.MyRequest,
-      requestOptions?: Service.RequestOptions
+      request: Acme.MyRequest,
+      requestOptions?: Acme.RequestOptions
   ): Promise<void> {
     ...
   }
@@ -48,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   ```ts
   /**
-    * @param {SeedFileUpload.MyRequest} request
+    * @param {Acme.MyRequest} request
     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
     *
     * @example
@@ -58,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     *     })
     */
   public async post(
-      request: SeedFileUpload.MyRequest,
+      request: Acme.MyRequest,
       requestOptions?: Service.RequestOptions
   ): Promise<void> {
     ...
