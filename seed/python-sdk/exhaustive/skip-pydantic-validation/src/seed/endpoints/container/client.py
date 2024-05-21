@@ -444,13 +444,16 @@ class ContainerClient:
         Examples
         --------
         from seed.client import SeedExhaustive
+        from seed.types import ObjectWithRequiredField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.container.get_and_return_optional(
-            string="string",
+            request=ObjectWithRequiredField(
+                string="string",
+            ),
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -917,13 +920,16 @@ class AsyncContainerClient:
         Examples
         --------
         from seed.client import AsyncSeedExhaustive
+        from seed.types import ObjectWithRequiredField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
         await client.endpoints.container.get_and_return_optional(
-            string="string",
+            request=ObjectWithRequiredField(
+                string="string",
+            ),
         )
         """
         _response = await self._client_wrapper.httpx_client.request(

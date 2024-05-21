@@ -80,8 +80,8 @@
                 "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_optional(\n    string=\"string\",\n)\n",
-                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_optional(\n    string=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_optional(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_optional(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
                 "type": "python"
             }
         },
