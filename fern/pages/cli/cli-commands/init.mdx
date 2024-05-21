@@ -1,6 +1,52 @@
 ---
-title: 'Overview'
-description: 'CLI'
+title: fern init
+description: The command "fern init" initializes a new Fern workspace in the current folder.
 ---
 
-The Fern Command Line Interface (Fern CLI) is an open source tool that enables you to interact with the Fern compiler using commands in your command-line shell. Use the Fern CLI to generate code from your API definition.
+Use `fern init` to initialize a new Fern workspace in the current folder. By default, you’ll see the IMDb API (International Movie Database) example.
+
+## Usage
+
+<CodeBlock title='Fern CLI command'>
+```bash
+fern init
+```
+</CodeBlock>
+
+This will create the following folder structure in your project:
+
+```yaml
+fern/
+├─ fern.config.json # root-level configuration
+├─ generators.yml # generators you're using
+└─ definition/
+    ├─ api.yml  # API-level configuration
+    └─ imdb.yml # endpoints, types, and errors
+```
+
+## Options
+
+By adding `--docs`, you’ll also get a sample documentation website for your API with an API Reference section.
+
+```bash
+fern init --docs
+```
+
+The file added will contain:
+
+```yaml docs.yaml
+instances:
+  - url: https://your-organization.docs.buildwithfern.com
+title: Your Organization | Documentation
+navigation:
+  - api: API Reference
+colors:
+  accentPrimary: '#ffffff'
+  background: '#000000'
+```
+
+To publish the API docs, run `fern generate --docs`. See more details on this command at [fern-generate](/learn/cli-api/cli-reference/generate).
+
+<Tip>
+For more information on getting started, check out our [Quickstart Guide](/learn/docs/getting-started/quickstart)
+</Tip>
