@@ -80,7 +80,7 @@ class EndpointFunctionGenerator:
         )
 
         self._named_parameter_names: List[str] = []
-        request_body_parameters: Optional[AbstractRequestBodyParameters] = (
+        self.request_body_parameters: Optional[AbstractRequestBodyParameters] = (
             self._endpoint.request_body.visit(
                 inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
                     endpoint=self._endpoint,
@@ -102,10 +102,10 @@ class EndpointFunctionGenerator:
             if self._endpoint.request_body is not None
             else None
         )
-        self._named_parameters = self._get_endpoint_named_parameters(
+        self._named_parameters, self._parameter_names_to_deconflict = self._get_endpoint_named_parameters(
             service=self._service,
             endpoint=self._endpoint,
-            request_body_parameters=request_body_parameters,
+            request_body_parameters=self.request_body_parameters,
             idempotency_headers=self._idempotency_headers,
         )
 
@@ -131,28 +131,6 @@ class EndpointFunctionGenerator:
             else False
         )
 
-        request_body_parameters: Optional[AbstractRequestBodyParameters] = (
-            self._endpoint.request_body.visit(
-                inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
-                    endpoint=self._endpoint,
-                    request_body=inlined_request_body,
-                    context=self._context,
-                ),
-                reference=lambda referenced_request_body: ReferencedRequestBodyParameters(
-                    endpoint=self._endpoint,
-                    request_body=referenced_request_body,
-                    context=self._context,
-                ),
-                file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
-                    endpoint=self._endpoint, request=file_upload_request, context=self._context
-                ),
-                bytes=lambda bytes_request: BytesRequestBodyParameters(
-                    endpoint=self._endpoint, request=bytes_request, context=self._context
-                ),
-            )
-            if self._endpoint.request_body is not None
-            else None
-        )
         named_parameters = self._named_parameters
         endpoint_snippet = self._generate_endpoint_snippet(
             package=self._package,
@@ -181,7 +159,7 @@ class EndpointFunctionGenerator:
                 service=self._service,
                 endpoint=self._endpoint,
                 idempotency_headers=self._idempotency_headers,
-                request_body_parameters=request_body_parameters,
+                request_body_parameters=self.request_body_parameters,
                 is_async=self._is_async,
                 is_primitive=is_primitive,
                 parameters=unnamed_parameters,
@@ -190,7 +168,7 @@ class EndpointFunctionGenerator:
         )
         return GeneratedEndpointFunction(
             function=function_declaration,
-            is_default_body_parameter_used=request_body_parameters is not None,
+            is_default_body_parameter_used=self.request_body_parameters is not None,
             snippet=endpoint_snippet,
         )
 
@@ -234,7 +212,7 @@ class EndpointFunctionGenerator:
         endpoint: ir_types.HttpEndpoint,
         request_body_parameters: Optional[AbstractRequestBodyParameters],
         idempotency_headers: List[ir_types.HttpHeader],
-    ) -> List[AST.NamedFunctionParameter]:
+    ) -> Tuple[List[AST.NamedFunctionParameter], List[str]]:
         parameters: List[AST.NamedFunctionParameter] = []
 
         for query_parameter in endpoint.query_parameters:
@@ -250,9 +228,6 @@ class EndpointFunctionGenerator:
                         type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
                     ),
                 )
-
-        if request_body_parameters is not None:
-            parameters.extend(request_body_parameters.get_parameters())
 
         for header in service.headers + endpoint.headers:
             if not self._is_header_literal(header):
@@ -281,6 +256,12 @@ class EndpointFunctionGenerator:
                     ),
                 )
 
+        parameter_names_to_deconflict: List[str] = []
+        if request_body_parameters is not None:
+            parameter_names_to_deconflict = [param.name for param in parameters]
+            body_parameters = request_body_parameters.get_parameters(names_to_deconflict=parameter_names_to_deconflict)
+            parameters.extend(body_parameters)
+
         # Always include the idempotency header parameters second to last.
         if endpoint.idempotent:
             for header in idempotency_headers:
@@ -307,7 +288,7 @@ class EndpointFunctionGenerator:
             ),
         )
 
-        return parameters
+        return parameters, parameter_names_to_deconflict
 
     def _create_endpoint_body_writer(
         self,
@@ -323,7 +304,9 @@ class EndpointFunctionGenerator:
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             request_pre_fetch_statements = (
-                request_body_parameters.get_pre_fetch_statements() if request_body_parameters is not None else None
+                request_body_parameters.get_pre_fetch_statements(self._parameter_names_to_deconflict)
+                if request_body_parameters is not None
+                else None
             )
             if request_pre_fetch_statements is not None:
                 writer.write_node(AST.Expression(request_pre_fetch_statements))

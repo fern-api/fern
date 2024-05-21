@@ -6,11 +6,11 @@ from fern_python.codegen import AST
 
 class AbstractRequestBodyParameters:
     @abstractmethod
-    def get_parameters(self) -> List[AST.NamedFunctionParameter]:
+    def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         ...
 
     @abstractmethod
-    def get_json_body(self) -> Optional[AST.Expression]:
+    def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         ...
 
     @abstractmethod
@@ -18,7 +18,7 @@ class AbstractRequestBodyParameters:
         ...
 
     @abstractmethod
-    def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
+    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
         ...
 
     @abstractmethod

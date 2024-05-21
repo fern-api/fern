@@ -22,19 +22,19 @@ class ReqWithHeadersClient:
     def get_with_custom_header(
         self,
         *,
-        request: str,
         x_test_service_header: str,
         x_test_endpoint_header: str,
+        request: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        request : str
-
         x_test_service_header : str
 
         x_test_endpoint_header : str
+
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -102,19 +102,19 @@ class AsyncReqWithHeadersClient:
     async def get_with_custom_header(
         self,
         *,
-        request: str,
         x_test_service_header: str,
         x_test_endpoint_header: str,
+        request: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        request : str
-
         x_test_service_header : str
 
         x_test_endpoint_header : str
+
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
