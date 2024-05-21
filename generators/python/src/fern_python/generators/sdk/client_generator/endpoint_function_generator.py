@@ -1,8 +1,10 @@
 from dataclasses import dataclass
+import json
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
 from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import NamedFunctionParameter
+from httpx import request
 from typing_extensions import Never
 
 from fern_python.codegen import AST
@@ -1107,6 +1109,11 @@ class EndpointFunctionSnippetGenerator:
                 )
 
         if self.example.request is not None:
+            # For some reason the example type refernce is not marking it's type as optional, so we need to specify it so the
+            # snippets (and thus unit tests) write correctly
+            is_optional = False
+            if self.endpoint.request_body is not None and self.endpoint.request_body.get_as_union().type == "reference" and self.endpoint.request_body.get_as_union().request_body_type.get_as_union().type == "container" and self.endpoint.request_body.get_as_union().request_body_type.get_as_union().container.get_as_union().type == "optional":
+                is_optional = True
             args.extend(
                 self.example.request.visit(
                     inlined_request_body=lambda inlined_request_body: self._get_snippet_for_inlined_request_body_properties(
@@ -1114,6 +1121,7 @@ class EndpointFunctionSnippetGenerator:
                     ),
                     reference=lambda reference: self._get_snippet_for_request_reference(
                         example_type_reference=reference,
+                        is_optional=is_optional,
                     ),
                 ),
             )
@@ -1181,12 +1189,13 @@ class EndpointFunctionSnippetGenerator:
     def _get_snippet_for_request_reference(
         self,
         example_type_reference: ir_types.ExampleTypeReference,
+        is_optional: bool,
     ) -> List[AST.Expression]:
-        if self.context.custom_config.inline_request_params:
+        if self.context.custom_config.inline_request_params and not is_optional:
             if example_type_reference.shape.get_as_union().type == "named":
                 inner_shape = example_type_reference.shape.get_as_union().shape
                 if inner_shape.get_as_union().type == "alias":
-                    return self._get_snippet_for_request_reference(example_type_reference)
+                    return self._get_snippet_for_request_reference(example_type_reference, is_optional)
                 if inner_shape.get_as_union().type == "object":
                     return self._get_snippet_for_request_reference_flattened(inner_shape.get_as_union())
             return self._get_snippet_for_request_reference_default(example_type_reference)
