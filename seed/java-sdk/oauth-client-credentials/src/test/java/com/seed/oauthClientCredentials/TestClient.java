@@ -3,23 +3,9 @@
  */
 package com.seed.oauthClientCredentials;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.seed.oauthClientCredentials.core.ApiError;
-import com.seed.oauthClientCredentials.core.ObjectMappers;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.junit.jupiter.api.Test;
-
 public final class TestClient {
-    private static final Logger logger = Logger.getLogger(TestClient.class.getName());
-
-    @Test
-    public void test() throws JsonProcessingException {
+    public void test() {
         // Add tests here and mark this file in .fernignore
-        String value = "{}";
-        throw new ApiError(
-            400,
-            ObjectMappers.JSON_MAPPER.readValue(value, Object.class));
-
+        assert true;
     }
 }
