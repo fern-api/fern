@@ -1,4 +1,4 @@
-import { ExampleEndpointCall, Name, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpRequestBody, Name, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -9,6 +9,7 @@ export declare namespace GeneratedRequestWrapperExampleImpl {
         example: ExampleEndpointCall;
         packageId: PackageId;
         endpointName: Name;
+        requestBody: HttpRequestBody | undefined;
     }
 }
 
@@ -17,12 +18,20 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     private example: ExampleEndpointCall;
     private packageId: PackageId;
     private endpointName: Name;
+    private requestBody: HttpRequestBody | undefined;
 
-    constructor({ bodyPropertyName, example, packageId, endpointName }: GeneratedRequestWrapperExampleImpl.Init) {
+    constructor({
+        bodyPropertyName,
+        example,
+        packageId,
+        endpointName,
+        requestBody
+    }: GeneratedRequestWrapperExampleImpl.Init) {
         this.bodyPropertyName = bodyPropertyName;
         this.example = example;
         this.packageId = packageId;
         this.endpointName = endpointName;
+        this.requestBody = requestBody;
     }
 
     public build(context: SdkContext, opts: GetReferenceOpts): ts.Expression {
@@ -41,6 +50,38 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
         };
 
         const generatedType = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpointName);
+        const fileProperties = [];
+        if (context.wrapFileProperties && this.requestBody != null && this.requestBody.type === "fileUpload") {
+            for (const property of this.requestBody.properties) {
+                if (property.type === "file") {
+                    if (property.value.isOptional) {
+                        continue;
+                    }
+                    const createReadStream = context.externalDependencies.fs.createReadStream(
+                        ts.factory.createStringLiteral("/path/to/your/file")
+                    );
+                    if (property.value.type === "fileArray") {
+                        fileProperties.push(
+                            ts.factory.createPropertyAssignment(
+                                asObjectProperty(
+                                    generatedType.getPropertyNameOfFileParameter(property.value).propertyName
+                                ),
+                                ts.factory.createArrayLiteralExpression([createReadStream])
+                            )
+                        );
+                    } else {
+                        fileProperties.push(
+                            ts.factory.createPropertyAssignment(
+                                asObjectProperty(
+                                    generatedType.getPropertyNameOfFileParameter(property.value).propertyName
+                                ),
+                                createReadStream
+                            )
+                        );
+                    }
+                }
+            }
+        }
         const headerProperties = [...this.example.serviceHeaders, ...this.example.endpointHeaders].map((header) => {
             return ts.factory.createPropertyAssignment(
                 asObjectProperty(generatedType.getPropertyNameOfNonLiteralHeaderFromName(header.name).propertyName),
@@ -105,7 +146,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
             }) ?? [];
 
         return ts.factory.createObjectLiteralExpression(
-            [...headerProperties, ...queryParamProperties, ...bodyProperties],
+            [...fileProperties, ...headerProperties, ...queryParamProperties, ...bodyProperties],
             true
         );
     }

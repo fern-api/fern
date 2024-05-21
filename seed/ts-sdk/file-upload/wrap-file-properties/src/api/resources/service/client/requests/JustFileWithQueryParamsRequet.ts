@@ -7,6 +7,7 @@ import * as fs from "fs";
 /**
  * @example
  *     {
+ *         file: fs.createReadStream("/path/to/your/file"),
  *         maybeString: "string",
  *         integer: 1,
  *         maybeInteger: 1,

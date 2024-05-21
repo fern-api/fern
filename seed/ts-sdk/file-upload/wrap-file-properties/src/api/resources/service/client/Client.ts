@@ -4,6 +4,7 @@
 
 import * as core from "../../../../core";
 import * as SeedFileUpload from "../../../index";
+import * as fs from "fs";
 import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
@@ -26,7 +27,10 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.post({})
+     *     await seedFileUpload.service.post({
+     *         file: fs.createReadStream("/path/to/your/file"),
+     *         fileList: [fs.createReadStream("/path/to/your/file")]
+     *     })
      */
     public async post(request: SeedFileUpload.MyRequest, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = new core.FormDataWrapper();
@@ -111,7 +115,9 @@ export class Service {
      * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedFileUpload.service.justFile({})
+     *     await seedFileUpload.service.justFile({
+     *         file: fs.createReadStream("/path/to/your/file")
+     *     })
      */
     public async justFile(
         request: SeedFileUpload.JustFileRequet,
@@ -167,6 +173,7 @@ export class Service {
      *
      * @example
      *     await seedFileUpload.service.justFileWithQueryParams({
+     *         file: fs.createReadStream("/path/to/your/file"),
      *         maybeString: "string",
      *         integer: 1,
      *         maybeInteger: 1,

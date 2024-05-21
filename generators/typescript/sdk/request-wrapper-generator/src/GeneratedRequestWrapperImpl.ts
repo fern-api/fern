@@ -135,7 +135,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                     return;
                                 }
                                 requestInterface.addProperty({
-                                    name: this.getParameterNameForFile({ fileProperty }),
+                                    name: this.getPropertyNameOfFileParameterFromName(fileProperty.key).propertyName,
                                     type: getTextOfTsNode(this.getFileParameterType(fileProperty, context)),
                                     hasQuestionToken: fileProperty.isOptional
                                 });
@@ -165,7 +165,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             bodyPropertyName: this.getReferencedBodyPropertyName(),
             example,
             packageId: this.packageId,
-            endpointName: this.endpoint.name
+            endpointName: this.endpoint.name,
+            requestBody: this.endpoint.requestBody
         });
     }
 
@@ -273,7 +274,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
         return [
             ...this.getAllFileUploadProperties().map((fileProperty) =>
-                this.getPropertyNameOfFileProperty(fileProperty)
+                this.getPropertyNameOfFileParameter(fileProperty)
             ),
             ...properties
         ];
@@ -362,10 +363,15 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return resolvedType.type === "container" && resolvedType.container.type === "optional";
     }
 
-    public getPropertyNameOfFileProperty(fileProperty: FileProperty): RequestWrapperNonBodyProperty {
+    public getPropertyNameOfFileParameter(fileProperty: FileProperty): RequestWrapperNonBodyProperty {
+        return this.getPropertyNameOfFileParameterFromName(fileProperty.key);
+    }
+
+    public getPropertyNameOfFileParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
-            safeName: fileProperty.key.name.camelCase.safeName,
-            propertyName: this.getParameterNameForFile({ fileProperty })
+            safeName: name.name.camelCase.safeName,
+            propertyName:
+                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
         };
     }
 
@@ -448,12 +454,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.retainOriginalCasing
             ? this.endpoint.sdkRequest.shape.bodyKey.originalName
             : this.endpoint.sdkRequest.shape.bodyKey.camelCase.unsafeName;
-    }
-
-    private getParameterNameForFile({ fileProperty }: { fileProperty: FileProperty }): string {
-        return this.retainOriginalCasing
-            ? fileProperty.key.name.originalName
-            : fileProperty.key.name.camelCase.unsafeName;
     }
 
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
