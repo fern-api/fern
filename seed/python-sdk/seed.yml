@@ -92,11 +92,10 @@ fixtures:
 scripts:
   - docker: fernapi/python-seed
     commands:
-      # The global python version is 3.8
-      - poetry install
       # - poetry run mypy .
+      # The global python version is 3.8
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
-      - fern test --command "poetry run pytest -rP ."
+      - poetry install && fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   - response-property
   - websocket
