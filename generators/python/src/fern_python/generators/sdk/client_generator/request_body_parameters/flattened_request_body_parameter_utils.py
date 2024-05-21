@@ -27,7 +27,9 @@ def get_json_body_for_inlined_request(
         with writer.indent():
             for property in properties:
                 property_name = property.name
-                possible_literal_value = context.get_literal_value(property.raw_type)
+                possible_literal_value = (
+                    context.get_literal_value(property.raw_type) if property.raw_type is not None else None
+                )
                 if possible_literal_value is not None and type(possible_literal_value) is str:
                     writer.write_line(f'"{property.raw_name}": "{possible_literal_value}",')
                 elif possible_literal_value is not None and type(possible_literal_value) is bool:
@@ -50,11 +52,15 @@ def get_pre_fetch_statements_for_inlined_request(
     optional_properties: List[AST.NamedFunctionParameter] = []
     required_properties: List[AST.NamedFunctionParameter] = []
     for body_property in properties:
-        type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
-            body_property.raw_type,
-            in_endpoint=True,
+        type_hint = (
+            context.pydantic_generator_context.get_type_hint_for_type_reference(
+                body_property.raw_type,
+                in_endpoint=True,
+            )
+            if body_property.raw_type
+            else None
         )
-        if type_hint.is_optional:
+        if type_hint is not None and type_hint.is_optional:
             optional_properties.append(body_property)
         else:
             required_properties.append(body_property)
@@ -69,15 +75,17 @@ def get_pre_fetch_statements_for_inlined_request(
             writer.write_line("{")
             with writer.indent():
                 for required_property in required_properties:
-                    literal_value = context.get_literal_value(reference=required_property.raw_type)
+                    literal_value = (
+                        context.get_literal_value(reference=required_property.raw_type)
+                        if required_property.raw_type is not None
+                        else None
+                    )
                     if literal_value is not None and type(literal_value) is str:
                         writer.write_line(f'"{required_property.raw_name}": "{literal_value}",')
                     elif literal_value is not None and type(literal_value) is bool:
                         writer.write_line(f'"{required_property.raw_name}": {literal_value},')
                     else:
-                        writer.write_line(
-                            f'"{required_property.raw_name}": {required_property.name},'
-                        )
+                        writer.write_line(f'"{required_property.raw_name}": {required_property.name},')
             writer.write_line("}")
 
         for optional_property in optional_properties:

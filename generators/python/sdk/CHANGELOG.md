@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix: The Python SDK generator now uses safe names wherever string concat is not used (like in client generation naming), so this will update module and parameter names.
 
+## [2.3.4] - 2024-05-21
+
+- Fix: Snippets and unit tests now correctly write optional request bodies when `inline_request_params` is set to `True`. Previously the generator wrote snippets that inlined these parameters, which does not match the generated SDK itself.
+
 ## [2.3.3] - 2024-05-21
 
 - Fix: Inlined body parameters now deconflict in naming with header and query parameters by prefixing the request objects name.

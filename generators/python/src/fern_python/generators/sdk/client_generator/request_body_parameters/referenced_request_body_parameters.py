@@ -58,7 +58,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return self._context.get_literal_value(reference=type_reference) is not None
 
     # Shared with inlined_request_body_parameters.py
-    def _get_inlined_request_parameters(self, names_to_deconflict: Optional[List[str]]) -> List[AST.NamedFunctionParameter]:
+    def _get_inlined_request_parameters(
+        self, names_to_deconflict: Optional[List[str]]
+    ) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._get_all_properties_for_inlined_request_body():
             if not self._is_type_literal(property.value_type):
@@ -123,7 +125,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             AST.Expression(self._get_request_parameter_name())
             if not self.should_inline_request_parameters
             else get_json_body_for_inlined_request(
-                self._context, self._get_inlined_request_parameters(names_to_deconflict), self._are_any_properties_optional
+                self._context,
+                self._get_inlined_request_parameters(names_to_deconflict),
+                self._are_any_properties_optional,
             )
         )
 
@@ -140,7 +144,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             None
             if not self.should_inline_request_parameters
             else get_pre_fetch_statements_for_inlined_request(
-                self._context, self._get_inlined_request_parameters(names_to_deconflict), self._are_any_properties_optional
+                self._context,
+                self._get_inlined_request_parameters(names_to_deconflict),
+                self._are_any_properties_optional,
             )
         )
 
