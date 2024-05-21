@@ -191,10 +191,12 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
     switch (primitiveSchema.type) {
         case "string":
             return PrimitiveSchemaValueWithExample.string({
-                maxLength: primitiveSchema.maxLength,
+                default: primitiveSchema.default,
+                pattern: primitiveSchema.pattern,
+                format: primitiveSchema.format,
                 minLength: primitiveSchema.minLength,
-                example: undefined,
-                format: undefined
+                maxLength: primitiveSchema.maxLength,
+                example: undefined
             });
         case "base64":
             return PrimitiveSchemaValueWithExample.base64({
@@ -214,6 +216,12 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             });
         case "double":
             return PrimitiveSchemaValueWithExample.double({
+                default: primitiveSchema.default,
+                minimum: primitiveSchema.minimum,
+                maximum: primitiveSchema.maximum,
+                exclusiveMinimum: primitiveSchema.exclusiveMinimum,
+                exclusiveMaximum: primitiveSchema.exclusiveMaximum,
+                multipleOf: primitiveSchema.multipleOf,
                 example: undefined
             });
         case "float":
@@ -222,6 +230,12 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             });
         case "int":
             return PrimitiveSchemaValueWithExample.int({
+                default: primitiveSchema.default,
+                minimum: primitiveSchema.minimum,
+                maximum: primitiveSchema.maximum,
+                exclusiveMinimum: primitiveSchema.exclusiveMinimum,
+                exclusiveMaximum: primitiveSchema.exclusiveMaximum,
+                multipleOf: primitiveSchema.multipleOf,
                 example: undefined
             });
         case "int64":

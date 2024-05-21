@@ -122,10 +122,15 @@ async function visitEndpoint({
                                 docs: createDocsVisitor(visitor, nodePathForQueryParameter),
                                 availability: noop,
                                 type: async (type) => {
-                                    await visitTypeReference(type, [...nodePathForQueryParameter, "type"]);
+                                    await visitTypeReference(type, [...nodePathForQueryParameter, "type"], {
+                                        _default: queryParameter.default,
+                                        validation: queryParameter.validation
+                                    });
                                 },
                                 "allow-multiple": noop,
-                                audiences: noop
+                                audiences: noop,
+                                default: noop,
+                                validation: noop
                             });
                         }
                     }
@@ -183,10 +188,14 @@ async function visitEndpoint({
                                             availability: noop,
                                             type: async (type) => {
                                                 await visitTypeReference(type, [...nodePathForProperty, "type"], {
-                                                    location: TypeReferenceLocation.InlinedRequestProperty
+                                                    location: TypeReferenceLocation.InlinedRequestProperty,
+                                                    _default: property.default,
+                                                    validation: property.validation
                                                 });
                                             },
-                                            audiences: noop
+                                            audiences: noop,
+                                            default: noop,
+                                            validation: noop
                                         });
                                     }
                                 }
@@ -467,8 +476,13 @@ export async function visitPathParameters({
                 await visitObject(pathParameter, {
                     docs: createDocsVisitor(visitor, nodePathForPathParameter),
                     type: async (type) => {
-                        await visitTypeReference(type, [...nodePathForPathParameter, "type"]);
-                    }
+                        await visitTypeReference(type, [...nodePathForPathParameter, "type"], {
+                            _default: pathParameter.default,
+                            validation: pathParameter.validation
+                        });
+                    },
+                    default: noop,
+                    validation: noop
                 });
             }
         }
@@ -502,11 +516,16 @@ async function visitHeaders({
                 name: noop,
                 availability: noop,
                 type: async (type) => {
-                    await visitTypeReference(type, nodePathForHeader);
+                    await visitTypeReference(type, nodePathForHeader, {
+                        _default: header.default,
+                        validation: header.validation
+                    });
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
-                env: noop
+                env: noop,
+                default: noop,
+                validation: noop
             });
         }
     }

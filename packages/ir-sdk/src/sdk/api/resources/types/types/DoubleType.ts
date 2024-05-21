@@ -6,5 +6,5 @@ import * as FernIr from "../../..";
 
 export interface DoubleType {
     default: number | undefined;
-    validation: FernIr.IntegerValidationRules | undefined;
+    validation: FernIr.DoubleValidationRules | undefined;
 }

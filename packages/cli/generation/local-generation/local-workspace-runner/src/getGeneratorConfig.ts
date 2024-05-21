@@ -255,7 +255,8 @@ function newDummyPublishOutputConfig(
                     packageName: (outputMode as PypiOutput)?.coordinate ?? "",
                     password: (outputMode as PypiOutput)?.password ?? "",
                     registryUrl: (outputMode as PypiOutput)?.registryUrl ?? "",
-                    username: (outputMode as PypiOutput)?.username ?? ""
+                    username: (outputMode as PypiOutput)?.username ?? "",
+                    pypiMetadata: (outputMode as PypiOutput)?.pypiMetadata
                 },
                 rubygems: {
                     registryUrl: (outputMode as RubyGemsOutput)?.registryUrl ?? "",

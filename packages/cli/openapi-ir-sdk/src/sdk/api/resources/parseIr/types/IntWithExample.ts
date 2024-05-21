@@ -3,5 +3,11 @@
  */
 
 export interface IntWithExample {
+    default: number | undefined;
+    minimum: number | undefined;
+    maximum: number | undefined;
+    exclusiveMinimum: boolean | undefined;
+    exclusiveMaximum: boolean | undefined;
+    multipleOf: number | undefined;
     example: number | undefined;
 }

@@ -293,9 +293,20 @@ export function buildMapTypeDeclaration({
 }
 
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
+    const typeReference = buildPrimitiveTypeReference(schema);
+    if (typeof typeReference === "string") {
+        return {
+            name: schema.nameOverride ?? schema.generatedName,
+            schema: typeReference
+        };
+    }
+    // We don't want to include the default value in the type alias declaration.
+    const { default: _, ...rest } = typeReference;
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: buildPrimitiveTypeReference(schema)
+        schema: {
+            ...rest
+        }
     };
 }
 

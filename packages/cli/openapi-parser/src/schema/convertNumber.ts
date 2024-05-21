@@ -5,6 +5,12 @@ export function convertNumber({
     nameOverride,
     generatedName,
     format,
+    _default,
+    minimum,
+    maximum,
+    exclusiveMinimum,
+    exclusiveMaximum,
+    multipleOf,
     description,
     wrapAsNullable,
     example,
@@ -13,6 +19,12 @@ export function convertNumber({
     nameOverride: string | undefined;
     generatedName: string;
     format: string | undefined;
+    _default: number | undefined;
+    minimum: number | undefined;
+    maximum: number | undefined;
+    exclusiveMinimum: boolean | undefined;
+    exclusiveMaximum: boolean | undefined;
+    multipleOf: number | undefined;
     description: string | undefined;
     wrapAsNullable: boolean;
     example: number | undefined;
@@ -23,6 +35,12 @@ export function convertNumber({
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.double({
+                default: _default,
+                minimum,
+                maximum,
+                exclusiveMinimum,
+                exclusiveMaximum,
+                multipleOf,
                 example
             }),
             wrapAsNullable,
@@ -45,6 +63,12 @@ export function convertNumber({
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.int({
+                default: _default,
+                minimum,
+                maximum,
+                exclusiveMinimum,
+                exclusiveMaximum,
+                multipleOf,
                 example
             }),
             wrapAsNullable,
