@@ -110,7 +110,30 @@ export class CsharpProject {
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
         await mkdir(absolutePathToProjectDirectory, { recursive: true });
 
-        const templateCsProjContents = (await readFile(getAsIsFilepath(AsIsFiles.TemplateCsProj))).toString();
+        const csproj = new CsProj({
+            version: this.context.config.output?.mode._visit({
+                downloadFiles: () => undefined,
+                github: (github) => github.version,
+                publish: (publish) => publish.version,
+                _other: () => undefined
+            }),
+            license: this.context.config.license?._visit({
+                custom: (val) => {
+                    return val.filename;
+                },
+                basic: (val) => {
+                    return val.id;
+                },
+                _other: () => undefined
+            }),
+            githubUrl: this.context.config.output?.mode._visit({
+                downloadFiles: () => undefined,
+                github: (github) => github.repoUrl,
+                publish: () => undefined,
+                _other: () => undefined
+            })
+        });
+        const templateCsProjContents = csproj.toString();
         await writeFile(
             join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`)),
             templateCsProjContents
@@ -217,5 +240,68 @@ class CsharpProjectFilepaths {
 
     public getTestProjectName(): string {
         return `${this.name}.Test`;
+    }
+}
+
+declare namespace CsProj {
+    interface Args {
+        version?: string;
+        license?: string;
+        githubUrl?: string;
+    }
+}
+
+class CsProj {
+    private version: string | undefined;
+    private license: string | undefined;
+    private githubUrl: string | undefined;
+
+    public constructor({ version, license, githubUrl }: CsProj.Args) {
+        this.version = version;
+        this.license = license;
+        this.githubUrl = githubUrl;
+    }
+
+    public toString(): string {
+        const propertyGroups = this.getPropertyGroups();
+        return `
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <NuGetAudit>false</NuGetAudit>
+        ${propertyGroups.join("\n        ")}
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="OneOf" Version="3.0.263" />
+      <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    </ItemGroup>
+
+</Project>
+`;
+    }
+
+    private getPropertyGroups(): string[] {
+        const result: string[] = [];
+        if (this.version != null) {
+            result.push(`<Version>${this.version}</Version>`);
+        }
+
+        result.push("<PackageReadmeFile>README.md</PackageReadmeFile>");
+
+        if (this.license != null) {
+            result.push(`<PackageLicenseFile>${this.license}</PackageLicenseFile>`);
+        }
+
+        if (this.githubUrl != null) {
+            result.push(`<PackageProjectUrl>${this.githubUrl}</PackageProjectUrl>`);
+        }
+        return result;
     }
 }
