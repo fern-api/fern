@@ -37,7 +37,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         packageId: PackageId;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
-        wrapFileProperties: boolean;
+        inlineFileProperties: boolean;
     }
 }
 
@@ -50,7 +50,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private packageId: PackageId;
     protected includeSerdeLayer: boolean;
     protected retainOriginalCasing: boolean;
-    protected wrapFileProperties: boolean;
+    protected inlineFileProperties: boolean;
 
     constructor({
         service,
@@ -59,7 +59,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         packageId,
         includeSerdeLayer,
         retainOriginalCasing,
-        wrapFileProperties
+        inlineFileProperties
     }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
@@ -67,7 +67,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.packageId = packageId;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.wrapFileProperties = wrapFileProperties;
+        this.inlineFileProperties = inlineFileProperties;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -131,7 +131,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     for (const property of fileUploadRequest.properties) {
                         FileUploadRequestProperty._visit(property, {
                             file: (fileProperty) => {
-                                if (!this.wrapFileProperties) {
+                                if (!this.inlineFileProperties) {
                                     return;
                                 }
                                 requestInterface.addProperty({
@@ -269,7 +269,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             ),
             ...this.getAllNonLiteralHeaders(context).map((header) => this.getPropertyNameOfNonLiteralHeader(header))
         ];
-        if (!this.wrapFileProperties) {
+        if (!this.inlineFileProperties) {
             return properties;
         }
         return [
@@ -326,7 +326,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                     for (const property of fileUploadRequest.properties) {
                         const isPropertyRequired = FileUploadRequestProperty._visit(property, {
                             file: (fileProperty) => {
-                                if (!this.wrapFileProperties) {
+                                if (!this.inlineFileProperties) {
                                     return false;
                                 }
                                 return !fileProperty.isOptional;

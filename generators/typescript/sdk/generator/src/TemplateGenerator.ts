@@ -27,7 +27,7 @@ export class TemplateGenerator {
     private packageId: PackageId;
     private rootPackageId: PackageId;
     private retainOriginalCasing: boolean;
-    private wrapFileProperties: boolean;
+    private inlineFileProperties: boolean;
 
     constructor({
         clientContext,
@@ -37,7 +37,7 @@ export class TemplateGenerator {
         packageId,
         rootPackageId,
         retainOriginalCasing,
-        wrapFileProperties
+        inlineFileProperties
     }: {
         clientContext: SdkContext;
         endpointContext: SdkContext;
@@ -46,7 +46,7 @@ export class TemplateGenerator {
         packageId: PackageId;
         rootPackageId: PackageId;
         retainOriginalCasing: boolean;
-        wrapFileProperties: boolean;
+        inlineFileProperties: boolean;
     }) {
         this.endpointContext = endpointContext;
         this.clientContext = clientContext;
@@ -55,7 +55,7 @@ export class TemplateGenerator {
         this.packageId = packageId;
         this.rootPackageId = rootPackageId;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.wrapFileProperties = wrapFileProperties;
+        this.inlineFileProperties = inlineFileProperties;
 
         this.opts = { isForSnippet: true };
     }
@@ -684,7 +684,7 @@ export class TemplateGenerator {
         const containerTemplateString = `[\n\t\t${TEMPLATE_SENTINEL}\n\t]`;
         return FdrSnippetTemplate.Template.iterable({
             isOptional: true,
-            containerTemplateString: this.wrapFileProperties
+            containerTemplateString: this.inlineFileProperties
                 ? `${this.getPropertyKey(key.name)}: ${containerTemplateString}`
                 : containerTemplateString,
             delimiter: ",\n\t\t",
@@ -701,7 +701,7 @@ export class TemplateGenerator {
         return FdrSnippetTemplate.Template.generic({
             imports: ['import fs from "fs";'],
             templateString:
-                this.wrapFileProperties && !isNested
+                this.inlineFileProperties && !isNested
                     ? `${this.getPropertyKey(key.name)}: ${templateString}`
                     : templateString,
             isOptional: false,
@@ -727,7 +727,7 @@ export class TemplateGenerator {
         // Generally its: (`path parameters`, {`request parameter`}}
 
         const fileParamInputs = this.getFileUploadRequestParametersFromEndpoint();
-        if (!this.wrapFileProperties && fileParamInputs.length > 0) {
+        if (!this.inlineFileProperties && fileParamInputs.length > 0) {
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(
                     FdrSnippetTemplate.Template.generic({
@@ -759,7 +759,7 @@ export class TemplateGenerator {
 
         // Finally, if there's a request param, build that.
         const requestParamInputs = this.getRequestParametersFromEndpoint();
-        if (this.wrapFileProperties) {
+        if (this.inlineFileProperties) {
             requestParamInputs.push(...fileParamInputs);
         }
         if (requestParamInputs.length > 0) {

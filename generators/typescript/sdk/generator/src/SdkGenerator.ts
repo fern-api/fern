@@ -107,7 +107,7 @@ export declare namespace SdkGenerator {
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
         writeUnitTests: boolean;
-        wrapFileProperties: boolean;
+        inlineFileProperties: boolean;
         executionEnvironment: "local" | "dev" | "prod";
         organization: string;
         apiName: string;
@@ -317,7 +317,7 @@ export class SdkGenerator {
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
-            wrapFileProperties: config.wrapFileProperties,
+            inlineFileProperties: config.inlineFileProperties,
             oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
@@ -759,7 +759,7 @@ export class SdkGenerator {
                         packageId,
                         rootPackageId: rootPackage,
                         retainOriginalCasing: this.config.retainOriginalCasing,
-                        wrapFileProperties: this.config.wrapFileProperties
+                        inlineFileProperties: this.config.inlineFileProperties
                     }).generateSnippetTemplate();
                     if (snippetTemplate != null) {
                         const endpointPath = FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint));
@@ -1063,7 +1063,7 @@ export class SdkGenerator {
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
             targetRuntime: this.config.targetRuntime,
-            wrapFileProperties: this.config.wrapFileProperties,
+            inlineFileProperties: this.config.inlineFileProperties,
             generateOAuthClients: this.generateOAuthClients
         });
     }

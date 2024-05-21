@@ -51,7 +51,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
 
         const generatedType = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpointName);
         const fileProperties = [];
-        if (context.wrapFileProperties && this.requestBody != null && this.requestBody.type === "fileUpload") {
+        if (context.inlineFileProperties && this.requestBody != null && this.requestBody.type === "fileUpload") {
             for (const property of this.requestBody.properties) {
                 if (property.type === "file") {
                     if (property.value.isOptional) {

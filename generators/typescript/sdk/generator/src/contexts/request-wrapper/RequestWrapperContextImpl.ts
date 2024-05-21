@@ -15,7 +15,7 @@ export declare namespace RequestWrapperContextImpl {
         sourceFile: SourceFile;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
-        wrapFileProperties: boolean;
+        inlineFileProperties: boolean;
     }
 }
 
@@ -27,7 +27,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private sourceFile: SourceFile;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
-    private wrapFileProperties: boolean;
+    private inlineFileProperties: boolean;
 
     constructor({
         requestWrapperGenerator,
@@ -37,7 +37,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         sourceFile,
         includeSerdeLayer,
         retainOriginalCasing,
-        wrapFileProperties
+        inlineFileProperties
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -46,7 +46,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.sourceFile = sourceFile;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.wrapFileProperties = wrapFileProperties;
+        this.inlineFileProperties = inlineFileProperties;
     }
 
     public getGeneratedRequestWrapper(packageId: PackageId, endpointName: Name): GeneratedRequestWrapper {
@@ -67,7 +67,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             }),
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
-            wrapFileProperties: this.wrapFileProperties
+            inlineFileProperties: this.inlineFileProperties
         });
     }
 

@@ -30,7 +30,7 @@ export function appendPropertyToFormData({
                         wrapperName,
                         includeSerdeLayer: context.includeSerdeLayer,
                         retainOriginalCasing: context.retainOriginalCasing,
-                        wrapFileProperties: context.wrapFileProperties
+                        inlineFileProperties: context.inlineFileProperties
                     })
                 )
             });
@@ -55,7 +55,7 @@ export function appendPropertyToFormData({
                             wrapperName,
                             includeSerdeLayer: context.includeSerdeLayer,
                             retainOriginalCasing: context.retainOriginalCasing,
-                            wrapFileProperties: context.wrapFileProperties
+                            inlineFileProperties: context.inlineFileProperties
                         })
                     ),
                     ts.factory.createBlock(
@@ -80,7 +80,7 @@ export function appendPropertyToFormData({
                                 wrapperName,
                                 includeSerdeLayer: context.includeSerdeLayer,
                                 retainOriginalCasing: context.retainOriginalCasing,
-                                wrapFileProperties: context.wrapFileProperties
+                                inlineFileProperties: context.inlineFileProperties
                             })
                         ),
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),

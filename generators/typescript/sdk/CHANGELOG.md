@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.19.0] - 2024-05-20
 
-- Feature: Add `wrapFileProperties` configuration to support generating file upload properties
+- Feature: Add `inlineFileProperties` configuration to support generating file upload properties
   as in-lined request properties (instead of positional parameters). Simply configure the following:
 
   ```yaml
@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     version: 0.19.0
     ...
     config:
-      wrapFileProperties: true
+      inlineFileProperties: true
   ```
 
   **Before**:

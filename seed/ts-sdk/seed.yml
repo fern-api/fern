@@ -78,7 +78,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        wrapFileProperties: true
+        inlineFileProperties: true
       outputFolder: wrap-file-properties
   unknown:
     - customConfig: null

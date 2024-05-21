@@ -60,7 +60,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
-        wrapFileProperties: boolean;
+        inlineFileProperties: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -94,7 +94,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private targetRuntime: JavaScriptRuntime;
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
-    private wrapFileProperties: boolean;
+    private inlineFileProperties: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -115,7 +115,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
-        wrapFileProperties,
+        inlineFileProperties,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -129,7 +129,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.wrapFileProperties = wrapFileProperties;
+        this.inlineFileProperties = inlineFileProperties;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -159,7 +159,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
                             retainOriginalCasing: this.retainOriginalCasing,
-                            wrapFileProperties: this.wrapFileProperties
+                            inlineFileProperties: this.inlineFileProperties
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({

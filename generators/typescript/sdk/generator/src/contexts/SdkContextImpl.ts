@@ -97,7 +97,7 @@ export declare namespace SdkContextImpl {
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
         generateOAuthClients: boolean;
-        wrapFileProperties: boolean;
+        inlineFileProperties: boolean;
     }
 }
 
@@ -127,7 +127,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly targetRuntime: JavaScriptRuntime;
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
-    public readonly wrapFileProperties: boolean;
+    public readonly inlineFileProperties: boolean;
     public readonly generateOAuthClients: boolean;
 
     constructor({
@@ -171,12 +171,12 @@ export class SdkContextImpl implements SdkContext {
         includeSerdeLayer,
         retainOriginalCasing,
         targetRuntime,
-        wrapFileProperties,
+        inlineFileProperties,
         generateOAuthClients
     }: SdkContextImpl.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
-        this.wrapFileProperties = wrapFileProperties;
+        this.inlineFileProperties = inlineFileProperties;
         this.targetRuntime = targetRuntime;
         this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
@@ -250,7 +250,7 @@ export class SdkContextImpl implements SdkContext {
             importsManager,
             includeSerdeLayer,
             retainOriginalCasing,
-            wrapFileProperties
+            inlineFileProperties
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

@@ -27,7 +27,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     includeApiReference: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
     allowExtraFields: z.optional(z.boolean()),
-    wrapFileProperties: z.optional(z.boolean()),
+    inlineFileProperties: z.optional(z.boolean()),
 
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()]))
