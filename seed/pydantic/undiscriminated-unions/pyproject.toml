@@ -27,6 +27,9 @@ packages = [
     { include = "seed/undiscriminated_unions", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/undiscriminated-unions/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

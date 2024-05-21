@@ -27,6 +27,9 @@ packages = [
     { include = "seed/api_wide_base_path", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/api-wide-base-path/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

@@ -27,6 +27,9 @@ packages = [
     { include = "seed/oauth_client_credentials", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/oauth-client-credentials/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

@@ -27,6 +27,9 @@ packages = [
     { include = "seed/basic_auth", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/basic-auth/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

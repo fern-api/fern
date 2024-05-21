@@ -27,6 +27,9 @@ packages = [
     { include = "seed/multi_url_environment", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/multi-url-environment/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

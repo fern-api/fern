@@ -27,6 +27,9 @@ packages = [
     { include = "seed/bearer_token_environment_variable", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/bearer-token-environment-variable/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

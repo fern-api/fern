@@ -27,6 +27,9 @@ packages = [
     { include = "seed/idempotency_headers", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/idempotency-headers/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

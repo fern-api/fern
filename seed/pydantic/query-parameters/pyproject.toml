@@ -27,6 +27,9 @@ packages = [
     { include = "seed/query_parameters", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/query-parameters/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

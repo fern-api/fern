@@ -27,6 +27,9 @@ packages = [
     { include = "seed/error_property", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/error-property/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

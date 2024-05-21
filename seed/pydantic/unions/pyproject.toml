@@ -27,6 +27,9 @@ packages = [
     { include = "seed/unions", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/unions/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

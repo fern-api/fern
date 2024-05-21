@@ -27,6 +27,9 @@ packages = [
     { include = "seed/pagination", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/pagination/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 
