@@ -40,7 +40,12 @@ type Error struct {
 	// If multiple errors occured (e.g., with param validation), the list of errors that occured.
 	Errors []*Error `json:"errors,omitempty" url:"errors,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (e *Error) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *Error) UnmarshalJSON(data []byte) error {
@@ -50,6 +55,13 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Error(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
 	e._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -79,7 +91,12 @@ type Request struct {
 	// The HTTP request body as a string.
 	Body *string `json:"body,omitempty" url:"body,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (r *Request) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
 }
 
 func (r *Request) UnmarshalJSON(data []byte) error {
@@ -89,6 +106,13 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Request(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
 	r._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -128,7 +152,12 @@ type Schedule struct {
 	Request   *Request   `json:"request,omitempty" url:"request,omitempty"`
 	CreatedAt *CreatedAt `json:"created_at,omitempty" url:"created_at,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *Schedule) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *Schedule) UnmarshalJSON(data []byte) error {
@@ -138,6 +167,13 @@ func (s *Schedule) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = Schedule(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -169,7 +205,12 @@ type Task struct {
 	Delay     *string    `json:"delay,omitempty" url:"delay,omitempty"`
 	CreatedAt *CreatedAt `json:"created_at,omitempty" url:"created_at,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (t *Task) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *Task) UnmarshalJSON(data []byte) error {
@@ -179,6 +220,13 @@ func (t *Task) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Task(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	t._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -210,7 +258,12 @@ type TaskNew struct {
 	Delay     *string    `json:"delay,omitempty" url:"delay,omitempty"`
 	CreatedAt *CreatedAt `json:"created_at,omitempty" url:"created_at,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (t *TaskNew) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *TaskNew) UnmarshalJSON(data []byte) error {
@@ -220,6 +273,13 @@ func (t *TaskNew) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = TaskNew(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	t._rawJSON = json.RawMessage(data)
 	return nil
 }

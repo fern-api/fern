@@ -3,6 +3,7 @@
 package oauthclientcredentials
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/oauth-client-credentials/fern/core"
 )
@@ -12,6 +13,29 @@ type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
 	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *TokenResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler TokenResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TokenResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
+	return nil
 }
 
 func (t *TokenResponse) String() string {

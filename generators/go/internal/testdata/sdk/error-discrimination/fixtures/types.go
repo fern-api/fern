@@ -11,7 +11,12 @@ import (
 type OrganizationNotFoundErrorBody struct {
 	RequestedOrganizationId string `json:"requestedOrganizationId" url:"requestedOrganizationId"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (o *OrganizationNotFoundErrorBody) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
 }
 
 func (o *OrganizationNotFoundErrorBody) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (o *OrganizationNotFoundErrorBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = OrganizationNotFoundErrorBody(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
 	o._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -40,7 +52,12 @@ func (o *OrganizationNotFoundErrorBody) String() string {
 type UserNotFoundErrorBody struct {
 	RequestedUserId string `json:"requestedUserId" url:"requestedUserId"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *UserNotFoundErrorBody) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *UserNotFoundErrorBody) UnmarshalJSON(data []byte) error {
@@ -50,6 +67,13 @@ func (u *UserNotFoundErrorBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserNotFoundErrorBody(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

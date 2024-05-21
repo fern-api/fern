@@ -11,7 +11,12 @@ import (
 type WithAuthToken struct {
 	Value string `json:"value" url:"value"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (w *WithAuthToken) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
 }
 
 func (w *WithAuthToken) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (w *WithAuthToken) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithAuthToken(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
 	w._rawJSON = json.RawMessage(data)
 	return nil
 }

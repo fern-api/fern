@@ -63,7 +63,12 @@ type Identifier struct {
 	Value string `json:"value" url:"value"`
 	Label string `json:"label" url:"label"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (i *Identifier) GetExtraProperties() map[string]interface{} {
+	return i.extraProperties
 }
 
 func (i *Identifier) UnmarshalJSON(data []byte) error {
@@ -73,6 +78,13 @@ func (i *Identifier) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = Identifier(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+
 	i._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -145,7 +157,12 @@ type Actor struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (a *Actor) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
 }
 
 func (a *Actor) UnmarshalJSON(data []byte) error {
@@ -155,6 +172,13 @@ func (a *Actor) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = Actor(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+
 	a._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -175,7 +199,12 @@ type Actress struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (a *Actress) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
 }
 
 func (a *Actress) UnmarshalJSON(data []byte) error {
@@ -185,6 +214,13 @@ func (a *Actress) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = Actress(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+
 	a._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -275,7 +311,12 @@ type Directory struct {
 	Files       []*File      `json:"files,omitempty" url:"files,omitempty"`
 	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (d *Directory) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
 }
 
 func (d *Directory) UnmarshalJSON(data []byte) error {
@@ -285,6 +326,13 @@ func (d *Directory) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*d = Directory(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+
 	d._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -305,7 +353,12 @@ type Entity struct {
 	Type *Type  `json:"type,omitempty" url:"type,omitempty"`
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (e *Entity) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *Entity) UnmarshalJSON(data []byte) error {
@@ -315,6 +368,13 @@ func (e *Entity) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Entity(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
 	e._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -409,7 +469,12 @@ type ExceptionInfo struct {
 	ExceptionMessage    string `json:"exceptionMessage" url:"exceptionMessage"`
 	ExceptionStacktrace string `json:"exceptionStacktrace" url:"exceptionStacktrace"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (e *ExceptionInfo) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *ExceptionInfo) UnmarshalJSON(data []byte) error {
@@ -419,6 +484,13 @@ func (e *ExceptionInfo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = ExceptionInfo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
 	e._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -448,7 +520,12 @@ type ExtendedMovie struct {
 	Cast     []string               `json:"cast,omitempty" url:"cast,omitempty"`
 	type_    string
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (e *ExtendedMovie) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *ExtendedMovie) Type() string {
@@ -467,6 +544,12 @@ func (e *ExtendedMovie) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExtendedMovie(unmarshaler.embed)
 	e.type_ = "movie"
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e, "type")
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
 
 	e._rawJSON = json.RawMessage(data)
 	return nil
@@ -500,7 +583,12 @@ type File struct {
 	Name     string `json:"name" url:"name"`
 	Contents string `json:"contents" url:"contents"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *File) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *File) UnmarshalJSON(data []byte) error {
@@ -510,6 +598,13 @@ func (f *File) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = File(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -628,7 +723,12 @@ type Migration struct {
 	Name   string          `json:"name" url:"name"`
 	Status MigrationStatus `json:"status" url:"status"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *Migration) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Migration) UnmarshalJSON(data []byte) error {
@@ -638,6 +738,13 @@ func (m *Migration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Migration(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -686,7 +793,12 @@ type Moment struct {
 	Date     time.Time `json:"date" url:"date" format:"date"`
 	Datetime time.Time `json:"datetime" url:"datetime"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *Moment) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Moment) UnmarshalJSON(data []byte) error {
@@ -704,6 +816,12 @@ func (m *Moment) UnmarshalJSON(data []byte) error {
 	*m = Moment(unmarshaler.embed)
 	m.Date = unmarshaler.Date.Time()
 	m.Datetime = unmarshaler.Datetime.Time()
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
 
 	m._rawJSON = json.RawMessage(data)
 	return nil
@@ -747,7 +865,12 @@ type Movie struct {
 	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
 	type_    string
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *Movie) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Movie) Type() string {
@@ -766,6 +889,12 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	}
 	*m = Movie(unmarshaler.embed)
 	m.type_ = "movie"
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m, "type")
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
 
 	m._rawJSON = json.RawMessage(data)
 	return nil
@@ -802,7 +931,12 @@ type Node struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 	Trees []*Tree `json:"trees,omitempty" url:"trees,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (n *Node) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
 }
 
 func (n *Node) UnmarshalJSON(data []byte) error {
@@ -812,6 +946,13 @@ func (n *Node) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = Node(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
 	n._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -831,7 +972,12 @@ func (n *Node) String() string {
 type Request struct {
 	Request interface{} `json:"request,omitempty" url:"request,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (r *Request) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
 }
 
 func (r *Request) UnmarshalJSON(data []byte) error {
@@ -841,6 +987,13 @@ func (r *Request) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Request(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
 	r._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -861,7 +1014,12 @@ type Response struct {
 	Response    interface{}   `json:"response,omitempty" url:"response,omitempty"`
 	Identifiers []*Identifier `json:"identifiers,omitempty" url:"identifiers,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (r *Response) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
 }
 
 func (r *Response) UnmarshalJSON(data []byte) error {
@@ -871,6 +1029,13 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Response(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
 	r._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -890,7 +1055,12 @@ func (r *Response) String() string {
 type ResponseType struct {
 	Type *Type `json:"type,omitempty" url:"type,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (r *ResponseType) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
 }
 
 func (r *ResponseType) UnmarshalJSON(data []byte) error {
@@ -900,6 +1070,13 @@ func (r *ResponseType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = ResponseType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
 	r._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -920,7 +1097,12 @@ type StuntDouble struct {
 	Name             string `json:"name" url:"name"`
 	ActorOrActressId string `json:"actorOrActressId" url:"actorOrActressId"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *StuntDouble) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *StuntDouble) UnmarshalJSON(data []byte) error {
@@ -930,6 +1112,13 @@ func (s *StuntDouble) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StuntDouble(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1033,7 +1222,12 @@ func (t *Test) Accept(visitor TestVisitor) error {
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (t *Tree) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *Tree) UnmarshalJSON(data []byte) error {
@@ -1043,6 +1237,13 @@ func (t *Tree) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Tree(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	t._rawJSON = json.RawMessage(data)
 	return nil
 }

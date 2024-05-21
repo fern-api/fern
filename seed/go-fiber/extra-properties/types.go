@@ -14,6 +14,10 @@ type Failure struct {
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 }
 
+func (f *Failure) GetExtraProperties() map[string]interface{} {
+	return f.ExtraProperties
+}
+
 func (f *Failure) Status() string {
 	return f.status
 }
