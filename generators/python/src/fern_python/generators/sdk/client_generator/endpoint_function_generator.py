@@ -1109,7 +1109,7 @@ class EndpointFunctionSnippetGenerator:
                 )
 
         if self.example.request is not None:
-            # For some reason the example type refernce is not marking it's type as optional, so we need to specify it so the
+            # For some reason the example type reference is not marking it's type as optional, so we need to specify it so the
             # snippets (and thus unit tests) write correctly
             is_optional = False
             if self.endpoint.request_body is not None and self.endpoint.request_body.get_as_union().type == "reference" and self.endpoint.request_body.get_as_union().request_body_type.get_as_union().type == "container" and self.endpoint.request_body.get_as_union().request_body_type.get_as_union().container.get_as_union().type == "optional":
