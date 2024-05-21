@@ -3,8 +3,8 @@ import { OutputMetadataSchema } from "./OutputMetadataSchema";
 
 export const PypiOutputMetadataSchema = OutputMetadataSchema.extend({
     keywords: z.optional(z.array(z.string())),
-    documentationLink: z.optional(z.string()),
-    homepageLink: z.optional(z.string())
+    "documentation-link": z.optional(z.string()),
+    "homepage-link": z.optional(z.string())
 });
 
 export type PypiOutputMetadataSchema = z.infer<typeof PypiOutputMetadataSchema>;
