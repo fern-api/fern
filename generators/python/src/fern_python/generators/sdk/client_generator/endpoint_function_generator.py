@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
-from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import NamedFunctionParameter
 from typing_extensions import Never
 
 from fern_python.codegen import AST
@@ -305,7 +304,9 @@ class EndpointFunctionGenerator:
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             request_pre_fetch_statements = (
-                request_body_parameters.get_pre_fetch_statements(self._parameter_names_to_deconflict) if request_body_parameters is not None else None
+                request_body_parameters.get_pre_fetch_statements(self._parameter_names_to_deconflict)
+                if request_body_parameters is not None
+                else None
             )
             if request_pre_fetch_statements is not None:
                 writer.write_node(AST.Expression(request_pre_fetch_statements))

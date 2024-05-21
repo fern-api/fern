@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from typing import List, Optional
-import fern.ir.resources as ir_types
+
 from fern_python.codegen import AST
 
 
