@@ -1026,6 +1026,14 @@ class EndpointFunctionGenerator:
             )
         return query_parameter_type_hint
 
+def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
+    return (type_reference.get_as_union().type == "reference"
+                and type_reference.get_as_union().request_body_type.get_as_union().type == "container"
+                and type_reference.get_as_union()
+                .request_body_type.get_as_union()
+                .container.get_as_union()
+                .type
+                == "optional")
 
 # TODO: this is effectively what should be exposed when creating the snippets API.
 class EndpointFunctionSnippetGenerator:
@@ -1110,18 +1118,7 @@ class EndpointFunctionSnippetGenerator:
         if self.example.request is not None:
             # For some reason the example type reference is not marking it's type as optional, so we need to specify it so the
             # snippets (and thus unit tests) write correctly
-            is_optional = False
-            if (
-                self.endpoint.request_body is not None
-                and self.endpoint.request_body.get_as_union().type == "reference"
-                and self.endpoint.request_body.get_as_union().request_body_type.get_as_union().type == "container"
-                and self.endpoint.request_body.get_as_union()
-                .request_body_type.get_as_union()
-                .container.get_as_union()
-                .type
-                == "optional"
-            ):
-                is_optional = True
+            is_optional = self.endpoint.request_body is not None and _is_type_reference_optional(self.endpoint.request_body)
             args.extend(
                 self.example.request.visit(
                     inlined_request_body=lambda inlined_request_body: self._get_snippet_for_inlined_request_body_properties(
