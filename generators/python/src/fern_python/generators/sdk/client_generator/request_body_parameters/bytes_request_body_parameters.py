@@ -19,7 +19,7 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
         self._request = request
         self._context = context
 
-    def get_parameters(self) -> List[AST.NamedFunctionParameter]:
+    def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         return [
             AST.NamedFunctionParameter(
                 name=self._get_request_parameter_name(),
@@ -35,13 +35,13 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
             raise RuntimeError("Request body is referenced by SDKRequestBody is not defined")
         return self._endpoint.sdk_request.request_parameter_name.snake_case.safe_name
 
-    def get_json_body(self) -> Optional[AST.Expression]:
+    def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         return None
 
     def get_files(self) -> Optional[AST.Expression]:
         return None
 
-    def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
+    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
         return None
 
     def is_default_body_parameter_used(self) -> bool:

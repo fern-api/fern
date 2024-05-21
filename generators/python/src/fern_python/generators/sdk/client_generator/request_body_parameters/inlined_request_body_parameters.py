@@ -30,7 +30,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
             context, self._get_all_properties_for_inlined_request_body()
         )
 
-    def get_parameters(self) -> List[AST.NamedFunctionParameter]:
+    def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._get_all_properties_for_inlined_request_body():
             if not self._is_type_literal(property.value_type):
@@ -78,17 +78,17 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
         return property.name.name.snake_case.unsafe_name
 
-    def get_json_body(self) -> Optional[AST.Expression]:
+    def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         return get_json_body_for_inlined_request(
-            self._context, self._get_all_properties_for_inlined_request_body(), self._are_any_properties_optional
+            self._context, self.get_parameters(), self._are_any_properties_optional
         )
 
     def get_files(self) -> Optional[AST.Expression]:
         return None
 
-    def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
+    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
         return get_pre_fetch_statements_for_inlined_request(
-            self._context, self._get_all_properties_for_inlined_request_body(), self._are_any_properties_optional
+            self._context, self.get_parameters(), self._are_any_properties_optional
         )
 
     def is_default_body_parameter_used(self) -> bool:

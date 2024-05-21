@@ -48,9 +48,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             union=lambda _: None,
         )
 
-    def get_parameters(self) -> List[AST.NamedFunctionParameter]:
+    def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         if self.should_inline_request_parameters:
-            return self._get_inlined_request_parameters()
+            return self._get_inlined_request_parameters(names_to_deconflict)
         else:
             return self._get_default_referenced_parameters()
 
@@ -58,7 +58,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return self._context.get_literal_value(reference=type_reference) is not None
 
     # Shared with inlined_request_body_parameters.py
-    def _get_inlined_request_parameters(self) -> List[AST.NamedFunctionParameter]:
+    def _get_inlined_request_parameters(self, names_to_deconflict: Optional[List[str]]) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._get_all_properties_for_inlined_request_body():
             if not self._is_type_literal(property.value_type):
@@ -66,9 +66,14 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     property.value_type,
                     in_endpoint=True,
                 )
+
+                property_name = self._get_property_name(property)
+                if names_to_deconflict is not None and property_name in names_to_deconflict:
+                    maybe_body_name = self.get_body_name()
+                    property_name = f'{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else "request")}_{property_name}'
                 parameters.append(
                     AST.NamedFunctionParameter(
-                        name=self._get_property_name(property),
+                        name=property_name,
                         docs=property.docs,
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                             property.value_type,
@@ -113,12 +118,12 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             )
         ]
 
-    def get_json_body(self) -> Optional[AST.Expression]:
+    def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         return (
             AST.Expression(self._get_request_parameter_name())
             if not self.should_inline_request_parameters
             else get_json_body_for_inlined_request(
-                self._context, self._get_all_properties_for_inlined_request_body(), self._are_any_properties_optional
+                self._context, self._get_inlined_request_parameters(names_to_deconflict), self._are_any_properties_optional
             )
         )
 
@@ -130,12 +135,12 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
     def get_files(self) -> Optional[AST.Expression]:
         return None
 
-    def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
+    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
         return (
             None
             if not self.should_inline_request_parameters
             else get_pre_fetch_statements_for_inlined_request(
-                self._context, self._get_all_properties_for_inlined_request_body(), self._are_any_properties_optional
+                self._context, self._get_inlined_request_parameters(names_to_deconflict), self._are_any_properties_optional
             )
         )
 
@@ -144,3 +149,14 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def get_content(self) -> Optional[AST.Expression]:
         return None
+
+    # HACK: This is a bit of a hack to deconflict parameter names when inlining the request body
+    # since these parameters can conflict with the query and header properties, we need the name
+    # of the body to deconflict them.
+    def get_body_name(self) -> Optional[ir_types.Name]:
+        return self._request_body.request_body_type.visit(
+            container=lambda _: None,
+            named=lambda t: t.name,
+            primitive=lambda _: None,
+            unknown=lambda: None,
+        )
