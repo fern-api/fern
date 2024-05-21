@@ -1,0 +1,206 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    add_from_file:
+      path: /v1/pronunciation-dictionaries/add-from-file
+      method: POST
+      auth: false
+      docs: Creates a new pronunciation dictionary from a lexicon .PLS file
+      display-name: Add A Pronunciation Dictionary
+      request:
+        name: >-
+          Body_Add_a_pronunciation_dictionary_v1_pronunciation_dictionaries_add_from_file_post
+        body:
+          properties:
+            file: optional<file>
+            name:
+              type: string
+              docs: >-
+                The name of the pronunciation dictionary, used for
+                identification only.
+            description:
+              docs: >-
+                A description of the pronunciation dictionary, used for
+                identification only.
+              type: optional<string>
+        content-type: multipart/form-data
+      response:
+        docs: Successful Response
+        type: root.AddPronunciationDictionaryResponseModel
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request:
+            name: name
+          response:
+            body:
+              id: id
+              name: name
+              created_by: created_by
+              creation_time_unix: 1
+              version_id: version_id
+              description: description
+    addRulesToThePronunciationDictionary:
+      path: /v1/pronunciation-dictionaries/{pronunciation_dictionary_id}/add-rules
+      method: POST
+      auth: false
+      docs: Add rules to the pronunciation dictionary
+      path-parameters:
+        pronunciation_dictionary_id:
+          type: string
+          docs: The id of the pronunciation dictionary
+      display-name: Add Rules To The Pronunciation Dictionary
+      request:
+        name: PronunciationDictionary
+        body:
+          properties:
+            rules:
+              docs: |-
+                List of pronunciation rules. Rule can be either:
+                    an alias rule: {'string_to_replace': 'a', 'type': 'alias', 'alias': 'b', }
+                    or a phoneme rule: {'string_to_replace': 'a', 'type': 'phoneme', 'phoneme': 'b', 'alphabet': 'ipa' }
+              type: list<PronunciationDictionaryRule>
+      response:
+        docs: Successful Response
+        type: root.AddPronunciationDictionaryRulesResponseModel
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            pronunciation_dictionary_id: pronunciation_dictionary_id
+          request:
+            rules: []
+          response:
+            body:
+              id: id
+              version_id: version_id
+    removeRulesFromThePronunciationDictionary:
+      path: >-
+        /v1/pronunciation-dictionaries/{pronunciation_dictionary_id}/remove-rules
+      method: POST
+      auth: false
+      docs: Remove rules from the pronunciation dictionary
+      path-parameters:
+        pronunciation_dictionary_id:
+          type: string
+          docs: The id of the pronunciation dictionary
+      display-name: Remove Rules From The Pronunciation Dictionary
+      request:
+        name: >-
+          BodyRemoveRulesFromThePronunciationDictionaryV1PronunciationDictionariesPronunciationDictionaryIdRemoveRulesPost
+        body:
+          properties:
+            rule_strings:
+              docs: List of strings to remove from the pronunciation dictionary.
+              type: list<string>
+      response:
+        docs: Successful Response
+        type: root.RemovePronunciationDictionaryRulesResponseModel
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            pronunciation_dictionary_id: pronunciation_dictionary_id
+          request:
+            rule_strings:
+              - rule_strings
+          response:
+            body:
+              id: id
+              version_id: version_id
+    download:
+      path: /v1/pronunciation-dictionaries/{dictionary_id}/{version_id}/download
+      method: GET
+      auth: false
+      docs: Get PLS file with a pronunciation dictionary version rules
+      path-parameters:
+        dictionary_id:
+          type: string
+          docs: The id of the pronunciation dictionary
+        version_id:
+          type: string
+          docs: The id of the version of the pronunciation dictionary
+      display-name: Get Pls File With A Pronunciation Dictionary Version Rules
+      response:
+        docs: Successful Response
+        type: text
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            dictionary_id: Fm6AvNgS53NXe6Kqxp3e
+            version_id: KZFyRUq3R6kaqhKI146w
+    get:
+      path: /v1/pronunciation-dictionaries/{pronunciation_dictionary_id}/
+      method: GET
+      auth: false
+      docs: Get metadata for a pronunciation dictionary
+      path-parameters:
+        pronunciation_dictionary_id:
+          type: string
+          docs: The id of the pronunciation dictionary
+      display-name: Get metadata for a pronunciation dictionary
+      response:
+        docs: Successful Response
+        type: root.GetPronunciationDictionaryMetadataResponse
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            pronunciation_dictionary_id: Fm6AvNgS53NXe6Kqxp3e
+          response:
+            body:
+              id: Fm6AvNgS53NXe6Kqxp3e
+              latest_version_id: KZFyRUq3R6kaqhKI146w
+              name: example
+              created_by: o9WISTz8KvevBMaOA9l0p4wrfsf1
+              creation_time_unix: 1713968202235
+              description: null
+    get_all:
+      path: /v1/pronunciation-dictionaries/
+      method: GET
+      auth: false
+      docs: >-
+        Get a list of the pronunciation dictionaries you have access to and
+        their metadata
+      display-name: Get Pronunciation Dictionaries
+      request:
+        name: PronunciationDictionaryGetAllRequest
+        query-parameters:
+          cursor:
+            type: optional<string>
+            docs: Used for fetching next page. Cursor is returned in the response.
+          page_size:
+            type: optional<integer>
+            docs: >-
+              How many pronunciation dictionaries to return at maximum. Can not
+              exceed 100, defaults to 30.
+      response:
+        docs: Successful Response
+        type: root.GetPronunciationDictionariesMetadataResponseModel
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - query-parameters:
+            page_size: 1
+          response:
+            body:
+              pronunciation_dictionaries:
+                - id: Fm6AvNgS53NXe6Kqxp3e
+                  latest_version_id: KZFyRUq3R6kaqhKI146w
+                  name: example
+                  created_by: o9WISTz8KvevBMaOA9l0p4wrfsf1
+                  creation_time_unix: 1713968202235
+                  description: null
+              next_cursor: Rm02QXZOZ1M1M05YZTZLcXhwM2U=
+              has_more: true
+types:
+  PronunciationDictionaryRule:
+    discriminant: type
+    base-properties: {}
+    union:
+      alias: root.PronunciationDictionaryAliasRuleRequestModel
+      phoneme: root.PronunciationDictionaryPhonemeRuleRequestModel

@@ -1,0 +1,101 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    convert:
+      path: /v1/speech-to-speech/{voice_id}
+      method: POST
+      auth: false
+      docs: >-
+        Create speech by combining the content and emotion of the uploaded audio
+        with a voice of your choice.
+      path-parameters:
+        voice_id:
+          type: string
+          docs: >-
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices
+            to list all the available voices.
+      display-name: Convert
+      request:
+        name: Body_Speech_to_Speech_v1_speech_to_speech__voice_id__post
+        query-parameters:
+          optimize_streaming_latency:
+            type: optional<root.OptimizeStreamingLatency>
+            docs: >
+              You can turn on latency optimizations at some cost of quality. The
+              best possible final latency varies by model.
+          output_format:
+            type: optional<root.OutputFormat>
+            docs: The output format of the generated audio.
+        body:
+          properties:
+            audio: file
+            model_id:
+              docs: >-
+                Identifier of the model that will be used, you can query them
+                using GET /v1/models. The model needs to have support for speech
+                to speech, you can check this using the can_do_voice_conversion
+                property.
+              type: optional<string>
+            voice_settings:
+              docs: >-
+                Voice settings overriding stored setttings for the given voice.
+                They are applied only on the given request. Needs to be send as
+                a JSON encoded string.
+              type: optional<string>
+        content-type: multipart/form-data
+      response:
+        docs: Successful Response
+        type: file
+      errors:
+        - root.UnprocessableEntityError
+    convert_as_stream:
+      path: /v1/speech-to-speech/{voice_id}/stream
+      method: POST
+      auth: false
+      docs: >-
+        Create speech by combining the content and emotion of the uploaded audio
+        with a voice of your choice and returns an audio stream.
+      path-parameters:
+        voice_id:
+          type: string
+          docs: >-
+            Voice ID to be used, you can use https://api.elevenlabs.io/v1/voices
+            to list all the available voices.
+      display-name: Convert as Stream
+      request:
+        name: >-
+          Body_Speech_to_Speech_Streaming_v1_speech_to_speech__voice_id__stream_post
+        query-parameters:
+          optimize_streaming_latency:
+            type: optional<root.OptimizeStreamingLatency>
+            docs: >
+              You can turn on latency optimizations at some cost of quality. The
+              best possible final latency varies by model.
+          output_format:
+            type: optional<root.OutputFormat>
+            docs: The output format of the generated audio.
+        body:
+          properties:
+            audio: file
+            model_id:
+              docs: >-
+                Identifier of the model that will be used, you can query them
+                using GET /v1/models. The model needs to have support for speech
+                to speech, you can check this using the can_do_voice_conversion
+                property.
+              type: optional<string>
+            voice_settings:
+              docs: >-
+                Voice settings overriding stored setttings for the given voice.
+                They are applied only on the given request. Needs to be send as
+                a JSON encoded string.
+              type: optional<string>
+        content-type: multipart/form-data
+      response:
+        docs: Successful Response
+        type: file
+      errors:
+        - root.UnprocessableEntityError

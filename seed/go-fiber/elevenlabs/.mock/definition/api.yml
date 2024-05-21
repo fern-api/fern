@@ -1,0 +1,16 @@
+name: elevenlabs
+error-discrimination:
+  strategy: status-code
+display-name: ElevenLabs API Documentation
+default-environment: Production
+environments:
+  Production: https://api.elevenlabs.io/
+headers:
+  xi-api-key:
+    type: optional<string>
+    name: apiKey
+    docs: >-
+      Your API key. This is required by most endpoints to access our API
+      programatically. You can view your xi-api-key using the 'Profile' tab on
+      the website.
+    env: ELEVEN_API_KEY

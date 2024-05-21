@@ -12,7 +12,12 @@ type Notification struct {
 	Id      string `json:"id" url:"id"`
 	Message string `json:"message" url:"message"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (n *Notification) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
 }
 
 func (n *Notification) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (n *Notification) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = Notification(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
 	n._rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -1,0 +1,754 @@
+errors:
+  UnprocessableEntityError:
+    status-code: 422
+    type: HTTPValidationError
+    docs: Validation Error
+types:
+  AddProjectResponseModel:
+    properties:
+      project: ProjectResponse
+  AddPronunciationDictionaryResponseModel:
+    properties:
+      id: string
+      name: string
+      created_by: string
+      creation_time_unix: integer
+      version_id: string
+      description: optional<string>
+  AddPronunciationDictionaryRulesResponseModel:
+    properties:
+      id: string
+      version_id: string
+  AddVoiceResponseModel:
+    properties:
+      voice_id: string
+  AudioNativeCreateProjectResponseModel:
+    properties:
+      project_id: string
+      converting: boolean
+      html_snippet: string
+  ChapterState:
+    enum:
+      - default
+      - converting
+  ChapterResponse:
+    properties:
+      chapter_id: string
+      name: string
+      last_conversion_date_unix: integer
+      conversion_progress: double
+      can_be_downloaded: boolean
+      state: ChapterState
+      statistics: ChapterStatisticsResponse
+  ChapterSnapshotResponse:
+    properties:
+      chapter_snapshot_id: string
+      project_id: string
+      chapter_id: string
+      created_at_unix: integer
+      name: string
+  ChapterSnapshotsResponse:
+    properties:
+      snapshots: list<ChapterSnapshotResponse>
+  ChapterStatisticsResponse:
+    properties:
+      characters_unconverted: integer
+      characters_converted: integer
+      paragraphs_converted: integer
+      paragraphs_unconverted: integer
+  DoDubbingResponse:
+    properties:
+      dubbing_id: string
+      expected_duration_sec: double
+  DubbingMetadataResponse:
+    properties:
+      dubbing_id: string
+      name: string
+      status: string
+      error: string
+      target_languages: list<string>
+  Currency:
+    enum:
+      - usd
+      - eur
+  SubscriptionStatus:
+    enum:
+      - trialing
+      - active
+      - incomplete
+      - incomplete_expired
+      - past_due
+      - canceled
+      - unpaid
+      - free
+  ExtendedSubscriptionResponseModelBillingPeriod:
+    enum:
+      - monthly_period
+      - annual_period
+  Subscription:
+    properties:
+      tier: string
+      character_count: integer
+      character_limit: integer
+      can_extend_character_limit: boolean
+      allowed_to_extend_character_limit: boolean
+      next_character_count_reset_unix: integer
+      voice_limit: integer
+      max_voice_add_edits: optional<integer>
+      voice_add_edit_counter: optional<integer>
+      professional_voice_limit: integer
+      can_extend_voice_limit: boolean
+      can_use_instant_voice_cloning: boolean
+      can_use_professional_voice_cloning: boolean
+      currency: optional<Currency>
+      status: optional<SubscriptionStatus>
+      billing_period: optional<ExtendedSubscriptionResponseModelBillingPeriod>
+      next_invoice: optional<Invoice>
+      has_open_invoices: optional<boolean>
+  FeedbackItem:
+    properties:
+      thumbs_up: boolean
+      feedback: string
+      emotions: boolean
+      inaccurate_clone: boolean
+      glitches: boolean
+      audio_quality: boolean
+      other: boolean
+      review_status: optional<string>
+  FinetuningState:
+    enum:
+      - not_started
+      - queued
+      - fine_tuning
+      - fine_tuned
+      - failed
+      - delayed
+  FineTuningResponse:
+    properties:
+      is_allowed_to_fine_tune: optional<boolean>
+      finetuning_state: optional<FinetuningState>
+      verification_failures: optional<list<string>>
+      verification_attempts_count: optional<integer>
+      manual_verification_requested: optional<boolean>
+      language: optional<string>
+      finetuning_progress: optional<map<string, double>>
+      message: optional<string>
+      dataset_duration_seconds: optional<double>
+      verification_attempts: optional<list<VerificationAttemptResponse>>
+      slice_ids: optional<list<string>>
+      manual_verification: optional<ManualVerificationResponse>
+  GetChaptersResponse:
+    properties:
+      chapters: list<ChapterResponse>
+  GetLibraryVoicesResponse:
+    properties:
+      voices: list<LibraryVoiceResponse>
+      has_more: boolean
+      last_sort_id: optional<string>
+  GetProjectsResponse:
+    properties:
+      projects: list<ProjectResponse>
+  GetPronunciationDictionariesMetadataResponseModel:
+    properties:
+      pronunciation_dictionaries: list<GetPronunciationDictionaryMetadataResponse>
+      next_cursor: string
+      has_more: boolean
+  GetPronunciationDictionaryMetadataResponse:
+    properties:
+      id: string
+      latest_version_id: string
+      name: string
+      created_by: string
+      creation_time_unix: integer
+      description: optional<string>
+  GetSpeechHistoryResponse:
+    properties:
+      history: list<SpeechHistoryItemResponse>
+      last_history_item_id: string
+      has_more: boolean
+  GetVoicesResponse:
+    properties:
+      voices: list<Voice>
+  HTTPValidationError:
+    properties:
+      detail: optional<list<ValidationError>>
+  Invoice:
+    properties:
+      amount_due_cents: integer
+      next_payment_attempt_unix: integer
+  LanguageResponse:
+    properties:
+      language_id: string
+      name: string
+  LibraryVoiceResponse:
+    properties:
+      public_owner_id: string
+      voice_id: string
+      date_unix: integer
+      name: string
+      accent: string
+      gender: string
+      age: string
+      descriptive: string
+      use_case: string
+      category: string
+      language: string
+      description: string
+      preview_url: string
+      usage_character_count_1y: integer
+      usage_character_count_7d: integer
+      cloned_by_count: integer
+      rate: double
+      free_users_allowed: boolean
+      live_moderation_enabled: boolean
+      featured: boolean
+      notice_period: optional<integer>
+      instagram_username: optional<string>
+      twitter_username: optional<string>
+      youtube_username: optional<string>
+      tiktok_username: optional<string>
+  ManualVerificationFileResponse:
+    properties:
+      file_id: string
+      file_name: string
+      mime_type: string
+      size_bytes: integer
+      upload_date_unix: integer
+  ManualVerificationResponse:
+    properties:
+      extra_text: string
+      request_time_unix: integer
+      files: list<ManualVerificationFileResponse>
+  Model:
+    properties:
+      model_id: string
+      name: optional<string>
+      can_be_finetuned: optional<boolean>
+      can_do_text_to_speech: optional<boolean>
+      can_do_voice_conversion: optional<boolean>
+      can_use_style: optional<boolean>
+      can_use_speaker_boost: optional<boolean>
+      serves_pro_voices: optional<boolean>
+      token_cost_factor: optional<double>
+      description: optional<string>
+      requires_alpha_access: optional<boolean>
+      max_characters_request_free_user: optional<integer>
+      max_characters_request_subscribed_user: optional<integer>
+      languages: optional<list<LanguageResponse>>
+  ProjectState:
+    enum:
+      - default
+      - converting
+  ProjectExtendedResponseModel:
+    properties:
+      project_id: string
+      name: string
+      create_date_unix: integer
+      default_title_voice_id: string
+      default_paragraph_voice_id: string
+      default_model_id: string
+      last_conversion_date_unix: integer
+      can_be_downloaded: boolean
+      state: ProjectState
+      chapters: list<ChapterResponse>
+  ProjectResponse:
+    properties:
+      project_id: string
+      name: string
+      create_date_unix: integer
+      default_title_voice_id: string
+      default_paragraph_voice_id: string
+      default_model_id: string
+      last_conversion_date_unix: integer
+      can_be_downloaded: boolean
+      title: string
+      author: string
+      isbn_number: string
+      volume_normalization: boolean
+      state: ProjectState
+  ProjectSnapshotResponse:
+    properties:
+      project_snapshot_id: string
+      project_id: string
+      created_at_unix: integer
+      name: string
+  ProjectSnapshotsResponse:
+    properties:
+      snapshots: list<ProjectSnapshotResponse>
+  PronunciationDictionaryAliasRuleRequestModel:
+    properties:
+      string_to_replace: string
+      alias: string
+  PronunciationDictionaryPhonemeRuleRequestModel:
+    properties:
+      string_to_replace: string
+      phoneme: string
+      alphabet: string
+  PronunciationDictionaryVersionLocator:
+    properties:
+      pronunciation_dictionary_id: string
+      version_id: string
+  RecordingResponse:
+    properties:
+      recording_id: string
+      mime_type: string
+      size_bytes: integer
+      upload_date_unix: integer
+      transcription: string
+  RemovePronunciationDictionaryRulesResponseModel:
+    properties:
+      id: string
+      version_id: string
+  VoiceSample:
+    properties:
+      sample_id: optional<string>
+      file_name: optional<string>
+      mime_type: optional<string>
+      size_bytes: optional<integer>
+      hash: optional<string>
+  SpeechHistoryItemResponseModelVoiceCategory:
+    enum:
+      - premade
+      - cloned
+      - generated
+      - professional
+  Source:
+    enum:
+      - TTS
+      - STS
+  SpeechHistoryItemResponse:
+    properties:
+      history_item_id: string
+      request_id: optional<string>
+      voice_id: optional<string>
+      model_id: optional<string>
+      voice_name: optional<string>
+      voice_category: optional<SpeechHistoryItemResponseModelVoiceCategory>
+      text: optional<string>
+      date_unix: optional<integer>
+      character_count_change_from: optional<integer>
+      character_count_change_to: optional<integer>
+      content_type: optional<string>
+      state: optional<unknown>
+      settings: optional<map<string, unknown>>
+      feedback: optional<FeedbackItem>
+      share_link_id: optional<string>
+      source: optional<Source>
+  SsoProviderDbModelProviderType:
+    enum:
+      - saml
+      - oidc
+  SsoProviderDBModel:
+    properties:
+      provider_type: SsoProviderDbModelProviderType
+      provider_id: string
+      domains: list<string>
+  SubscriptionResponseModelBillingPeriod:
+    enum:
+      - monthly_period
+      - annual_period
+  SubscriptionResponse:
+    properties:
+      tier: string
+      character_count: integer
+      character_limit: integer
+      can_extend_character_limit: boolean
+      allowed_to_extend_character_limit: boolean
+      next_character_count_reset_unix: integer
+      voice_limit: integer
+      max_voice_add_edits: integer
+      voice_add_edit_counter: integer
+      professional_voice_limit: integer
+      can_extend_voice_limit: boolean
+      can_use_instant_voice_cloning: boolean
+      can_use_professional_voice_cloning: boolean
+      currency: Currency
+      status: SubscriptionStatus
+      billing_period: SubscriptionResponseModelBillingPeriod
+  User:
+    properties:
+      subscription: SubscriptionResponse
+      is_new_user: boolean
+      xi_api_key: string
+      can_use_delayed_payment_methods: boolean
+      is_onboarding_completed: boolean
+      first_name: optional<string>
+  ValidationErrorLocItem:
+    discriminated: false
+    union:
+      - string
+      - integer
+  ValidationError:
+    properties:
+      loc: list<ValidationErrorLocItem>
+      msg: string
+      type: string
+  VerificationAttemptResponse:
+    properties:
+      text: string
+      date_unix: integer
+      accepted: boolean
+      similarity: double
+      levenshtein_distance: double
+      recording: optional<RecordingResponse>
+  VoiceGenerationParameterOptionResponse:
+    properties:
+      name: string
+      code: string
+  VoiceGenerationParameterResponse:
+    properties:
+      genders: list<VoiceGenerationParameterOptionResponse>
+      accents: list<VoiceGenerationParameterOptionResponse>
+      ages: list<VoiceGenerationParameterOptionResponse>
+      minimum_characters: integer
+      maximum_characters: integer
+      minimum_accent_strength: double
+      maximum_accent_strength: double
+  VoiceResponseModelSafetyControl:
+    enum:
+      - NONE
+      - BAN
+      - CAPTCHA
+      - CAPTCHA_AND_MODERATION
+  Voice:
+    properties:
+      voice_id: string
+      name: optional<string>
+      samples: optional<list<VoiceSample>>
+      category: optional<string>
+      fine_tuning: optional<FineTuningResponse>
+      labels: optional<map<string, string>>
+      description: optional<string>
+      preview_url: optional<string>
+      available_for_tiers: optional<list<string>>
+      settings: optional<VoiceSettings>
+      sharing: optional<VoiceSharingResponse>
+      high_quality_base_model_ids: optional<list<string>>
+      safety_control: optional<VoiceResponseModelSafetyControl>
+      voice_verification: optional<VoiceVerificationResponse>
+      owner_id: optional<string>
+      permission_on_resource: optional<string>
+  VoiceSettings:
+    properties:
+      stability: optional<double>
+      similarity_boost: optional<double>
+      style: optional<double>
+      use_speaker_boost: optional<boolean>
+  voice_sharing_state:
+    enum:
+      - enabled
+      - disabled
+      - copied
+      - copied_disabled
+  Category:
+    enum:
+      - generated
+      - professional
+      - high_quality
+  review_status:
+    enum:
+      - not_requested
+      - pending
+      - declined
+      - allowed
+      - allowed_with_changes
+  VoiceSharingResponse:
+    properties:
+      status: optional<voice_sharing_state>
+      history_item_sample_id: optional<string>
+      date_unix: optional<integer>
+      whitelisted_emails: optional<list<string>>
+      public_owner_id: optional<string>
+      original_voice_id: optional<string>
+      financial_rewards_enabled: optional<boolean>
+      free_users_allowed: optional<boolean>
+      live_moderation_enabled: optional<boolean>
+      rate: optional<double>
+      notice_period: optional<integer>
+      disable_at_unix: optional<integer>
+      voice_mixing_allowed: optional<boolean>
+      featured: optional<boolean>
+      category: optional<Category>
+      reader_app_enabled: optional<boolean>
+      ban_reason: optional<string>
+      liked_by_count: optional<integer>
+      cloned_by_count: optional<integer>
+      name: optional<string>
+      description: optional<string>
+      labels: optional<map<string, string>>
+      review_status: optional<review_status>
+      review_message: optional<string>
+      enabled_in_library: optional<boolean>
+      instagram_username: optional<string>
+      twitter_username: optional<string>
+      youtube_username: optional<string>
+      tiktok_username: optional<string>
+  VoiceVerificationResponse:
+    properties:
+      requires_verification: boolean
+      is_verified: boolean
+      verification_failures: list<string>
+      verification_attempts_count: integer
+      language: optional<string>
+      verification_attempts: optional<list<VerificationAttemptResponse>>
+  AudioNativeGetEmbedCodeResponseModel: unknown
+  HistoryItem:
+    properties:
+      state: optional<unknown>
+      voice_category: optional<unknown>
+  History: unknown
+  Accent:
+    enum:
+      - british
+      - american
+      - african
+      - australian
+      - indian
+  Age:
+    enum:
+      - young
+      - middle_aged
+      - old
+  Gender:
+    enum:
+      - male
+      - female
+  OutputFormat:
+    enum:
+      - value: mp3_22050_32
+        docs: Output format, mp3 with 22.05kHz sample rate at 32kbps
+      - value: mp3_44100_32
+        docs: Output format, mp3 with 44.1kHz sample rate at 32kbps
+      - value: mp3_44100_64
+        docs: Output format, mp3 with 44.1kHz sample rate at 64kbps
+      - value: mp3_44100_96
+        docs: Output format, mp3 with 44.1kHz sample rate at 96kbps
+      - value: mp3_44100_128
+        docs: Default output format, mp3 with 44.1kHz sample rate at 128kbps
+      - value: mp3_44100_192
+        docs: |
+          Output format, mp3 with 44.1kHz sample rate at 192kbps.
+      - value: pcm_16000
+        docs: |
+          PCM format (S16LE) with 16kHz sample rate.
+      - value: pcm_22050
+        docs: |
+          PCM format (S16LE) with 22.05kHz sample rate.
+      - value: pcm_24000
+        docs: |
+          PCM format (S16LE) with 24kHz sample rate.
+      - value: pcm_44100
+        docs: >
+          PCM format (S16LE) with 44.1kHz sample rate. Requires you to be
+          subscribed to Independent Publisher tier or above.
+      - value: ulaw_8000
+        docs: >
+          μ-law format (sometimes written mu-law, often approximated as u-law)
+          with 8kHz sample rate. Note that this format is commonly used for
+          Twilio audio inputs.
+  OptimizeStreamingLatency:
+    enum:
+      - value: '0'
+        name: Zero
+        docs: |
+          Default mode (no latency optimizations)
+      - value: '1'
+        name: One
+        docs: >
+          Normal latency optimizations (about 50% of possible latency
+          improvement of option 3)
+      - value: '2'
+        name: Two
+        docs: >
+          Strong latency optimizations (about 75% of possible latency
+          improvement of option 3)
+      - value: '3'
+        name: Three
+        docs: |
+          Max latency optimizations
+      - value: '4'
+        name: Four
+        docs: >
+          Max latency optimizations, but also with text normalizer turned off
+          for even more latency savings (best latency, but can mispronounce eg
+          numbers and dates).
+  InitializeConnection:
+    properties:
+      text:
+        type: literal<" ">
+        docs: The initial text that must be sent is a blank space.
+      voice_settings: optional<RealtimeVoiceSettings>
+      generation_config:
+        docs: 'This property should only be provided in the first message you send. '
+        type: optional<GenerationConfig>
+      xi-api-key:
+        type: string
+        docs: >
+          Your ElevenLabs API key. This is a required parameter that should be
+          provided in the first message you send. 
+
+          You can find your API key in the [API Keys
+          section](https://elevenlabs.io/docs/api-reference/websockets#api-keys).
+  CloseConnection:
+    properties:
+      text:
+        type: literal<"">
+        docs: End the stream with an empty string
+  SendText:
+    properties:
+      text: string
+      try_trigger_generation:
+        docs: >
+          This is an advanced setting that most users shouldn't need to use. It
+          relates to our generation schedule 
+
+          explained [here](#understanding-how-our-websockets-buffer-text).
+
+
+          Use this to attempt to immediately trigger the generation of audio,
+          overriding the `chunk_length_schedule`. 
+
+          Unlike flush, `try_trigger_generation` will only generate audio if
+          our 
+
+          buffer contains more than a minimum 
+
+          threshold of characters, this is to ensure a higher quality response
+          from our model. 
+
+
+          Note that overriding the chunk schedule to generate small amounts of 
+
+          text may result in lower quality audio, therefore, only use this
+          parameter if you 
+
+          really need text to be processed immediately. We generally recommend
+          keeping the default value of 
+
+          `false` and adjusting the `chunk_length_schedule` in the
+          `generation_config` instead.
+        type: optional<boolean>
+  RealtimeVoiceSettings:
+    properties:
+      stability:
+        type: double
+        docs: Defines the stability for voice settings.
+      similarity_boost:
+        type: double
+        docs: Defines the similarity boost for voice settings.
+      style:
+        docs: >-
+          Defines the style for voice settings. This parameter is available on
+          V2+ models.
+        type: optional<double>
+      use_speaker_boost:
+        docs: >-
+          Defines the use speaker boost for voice settings. This parameter is
+          available on V2+ models.
+        type: optional<boolean>
+  GenerationConfig:
+    properties:
+      chunk_length_schedule:
+        docs: >
+          This is an advanced setting that most users shouldn't need to use. It
+          relates to our 
+
+          generation schedule explained
+          [here](https://elevenlabs.io/docs/api-reference/websockets#understanding-how-our-websockets-buffer-text).
+
+
+          Determines the minimum amount of text that needs to be sent and
+          present in our 
+
+          buffer before audio starts being generated. This is to maximise the
+          amount of context available to 
+
+          the model to improve audio quality, whilst balancing latency of the
+          returned audio chunks.
+
+
+          The default value is: [120, 160, 250, 290].
+
+
+          This means that the first chunk of audio will not be generated until
+          you send text that 
+
+          totals at least 120 characters long. The next chunk of audio will only
+          be generated once a 
+
+          further 160 characters have been sent. The third audio chunk will be
+          generated after the 
+
+          next 250 characters. Then the fourth, and beyond, will be generated in
+          sets of at least 290 characters.
+
+
+          Customize this array to suit your needs. If you want to generate audio
+          more frequently 
+
+          to optimise latency, you can reduce the values in the array. Note that
+          setting the values 
+
+          too low may result in lower quality audio. Please test and adjust as
+          needed.
+
+
+          Each item should be in the range 50-500.
+        type: optional<list<double>>
+  AudioOutput:
+    properties:
+      audio:
+        docs: >
+          A generated partial audio chunk, encoded using the selected
+          output_format, by default this 
+
+          is MP3 encoded as a base64 string.
+        type: optional<string>
+      isFinal:
+        docs: >
+          Indicates if the generation is complete. If set to `True`, `audio`
+          will be null.
+        type: optional<boolean>
+      normalizedAlignment: optional<NormalizedAlignment>
+  NormalizedAlignment:
+    docs: >
+      Alignment information for the generated audio given the input normalized
+      text sequence.
+    properties:
+      char_start_times_ms:
+        docs: >
+          A list of starting times (in milliseconds) for each character in the
+          normalized text as it 
+
+          corresponds to the audio. For instance, the character 'H' starts at
+          time 0 ms in the audio.  
+
+          Note these times are relative to the returned chunk from the model,
+          and not the 
+
+          full audio response. 
+        type: optional<list<integer>>
+      chars_durations_ms:
+        docs: >
+          A list of durations (in milliseconds) for each character in the
+          normalized text as it 
+
+          corresponds to the audio. For instance, the character 'H' lasts for 3
+          ms in the audio.  
+
+          Note these times are relative to the returned chunk from the model,
+          and not the 
+
+          full audio response.
+        type: optional<list<integer>>
+      chars:
+        docs: >
+          A list of characters in the normalized text sequence. For instance,
+          the first character is 'H'. 
+
+          Note that this list may contain spaces, punctuation, and other special
+          characters. 
+
+          The length of this list should be the same as the lengths of
+          `char_start_times_ms` and `chars_durations_ms`.
+        type: optional<list<string>>

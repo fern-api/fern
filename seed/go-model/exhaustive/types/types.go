@@ -41,6 +41,29 @@ func (w WeatherReport) Ptr() *WeatherReport {
 type NestedObjectWithOptionalField struct {
 	String       *string                  `json:"string,omitempty" url:"string,omitempty"`
 	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (n *NestedObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *NestedObjectWithOptionalField) UnmarshalJSON(data []byte) error {
+	type unmarshaler NestedObjectWithOptionalField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedObjectWithOptionalField(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
+	return nil
 }
 
 func (n *NestedObjectWithOptionalField) String() string {
@@ -53,6 +76,29 @@ func (n *NestedObjectWithOptionalField) String() string {
 type NestedObjectWithRequiredField struct {
 	String       string                   `json:"string" url:"string"`
 	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (n *NestedObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *NestedObjectWithRequiredField) UnmarshalJSON(data []byte) error {
+	type unmarshaler NestedObjectWithRequiredField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = NestedObjectWithRequiredField(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
+	return nil
 }
 
 func (n *NestedObjectWithRequiredField) String() string {
@@ -64,6 +110,29 @@ func (n *NestedObjectWithRequiredField) String() string {
 
 type ObjectWithMapOfMap struct {
 	Map map[string]map[string]string `json:"map,omitempty" url:"map,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (o *ObjectWithMapOfMap) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
+}
+
+func (o *ObjectWithMapOfMap) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithMapOfMap
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithMapOfMap(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
+	return nil
 }
 
 func (o *ObjectWithMapOfMap) String() string {
@@ -86,6 +155,12 @@ type ObjectWithOptionalField struct {
 	List     []string       `json:"list,omitempty" url:"list,omitempty"`
 	Set      []string       `json:"set,omitempty" url:"set,omitempty"`
 	Map      map[int]string `json:"map,omitempty" url:"map,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (o *ObjectWithOptionalField) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
 }
 
 func (o *ObjectWithOptionalField) UnmarshalJSON(data []byte) error {
@@ -103,6 +178,13 @@ func (o *ObjectWithOptionalField) UnmarshalJSON(data []byte) error {
 	*o = ObjectWithOptionalField(unmarshaler.embed)
 	o.Datetime = unmarshaler.Datetime.TimePtr()
 	o.Date = unmarshaler.Date.TimePtr()
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
 	return nil
 }
 
@@ -129,6 +211,29 @@ func (o *ObjectWithOptionalField) String() string {
 
 type ObjectWithRequiredField struct {
 	String string `json:"string" url:"string"`
+
+	extraProperties map[string]interface{}
+}
+
+func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
+}
+
+func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithRequiredField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithRequiredField(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
+	return nil
 }
 
 func (o *ObjectWithRequiredField) String() string {
@@ -207,6 +312,29 @@ func (a *Animal) Accept(visitor AnimalVisitor) error {
 type Cat struct {
 	Name        string `json:"name" url:"name"`
 	LikesToMeow bool   `json:"likesToMeow" url:"likesToMeow"`
+
+	extraProperties map[string]interface{}
+}
+
+func (c *Cat) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *Cat) UnmarshalJSON(data []byte) error {
+	type unmarshaler Cat
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Cat(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+
+	return nil
 }
 
 func (c *Cat) String() string {
@@ -219,6 +347,29 @@ func (c *Cat) String() string {
 type Dog struct {
 	Name        string `json:"name" url:"name"`
 	LikesToWoof bool   `json:"likesToWoof" url:"likesToWoof"`
+
+	extraProperties map[string]interface{}
+}
+
+func (d *Dog) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *Dog) UnmarshalJSON(data []byte) error {
+	type unmarshaler Dog
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Dog(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+
+	return nil
 }
 
 func (d *Dog) String() string {

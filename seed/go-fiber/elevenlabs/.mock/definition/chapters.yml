@@ -1,0 +1,228 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get_all:
+      path: /v1/projects/{project_id}/chapters
+      method: GET
+      auth: false
+      docs: Returns a list of your chapters for a project together and its metadata.
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The project_id of the project, you can query GET
+            https://api.elevenlabs.io/v1/projects to list all available
+            projects.
+      display-name: Get Chapters
+      response:
+        docs: Successful Response
+        type: root.GetChaptersResponse
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: project_id
+          response:
+            body:
+              chapters:
+                - chapter_id: chapter_id
+                  name: name
+                  last_conversion_date_unix: 1
+                  conversion_progress: 1.1
+                  can_be_downloaded: true
+                  state: default
+                  statistics:
+                    characters_unconverted: 1
+                    characters_converted: 1
+                    paragraphs_converted: 1
+                    paragraphs_unconverted: 1
+    get:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}
+      method: GET
+      auth: false
+      docs: Returns information about a specific chapter.
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The project_id of the project, you can query GET
+            https://api.elevenlabs.io/v1/projects to list all available
+            projects.
+        chapter_id:
+          type: string
+          docs: >-
+            The chapter_id of the chapter. You can query GET
+            https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list
+            all available chapters for a project.
+      display-name: Get Chapter By Id
+      response:
+        docs: Successful Response
+        type: root.ChapterResponse
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: project_id
+            chapter_id: chapter_id
+          response:
+            body:
+              chapter_id: chapter_id
+              name: name
+              last_conversion_date_unix: 1
+              conversion_progress: 1.1
+              can_be_downloaded: true
+              state: default
+              statistics:
+                characters_unconverted: 1
+                characters_converted: 1
+                paragraphs_converted: 1
+                paragraphs_unconverted: 1
+    delete:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}
+      method: DELETE
+      auth: false
+      docs: Delete a chapter by its chapter_id.
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The project_id of the project, you can query GET
+            https://api.elevenlabs.io/v1/projects to list all available
+            projects.
+        chapter_id:
+          type: string
+          docs: >-
+            The chapter_id of the chapter. You can query GET
+            https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list
+            all available chapters for a project.
+      display-name: Delete Chapter
+      response:
+        docs: Successful Response
+        type: unknown
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: project_id
+            chapter_id: chapter_id
+          response:
+            body:
+              key: value
+    convert:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}/convert
+      method: POST
+      auth: false
+      docs: Starts conversion of a specific chapter.
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The project_id of the project, you can query GET
+            https://api.elevenlabs.io/v1/projects to list all available
+            projects.
+        chapter_id:
+          type: string
+          docs: >-
+            The chapter_id of the chapter. You can query GET
+            https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list
+            all available chapters for a project.
+      display-name: Convert Chapter
+      response:
+        docs: Successful Response
+        type: unknown
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: project_id
+            chapter_id: chapter_id
+          response:
+            body:
+              key: value
+    get_all_snapshots:
+      path: /v1/projects/{project_id}/chapters/{chapter_id}/snapshots
+      method: GET
+      auth: false
+      docs: >-
+        Gets information about all the snapshots of a chapter, each snapshot
+        corresponds can be downloaded as audio. Whenever a chapter is converted
+        a snapshot will be automatically created.
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The project_id of the project, you can query GET
+            https://api.elevenlabs.io/v1/projects to list all available
+            projects.
+        chapter_id:
+          type: string
+          docs: >-
+            The chapter_id of the chapter. You can query GET
+            https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list
+            all available chapters for a project.
+      display-name: Get Chapter Snapshots
+      response:
+        docs: Successful Response
+        type: root.ChapterSnapshotsResponse
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: project_id
+            chapter_id: chapter_id
+          response:
+            body:
+              snapshots:
+                - chapter_snapshot_id: chapter_snapshot_id
+                  project_id: project_id
+                  chapter_id: chapter_id
+                  created_at_unix: 1
+                  name: name
+    stream_snapshot:
+      path: >-
+        /v1/projects/{project_id}/chapters/{chapter_id}/snapshots/{chapter_snapshot_id}/stream
+      method: POST
+      auth: false
+      docs: >-
+        Stream the audio from a chapter snapshot. Use `GET
+        /v1/projects/{project_id}/chapters/{chapter_id}/snapshots` to return the
+        chapter snapshots of a chapter.
+      path-parameters:
+        project_id:
+          type: string
+          docs: >-
+            The project_id of the project, you can query GET
+            https://api.elevenlabs.io/v1/projects to list all available
+            projects.
+        chapter_id:
+          type: string
+          docs: >-
+            The chapter_id of the chapter. You can query GET
+            https://api.elevenlabs.io/v1/projects/{project_id}/chapters to list
+            all available chapters for a project.
+        chapter_snapshot_id:
+          type: string
+          docs: >-
+            The chapter_snapshot_id of the chapter snapshot. You can query GET
+            /v1/projects/{project_id}/chapters/{chapter_id}/snapshots to the all
+            available snapshots for a chapter.
+      display-name: Stream Chapter Audio
+      request:
+        name: >-
+          BodyStreamChapterAudioV1ProjectsProjectIdChaptersChapterIdSnapshotsChapterSnapshotIdStreamPost
+        body:
+          properties:
+            convert_to_mpeg:
+              docs: Whether to convert the audio to mpeg format.
+              type: optional<boolean>
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            project_id: project_id
+            chapter_id: chapter_id
+            chapter_snapshot_id: chapter_snapshot_id
+          request: {}

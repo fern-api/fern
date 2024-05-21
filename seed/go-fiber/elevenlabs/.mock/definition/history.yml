@@ -1,0 +1,186 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get_all:
+      path: /v1/history
+      method: GET
+      auth: false
+      docs: Returns metadata about all your generated audio.
+      display-name: Get Generated Items
+      request:
+        name: HistoryGetAllRequest
+        query-parameters:
+          page_size:
+            type: optional<integer>
+            docs: >-
+              How many history items to return at maximum. Can not exceed 1000,
+              defaults to 100.
+          start_after_history_item_id:
+            type: optional<string>
+            docs: >-
+              After which ID to start fetching, use this parameter to paginate
+              across a large collection of history items. In case this parameter
+              is not provided history items will be fetched starting from the
+              most recently created one ordered descending by their creation
+              date.
+          voice_id:
+            type: optional<string>
+            docs: >-
+              Voice ID to be filtered for, you can use GET
+              https://api.elevenlabs.io/v1/voices to receive a list of voices
+              and their IDs.
+      response:
+        docs: Successful Response
+        type: root.GetSpeechHistoryResponse
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - query-parameters:
+            page_size: 1
+            voice_id: pMsXgVXv3BLzUgSXRplE
+          response:
+            body:
+              history:
+                - history_item_id: ja9xsmfGhxYcymxGcOGB
+                  request_id: BF0BZg4IwLGBlaVjv9Im
+                  voice_id: 21m00Tcm4TlvDq8ikWAM
+                  model_id: eleven_multilingual_v2
+                  voice_name: Rachel
+                  voice_category: premade
+                  text: This is an example sentence with streaming
+                  date_unix: 1714650306
+                  character_count_change_from: 17189
+                  character_count_change_to: 17231
+                  content_type: audio/mpeg
+                  state: created
+                  settings:
+                    similarity_boost: 0.5
+                    stability: 0.71
+                    style: 0
+                    use_speaker_boost: true
+                  feedback: null
+                  share_link_id: null
+                  source: TTS
+              last_history_item_id: ja9xsmfGhxYcymxGcOGB
+              has_more: true
+    get:
+      path: /v1/history/{history_item_id}
+      method: GET
+      auth: false
+      docs: Returns information about an history item by its ID.
+      path-parameters:
+        history_item_id:
+          type: string
+          docs: >-
+            History item ID to be used, you can use GET
+            https://api.elevenlabs.io/v1/history to receive a list of history
+            items and their IDs.
+      display-name: Get History Item By Id
+      response:
+        docs: Successful Response
+        type: root.SpeechHistoryItemResponse
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            history_item_id: ja9xsmfGhxYcymxGcOGB
+          response:
+            body:
+              history_item_id: ja9xsmfGhxYcymxGcOGB
+              request_id: BF0BZg4IwLGBlaVjv9Im
+              voice_id: 21m00Tcm4TlvDq8ikWAM
+              model_id: eleven_multilingual_v2
+              voice_name: Rachel
+              voice_category: premade
+              text: This is an example sentence with streaming
+              date_unix: 1714650306
+              character_count_change_from: 17189
+              character_count_change_to: 17231
+              content_type: audio/mpeg
+              state: created
+              settings:
+                stability: 0.71
+                similarity_boost: 0.5
+                style: 0
+                use_speaker_boost: true
+              feedback: null
+              share_link_id: null
+              source: TTS
+    delete:
+      path: /v1/history/{history_item_id}
+      method: DELETE
+      auth: false
+      docs: Delete a history item by its ID
+      path-parameters:
+        history_item_id:
+          type: string
+          docs: >-
+            History item ID to be used, you can use GET
+            https://api.elevenlabs.io/v1/history to receive a list of history
+            items and their IDs.
+      display-name: Delete History Item
+      response:
+        docs: Successful Response
+        type: unknown
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            history_item_id: ja9xsmfGhxYcymxGcOGB
+          response:
+            body:
+              status: ok
+    get_audio:
+      path: /v1/history/{history_item_id}/audio
+      method: GET
+      auth: false
+      docs: Returns the audio of an history item.
+      path-parameters:
+        history_item_id:
+          type: string
+          docs: >-
+            History item ID to be used, you can use GET
+            https://api.elevenlabs.io/v1/history to receive a list of history
+            items and their IDs.
+      display-name: Get Audio From History Item
+      response:
+        docs: Successful Response
+        type: file
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - path-parameters:
+            history_item_id: ja9xsmfGhxYcymxGcOGB
+    download:
+      path: /v1/history/download
+      method: POST
+      auth: false
+      docs: >-
+        Download one or more history items. If one history item ID is provided,
+        we will return a single audio file. If more than one history item IDs
+        are provided, we will provide the history items packed into a .zip file.
+      display-name: Download History Items
+      request:
+        name: DownloadHistoryRequest
+        body:
+          properties:
+            history_item_ids:
+              docs: >-
+                A list of history items to download, you can get IDs of history
+                items and other metadata using the GET
+                https://api.elevenlabs.io/v1/history endpoint.
+              type: list<string>
+            output_format:
+              docs: >-
+                Output format to transcode the audio file, can be wav or
+                default.
+              type: optional<string>
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request:
+            history_item_ids:
+              - ja9xsmfGhxYcymxGcOGB

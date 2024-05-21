@@ -1,0 +1,87 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /v1/audio-native
+      method: POST
+      auth: false
+      docs: >-
+        Creates AudioNative enabled project, optionally starts conversion and
+        returns project id and embeddable html snippet.
+      display-name: Creates Audionative Enabled Project.
+      request:
+        name: Body_Creates_AudioNative_enabled_project__v1_audio_native_post
+        body:
+          properties:
+            name:
+              type: string
+              docs: Project name.
+            image:
+              docs: >-
+                Image URL used in the player. If not provided, default image set
+                in the Player settings is used.
+              type: optional<string>
+            author:
+              docs: >-
+                Author used in the player and inserted at the start of the
+                uploaded article. If not provided, the default author set in the
+                Player settings is used.
+              type: optional<string>
+            title:
+              docs: >-
+                Title used in the player and inserted at the top of the uploaded
+                article. If not provided, the default title set in the Player
+                settings is used.
+              type: optional<string>
+            small:
+              docs: >-
+                Whether to use small player or not. If not provided, default
+                value set in the Player settings is used.
+              type: optional<boolean>
+            text_color:
+              docs: >-
+                Text color used in the player. If not provided, default text
+                color set in the Player settings is used.
+              type: optional<string>
+            background_color:
+              docs: >-
+                Background color used in the player. If not provided, default
+                background color set in the Player settings is used.
+              type: optional<string>
+            sessionization:
+              docs: >-
+                Specifies for how many minutes to persist the session across
+                page reloads. If not provided, default sessionization set in the
+                Player settings is used.
+              type: optional<integer>
+            voice_id:
+              docs: >-
+                Voice ID used to voice the content. If not provided, default
+                voice ID set in the Player settings is used.
+              type: optional<string>
+            model_id:
+              docs: >-
+                TTS Model ID used in the player. If not provided, default model
+                ID set in the Player settings is used.
+              type: optional<string>
+            file: file
+            auto_convert:
+              docs: Whether to auto convert the project to audio or not.
+              type: optional<boolean>
+        content-type: multipart/form-data
+      response:
+        docs: Successful Response
+        type: root.AudioNativeCreateProjectResponseModel
+      errors:
+        - root.UnprocessableEntityError
+      examples:
+        - request:
+            name: name
+          response:
+            body:
+              project_id: project_id
+              converting: true
+              html_snippet: html_snippet
