@@ -1,10 +1,7 @@
 from dataclasses import dataclass
-import json
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
-from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import NamedFunctionParameter
-from httpx import request
 from typing_extensions import Never
 
 from fern_python.codegen import AST
@@ -307,7 +304,9 @@ class EndpointFunctionGenerator:
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
             request_pre_fetch_statements = (
-                request_body_parameters.get_pre_fetch_statements(self._parameter_names_to_deconflict) if request_body_parameters is not None else None
+                request_body_parameters.get_pre_fetch_statements(self._parameter_names_to_deconflict)
+                if request_body_parameters is not None
+                else None
             )
             if request_pre_fetch_statements is not None:
                 writer.write_node(AST.Expression(request_pre_fetch_statements))
@@ -1112,7 +1111,16 @@ class EndpointFunctionSnippetGenerator:
             # For some reason the example type reference is not marking it's type as optional, so we need to specify it so the
             # snippets (and thus unit tests) write correctly
             is_optional = False
-            if self.endpoint.request_body is not None and self.endpoint.request_body.get_as_union().type == "reference" and self.endpoint.request_body.get_as_union().request_body_type.get_as_union().type == "container" and self.endpoint.request_body.get_as_union().request_body_type.get_as_union().container.get_as_union().type == "optional":
+            if (
+                self.endpoint.request_body is not None
+                and self.endpoint.request_body.get_as_union().type == "reference"
+                and self.endpoint.request_body.get_as_union().request_body_type.get_as_union().type == "container"
+                and self.endpoint.request_body.get_as_union()
+                .request_body_type.get_as_union()
+                .container.get_as_union()
+                .type
+                == "optional"
+            ):
                 is_optional = True
             args.extend(
                 self.example.request.visit(
