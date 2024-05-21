@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+import keyword
 import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -10,6 +12,7 @@ from fern_python.codegen.ast.dependency.dependency import (
     DependencyCompatibility,
 )
 from fern_python.codegen.dependency_manager import DependencyManager
+from fern.generator_exec.resources import PypiMetadata, LicenseConfig, GithubOutputMode, LicenseId
 
 
 @dataclass(frozen=True)
@@ -28,8 +31,11 @@ class PyProjectToml:
         path: str,
         dependency_manager: DependencyManager,
         python_version: str,
+        pypi_metadata: Optional[PypiMetadata],
+        github_output_mode: Optional[GithubOutputMode],
+        license_: Optional[LicenseConfig]
     ):
-        self._poetry_block = PyProjectToml.PoetryBlock(name=name, version=version, package=package)
+        self._poetry_block = PyProjectToml.PoetryBlock(name=name, version=version, package=package, pypi_metadata=pypi_metadata, github_output_mode=github_output_mode, license_=license_)
         self._dependency_manager = dependency_manager
         self._path = path
         self._python_version = python_version
@@ -61,16 +67,74 @@ class PyProjectToml:
         name: str
         version: Optional[str]
         package: PyProjectTomlPackageConfig
+        pypi_metadata: Optional[PypiMetadata]
+        github_output_mode: Optional[GithubOutputMode]
+        license_: Optional[LicenseConfig]
 
         def to_string(self) -> str:
             s = f'''[tool.poetry]
 name = "{self.name}"'''
             if self.version is not None:
                 s += "\n" + f'version = "{self.version}"'
-            s += """
-description = ""
+            
+            description = ""
+            authors = []
+            keywords = []
+            project_urls = []
+            classifiers = [
+                "Intended Audience :: Developers",
+                "Programming Language :: Python",
+                "Programming Language :: Python :: 3",
+                "Programming Language :: Python :: 3.8",
+                "Programming Language :: Python :: 3.9",
+                "Programming Language :: Python :: 3.10",
+                "Programming Language :: Python :: 3.11",
+                "Programming Language :: Python :: 3.12",
+                "Operating System :: OS Independent",
+                "Operating System :: POSIX",
+                "Operating System :: MacOS",
+                "Operating System :: POSIX :: Linux",
+                "Operating System :: Microsoft :: Windows",
+                "Topic :: Software Development :: Libraries :: Python Modules",
+                "Typing :: Typed"
+            ]
+            license_evaluated = ""
+            if self.pypi_metadata is not None:
+                description = self.pypi_metadata.description if self.pypi_metadata.description is not None else description
+                authors = [f"{{name = '{author.name}', email = '{author.email}'}}" for author in self.pypi_metadata.authors] if self.pypi_metadata.authors is not None else authors
+                keywords = self.pypi_metadata.keywords if self.pypi_metadata.keywords is not None else keywords
+                if self.pypi_metadata.documentation_link is not None:
+                    project_urls.append(f"Documentation = '{self.pypi_metadata.documentation_link}'")
+                if self.pypi_metadata.homepage_link is not None:
+                    project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
+
+            if self.license_ is not None:
+                if self.license_.get_as_union().type == "basic":
+                    license_id = self.license_.get_as_union().id
+                    if license_id == LicenseId.MIT:
+                        license_evaluated = 'license = "MIT"'
+                        classifiers.append("License :: OSI Approved :: MIT License")
+                    elif license_id == LicenseId.APACHE_2:
+                        license_evaluated = 'license = "Apache-2.0"'
+                        classifiers.append("License :: OSI Approved :: Apache Software License")
+                else:
+                    license_filename = self.license_.get_as_union().filename
+                    license_evaluated = f"license = {{ file = '{license_filename}' }}"
+
+            if self.github_output_mode is not None:
+                project_urls.append(f"Repository = '{self.github_output_mode.repo_url}'")
+            
+            stringified_project_urls = ""
+            if len(project_urls) > 0:
+                stringified_project_urls = "[project.urls]\n" + "\n".join(project_urls)
+
+            s += f'''
+description = "{description}"
 readme = "README.md"
-authors = []"""
+authors = {json.dumps(authors, indent=4)}
+keywords = {json.dumps(keywords, indent=4)}
+{license_evaluated}
+classifiers = {json.dumps(classifiers, indent=4)}'''
             if self.package._from is not None:
                 s += f"""
 packages = [
@@ -82,6 +146,8 @@ packages = [
 packages = [
     {{ include = "{self.package.include}"}}
 ]
+
+{stringified_project_urls}
 """
             return s
 

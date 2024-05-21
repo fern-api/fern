@@ -15,6 +15,9 @@ def test_pyproject_toml_gen(tmpdir: Path) -> None:
         dependency_manager=dependency_manager,
         python_version="^3.8",
         path=str(tmpdir),
+        pypi_metadata=None,
+        github_output_mode=None,
+        license_=None,
     )
     pyproject_toml.write()
 

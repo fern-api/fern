@@ -17,6 +17,7 @@ from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 from .writer_impl import WriterImpl
+from fern.generator_exec.resources import PypiMetadata, LicenseConfig, GithubOutputMode
 
 
 @dataclass(frozen=True)
@@ -42,6 +43,9 @@ class Project:
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
         whitelabel: bool = False,
+        pypi_metadata: Optional[PypiMetadata],
+        github_output_mode: Optional[GithubOutputMode],
+        license_: Optional[LicenseConfig]
     ) -> None:
         if flat_layout:
             self._project_filepath = (
@@ -60,6 +64,9 @@ class Project:
         self._dependency_manager = DependencyManager()
         self._should_format_files = should_format_files
         self._whitelabel = whitelabel
+        self._github_output_mode = github_output_mode
+        self._pypi_metadata = pypi_metadata
+        self.license_ = license_
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
@@ -157,6 +164,9 @@ class Project:
                 path=self._root_filepath,
                 dependency_manager=self._dependency_manager,
                 python_version=self._python_version,
+                github_output_mode=self._github_output_mode,
+                pypi_metadata=self._pypi_metadata,
+                license_=self.license_
             )
             py_project_toml.write()
 
