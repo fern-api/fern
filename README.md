@@ -81,6 +81,7 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 | `fernapi/fern-java-sdk`                | [![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)](./generators/java/sdk/VERSION)                        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
 | `fernapi/fern-ruby-sdk`                | [![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)](./generators/ruby/sdk/VERSION)                        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                      |
 | `fernapi/fern-go-sdk`                  | [![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)](./generators/go/sdk/VERSION)                              | [CHANGELOG.md](./generators/go/sdk/CHANGELOG.md)             | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
+| `fernapi/fern-csharp-sdk`                  | [![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)](./generators/csharp/sdk/VERSION)                  | [CHANGELOG.md](./generators/csharp/sdk/CHANGELOG.md)         | [Cli.cs](./generators/csharp/sdk/src/Cli.cs)                                    |
 
 ### Server-side Generators
 
