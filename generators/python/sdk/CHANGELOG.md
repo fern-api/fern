@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.2] - 2024-05-21
+
+- Fix: The `pyproject.toml` generator now writes authors in a valid format for `tool.poetry`, not just `project`
+
+- Fix: The query encoder now correctly handles none values
+
 ## [2.3.1] - 2024-05-21
 
 - Fix: The `pyproject.toml` generator now includes project URLs when specified.

@@ -118,7 +118,7 @@ name = "{self.name}"'''
                     self.pypi_metadata.description if self.pypi_metadata.description is not None else description
                 )
                 authors = (
-                    [f"{{name = '{author.name}', email = '{author.email}'}}" for author in self.pypi_metadata.authors]
+                    [f"{author.name} <{author.email}>" for author in self.pypi_metadata.authors]
                     if self.pypi_metadata.authors is not None
                     else authors
                 )
