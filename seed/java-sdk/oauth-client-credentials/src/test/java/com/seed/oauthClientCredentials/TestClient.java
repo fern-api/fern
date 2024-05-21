@@ -3,9 +3,24 @@
  */
 package com.seed.oauthClientCredentials;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.oauthClientCredentials.core.ApiError;
+import com.seed.oauthClientCredentials.core.ObjectMappers;
+import org.junit.jupiter.api.Test;
+
 public final class TestClient {
+    @Test
     public void test() {
         // Add tests here and mark this file in .fernignore
-        assert true;
+        String value = "{}";
+        try {
+            throw new ApiError(
+                200,
+                ObjectMappers.JSON_MAPPER.readValue(value, Object.class));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 }

@@ -41,7 +41,7 @@ scripts:
     commands:
       - source ~/.bash_profile 
       - ./gradlew compileJava
-      # - jenv shell 1.8 && ./gradlew compileJava
+      - jenv shell 1.8 && ./gradlew compileJava
 allowedFailures:
   - enum
   - extends
