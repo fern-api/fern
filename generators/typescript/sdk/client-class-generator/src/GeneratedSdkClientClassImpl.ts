@@ -60,6 +60,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        inlineFileProperties: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -93,6 +94,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private targetRuntime: JavaScriptRuntime;
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
+    private inlineFileProperties: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -113,6 +115,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
+        inlineFileProperties,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -126,6 +129,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -154,7 +158,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             requestBody,
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
-                            retainOriginalCasing: this.retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            inlineFileProperties: this.inlineFileProperties
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
