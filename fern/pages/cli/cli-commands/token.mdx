@@ -1,6 +1,28 @@
 ---
-title: 'Overview'
-description: 'CLI'
+title: fern token
+description: The command "fern token" starts a mock server for an API. 
 ---
 
-The Fern Command Line Interface (Fern CLI) is an open source tool that enables you to interact with the Fern compiler using commands in your command-line shell. Use the Fern CLI to generate code from your API definition.
+Use fern token to generate a `FERN_TOKEN` that is specific to your organization that is defined 
+in `fern.config.json`. Use the token to authenticate with the API in CI. Tokens do not expire.
+
+```bash 
+fern token
+```
+
+## GitHub Actions
+
+If using GitHub Actions as your CI, add the `FERN_TOKEN` as a GitHub Action secret in the repo where your 
+Fern configuration is stored. Here are 
+[instructions for how to create a secret](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) for a repo.
+
+You can then reference the secret in your CI. Example:
+
+```yaml
+- name: Generate and Publish Documentation with Fern
+env:
+    FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+run: fern generate --docs
+```
+
+See [the full example on GitHub](https://github.com/fern-api/fern/blob/main/.github/workflows/publish-docs.yml).

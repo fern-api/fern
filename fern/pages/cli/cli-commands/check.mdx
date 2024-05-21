@@ -7,10 +7,26 @@ Use `fern check` to validate your API definition and Fern configuration. Your Fe
 
 When successfully executed, this command will not produce any output, indicating it has run without issues.
 
-## Usage
-
 ```bash
 fern check
+```
+
+## Options
+
+### api
+
+Use `--api` to specify which API to check. 
+
+```bash
+fern api update --api public-api
+```
+
+### warnings
+
+Use `--warnings` to log warnings in addition to errors. 
+
+```bash
+fern api update --warnings
 ```
 
 ## Usage in a GitHub Action

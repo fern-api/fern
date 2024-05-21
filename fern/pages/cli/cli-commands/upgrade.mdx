@@ -1,6 +1,19 @@
 ---
-title: 'Overview'
-description: 'CLI'
+title: fern upgrade
+description: The command "fern upgrade" upgrades your Fern version as well as the versions of generators in generators.yml.
 ---
 
-The Fern Command Line Interface (Fern CLI) is an open source tool that enables you to interact with the Fern compiler using commands in your command-line shell. Use the Fern CLI to generate code from your API definition.
+`fern upgrade` will upgrade your compiler version in `fern.config.json` to the
+latest version. It will also upgrade generators in `generators.yml` to their minimum-compatible versions.
+
+```bash
+fern upgrade
+```
+
+## Release candidates
+
+By adding `--rc`, you can upgrade to the compiler's latest release candidate. Using a release candidate is not recommended for production use.
+
+```bash
+fern upgrade --rc
+```

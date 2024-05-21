@@ -5,8 +5,16 @@ description: The command "fern api update" updates the latest OpenAPI spec from 
 
 Use `fern api update` to pulls the latest OpenAPI spec from the specified origin in `generators.yml` and update the local spec.
 
-## Usage
-
 ```bash
 fern api update
+```
+
+## Options
+
+### api
+
+Use `--api` to specify which API to update the spec for. If not specified, all APIs with a declared origin will be updated.     
+
+```bash
+fern api update --api public-api
 ```
