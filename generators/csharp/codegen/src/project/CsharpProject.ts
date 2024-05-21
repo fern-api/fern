@@ -275,7 +275,7 @@ class CsProj {
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\\..\\README.md" Pack="true" PackagePath="\\"/>
+        <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
 
     <ItemGroup>
