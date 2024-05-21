@@ -148,6 +148,23 @@ types:
           SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       server: list<commons.Server>
       examples: list<EndpointExample>
+      pagination: optional<Pagination>
+
+  Pagination:
+    union:
+      cursor: CursorPagination
+      offset: OffsetPagination
+
+  CursorPagination:
+    properties:
+      cursor: string
+      next_cursor: string
+      results: string
+  
+  OffsetPagination:
+    properties:
+      offset: string
+      results: string
 
   CustomCodeSample:
     availability: in-development
@@ -379,18 +396,39 @@ types:
 
   PrimitiveSchemaValue:
     union:
-      int: {}
+      int: IntSchema
       int64: {}
       float: {}
-      double: {}
+      double: DoubleSchema
       string: StringSchema
       datetime: {}
       date: {}
       base64: {}
       boolean: {}
 
+  IntSchema:
+    properties:
+      default: optional<integer>
+      minimum: optional<integer>
+      maximum: optional<integer>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<integer>
+
+  DoubleSchema:
+    properties:
+      default: optional<double>
+      minimum: optional<double>
+      maximum: optional<double>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<double>
+
   StringSchema:
     properties:
+      default: optional<string>
+      pattern: optional<string>
+      format: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
 

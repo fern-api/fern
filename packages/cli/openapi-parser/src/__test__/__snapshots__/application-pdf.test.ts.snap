@@ -18,6 +18,7 @@ exports[`open api parser application-pdf-content-type parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "pdf_get",
+      "pagination": null,
       "path": "/pdf",
       "pathParameters": [],
       "queryParameters": [],

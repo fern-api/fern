@@ -201,6 +201,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/group/",
             "request": {
               "body": {
@@ -398,6 +399,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/group/info/",
             "request": {
               "name": "FilesGroupInfoRequest",
@@ -562,6 +564,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/base/",
             "request": {
               "body": {
@@ -785,6 +788,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/info/",
             "request": {
               "name": "FileUploadInfoRequest",
@@ -1156,19 +1160,23 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/from_url/",
             "request": {
               "body": {
                 "properties": {
                   "check_URL_duplicates": {
+                    "default": undefined,
                     "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
 ",
                     "type": "optional<FromUrlUploadRequestCheckUrlDuplicates>",
+                    "validation": undefined,
                   },
                   "expire": "optional<root.ExpireType>",
                   "filename": {
+                    "default": undefined,
                     "docs": "Sets the file name of the resource fetched from the source URL.
 If not defined, the file name is obtained from either HTTP
 response headers or the \`source_url\`'s path.
@@ -1177,15 +1185,18 @@ response headers or the \`source_url\`'s path.
 \`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._\`.
 ",
                     "type": "optional<string>",
+                    "validation": undefined,
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "pub_key": "root.ProjectPublicKeyType",
                   "save_URL_duplicates": {
+                    "default": undefined,
                     "docs": "Determines if the requested \`source_url\` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
 ",
                     "type": "optional<FromUrlUploadRequestSaveUrlDuplicates>",
+                    "validation": undefined,
                   },
                   "signature": "optional<root.SignatureType>",
                   "source_url": {
@@ -1194,6 +1205,12 @@ to the value of the \`check_URL_duplicates\` parameter.
 **Note**: The URL should point to a resource publicly available via HTTP/HTTPS.
 ",
                     "type": "string",
+                    "validation": {
+                      "format": "uri",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "store": "optional<root.StoreType>",
                 },
@@ -1786,6 +1803,7 @@ Log.d("TAG", status.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/from_url/status/",
             "request": {
               "name": "FromUrlUploadStatusRequest",
@@ -2025,6 +2043,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multipart/complete/",
             "request": {
               "body": {
@@ -2033,6 +2052,12 @@ Log.d("TAG", file.toString())
                   "uuid": {
                     "docs": "File's UUID from the \`/multipart/start/\` endpoint.",
                     "type": "string",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -2164,6 +2189,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/<presigned-url-x>",
             "request": {
               "body": "bytes",
@@ -2321,6 +2347,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multipart/start/",
             "request": {
               "body": {
@@ -2338,6 +2365,7 @@ Log.d("TAG", file.toString())
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "part_size": {
+                    "default": 5242880,
                     "docs": "Multipart Uploads expect that you will split the uploaded file into equally sized
 parts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).
 By default, we assume that you will upload the files in 5 megabyte chunks,
@@ -2347,6 +2375,13 @@ we recommend to bump the part size and to pass the expected chunk size
 to us as a value of the \`part_size\` parameter (in bytes).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 5368709120,
+                      "min": 5242880,
+                      "multipleOf": undefined,
+                    },
                   },
                   "signature": "optional<root.SignatureType>",
                   "size": {
@@ -2375,7 +2410,17 @@ to us as a value of the \`part_size\` parameter (in bytes).
 the value is the unique ID of the file on our systems.
 ",
           "properties": {
-            "filename": "optional<string>",
+            "filename": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
         "FromUrlUploadRequestCheckUrlDuplicates": {
@@ -2436,6 +2481,12 @@ to the value of the \`check_URL_duplicates\` parameter.
             "uuid": {
               "docs": "File's UUID.",
               "type": "string",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
             },
           },
         },
@@ -3300,10 +3351,18 @@ to the value of the \`check_URL_duplicates\` parameter.
       },
     },
     "types": {
-      "AccountBlockedError": "string",
-      "AccountLimitsExceededError": "string",
-      "AccountUnpaidError": "string",
-      "AutoStoreDisabledError": "string",
+      "AccountBlockedError": {
+        "type": "string",
+      },
+      "AccountLimitsExceededError": {
+        "type": "string",
+      },
+      "AccountUnpaidError": {
+        "type": "string",
+      },
+      "AutoStoreDisabledError": {
+        "type": "string",
+      },
       "BaseUploadRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
@@ -3349,8 +3408,10 @@ to the value of the \`check_URL_duplicates\` parameter.
         "properties": {
           "image": "optional<SchemasImageInfo>",
           "mime": {
+            "default": undefined,
             "docs": "MIME type.",
             "type": "optional<ContentInfoMime>",
+            "validation": undefined,
           },
           "video": "optional<VideoInfo>",
         },
@@ -3409,20 +3470,48 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
 ",
         "type": "double",
       },
-      "FileIdInvalidError": "string",
-      "FileIdRequiredError": "string",
-      "FileInfectedError": "string",
-      "FileMetadataKeyDuplicatedError": "string",
-      "FileMetadataKeyEmptyError": "string",
-      "FileMetadataKeyForbiddenError": "string",
-      "FileMetadataKeyLengthTooBigError": "string",
-      "FileMetadataKeysNumberTooBigError": "string",
-      "FileMetadataValueEmptyError": "string",
-      "FileMetadataValueForbiddenError": "string",
-      "FileMetadataValueLengthTooBigError": "string",
-      "FileNotFoundError": "string",
-      "FileSizeLimitExceededError": "string",
-      "FileTypeForbiddenError": "string",
+      "FileIdInvalidError": {
+        "type": "string",
+      },
+      "FileIdRequiredError": {
+        "type": "string",
+      },
+      "FileInfectedError": {
+        "type": "string",
+      },
+      "FileMetadataKeyDuplicatedError": {
+        "type": "string",
+      },
+      "FileMetadataKeyEmptyError": {
+        "type": "string",
+      },
+      "FileMetadataKeyForbiddenError": {
+        "type": "string",
+      },
+      "FileMetadataKeyLengthTooBigError": {
+        "type": "string",
+      },
+      "FileMetadataKeysNumberTooBigError": {
+        "type": "string",
+      },
+      "FileMetadataValueEmptyError": {
+        "type": "string",
+      },
+      "FileMetadataValueForbiddenError": {
+        "type": "string",
+      },
+      "FileMetadataValueLengthTooBigError": {
+        "type": "string",
+      },
+      "FileNotFoundError": {
+        "type": "string",
+      },
+      "FileSizeLimitExceededError": {
+        "type": "string",
+      },
+      "FileTypeForbiddenError": {
+        "type": "string",
+      },
       "FileUploadInfo": {
         "docs": "Information about an uploaded file.",
         "properties": {
@@ -3434,6 +3523,12 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "file_id": {
             "docs": "Same as \`uuid\`",
             "type": "string",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "filename": {
             "docs": "Sanitized \`original_filename\`.",
@@ -3462,8 +3557,10 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "type": "string",
           },
           "s3_bucket": {
+            "default": undefined,
             "docs": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "size": {
             "docs": "File's size in bytes.",
@@ -3476,6 +3573,12 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "uuid": {
             "docs": "File's unique ID.",
             "type": "string",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "video_info": "optional<LegacyVideoInfo>",
         },
@@ -3484,22 +3587,28 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         "docs": undefined,
         "properties": {
           "error": {
+            "default": undefined,
             "docs": "Human readable description of the issue with the fetch/upload task.
 ",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "error_code": {
+            "default": undefined,
             "docs": "Machine readable error code.
 
 Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
 page for a full list of all possible error codes.
 ",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "status": {
+            "default": undefined,
             "docs": "The system failed to fetch and/or upload the file.
 ",
             "type": "optional<literal<"error">>",
+            "validation": undefined,
           },
         },
       },
@@ -3516,16 +3625,21 @@ page for a full list of all possible error codes.
         "docs": undefined,
         "properties": {
           "done": {
+            "default": undefined,
             "docs": "How many bytes of the file have been fetched so far.
 ",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "status": {
+            "default": undefined,
             "docs": "The system is fetching/uploading the file.
 ",
             "type": "optional<literal<"progress">>",
+            "validation": undefined,
           },
           "total": {
+            "default": undefined,
             "docs": "The expected size of the fetched file (in bytes).
 
 **Note:** the value can be missing if the server we are fetching the file from
@@ -3533,6 +3647,7 @@ does not provide the information or if the server is returning the file in, for
 example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
 ",
             "type": "optional<double>",
+            "validation": undefined,
           },
         },
       },
@@ -3560,8 +3675,10 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         ],
         "properties": {
           "status": {
+            "default": undefined,
             "docs": "The file has been fetched/uploaded successfully.",
             "type": "optional<literal<"success">>",
+            "validation": undefined,
           },
         },
       },
@@ -3569,6 +3686,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         "docs": undefined,
         "properties": {
           "status": {
+            "default": undefined,
             "docs": "The system does not have information about the task.
 
 Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
@@ -3576,6 +3694,7 @@ period of time only. The endpoint can return the status \`unknown\` for the task
 that are tool old (or that have not been created at all).
 ",
             "type": "optional<literal<"unknown">>",
+            "validation": undefined,
           },
         },
       },
@@ -3583,9 +3702,11 @@ that are tool old (or that have not been created at all).
         "docs": undefined,
         "properties": {
           "status": {
+            "default": undefined,
             "docs": "The system is preparing to handle the request.
 ",
             "type": "optional<literal<"waiting">>",
+            "validation": undefined,
           },
         },
       },
@@ -3605,7 +3726,9 @@ that are tool old (or that have not been created at all).
           "PublicKeyInvalidError",
         ],
       },
-      "FilesRequiredError": "string",
+      "FilesRequiredError": {
+        "type": "string",
+      },
       "FromUrlUploadRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
@@ -3655,52 +3778,95 @@ that are tool old (or that have not been created at all).
         "docs": "\`/from_url/\` upload response.",
         "properties": {
           "token": {
+            "default": undefined,
             "docs": "Token to identify a \`/from_url/\` request.",
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "type": "optional<literal<"token">>",
         },
       },
-      "GroupFileUrlParsingFailedError": "string",
-      "GroupFilesInvalidError": "string",
-      "GroupFilesNotFoundError": "string",
-      "GroupIdRequiredError": "string",
+      "GroupFileUrlParsingFailedError": {
+        "type": "string",
+      },
+      "GroupFilesInvalidError": {
+        "type": "string",
+      },
+      "GroupFilesNotFoundError": {
+        "type": "string",
+      },
+      "GroupIdRequiredError": {
+        "type": "string",
+      },
       "GroupInfo": {
         "docs": "File group information object.",
         "properties": {
           "cdn_url": {
+            "default": undefined,
             "docs": "Group's CDN URL.",
             "type": "optional<string>",
+            "validation": {
+              "format": "uri",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "datetime_created": {
+            "default": undefined,
             "docs": "ISO-8601 date and time when the group was created.",
             "type": "optional<datetime>",
+            "validation": undefined,
           },
           "datetime_stored": {
+            "default": undefined,
             "docs": "ISO-8601 date and time when the group was marked as stored.",
             "type": "optional<datetime>",
+            "validation": undefined,
           },
           "files": {
+            "default": undefined,
             "docs": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
             "type": "optional<list<unknown>>",
+            "validation": undefined,
           },
           "files_count": {
+            "default": undefined,
             "docs": "Number of the files in the group.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "id": {
+            "default": undefined,
             "docs": "Group's unique ID.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "url": {
+            "default": undefined,
             "docs": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
             "type": "optional<string>",
+            "validation": {
+              "format": "uri",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
-      "GroupNotFoundError": "string",
-      "HostnameNotFoundError": "string",
+      "GroupNotFoundError": {
+        "type": "string",
+      },
+      "HostnameNotFoundError": {
+        "type": "string",
+      },
       "ImageInfo": {
         "docs": "Image metadata.",
         "properties": {
@@ -3709,28 +3875,42 @@ that are tool old (or that have not been created at all).
             "type": "ImageInfoColorMode",
           },
           "datetime_original": {
+            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
+            "validation": undefined,
           },
           "dpi": {
+            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
+            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
+            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<ImageInfoGeoLocation>",
+            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
+            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 8,
+              "min": 0,
+              "multipleOf": undefined,
+            },
           },
           "sequence": {
             "docs": "Set to true if a file contains a sequence of images (GIF for example).",
@@ -3775,24 +3955,34 @@ that are tool old (or that have not been created at all).
         "docs": "Video metadata.",
         "properties": {
           "audio": {
+            "default": undefined,
             "docs": "Audio stream's metadata.",
             "type": "optional<LegacyVideoInfoAudio>",
+            "validation": undefined,
           },
           "bitrate": {
+            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "duration": {
+            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "format": {
+            "default": undefined,
             "docs": "Video file's format.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "video": {
+            "default": undefined,
             "docs": "Video stream's metadata.",
             "type": "optional<LegacyVideoInfoVideo>",
+            "validation": undefined,
           },
         },
       },
@@ -3800,20 +3990,28 @@ that are tool old (or that have not been created at all).
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
+            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "channels": {
+            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "codec": {
+            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "sample_rate": {
+            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
         },
       },
@@ -3821,42 +4019,70 @@ that are tool old (or that have not been created at all).
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
+            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "codec": {
+            "default": undefined,
             "docs": "Video stream codec.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "frame_rate": {
+            "default": undefined,
             "docs": "Video stream's frame rate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "height": {
+            "default": undefined,
             "docs": "Video stream's image height.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "width": {
+            "default": undefined,
             "docs": "Video stream's image width.",
             "type": "optional<double>",
+            "validation": undefined,
           },
         },
       },
       "Metadata": {
+        "default": undefined,
         "docs": "Arbitrary metadata associated with a file.",
         "type": "optional<map<string, unknown>>",
+        "validation": undefined,
       },
       "MetadataValue": {
         "docs": "Arbitrary metadata associated with the file.
 See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-refs/rest-api/v0.7.0/#tag/File-metadata) for more information.
 ",
         "type": "string",
+        "validation": {
+          "format": undefined,
+          "maxLength": 512,
+          "minLength": 1,
+          "pattern": undefined,
+        },
       },
-      "MultipartFileAlreadyUploadedError": "string",
-      "MultipartFileCompletionFailedError": "string",
-      "MultipartFileIdRequiredError": "string",
-      "MultipartFileSizeLimitExceededError": "string",
-      "MultipartFileSizeTooSmallError": "string",
+      "MultipartFileAlreadyUploadedError": {
+        "type": "string",
+      },
+      "MultipartFileCompletionFailedError": {
+        "type": "string",
+      },
+      "MultipartFileIdRequiredError": {
+        "type": "string",
+      },
+      "MultipartFileSizeLimitExceededError": {
+        "type": "string",
+      },
+      "MultipartFileSizeTooSmallError": {
+        "type": "string",
+      },
       "MultipartFileUploadCompleteRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
@@ -3925,23 +4151,49 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "SignatureInvalidError",
         ],
       },
-      "MultipartPartSizeInvalidError": "string",
-      "MultipartPartSizeTooBigError": "string",
-      "MultipartPartSizeTooSmallError": "string",
-      "MultipartSizeInvalidError": "string",
-      "MultipartUploadSizeTooLargeError": "string",
-      "MultipartUploadSizeTooSmallError": "string",
-      "NullCharactersForbiddenError": "string",
-      "PostRequestParserFailedError": "string",
-      "ProjectPublicKeyRemovedError": "string",
+      "MultipartPartSizeInvalidError": {
+        "type": "string",
+      },
+      "MultipartPartSizeTooBigError": {
+        "type": "string",
+      },
+      "MultipartPartSizeTooSmallError": {
+        "type": "string",
+      },
+      "MultipartSizeInvalidError": {
+        "type": "string",
+      },
+      "MultipartUploadSizeTooLargeError": {
+        "type": "string",
+      },
+      "MultipartUploadSizeTooSmallError": {
+        "type": "string",
+      },
+      "NullCharactersForbiddenError": {
+        "type": "string",
+      },
+      "PostRequestParserFailedError": {
+        "type": "string",
+      },
+      "ProjectPublicKeyRemovedError": {
+        "type": "string",
+      },
       "ProjectPublicKeyType": {
         "docs": "Public key identifying an Uploadcare project your uploads will go to.",
         "type": "string",
       },
-      "PublicKeyInvalidError": "string",
-      "PublicKeyRequiredError": "string",
-      "RequestFiledsNumberLimitExceededError": "string",
-      "RequestParamRequiredError": "string",
+      "PublicKeyInvalidError": {
+        "type": "string",
+      },
+      "PublicKeyRequiredError": {
+        "type": "string",
+      },
+      "RequestFiledsNumberLimitExceededError": {
+        "type": "string",
+      },
+      "RequestParamRequiredError": {
+        "type": "string",
+      },
       "SchemasImageInfo": {
         "docs": "Image metadata.",
         "properties": {
@@ -3950,28 +4202,42 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "SchemasImageInfoColorMode",
           },
           "datetime_original": {
+            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
+            "validation": undefined,
           },
           "dpi": {
+            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
+            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
+            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<SchemasImageInfoGeoLocation>",
+            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
+            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 8,
+              "min": 0,
+              "multipleOf": undefined,
+            },
           },
           "sequence": {
             "docs": "Set to true if a file contains a sequence of images (GIF for example).",
@@ -4012,11 +4278,21 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           },
         },
       },
-      "SignatureExpirationError": "string",
-      "SignatureExpirationInvalidError": "string",
-      "SignatureExpirationRequiredError": "string",
-      "SignatureInvalidError": "string",
-      "SignatureRequiredError": "string",
+      "SignatureExpirationError": {
+        "type": "string",
+      },
+      "SignatureExpirationInvalidError": {
+        "type": "string",
+      },
+      "SignatureExpirationRequiredError": {
+        "type": "string",
+      },
+      "SignatureInvalidError": {
+        "type": "string",
+      },
+      "SignatureRequiredError": {
+        "type": "string",
+      },
       "SignatureType": {
         "docs": "\`signature\` must be sent along with your upload request if you would like to use signed uploads.
 The signature should be generated on your backend.
@@ -4025,7 +4301,9 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
 ",
         "type": "string",
       },
-      "SourceUrlRequiredError": "string",
+      "SourceUrlRequiredError": {
+        "type": "string",
+      },
       "StoreType": {
         "docs": "Determines if an uploaded file should be marked as temporary or permanent.
 
@@ -4057,29 +4335,57 @@ change the value to \`auto\`.
           "auto",
         ],
       },
-      "TokenRequiredError": "string",
-      "UploadFailedError": "string",
-      "UploadcarePublicKeyInvalidError": "string",
-      "UploadcarePublicKeyRequiredError": "string",
-      "UrlBlacklistedError": "string",
-      "UrlHostMalformedError": "string",
-      "UrlHostPrivateIpForbiddenError": "string",
-      "UrlHostRequiredError": "string",
-      "UrlParsingFailedError": "string",
-      "UrlSchemeInvalidError": "string",
-      "UrlSchemeRequiredError": "string",
-      "UuidInvalidError": "string",
+      "TokenRequiredError": {
+        "type": "string",
+      },
+      "UploadFailedError": {
+        "type": "string",
+      },
+      "UploadcarePublicKeyInvalidError": {
+        "type": "string",
+      },
+      "UploadcarePublicKeyRequiredError": {
+        "type": "string",
+      },
+      "UrlBlacklistedError": {
+        "type": "string",
+      },
+      "UrlHostMalformedError": {
+        "type": "string",
+      },
+      "UrlHostPrivateIpForbiddenError": {
+        "type": "string",
+      },
+      "UrlHostRequiredError": {
+        "type": "string",
+      },
+      "UrlParsingFailedError": {
+        "type": "string",
+      },
+      "UrlSchemeInvalidError": {
+        "type": "string",
+      },
+      "UrlSchemeRequiredError": {
+        "type": "string",
+      },
+      "UuidInvalidError": {
+        "type": "string",
+      },
       "VideoInfo": {
         "docs": "Video metadata.",
         "properties": {
           "audio": "list<VideoInfoAudioItem>",
           "bitrate": {
+            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "duration": {
+            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "format": {
             "docs": "Video file's format.",
@@ -4092,20 +4398,28 @@ change the value to \`auto\`.
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
+            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "channels": {
+            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "codec": {
+            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "sample_rate": {
+            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
         },
       },
@@ -4113,12 +4427,16 @@ change the value to \`auto\`.
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
+            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "codec": {
+            "default": undefined,
             "docs": "Video stream's codec.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "frame_rate": {
             "docs": "Video stream's frame rate.",
@@ -4351,6 +4669,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/group/",
             "request": {
               "body": {
@@ -4548,6 +4867,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/group/info/",
             "request": {
               "name": "FilesGroupInfoRequest",
@@ -4712,6 +5032,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/base/",
             "request": {
               "body": {
@@ -4935,6 +5256,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/info/",
             "request": {
               "name": "FileUploadInfoRequest",
@@ -5306,19 +5628,23 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/from_url/",
             "request": {
               "body": {
                 "properties": {
                   "check_URL_duplicates": {
+                    "default": undefined,
                     "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
 ",
                     "type": "optional<FromUrlUploadRequestCheckUrlDuplicates>",
+                    "validation": undefined,
                   },
                   "expire": "optional<root.ExpireType>",
                   "filename": {
+                    "default": undefined,
                     "docs": "Sets the file name of the resource fetched from the source URL.
 If not defined, the file name is obtained from either HTTP
 response headers or the \`source_url\`'s path.
@@ -5327,15 +5653,18 @@ response headers or the \`source_url\`'s path.
 \`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._\`.
 ",
                     "type": "optional<string>",
+                    "validation": undefined,
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "pub_key": "root.ProjectPublicKeyType",
                   "save_URL_duplicates": {
+                    "default": undefined,
                     "docs": "Determines if the requested \`source_url\` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
 ",
                     "type": "optional<FromUrlUploadRequestSaveUrlDuplicates>",
+                    "validation": undefined,
                   },
                   "signature": "optional<root.SignatureType>",
                   "source_url": {
@@ -5344,6 +5673,12 @@ to the value of the \`check_URL_duplicates\` parameter.
 **Note**: The URL should point to a resource publicly available via HTTP/HTTPS.
 ",
                     "type": "string",
+                    "validation": {
+                      "format": "uri",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                   "store": "optional<root.StoreType>",
                 },
@@ -5936,6 +6271,7 @@ Log.d("TAG", status.toString())
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/from_url/status/",
             "request": {
               "name": "FromUrlUploadStatusRequest",
@@ -6175,6 +6511,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multipart/complete/",
             "request": {
               "body": {
@@ -6183,6 +6520,12 @@ Log.d("TAG", file.toString())
                   "uuid": {
                     "docs": "File's UUID from the \`/multipart/start/\` endpoint.",
                     "type": "string",
+                    "validation": {
+                      "format": "uuid",
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                    },
                   },
                 },
               },
@@ -6314,6 +6657,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "PUT",
+            "pagination": undefined,
             "path": "/<presigned-url-x>",
             "request": {
               "body": "bytes",
@@ -6471,6 +6815,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
+            "pagination": undefined,
             "path": "/multipart/start/",
             "request": {
               "body": {
@@ -6488,6 +6833,7 @@ Log.d("TAG", file.toString())
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "part_size": {
+                    "default": 5242880,
                     "docs": "Multipart Uploads expect that you will split the uploaded file into equally sized
 parts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).
 By default, we assume that you will upload the files in 5 megabyte chunks,
@@ -6497,6 +6843,13 @@ we recommend to bump the part size and to pass the expected chunk size
 to us as a value of the \`part_size\` parameter (in bytes).
 ",
                     "type": "optional<integer>",
+                    "validation": {
+                      "exclusiveMax": undefined,
+                      "exclusiveMin": undefined,
+                      "max": 5368709120,
+                      "min": 5242880,
+                      "multipleOf": undefined,
+                    },
                   },
                   "signature": "optional<root.SignatureType>",
                   "size": {
@@ -6525,7 +6878,17 @@ to us as a value of the \`part_size\` parameter (in bytes).
 the value is the unique ID of the file on our systems.
 ",
           "properties": {
-            "filename": "optional<string>",
+            "filename": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
         "FromUrlUploadRequestCheckUrlDuplicates": {
@@ -6586,6 +6949,12 @@ to the value of the \`check_URL_duplicates\` parameter.
             "uuid": {
               "docs": "File's UUID.",
               "type": "string",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
             },
           },
         },
@@ -6714,10 +7083,18 @@ to the value of the \`check_URL_duplicates\` parameter.
       },
     },
     "types": {
-      "AccountBlockedError": "string",
-      "AccountLimitsExceededError": "string",
-      "AccountUnpaidError": "string",
-      "AutoStoreDisabledError": "string",
+      "AccountBlockedError": {
+        "type": "string",
+      },
+      "AccountLimitsExceededError": {
+        "type": "string",
+      },
+      "AccountUnpaidError": {
+        "type": "string",
+      },
+      "AutoStoreDisabledError": {
+        "type": "string",
+      },
       "BadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
@@ -6731,8 +7108,10 @@ to the value of the \`check_URL_duplicates\` parameter.
         "properties": {
           "image": "optional<SchemasImageInfo>",
           "mime": {
+            "default": undefined,
             "docs": "MIME type.",
             "type": "optional<ContentInfoMime>",
+            "validation": undefined,
           },
           "video": "optional<VideoInfo>",
         },
@@ -6761,20 +7140,48 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
 ",
         "type": "double",
       },
-      "FileIdInvalidError": "string",
-      "FileIdRequiredError": "string",
-      "FileInfectedError": "string",
-      "FileMetadataKeyDuplicatedError": "string",
-      "FileMetadataKeyEmptyError": "string",
-      "FileMetadataKeyForbiddenError": "string",
-      "FileMetadataKeyLengthTooBigError": "string",
-      "FileMetadataKeysNumberTooBigError": "string",
-      "FileMetadataValueEmptyError": "string",
-      "FileMetadataValueForbiddenError": "string",
-      "FileMetadataValueLengthTooBigError": "string",
-      "FileNotFoundError": "string",
-      "FileSizeLimitExceededError": "string",
-      "FileTypeForbiddenError": "string",
+      "FileIdInvalidError": {
+        "type": "string",
+      },
+      "FileIdRequiredError": {
+        "type": "string",
+      },
+      "FileInfectedError": {
+        "type": "string",
+      },
+      "FileMetadataKeyDuplicatedError": {
+        "type": "string",
+      },
+      "FileMetadataKeyEmptyError": {
+        "type": "string",
+      },
+      "FileMetadataKeyForbiddenError": {
+        "type": "string",
+      },
+      "FileMetadataKeyLengthTooBigError": {
+        "type": "string",
+      },
+      "FileMetadataKeysNumberTooBigError": {
+        "type": "string",
+      },
+      "FileMetadataValueEmptyError": {
+        "type": "string",
+      },
+      "FileMetadataValueForbiddenError": {
+        "type": "string",
+      },
+      "FileMetadataValueLengthTooBigError": {
+        "type": "string",
+      },
+      "FileNotFoundError": {
+        "type": "string",
+      },
+      "FileSizeLimitExceededError": {
+        "type": "string",
+      },
+      "FileTypeForbiddenError": {
+        "type": "string",
+      },
       "FileUploadInfo": {
         "docs": "Information about an uploaded file.",
         "properties": {
@@ -6786,6 +7193,12 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "file_id": {
             "docs": "Same as \`uuid\`",
             "type": "string",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "filename": {
             "docs": "Sanitized \`original_filename\`.",
@@ -6814,8 +7227,10 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "type": "string",
           },
           "s3_bucket": {
+            "default": undefined,
             "docs": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "size": {
             "docs": "File's size in bytes.",
@@ -6828,6 +7243,12 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           "uuid": {
             "docs": "File's unique ID.",
             "type": "string",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "video_info": "optional<LegacyVideoInfo>",
         },
@@ -6836,22 +7257,28 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         "docs": undefined,
         "properties": {
           "error": {
+            "default": undefined,
             "docs": "Human readable description of the issue with the fetch/upload task.
 ",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "error_code": {
+            "default": undefined,
             "docs": "Machine readable error code.
 
 Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
 page for a full list of all possible error codes.
 ",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "status": {
+            "default": undefined,
             "docs": "The system failed to fetch and/or upload the file.
 ",
             "type": "optional<literal<"error">>",
+            "validation": undefined,
           },
         },
       },
@@ -6868,16 +7295,21 @@ page for a full list of all possible error codes.
         "docs": undefined,
         "properties": {
           "done": {
+            "default": undefined,
             "docs": "How many bytes of the file have been fetched so far.
 ",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "status": {
+            "default": undefined,
             "docs": "The system is fetching/uploading the file.
 ",
             "type": "optional<literal<"progress">>",
+            "validation": undefined,
           },
           "total": {
+            "default": undefined,
             "docs": "The expected size of the fetched file (in bytes).
 
 **Note:** the value can be missing if the server we are fetching the file from
@@ -6885,6 +7317,7 @@ does not provide the information or if the server is returning the file in, for
 example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
 ",
             "type": "optional<double>",
+            "validation": undefined,
           },
         },
       },
@@ -6895,8 +7328,10 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         ],
         "properties": {
           "status": {
+            "default": undefined,
             "docs": "The file has been fetched/uploaded successfully.",
             "type": "optional<literal<"success">>",
+            "validation": undefined,
           },
         },
       },
@@ -6904,6 +7339,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         "docs": undefined,
         "properties": {
           "status": {
+            "default": undefined,
             "docs": "The system does not have information about the task.
 
 Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
@@ -6911,6 +7347,7 @@ period of time only. The endpoint can return the status \`unknown\` for the task
 that are tool old (or that have not been created at all).
 ",
             "type": "optional<literal<"unknown">>",
+            "validation": undefined,
           },
         },
       },
@@ -6918,13 +7355,17 @@ that are tool old (or that have not been created at all).
         "docs": undefined,
         "properties": {
           "status": {
+            "default": undefined,
             "docs": "The system is preparing to handle the request.
 ",
             "type": "optional<literal<"waiting">>",
+            "validation": undefined,
           },
         },
       },
-      "FilesRequiredError": "string",
+      "FilesRequiredError": {
+        "type": "string",
+      },
       "ForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
@@ -6937,52 +7378,95 @@ that are tool old (or that have not been created at all).
         "docs": "\`/from_url/\` upload response.",
         "properties": {
           "token": {
+            "default": undefined,
             "docs": "Token to identify a \`/from_url/\` request.",
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "type": "optional<literal<"token">>",
         },
       },
-      "GroupFileUrlParsingFailedError": "string",
-      "GroupFilesInvalidError": "string",
-      "GroupFilesNotFoundError": "string",
-      "GroupIdRequiredError": "string",
+      "GroupFileUrlParsingFailedError": {
+        "type": "string",
+      },
+      "GroupFilesInvalidError": {
+        "type": "string",
+      },
+      "GroupFilesNotFoundError": {
+        "type": "string",
+      },
+      "GroupIdRequiredError": {
+        "type": "string",
+      },
       "GroupInfo": {
         "docs": "File group information object.",
         "properties": {
           "cdn_url": {
+            "default": undefined,
             "docs": "Group's CDN URL.",
             "type": "optional<string>",
+            "validation": {
+              "format": "uri",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
           "datetime_created": {
+            "default": undefined,
             "docs": "ISO-8601 date and time when the group was created.",
             "type": "optional<datetime>",
+            "validation": undefined,
           },
           "datetime_stored": {
+            "default": undefined,
             "docs": "ISO-8601 date and time when the group was marked as stored.",
             "type": "optional<datetime>",
+            "validation": undefined,
           },
           "files": {
+            "default": undefined,
             "docs": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
             "type": "optional<list<unknown>>",
+            "validation": undefined,
           },
           "files_count": {
+            "default": undefined,
             "docs": "Number of the files in the group.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "id": {
+            "default": undefined,
             "docs": "Group's unique ID.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "url": {
+            "default": undefined,
             "docs": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
             "type": "optional<string>",
+            "validation": {
+              "format": "uri",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
-      "GroupNotFoundError": "string",
-      "HostnameNotFoundError": "string",
+      "GroupNotFoundError": {
+        "type": "string",
+      },
+      "HostnameNotFoundError": {
+        "type": "string",
+      },
       "ImageInfo": {
         "docs": "Image metadata.",
         "properties": {
@@ -6991,28 +7475,42 @@ that are tool old (or that have not been created at all).
             "type": "ImageInfoColorMode",
           },
           "datetime_original": {
+            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
+            "validation": undefined,
           },
           "dpi": {
+            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
+            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
+            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<ImageInfoGeoLocation>",
+            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
+            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 8,
+              "min": 0,
+              "multipleOf": undefined,
+            },
           },
           "sequence": {
             "docs": "Set to true if a file contains a sequence of images (GIF for example).",
@@ -7057,24 +7555,34 @@ that are tool old (or that have not been created at all).
         "docs": "Video metadata.",
         "properties": {
           "audio": {
+            "default": undefined,
             "docs": "Audio stream's metadata.",
             "type": "optional<LegacyVideoInfoAudio>",
+            "validation": undefined,
           },
           "bitrate": {
+            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "duration": {
+            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "format": {
+            "default": undefined,
             "docs": "Video file's format.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "video": {
+            "default": undefined,
             "docs": "Video stream's metadata.",
             "type": "optional<LegacyVideoInfoVideo>",
+            "validation": undefined,
           },
         },
       },
@@ -7082,20 +7590,28 @@ that are tool old (or that have not been created at all).
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
+            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "channels": {
+            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "codec": {
+            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "sample_rate": {
+            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
         },
       },
@@ -7103,59 +7619,113 @@ that are tool old (or that have not been created at all).
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
+            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "codec": {
+            "default": undefined,
             "docs": "Video stream codec.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "frame_rate": {
+            "default": undefined,
             "docs": "Video stream's frame rate.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "height": {
+            "default": undefined,
             "docs": "Video stream's image height.",
             "type": "optional<double>",
+            "validation": undefined,
           },
           "width": {
+            "default": undefined,
             "docs": "Video stream's image width.",
             "type": "optional<double>",
+            "validation": undefined,
           },
         },
       },
       "Metadata": {
+        "default": undefined,
         "docs": "Arbitrary metadata associated with a file.",
         "type": "optional<map<string, unknown>>",
+        "validation": undefined,
       },
       "MetadataValue": {
         "docs": "Arbitrary metadata associated with the file.
 See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-refs/rest-api/v0.7.0/#tag/File-metadata) for more information.
 ",
         "type": "string",
+        "validation": {
+          "format": undefined,
+          "maxLength": 512,
+          "minLength": 1,
+          "pattern": undefined,
+        },
       },
-      "MultipartFileAlreadyUploadedError": "string",
-      "MultipartFileCompletionFailedError": "string",
-      "MultipartFileIdRequiredError": "string",
-      "MultipartFileSizeLimitExceededError": "string",
-      "MultipartFileSizeTooSmallError": "string",
-      "MultipartPartSizeInvalidError": "string",
-      "MultipartPartSizeTooBigError": "string",
-      "MultipartPartSizeTooSmallError": "string",
-      "MultipartSizeInvalidError": "string",
-      "MultipartUploadSizeTooLargeError": "string",
-      "MultipartUploadSizeTooSmallError": "string",
-      "NullCharactersForbiddenError": "string",
-      "PostRequestParserFailedError": "string",
-      "ProjectPublicKeyRemovedError": "string",
+      "MultipartFileAlreadyUploadedError": {
+        "type": "string",
+      },
+      "MultipartFileCompletionFailedError": {
+        "type": "string",
+      },
+      "MultipartFileIdRequiredError": {
+        "type": "string",
+      },
+      "MultipartFileSizeLimitExceededError": {
+        "type": "string",
+      },
+      "MultipartFileSizeTooSmallError": {
+        "type": "string",
+      },
+      "MultipartPartSizeInvalidError": {
+        "type": "string",
+      },
+      "MultipartPartSizeTooBigError": {
+        "type": "string",
+      },
+      "MultipartPartSizeTooSmallError": {
+        "type": "string",
+      },
+      "MultipartSizeInvalidError": {
+        "type": "string",
+      },
+      "MultipartUploadSizeTooLargeError": {
+        "type": "string",
+      },
+      "MultipartUploadSizeTooSmallError": {
+        "type": "string",
+      },
+      "NullCharactersForbiddenError": {
+        "type": "string",
+      },
+      "PostRequestParserFailedError": {
+        "type": "string",
+      },
+      "ProjectPublicKeyRemovedError": {
+        "type": "string",
+      },
       "ProjectPublicKeyType": {
         "docs": "Public key identifying an Uploadcare project your uploads will go to.",
         "type": "string",
       },
-      "PublicKeyInvalidError": "string",
-      "PublicKeyRequiredError": "string",
-      "RequestFiledsNumberLimitExceededError": "string",
-      "RequestParamRequiredError": "string",
+      "PublicKeyInvalidError": {
+        "type": "string",
+      },
+      "PublicKeyRequiredError": {
+        "type": "string",
+      },
+      "RequestFiledsNumberLimitExceededError": {
+        "type": "string",
+      },
+      "RequestParamRequiredError": {
+        "type": "string",
+      },
       "SchemasImageInfo": {
         "docs": "Image metadata.",
         "properties": {
@@ -7164,28 +7734,42 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "SchemasImageInfoColorMode",
           },
           "datetime_original": {
+            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
+            "validation": undefined,
           },
           "dpi": {
+            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
+            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
+            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<SchemasImageInfoGeoLocation>",
+            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
+            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": undefined,
+              "exclusiveMin": undefined,
+              "max": 8,
+              "min": 0,
+              "multipleOf": undefined,
+            },
           },
           "sequence": {
             "docs": "Set to true if a file contains a sequence of images (GIF for example).",
@@ -7226,11 +7810,21 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           },
         },
       },
-      "SignatureExpirationError": "string",
-      "SignatureExpirationInvalidError": "string",
-      "SignatureExpirationRequiredError": "string",
-      "SignatureInvalidError": "string",
-      "SignatureRequiredError": "string",
+      "SignatureExpirationError": {
+        "type": "string",
+      },
+      "SignatureExpirationInvalidError": {
+        "type": "string",
+      },
+      "SignatureExpirationRequiredError": {
+        "type": "string",
+      },
+      "SignatureInvalidError": {
+        "type": "string",
+      },
+      "SignatureRequiredError": {
+        "type": "string",
+      },
       "SignatureType": {
         "docs": "\`signature\` must be sent along with your upload request if you would like to use signed uploads.
 The signature should be generated on your backend.
@@ -7239,7 +7833,9 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
 ",
         "type": "string",
       },
-      "SourceUrlRequiredError": "string",
+      "SourceUrlRequiredError": {
+        "type": "string",
+      },
       "StoreType": {
         "docs": "Determines if an uploaded file should be marked as temporary or permanent.
 
@@ -7271,29 +7867,57 @@ change the value to \`auto\`.
           "auto",
         ],
       },
-      "TokenRequiredError": "string",
-      "UploadFailedError": "string",
-      "UploadcarePublicKeyInvalidError": "string",
-      "UploadcarePublicKeyRequiredError": "string",
-      "UrlBlacklistedError": "string",
-      "UrlHostMalformedError": "string",
-      "UrlHostPrivateIpForbiddenError": "string",
-      "UrlHostRequiredError": "string",
-      "UrlParsingFailedError": "string",
-      "UrlSchemeInvalidError": "string",
-      "UrlSchemeRequiredError": "string",
-      "UuidInvalidError": "string",
+      "TokenRequiredError": {
+        "type": "string",
+      },
+      "UploadFailedError": {
+        "type": "string",
+      },
+      "UploadcarePublicKeyInvalidError": {
+        "type": "string",
+      },
+      "UploadcarePublicKeyRequiredError": {
+        "type": "string",
+      },
+      "UrlBlacklistedError": {
+        "type": "string",
+      },
+      "UrlHostMalformedError": {
+        "type": "string",
+      },
+      "UrlHostPrivateIpForbiddenError": {
+        "type": "string",
+      },
+      "UrlHostRequiredError": {
+        "type": "string",
+      },
+      "UrlParsingFailedError": {
+        "type": "string",
+      },
+      "UrlSchemeInvalidError": {
+        "type": "string",
+      },
+      "UrlSchemeRequiredError": {
+        "type": "string",
+      },
+      "UuidInvalidError": {
+        "type": "string",
+      },
       "VideoInfo": {
         "docs": "Video metadata.",
         "properties": {
           "audio": "list<VideoInfoAudioItem>",
           "bitrate": {
+            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "duration": {
+            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "format": {
             "docs": "Video file's format.",
@@ -7306,20 +7930,28 @@ change the value to \`auto\`.
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
+            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "channels": {
+            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "codec": {
+            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "sample_rate": {
+            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
         },
       },
@@ -7327,12 +7959,16 @@ change the value to \`auto\`.
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
+            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<integer>",
+            "validation": undefined,
           },
           "codec": {
+            "default": undefined,
             "docs": "Video stream's codec.",
             "type": "optional<string>",
+            "validation": undefined,
           },
           "frame_rate": {
             "docs": "Video stream's frame rate.",

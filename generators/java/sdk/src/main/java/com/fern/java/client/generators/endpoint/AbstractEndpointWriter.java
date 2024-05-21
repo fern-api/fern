@@ -22,8 +22,6 @@ import com.fern.irV42.model.environment.EnvironmentBaseUrlId;
 import com.fern.irV42.model.http.BytesRequest;
 import com.fern.irV42.model.http.FileDownloadResponse;
 import com.fern.irV42.model.http.FileProperty;
-import com.fern.irV42.model.http.FilePropertyArray;
-import com.fern.irV42.model.http.FilePropertySingle;
 import com.fern.irV42.model.http.FileUploadRequest;
 import com.fern.irV42.model.http.FileUploadRequestProperty;
 import com.fern.irV42.model.http.HttpEndpoint;
@@ -84,7 +82,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -124,6 +121,26 @@ public abstract class AbstractEndpointWriter {
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
+    }
+
+    public static CodeBlock stringify(String reference, TypeName typeName) {
+        if (typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class))) {
+            return CodeBlock.of(reference);
+        } else if (typeName.equals(ClassName.get(String.class))) {
+            return CodeBlock.of(reference);
+        } else if (typeName.equals(TypeName.DOUBLE)) {
+            return CodeBlock.of("$T.toString($L)", Double.class, reference);
+        } else if (typeName.equals(TypeName.INT)) {
+            return CodeBlock.of("$T.toString($L)", Integer.class, reference);
+        } else {
+            return CodeBlock.of("$L.toString()", reference);
+        }
+    }
+
+    private static boolean typeNameIsOptional(TypeName typeName) {
+        return typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
     }
 
     public final HttpEndpointMethodSpecs generate() {
@@ -292,7 +309,10 @@ public abstract class AbstractEndpointWriter {
                         defaultedClientName,
                         clientOptionsField,
                         generatedClientOptions.httpClient())
-                .beginControlFlow("if ($L != null && $L.getTimeout().isPresent())", REQUEST_OPTIONS_PARAMETER_NAME, REQUEST_OPTIONS_PARAMETER_NAME)
+                .beginControlFlow(
+                        "if ($L != null && $L.getTimeout().isPresent())",
+                        REQUEST_OPTIONS_PARAMETER_NAME,
+                        REQUEST_OPTIONS_PARAMETER_NAME)
                 // Set the client's callTimeout if requestOptions overrides it has one
                 .addStatement(
                         "$L = $N.$N($L)",
@@ -436,26 +456,6 @@ public abstract class AbstractEndpointWriter {
                 .build();
     }
 
-    public static CodeBlock stringify(String reference, TypeName typeName) {
-        if (typeName instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) typeName).typeArguments.get(0).equals(ClassName.get(String.class))) {
-            return CodeBlock.of(reference);
-        } else if (typeName.equals(ClassName.get(String.class))) {
-            return CodeBlock.of(reference);
-        } else if (typeName.equals(TypeName.DOUBLE)) {
-            return CodeBlock.of("$T.toString($L)", Double.class, reference);
-        } else if (typeName.equals(TypeName.INT)) {
-            return CodeBlock.of("$T.toString($L)", Integer.class, reference);
-        } else {
-            return CodeBlock.of("$L.toString()", reference);
-        }
-    }
-
-    private static boolean typeNameIsOptional(TypeName typeName) {
-        return typeName instanceof ParameterizedTypeName
-                && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
-    }
-
     private final class SuccessResponseWriter implements HttpResponse.Visitor<Void> {
 
         private final CodeBlock.Builder httpResponseBuilder;
@@ -531,30 +531,30 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Void visitStreaming(StreamingResponse streaming) {
-            com.fern.irV42.model.types.TypeReference bodyType = streaming
-                    .visit(new StreamingResponse.Visitor<>() {
-                        @Override
-                        public com.fern.irV42.model.types.TypeReference visitJson(JsonStreamChunk json) {
-                            return json.getPayload();
-                        }
+            com.fern.irV42.model.types.TypeReference bodyType = streaming.visit(new StreamingResponse.Visitor<>() {
+                @Override
+                public com.fern.irV42.model.types.TypeReference visitJson(JsonStreamChunk json) {
+                    return json.getPayload();
+                }
 
-                        @Override
-                        public com.fern.irV42.model.types.TypeReference visitText(TextStreamChunk text) {
-                            throw new RuntimeException("Returning streamed text is not supported.");
-                        }
+                @Override
+                public com.fern.irV42.model.types.TypeReference visitText(TextStreamChunk text) {
+                    throw new RuntimeException("Returning streamed text is not supported.");
+                }
 
-                        @Override
-                        public com.fern.irV42.model.types.TypeReference visitSse(SseStreamChunk sse) {
-                            return sse.getPayload();
-                        }
+                @Override
+                public com.fern.irV42.model.types.TypeReference visitSse(SseStreamChunk sse) {
+                    return sse.getPayload();
+                }
 
-                        @Override
-                        public com.fern.irV42.model.types.TypeReference _visitUnknown(Object unknownType) {
-                            throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
-                        }
-                    });
+                @Override
+                public com.fern.irV42.model.types.TypeReference _visitUnknown(Object unknownType) {
+                    throw new RuntimeException("Encountered unknown json response body type: " + unknownType);
+                }
+            });
 
-            String terminator = streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
+            String terminator =
+                    streaming.visit(new GetStreamingResponseTerminator()).orElse("\n");
             TypeName bodyTypeName =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, bodyType);
             endpointMethodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Iterable.class), bodyTypeName));
@@ -796,5 +796,4 @@ public abstract class AbstractEndpointWriter {
             return false;
         }
     }
-
 }

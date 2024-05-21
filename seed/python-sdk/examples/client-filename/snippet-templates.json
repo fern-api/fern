@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_.echo"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
@@ -78,7 +79,8 @@
         },
         "endpointId": {
             "path": "/file/notification/{notificationId}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_file/notification/service.getException"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
@@ -115,7 +117,8 @@
         },
         "endpointId": {
             "path": "/file/{filename}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_file/service.getFile"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
@@ -186,7 +189,8 @@
         },
         "endpointId": {
             "path": "/check/{id}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_health/service.check"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
@@ -257,7 +261,8 @@
         },
         "endpointId": {
             "path": "/ping",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_health/service.ping"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
@@ -294,7 +299,8 @@
         },
         "endpointId": {
             "path": "/movie/{movieId}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
@@ -365,7 +371,8 @@
         },
         "endpointId": {
             "path": "/movie",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.createMovie"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
@@ -710,7 +717,8 @@
         },
         "endpointId": {
             "path": "/metadata",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getMetadata"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
@@ -830,6 +838,44 @@
                             }
                         }
                     ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_examples",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/response",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getResponse"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.service.get_response(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedExhaustive\nfrom seed.environment import SeedExhaustiveEnvironment\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    environment=SeedExhaustiveEnvironment.PRODUCTION,\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.get_response(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
                 },

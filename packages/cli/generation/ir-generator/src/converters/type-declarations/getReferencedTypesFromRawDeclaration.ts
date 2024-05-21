@@ -66,15 +66,20 @@ export function getReferencedTypesFromRawDeclaration({
     const referencedTypes: DeclaredTypeName[] = [];
 
     for (const rawTypeReference of rawTypeReferences) {
-        const rawNames = recursivelyVisitRawTypeReference<string[]>(rawTypeReference, {
-            primitive: () => [],
-            map: ({ keyType, valueType }) => [...keyType, ...valueType],
-            list: (valueType) => valueType,
-            optional: (valueType) => valueType,
-            set: (valueType) => valueType,
-            named: (name) => [name],
-            literal: () => [],
-            unknown: () => []
+        const rawNames = recursivelyVisitRawTypeReference<string[]>({
+            type: rawTypeReference,
+            _default: undefined,
+            validation: undefined,
+            visitor: {
+                primitive: () => [],
+                map: ({ keyType, valueType }) => [...keyType, ...valueType],
+                list: (valueType) => valueType,
+                optional: (valueType) => valueType,
+                set: (valueType) => valueType,
+                named: (name) => [name],
+                literal: () => [],
+                unknown: () => []
+            }
         });
 
         for (const rawName of rawNames) {

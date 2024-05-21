@@ -87,7 +87,11 @@ public final class AuthToSpringParameterSpecConverter {
 
         @Override
         public ParameterSpec visitOauth(OAuthScheme oauth) {
-            throw new RuntimeException("OAuth not supported");
+            return ParameterSpec.builder(getTypeName(), parameterName)
+                    .addAnnotation(AnnotationSpec.builder(RequestHeader.class)
+                            .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
+                            .build())
+                    .build();
         }
 
         @Override

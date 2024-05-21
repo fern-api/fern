@@ -107,6 +107,7 @@ exports[`generate IR from OpenAPI 1`] = `
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {
@@ -2213,7 +2214,10 @@ exports[`generate IR from OpenAPI 1`] = `
                   "_type": "optional",
                   "optional": {
                     "_type": "primitive",
-                    "primitive": "BOOLEAN",
+                    "primitive": {
+                      "v1": "BOOLEAN",
+                      "v2": null,
+                    },
                   },
                 },
               },
@@ -2823,7 +2827,14 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "DOUBLE",
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": null,
+                      "type": "double",
+                      "validation": null,
+                    },
+                  },
                 },
               },
             },
@@ -2859,7 +2870,14 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "DOUBLE",
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": null,
+                      "type": "double",
+                      "validation": null,
+                    },
+                  },
                 },
               },
             },
@@ -2895,7 +2913,14 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "DOUBLE",
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": null,
+                      "type": "double",
+                      "validation": null,
+                    },
+                  },
                 },
               },
             },
@@ -3011,7 +3036,14 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "DOUBLE",
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "default": null,
+                      "type": "double",
+                      "validation": null,
+                    },
+                  },
                 },
               },
             },
@@ -3047,7 +3079,14 @@ exports[`generate IR from OpenAPI 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "STRING",
+                  "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                      "default": null,
+                      "type": "string",
+                      "validation": null,
+                    },
+                  },
                 },
               },
             },

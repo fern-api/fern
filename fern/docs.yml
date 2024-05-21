@@ -97,6 +97,9 @@ navigation:
         contents:
           - page: Generate your first SDK
             path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
+          - page: Publish a public-facing SDK
+            path: ./pages/sdks/publish-sdk/publish-your-sdk.mdx
+            hidden: true
       - section: Features
         contents:
           - page: Strongly typed
@@ -114,6 +117,9 @@ navigation:
             icon: pro
           - page: Auto-Pagination
             path: ./pages/sdks/features/auto-pagination.mdx
+            icon: pro
+          - page: OAuth
+            path: ./pages/sdks/features/oauth.mdx
             icon: pro
           - page: Retries with backoff
             path: ./pages/sdks/features/retries-with-backoff.mdx
@@ -192,12 +198,15 @@ navigation:
           - page: Quickstart
             slug: quickstart
             path: ./pages/docs/introduction/quickstart.mdx
-          - page: Project Structure 
-            slug: project-structure
-            path: ./pages/docs/introduction/project-structure.mdx
           - page: Showcase 
             slug: showcase
             path: ./pages/docs/introduction/showcase.mdx
+          - page: Local Development
+            slug: development
+            path: ./pages/docs/introduction/development.mdx
+          - page: Project Structure 
+            slug: project-structure
+            path: ./pages/docs/introduction/project-structure.mdx
       - section: Configuration
         slug: config
         contents:

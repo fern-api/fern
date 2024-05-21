@@ -51,7 +51,4 @@ allowedFailures:
   - trace
   - undiscriminated-unions
   - unions
-  - oauth-client-credentials
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
   - query-parameters

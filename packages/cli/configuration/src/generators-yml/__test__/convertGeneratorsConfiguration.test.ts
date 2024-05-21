@@ -204,4 +204,49 @@ describe("convertGeneratorsConfiguration", () => {
             expect(output.githubV2.license?.type === "basic" && output.githubV2.license.id === "MIT").toEqual(true);
         }
     });
+
+    it("Output Metadata", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    "stage:python": {
+                        metadata: {
+                            description: "test that's top level"
+                        },
+                        generators: [
+                            {
+                                output: {
+                                    location: "pypi",
+                                    "package-name": "test",
+                                    metadata: {
+                                        description: "test that's low level",
+                                        keywords: ["test"],
+                                        "documentation-link": "https://test.com"
+                                    }
+                                },
+                                name: "fernapi/fern-python-sdk",
+                                version: "0.8.8-rc0",
+                                config: {
+                                    "package-prefix": "com.test.sdk"
+                                },
+                                github: {
+                                    repository: "fern-api/github-app-test"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        });
+        const output = converted.groups[0]?.generators[0]?.outputMode;
+        expect(output?.type).toEqual("githubV2");
+        if (output?.type === "githubV2") {
+            expect(
+                output.githubV2.publishInfo?.type === "pypi" &&
+                    output.githubV2.publishInfo.pypiMetadata?.documentationLink === "https://test.com" &&
+                    output.githubV2.publishInfo.pypiMetadata?.description === "test that's low level"
+            ).toEqual(true);
+        }
+    });
 });

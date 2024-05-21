@@ -11,14 +11,18 @@ export interface LogViolationsResponse {
 export function logViolations({
     context,
     violations,
-    logWarnings
+    logWarnings,
+    logSummary = true
 }: {
     context: TaskContext;
     violations: ValidationViolation[];
     logWarnings: boolean;
+    logSummary?: boolean;
 }): LogViolationsResponse {
     const stats = getViolationStats(violations);
-    logViolationsSummary({ context, stats, logWarnings });
+    if (logSummary) {
+        logViolationsSummary({ context, stats, logWarnings });
+    }
 
     violations.forEach((violation) => {
         if (violation.severity === "error") {

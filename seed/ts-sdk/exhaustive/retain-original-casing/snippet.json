@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/container/list-of-primitives",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfPrimitives"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/container/list-of-objects",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnListOfObjects"
             },
             "snippet": {
                 "type": "typescript",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/container/set-of-primitives",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfPrimitives"
             },
             "snippet": {
                 "type": "typescript",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/container/set-of-objects",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnSetOfObjects"
             },
             "snippet": {
                 "type": "typescript",
@@ -43,7 +47,8 @@
         {
             "id": {
                 "path": "/container/map-prim-to-prim",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapPrimToPrim"
             },
             "snippet": {
                 "type": "typescript",
@@ -53,7 +58,8 @@
         {
             "id": {
                 "path": "/container/map-prim-to-object",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject"
             },
             "snippet": {
                 "type": "typescript",
@@ -63,7 +69,8 @@
         {
             "id": {
                 "path": "/container/opt-objects",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/container.getAndReturnOptional"
             },
             "snippet": {
                 "type": "typescript",
@@ -73,7 +80,8 @@
         {
             "id": {
                 "path": "/enum",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/enum.getAndReturnEnum"
             },
             "snippet": {
                 "type": "typescript",
@@ -83,7 +91,8 @@
         {
             "id": {
                 "path": "/http-methods/{id}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/http-methods.testGet"
             },
             "snippet": {
                 "type": "typescript",
@@ -93,7 +102,8 @@
         {
             "id": {
                 "path": "/http-methods",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/http-methods.testPost"
             },
             "snippet": {
                 "type": "typescript",
@@ -103,7 +113,8 @@
         {
             "id": {
                 "path": "/http-methods/{id}",
-                "method": "PUT"
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/http-methods.testPut"
             },
             "snippet": {
                 "type": "typescript",
@@ -113,7 +124,8 @@
         {
             "id": {
                 "path": "/http-methods/{id}",
-                "method": "PATCH"
+                "method": "PATCH",
+                "identifier_override": "endpoint_endpoints/http-methods.testPatch"
             },
             "snippet": {
                 "type": "typescript",
@@ -123,7 +135,8 @@
         {
             "id": {
                 "path": "/http-methods/{id}",
-                "method": "DELETE"
+                "method": "DELETE",
+                "identifier_override": "endpoint_endpoints/http-methods.testDelete"
             },
             "snippet": {
                 "type": "typescript",
@@ -133,7 +146,8 @@
         {
             "id": {
                 "path": "/object/get-and-return-with-optional-field",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithOptionalField"
             },
             "snippet": {
                 "type": "typescript",
@@ -143,7 +157,8 @@
         {
             "id": {
                 "path": "/object/get-and-return-with-required-field",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithRequiredField"
             },
             "snippet": {
                 "type": "typescript",
@@ -153,7 +168,8 @@
         {
             "id": {
                 "path": "/object/get-and-return-with-map-of-map",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithMapOfMap"
             },
             "snippet": {
                 "type": "typescript",
@@ -163,7 +179,8 @@
         {
             "id": {
                 "path": "/object/get-and-return-nested-with-optional-field",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField"
             },
             "snippet": {
                 "type": "typescript",
@@ -172,18 +189,20 @@
         },
         {
             "id": {
-                "path": "/object/get-and-return-nested-with-required-field",
-                "method": "POST"
+                "path": "/object/get-and-return-nested-with-required-field/{string}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst seedExhaustive = new SeedExhaustiveClient({ token: \"YOUR_TOKEN\" });\nawait seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField({\n    string: \"string\",\n    NestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: 1000000,\n        double: 1.1,\n        bool: true,\n        datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"string\"],\n        set: new Set([\"string\"]),\n        map: {\n            1: \"string\"\n        }\n    }\n});\n"
+                "client": "import { SeedExhaustiveClient } from \"@fern/exhaustive\";\n\nconst seedExhaustive = new SeedExhaustiveClient({ token: \"YOUR_TOKEN\" });\nawait seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField(\"string\", {\n    string: \"string\",\n    NestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: 1000000,\n        double: 1.1,\n        bool: true,\n        datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"string\"],\n        set: new Set([\"string\"]),\n        map: {\n            1: \"string\"\n        }\n    }\n});\n"
             }
         },
         {
             "id": {
                 "path": "/object/get-and-return-nested-with-required-field-list",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList"
             },
             "snippet": {
                 "type": "typescript",
@@ -193,7 +212,8 @@
         {
             "id": {
                 "path": "/params/path/{param}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPath"
             },
             "snippet": {
                 "type": "typescript",
@@ -203,7 +223,8 @@
         {
             "id": {
                 "path": "/params",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithQuery"
             },
             "snippet": {
                 "type": "typescript",
@@ -213,7 +234,8 @@
         {
             "id": {
                 "path": "/params",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithAllowMultipleQuery"
             },
             "snippet": {
                 "type": "typescript",
@@ -223,7 +245,8 @@
         {
             "id": {
                 "path": "/params/path-query/{param}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_endpoints/params.getWithPathAndQuery"
             },
             "snippet": {
                 "type": "typescript",
@@ -233,7 +256,8 @@
         {
             "id": {
                 "path": "/params/path/{param}",
-                "method": "PUT"
+                "method": "PUT",
+                "identifier_override": "endpoint_endpoints/params.modifyWithPath"
             },
             "snippet": {
                 "type": "typescript",
@@ -243,7 +267,8 @@
         {
             "id": {
                 "path": "/primitive/string",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnString"
             },
             "snippet": {
                 "type": "typescript",
@@ -253,7 +278,8 @@
         {
             "id": {
                 "path": "/primitive/integer",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnInt"
             },
             "snippet": {
                 "type": "typescript",
@@ -263,7 +289,8 @@
         {
             "id": {
                 "path": "/primitive/long",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnLong"
             },
             "snippet": {
                 "type": "typescript",
@@ -273,7 +300,8 @@
         {
             "id": {
                 "path": "/primitive/double",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDouble"
             },
             "snippet": {
                 "type": "typescript",
@@ -283,7 +311,8 @@
         {
             "id": {
                 "path": "/primitive/boolean",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBool"
             },
             "snippet": {
                 "type": "typescript",
@@ -293,7 +322,8 @@
         {
             "id": {
                 "path": "/primitive/datetime",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDatetime"
             },
             "snippet": {
                 "type": "typescript",
@@ -303,7 +333,8 @@
         {
             "id": {
                 "path": "/primitive/date",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnDate"
             },
             "snippet": {
                 "type": "typescript",
@@ -313,7 +344,8 @@
         {
             "id": {
                 "path": "/primitive/uuid",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnUUID"
             },
             "snippet": {
                 "type": "typescript",
@@ -323,7 +355,8 @@
         {
             "id": {
                 "path": "/primitive/base64",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/primitive.getAndReturnBase64"
             },
             "snippet": {
                 "type": "typescript",
@@ -333,7 +366,8 @@
         {
             "id": {
                 "path": "/union",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/union.getAndReturnUnion"
             },
             "snippet": {
                 "type": "typescript",
@@ -343,7 +377,8 @@
         {
             "id": {
                 "path": "/req-bodies/object",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-requests.postWithObjectBodyandResponse"
             },
             "snippet": {
                 "type": "typescript",
@@ -353,7 +388,8 @@
         {
             "id": {
                 "path": "/no-auth",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_no-auth.postWithNoAuth"
             },
             "snippet": {
                 "type": "typescript",
@@ -363,7 +399,8 @@
         {
             "id": {
                 "path": "/no-req-body",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_no-req-body.getWithNoRequestBody"
             },
             "snippet": {
                 "type": "typescript",
@@ -373,7 +410,8 @@
         {
             "id": {
                 "path": "/no-req-body",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_no-req-body.postWithNoRequestBody"
             },
             "snippet": {
                 "type": "typescript",
@@ -383,7 +421,8 @@
         {
             "id": {
                 "path": "/test-headers/custom-header",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_req-with-headers.getWithCustomHeader"
             },
             "snippet": {
                 "type": "typescript",

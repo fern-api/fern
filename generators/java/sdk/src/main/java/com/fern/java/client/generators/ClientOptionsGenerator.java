@@ -108,6 +108,29 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .stream()
                 .map(val -> CodeBlock.of("$S", val).toString())
                 .collect(Collectors.joining(", "));
+        MethodSpec.Builder contructorBuilder = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PRIVATE)
+                .addParameter(ParameterSpec.builder(environmentField.type, environmentField.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(HEADERS_FIELD.type, HEADERS_FIELD.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(HEADER_SUPPLIERS_FIELD.type, HEADER_SUPPLIERS_FIELD.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
+                        .build())
+                .addParameters(variableFields.values().stream()
+                        .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
+                                .build())
+                        .collect(Collectors.toList()))
+                .addStatement("this.$L = $L", environmentField.name, environmentField.name)
+                .addStatement("this.$L = new $T<>()", HEADERS_FIELD.name, HashMap.class)
+                .addStatement("this.$L.putAll($L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
+                .addStatement("this.$L.putAll($T.of($L))", HEADERS_FIELD.name, Map.class, commaDelimitedPatformHeaders)
+                .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
+                .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
+        variableFields
+                .values()
+                .forEach(fieldSpec -> contructorBuilder.addStatement("this.$N = $N", fieldSpec, fieldSpec));
         TypeSpec.Builder clientOptionsBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(environmentField)
@@ -115,40 +138,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addFields(variableFields.values())
-                .addMethod(MethodSpec.constructorBuilder()
-                        .addModifiers(Modifier.PRIVATE)
-                        .addParameter(ParameterSpec.builder(environmentField.type, environmentField.name)
-                                .build())
-                        .addParameter(ParameterSpec.builder(HEADERS_FIELD.type, HEADERS_FIELD.name)
-                                .build())
-                        .addParameter(ParameterSpec.builder(HEADER_SUPPLIERS_FIELD.type, HEADER_SUPPLIERS_FIELD.name)
-                                .build())
-                        .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
-                                .build())
-                        .addParameters(variableFields.values().stream()
-                                .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
-                                        .build())
-                                .collect(Collectors.toList()))
-                        .addStatement("this.$L = $L", environmentField.name, environmentField.name)
-                        .addStatement("this.$L = new $T<>()", HEADERS_FIELD.name, HashMap.class)
-                        .addStatement("this.$L.putAll($L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
-                        .addStatement(
-                                "this.$L.putAll($T.of($L))",
-                                HEADERS_FIELD.name,
-                                Map.class,
-                                commaDelimitedPatformHeaders)
-                        .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
-                        .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
-                        .addStatement(CodeBlock.join(
-                                variableFields.values().stream()
-                                        .map(fieldSpec -> CodeBlock.of("this.$N = $N", fieldSpec, fieldSpec))
-                                        .collect(Collectors.toList()),
-                                "\n"))
-                        .build())
+                .addMethod(contructorBuilder.build())
                 .addMethod(environmentGetter)
                 .addMethod(headersFromRequestOptions);
 
-        TypeName requestOptionsClassName = clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName();
         if (headersFromIdempotentRequestOptions.isPresent()) {
             clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
             MethodSpec httpClientWithTimeoutGetter = MethodSpec.methodBuilder("httpClientWithTimeout")
@@ -161,10 +154,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     .addStatement("return this.$L", OKHTTP_CLIENT_FIELD.name)
                     .endControlFlow()
                     .addStatement(
-                            "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())" +
-                                    ".connectTimeout(0, $T.SECONDS)" +
-                                    ".writeTimeout(0, $T.SECONDS)" +
-                                    ".readTimeout(0, $T.SECONDS).build()",
+                            "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())"
+                                    + ".connectTimeout(0, $T.SECONDS)"
+                                    + ".writeTimeout(0, $T.SECONDS)"
+                                    + ".readTimeout(0, $T.SECONDS).build()",
                             OKHTTP_CLIENT_FIELD.name,
                             REQUEST_OPTIONS_PARAMETER_NAME,
                             REQUEST_OPTIONS_PARAMETER_NAME,
@@ -175,20 +168,20 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             clientOptionsBuilder.addMethod(httpClientWithTimeoutGetter);
         }
 
+        TypeName requestOptionsClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName();
         MethodSpec httpClientWithTimeoutGetter = MethodSpec.methodBuilder("httpClientWithTimeout")
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(
-                        clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
-                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .addParameter(requestOptionsClassName, REQUEST_OPTIONS_PARAMETER_NAME)
                 .returns(OKHTTP_CLIENT_FIELD.type)
                 .beginControlFlow("if ($L == null)", REQUEST_OPTIONS_PARAMETER_NAME)
                 .addStatement("return this.$L", OKHTTP_CLIENT_FIELD.name)
                 .endControlFlow()
                 .addStatement(
-                        "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())" +
-                                ".connectTimeout(0, $T.SECONDS)" +
-                                ".writeTimeout(0, $T.SECONDS)" +
-                                ".readTimeout(0, $T.SECONDS).build()",
+                        "return this.$L.newBuilder().callTimeout($N.getTimeout().get(), $N.getTimeoutTimeUnit())"
+                                + ".connectTimeout(0, $T.SECONDS)"
+                                + ".writeTimeout(0, $T.SECONDS)"
+                                + ".readTimeout(0, $T.SECONDS).build()",
                         OKHTTP_CLIENT_FIELD.name,
                         REQUEST_OPTIONS_PARAMETER_NAME,
                         REQUEST_OPTIONS_PARAMETER_NAME,
@@ -196,7 +189,6 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class,
                         TimeUnit.class)
                 .build();
-
 
         TypeSpec clientOptions = clientOptionsBuilder
                 .addMethod(httpClientGetter)

@@ -9,10 +9,14 @@ import * as core from "../../../../core";
 export const Response: core.serialization.ObjectSchema<serializers.Response.Raw, SeedExamples.Response> =
     core.serialization.object({
         response: core.serialization.unknown(),
+        identifiers: core.serialization.list(
+            core.serialization.lazyObject(async () => (await import("../../..")).Identifier)
+        ),
     });
 
 export declare namespace Response {
     interface Raw {
         response?: unknown;
+        identifiers: serializers.Identifier.Raw[];
     }
 }

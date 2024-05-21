@@ -8,8 +8,8 @@ import { Auth } from "./api/resources/auth/client/Client";
 export declare namespace SeedOauthClientCredentialsEnvironmentVariablesClient {
     interface Options {
         environment: core.Supplier<string>;
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
+        clientId?: core.Supplier<string>;
+        clientSecret?: core.Supplier<string>;
     }
 
     interface RequestOptions {
@@ -28,12 +28,14 @@ export class SeedOauthClientCredentialsEnvironmentVariablesClient {
                 "clientId is required; either pass it as an argument or set the CLIENT_ID environment variable"
             );
         }
+
         const clientSecret = this._options.clientSecret ?? process.env["CLIENT_SECRET"];
         if (clientSecret == null) {
             throw new Error(
                 "clientSecret is required; either pass it as an argument or set the CLIENT_SECRET environment variable"
             );
         }
+
         this._oauthTokenProvider = new core.OAuthTokenProvider({
             clientId,
             clientSecret,

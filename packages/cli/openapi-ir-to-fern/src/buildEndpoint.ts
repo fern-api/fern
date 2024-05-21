@@ -58,11 +58,28 @@ export function buildEndpoint({
         names.add(queryParameter.name);
     }
 
+    let pagination: RawSchemas.PaginationSchema | undefined = undefined;
+    if (endpoint.pagination != null) {
+        if (endpoint.pagination.type === "cursor") {
+            pagination = {
+                cursor: endpoint.pagination.cursor,
+                next_cursor: endpoint.pagination.nextCursor,
+                results: endpoint.pagination.results
+            };
+        } else {
+            pagination = {
+                offset: endpoint.pagination.offset,
+                results: endpoint.pagination.results
+            };
+        }
+    }
+
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
         path: endpoint.path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
-        docs: endpoint.description ?? undefined
+        docs: endpoint.description ?? undefined,
+        pagination
     };
 
     if (Object.keys(pathParameters).length > 0) {

@@ -9,7 +9,7 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
-    PrimitiveType
+    PrimitiveTypeV1
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
@@ -139,7 +139,7 @@ export function convertTypeExample({
                     example,
                     typeResolver,
                     exampleResolver,
-                    file: fileContainingExample,
+                    file: fileContainingType,
                     workspace
                 });
                 if (violationsForMember.length === 0) {
@@ -188,143 +188,148 @@ export function convertTypeReferenceExample({
         file: fileContainingExample
     }).resolvedExample;
 
-    const shape = visitRawTypeReference<ExampleTypeReferenceShape>(rawTypeBeingExemplified, {
-        primitive: (primitive) => {
-            return convertPrimitiveExample({
-                example: resolvedExample,
-                typeBeingExemplified: primitive
-            });
-        },
-        map: ({ keyType, valueType }) => {
-            if (!isPlainObject(resolvedExample)) {
-                throw new Error("Example is not an object");
-            }
-            return ExampleTypeReferenceShape.container(
-                ExampleContainer.map(
-                    Object.entries(resolvedExample).map(([key, value]) => ({
-                        key: convertTypeReferenceExample({
-                            example: key,
-                            fileContainingExample: fileContainingResolvedExample,
-                            rawTypeBeingExemplified: keyType,
-                            fileContainingRawTypeReference,
-                            typeResolver,
-                            exampleResolver,
-                            workspace
-                        }),
-                        value: convertTypeReferenceExample({
-                            example: value,
-                            fileContainingExample: fileContainingResolvedExample,
-                            rawTypeBeingExemplified: valueType,
-                            fileContainingRawTypeReference,
-                            typeResolver,
-                            exampleResolver,
-                            workspace
-                        })
-                    }))
-                )
-            );
-        },
-        list: (itemType) => {
-            if (!Array.isArray(resolvedExample)) {
-                throw new Error("Example is not a list");
-            }
-            return ExampleTypeReferenceShape.container(
-                ExampleContainer.list(
-                    resolvedExample.map((exampleItem) =>
-                        convertTypeReferenceExample({
-                            example: exampleItem,
-                            fileContainingExample: fileContainingResolvedExample,
-                            rawTypeBeingExemplified: itemType,
-                            fileContainingRawTypeReference,
-                            typeResolver,
-                            exampleResolver,
-                            workspace
-                        })
-                    )
-                )
-            );
-        },
-        set: (itemType) => {
-            if (!Array.isArray(resolvedExample)) {
-                throw new Error("Example is not a list");
-            }
-            return ExampleTypeReferenceShape.container(
-                ExampleContainer.set(
-                    resolvedExample.map((exampleItem) =>
-                        convertTypeReferenceExample({
-                            example: exampleItem,
-                            fileContainingExample: fileContainingResolvedExample,
-                            rawTypeBeingExemplified: itemType,
-                            fileContainingRawTypeReference,
-                            typeResolver,
-                            exampleResolver,
-                            workspace
-                        })
-                    )
-                )
-            );
-        },
-        optional: (itemType) => {
-            return ExampleTypeReferenceShape.container(
-                ExampleContainer.optional(
-                    resolvedExample != null
-                        ? convertTypeReferenceExample({
-                              example: resolvedExample,
-                              fileContainingExample: fileContainingResolvedExample,
-                              rawTypeBeingExemplified: itemType,
-                              fileContainingRawTypeReference,
-                              typeResolver,
-                              exampleResolver,
-                              workspace
-                          })
-                        : undefined
-                )
-            );
-        },
-        literal: (literal) => {
-            switch (literal.type) {
-                case "boolean":
-                    return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(literal.boolean));
-                case "string":
-                    return ExampleTypeReferenceShape.primitive(
-                        ExamplePrimitive.string({
-                            original: literal.string
-                        })
-                    );
-                default:
-                    assertNever(literal);
-            }
-        },
-        named: (named) => {
-            const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
-                referenceToNamedType: rawTypeBeingExemplified,
-                file: fileContainingRawTypeReference
-            });
-            const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
-            if (parsedReferenceToNamedType.type !== "named") {
-                throw new Error("Type reference is not to a named type.");
-            }
-            const typeName: DeclaredTypeName = {
-                typeId: parsedReferenceToNamedType.typeId,
-                fernFilepath: parsedReferenceToNamedType.fernFilepath,
-                name: parsedReferenceToNamedType.name
-            };
-            return ExampleTypeReferenceShape.named({
-                typeName,
-                shape: convertTypeExample({
-                    typeName,
-                    typeDeclaration: typeDeclaration.declaration,
-                    fileContainingType: typeDeclaration.file,
-                    fileContainingExample: fileContainingResolvedExample,
+    const shape = visitRawTypeReference<ExampleTypeReferenceShape>({
+        type: rawTypeBeingExemplified,
+        _default: undefined,
+        validation: undefined,
+        visitor: {
+            primitive: (primitive) => {
+                return convertPrimitiveExample({
                     example: resolvedExample,
-                    typeResolver,
-                    exampleResolver,
-                    workspace
-                })
-            });
-        },
-        unknown: () => {
-            return ExampleTypeReferenceShape.unknown(jsonExample);
+                    typeBeingExemplified: primitive.v1
+                });
+            },
+            map: ({ keyType, valueType }) => {
+                if (!isPlainObject(resolvedExample)) {
+                    throw new Error("Example is not an object");
+                }
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.map(
+                        Object.entries(resolvedExample).map(([key, value]) => ({
+                            key: convertTypeReferenceExample({
+                                example: key,
+                                fileContainingExample: fileContainingResolvedExample,
+                                rawTypeBeingExemplified: keyType,
+                                fileContainingRawTypeReference,
+                                typeResolver,
+                                exampleResolver,
+                                workspace
+                            }),
+                            value: convertTypeReferenceExample({
+                                example: value,
+                                fileContainingExample: fileContainingResolvedExample,
+                                rawTypeBeingExemplified: valueType,
+                                fileContainingRawTypeReference,
+                                typeResolver,
+                                exampleResolver,
+                                workspace
+                            })
+                        }))
+                    )
+                );
+            },
+            list: (itemType) => {
+                if (!Array.isArray(resolvedExample)) {
+                    throw new Error("Example is not a list");
+                }
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.list(
+                        resolvedExample.map((exampleItem) =>
+                            convertTypeReferenceExample({
+                                example: exampleItem,
+                                fileContainingExample: fileContainingResolvedExample,
+                                rawTypeBeingExemplified: itemType,
+                                fileContainingRawTypeReference,
+                                typeResolver,
+                                exampleResolver,
+                                workspace
+                            })
+                        )
+                    )
+                );
+            },
+            set: (itemType) => {
+                if (!Array.isArray(resolvedExample)) {
+                    throw new Error("Example is not a list");
+                }
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.set(
+                        resolvedExample.map((exampleItem) =>
+                            convertTypeReferenceExample({
+                                example: exampleItem,
+                                fileContainingExample: fileContainingResolvedExample,
+                                rawTypeBeingExemplified: itemType,
+                                fileContainingRawTypeReference,
+                                typeResolver,
+                                exampleResolver,
+                                workspace
+                            })
+                        )
+                    )
+                );
+            },
+            optional: (itemType) => {
+                return ExampleTypeReferenceShape.container(
+                    ExampleContainer.optional(
+                        resolvedExample != null
+                            ? convertTypeReferenceExample({
+                                  example: resolvedExample,
+                                  fileContainingExample: fileContainingResolvedExample,
+                                  rawTypeBeingExemplified: itemType,
+                                  fileContainingRawTypeReference,
+                                  typeResolver,
+                                  exampleResolver,
+                                  workspace
+                              })
+                            : undefined
+                    )
+                );
+            },
+            literal: (literal) => {
+                switch (literal.type) {
+                    case "boolean":
+                        return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(literal.boolean));
+                    case "string":
+                        return ExampleTypeReferenceShape.primitive(
+                            ExamplePrimitive.string({
+                                original: literal.string
+                            })
+                        );
+                    default:
+                        assertNever(literal);
+                }
+            },
+            named: (named) => {
+                const typeDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
+                    referenceToNamedType: rawTypeBeingExemplified,
+                    file: fileContainingRawTypeReference
+                });
+                const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
+                if (parsedReferenceToNamedType.type !== "named") {
+                    throw new Error("Type reference is not to a named type.");
+                }
+                const typeName: DeclaredTypeName = {
+                    typeId: parsedReferenceToNamedType.typeId,
+                    fernFilepath: parsedReferenceToNamedType.fernFilepath,
+                    name: parsedReferenceToNamedType.name
+                };
+                return ExampleTypeReferenceShape.named({
+                    typeName,
+                    shape: convertTypeExample({
+                        typeName,
+                        typeDeclaration: typeDeclaration.declaration,
+                        fileContainingType: typeDeclaration.file,
+                        fileContainingExample: fileContainingResolvedExample,
+                        example: resolvedExample,
+                        typeResolver,
+                        exampleResolver,
+                        workspace
+                    })
+                });
+            },
+            unknown: () => {
+                return ExampleTypeReferenceShape.unknown(jsonExample);
+            }
         }
     });
 
@@ -339,9 +344,9 @@ function convertPrimitiveExample({
     typeBeingExemplified
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;
-    typeBeingExemplified: PrimitiveType;
+    typeBeingExemplified: PrimitiveTypeV1;
 }): ExampleTypeReferenceShape {
-    return PrimitiveType._visit(typeBeingExemplified, {
+    return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
@@ -403,6 +408,16 @@ function convertPrimitiveExample({
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
+        },
+        bigInteger: () => {
+            if (typeof example !== "string") {
+                throw new Error("Example is not a string");
+            }
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.string({
+                    original: example
+                })
+            );
         },
         _other: () => {
             throw new Error("Unknown primitive type: " + typeBeingExemplified);

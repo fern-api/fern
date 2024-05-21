@@ -5,7 +5,155 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.0.1] - 2024-05-09
+## [2.3.2] - 2024-05-21
+
+- Fix: The `pyproject.toml` generator now writes authors in a valid format for `tool.poetry`, not just `project`
+
+- Fix: The query encoder now correctly handles none values
+
+## [2.3.1] - 2024-05-21
+
+- Fix: The `pyproject.toml` generator now includes project URLs when specified.
+
+## [2.3.0] - 2024-05-21
+
+- Improvement: Users can now specify information that will appear in their pypi record.
+
+```yaml
+generators:
+  - name: fernapi/fern-python-sdk
+    metadata:
+      description: this is the desc for my package
+      keywords:
+        - science
+        - data analysis
+      documentationLink: "https://buildwithfern.com/learn"
+      homepageLink: "https://buildwithfern.com/"
+      authors:
+        - email: support@buildwithfern.com
+          name: Armando
+```
+
+## [2.2.2] - 2024-05-20
+
+- Fix: Inline request parameters now deconflict in naming with the unnamed path parameter arguments. Previously, when inlining request parameters into the method signature, we would not deconflict naming with the unnamed args preceeding them. Now, conflicting unnamed parameters are post-fixed with an "\_".
+
+Before:
+
+```python
+def method_name(id: str, *, id: str) -> None:
+  ...
+```
+
+After:
+
+```python
+def method_name(id_: str, *, id: str) -> None:
+  ...
+```
+
+## [2.2.1] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
+## [2.2.0] - 2024-05-16
+
+- Improvement: The generated SDK will now correctly encode deep object query parameters.
+  For example, if you have an object `{"test": {"nested": "object"}}` as a query parameter, we will now encode it as `test[nested]=object`.
+
+## [2.1.1] - 2024-05-15
+
+- Chore: add enhanced snippet support for streaming endpoints.
+
+  Before:
+
+  ```python
+  from seed.client import SeedStreaming
+
+  client = SeedStreaming(
+      base_url="https://yourhost.com/path/to/api",
+  )
+  client.dummy.generate_stream(
+      num_events=1,
+  )
+  ```
+
+  After:
+
+  ```python
+  from seed.client import SeedStreaming
+
+  client = SeedStreaming(
+      base_url="https://yourhost.com/path/to/api",
+  )
+  response = client.dummy.generate_stream(
+      num_events=1,
+  )
+  for chunk in response:
+      yield chunk
+  ```
+
+## [2.1.0] - 2024-05-14
+
+- Feature: Add support for cursor and offset pagination.
+
+  For example, consider the following endpoint `/users` endpoint:
+
+  ```yaml
+  types:
+    User:
+      properties:
+        name: string
+
+    ListUserResponse:
+      properties:
+        next: optional<string>
+        data: list<User>
+
+  service:
+    auth: false
+    base-path: /users
+    endpoints:
+      list:
+        path: ""
+        method: GET
+        pagination:
+          cursor: $request.starting_after
+          next_cursor: $response.next
+          results: $response.data
+        request:
+          name: ListUsersRequest
+          query-parameters:
+            starting_after: optional<string>
+        response: ListUsersResponse
+  ```
+
+  The generated `client.Users.List` can then be used as a `User` generator (effectively the "default"):
+
+  ```python
+  for user in client.users.list(...):
+    print user
+  ```
+
+  a page-by-page generator:
+
+  ```python
+  for page in client.users.list(...).iter_pages():
+    print(page.items)
+  ```
+
+  or statically calling `next_page` to perform the pagination manually:
+
+  ```python
+  pager = client.users.list(...)
+  # First page
+  print(pager.items)
+  # Second page
+  pager = pager.next_page()
+  print(pager.items)
+  ```
+
+## [2.0.1] - 2024-05-14
 
 - Fix: the python generator previously used `exclude_unset` on pydantic models, however this would remove defaulted values. This change updates this to only exclude none fields that were not required.
 

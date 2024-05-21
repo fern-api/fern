@@ -371,6 +371,10 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "streaming");
     });
 
+    const hasPaginatedEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
+        return service.endpoints.some((endpoint) => endpoint.pagination != null);
+    });
+
     const hasFileDownloadEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
@@ -381,6 +385,7 @@ export async function generateIntermediateRepresentation({
         sdkConfig: {
             isAuthMandatory,
             hasStreamingEndpoints,
+            hasPaginatedEndpoints,
             hasFileDownloadEndpoints,
             platformHeaders: {
                 language: "X-Fern-Language",

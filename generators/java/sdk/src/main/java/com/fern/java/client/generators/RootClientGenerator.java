@@ -21,8 +21,12 @@ import com.fern.irV42.model.auth.BasicAuthScheme;
 import com.fern.irV42.model.auth.BearerAuthScheme;
 import com.fern.irV42.model.auth.EnvironmentVariable;
 import com.fern.irV42.model.auth.HeaderAuthScheme;
+import com.fern.irV42.model.auth.OAuthClientCredentials;
+import com.fern.irV42.model.auth.OAuthConfiguration;
 import com.fern.irV42.model.auth.OAuthScheme;
+import com.fern.irV42.model.commons.EndpointReference;
 import com.fern.irV42.model.commons.TypeId;
+import com.fern.irV42.model.ir.Subpackage;
 import com.fern.irV42.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
@@ -55,6 +59,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final ClientGeneratorContext clientGeneratorContext;
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final Optional<GeneratedJavaFile> generatedOAuthTokenSupplier;
     private final GeneratedJavaFile generatedSuppliersFile;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName builderName;
@@ -68,7 +73,8 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             GeneratedJavaFile generatedSuppliersFile,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedJavaFile requestOptionsFile,
-            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
+            Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
+            Optional<GeneratedJavaFile> generatedOAuthTokenSupplier) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
@@ -83,6 +89,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.generatedSuppliersFile = generatedSuppliersFile;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
+        this.generatedOAuthTokenSupplier = generatedOAuthTokenSupplier;
         this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
         this.requestOptionsFile = requestOptionsFile;
     }
@@ -297,12 +304,11 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             }
             this.clientBuilder.addField(passwordField.build());
 
-
             // add setter method
-            ParameterSpec usernameParam = ParameterSpec.builder(String.class, usernameFieldName)
-                    .build();
-            ParameterSpec passwordParam = ParameterSpec.builder(String.class, passwordFieldName)
-                    .build();
+            ParameterSpec usernameParam =
+                    ParameterSpec.builder(String.class, usernameFieldName).build();
+            ParameterSpec passwordParam =
+                    ParameterSpec.builder(String.class, passwordFieldName).build();
             this.clientBuilder.addMethod(MethodSpec.methodBuilder("credentials")
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(usernameParam)
@@ -360,7 +366,49 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
-            throw new RuntimeException("OAuth not supported");
+            return oauth.getConfiguration().visit(new OAuthSchemeHandler());
+        }
+
+        public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
+
+            @Override
+            public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
+                EndpointReference tokenEndpointReference =
+                        clientCredentials.getTokenEndpoint().getEndpointReference();
+
+                createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
+                createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
+
+                Subpackage subpackage = clientGeneratorContext
+                        .getIr()
+                        .getSubpackages()
+                        .get(tokenEndpointReference.getSubpackageId().get());
+                ClassName authClientClassName =
+                        clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage);
+                ClassName oauthTokenSupplierClassName =
+                        generatedOAuthTokenSupplier.get().getClassName();
+                buildMethod
+                        .addStatement(
+                                "$T authClient = new $T($T.builder().environment(this.$L).build())",
+                                authClientClassName,
+                                authClientClassName,
+                                generatedClientOptions.getClassName(),
+                                ENVIRONMENT_FIELD_NAME)
+                        .addStatement(
+                                "$T oAuthTokenSupplier = new $T(clientId, clientSecret, authClient)",
+                                oauthTokenSupplierClassName,
+                                oauthTokenSupplierClassName)
+                        .addStatement(
+                                "this.$L.addHeader($S, oAuthTokenSupplier)",
+                                CLIENT_OPTIONS_BUILDER_NAME,
+                                "Authorization");
+                return null;
+            }
+
+            @Override
+            public Void _visitUnknown(Object unknownType) {
+                throw new RuntimeException("Encountered unknown oauth scheme" + unknownType);
+            }
         }
 
         public Void visitNonAuthHeader(HeaderAuthScheme header) {
@@ -370,9 +418,13 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         public Void visitHeaderBase(HeaderAuthScheme header, Boolean respectMandatoryAuth) {
             String fieldName = header.getName().getName().getCamelCase().getSafeName();
             // Never not create a setter or a null check if it's a literal
-            if ((respectMandatoryAuth && isMandatory) || !(header.getValueType().isContainer() && header.getValueType().getContainer().get().isLiteral())) {
+            if ((respectMandatoryAuth && isMandatory)
+                    || !(header.getValueType().isContainer()
+                            && header.getValueType().getContainer().get().isLiteral())) {
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.empty());
-                if ((respectMandatoryAuth && isMandatory) || !(header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional())) {
+                if ((respectMandatoryAuth && isMandatory)
+                        || !(header.getValueType().isContainer()
+                                && header.getValueType().getContainer().get().isOptional())) {
                     this.buildMethod
                             .beginControlFlow("if ($L == null)", fieldName)
                             .addStatement(
@@ -380,22 +432,23 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                                     header.getHeaderEnvVar().isEmpty()
                                             ? getErrorMessage(fieldName)
                                             : getErrorMessage(
-                                            fieldName,
-                                            header.getHeaderEnvVar().get()))
+                                                    fieldName,
+                                                    header.getHeaderEnvVar().get()))
                             .endControlFlow();
                 }
             } else {
-                Literal literal = header.getValueType().getContainer().get().getLiteral().get();
+                Literal literal =
+                        header.getValueType().getContainer().get().getLiteral().get();
 
                 createSetter(fieldName, header.getHeaderEnvVar(), Optional.of(literal));
             }
 
-            Boolean shouldWrapInConditional = header.getValueType().isContainer() && header.getValueType().getContainer().get().isOptional();
+            Boolean shouldWrapInConditional = header.getValueType().isContainer()
+                    && header.getValueType().getContainer().get().isOptional();
             MethodSpec.Builder maybeConditionalAdditionFlow = this.buildMethod;
             // If the header is optional, wrap the add in a presence check so it does not get added unless it's non-null
             if (shouldWrapInConditional) {
-                maybeConditionalAdditionFlow = this.buildMethod
-                        .beginControlFlow("if ($L != null)", fieldName);
+                maybeConditionalAdditionFlow = this.buildMethod.beginControlFlow("if ($L != null)", fieldName);
             }
 
             if (header.getPrefix().isPresent()) {
@@ -419,11 +472,11 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             return null;
         }
 
-        private void createSetter(String fieldName, Optional<EnvironmentVariable> environmentVariable, Optional<Literal> literal) {
+        private void createSetter(
+                String fieldName, Optional<EnvironmentVariable> environmentVariable, Optional<Literal> literal) {
             FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName).addModifiers(Modifier.PRIVATE);
             if (environmentVariable.isPresent()) {
-                field.initializer(
-                        "System.getenv($S)", environmentVariable.get().get());
+                field.initializer("System.getenv($S)", environmentVariable.get().get());
             } else if (literal.isPresent()) {
                 literal.get().visit(new Literal.Visitor<Void>() {
                     @Override
@@ -463,7 +516,6 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                             environmentVariable.get().get());
                 }
                 clientBuilder.addMethod(setter.build());
-
             }
         }
 

@@ -442,6 +442,7 @@ exports[`migrateFromV42ToV41 snapshot 1`] = `
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": true,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {

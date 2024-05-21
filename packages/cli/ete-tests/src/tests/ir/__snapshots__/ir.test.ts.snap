@@ -52,7 +52,14 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
                 },
                 "valueType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "prefix": "ApiKey",
                 "headerEnvVar": null,
@@ -123,6 +130,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -350,7 +358,14 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -744,11 +759,25 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -1186,6 +1215,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -1370,7 +1400,14 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                 },
                                 "valueType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "docs": null
                             },
@@ -1458,7 +1495,14 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                 },
                                 "valueType": {
                                     "_type": "primitive",
-                                    "primitive": "INTEGER"
+                                    "primitive": {
+                                        "v1": "INTEGER",
+                                        "v2": {
+                                            "type": "integer",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "docs": null
                             }
@@ -1694,6 +1738,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -7474,6 +7519,7 @@ exports[`ir {"name":"migration","version":"v1"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -8449,6 +8495,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -8743,6 +8790,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -8932,7 +8980,14 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                         "_type": "map",
                                         "keyType": {
                                             "_type": "primitive",
-                                            "primitive": "STRING"
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         },
                                         "valueType": {
                                             "_type": "named",
@@ -9200,11 +9255,25 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -10481,6 +10550,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -10554,11 +10624,25 @@ exports[`ir {"name":"packages"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -10638,11 +10722,25 @@ exports[`ir {"name":"packages"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -10988,11 +11086,25 @@ exports[`ir {"name":"packages"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -11602,6 +11714,7 @@ exports[`ir {"name":"packages"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -11738,7 +11851,14 @@ exports[`ir {"name":"response-property"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -11846,7 +11966,14 @@ exports[`ir {"name":"response-property"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -12198,7 +12325,14 @@ exports[`ir {"name":"response-property"} 1`] = `
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "contentType": null,
                         "docs": null
@@ -12210,7 +12344,14 @@ exports[`ir {"name":"response-property"} 1`] = `
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -12664,7 +12805,14 @@ exports[`ir {"name":"response-property"} 1`] = `
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "contentType": null,
                         "docs": null
@@ -12676,7 +12824,14 @@ exports[`ir {"name":"response-property"} 1`] = `
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "contentType": null,
                                 "docs": null
@@ -12798,7 +12953,14 @@ exports[`ir {"name":"response-property"} 1`] = `
                                     },
                                     "valueType": {
                                         "_type": "primitive",
-                                        "primitive": "STRING"
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
                                     },
                                     "availability": null,
                                     "docs": null
@@ -13006,6 +13168,7 @@ exports[`ir {"name":"response-property"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -13074,7 +13237,14 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "STRING"
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
                     }
                 }
             },
@@ -13180,7 +13350,14 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -13515,7 +13692,14 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -13697,7 +13881,14 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "docs": null
                             }
@@ -14430,7 +14621,14 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
             },
             "location": "ROOT",
             "variable": null,
@@ -14626,6 +14824,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -14694,7 +14893,14 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "STRING"
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
                     }
                 }
             },
@@ -14800,7 +15006,14 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -14883,11 +15096,25 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -15031,7 +15258,14 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -15065,7 +15299,14 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 "_type": "list",
                                 "list": {
                                     "_type": "primitive",
-                                    "primitive": "DOUBLE"
+                                    "primitive": {
+                                        "v1": "DOUBLE",
+                                        "v2": {
+                                            "type": "double",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -15566,7 +15807,14 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -18315,7 +18563,14 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
             },
             "location": "ROOT",
             "variable": null,
@@ -18513,6 +18768,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -18581,7 +18837,14 @@ exports[`ir {"name":"simple"} 1`] = `
                     "_type": "optional",
                     "optional": {
                         "_type": "primitive",
-                        "primitive": "STRING"
+                        "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                                "type": "string",
+                                "default": null,
+                                "validation": null
+                            }
+                        }
                     }
                 }
             },
@@ -18687,7 +18950,14 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -18795,7 +19065,14 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -18880,7 +19157,14 @@ exports[`ir {"name":"simple"} 1`] = `
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "docs": null
                     },
@@ -18891,7 +19175,14 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "list",
                                 "list": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -18900,7 +19191,14 @@ exports[`ir {"name":"simple"} 1`] = `
                     {
                         "type": {
                             "_type": "primitive",
-                            "primitive": "INTEGER"
+                            "primitive": {
+                                "v1": "INTEGER",
+                                "v2": {
+                                    "type": "integer",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "docs": null
                     },
@@ -18915,7 +19213,14 @@ exports[`ir {"name":"simple"} 1`] = `
                                         "_type": "list",
                                         "list": {
                                             "_type": "primitive",
-                                            "primitive": "INTEGER"
+                                            "primitive": {
+                                                "v1": "INTEGER",
+                                                "v2": {
+                                                    "type": "integer",
+                                                    "default": null,
+                                                    "validation": null
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -19025,7 +19330,14 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -19508,11 +19820,25 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "INTEGER"
+                    "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                            "type": "integer",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "INTEGER"
+                    "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                            "type": "integer",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -19815,11 +20141,25 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -19918,11 +20258,25 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -20041,11 +20395,25 @@ exports[`ir {"name":"simple"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -20240,7 +20608,14 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -20270,7 +20645,14 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "DOUBLE"
+                            "primitive": {
+                                "v1": "DOUBLE",
+                                "v2": {
+                                    "type": "double",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -20770,7 +21152,14 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "valueType": {
                             "_type": "primitive",
-                            "primitive": "STRING"
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -20804,7 +21193,14 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "_type": "list",
                                 "list": {
                                     "_type": "primitive",
-                                    "primitive": "DOUBLE"
+                                    "primitive": {
+                                        "v1": "DOUBLE",
+                                        "v2": {
+                                            "type": "double",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 }
                             }
                         },
@@ -24707,7 +25103,14 @@ exports[`ir {"name":"simple"} 1`] = `
             "statusCode": 404,
             "type": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
             },
             "examples": [],
             "docs": null
@@ -24832,7 +25235,14 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -25014,7 +25424,14 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "docs": null
                             }
@@ -25703,7 +26120,14 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -28508,7 +28932,14 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -28631,7 +29062,14 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "allowMultiple": true,
                             "availability": null,
@@ -31463,7 +31901,14 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "location": "ROOT",
                             "variable": null,
@@ -32139,7 +32584,14 @@ exports[`ir {"name":"simple"} 1`] = `
             },
             "valueType": {
                 "_type": "primitive",
-                "primitive": "STRING"
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
             },
             "location": "ROOT",
             "variable": null,
@@ -32440,6 +32892,7 @@ exports[`ir {"name":"simple"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -32585,7 +33038,14 @@ exports[`ir {"name":"streaming"} 1`] = `
                                 "type": "json",
                                 "payload": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "terminator": null,
                                 "docs": null
@@ -32733,7 +33193,10 @@ exports[`ir {"name":"streaming"} 1`] = `
                                 },
                                 "valueType": {
                                     "_type": "primitive",
-                                    "primitive": "BOOLEAN"
+                                    "primitive": {
+                                        "v1": "BOOLEAN",
+                                        "v2": null
+                                    }
                                 },
                                 "docs": null
                             }
@@ -32809,7 +33272,14 @@ exports[`ir {"name":"streaming"} 1`] = `
                                 "type": "json",
                                 "payload": {
                                     "_type": "primitive",
-                                    "primitive": "STRING"
+                                    "primitive": {
+                                        "v1": "STRING",
+                                        "v2": {
+                                            "type": "string",
+                                            "default": null,
+                                            "validation": null
+                                        }
+                                    }
                                 },
                                 "terminator": "[DONE]",
                                 "docs": null
@@ -33048,6 +33518,7 @@ exports[`ir {"name":"streaming"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": true,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -33159,11 +33630,25 @@ exports[`ir {"name":"variables"} 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -34208,6 +34693,7 @@ exports[`ir {"name":"variables"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -34359,7 +34845,14 @@ exports[`ir {"name":"webhooks"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "STRING"
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
                             },
                             "docs": null
                         },
@@ -34388,7 +34881,10 @@ exports[`ir {"name":"webhooks"} 1`] = `
                             },
                             "valueType": {
                                 "_type": "primitive",
-                                "primitive": "BOOLEAN"
+                                "primitive": {
+                                    "v1": "BOOLEAN",
+                                    "v2": null
+                                }
                             },
                             "docs": "Some docs about urgency"
                         }
@@ -34496,6 +34992,7 @@ exports[`ir {"name":"webhooks"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",

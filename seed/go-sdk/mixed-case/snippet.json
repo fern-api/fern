@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/resource",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.listResources"
             },
             "snippet": {
                 "type": "go",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/resource/{ResourceID}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.getResource"
             },
             "snippet": {
                 "type": "go",

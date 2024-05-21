@@ -312,11 +312,12 @@ export class Object_ {
     }
 
     /**
+     * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField({
+     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField("string", {
      *         string: "string",
      *         nestedObject: {
      *             string: "string",
@@ -337,13 +338,14 @@ export class Object_ {
      *     })
      */
     public async getAndReturnNestedWithRequiredField(
+        string: string,
         request: SeedExhaustive.types.NestedObjectWithRequiredField,
         requestOptions?: Object_.RequestOptions
     ): Promise<SeedExhaustive.types.NestedObjectWithRequiredField> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                "/object/get-and-return-nested-with-required-field"
+                `/object/get-and-return-nested-with-required-field/${encodeURIComponent(string)}`
             ),
             method: "POST",
             headers: {

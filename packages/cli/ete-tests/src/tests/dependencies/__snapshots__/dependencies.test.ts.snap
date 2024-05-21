@@ -103,11 +103,25 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -185,11 +199,25 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "INTEGER"
+                    "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                            "type": "integer",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "INTEGER"
+                    "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                            "type": "integer",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -306,11 +334,25 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "_type": "alias",
                 "aliasOf": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 },
                 "resolvedType": {
                     "_type": "primitive",
-                    "primitive": "STRING"
+                    "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                            "type": "string",
+                            "default": null,
+                            "validation": null
+                        }
+                    }
                 }
             },
             "referencedTypes": [],
@@ -786,6 +828,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
@@ -796,4 +839,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `2657122`;
+exports[`dependencies file dependencies 1`] = `2695212`;

@@ -60,6 +60,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        inlineFileProperties: boolean;
         oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 }
@@ -93,6 +94,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private targetRuntime: JavaScriptRuntime;
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
+    private inlineFileProperties: boolean;
     private importsManager: ImportsManager;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
@@ -113,6 +115,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
         retainOriginalCasing,
+        inlineFileProperties,
         importsManager,
         oauthTokenProviderGenerator
     }: GeneratedSdkClientClassImpl.Init) {
@@ -126,6 +129,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
         this.importsManager = importsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
 
@@ -154,7 +158,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             requestBody,
                             generatedSdkClientClass: this,
                             targetRuntime: this.targetRuntime,
-                            retainOriginalCasing: this.retainOriginalCasing
+                            retainOriginalCasing: this.retainOriginalCasing,
+                            inlineFileProperties: this.inlineFileProperties
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -451,60 +456,61 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     )
                 }
             ];
-            if (
-                this.oauthAuthScheme.configuration.clientIdEnvVar != null &&
-                this.oauthAuthScheme.configuration.clientSecretEnvVar != null
-            ) {
-                const clientIdEnvVar = this.oauthAuthScheme.configuration.clientIdEnvVar;
-                const clientSecretEnvVar = this.oauthAuthScheme.configuration.clientSecretEnvVar;
-                const statements = code`
-                    const ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} = this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} ?? process.env["${clientIdEnvVar}"];
+            const readClientId =
+                this.oauthAuthScheme.configuration.clientIdEnvVar != null
+                    ? code`
+                    const ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} = this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} ?? process.env["${this.oauthAuthScheme.configuration.clientIdEnvVar}"];
                     if (${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} == null) {
                         throw new Error(
-                            "${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} is required; either pass it as an argument or set the ${clientIdEnvVar} environment variable"
+                            "${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} is required; either pass it as an argument or set the ${this.oauthAuthScheme.configuration.clientIdEnvVar} environment variable"
                         );
                     }
-                    const ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} = this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} ?? process.env["${clientSecretEnvVar}"];
+                `
+                    : code``;
+            const setClientId =
+                this.oauthAuthScheme.configuration.clientIdEnvVar != null
+                    ? code`
+                ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME}
+            `
+                    : code`
+                ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME}: this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME}
+            `;
+            const readClientSecret =
+                this.oauthAuthScheme.configuration.clientSecretEnvVar != null
+                    ? code`
+                    const ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} = this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} ?? process.env["${this.oauthAuthScheme.configuration.clientSecretEnvVar}"];
                     if (${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} == null) {
                         throw new Error(
-                            "${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} is required; either pass it as an argument or set the ${clientSecretEnvVar} environment variable"
+                            "${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} is required; either pass it as an argument or set the ${this.oauthAuthScheme.configuration.clientSecretEnvVar} environment variable"
                         );
                     }
-                    this.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME} = new core.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME}({
-                        ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME},
-                        ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME},
-                        ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
-                            environment: this._options.environment,
-                        }),
-                    });
-                `;
-                serviceClass.addConstructor({
-                    parameters,
-                    statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+                `
+                    : code``;
+            const setClientSecret =
+                this.oauthAuthScheme.configuration.clientSecretEnvVar != null
+                    ? code`
+                ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}
+            `
+                    : code`
+                ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}: this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}
+            `;
+            const statements = code`
+                ${readClientId}
+
+                ${readClientSecret}
+
+                this.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME} = new core.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME}({
+                    ${setClientId},
+                    ${setClientSecret},
+                    ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
+                        environment: this._options.environment,
+                    }),
                 });
-            } else {
-                serviceClass.addConstructor({
-                    parameters,
-                    statements: [
-                        getTextOfTsNode(
-                            ts.factory.createExpressionStatement(
-                                ts.factory.createBinaryExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createThis(),
-                                        OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME
-                                    ),
-                                    ts.factory.createToken(ts.SyntaxKind.EqualsToken),
-                                    ts.factory.createNewExpression(
-                                        context.coreUtilities.auth.OAuthTokenProvider._getExpression(),
-                                        undefined,
-                                        [ts.factory.createObjectLiteralExpression(properties, true)]
-                                    )
-                                )
-                            )
-                        )
-                    ]
-                });
-            }
+            `;
+            serviceClass.addConstructor({
+                parameters,
+                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
+            });
         } else {
             serviceClass.addConstructor({
                 parameters: [
@@ -889,7 +895,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 .valueType
                         ).typeNode
                     )
-                )
+                ),
+                hasQuestionToken: this.oauthAuthScheme.configuration.clientIdEnvVar != null
             });
             properties.push({
                 name: OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
@@ -900,7 +907,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 .valueType
                         ).typeNode
                     )
-                )
+                ),
+                hasQuestionToken: this.oauthAuthScheme.configuration.clientSecretEnvVar != null
             });
         }
 
@@ -1152,18 +1160,51 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const statements: ts.Statement[] = [];
 
         if (this.oauthAuthScheme != null) {
+            const BEARER_TOKEN_VARIABLE_NAME = "bearer";
             statements.push(
-                ts.factory.createReturnStatement(
-                    ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
-                        ts.factory.createTemplateSpan(
-                            context.coreUtilities.fetcher.Supplier.get(
-                                this.getReferenceToOption(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME)
-                            ),
-                            ts.factory.createTemplateTail("", "")
-                        )
-                    ])
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                undefined,
+                                undefined,
+                                context.coreUtilities.fetcher.Supplier.get(
+                                    this.getReferenceToOption(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME)
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
                 )
             );
+
+            statements.push(
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createReturnStatement(
+                                ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
+                                    ts.factory.createTemplateSpan(
+                                        ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                        ts.factory.createTemplateTail("", "")
+                                    )
+                                ])
+                            )
+                        ],
+                        true
+                    )
+                )
+            );
+
+            statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));
+
             return statements;
         }
         if (this.bearerAuthScheme != null) {

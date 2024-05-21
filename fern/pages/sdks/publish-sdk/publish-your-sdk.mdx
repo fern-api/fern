@@ -1,0 +1,222 @@
+---
+title: Publish a public-facing SDK
+description: Use Fern to publish a public-facing SDK
+---
+
+<Frame caption="Merge.dev uses Fern for their SDKs">
+  <img alt="GitHub Page" src="assets/merge-github.png" />
+</Frame>
+
+This guide will walk you through how to publish public-facing SDKs through Fern. 
+
+<Steps>
+  ### Navigate to your `generators.yml` 
+
+  This guide assumes that you already have an initialized fern folder. If you don't 
+  please run `fern init`! 
+
+  Your `generators.yml` lives inside of the fern folder and contains all 
+  the configuration for your Fern generators. 
+
+  ### Run `fern add <generator>`
+
+  In order to generate the SDK, we'll need to add the generator to your 
+  `generators.yml`. You can use the `fern <add>` command to do this. 
+
+  <CodeBlocks>
+    ```bash TypeScript
+    fern add fern-typescript-node-sdk --group ts-sdk
+    ```
+    ```bash Python
+    fern add fern-python-sdk --group python-sdk
+    ```
+    ```bash Java
+    fern add fern-java-sdk --group java-sdk
+    ```
+    ```bash Go
+    fern add fern-go-sdk --group go-sdk
+    ```
+  </CodeBlocks>
+
+  Once the command completes, you'll see a new group created in your `generators.yml`. 
+  
+  <CodeBlocks>
+    ```yaml TypeScript 
+    groups: 
+      ts-sdk:
+        generators:
+          - name: fernapi/fern-typescript-node-sdk
+            version: 0.9.5
+            output:
+              location: local-file-system
+              path: ../sdks/typescript
+    ```
+    ```yaml Python 
+    groups: 
+      python-sdk:
+        generators:
+          - name: fernapi/fern-python-sdk
+            version: 0.8.1
+            output:
+              location: local-file-system
+              path: ../sdks/python
+    ```
+    ```yaml Java 
+    groups: 
+      java-sdk:
+        generators:
+          - name: fernapi/fern-java-sdk
+            version: 0.9.1
+    ```
+    ```yaml Go 
+    groups:
+      go-sdk:
+        generators:
+          - name: fernapi/fern-go-sdk
+            version: 0.9.1
+    ```
+  </CodeBlocks>
+
+  ### Configure `output` location
+
+  In order to setup publishing your SDK, you'll need to configure 
+  an output location in your `generators.yml`.
+
+    <CodeBlocks>
+    ```yaml title="TypeScript" {6-9}
+    groups: 
+      ts-sdk:
+        generators:
+          - name: fernapi/fern-typescript-node-sdk
+            version: 0.9.5
+            output:
+              location: npm
+              package-name: imdb
+              token: ${NPM_TOKEN} # reads from environment
+    ```
+    ```yaml title="Python" {6-9}
+    groups: 
+      python-sdk:
+        generators:
+          - name: fernapi/fern-python-sdk
+            version: 0.8.1
+            output:
+              location: pypi
+              package-name: imdb
+              token: ${PYPI_TOKEN} # reads from environment
+    ```
+    ```yaml title="Java" {9-12}
+    groups: 
+      java-sdk:
+        generators:
+          - name: fernapi/fern-java-sdk
+            version: 0.9.1
+            output:
+              location: maven
+              artifact: com.imdb:imdb-java
+              username: ${MAVEN_USERNAME} # reads from environment
+              password: ${MAVEN_PASSWORD} # reads from environment
+    ```
+  </CodeBlocks>
+
+  ### Configure `GitHub` location
+
+  <Warning>
+    To configure the Github integration you must (1) **create a Github repository** and (2) **install the [Fern GitHub App](https://github.com/apps/fern-api)**. 
+  </Warning>
+
+  Once you've created the Github repository you must add it to your `generators.yml`: 
+
+  ```yaml title="TypeScript" {10-11}
+  groups: 
+    ts-sdk:
+      generators:
+        - name: fernapi/fern-typescript-node-sdk
+          version: 0.9.5
+          output:
+            location: npm
+            package-name: imdb
+            token: ${NPM_TOKEN} 
+          github: 
+            repository: your-org/your-repository
+  ```
+
+  ### Run `fern generate`
+
+  At this point, you are ready to go and can run `fern generate --version <version>`. 
+  
+  <Warning> Make sure that any environment variables like `NPM_TOKEN` are present! </Warning>
+
+  ### Setup a GitHub action
+
+  We strongly advise adding a GitHub action to trigger SDK releases for each language. Below is 
+  an example of how you might setup a workflow_dispatch 
+  
+  <CodeBlocks>
+    ```yaml title="Python" maxLines=0
+    name: python-sdk
+
+    on:
+      workflow_dispatch:
+        inputs:
+          version:
+            description: "The version of the python SDK that you would like to release"
+            required: true
+            type: string
+
+    jobs:
+      release:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repository
+            uses: actions/checkout@v4
+
+          - name: Install Fern
+            run: npm install -g fern-api
+
+          - name: Release Python SDK
+            env:
+              FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+              PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+            run: |
+              fern generate --group python-sdk --version ${{ inputs.version }} --log-level debug
+    ```
+    ```yaml title="TypeScript" maxLines=0
+    name: ts-sdk
+
+    on:
+      workflow_dispatch:
+        inputs:
+          version:
+            description: "The version of the TS SDK that you would like to release"
+            required: true
+            type: string
+
+    jobs:
+      release:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repo
+            uses: actions/checkout@v3
+
+          - name: Setup node
+            uses: actions/setup-node@v3
+
+          - name: Download Fern
+            run: npm install -g fern-api
+
+          - name: Release Node SDK
+            env:
+              FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+              NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+            run: |
+              fern generate --group ts-sdk --version ${{ inputs.version }} --log-level debug
+    ```
+  </CodeBlocks>
+
+  Once these actions are merged in, you can simply releease your SDK by navigating to the actions tab: 
+
+  <img alt="GitHub Page" src="assets/sdk-release-action.png" width="250" height="300"/>
+
+
+</Steps>

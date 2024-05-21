@@ -627,6 +627,68 @@
               "_postman_previewlanguage": "json"
             }
           ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Response",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/response",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "response"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/response",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "response"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"response\": \"Initializing...\",\n    \"identifiers\": [\n        {\n            \"type\": \"primitive\",\n            \"value\": \"example\",\n            \"label\": \"Primitive\"\n        },\n        {\n            \"type\": \"unknown\",\n            \"value\": \"{}\",\n            \"label\": \"Unknown\"\n        }\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     },

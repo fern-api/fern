@@ -1,6 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { PrimitiveType } from "@fern-api/ir-sdk";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import {
@@ -513,7 +512,7 @@ function convertResolvedTypeReference(val: IrVersions.V28.ResolvedTypeReference)
         case "container":
             if (val.container.type === "literal") {
                 if (val.container.literal.type === "boolean") {
-                    return IrVersions.V27.ResolvedTypeReference.primitive(PrimitiveType.Boolean);
+                    return IrVersions.V27.ResolvedTypeReference.primitive(IrVersions.V27.PrimitiveType.Boolean);
                 }
                 return IrVersions.V27.ResolvedTypeReference.container(
                     IrVersions.V27.ContainerType.literal(IrVersions.V27.Literal.string(val.container.literal.string))
@@ -538,7 +537,7 @@ function maybeConvertBooleanLiteralForTypeReference(val: IrVersions.V28.TypeRefe
         case "container":
             if (val.container.type === "literal") {
                 if (val.container.literal.type === "boolean") {
-                    return IrVersions.V27.TypeReference.primitive(PrimitiveType.Boolean);
+                    return IrVersions.V27.TypeReference.primitive(IrVersions.V27.PrimitiveType.Boolean);
                 }
                 return IrVersions.V27.TypeReference.container(
                     IrVersions.V27.ContainerType.literal(IrVersions.V27.Literal.string(val.container.literal.string))

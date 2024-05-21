@@ -2,13 +2,14 @@ from __future__ import annotations
 
 import os
 from abc import ABC, abstractmethod
-from typing import Optional, Sequence, Tuple
+from typing import Optional, Sequence, Tuple, cast
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorConfig
+from fern.generator_exec.resources import GeneratorConfig, PypiMetadata
 from fern.generator_exec.resources.config import (
     GeneratorPublishConfig,
     GithubOutputMode,
+    PypiGithubPublishInfo,
 )
 
 from fern_python.codegen.project import Project, ProjectConfig
@@ -35,6 +36,11 @@ class AbstractGenerator(ABC):
             ),
             github=lambda github_output_mode: self._get_github_publish_config(generator_config, github_output_mode),
         )
+        maybe_github_output_mode = generator_config.output.mode.visit(
+            download_files=lambda: None,
+            publish=lambda _: None,
+            github=lambda github_output_mode: github_output_mode,
+        )
         python_version = "^3.8"
         if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
             python_version = generator_config.custom_config.get("pyproject_python_version")
@@ -54,6 +60,9 @@ class AbstractGenerator(ABC):
             flat_layout=self.is_flat_layout(generator_config=generator_config),
             whitelabel=generator_config.whitelabel,
             python_version=python_version,
+            pypi_metadata=self._get_pypi_metadata(generator_config=generator_config),
+            github_output_mode=maybe_github_output_mode,
+            license_=generator_config.license,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=generator_config, project=project
@@ -96,6 +105,15 @@ class AbstractGenerator(ABC):
         return ProjectConfig(
             package_name=publish_info_union.package_name,
             package_version=output_mode.version,
+        )
+
+    def _get_pypi_metadata(self, generator_config: GeneratorConfig) -> Optional[PypiMetadata]:
+        return generator_config.output.mode.visit(
+            download_files=lambda: None,
+            publish=lambda publish: publish.registries_v_2.pypi.pypi_metadata,
+            github=lambda github: cast(PypiGithubPublishInfo, github.publish_info.get_as_union()).pypi_metadata
+            if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
+            else None,
         )
 
     def _poetry_install(

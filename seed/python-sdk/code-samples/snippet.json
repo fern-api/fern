@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/hello",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.hello"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedCodeSamples\n\nclient = SeedCodeSamples(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.hello(\n    num_events=5,\n)\n",
