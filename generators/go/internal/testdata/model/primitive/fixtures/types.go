@@ -20,6 +20,12 @@ type Type struct {
 	Seven time.Time `json:"seven" url:"seven" format:"date"`
 	Eight uuid.UUID `json:"eight" url:"eight"`
 	Nine  []byte    `json:"nine" url:"nine"`
+
+	extraProperties map[string]interface{}
+}
+
+func (t *Type) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *Type) UnmarshalJSON(data []byte) error {
@@ -37,6 +43,13 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	*t = Type(unmarshaler.embed)
 	t.Six = unmarshaler.Six.Time()
 	t.Seven = unmarshaler.Seven.Time()
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	return nil
 }
 

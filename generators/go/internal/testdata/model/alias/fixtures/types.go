@@ -12,6 +12,29 @@ import (
 
 type Bar struct {
 	Foo *Foo `json:"foo,omitempty" url:"foo,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	return nil
 }
 
 func (b *Bar) String() string {
@@ -39,6 +62,29 @@ type Foo struct {
 	Id          uuid.UUID `json:"id" url:"id"`
 	Name        string    `json:"name" url:"name"`
 	StringAlias String    `json:"stringAlias" url:"stringAlias"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	return nil
 }
 
 func (f *Foo) String() string {

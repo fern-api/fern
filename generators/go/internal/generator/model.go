@@ -150,12 +150,16 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	for _, literal := range objectProperties.literals {
 		t.writer.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}
+	extraPropertiesFieldName := getExtraPropertiesFieldName(object.ExtraProperties)
 	if object.ExtraProperties {
 		t.writer.P()
-		t.writer.P("ExtraProperties map[string]interface{} `json:\"-\" url:\"-\"`")
+		t.writer.P(extraPropertiesFieldName, " map[string]interface{} `json:\"-\" url:\"-\"`")
+		t.writer.P()
+	} else {
+		t.writer.P()
+		t.writer.P(extraPropertiesFieldName, " map[string]interface{}")
 	}
 	if t.includeRawJSON {
-		t.writer.P()
 		t.writer.P("_rawJSON json.RawMessage")
 	}
 	t.writer.P("}")
@@ -164,6 +168,10 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	receiver := typeNameToReceiver(t.typeName)
 
 	// Implement the getter methods.
+	t.writer.P("func (", receiver, " *", t.typeName, ") GetExtraProperties() map[string]interface{} {")
+	t.writer.P("return ", receiver, ".", extraPropertiesFieldName)
+	t.writer.P("}")
+	t.writer.P()
 	for _, literal := range objectProperties.literals {
 		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
 		t.writer.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
@@ -172,54 +180,54 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	}
 
 	// Implement the json.Unmarshaler interface.
-	if t.includeRawJSON || len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 || object.ExtraProperties {
-		if t.includeRawJSON && len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 && !object.ExtraProperties {
-			// If we don't require any special unmarshaling, prefer the simpler implementation.
-			t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
-			t.writer.P("type unmarshaler ", t.typeName)
-			t.writer.P("var value unmarshaler")
-			t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
-			t.writer.P("return err")
-			t.writer.P("}")
-			t.writer.P("*", receiver, " = ", t.typeName, "(value)")
+	if len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 && !object.ExtraProperties {
+		// If we don't require any special unmarshaling, prefer the simpler implementation.
+		t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+		t.writer.P("type unmarshaler ", t.typeName)
+		t.writer.P("var value unmarshaler")
+		t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
+		t.writer.P("return err")
+		t.writer.P("}")
+		t.writer.P("*", receiver, " = ", t.typeName, "(value)")
+		t.writer.P()
+		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
+		if t.includeRawJSON {
 			t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
-			t.writer.P("return nil")
-			t.writer.P("}")
-			t.writer.P()
-		} else {
-			t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
-			t.writer.P("type embed ", t.typeName)
-			t.writer.P("var unmarshaler = struct{")
-			t.writer.P("embed")
-			for _, date := range objectProperties.dates {
-				t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
-			}
-			t.writer.P("}{")
-			t.writer.P("embed: embed(*", receiver, "),")
-			t.writer.P("}")
-			t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
-			t.writer.P("return err")
-			t.writer.P("}")
-			t.writer.P("*", receiver, " = ", t.typeName, "(unmarshaler.embed)")
-			for _, date := range objectProperties.dates {
-				t.writer.P(receiver, ".", date.Name.Name.PascalCase.UnsafeName, " = unmarshaler.", date.Name.Name.PascalCase.UnsafeName, ".", date.TimeMethod)
-			}
-			for _, literal := range objectProperties.literals {
-				t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
-			}
-			if object.ExtraProperties {
-				t.writer.P()
-				writeExtractExtraProperties(t.writer, objectProperties.literals, receiver)
-			}
-			if t.includeRawJSON {
-				t.writer.P()
-				t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
-			}
-
-			t.writer.P("return nil")
-			t.writer.P("}")
-			t.writer.P()
 		}
+		t.writer.P("return nil")
+		t.writer.P("}")
+		t.writer.P()
+	} else {
+		t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+		t.writer.P("type embed ", t.typeName)
+		t.writer.P("var unmarshaler = struct{")
+		t.writer.P("embed")
+		for _, date := range objectProperties.dates {
+			t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
+		}
+		t.writer.P("}{")
+		t.writer.P("embed: embed(*", receiver, "),")
+		t.writer.P("}")
+		t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
+		t.writer.P("return err")
+		t.writer.P("}")
+		t.writer.P("*", receiver, " = ", t.typeName, "(unmarshaler.embed)")
+		for _, date := range objectProperties.dates {
+			t.writer.P(receiver, ".", date.Name.Name.PascalCase.UnsafeName, " = unmarshaler.", date.Name.Name.PascalCase.UnsafeName, ".", date.TimeMethod)
+		}
+		for _, literal := range objectProperties.literals {
+			t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+		}
+		t.writer.P()
+		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
+		if t.includeRawJSON {
+			t.writer.P()
+			t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
+		}
+
+		t.writer.P("return nil")
+		t.writer.P("}")
+		t.writer.P()
 	}
 
 	// Implement the json.Marshaler interface.
@@ -1298,6 +1306,7 @@ func writeExtractExtraProperties(
 	f *fileWriter,
 	literals []*literal,
 	receiver string,
+	extraPropertiesFieldName string,
 ) {
 	var exclude string
 	if len(literals) > 0 {
@@ -1310,7 +1319,7 @@ func writeExtractExtraProperties(
 	f.P("if err != nil {")
 	f.P("return err")
 	f.P("}")
-	f.P(receiver, ".ExtraProperties = extraProperties")
+	f.P(receiver, ".", extraPropertiesFieldName, " = extraProperties")
 	f.P()
 }
 
@@ -1493,6 +1502,14 @@ func tagFormatForType(
 		}
 	}
 	return `%s:"%s,omitempty"`
+}
+
+func getExtraPropertiesFieldName(extraPropertiesEnabled bool) string {
+	if extraPropertiesEnabled {
+		return "ExtraProperties"
+	}
+	return "extraProperties"
+
 }
 
 // unknownToGoType maps the given unknown into its Go-equivalent.
