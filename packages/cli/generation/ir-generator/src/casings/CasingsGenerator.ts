@@ -158,7 +158,6 @@ const COMMON_ITIALISMS = new Set<string>([
     "HTTP",
     "HTTPS",
     "ID",
-    "IDP",
     "IP",
     "JSON",
     "LHS",
