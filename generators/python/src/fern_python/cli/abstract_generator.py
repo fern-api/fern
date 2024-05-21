@@ -105,12 +105,14 @@ class AbstractGenerator(ABC):
             package_name=publish_info_union.package_name,
             package_version=output_mode.version,
         )
-    
+
     def _get_pypi_metadata(self, generator_config: GeneratorConfig) -> Optional[PypiMetadata]:
         return generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda publish: publish.registries_v_2.pypi.pypi_metadata,
-            github=lambda github: github.publish_info.get_as_union().pypi_metadata if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi" else None,
+            github=lambda github: github.publish_info.get_as_union().pypi_metadata
+            if github.publish_info is not None and github.publish_info.get_as_union().type == "pypi"
+            else None,
         )
 
     def _poetry_install(

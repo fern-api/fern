@@ -1,18 +1,23 @@
 from __future__ import annotations
 
 import json
-import keyword
 import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set
+
+from fern.generator_exec.resources import (
+    GithubOutputMode,
+    LicenseConfig,
+    LicenseId,
+    PypiMetadata,
+)
 
 from fern_python.codegen.ast.dependency.dependency import (
     Dependency,
     DependencyCompatibility,
 )
 from fern_python.codegen.dependency_manager import DependencyManager
-from fern.generator_exec.resources import PypiMetadata, LicenseConfig, GithubOutputMode, LicenseId
 
 
 @dataclass(frozen=True)
@@ -33,9 +38,16 @@ class PyProjectToml:
         python_version: str,
         pypi_metadata: Optional[PypiMetadata],
         github_output_mode: Optional[GithubOutputMode],
-        license_: Optional[LicenseConfig]
+        license_: Optional[LicenseConfig],
     ):
-        self._poetry_block = PyProjectToml.PoetryBlock(name=name, version=version, package=package, pypi_metadata=pypi_metadata, github_output_mode=github_output_mode, license_=license_)
+        self._poetry_block = PyProjectToml.PoetryBlock(
+            name=name,
+            version=version,
+            package=package,
+            pypi_metadata=pypi_metadata,
+            github_output_mode=github_output_mode,
+            license_=license_,
+        )
         self._dependency_manager = dependency_manager
         self._path = path
         self._python_version = python_version
@@ -76,7 +88,7 @@ class PyProjectToml:
 name = "{self.name}"'''
             if self.version is not None:
                 s += "\n" + f'version = "{self.version}"'
-            
+
             description = ""
             authors = []
             keywords = []
@@ -96,12 +108,18 @@ name = "{self.name}"'''
                 "Operating System :: POSIX :: Linux",
                 "Operating System :: Microsoft :: Windows",
                 "Topic :: Software Development :: Libraries :: Python Modules",
-                "Typing :: Typed"
+                "Typing :: Typed",
             ]
             license_evaluated = ""
             if self.pypi_metadata is not None:
-                description = self.pypi_metadata.description if self.pypi_metadata.description is not None else description
-                authors = [f"{{name = '{author.name}', email = '{author.email}'}}" for author in self.pypi_metadata.authors] if self.pypi_metadata.authors is not None else authors
+                description = (
+                    self.pypi_metadata.description if self.pypi_metadata.description is not None else description
+                )
+                authors = (
+                    [f"{{name = '{author.name}', email = '{author.email}'}}" for author in self.pypi_metadata.authors]
+                    if self.pypi_metadata.authors is not None
+                    else authors
+                )
                 keywords = self.pypi_metadata.keywords if self.pypi_metadata.keywords is not None else keywords
                 if self.pypi_metadata.documentation_link is not None:
                     project_urls.append(f"Documentation = '{self.pypi_metadata.documentation_link}'")
@@ -123,18 +141,18 @@ name = "{self.name}"'''
 
             if self.github_output_mode is not None:
                 project_urls.append(f"Repository = '{self.github_output_mode.repo_url}'")
-            
+
             stringified_project_urls = ""
             if len(project_urls) > 0:
                 stringified_project_urls = "[project.urls]\n" + "\n".join(project_urls)
 
-            s += f'''
+            s += f"""
 description = "{description}"
 readme = "README.md"
 authors = {json.dumps(authors, indent=4)}
 keywords = {json.dumps(keywords, indent=4)}
 {license_evaluated}
-classifiers = {json.dumps(classifiers, indent=4)}'''
+classifiers = {json.dumps(classifiers, indent=4)}"""
             if self.package._from is not None:
                 s += f"""
 packages = [

@@ -6,6 +6,7 @@ from pathlib import Path
 from types import TracebackType
 from typing import List, Optional, Sequence, Set, Type
 
+from fern.generator_exec.resources import GithubOutputMode, LicenseConfig, PypiMetadata
 from isort import file
 
 from fern_python.codegen import AST
@@ -17,7 +18,6 @@ from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
 from .source_file import SourceFile, SourceFileImpl
 from .writer_impl import WriterImpl
-from fern.generator_exec.resources import PypiMetadata, LicenseConfig, GithubOutputMode
 
 
 @dataclass(frozen=True)
@@ -45,7 +45,7 @@ class Project:
         whitelabel: bool = False,
         pypi_metadata: Optional[PypiMetadata],
         github_output_mode: Optional[GithubOutputMode],
-        license_: Optional[LicenseConfig]
+        license_: Optional[LicenseConfig],
     ) -> None:
         if flat_layout:
             self._project_filepath = (
@@ -166,7 +166,7 @@ class Project:
                 python_version=self._python_version,
                 github_output_mode=self._github_output_mode,
                 pypi_metadata=self._pypi_metadata,
-                license_=self.license_
+                license_=self.license_,
             )
             py_project_toml.write()
 

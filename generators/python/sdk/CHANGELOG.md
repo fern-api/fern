@@ -10,18 +10,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improvement: Users can now specify information that will appear in their pypi record.
 
 ```yaml
-  generators:
-    - name: fernapi/fern-python-sdk
-        metadata:
-          description: this is the desc for my package
-          keywords:
-            - science
-            - data analysis
-          documentationLink: "https://buildwithfern.com/learn"
-          homepageLink: "https://buildwithfern.com/"
-          authors:
-            - email: support@buildwithfern.com
-              name: Armando
+generators:
+  - name: fernapi/fern-python-sdk
+    metadata:
+      description: this is the desc for my package
+      keywords:
+        - science
+        - data analysis
+      documentationLink: "https://buildwithfern.com/learn"
+      homepageLink: "https://buildwithfern.com/"
+      authors:
+        - email: support@buildwithfern.com
+          name: Armando
 ```
 
 ## [2.2.2] - 2024-05-20
