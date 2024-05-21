@@ -758,7 +758,8 @@ export class SdkGenerator {
                         endpoint,
                         packageId,
                         rootPackageId: rootPackage,
-                        retainOriginalCasing: this.config.retainOriginalCasing
+                        retainOriginalCasing: this.config.retainOriginalCasing,
+                        wrapFileProperties: this.config.wrapFileProperties
                     }).generateSnippetTemplate();
                     if (snippetTemplate != null) {
                         const endpointPath = FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint));

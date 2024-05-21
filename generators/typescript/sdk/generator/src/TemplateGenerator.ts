@@ -27,6 +27,7 @@ export class TemplateGenerator {
     private packageId: PackageId;
     private rootPackageId: PackageId;
     private retainOriginalCasing: boolean;
+    private wrapFileProperties: boolean;
 
     constructor({
         clientContext,
@@ -35,7 +36,8 @@ export class TemplateGenerator {
         endpoint,
         packageId,
         rootPackageId,
-        retainOriginalCasing
+        retainOriginalCasing,
+        wrapFileProperties
     }: {
         clientContext: SdkContext;
         endpointContext: SdkContext;
@@ -44,6 +46,7 @@ export class TemplateGenerator {
         packageId: PackageId;
         rootPackageId: PackageId;
         retainOriginalCasing: boolean;
+        wrapFileProperties: boolean;
     }) {
         this.endpointContext = endpointContext;
         this.clientContext = clientContext;
@@ -52,6 +55,7 @@ export class TemplateGenerator {
         this.packageId = packageId;
         this.rootPackageId = rootPackageId;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.wrapFileProperties = wrapFileProperties;
 
         this.opts = { isForSnippet: true };
     }
@@ -544,7 +548,6 @@ export class TemplateGenerator {
         return template != null ? this.getTemplateInputFromTemplate(template) : template;
     }
 
-    // TODO: If wrapFileProperties is enabled, the generated snippet templates need to be updated.
     private getFileUploadRequestParametersFromEndpoint(): FdrSnippetTemplate.TemplateInput[] {
         const frp: FdrSnippetTemplate.TemplateInput[] = [];
         const rbpt = this.endpoint.requestBody?._visit<(FdrSnippetTemplate.TemplateInput | undefined)[] | undefined>({
@@ -678,9 +681,12 @@ export class TemplateGenerator {
     }
 
     private fileUploadArrayTemplate(key: NameAndWireValue) {
+        const containerTemplateString = `[\n\t\t${TEMPLATE_SENTINEL}\n\t]`;
         return FdrSnippetTemplate.Template.iterable({
             isOptional: true,
-            containerTemplateString: `[\n\t\t${TEMPLATE_SENTINEL}\n\t]`,
+            containerTemplateString: this.wrapFileProperties
+                ? `${this.getPropertyKey(key.name)}: ${containerTemplateString}`
+                : containerTemplateString,
             delimiter: ",\n\t\t",
             innerTemplate: this.fileUploadTemplate(key, true),
             templateInput: FdrSnippetTemplate.TemplateInput.payload({
@@ -691,19 +697,22 @@ export class TemplateGenerator {
     }
 
     private fileUploadTemplate(key: NameAndWireValue, isNested?: boolean) {
+        const templateString = `fs.createReadStream('${TEMPLATE_SENTINEL}')`;
         return FdrSnippetTemplate.Template.generic({
             imports: ['import fs from "fs";'],
-            templateString: `fs.createReadStream('${TEMPLATE_SENTINEL}')`,
+            templateString:
+                this.wrapFileProperties && !isNested
+                    ? `${this.getPropertyKey(key.name)}: ${templateString}`
+                    : templateString,
             isOptional: false,
-            templateInputs:
-                isNested !== true
-                    ? [
-                          FdrSnippetTemplate.TemplateInput.payload({
-                              location: FdrSnippetTemplate.PayloadLocation.Body,
-                              path: key.wireValue
-                          })
-                      ]
-                    : []
+            templateInputs: !isNested
+                ? [
+                      FdrSnippetTemplate.TemplateInput.payload({
+                          location: FdrSnippetTemplate.PayloadLocation.Body,
+                          path: key.wireValue
+                      })
+                  ]
+                : []
         });
     }
 
@@ -718,7 +727,7 @@ export class TemplateGenerator {
         // Generally its: (`path parameters`, {`request parameter`}}
 
         const fileParamInputs = this.getFileUploadRequestParametersFromEndpoint();
-        if (fileParamInputs.length > 0) {
+        if (!this.wrapFileProperties && fileParamInputs.length > 0) {
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(
                     FdrSnippetTemplate.Template.generic({
@@ -750,6 +759,9 @@ export class TemplateGenerator {
 
         // Finally, if there's a request param, build that.
         const requestParamInputs = this.getRequestParametersFromEndpoint();
+        if (this.wrapFileProperties) {
+            requestParamInputs.push(...fileParamInputs);
+        }
         if (requestParamInputs.length > 0) {
             topLevelTemplateInputs.push(
                 FdrSnippetTemplate.TemplateInput.template(
