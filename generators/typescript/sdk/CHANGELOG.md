@@ -5,6 +5,66 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.19.0] - 2024-05-20
+
+- Feature: Add `inlineFileProperties` configuration to support generating file upload properties
+  as in-lined request properties (instead of positional parameters). Simply configure the following:
+
+  ```yaml
+  - name: fernapi/fern-typscript-node-sdk
+    version: 0.19.0
+    ...
+    config:
+      inlineFileProperties: true
+  ```
+
+  **Before**:
+
+  ```ts
+  /**
+    * @param {File | fs.ReadStream} file
+    * @param {File[] | fs.ReadStream[]} fileList
+    * @param {File | fs.ReadStream | undefined} maybeFile
+    * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
+    */
+  public async post(
+      file: File | fs.ReadStream,
+      fileList: File[] | fs.ReadStream[],
+      maybeFile: File | fs.ReadStream | undefined,
+      maybeFileList: File[] | fs.ReadStream[] | undefined,
+      request: Acme.MyRequest,
+      requestOptions?: Acme.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+  **After**:
+
+  ```ts
+  /**
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post({
+    *        file: fs.createReadStream("/path/to/your/file"),
+    *        fileList: [fs.createReadStream("/path/to/your/file")]
+    *     })
+    */
+  public async post(
+      request: Acme.MyRequest,
+      requestOptions?: Service.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
 ## [0.18.3] - 2024-05-17
 
 - Internal: The generator now uses the latest FDR SDK.
