@@ -29,5 +29,5 @@ def single_query_encoder(query_key: str, query_value: Any) -> Dict[str, Any]:
     return {query_key: query_value}
 
 
-def encode_query(query: Dict[str, Any]) -> Dict[str, Any]:
-    return dict(ChainMap(*[single_query_encoder(k, v) for k, v in query.items()]))
+def encode_query(query: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+    return dict(ChainMap(*[single_query_encoder(k, v) for k, v in query.items()])) if query is not None else None
