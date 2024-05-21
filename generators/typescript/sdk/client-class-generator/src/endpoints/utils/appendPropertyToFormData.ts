@@ -28,6 +28,7 @@ export function appendPropertyToFormData({
                     getParameterNameForFile({
                         property,
                         wrapperName,
+                        includeSerdeLayer: context.includeSerdeLayer,
                         retainOriginalCasing: context.retainOriginalCasing,
                         wrapFileProperties: context.wrapFileProperties
                     })
@@ -52,6 +53,7 @@ export function appendPropertyToFormData({
                         getParameterNameForFile({
                             property,
                             wrapperName,
+                            includeSerdeLayer: context.includeSerdeLayer,
                             retainOriginalCasing: context.retainOriginalCasing,
                             wrapFileProperties: context.wrapFileProperties
                         })
@@ -76,6 +78,7 @@ export function appendPropertyToFormData({
                             getParameterNameForFile({
                                 property,
                                 wrapperName,
+                                includeSerdeLayer: context.includeSerdeLayer,
                                 retainOriginalCasing: context.retainOriginalCasing,
                                 wrapFileProperties: context.wrapFileProperties
                             })

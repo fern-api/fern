@@ -165,6 +165,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                         name: getParameterNameForFile({
                             property: property.value,
                             wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
+                            includeSerdeLayer: context.includeSerdeLayer,
                             retainOriginalCasing: context.retainOriginalCasing,
                             wrapFileProperties: context.wrapFileProperties
                         }),
