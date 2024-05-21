@@ -27,6 +27,9 @@ packages = [
     { include = "seed/enum", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/enum/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

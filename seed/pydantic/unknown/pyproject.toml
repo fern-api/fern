@@ -27,6 +27,9 @@ packages = [
     { include = "seed/unknown_as_any", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/unknown/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

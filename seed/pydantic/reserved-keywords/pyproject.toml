@@ -27,6 +27,9 @@ packages = [
     { include = "seed/nursery_api", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/reserved-keywords/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

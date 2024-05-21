@@ -146,7 +146,7 @@ name = "{self.name}"'''
 
             stringified_project_urls = ""
             if len(project_urls) > 0:
-                stringified_project_urls = "[project.urls]\n" + "\n".join(project_urls)
+                stringified_project_urls = "\n[project.urls]\n" + "\n".join(project_urls) + "\n"
 
             s += f"""
 description = "{description}"
@@ -166,9 +166,8 @@ packages = [
 packages = [
     {{ include = "{self.package.include}"}}
 ]
-
-{stringified_project_urls}
 """
+            s += stringified_project_urls
             return s
 
     @dataclass(frozen=True)

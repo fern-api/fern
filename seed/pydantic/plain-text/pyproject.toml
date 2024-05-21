@@ -27,6 +27,9 @@ packages = [
     { include = "seed/plain_text", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/plain-text/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

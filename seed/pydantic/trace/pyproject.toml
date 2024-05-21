@@ -27,6 +27,9 @@ packages = [
     { include = "seed/trace", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/trace/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

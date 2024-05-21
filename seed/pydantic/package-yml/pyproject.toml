@@ -27,6 +27,9 @@ packages = [
     { include = "seed/package_yml", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/package-yml/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 

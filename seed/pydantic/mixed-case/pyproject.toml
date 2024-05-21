@@ -27,6 +27,9 @@ packages = [
     { include = "seed/mixed_case", from = "src"}
 ]
 
+[project.urls]
+Repository = 'https://github.com/mixed-case/fern'
+
 [tool.poetry.dependencies]
 python = "^3.8"
 
