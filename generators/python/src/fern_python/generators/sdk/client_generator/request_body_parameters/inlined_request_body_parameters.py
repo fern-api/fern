@@ -76,7 +76,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         return properties
 
     def _get_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
-        return property.name.name.snake_case.unsafe_name
+        return property.name.name.snake_case.safe_name
 
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         return get_json_body_for_inlined_request(

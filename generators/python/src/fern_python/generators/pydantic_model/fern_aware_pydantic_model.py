@@ -220,8 +220,8 @@ class FernAwarePydanticModel:
         else:
             unique_name = []
             if self._type_name is not None:
-                unique_name = [path.snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path]
-                unique_name.append(self._type_name.name.snake_case.unsafe_name)
+                unique_name = [path.snake_case.safe_name for path in self._type_name.fern_filepath.package_path]
+                unique_name.append(self._type_name.name.snake_case.safe_name)
             return PydanticValidatorsGenerator(
                 model=self._pydantic_model,
                 extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
@@ -236,8 +236,8 @@ class FernAwarePydanticModel:
             if shape_union.type == "object":
                 for property in shape_union.properties:
                     field = self._create_pydantic_field(
-                        name=property.name.name.snake_case.unsafe_name,
-                        pascal_case_field_name=property.name.name.pascal_case.unsafe_name,
+                        name=property.name.name.snake_case.safe_name,
+                        pascal_case_field_name=property.name.name.pascal_case.safe_name,
                         json_field_name=property.name.wire_value,
                         type_reference=property.value_type,
                         description=property.docs,

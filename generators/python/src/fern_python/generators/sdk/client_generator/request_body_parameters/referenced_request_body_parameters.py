@@ -130,7 +130,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
     def _get_request_parameter_name(self) -> str:
         if self._endpoint.sdk_request is None:
             raise RuntimeError("Request body is referenced by SDKRequestBody is not defined")
-        return self._endpoint.sdk_request.request_parameter_name.snake_case.unsafe_name
+        return self._endpoint.sdk_request.request_parameter_name.snake_case.safe_name
 
     def get_files(self) -> Optional[AST.Expression]:
         return None
