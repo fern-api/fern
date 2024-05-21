@@ -7,4 +7,5 @@ import * as FernOpenapiIr from "../../..";
 export interface JsonRequest extends FernOpenapiIr.WithDescription {
     schema: FernOpenapiIr.Schema;
     contentType: string | undefined;
+    extraProperties: boolean;
 }

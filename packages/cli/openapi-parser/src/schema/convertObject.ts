@@ -11,6 +11,7 @@ import {
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
 import { FernOpenAPIExtension } from "../openapi/v3/extensions/fernExtensions";
+import { isAdditionalPropertiesAny } from "./convertAdditionalProperties";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
@@ -36,7 +37,8 @@ export function convertObject({
     context,
     propertiesToExclude,
     groupName,
-    fullExamples
+    fullExamples,
+    additionalProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -50,6 +52,7 @@ export function convertObject({
     propertiesToExclude: Set<string>;
     groupName: SdkGroupName | undefined;
     fullExamples: undefined | NamedFullExample[];
+    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -211,7 +214,8 @@ export function convertObject({
         allOf: parents.map((parent) => parent.convertedSchema),
         allOfPropertyConflicts,
         groupName,
-        fullExamples
+        fullExamples,
+        additionalProperties
     });
 }
 
@@ -224,7 +228,8 @@ export function wrapObject({
     allOf,
     allOfPropertyConflicts,
     groupName,
-    fullExamples
+    fullExamples,
+    additionalProperties
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -235,6 +240,7 @@ export function wrapObject({
     allOfPropertyConflicts: AllOfPropertyConflict[];
     groupName: SdkGroupName | undefined;
     fullExamples: undefined | NamedFullExample[];
+    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -248,7 +254,8 @@ export function wrapObject({
                 allOf,
                 allOfPropertyConflicts,
                 groupName,
-                fullExamples
+                fullExamples,
+                extraProperties: isAdditionalPropertiesAny(additionalProperties)
             }),
             description,
             groupName
@@ -262,7 +269,8 @@ export function wrapObject({
         allOf,
         allOfPropertyConflicts,
         groupName,
-        fullExamples
+        fullExamples,
+        extraProperties: isAdditionalPropertiesAny(additionalProperties)
     });
 }
 

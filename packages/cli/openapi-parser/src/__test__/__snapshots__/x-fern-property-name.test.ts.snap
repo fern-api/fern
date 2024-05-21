@@ -15,6 +15,7 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
+      "extraProperties": false,
       "generatedName": "BaseUser",
       "groupName": null,
       "nameOverride": null,

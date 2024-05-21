@@ -1,6 +1,7 @@
 import { MediaType } from "@fern-api/core-utils";
 import { MultipartRequestProperty, MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -171,7 +172,10 @@ export function convertRequest({
         description: undefined,
         schema: requestSchema,
         contentType: undefined,
-        fullExamples: jsonMediaObject.examples
+        fullExamples: jsonMediaObject.examples,
+        extraProperties:
+            !isReferenceObject(jsonMediaObject.schema) &&
+            isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties)
     });
 }
 

@@ -20,7 +20,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                extraProperties: schema.extraProperties
             });
         case "array":
             return Schema.array({

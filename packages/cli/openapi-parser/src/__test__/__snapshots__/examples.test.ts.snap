@@ -184,6 +184,7 @@ exports[`examples examples parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": "The PropertySearchResponse object is returned by the /properties/search endpoint.
 It is a very simple property object that can then be used to query the /properties/:id endpoint",
+      "extraProperties": false,
       "generatedName": "PropertySearchResponse",
       "groupName": null,
       "nameOverride": null,

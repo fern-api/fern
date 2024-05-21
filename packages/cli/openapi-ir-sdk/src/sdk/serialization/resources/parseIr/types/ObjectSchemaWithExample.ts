@@ -23,6 +23,7 @@ export const ObjectSchemaWithExample: core.serialization.ObjectSchema<
         fullExamples: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).NamedFullExample))
             .optional(),
+        extraProperties: core.serialization.boolean(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -34,5 +35,6 @@ export declare namespace ObjectSchemaWithExample {
         properties: serializers.ObjectPropertyWithExample.Raw[];
         allOfPropertyConflicts: serializers.AllOfPropertyConflict.Raw[];
         fullExamples?: serializers.NamedFullExample.Raw[] | null;
+        extraProperties: boolean;
     }
 }

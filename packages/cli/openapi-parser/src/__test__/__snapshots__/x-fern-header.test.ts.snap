@@ -46,10 +46,12 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "request": {
         "contentType": null,
         "description": null,
+        "extraProperties": false,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
+          "extraProperties": false,
           "generatedName": "UserGetStreamRequest",
           "groupName": null,
           "nameOverride": null,
@@ -195,10 +197,12 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "request": {
         "contentType": null,
         "description": null,
+        "extraProperties": false,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
+          "extraProperties": false,
           "generatedName": "UserGetRequest",
           "groupName": null,
           "nameOverride": null,
@@ -265,6 +269,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
+      "extraProperties": false,
       "generatedName": "StreamUser",
       "groupName": null,
       "nameOverride": null,
@@ -330,6 +335,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
+      "extraProperties": false,
       "generatedName": "User",
       "groupName": null,
       "nameOverride": null,

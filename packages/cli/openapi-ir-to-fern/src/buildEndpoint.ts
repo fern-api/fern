@@ -424,6 +424,9 @@ function getRequest({
         if (extendedSchemas.length > 0) {
             requestBodySchema.extends = extendedSchemas;
         }
+        if (request.extraProperties) {
+            requestBodySchema["extra-properties"] = true;
+        }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
