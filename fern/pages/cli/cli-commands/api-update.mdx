@@ -1,0 +1,18 @@
+---
+title: fern api update
+description: The command "fern api update" updates the latest OpenAPI spec from the specified origin in generators.yml.
+---
+
+Use `fern api update` to pulls the latest OpenAPI spec from the specified origin in `generators.yml` and update the local spec.
+
+groups:
+  my-group:
+    generators:
+      - name: my-generator
+        version: 0.0.1
+
+## Usage
+
+```bash
+fern api update
+```

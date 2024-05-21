@@ -6,13 +6,11 @@ description: The command "fern generate" outputs SDKs or API reference documenta
 Use `fern generate` to run the Fern compiler for creating SDKs or documentation for your API. By default, Fern runs generators in the cloud
 in isolated, containerized environments.
 
-## Command flags
-
-### For SDKs
+## For SDKs
 
 <CodeBlock title = "SDK Generation Command">
 ```bash
-fern generate [--group <group>] [--version <version>] [--api <api>] [--local] [--keepDocker] [--log-level debug]
+fern generate [--group <group>] [--api <api>] [--version <version>] [--local] [--keepDocker]
 ```
 </CodeBlock>
 
@@ -20,31 +18,25 @@ fern generate [--group <group>] [--version <version>] [--api <api>] [--local] [-
 
 **Description:** Filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared in `generators.yml`.
 
-**Example:**
-
 ```bash
 $ fern generate --group internal
+```
+
+### api `string`
+
+**Description:** If you have defined more than one API, specify the name with `--api <name>` for SDK generation.
+
+```bash
+$ fern generate --api core-api
 ```
 
 ### version `string`
 
 **Description:** Specify a version for SDKs and documentation. Adherance to [semantic versioning](https://semver.org/) is advised.
 
-**Example**
-
 ```bash
 $ fern generate --version
 2.1.1
-```
-
-### api    `string`
-
-**Description:** If more than one API, specify the name with `--api <name>` for SDK generation.
-
-**Example**
-
-```bash
-$ fern generate --api core-api
 ```
 
 ### local   `boolean`
@@ -69,15 +61,15 @@ fern generate --local
 fern generate --local --keepDocker
 ```
 
-### For Documentation
+## For Documentation
 
 <CodeBlock title = "Documentation Generation Command">
 ```bash
-fern generate [--docs <instance-url>] [--preview] [--log-level debug]
+fern generate [--docs <instance-url>] [--preview]
 ```
 </CodeBlock>
 
-### instance    `string`
+### instance `string`
 
 **Description**: Use the `--instance` option to specify an instance URL from your `docs.yml` to generate documentation for.
 
@@ -85,7 +77,7 @@ fern generate [--docs <instance-url>] [--preview] [--log-level debug]
 fern generate --docs --instance your-organization.docs.buildwithfern.com
 ```
 
-### preview `string`
+### preview `boolean`
 **Description**: Use the `preview` option along with the `--docs` flag to preview updates to your documentation before publishing changes to your production site. 
 
 ```bash

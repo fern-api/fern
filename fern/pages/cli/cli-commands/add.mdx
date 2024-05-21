@@ -1,6 +1,53 @@
 ---
-title: 'Overview'
-description: 'CLI'
+title: fern add
+description: The command "fern add" includes a new generator in your generators configuration file.
 ---
 
-The Fern Command Line Interface (Fern CLI) is an open source tool that enables you to interact with the Fern compiler using commands in your command-line shell. Use the Fern CLI to generate code from your API definition.
+Use `fern add <generator>` to include a new generator in your `generators.yml`.
+
+See a [list of generators to choose from](/learn/sdks/introduction/overview).
+
+## Usage
+
+```bash
+fern add <generator>
+```
+
+## Examples
+
+  <Warning title='Pro Features'>
+    By default, none of the pro features will be enabled. 
+  </Warning>
+
+<CodeBlocks>
+    <CodeBlock title="Node.js SDK">
+    ```bash
+    fern add fern-typescript-node-sdk
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Python SDK">
+    ```bash
+    fern add fern-python-sdk
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Go SDK">
+    ```bash
+    fern add fern-go-sdk
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Postman Collection">
+    ```bash
+    fern add fern-postman
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="FastAPI">
+    ```bash
+    fern add fern-fastapi-server
+    ```
+    </CodeBlock>
+
+</CodeBlocks>

@@ -299,30 +299,40 @@ navigation:
         contents:
           - page: CLI Overview
             path: ./pages/cli/overview.mdx
+          - page: Global Options
+            path: ./pages/cli/global-options.mdx
           - page: generate
-            path: ./pages/cli/generate.mdx
+            path: ./pages/cli/cli-commands/generate.mdx
           - page: check
-            path: ./pages/cli/check.mdx
+            path: ./pages/cli/cli-commands/check.mdx
           - page: add
-            path: ./pages/cli/add.mdx
+            path: ./pages/cli/cli-commands/add.mdx
           - page: init
-            path: ./pages/cli/init.mdx
+            path: ./pages/cli/cli-commands/init.mdx
+          - page: ir
+            path: ./pages/cli/cli-commands/ir.mdx
           - page: write-definition
-            path: ./pages/cli/write-definition.mdx
+            path: ./pages/cli/cli-commands/write-definition.mdx
+          - page: docs dev
+            path: ./pages/cli/cli-commands/docs-dev.mdx
+          - page: mock
+            path: ./pages/cli/cli-commands/mock.mdx    
+          - page: write-overrides
+            path: ./pages/cli/cli-commands/write-overrides.mdx          
+          - page: test
+            path: ./pages/cli/cli-commands/test.mdx
+          - page: generator upgrade
+            path: ./pages/cli/cli-commands/generator-upgrade.mdx                   
           - page: upgrade
-            path: ./pages/cli/upgrade.mdx
+            path: ./pages/cli/cli-commands/upgrade.mdx
           - page: token
-            path: ./pages/cli/token.mdx
+            path: ./pages/cli/cli-commands/token.mdx
           - page: login
-            path: ./pages/cli/login.mdx
-          - page: register
-            path: ./pages/cli/register.mdx
+            path: ./pages/cli/cli-commands/login.mdx
           - page: format
-            path: ./pages/cli/format.mdx
+            path: ./pages/cli/cli-commands/format.mdx
           - page: help
-            path: ./pages/cli/help.mdx
-          - page: version
-            path: ./pages/cli/version.mdx
+            path: ./pages/cli/cli-commands/help.mdx
       - api: API Reference
         api-name: public-api
         # audiences:
