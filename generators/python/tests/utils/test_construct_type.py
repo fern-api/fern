@@ -44,7 +44,7 @@ def test_construct_valid() -> None:
     assert cast_response.base_64 == "SGVsbG8gd29ybGQh"
     assert cast_response.list_ == ["string"]
     assert cast_response.set_ == {"string"}
-    assert cast_response.map_ == {"1": "string"}
+    assert cast_response.map_ == {1: "string"}
     assert cast_response.enum == "red"
     assert cast_response.any == "something here"
 
@@ -133,7 +133,7 @@ def test_construct_invalid() -> None:
     assert cast_response.date == "SGVsbG8gd29ybGQh"
     assert cast_response.uuid_ == "1234"
     assert cast_response.base_64 == 123
-    assert cast_response.list_ == {"1": "string"}
+    assert cast_response.list_ == {1: "string"}
     assert cast_response.set_ == "testing"
     assert cast_response.map_ == "hello world"
     assert cast_response.enum == "bread"

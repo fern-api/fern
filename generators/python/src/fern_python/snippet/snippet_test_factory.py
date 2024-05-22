@@ -15,14 +15,12 @@ from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
 )
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
     EndpointFunctionGenerator,
-    EndpointFunctionSnippetGenerator,
 )
 from fern_python.generators.sdk.client_generator.generated_root_client import (
     GeneratedRootClient,
     RootClient,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
-from fern_python.generators.sdk.declaration_referencers import subpackage_async_client_declaration_referencer
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     MultipleBaseUrlsEnvironmentGenerator,
 )
@@ -490,7 +488,9 @@ class SnippetTestFactory:
         if source_file:
             self._service_test_files[filepath] = source_file
 
-    def _function_generator(self, service: ir_types.HttpService, endpoint: ir_types.HttpEndpoint, snippet_writer: SnippetWriter) -> EndpointFunctionGenerator:
+    def _function_generator(
+        self, service: ir_types.HttpService, endpoint: ir_types.HttpEndpoint, snippet_writer: SnippetWriter
+    ) -> EndpointFunctionGenerator:
         return EndpointFunctionGenerator(
             context=self._context,
             service=service,

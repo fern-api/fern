@@ -355,8 +355,7 @@ class DiscriminatedUnionSnippetGenerator:
         if isinstance(example, ir_types.ExampleObjectTypeWithTypeId):
             args.extend(
                 self.snippet_writer.get_snippet_for_object_properties(
-                    example=example.object,
-                    request_parameter_names={}
+                    example=example.object, request_parameter_names={}
                 ),
             )
         else:

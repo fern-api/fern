@@ -150,7 +150,10 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
             return object_
 
         key_type, items_type = pydantic_v1.typing.get_args(type_)
-        d = {construct_type(object_=key, type_=key_type): construct_type(object_=item, type_=items_type) for key, item in object_.items()}
+        d = {
+            construct_type(object_=key, type_=key_type): construct_type(object_=item, type_=items_type)
+            for key, item in object_.items()
+        }
         return d
 
     if base_type == list:
@@ -178,7 +181,6 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     ):
         return type_.construct(**object_)
 
-    
     if base_type == dt.datetime:
         try:
             return pydantic_v1.datetime_parse.parse_datetime(object_)
@@ -196,16 +198,18 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
             return uuid.UUID(object_)
         except Exception:
             return object_
-    
+
     if base_type == int:
         try:
             return int(object_)
         except Exception:
             return object_
-        
+
     if base_type == bool:
         try:
-            return bool(object_)
+            if isinstance(object_, str):
+                object_ = object_.lower()
+                return object_ == "true" or object_ == "1"
         except Exception:
             return object_
 

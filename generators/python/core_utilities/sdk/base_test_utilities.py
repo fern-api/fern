@@ -1,8 +1,9 @@
 import typing
 import uuid
 
-import pydantic
 from dateutil import parser
+
+import pydantic
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
@@ -48,7 +49,9 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
                     entry_expectation = contents_expectation.get(idx)
                     if isinstance(entry_expectation, dict):
                         is_container_of_complex_type = True
-                        validate_response(response=response[idx], json_expectation=ex, type_expectations=entry_expectation)
+                        validate_response(
+                            response=response[idx], json_expectation=ex, type_expectations=entry_expectation
+                        )
                     else:
                         cast_json_expectation.append(cast_field(ex, entry_expectation))
                 else:
