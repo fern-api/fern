@@ -31274,6 +31274,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnBusiness": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "cifras_cierre_ejercicio": {
             "default": undefined,
@@ -31384,6 +31385,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnBusinessMonthly": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "collected_at": {
             "default": undefined,
@@ -31470,6 +31472,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnPersonal": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "collected_at": {
             "default": undefined,
@@ -31579,6 +31582,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnPersonalMonthly": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "collected_at": {
             "default": undefined,
@@ -31651,6 +31655,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnsBusinessMonthlyPaginated": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "count": {
             "default": undefined,
@@ -31683,6 +31688,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnsBusinessPaginated": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "count": {
             "default": undefined,
@@ -31761,6 +31767,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       },
       "TaxReturnsPersonalMonthlyPaginated": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "count": {
             "default": undefined,
@@ -31793,6 +31800,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnsPersonalPaginated": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "count": {
             "default": undefined,
@@ -63278,6 +63286,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnBusiness": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "cifras_cierre_ejercicio": {
             "default": undefined,
@@ -63388,6 +63397,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnBusinessMonthly": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "collected_at": {
             "default": undefined,
@@ -63474,6 +63484,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnPersonal": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "collected_at": {
             "default": undefined,
@@ -63583,6 +63594,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnPersonalMonthly": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "collected_at": {
             "default": undefined,
@@ -63655,6 +63667,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnsBusinessMonthlyPaginated": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "count": {
             "default": undefined,
@@ -63687,6 +63700,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnsBusinessPaginated": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "count": {
             "default": undefined,
@@ -63765,6 +63779,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       },
       "TaxReturnsPersonalMonthlyPaginated": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "count": {
             "default": undefined,
@@ -63797,6 +63812,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       },
       "TaxReturnsPersonalPaginated": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "count": {
             "default": undefined,

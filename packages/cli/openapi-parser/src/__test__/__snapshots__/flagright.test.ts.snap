@@ -471,6 +471,7 @@ Here are some of the most used payload fields explained (you can find the full p
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -488,6 +489,7 @@ Here are some of the most used payload fields explained (you can find the full p
         "description": "Created",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [
             {
               "description": null,
@@ -1492,6 +1494,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2005,6 +2008,7 @@ Each consumer User entity needs three mandatory fields:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2022,6 +2026,7 @@ Each consumer User entity needs three mandatory fields:
         "description": "Created",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [
             {
               "description": null,
@@ -2930,6 +2935,7 @@ Each consumer Business entity needs three mandatory fields:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2947,6 +2953,7 @@ Each consumer Business entity needs three mandatory fields:
         "description": "Created",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [
             {
               "description": null,
@@ -5036,6 +5043,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6477,6 +6485,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6596,6 +6605,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   ],
   "schemas": {
     "ACHDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for ACH payment method",
@@ -6866,6 +6876,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "Address": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for standardized address",
@@ -7020,6 +7031,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "AlertClosedDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7371,6 +7383,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "Amount": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for amount",
@@ -7420,6 +7433,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "Business": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -7445,6 +7459,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "BusinessBase": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for a business user base fields",
@@ -7501,6 +7516,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "BusinessEntityLink": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7577,6 +7593,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "BusinessOptional": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for a business user - optional fields",
@@ -7987,6 +8004,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "BusinessUserEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for business user-related events",
@@ -8152,6 +8170,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "BusinessUsersResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for business user risk score response",
@@ -8185,6 +8204,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "BusinessWithRulesResult": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8262,6 +8282,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "CardDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for credit or debit card details",
@@ -8738,6 +8759,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "CardExpiry": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8809,6 +8831,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "CardMerchantDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9035,6 +9058,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "CaseClosedDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9270,6 +9294,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "CaseManagementEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for case management events",
@@ -9524,6 +9549,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "CheckDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9780,6 +9806,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "CompanyFinancialDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for business user company financial details",
@@ -9864,6 +9891,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "CompanyGeneralDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for business user company general details",
@@ -10115,6 +10143,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "CompanyRegistrationDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for business user company registration details",
@@ -10279,6 +10308,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ConsumerName": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for a generic consumer name",
@@ -10370,6 +10400,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ConsumerUserEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for consumer user-related events",
@@ -10535,6 +10566,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ConsumerUsersResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for consumer user risk score response",
@@ -10568,6 +10600,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ContactDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for business user contact information details",
@@ -17010,6 +17043,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "Date": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for date",
@@ -17090,6 +17124,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "DeviceData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for device data",
@@ -17418,6 +17453,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ExecutedRulesResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for list of executed rules",
@@ -17622,6 +17658,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "FailedRulesResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for list of rules failed execution. It means rules could not be run",
@@ -17714,6 +17751,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "FalsePositiveDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -17776,6 +17814,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "GenericBankAccountDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for any generic bank account",
@@ -18012,6 +18051,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "HitRulesDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for list of hit rules",
@@ -18199,6 +18239,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "IBANDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Standardized model for Bank Details",
@@ -18531,6 +18572,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "KYCStatusDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -18593,6 +18635,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "LegalDocument": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "LegalDocument model generalizes User's identity document type (ex: Passport)",
@@ -18774,6 +18817,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "LegalEntity": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for business user legal entity details",
@@ -18902,6 +18946,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ListData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Payload of a list, new or existed",
@@ -18964,6 +19009,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ListExisted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "List with ID and header",
@@ -19034,6 +19080,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ListHeader": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -19165,6 +19212,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "ListItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -19246,6 +19294,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "ListMetadata": {
+      "additionalProperties": true,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -19554,6 +19603,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "MCCDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -19617,6 +19667,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "MpesaDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for Mpesa payment method",
@@ -19759,6 +19810,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "PEPStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -19933,6 +19985,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "Person": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for a generic individual - different from User model by not having userId field",
@@ -20137,6 +20190,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "RiskScoringResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for results from Risk Scoring",
@@ -20281,6 +20335,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "RuleFailureException": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -20369,6 +20424,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "RuleHitMeta": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of rule execution, for internal purposes only",
@@ -20670,6 +20726,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "RulesResults": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -20725,6 +20782,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "SWIFTDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for SWIFT payment method",
@@ -20943,6 +21001,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "SanctionsDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21125,6 +21184,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "Tag": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Generic key-value pair model to append a custom variable being sent to Flagright API",
@@ -21180,6 +21240,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "Transaction": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -21205,6 +21266,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionAmountDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for transaction amount details",
@@ -21276,6 +21338,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionAmountLimit": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21375,6 +21438,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionBase": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for transaction base Payload",
@@ -21511,6 +21575,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionCountLimit": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21642,6 +21707,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for transaction-related events",
@@ -21844,6 +21910,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionEventMonitoringResult": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -21900,6 +21967,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionLimit": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -21977,6 +22045,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionLimits": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for transaction limits for a given user",
@@ -22129,6 +22198,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "nameOverride": "TransactionLimits",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -22343,6 +22413,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionMonitoringResult": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -22570,6 +22641,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "TransactionUpdatable": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for transaction additional payload",
@@ -23016,6 +23088,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "TransactionWithRulesResult": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -23079,6 +23152,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "UPIDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for UPI payment method",
@@ -23210,6 +23284,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "User": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -23235,6 +23310,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "UserBase": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for User details",
@@ -23313,6 +23389,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "UserDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for consumer user personal details",
@@ -23471,6 +23548,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "UserMonitoringResult": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -23512,6 +23590,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "UserOptional": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Model for User details",
@@ -23987,6 +24066,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
     },
     "UserStateDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -24071,6 +24151,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "UserWithRulesResult": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -24148,6 +24229,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "type": "object",
     },
     "WalletDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Standardized model for a Generic wallet transaction",
@@ -24330,6 +24412,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "WebhookEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

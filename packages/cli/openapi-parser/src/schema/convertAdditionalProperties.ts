@@ -30,7 +30,7 @@ export function convertAdditionalProperties({
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
 }): SchemaWithExample {
-    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
+    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
         return wrapMap({
             nameOverride,
             generatedName,
@@ -86,12 +86,6 @@ export function convertAdditionalProperties({
     });
 }
 
-function isAdditionalPropertiesEmptyDictionary(
-    additionalProperties: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-) {
-    return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0;
-}
-
 export function wrapMap({
     nameOverride,
     generatedName,
@@ -137,4 +131,16 @@ export function wrapMap({
         groupName,
         example
     });
+}
+
+export function isAdditionalPropertiesAny(
+    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined
+): boolean {
+    if (additionalProperties == null) {
+        return false;
+    }
+    if (typeof additionalProperties === "boolean") {
+        return additionalProperties;
+    }
+    return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0;
 }

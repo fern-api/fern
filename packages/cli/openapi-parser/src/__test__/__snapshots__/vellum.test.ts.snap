@@ -869,6 +869,7 @@ Creates a new document index.",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1203,6 +1204,7 @@ Executes a deployed Workflow and streams back its results.",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1412,6 +1414,7 @@ Generate a completion using a previously defined deployment.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1529,6 +1532,7 @@ Generate a stream of completions using a previously defined deployment.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1969,6 +1973,7 @@ Compiles the prompt backing the model version using the provided input values.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2278,6 +2283,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2701,6 +2707,7 @@ or overwritten with default values.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2982,6 +2989,7 @@ Perform a search against a document index.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3110,6 +3118,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3277,6 +3286,7 @@ or overwritten with default values.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3860,6 +3870,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "ChatMessage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3908,6 +3919,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ChatMessageRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4016,6 +4028,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "ConditionalNodeResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4042,6 +4055,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ConditionalNodeResultData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4123,6 +4137,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "DeploymentNodeResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4149,6 +4164,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "DeploymentNodeResultData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4254,6 +4270,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "DeploymentRead": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4511,6 +4528,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "Document": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4602,6 +4620,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "DocumentDocumentToDocumentIndex": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4685,6 +4704,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "DocumentIndexCreateRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4853,6 +4873,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "DocumentIndexRead": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5065,6 +5086,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "EnrichedNormalizedCompletion": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5302,6 +5324,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "EvaluationParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5342,6 +5365,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "EvaluationParamsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5382,6 +5406,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ExecuteWorkflowStreamRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5606,6 +5631,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "GenerateBodyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5740,6 +5766,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateErrorResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5773,6 +5800,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateOptionsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5809,6 +5837,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5925,6 +5954,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5958,6 +5988,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6013,6 +6044,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateResultData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6046,6 +6078,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateResultError": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6079,6 +6112,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateStreamBodyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6213,6 +6247,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateStreamResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6239,6 +6274,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateStreamResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6317,6 +6353,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "GenerateStreamResultData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6507,6 +6544,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "ModelVersionBuildConfig": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6569,6 +6607,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ModelVersionCompilePromptRequestRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6613,6 +6652,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ModelVersionCompilePromptResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6639,6 +6679,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ModelVersionCompiledPrompt": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6695,6 +6736,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ModelVersionExecConfig": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6824,6 +6866,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ModelVersionExecConfigParameters": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7088,6 +7131,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ModelVersionRead": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7336,6 +7380,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "ModelVersionSandboxSnapshot": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7457,6 +7502,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "NormalizedLogProbs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7520,6 +7566,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "NormalizedTokenLogProbs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7664,6 +7711,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PaginatedSlimDocumentList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7877,6 +7925,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "PromptNodeResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7903,6 +7952,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptNodeResultData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8008,6 +8058,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptTemplateBlock": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8071,6 +8122,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptTemplateBlockData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8127,6 +8179,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptTemplateBlockDataRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8183,6 +8236,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptTemplateBlockProperties": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8467,6 +8521,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptTemplateBlockPropertiesRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8751,6 +8806,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptTemplateBlockRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8814,6 +8870,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptTemplateInputVariable": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8847,6 +8904,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "PromptTemplateInputVariableRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8992,6 +9050,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "RegisterPromptErrorResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9025,6 +9084,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisterPromptModelParametersRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9282,6 +9342,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisterPromptPrompt": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9337,6 +9398,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisterPromptPromptInfoRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9415,6 +9477,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisterPromptRequestRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9586,6 +9649,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisterPromptResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9672,6 +9736,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisteredPromptDeployment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9749,6 +9814,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisteredPromptModelVersion": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9804,6 +9870,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisteredPromptSandbox": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9859,6 +9926,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "RegisteredPromptSandboxSnapshot": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9892,6 +9960,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SandboxMetricInputParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9932,6 +10001,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SandboxMetricInputParamsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9972,6 +10042,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SandboxNodeResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9998,6 +10069,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SandboxNodeResultData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10103,6 +10175,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SandboxScenario": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10202,6 +10275,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ScenarioInput": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10322,6 +10396,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "ScenarioInputRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10476,6 +10551,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "SearchErrorResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10509,6 +10585,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchFiltersRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10563,6 +10640,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchNodeResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10589,6 +10667,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchNodeResultData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10734,6 +10813,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchRequestBodyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10868,6 +10948,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchRequestOptionsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11003,6 +11084,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11036,6 +11118,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11136,6 +11219,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchResultMergingRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11164,6 +11248,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SearchWeightsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11221,6 +11306,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SlimDocument": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11480,6 +11566,7 @@ Upload a document to be indexed and used for search.
       },
     },
     "SubmitCompletionActualRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11667,6 +11754,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SubmitCompletionActualsErrorResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11700,6 +11788,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "SubmitCompletionActualsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11805,6 +11894,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "TerminalNodeChatHistoryResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11860,6 +11950,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "TerminalNodeJsonResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11926,6 +12017,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "TerminalNodeResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11952,6 +12044,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "TerminalNodeResultData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12016,6 +12109,7 @@ Upload a document to be indexed and used for search.
       },
     },
     "TerminalNodeStringResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12071,6 +12165,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "TestSuiteTestCase": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12195,6 +12290,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "TestSuiteTestCaseRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12319,6 +12415,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "UploadDocumentBodyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12496,6 +12593,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "UploadDocumentErrorResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12529,6 +12627,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "UploadDocumentResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12562,6 +12661,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "UpsertSandboxScenarioRequestRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12675,6 +12775,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "WorkflowEventError": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12757,6 +12858,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "WorkflowExecutionNodeResultEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12841,6 +12943,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "WorkflowExecutionWorkflowResultEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12987,6 +13090,7 @@ Upload a document to be indexed and used for search.
       },
     },
     "WorkflowNodeResultEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13221,6 +13325,7 @@ Upload a document to be indexed and used for search.
       ],
     },
     "WorkflowRequestChatHistoryInputRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13314,6 +13419,7 @@ Upload a document to be indexed and used for search.
       },
     },
     "WorkflowRequestJSONInputRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13380,6 +13486,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "WorkflowRequestStringInputRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13435,6 +13542,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "WorkflowResultEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13589,6 +13697,7 @@ Upload a document to be indexed and used for search.
       },
     },
     "WorkflowResultEventOutputDataChatHistory": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13724,6 +13833,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "WorkflowResultEventOutputDataJSON": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -13863,6 +13973,7 @@ Upload a document to be indexed and used for search.
       "type": "object",
     },
     "WorkflowResultEventOutputDataString": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

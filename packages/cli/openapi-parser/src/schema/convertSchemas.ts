@@ -624,7 +624,8 @@ export function convertSchemaObject(
             context,
             propertiesToExclude,
             groupName,
-            fullExamples
+            fullExamples,
+            additionalProperties: schema.additionalProperties
         });
     }
 

@@ -339,6 +339,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -401,6 +402,7 @@ exports[`polytomic polytomic parse open api 1`] = `
   ],
   "schemas": {
     "ApiError": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -490,6 +492,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "type": "object",
     },
     "BulkItemizedSchedule": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -531,6 +534,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "type": "object",
     },
     "BulkMultiScheduleConfiguration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -593,6 +597,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "type": "object",
     },
     "BulkSchedule": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -831,6 +836,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       ],
     },
     "RestErrResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1099,6 +1105,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       ],
     },
     "V2ConnectionTypeSchema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1211,6 +1218,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "type": "object",
     },
     "V2CreateConnectionRequestSchema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1438,6 +1446,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "type": "object",
     },
     "V2CreateConnectionResponseEnvelope": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1471,6 +1480,7 @@ exports[`polytomic polytomic parse open api 1`] = `
       "type": "object",
     },
     "V2CreateConnectionResponseSchema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

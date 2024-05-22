@@ -398,6 +398,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -663,6 +664,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1710,6 +1712,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2001,6 +2004,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2353,6 +2357,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3664,6 +3669,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3797,6 +3803,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3913,6 +3920,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4416,6 +4424,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6845,6 +6854,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7598,6 +7608,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -10284,6 +10295,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -11325,6 +11337,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -15828,6 +15841,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -15961,6 +15975,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -17002,6 +17017,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -17981,6 +17997,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -19073,6 +19090,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -20121,6 +20139,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -21169,6 +21188,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -22217,6 +22237,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -23266,6 +23287,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -24135,6 +24157,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -24976,6 +24999,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -28215,6 +28239,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -28348,6 +28373,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -29116,6 +29142,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -30645,6 +30672,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -31521,6 +31549,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -32369,6 +32398,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -33245,6 +33275,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -33357,6 +33388,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -33472,6 +33504,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -34800,6 +34833,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -35565,6 +35599,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -35755,6 +35790,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -36001,6 +36037,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -37011,6 +37048,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -37297,6 +37335,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -37664,6 +37703,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -37953,6 +37993,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -38086,6 +38127,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -38202,6 +38244,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -39022,6 +39065,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -40056,6 +40100,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -40934,6 +40979,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -43371,6 +43417,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -44095,6 +44142,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -44736,6 +44784,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -46159,6 +46208,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -46971,6 +47021,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -47917,6 +47968,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -50668,6 +50720,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -51526,6 +51579,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -52313,6 +52367,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -54001,6 +54056,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -54954,6 +55010,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -55476,6 +55533,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -55772,6 +55830,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -56285,6 +56344,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -57202,6 +57262,7 @@ exports[`open api parser aries parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -59287,6 +59348,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -59685,6 +59747,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -61518,6 +61581,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -63579,6 +63643,7 @@ exports[`open api parser aries parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -64235,6 +64300,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -64583,6 +64649,7 @@ exports[`open api parser aries parse open api 1`] = `
   ],
   "schemas": {
     "AMLRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64702,6 +64769,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ActionMenuFetchResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64769,6 +64837,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "AdminConfig": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64789,6 +64858,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "AdminConfig",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Configuration settings",
@@ -64804,6 +64874,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AdminMediationDeny": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64887,6 +64958,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AdminModules": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64986,6 +65058,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "AdminStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65006,6 +65079,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "AdminStatus",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Conductor statistics",
@@ -65066,6 +65140,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "AdminStatus",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Timing results",
@@ -65110,6 +65185,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AdminStatusLiveliness": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65145,6 +65221,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AdminStatusReadiness": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65180,6 +65257,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AttachDecorator": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65381,6 +65459,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AttachDecoratorData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65548,6 +65627,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AttachDecoratorData1JWS": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65625,6 +65705,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AttachDecoratorDataJWS": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65745,6 +65826,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AttachDecoratorDataJWSHeader": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65786,6 +65868,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "AttachmentDef": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65873,6 +65956,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "AttributeMimeTypesResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65974,6 +66058,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "ClaimFormat": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65994,6 +66079,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "ClaimFormat",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -66018,6 +66104,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "ClaimFormat",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -66042,6 +66129,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "ClaimFormat",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -66066,6 +66154,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "ClaimFormat",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -66090,6 +66179,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "ClaimFormat",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -66114,6 +66204,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "ClaimFormat",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -66129,6 +66220,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ClearPendingRevocationsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66197,6 +66289,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ConnRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66938,6 +67031,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ConnectionInvitation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67202,6 +67296,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ConnectionList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67242,6 +67337,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ConnectionMetadata": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67262,6 +67358,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "ConnectionMetadata",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Dictionary of metadata associated with connection.",
@@ -67277,6 +67374,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ConnectionMetadataSetRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67291,6 +67389,7 @@ exports[`open api parser aries parse open api 1`] = `
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Dictionary of metadata to set for connection.",
@@ -67331,6 +67430,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "ConnectionStaticRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67574,6 +67674,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ConnectionStaticResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67710,6 +67811,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Constraints": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68032,6 +68134,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CreateInvitationRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68081,6 +68184,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "CreateInvitationRequest",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Optional metadata to attach to the connection created with the invitation",
@@ -68226,6 +68330,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CreateWalletRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68591,6 +68696,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CreateWalletResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68680,6 +68786,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "CreateWalletResponse",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Settings for this wallet.",
@@ -68804,6 +68911,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CreateWalletTokenRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68844,6 +68952,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CreateWalletTokenResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68884,6 +68993,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredAttrSpec": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68975,6 +69085,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredDefValue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69030,6 +69141,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredDefValuePrimary": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69179,6 +69291,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredDefValueRevocation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69525,6 +69638,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "CredInfoList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69565,6 +69679,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredRevIndyRecordsResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69585,6 +69700,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "CredRevIndyRecordsResult",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Indy revocation registry delta",
@@ -69600,6 +69716,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredRevRecordDetailsResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69640,6 +69757,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredRevRecordResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69673,6 +69791,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredRevokedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69708,6 +69827,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Credential": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69956,6 +70076,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredentialDefinition": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70145,6 +70266,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredentialDefinitionGetResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70178,6 +70300,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredentialDefinitionSendRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70301,6 +70424,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredentialDefinitionSendResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70349,6 +70473,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "CredentialDefinitionsCreatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70396,6 +70521,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredentialOffer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70545,6 +70671,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredentialPreview": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70607,6 +70734,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredentialProposal": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70908,6 +71036,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "CredentialStatusOptions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70949,6 +71078,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "DID": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71153,6 +71283,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIDCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71244,6 +71375,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIDCreateOptions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71332,6 +71464,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "DIDEndpoint": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71394,6 +71527,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIDEndpointWithType": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71515,6 +71649,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIDList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71555,6 +71690,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIDResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71588,6 +71724,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIDXRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71738,6 +71875,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "DIFField": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71912,6 +72050,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIFHolder": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72006,6 +72145,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIFOptions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72075,6 +72215,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIFPresSpec": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72146,6 +72287,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "DIFPresSpec",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Mapping of input_descriptor id to list of stored W3C credential record_id",
@@ -72170,6 +72312,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "DIFPresSpec",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
@@ -72185,6 +72328,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIFProofProposal": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72247,6 +72391,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "DIFProofRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72295,6 +72440,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Date": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72323,6 +72469,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Disclose": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72414,6 +72561,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Disclosures": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72523,6 +72671,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Doc": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72537,6 +72686,7 @@ exports[`open api parser aries parse open api 1`] = `
           "key": "credential",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Credential to sign",
@@ -72574,6 +72724,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "EndorserInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72636,6 +72787,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "EndpointsResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72705,6 +72857,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Filter": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73134,6 +73287,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Generated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73232,6 +73386,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "GetDIDEndpointResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73279,6 +73434,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "GetDIDVerkeyResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73326,6 +73482,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "GetNymRoleResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73458,6 +73615,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "IndyAttrValue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73513,6 +73671,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyCredAbstract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73613,6 +73772,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "IndyCredInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73833,6 +73993,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyCredPrecis": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73940,6 +74101,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "IndyCredRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73954,6 +74116,7 @@ exports[`open api parser aries parse open api 1`] = `
           "key": "blinded_ms",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Blinded master secret",
@@ -73971,6 +74134,7 @@ exports[`open api parser aries parse open api 1`] = `
           "key": "blinded_ms_correctness_proof",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Blinded master secret correctness proof",
@@ -74051,6 +74215,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyCredential": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -74099,6 +74264,7 @@ exports[`open api parser aries parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Revocation registry state",
@@ -74176,6 +74342,7 @@ exports[`open api parser aries parse open api 1`] = `
           "key": "signature",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Credential signature",
@@ -74193,6 +74360,7 @@ exports[`open api parser aries parse open api 1`] = `
           "key": "signature_correctness_proof",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Credential signature correctness proof",
@@ -74258,6 +74426,7 @@ exports[`open api parser aries parse open api 1`] = `
               "nameOverride": "witness",
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Witness for revocation proof",
@@ -74282,6 +74451,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "IndyEQProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -74509,6 +74679,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyGEProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -74750,6 +74921,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyGEProofPred": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -74891,6 +75063,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyKeyCorrectnessProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -74982,6 +75155,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyNonRevocProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -75093,6 +75267,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyNonRevocationInterval": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -75164,6 +75339,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyPresAttrSpec": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -75313,6 +75489,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyPresPredSpec": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -75462,6 +75639,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyPresPreview": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -75546,6 +75724,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyPresSpec": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -75696,6 +75875,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyPrimaryProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -75780,6 +75960,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "IndyProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -75864,6 +76045,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofIdentifier": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76006,6 +76188,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76068,6 +76251,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofProofAggregatedProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76152,6 +76336,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofProofProofsProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76238,6 +76423,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "IndyProofReqAttrSpec": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76393,6 +76579,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofReqAttrSpecNonRevoked": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76479,6 +76666,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "IndyProofReqPredSpec": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76678,6 +76866,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofReqPredSpecNonRevoked": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76764,6 +76953,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "IndyProofRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -76956,6 +77146,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofRequestNonRevoked": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77042,6 +77233,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "IndyProofRequestedProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77219,6 +77411,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "IndyProofRequestedProof",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Proof requested proof self-attested attributes",
@@ -77243,6 +77436,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "IndyProofRequestedProof",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Unrevealed attributes",
@@ -77258,6 +77452,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofRequestedProofPredicate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77299,6 +77494,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofRequestedProofRevealedAttr": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77398,6 +77594,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyProofRequestedProofRevealedAttrGroup": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77498,6 +77695,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "IndyRequestedCredsRequestedAttr": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77555,6 +77753,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyRequestedCredsRequestedPred": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77618,6 +77817,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyRevRegDef": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77792,6 +77992,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyRevRegDefValue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77960,6 +78161,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyRevRegDefValuePublicKeys": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -77993,6 +78195,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyRevRegDefValuePublicKeysAccumKey": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -78049,6 +78252,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "IndyRevRegEntry": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -78111,6 +78315,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IndyRevRegEntryValue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -78225,6 +78430,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "InputDescriptors": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -78332,6 +78538,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "InputDescriptors",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Metadata dictionary",
@@ -78461,6 +78668,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "InvitationCreateRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -78640,6 +78848,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "InvitationCreateRequest",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Optional metadata to attach to the connection created with the invitation",
@@ -78737,6 +78946,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "InvitationMessage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -79019,6 +79229,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "InvitationRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -79287,6 +79498,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "InvitationResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -79404,6 +79616,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "IssuerCredRevRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -79676,6 +79889,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "IssuerRevRegRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80186,6 +80400,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "Keylist": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80226,6 +80441,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "KeylistQuery": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80304,6 +80520,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "KeylistQuery",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Query dictionary object",
@@ -80341,6 +80558,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "KeylistQueryFilterRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80361,6 +80579,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "KeylistQueryFilterRequest",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter for keylist query",
@@ -80376,6 +80595,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "KeylistQueryPaginate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80455,6 +80675,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "KeylistUpdate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80553,6 +80774,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "KeylistUpdateRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80593,6 +80815,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "KeylistUpdateRule": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80666,6 +80889,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "LDProofVCDetail": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80707,6 +80931,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "LDProofVCDetailOptions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -80902,6 +81127,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "LedgerConfigInstance": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -81053,6 +81279,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "LedgerConfigList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -81112,6 +81339,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "LinkedDataProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -81356,6 +81584,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MediationCreateRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -81439,6 +81668,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MediationDeny": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -81580,6 +81810,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MediationGrant": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -81714,6 +81945,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MediationIdMatchInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -81754,6 +81986,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MediationList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -81794,6 +82027,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MediationRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -82102,6 +82336,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Menu": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -82280,6 +82515,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MenuForm": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -82407,6 +82643,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MenuFormParam": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -82573,6 +82810,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MenuJson": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -82693,6 +82931,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "MenuOption": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -82849,6 +83088,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "OobRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -83257,6 +83497,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "PerformRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -83347,6 +83588,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "PingRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -83394,6 +83636,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "PingRequestResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -83434,6 +83677,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "PresentationDefinition": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -83612,6 +83856,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "PresentationProposal": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -83732,6 +83977,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "PresentationRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -83859,6 +84105,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ProtocolDescriptor": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -83935,6 +84182,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "PublishRevocations": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84003,6 +84251,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Queries": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84101,6 +84350,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Query": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84228,6 +84478,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "QueryItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84301,6 +84552,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RawEncoded": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84370,6 +84622,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ReceiveInvitationRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84634,6 +84887,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RemoveWalletRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84674,6 +84928,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ResolutionResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84688,6 +84943,7 @@ exports[`open api parser aries parse open api 1`] = `
           "key": "did_document",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "DID Document",
@@ -84705,6 +84961,7 @@ exports[`open api parser aries parse open api 1`] = `
           "key": "metadata",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Resolution metadata",
@@ -84719,6 +84976,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RevRegCreateRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84789,6 +85047,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RevRegIssuedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84830,6 +85089,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RevRegResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84863,6 +85123,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RevRegUpdateTailsFileUri": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84896,6 +85157,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RevRegWalletUpdatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -84916,6 +85178,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "RevRegWalletUpdatedResult",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Calculated accumulator for phantom revocations",
@@ -84940,6 +85203,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "RevRegWalletUpdatedResult",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Applied ledger transaction to fix revocations",
@@ -84964,6 +85228,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "RevRegWalletUpdatedResult",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Indy revocation registry delta",
@@ -84979,6 +85244,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RevRegsCreated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -85052,6 +85318,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "RevokeRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -85332,6 +85599,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "RouteRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -85568,6 +85836,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "Schema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -85761,6 +86030,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SchemaGetResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -85794,6 +86064,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SchemaInputDescriptor": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -85858,6 +86129,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SchemaSendRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -85942,6 +86214,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SchemaSendResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86005,6 +86278,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "SchemasCreatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86052,6 +86326,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SchemasInputDescriptorFilter": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86123,6 +86398,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SendMenu": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86157,6 +86433,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "SendMessage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86197,6 +86474,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "ServiceDecorator": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86295,6 +86573,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SignRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86343,6 +86622,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SignResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86392,6 +86672,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "SignResponse",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Signed document",
@@ -86407,6 +86688,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SignatureOptions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86549,6 +86831,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "SignedDoc": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86583,6 +86866,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "SubmissionRequirements": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86847,6 +87131,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TAAAccept": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -86945,6 +87230,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TAAAcceptance": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87015,6 +87301,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TAAInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87116,6 +87403,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TAARecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87214,6 +87502,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TAAResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87247,6 +87536,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TailsDeleteResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87287,6 +87577,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TransactionJobs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87416,6 +87707,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TransactionList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87456,6 +87748,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TransactionRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87650,6 +87943,7 @@ exports[`open api parser aries parse open api 1`] = `
               "nameOverride": null,
               "type": "array",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -87675,6 +87969,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "TransactionRecord",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -87705,6 +88000,7 @@ exports[`open api parser aries parse open api 1`] = `
               "nameOverride": null,
               "type": "array",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -87736,6 +88032,7 @@ exports[`open api parser aries parse open api 1`] = `
               "nameOverride": null,
               "type": "array",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -87819,6 +88116,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "TransactionRecord",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -87916,6 +88214,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "TxnOrCredentialDefinitionSendResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -87979,6 +88278,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "TxnOrPublishRevocationsResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -88042,6 +88342,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "TxnOrRegisterLedgerNymResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -88107,6 +88408,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "TxnOrRevRegResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -88170,6 +88472,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "TxnOrSchemaSendResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -88241,6 +88544,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "UpdateWalletRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -88405,6 +88709,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialBoundOfferRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -88446,6 +88751,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V10CredentialConnFreeOfferRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -88602,6 +88908,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -88886,6 +89193,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialExchange": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -89233,6 +89541,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "(Indy) credential request metadata",
@@ -89620,6 +89929,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialExchangeListResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -89708,6 +90018,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V10CredentialFreeOfferRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -89886,6 +90197,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialIssueRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -89933,6 +90245,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialProblemReportRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -89966,6 +90279,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialProposalRequestMand": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -90272,6 +90586,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialProposalRequestOpt": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -90585,6 +90900,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10CredentialStoreRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -90625,6 +90941,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10DiscoveryExchangeListResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -90673,6 +90990,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V10DiscoveryRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -90968,6 +91286,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "V10PresentationCreateRequestRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -91078,6 +91397,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10PresentationExchange": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -91629,6 +91949,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10PresentationExchangeList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -91701,6 +92022,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V10PresentationProblemReportRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -91734,6 +92056,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10PresentationProposalRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -91866,6 +92189,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10PresentationSendRequestRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -91998,6 +92322,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V10PresentationSendRequestToProposal": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -92057,6 +92382,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredAttrSpec": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -92148,6 +92474,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredBoundOfferRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -92219,6 +92546,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20CredExFree": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -92409,6 +92737,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredExRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -93112,6 +93441,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredExRecordByFormat": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -93132,6 +93462,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -93156,6 +93487,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -93180,6 +93512,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -93204,6 +93537,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -93219,6 +93553,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredExRecordDetail": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -93304,6 +93639,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20CredExRecordIndy": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -93440,6 +93776,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Credential request metadata for indy holder",
@@ -93571,6 +93908,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredExRecordLDProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -93756,6 +94094,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredExRecordListResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -93844,6 +94183,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20CredFilter": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -93899,6 +94239,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredFilterIndy": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94084,6 +94425,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredFilterLDProof": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94126,6 +94468,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20CredFormat": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94181,6 +94524,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredIssue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94359,6 +94703,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredIssueProblemReportRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94392,6 +94737,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredIssueRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94439,6 +94785,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredOffer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94639,6 +94986,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredOfferConnFreeRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94795,6 +95143,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredOfferRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -94973,6 +95322,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredPreview": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95035,6 +95385,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredProposal": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95214,6 +95565,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20CredRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95363,6 +95715,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredRequestFree": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95539,6 +95892,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20CredRequestRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95586,6 +95940,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20CredStoreRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95626,6 +95981,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20DiscoveryExchangeListResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95674,6 +96030,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20DiscoveryExchangeResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95707,6 +96064,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20DiscoveryRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -95976,6 +96334,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20IssueCredSchemaCore": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -96134,6 +96493,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "V20Pres": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -96283,6 +96643,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresCreateRequestRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -96393,6 +96754,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresExRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97046,6 +97408,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresExRecordByFormat": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97066,6 +97429,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -97090,6 +97454,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -97114,6 +97479,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -97129,6 +97495,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresExRecordList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97201,6 +97568,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20PresFormat": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97256,6 +97624,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresProblemReportRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97289,6 +97658,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresProposal": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97431,6 +97801,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresProposalByFormat": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97502,6 +97873,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20PresProposalRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97634,6 +98006,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97800,6 +98173,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresRequestByFormat": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -97871,6 +98245,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "V20PresSendRequestRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -98003,6 +98378,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "V20PresSpecByFormatRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -98124,6 +98500,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "V20PresentationSendRequestToProposal": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -98183,6 +98560,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "VCRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -98289,6 +98667,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "VCRecord",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "(JSON-serializable) credential value",
@@ -98535,6 +98914,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "VCRecordList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -98575,6 +98955,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "VerifyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -98638,6 +99019,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "reference",
     },
     "VerifyResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -98695,6 +99077,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "W3CCredentialsListRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -99024,6 +99407,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "WalletList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -99090,6 +99474,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
     },
     "WalletRecord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -99179,6 +99564,7 @@ exports[`open api parser aries parse open api 1`] = `
             "nameOverride": "WalletRecord",
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Settings for this wallet.",
@@ -99274,6 +99660,7 @@ exports[`open api parser aries parse open api 1`] = `
       "type": "object",
     },
     "WriteLedgerRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

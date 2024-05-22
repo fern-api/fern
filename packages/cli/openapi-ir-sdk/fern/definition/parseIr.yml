@@ -78,6 +78,7 @@ types:
       schema: SchemaWithExample
       contentType: optional<string>
       fullExamples: optional<list<NamedFullExample>>
+      additionalProperties: boolean
 
   ResponseWithExample:
     union:
@@ -201,6 +202,7 @@ types:
       properties: list<ObjectPropertyWithExample>
       allOfPropertyConflicts: list<finalIr.AllOfPropertyConflict>
       fullExamples: optional<list<NamedFullExample>>
+      additionalProperties: boolean
 
   ObjectPropertyWithExample:
     properties:

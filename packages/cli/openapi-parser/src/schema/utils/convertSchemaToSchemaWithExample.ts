@@ -21,7 +21,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
-                fullExamples: undefined
+                fullExamples: undefined,
+                additionalProperties: schema.additionalProperties
             });
         case "array":
             return SchemaWithExample.array({

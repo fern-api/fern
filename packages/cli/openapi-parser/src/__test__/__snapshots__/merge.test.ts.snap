@@ -10446,6 +10446,7 @@ exports[`open api parser merge parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -14569,6 +14570,7 @@ exports[`open api parser merge parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -16644,6 +16646,7 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -18301,6 +18304,7 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -20132,6 +20136,7 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -22134,6 +22139,7 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -22465,6 +22471,7 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -25404,6 +25411,7 @@ exports[`open api parser merge parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -27461,6 +27469,7 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -27601,6 +27610,7 @@ exports[`open api parser merge parse open api 1`] = `
   ],
   "schemas": {
     "AccountDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -27904,6 +27914,7 @@ exports[`open api parser merge parse open api 1`] = `
       "type": "object",
     },
     "AccountDetailsAndActions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The LinkedAccount Object
@@ -28156,6 +28167,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       "type": "object",
     },
     "AccountDetailsAndActionsIntegration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -28406,6 +28418,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       ],
     },
     "AccountIntegration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -28662,6 +28675,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       "type": "object",
     },
     "AccountToken": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -28744,6 +28758,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       ],
     },
     "AvailableActions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The AvailableActions Object
@@ -28821,6 +28836,7 @@ Fetch all the actions available for the \`Zenefits\` integration.",
       "type": "object",
     },
     "BankInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The BankInfo Object
@@ -29270,6 +29286,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
       "type": "object",
     },
     "Benefit": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Benefit Object
@@ -29924,6 +29941,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
       ],
     },
     "CommonModelScopesBodyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30008,6 +30026,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
       "type": "object",
     },
     "Company": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Company Object
@@ -30342,6 +30361,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
       "type": "object",
     },
     "ConditionSchema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33902,6 +33922,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
       ],
     },
     "DataPassthroughRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The DataPassthrough Object
@@ -34163,6 +34184,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
       "type": "object",
     },
     "DebugModeLog": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -34233,6 +34255,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
       "type": "object",
     },
     "DebugModelLogSummary": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -34311,6 +34334,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
       "type": "object",
     },
     "Deduction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Deduction Object
@@ -34669,6 +34693,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
       "type": "object",
     },
     "Earning": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Earning Object
@@ -35080,6 +35105,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
       ],
     },
     "Employee": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Employee Object
@@ -36430,6 +36456,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "type": "object",
     },
     "EmployeeEndpointRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -36456,6 +36483,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "type": "object",
     },
     "EmployeePayrollRun": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The EmployeePayrollRun Object
@@ -36994,6 +37022,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
       "type": "object",
     },
     "EmployeeRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Employee Object
@@ -38164,6 +38193,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "type": "object",
     },
     "EmployeeResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -38263,6 +38293,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "type": "object",
     },
     "Employment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Employment Object
@@ -39810,6 +39841,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       ],
     },
     "EndUserDetailsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -40042,6 +40074,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       "type": "object",
     },
     "ErrorValidationProblem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -40386,6 +40419,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       ],
     },
     "GenerateRemoteKeyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The GenerateRemoteKey Object
@@ -40424,6 +40458,7 @@ Post a \`GenerateRemoteKey\` to create a new remote key.",
       "type": "object",
     },
     "Group": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Group Object
@@ -40849,6 +40884,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       ],
     },
     "IgnoreCommonModelRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -40931,6 +40967,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "Issue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41241,6 +41278,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       ],
     },
     "LinkToken": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41332,6 +41370,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountCondition": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41493,6 +41532,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountConditionRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41560,6 +41600,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountSelectiveSyncConfiguration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41600,6 +41641,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountSelectiveSyncConfigurationListRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41633,6 +41675,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountSelectiveSyncConfigurationRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41666,6 +41709,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41716,6 +41760,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "Location": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Location Object
@@ -42905,6 +42950,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
       ],
     },
     "MetaResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43144,6 +43190,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
       ],
     },
     "ModelOperation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The ModelOperation Object
@@ -43269,6 +43316,7 @@ View what operations are supported for the \`Candidate\` endpoint.",
       "type": "object",
     },
     "MultipartFormFieldRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The MultipartFormField Object
@@ -43465,6 +43513,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "OperatorSchema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43529,6 +43578,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedAccountDetailsAndActionsList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43641,6 +43691,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedBankInfoList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43753,6 +43804,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedBenefitList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43865,6 +43917,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedCompanyList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43977,6 +44030,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedConditionSchemaList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44089,6 +44143,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedEmployeeList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44201,6 +44256,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedEmployeePayrollRunList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44313,6 +44369,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedEmploymentList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44425,6 +44482,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedGroupList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44537,6 +44595,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedIssueList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44649,6 +44708,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedLocationList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44761,6 +44821,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedPayGroupList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44873,6 +44934,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedPayrollRunList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44985,6 +45047,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedSyncStatusList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45097,6 +45160,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedTeamList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45209,6 +45273,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedTimeOffBalanceList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45321,6 +45386,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedTimeOffList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49544,6 +49610,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       ],
     },
     "PayGroup": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The PayGroup Object
@@ -49917,6 +49984,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
       ],
     },
     "PayrollRun": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The PayrollRun Object
@@ -50491,6 +50559,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
       ],
     },
     "RemoteData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50564,6 +50633,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
       "type": "object",
     },
     "RemoteKey": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The RemoteKey Object
@@ -50624,6 +50694,7 @@ Post a \`GenerateRemoteKey\` to receive a new \`RemoteKey\`.",
       "type": "object",
     },
     "RemoteKeyForRegenerationRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The RemoteKeyForRegeneration Object
@@ -50662,6 +50733,7 @@ Post a \`RemoteKeyForRegeneration\` to swap out an old remote key for a new one"
       "type": "object",
     },
     "RemoteResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The RemoteResponse Object
@@ -51233,6 +51305,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
       ],
     },
     "SyncStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The SyncStatus Object
@@ -51481,6 +51554,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
       ],
     },
     "Tax": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Tax Object
@@ -51833,6 +51907,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
       "type": "object",
     },
     "Team": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Team Object
@@ -52117,6 +52192,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
       "type": "object",
     },
     "TimeOff": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The TimeOff Object
@@ -52736,6 +52812,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "TimeOffBalance": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The TimeOffBalance Object
@@ -53128,6 +53205,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
       "type": "object",
     },
     "TimeOffEndpointRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -53154,6 +53232,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
       "type": "object",
     },
     "TimeOffRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The TimeOff Object
@@ -53671,6 +53750,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "TimeOffResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -53877,6 +53957,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       ],
     },
     "ValidationProblemSource": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -53910,6 +53991,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "WarningValidationProblem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54009,6 +54091,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "WebhookReceiver": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54088,6 +54171,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "WebhookReceiverRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

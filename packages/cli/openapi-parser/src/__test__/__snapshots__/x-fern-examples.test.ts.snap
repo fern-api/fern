@@ -58,6 +58,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -114,6 +115,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                 "type": "reference",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -174,6 +176,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
   ],
   "schemas": {
     "Schema1": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -244,6 +247,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       "type": "object",
     },
     "Schema2": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

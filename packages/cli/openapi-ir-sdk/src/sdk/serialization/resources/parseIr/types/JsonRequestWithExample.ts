@@ -16,6 +16,7 @@ export const JsonRequestWithExample: core.serialization.ObjectSchema<
         fullExamples: core.serialization
             .list(core.serialization.lazyObject(async () => (await import("../../..")).NamedFullExample))
             .optional(),
+        additionalProperties: core.serialization.boolean(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -24,5 +25,6 @@ export declare namespace JsonRequestWithExample {
         schema: serializers.SchemaWithExample.Raw;
         contentType?: string | null;
         fullExamples?: serializers.NamedFullExample.Raw[] | null;
+        additionalProperties: boolean;
     }
 }
