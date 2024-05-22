@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.13 - 2024-05-22]
+
+- Fix: If a LICENSE is specified, the generator now packages the license in the `.csproj` file.
+
+  ```xml
+    <ItemGroup>
+        <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+    </ItemGroup>
+  ```
+
 ## [0.0.12 - 2024-05-22]
 
 - Improvement: The C# generator now generates an `Environments.cs` file which contains
