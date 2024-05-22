@@ -18,6 +18,8 @@ export declare namespace Field {
         init?: boolean;
         /* The access level of the method */
         access: Access;
+        /* Whether the field is static */
+        static_?: boolean;
         /* Field annotations */
         annotations?: Annotation[];
         /* The initializer for the field */
@@ -39,8 +41,20 @@ export class Field extends AstNode {
     private initializer: CodeBlock | undefined;
     private summary: string | undefined;
     private jsonPropertyName: string | undefined;
+    private static_: boolean | undefined;
 
-    constructor({ name, type, get, init, access, annotations, initializer, summary, jsonPropertyName }: Field.Args) {
+    constructor({
+        name,
+        type,
+        get,
+        init,
+        access,
+        annotations,
+        initializer,
+        summary,
+        jsonPropertyName,
+        static_
+    }: Field.Args) {
         super();
         this.name = name;
         this.type = type;
@@ -51,6 +65,7 @@ export class Field extends AstNode {
         this.initializer = initializer;
         this.summary = summary;
         this.jsonPropertyName = jsonPropertyName;
+        this.static_ = static_;
 
         if (this.jsonPropertyName != null) {
             this.annotations = [
@@ -84,6 +99,9 @@ export class Field extends AstNode {
         }
 
         writer.write(`${this.access} `);
+        if (this.static_) {
+            writer.write("static ");
+        }
         writer.writeNode(this.type);
         writer.write(` ${this.name}`);
 

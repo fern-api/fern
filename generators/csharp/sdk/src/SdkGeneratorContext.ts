@@ -106,6 +106,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    public getEnvironmentsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Environments",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getClientOptionsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: CLIENT_OPTIONS_CLASS_NAME,

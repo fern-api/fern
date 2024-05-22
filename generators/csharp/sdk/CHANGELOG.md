@@ -5,10 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.12 - 2024-05-22]
+
+- Improvement: The C# generator now generates an `Environments.cs` file which contains
+  URLs for the different environments. If a default environment is present, then
+  the `BaseURL` in `ClientOptions.cs` will be initialized to this value.
+
+  ```csharp
+  class Environments {
+
+    public static string PRODUCTION = "https://api.production.com";
+
+    public static string STAGING = "https://api.staging.com";
+
+  }
+  ```
+
 ## [0.0.11 - 2024-05-20]
 
-- Fix: The C# generator now generates a proper `.csproj` file with version, GitHub url, and 
-  a reference to the SDK README. 
+- Fix: The C# generator now generates a proper `.csproj` file with version, GitHub url, and
+  a reference to the SDK README.
 
 ## [0.0.10 - 2024-05-15]
 
