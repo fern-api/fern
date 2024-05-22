@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.12 - 2024-05-22]
 
+- Fix: If a LICENSE is specified, Tte C# generator now packages the license in the `.csproj` file.
+
+  ```xml
+    <ItemGroup>
+        <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+    </ItemGroup>
+  ```
+
+## [0.0.12 - 2024-05-22]
+
 - Improvement: The C# generator now generates an `Environments.cs` file which contains
   URLs for the different environments. If a default environment is present, then
   the `BaseURL` in `ClientOptions.cs` will be initialized to this value.

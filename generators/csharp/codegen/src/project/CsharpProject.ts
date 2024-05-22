@@ -275,13 +275,15 @@ class CsProj {
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
+        <PackageReference Include="OneOf" Version="3.0.263" />
+        <PackageReference Include="System.Text.Json" Version="8.0.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.263" />
-      <PackageReference Include="System.Text.Json" Version="8.0.3" />
+        <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
+
+    ${this.getAdditionalItemGroups().join("\n    ")}
 
 </Project>
 `;
@@ -302,6 +304,18 @@ class CsProj {
         if (this.githubUrl != null) {
             result.push(`<PackageProjectUrl>${this.githubUrl}</PackageProjectUrl>`);
         }
+        return result;
+    }
+
+    private getAdditionalItemGroups(): string[] {
+        const result: string[] = [];
+
+        if (this.license != null) {
+            result.push(`<ItemGroup>
+    <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
+</ItemGroup>`);
+        }
+
         return result;
     }
 }
