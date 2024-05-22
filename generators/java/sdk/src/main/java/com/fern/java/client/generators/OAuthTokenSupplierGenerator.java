@@ -150,7 +150,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .endControlFlow()
                         .addStatement(
                                 "return $S + ($L != null ? $L : $L())",
-                                "Bearer ",
+                                clientCredentials.getTokenPrefix().orElse("Bearer") + " ",
                                 ACCESS_TOKEN_FIELD_NAME,
                                 ACCESS_TOKEN_FIELD_NAME,
                                 FETCH_TOKEN_METHOD_NAME)
