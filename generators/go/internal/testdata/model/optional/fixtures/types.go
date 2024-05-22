@@ -3,6 +3,7 @@
 package api
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "sdk/core"
 )
@@ -10,6 +11,29 @@ import (
 type AnotherType struct {
 	String *string `json:"string,omitempty" url:"string,omitempty"`
 	Type   *Type   `json:"type,omitempty" url:"type,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (a *AnotherType) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *AnotherType) UnmarshalJSON(data []byte) error {
+	type unmarshaler AnotherType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AnotherType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+
+	return nil
 }
 
 func (a *AnotherType) String() string {
@@ -21,6 +45,29 @@ func (a *AnotherType) String() string {
 
 type Type struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (t *Type) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *Type) UnmarshalJSON(data []byte) error {
+	type unmarshaler Type
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = Type(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
+	return nil
 }
 
 func (t *Type) String() string {

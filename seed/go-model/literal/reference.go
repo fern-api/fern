@@ -12,6 +12,12 @@ type SendRequest struct {
 	Query  string `json:"query" url:"query"`
 	prompt string
 	stream bool
+
+	extraProperties map[string]interface{}
+}
+
+func (s *SendRequest) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SendRequest) Prompt() string {
@@ -35,6 +41,13 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 	*s = SendRequest(unmarshaler.embed)
 	s.prompt = "You are a helpful assistant"
 	s.stream = false
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s, "prompt", "stream")
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	return nil
 }
 

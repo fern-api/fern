@@ -11,7 +11,12 @@ import (
 type Error struct {
 	Message string `json:"message" url:"message"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (e *Error) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *Error) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*e = Error(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
 	e._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -41,7 +53,12 @@ type Foo struct {
 	Id   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *Foo) UnmarshalJSON(data []byte) error {
@@ -51,6 +68,13 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }

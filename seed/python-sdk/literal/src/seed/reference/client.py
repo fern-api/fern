@@ -47,11 +47,7 @@ class ReferenceClient:
             query="What is the weather today",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {
-            "prompt": "You are a helpful assistant",
-            "query": query,
-            "stream": False,
-        }
+        _request: typing.Dict[str, typing.Any] = {"query": query}
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "reference"),
@@ -119,11 +115,7 @@ class AsyncReferenceClient:
             query="What is the weather today",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {
-            "prompt": "You are a helpful assistant",
-            "query": query,
-            "stream": False,
-        }
+        _request: typing.Dict[str, typing.Any] = {"query": query}
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "reference"),

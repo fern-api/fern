@@ -59,7 +59,7 @@ class SdkGenerator(AbstractGenerator):
         return (
             (
                 generator_config.organization,
-                ir.api_name.snake_case.unsafe_name,
+                ir.api_name.snake_case.safe_name,
             )
             if custom_config.use_api_name_in_package
             else (generator_config.organization,)

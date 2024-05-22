@@ -698,19 +698,19 @@ class ClientWrapperGenerator:
         return header_auth_schemes
 
     def _get_header_parameter_name(self, header: ir_types.HttpHeader) -> str:
-        return header.name.name.snake_case.unsafe_name
+        return header.name.name.snake_case.safe_name
 
     def _get_header_private_member_name(self, header: ir_types.HttpHeader) -> str:
         return "_" + header.name.name.snake_case.unsafe_name
 
     def _get_header_constructor_parameter_name(self, header: ir_types.HttpHeader) -> str:
-        return header.name.name.snake_case.unsafe_name
+        return header.name.name.snake_case.safe_name
 
     def _get_auth_scheme_header_constructor_parameter_name(self, header: ir_types.HeaderAuthScheme) -> str:
-        return header.name.name.snake_case.unsafe_name
+        return header.name.name.snake_case.safe_name
 
     def _get_auth_scheme_header_private_member_name(self, header: ir_types.HeaderAuthScheme) -> str:
-        return header.name.name.snake_case.unsafe_name
+        return header.name.name.snake_case.safe_name
 
     def _get_environment_instantiation(
         self,

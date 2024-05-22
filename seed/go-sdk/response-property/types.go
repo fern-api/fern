@@ -11,7 +11,12 @@ import (
 type WithMetadata struct {
 	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (w *WithMetadata) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
 }
 
 func (w *WithMetadata) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (w *WithMetadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithMetadata(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
 	w._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -41,7 +53,12 @@ type Movie struct {
 	Id   string `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *Movie) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Movie) UnmarshalJSON(data []byte) error {
@@ -51,6 +68,13 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = Movie(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -70,7 +94,12 @@ func (m *Movie) String() string {
 type WithDocs struct {
 	Docs string `json:"docs" url:"docs"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (w *WithDocs) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
 }
 
 func (w *WithDocs) UnmarshalJSON(data []byte) error {
@@ -80,6 +109,13 @@ func (w *WithDocs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*w = WithDocs(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+
 	w._rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -3,6 +3,7 @@
 package responseproperty
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/response-property/fern/core"
 )
@@ -11,6 +12,29 @@ type OptionalStringResponse = *StringResponse
 
 type StringResponse struct {
 	Data string `json:"data" url:"data"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *StringResponse) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *StringResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler StringResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = StringResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
+	return nil
 }
 
 func (s *StringResponse) String() string {
@@ -26,6 +50,29 @@ type Response struct {
 	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
 	Docs     string            `json:"docs" url:"docs"`
 	Data     *Movie            `json:"data,omitempty" url:"data,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (r *Response) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *Response) UnmarshalJSON(data []byte) error {
+	type unmarshaler Response
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Response(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
+	return nil
 }
 
 func (r *Response) String() string {

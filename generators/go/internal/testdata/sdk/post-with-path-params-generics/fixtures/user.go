@@ -90,7 +90,12 @@ func (s *SetNameRequestV5) MarshalJSON() ([]byte, error) {
 type Filter struct {
 	Tag string `json:"tag" url:"tag"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *Filter) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *Filter) UnmarshalJSON(data []byte) error {
@@ -100,6 +105,13 @@ func (f *Filter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = Filter(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -119,7 +131,12 @@ func (f *Filter) String() string {
 type SetNameRequestV3Body struct {
 	UserName string `json:"userName" url:"userName"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *SetNameRequestV3Body) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
@@ -129,6 +146,13 @@ func (s *SetNameRequestV3Body) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SetNameRequestV3Body(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }

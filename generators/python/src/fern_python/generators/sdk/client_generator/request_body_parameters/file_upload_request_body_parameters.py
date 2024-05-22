@@ -21,7 +21,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         self._request = request
         self._context = context
 
-    def get_parameters(self) -> List[AST.NamedFunctionParameter]:
+    def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._request.properties:
             parameters.append(
@@ -92,12 +92,12 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         )
 
     def _get_file_property_name(self, property: ir_types.FileProperty) -> str:
-        return property.get_as_union().key.name.snake_case.unsafe_name
+        return property.get_as_union().key.name.snake_case.safe_name
 
     def _get_body_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
-        return property.name.name.snake_case.unsafe_name
+        return property.name.name.snake_case.safe_name
 
-    def get_json_body(self) -> Optional[AST.Expression]:
+    def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_line("{")
             with writer.indent():
@@ -125,7 +125,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
 
         return self._context.core_utilities.remove_none_from_dict(AST.Expression(AST.CodeWriter(write)))
 
-    def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
+    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
         return None
 
     def is_default_body_parameter_used(self) -> bool:
