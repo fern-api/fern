@@ -963,6 +963,7 @@ Log.d("TAG", file.toString())
         "description": "The file was uploaded successfully.",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": "JSON object where the key is the file name of the uploaded file and
@@ -2130,6 +2131,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
         "description": "Multipart upload started successfully.",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -9921,6 +9923,7 @@ Log.d("TAG", group.toString())
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "Information about file content.",
@@ -9941,6 +9944,7 @@ Log.d("TAG", group.toString())
               "nameOverride": null,
               "type": "optional",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "MIME type.",
@@ -10297,6 +10301,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "primitive",
     },
     "fileUploadInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Information about an uploaded file.",
@@ -10634,6 +10639,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "type": "object",
     },
     "fileUploadInfoErrorStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10734,6 +10740,7 @@ page for a full list of all possible error codes.
       "type": "object",
     },
     "fileUploadInfoFromURL": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -10778,6 +10785,7 @@ page for a full list of all possible error codes.
       "type": "object",
     },
     "fileUploadInfoProgressStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10893,6 +10901,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "type": "object",
     },
     "fileUploadInfoSuccessStatus": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -10937,6 +10946,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "type": "object",
     },
     "fileUploadInfoUnknownStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10978,6 +10988,7 @@ that are tool old (or that have not been created at all).
       "type": "object",
     },
     "fileUploadInfoWaitingStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11030,6 +11041,7 @@ that are tool old (or that have not been created at all).
       "type": "primitive",
     },
     "fromURLUploadResponseSchema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "\`/from_url/\` upload response.",
@@ -11155,6 +11167,7 @@ that are tool old (or that have not been created at all).
       "type": "primitive",
     },
     "groupInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "File group information object.",
@@ -11409,6 +11422,7 @@ that are tool old (or that have not been created at all).
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "Image metadata.",
@@ -11716,6 +11730,7 @@ that are tool old (or that have not been created at all).
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Geo-location of image from EXIF.",
@@ -11846,6 +11861,7 @@ that are tool old (or that have not been created at all).
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "Video metadata.",
@@ -11961,6 +11977,7 @@ that are tool old (or that have not been created at all).
                 "nameOverride": null,
                 "type": "nullable",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Audio stream's metadata.",
@@ -12133,6 +12150,7 @@ that are tool old (or that have not been created at all).
               "nameOverride": null,
               "type": "optional",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Video stream's metadata.",
@@ -12634,6 +12652,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "type": "primitive",
     },
     "schemas-imageInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Image metadata.",
@@ -12941,6 +12960,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Geo-location of image from EXIF.",
@@ -13415,6 +13435,7 @@ change the value to \`auto\`.
       "type": "primitive",
     },
     "videoInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Video metadata.",
@@ -13517,6 +13538,7 @@ change the value to \`auto\`.
             "nameOverride": null,
             "type": "array",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Audio stream's metadata.",
@@ -13661,6 +13683,7 @@ change the value to \`auto\`.
             "nameOverride": null,
             "type": "array",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Video stream's metadata.",

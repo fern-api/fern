@@ -81,6 +81,7 @@ exports[`rules rules parse open api 1`] = `
                 "type": "reference",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -140,6 +141,7 @@ exports[`rules rules parse open api 1`] = `
   ],
   "schemas": {
     "Schema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

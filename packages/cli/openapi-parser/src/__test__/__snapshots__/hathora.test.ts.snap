@@ -409,9 +409,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -426,6 +428,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "authConfiguration",
               "nameOverride": null,
               "schema": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -446,6 +449,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -786,9 +790,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -803,6 +809,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "authConfiguration",
               "nameOverride": null,
               "schema": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -823,6 +830,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -1325,6 +1333,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1464,9 +1473,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1506,6 +1517,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1666,9 +1678,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1708,6 +1722,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -3353,6 +3368,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4631,9 +4647,11 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5046,9 +5064,11 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5461,9 +5481,11 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5880,9 +5902,11 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -6687,9 +6711,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -8368,9 +8394,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -9432,6 +9460,7 @@ exports[`open api parser hathora parse open api 1`] = `
   ],
   "schemas": {
     "ActiveConnectionInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9533,6 +9562,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "primitive",
     },
     "Application": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9654,6 +9684,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "authConfiguration",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -9674,6 +9705,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "nameOverride": null,
                   "type": "optional",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -9826,6 +9858,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "ApplicationWithDeployment": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9860,6 +9893,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "Build": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9880,6 +9914,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "nameOverride": null,
             "type": "array",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -10207,6 +10242,7 @@ exports[`open api parser hathora parse open api 1`] = `
       },
     },
     "Deployment": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -10356,6 +10392,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "DeploymentConfig": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10376,6 +10413,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "nameOverride": null,
             "type": "array",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -10534,6 +10572,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "type": "array",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": null,
@@ -10606,6 +10645,7 @@ exports[`open api parser hathora parse open api 1`] = `
       },
     },
     "Lobby": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10900,6 +10940,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
     "MetricValue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10988,6 +11029,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "primitive",
     },
     "Pick_Room.Exclude_keyofRoom.allocations__": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "From T, pick a set of properties whose keys are in the union K",
@@ -11123,6 +11165,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
     "Process": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11476,6 +11519,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "primitive",
     },
     "ProcessWithRooms": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11540,6 +11584,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "Record_Partial_MetricName_.MetricValue-Array_": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Construct a type with a set of properties K of type T",
@@ -11667,6 +11712,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "Record_string.never_": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Construct a type with a set of properties K of type T",
@@ -11806,6 +11852,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
     "Room": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -11906,6 +11953,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "RoomAllocation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -12083,6 +12131,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "reference",
     },
     "StartingConnectionInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
