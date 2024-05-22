@@ -6,6 +6,10 @@ description: The command "fern write-overrides" generates a basic OpenAPI overri
 Use `fern write-overrides` to generate a basic OpenAPI overrides file. An overrides file allows for 
 reversible revisions to the API specification, including adding request and response examples for Fern Docs.
 
+```bash
+fern write-overrides
+```
+
 When run, this command creates a new file within `fern/openapi/` called `openapi-overrides.yml`. 
 
 ```diff {5}
@@ -15,10 +19,6 @@ When run, this command creates a new file within `fern/openapi/` called `openapi
   └─ openapi/
 +   └─ openapi-overrides.yaml <--- your overrides file
     └─ openapi.json
-```
-
-```bash
-fern write-overrides
 ```
 
 ## Options

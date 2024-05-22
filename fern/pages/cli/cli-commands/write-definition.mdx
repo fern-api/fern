@@ -5,6 +5,10 @@ description: The command "fern write-definition" converts your OpenAPI specifica
 
 The `fern write-definition` command converts your OpenAPI specification into a Fern Definition. To use it, you must have a `fern/openapi/` folder that contains an OpenAPI specification file in `json` or `yaml` format.
 
+```bash
+fern write-definition
+```
+
 When run, this command creates a new folder within `fern/` called `.definition/`. 
 
 ```diff {6-8}
@@ -25,10 +29,6 @@ If you do not see the newly created `.definition/` folder, use the appropriate c
 If your `fern/` folder contains both an `openapi/` and a `definition/` folder, Fern defaults to reading your OpenAPI specification. If you'd like to use your Fern Definition as an input to Fern's generators instead of OpenAPI, you must:
 - Rename the `.definition/` folder to `definition/`.
 - Remove or rename the `openapi/` folder. For example, you can rename it to `.openapi/`. 
-
-```bash
-fern write-definition
-```
 
 ## Options
 
