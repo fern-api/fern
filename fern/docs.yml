@@ -301,42 +301,8 @@ navigation:
             path: ./pages/cli/overview.mdx
           - page: Global Options
             path: ./pages/cli/global-options.mdx
-          - section: Commands
-            contents:
-              - page: add
-                path: ./pages/cli/cli-commands/add.mdx
-              - page: api update
-                path: ./pages/cli/cli-commands/api-update.mdx
-              - page: check
-                path: ./pages/cli/cli-commands/check.mdx
-              - page: docs dev
-                path: ./pages/cli/cli-commands/docs-dev.mdx
-              - page: format
-                path: ./pages/cli/cli-commands/format.mdx
-              - page: generate
-                path: ./pages/cli/cli-commands/generate.mdx
-              - page: generator upgrade
-                path: ./pages/cli/cli-commands/generator-upgrade.mdx  
-              - page: help
-                path: ./pages/cli/cli-commands/help.mdx
-              - page: init
-                path: ./pages/cli/cli-commands/init.mdx
-              - page: ir
-                path: ./pages/cli/cli-commands/ir.mdx
-              - page: login
-                path: ./pages/cli/cli-commands/login.mdx
-              - page: mock
-                path: ./pages/cli/cli-commands/mock.mdx
-              - page: test
-                path: ./pages/cli/cli-commands/test.mdx
-              - page: token
-                path: ./pages/cli/cli-commands/token.mdx
-              - page: upgrade
-                path: ./pages/cli/cli-commands/upgrade.mdx
-              - page: write-definition
-                path: ./pages/cli/cli-commands/write-definition.mdx
-              - page: write-overrides
-                path: ./pages/cli/cli-commands/write-overrides.mdx
+          - page: Commands
+            path: ./pages/cli/commands.mdx
       - api: API Reference
         api-name: public-api
         # audiences:
