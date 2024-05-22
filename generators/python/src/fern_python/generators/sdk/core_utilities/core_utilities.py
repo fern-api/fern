@@ -4,6 +4,8 @@ from typing import Optional, Set
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies.pydantic import (
     PYDANTIC_DEPENDENCY,
+    PYDANTIC_V1_DEPENDENCY,
+    PYDANTIC_V2_DEPENDENCY,
     Pydantic,
     PydanticVersionCompatibility,
 )
@@ -17,13 +19,14 @@ class CoreUtilities:
     ASYNC_CLIENT_WRAPPER_CLASS_NAME = "AsyncClientWrapper"
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
-    def __init__(self, allow_skipping_validation: bool, has_paginated_endpoints: bool) -> None:
+    def __init__(self, allow_skipping_validation: bool, has_paginated_endpoints: bool, version: PydanticVersionCompatibility) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
         self._allow_skipping_validation = allow_skipping_validation
         self._has_paginated_endpoints = has_paginated_endpoints
+        self._version = version
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -133,7 +136,12 @@ class CoreUtilities:
             )
 
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
-        project.add_dependency(PYDANTIC_DEPENDENCY)
+        if self._version == PydanticVersionCompatibility.V1:
+            project.add_dependency(PYDANTIC_V1_DEPENDENCY)
+        elif self._version == PydanticVersionCompatibility.V2:
+            project.add_dependency(PYDANTIC_V2_DEPENDENCY)
+        else:
+            project.add_dependency(PYDANTIC_DEPENDENCY)
 
     def _copy_file_to_project(
         self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]

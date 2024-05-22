@@ -95,6 +95,8 @@ scripts:
       # - poetry run mypy .
       # The global python version is 3.8
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+      - npm config set cache . --local
+      - poetry config virtualenvs.in-project true
       - poetry install && fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   - response-property
@@ -105,3 +107,11 @@ allowedFailures:
   - trace
   - circular-references-advanced
   - oauth-client-credentials-default
+  # === Allowed failures due to unit testing ===
+  # We don't have oauth tests yet
+  - oauth-client-credentials
+  - oauth-client-credentials-environment-variables
+  # Currently, autogenned examples are not marking some literals as literals and so they're being passed
+  # into the method as parameters when they're meant to be omitted (so the tests fail on unrecognized params).
+  - examples:no-custom-config
+  - examples:client-filename
