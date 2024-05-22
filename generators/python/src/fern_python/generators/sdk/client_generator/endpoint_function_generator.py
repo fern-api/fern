@@ -79,8 +79,7 @@ class EndpointFunctionGenerator:
             self._endpoint.pagination if self._context.generator_config.generate_paginated_clients else None
         )
 
-        self._named_parameter_names: List[str] = []
-        request_body_parameters: Optional[AbstractRequestBodyParameters] = (
+        self.request_body_parameters: Optional[AbstractRequestBodyParameters] = (
             self._endpoint.request_body.visit(
                 inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
                     endpoint=self._endpoint,
@@ -102,15 +101,15 @@ class EndpointFunctionGenerator:
             if self._endpoint.request_body is not None
             else None
         )
-        self._named_parameters = self._get_endpoint_named_parameters(
+        self.named_parameters = self._get_endpoint_named_parameters(
             service=self._service,
             endpoint=self._endpoint,
-            request_body_parameters=request_body_parameters,
+            request_body_parameters=self.request_body_parameters,
             idempotency_headers=self._idempotency_headers,
         )
 
         self._path_parameter_names = dict()
-        _named_parameter_names: List[str] = [param.name for param in self._named_parameters]
+        _named_parameter_names: List[str] = [param.name for param in self.named_parameters]
         for path_parameter in self._endpoint.all_path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
@@ -131,29 +130,6 @@ class EndpointFunctionGenerator:
             else False
         )
 
-        request_body_parameters: Optional[AbstractRequestBodyParameters] = (
-            self._endpoint.request_body.visit(
-                inlined_request_body=lambda inlined_request_body: InlinedRequestBodyParameters(
-                    endpoint=self._endpoint,
-                    request_body=inlined_request_body,
-                    context=self._context,
-                ),
-                reference=lambda referenced_request_body: ReferencedRequestBodyParameters(
-                    endpoint=self._endpoint,
-                    request_body=referenced_request_body,
-                    context=self._context,
-                ),
-                file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
-                    endpoint=self._endpoint, request=file_upload_request, context=self._context
-                ),
-                bytes=lambda bytes_request: BytesRequestBodyParameters(
-                    endpoint=self._endpoint, request=bytes_request, context=self._context
-                ),
-            )
-            if self._endpoint.request_body is not None
-            else None
-        )
-        named_parameters = self._named_parameters
         endpoint_snippet = self._generate_endpoint_snippet(
             package=self._package,
             service=self._service,
@@ -168,29 +144,29 @@ class EndpointFunctionGenerator:
             is_async=self._is_async,
             docstring=self._get_docstring_for_endpoint(
                 endpoint=self._endpoint,
-                named_parameters=named_parameters,
+                named_parameters=self.named_parameters,
                 path_parameters=self._endpoint.all_path_parameters,
                 snippet=endpoint_snippet,
             ),
             signature=AST.FunctionSignature(
                 parameters=unnamed_parameters,
-                named_parameters=named_parameters,
+                named_parameters=self.named_parameters,
                 return_type=self._get_endpoint_return_type(),
             ),
             body=self._create_endpoint_body_writer(
                 service=self._service,
                 endpoint=self._endpoint,
                 idempotency_headers=self._idempotency_headers,
-                request_body_parameters=request_body_parameters,
+                request_body_parameters=self.request_body_parameters,
                 is_async=self._is_async,
                 is_primitive=is_primitive,
                 parameters=unnamed_parameters,
-                named_parameters=named_parameters,
+                named_parameters=self.named_parameters,
             ),
         )
         return GeneratedEndpointFunction(
             function=function_declaration,
-            is_default_body_parameter_used=request_body_parameters is not None,
+            is_default_body_parameter_used=self.request_body_parameters is not None,
             snippet=endpoint_snippet,
         )
 

@@ -90,6 +90,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
             self._type_id
         )
+
         inlined_properties = []
         for prop in object_properties:
             inlined_properties.append(
