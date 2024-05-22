@@ -100,7 +100,7 @@ export class Field extends AstNode {
 
         writer.write(`${this.access} `);
         if (this.static_) {
-            writer.write(`static `);
+            writer.write("static ");
         }
         writer.writeNode(this.type);
         writer.write(` ${this.name}`);
