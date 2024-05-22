@@ -5,22 +5,22 @@ on:
     branches:
       - main
       - ab/readd-tests-py
-    paths:
-      - "generators/openapi/VERSION"
-      - "generators/python/sdk/VERSION"
-      - "generators/python/fastapi/VERSION"
-      - "generators/python/pydantic/VERSION"
-      - "generators/postman/VERSION"
-      - "generators/ruby/model/VERSION"
-      - "generators/ruby/sdk/VERSION"
-      - "generators/java/sdk/VERSION"
-      - "generators/java/model/VERSION"
-      - "generators/java/spring/VERSION"
-      - "generators/typescript/sdk/VERSION"
-      - "generators/typescript/express/VERSION"
-      - "generators/go/VERSION"
-      - "generators/csharp/sdk/VERSION"
-      - "generators/csharp/model/VERSION"
+    # paths:
+    #   - "generators/openapi/VERSION"
+    #   - "generators/python/sdk/VERSION"
+    #   - "generators/python/fastapi/VERSION"
+    #   - "generators/python/pydantic/VERSION"
+    #   - "generators/postman/VERSION"
+    #   - "generators/ruby/model/VERSION"
+    #   - "generators/ruby/sdk/VERSION"
+    #   - "generators/java/sdk/VERSION"
+    #   - "generators/java/model/VERSION"
+    #   - "generators/java/spring/VERSION"
+    #   - "generators/typescript/sdk/VERSION"
+    #   - "generators/typescript/express/VERSION"
+    #   - "generators/go/VERSION"
+    #   - "generators/csharp/sdk/VERSION"
+    #   - "generators/csharp/model/VERSION"
   workflow_dispatch:
     inputs:
       generator:
