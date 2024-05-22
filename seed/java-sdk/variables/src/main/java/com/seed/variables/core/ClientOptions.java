@@ -29,7 +29,11 @@ public final class ClientOptions {
         this.environment = environment;
         this.headers = new HashMap<>();
         this.headers.putAll(headers);
-        this.headers.putAll(Map.of("X-Fern-Language", "JAVA"));
+        this.headers.putAll(new HashMap<String, String>() {
+            {
+                put("X-Fern-Language", "JAVA");
+            }
+        });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
         this.rootVariable = rootVariable;
