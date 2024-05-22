@@ -34,7 +34,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
