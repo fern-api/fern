@@ -34,7 +34,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,12 +102,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
         Map<VariableId, FieldSpec> variableFields = getVariableFields();
         Map<VariableId, MethodSpec> variableGetters = getVariableGetters(variableFields);
-        String commaDelimitedPatformHeaders = getPlatformHeadersEntries(
+        String platformHeadersPutString = getPlatformHeadersEntries(
                         generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
                         generatorContext.getGeneratorConfig())
+                .entrySet()
                 .stream()
-                .map(val -> CodeBlock.of("$S", val).toString())
-                .collect(Collectors.joining(", "));
+                .map(val -> CodeBlock.of("put($S, $S);", val.getKey(), val.getValue())
+                        .toString())
+                .collect(Collectors.joining(""));
         MethodSpec.Builder contructorBuilder = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PRIVATE)
                 .addParameter(ParameterSpec.builder(environmentField.type, environmentField.name)
@@ -125,7 +127,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addStatement("this.$L = $L", environmentField.name, environmentField.name)
                 .addStatement("this.$L = new $T<>()", HEADERS_FIELD.name, HashMap.class)
                 .addStatement("this.$L.putAll($L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
-                .addStatement("this.$L.putAll($T.of($L))", HEADERS_FIELD.name, Map.class, commaDelimitedPatformHeaders)
+                .addStatement(
+                        "this.$L.putAll(new $T<$T,$T>() {{$L}})",
+                        HEADERS_FIELD.name,
+                        HashMap.class,
+                        String.class,
+                        String.class,
+                        platformHeadersPutString)
                 .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name);
         variableFields
@@ -407,23 +415,23 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private static List<String> getPlatformHeadersEntries(
+    private static Map<String, String> getPlatformHeadersEntries(
             PlatformHeaders platformHeaders, GeneratorConfig generatorConfig) {
-        List<String> entries = new ArrayList<>();
+        Map<String, String> entries = new HashMap<>();
         if (generatorConfig.getPublish().isPresent()) {
-            entries.add(platformHeaders.getSdkName());
-            entries.add(generatorConfig
-                    .getPublish()
-                    .get()
-                    .getRegistriesV2()
-                    .getMaven()
-                    .getCoordinate());
-
-            entries.add(platformHeaders.getSdkVersion());
-            entries.add(generatorConfig.getPublish().get().getVersion());
+            entries.put(
+                    platformHeaders.getSdkName(),
+                    generatorConfig
+                            .getPublish()
+                            .get()
+                            .getRegistriesV2()
+                            .getMaven()
+                            .getCoordinate());
+            entries.put(
+                    platformHeaders.getSdkVersion(),
+                    generatorConfig.getPublish().get().getVersion());
         }
-        entries.add(platformHeaders.getLanguage());
-        entries.add("JAVA");
+        entries.put(platformHeaders.getLanguage(), "JAVA");
         return entries;
     }
 }
