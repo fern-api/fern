@@ -211,6 +211,10 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 
     if base_type == bool:
         try:
+            if isinstance(object_, str):
+                stringified_object = object_.lower()
+                return stringified_object == "true" or stringified_object == "1"
+
             return bool(object_)
         except Exception:
             return object_
