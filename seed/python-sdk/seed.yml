@@ -100,10 +100,12 @@ scripts:
       - poetry config virtualenvs.path .
       - poetry install && fern test --command "poetry run pytest -rP ."
 allowedFailures: 
+  # This is the only one that should always fail
+  - exhaustive:additional_init_exports
+  # TODO(FER-1837): Address this list
   - response-property
   - websocket
   - exhaustive:union-utils
-  - exhaustive:additional_init_exports
   - extra-properties
   - trace
   - circular-references-advanced
