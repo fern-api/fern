@@ -19,7 +19,9 @@ class CoreUtilities:
     ASYNC_CLIENT_WRAPPER_CLASS_NAME = "AsyncClientWrapper"
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
-    def __init__(self, allow_skipping_validation: bool, has_paginated_endpoints: bool, version: PydanticVersionCompatibility) -> None:
+    def __init__(
+        self, allow_skipping_validation: bool, has_paginated_endpoints: bool, version: PydanticVersionCompatibility
+    ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`

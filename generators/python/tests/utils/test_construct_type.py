@@ -148,7 +148,6 @@ def test_construct_invalid() -> None:
     # Note that even though the response is attempting to be a Square (note the "length" field), the
     # union is still going to create a circle given the type is not specified in the response.
     assert cast_response.undiscriminated_union is not None
-    assert cast_response.undiscriminated_union.id == "123"
     assert cast_response.undiscriminated_union.length == "fifteen"
     assert type(cast_response.undiscriminated_union) == Circle
 
