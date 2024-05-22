@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0-rc0] - 2024-05-22
+
+- Fix: This version addresses issues in unit test generation and reenables the creation of unit tests.
+
 ## [2.4.0-rc0] - 2024-05-21
 
 - Fix: The Python SDK generator now uses safe names wherever string concat is not used (like in client generation naming), so this will update module and parameter names.

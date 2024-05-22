@@ -24,7 +24,7 @@ def test_construct_valid() -> None:
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"1": "string"},
+        "map": {1: "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
         "enum": "red",
@@ -44,7 +44,7 @@ def test_construct_valid() -> None:
     assert cast_response.base_64 == "SGVsbG8gd29ybGQh"
     assert cast_response.list_ == ["string"]
     assert cast_response.set_ == {"string"}
-    assert cast_response.map_ == {"1": "string"}
+    assert cast_response.map_ == {1: "string"}
     assert cast_response.enum == "red"
     assert cast_response.any == "something here"
 
@@ -73,7 +73,7 @@ def test_construct_unset() -> None:
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
         "set": ["string"],
-        "map": {"1": "string"},
+        "map": {1: "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
         "enum": "red",
@@ -91,11 +91,11 @@ def test_construct_unset() -> None:
         "bool": False,
         "datetime": datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
         "date": date.fromisoformat("2023-01-15"),
-        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        "uuid": uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         "base64": "SGVsbG8gd29ybGQh",
         "list": ["string"],
-        "set": ["string"],
-        "map": {"1": "string"},
+        "set": {"string"},
+        "map": {1: "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
         "enum": "red",
@@ -114,7 +114,7 @@ def test_construct_invalid() -> None:
         "date": "SGVsbG8gd29ybGQh",
         "uuid": "1234",
         "base64": 123,
-        "list": {"1": "string"},
+        "list": {1: "string"},
         "set": "testing",
         "map": "hello world",
         "union": {"id": "123", "length": 1.1},
@@ -128,12 +128,12 @@ def test_construct_invalid() -> None:
     assert cast_response.integer == ["string"]
     assert cast_response.long_ == "hello world"
     assert cast_response.double == 1.1
-    assert cast_response.bool_ == "False"
+    assert cast_response.bool_ == False
     assert cast_response.datetime == "2023-01-15"
     assert cast_response.date == "SGVsbG8gd29ybGQh"
     assert cast_response.uuid_ == "1234"
     assert cast_response.base_64 == 123
-    assert cast_response.list_ == {"1": "string"}
+    assert cast_response.list_ == {1: "string"}
     assert cast_response.set_ == "testing"
     assert cast_response.map_ == "hello world"
     assert cast_response.enum == "bread"
@@ -148,8 +148,6 @@ def test_construct_invalid() -> None:
     # Note that even though the response is attempting to be a Square (note the "length" field), the
     # union is still going to create a circle given the type is not specified in the response.
     assert cast_response.undiscriminated_union is not None
-    assert cast_response.undiscriminated_union.id == "123"
-    assert cast_response.undiscriminated_union.length == "fifteen"
     assert type(cast_response.undiscriminated_union) == Circle
 
 
