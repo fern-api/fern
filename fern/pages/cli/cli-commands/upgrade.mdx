@@ -3,16 +3,18 @@ title: fern upgrade
 description: The command "fern upgrade" upgrades your Fern version as well as the versions of generators in generators.yml.
 ---
 
-`fern upgrade` will upgrade your compiler version in `fern.config.json` to the
+Use `fern upgrade` will upgrade your compiler version in `fern.config.json` to the
 latest version. It will also upgrade generators in `generators.yml` to their minimum-compatible versions.
 
 ```bash
 fern upgrade
 ```
 
-## Release candidates
+## Option
 
-By adding `--rc`, you can upgrade to the compiler's latest release candidate. Using a release candidate is not recommended for production use.
+### rc
+
+Use `--rc` to upgrade to the compiler's latest release candidate. Using a release candidate is not recommended for production use.
 
 ```bash
 fern upgrade --rc

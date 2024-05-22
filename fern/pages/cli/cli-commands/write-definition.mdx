@@ -7,16 +7,6 @@ The `fern write-definition` command converts your OpenAPI specification into a F
 
 When run, this command creates a new folder within `fern/` called `.definition/`. 
 
-<Warning>
-Folders with names that begin with `.` are often treated as hidden. If you do not see the newly created `.definition/` folder, make sure to use the appropriate command or configuration to view hidden folders. For example, in bash or zsh, use the command `ls -a` to view all contents of the `fern/` folder instead of `ls`.
-</Warning>
-
-Run this command from within your `fern/` folder:
-
-```bash
-fern write-definition
-```
-
 ```diff {6-8}
   fern/
   ├─ fern.config.json
@@ -28,10 +18,24 @@ fern write-definition
 +   └─ __package__.yml
 ```
 
+<Warning>
+If you do not see the newly created `.definition/` folder, use the appropriate command or configuration to view hidden folders (`ls -a` in `bash` and `zsh`).
+</Warning>
+
 If your `fern/` folder contains both an `openapi/` and a `definition/` folder, Fern defaults to reading your OpenAPI specification. If you'd like to use your Fern Definition as an input to Fern's generators instead of OpenAPI, you must:
 - Rename the `.definition/` folder to `definition/`.
 - Remove or rename the `openapi/` folder. For example, you can rename it to `.openapi/`. 
 
-<Tip>
-You can convert Fern Definition files back to OpenAPI at any time using our [OpenAPI generator](/fern-sd-ks/other-generators/spec/openapi). Whether you want to switch back, or you need an OpenAPI specification for use with other tools, you're never locked in.
-</Tip>
+```bash
+fern write-definition
+```
+
+## Options
+
+### api
+
+Use `--api` to specify the API to write the definition for if you have multiple defined in your `fern/apis/` folder. 
+
+```bash
+fern write-definition --api public-api
+```

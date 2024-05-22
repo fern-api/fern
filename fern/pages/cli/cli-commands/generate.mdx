@@ -14,52 +14,51 @@ fern generate [--group <group>] [--api <api>] [--version <version>] [--local] [-
 ```
 </CodeBlock>
 
-### group `string`
+### group
 
-**Description:** Filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared in `generators.yml`.
+Use `--group` to filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared in `generators.yml`.
 
 ```bash
 $ fern generate --group internal
 ```
 
-### api `string`
+### api
 
-**Description:** If you have defined more than one API, specify the name with `--api <name>` for SDK generation.
+Use `--api` if you have defined more than one API, specify the name with `--api <name>` for SDK generation.
 
 ```bash
-$ fern generate --api core-api
+$ fern generate --api public-api
 ```
 
-### version `string`
+### version
 
-**Description:** Specify a version for SDKs and documentation. Adherance to [semantic versioning](https://semver.org/) is advised.
+Use `--version` to specify a version for SDKs and documentation. Adherance to [semantic versioning](https://semver.org/) is advised.
 
 ```bash
 $ fern generate --version
 2.1.1
 ```
 
-### local   `boolean`
+### local
 
-**Requirement**: [Docker Desktop](https://www.docker.com/products/docker-desktop/) must be installed and running on your machine.
-
-**Description**: Use the `--local` option to generate code locally. This downloads the Docker Image and runs it on your machine.
+Use the `--local` option to generate code locally. This downloads the Docker Image and runs it on your machine. 
+Note that running Docker locally supports outputting files, and not publishing to package managers.
 
 ```bash
 fern generate --local
 ```
 
-<Info>Running a Docker locally supports outputting files. It does not support publishing to package managers.</Info>
+<Warning> [Docker Desktop](https://www.docker.com/products/docker-desktop/) must be installed and running on your machine. </Warning>
 
-### keepDocker  `boolean`
+### keepDocker
 
-**Requirement**: Docker Desktop should be ready on your local machine.
-
-**Description**: Use the `--keepDocker` option to keep the Docker container running after the generation is complete. This is useful for debugging.
+Use the `--keepDocker` option to keep the Docker container running after the generation is complete. This is useful for debugging.
 
 ```bash
 fern generate --local --keepDocker
 ```
+
+<Warning> [Docker Desktop](https://www.docker.com/products/docker-desktop/) must be installed and running on your machine. </Warning>
 
 ## For Documentation
 
@@ -69,16 +68,17 @@ fern generate [--docs <instance-url>] [--preview]
 ```
 </CodeBlock>
 
-### instance `string`
+### instance
 
-**Description**: Use the `--instance` option to specify an instance URL from your `docs.yml` to generate documentation for.
+Use `--instance` to specify for which instance URL in your `docs.yml` to generate documentation.
 
 ```bash
 fern generate --docs --instance your-organization.docs.buildwithfern.com
 ```
 
-### preview `boolean`
-**Description**: Use the `preview` option along with the `--docs` flag to preview updates to your documentation before publishing changes to your production site. 
+### preview
+
+Use `--preview` to preview updates to your documentation before publishing changes to your production site. 
 
 ```bash
 fern generate --docs --preview

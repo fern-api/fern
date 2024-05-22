@@ -305,6 +305,8 @@ navigation:
             contents:
               - page: add
                 path: ./pages/cli/cli-commands/add.mdx
+              - page: api update
+                path: ./pages/cli/cli-commands/api-update.mdx
               - page: check
                 path: ./pages/cli/cli-commands/check.mdx
               - page: docs dev

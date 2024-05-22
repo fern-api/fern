@@ -3,7 +3,19 @@ title: fern mock
 description: The command "fern mock" starts a mock server for an API. 
 ---
 
-Use `fern mock` to start a mock server for an API.
+Use `fern mock` to start a mock server for your API. Fern will use your 
+API Definition to generate a mock server that will be used in the integration tests. 
+The mock server will assert that the SDK is making the correct requests.
+
+By default, the mock server will use the examples specified in your API Definition. 
+If no examples are specified, Fern will generate examples to the best of its ability.
+
+For more information on testing Fern SDKs, see [Integration Tests](/learn/sdks/features/integration-tests).
+
+<Note>
+Specifying examples in your API Definition is recommended to ensure so that you can control what data is used in the tests.
+</Note>
+
 ```bash
 fern mock
 ```
