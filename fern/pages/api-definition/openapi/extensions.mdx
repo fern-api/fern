@@ -509,29 +509,23 @@ components:
 
 Because of the number of tools that use OpenAPI, it may be more convenient to
 "overlay" your fern specific OpenAPI extensions onto your original definition. \
-In order to do this you can use the `x-fern-overrides-filepath` extension.
+In order to do this you can specify your overrides file in `generators.yml`.
 
 Below is an example of how someone can overlay the extensions `x-fern-sdk-method-name` and
 `x-fern-sdk-group-name` without polluting their original OpenAPI. The combined result is
 shown in the third tab.
 
 <CodeBlocks>
-    ```yaml title="openapi.yml" {5}
-    openapi: 3.0.0
-    info:
-      title: User API
-      version: 1.0.0
-    x-fern-overrides-filepath: overrides.yml
-    paths:
-      /users:
-        get:
-          summary: Get a list of users
-          description: Retrieve a list of users from the system.
-          responses:
-            '200':
-              description: Successful response
-            '500':
-              description: Internal Server Error
+    ```yaml title="generators.yml" {3}
+    api:
+      path: ./openapi/openapi.yaml
+      overrides: ./openapi/overrides.yaml
+    default-group: sdk
+    groups:
+      sdk:
+        generators:
+          - name: fernapi/fern-python-sdk
+            version: 2.2.0
     ```
 
     ```yaml title="overrides.yml"

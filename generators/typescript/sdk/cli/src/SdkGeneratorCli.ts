@@ -50,7 +50,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeApiReference: parsed?.includeApiReference ?? false,
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
-            allowExtraFields: parsed?.allowExtraFields ?? false
+            allowExtraFields: parsed?.allowExtraFields ?? false,
+            inlineFileProperties: parsed?.inlineFileProperties ?? false
         };
     }
 
@@ -113,6 +114,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeApiReference: customConfig.includeApiReference ?? false,
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
+                inlineFileProperties: customConfig.inlineFileProperties ?? false,
                 writeUnitTests: config.writeUnitTests,
                 executionEnvironment: this.exectuionEnvironment(config)
             }

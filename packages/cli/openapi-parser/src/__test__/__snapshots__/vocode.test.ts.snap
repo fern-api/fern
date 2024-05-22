@@ -380,6 +380,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -905,6 +906,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1415,6 +1417,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1531,6 +1534,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1926,6 +1930,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2012,6 +2017,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2340,6 +2346,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2464,6 +2471,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2963,6 +2971,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3113,6 +3122,7 @@ exports[`open api parser vocode parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3186,6 +3196,7 @@ exports[`open api parser vocode parse open api 1`] = `
   ],
   "schemas": {
     "ActionPage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3388,6 +3399,7 @@ exports[`open api parser vocode parse open api 1`] = `
       },
     },
     "Agent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3687,6 +3699,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "AgentPage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3783,6 +3796,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "AgentParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4153,6 +4167,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "AgentUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4661,6 +4676,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "AzureVoice": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4798,6 +4814,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "AzureVoiceParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4891,6 +4908,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "AzureVoiceUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5051,6 +5069,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "Call": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5339,6 +5358,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "CallPage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5492,6 +5512,7 @@ exports[`open api parser vocode parse open api 1`] = `
       ],
     },
     "CreateCallAgentParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5869,6 +5890,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "CreateCallRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5966,6 +5988,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "DTMFAction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6043,6 +6066,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "DTMFActionParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6076,6 +6100,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "DTMFActionUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6129,6 +6154,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "ElevenLabsVoice": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6288,6 +6314,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "ElevenLabsVoiceParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6403,6 +6430,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "ElevenLabsVoiceUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6612,6 +6640,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "EmptyActionConfig": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6622,6 +6651,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "EndConversationAction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6699,6 +6729,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "EndConversationActionParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6732,6 +6763,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "EndConversationActionUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -6899,6 +6931,7 @@ exports[`open api parser vocode parse open api 1`] = `
       ],
     },
     "HTTPValidationError": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7017,6 +7050,7 @@ exports[`open api parser vocode parse open api 1`] = `
       ],
     },
     "NormalizedAgent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7296,6 +7330,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "NormalizedCall": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7591,6 +7626,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "NormalizedPhoneNumber": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7743,6 +7779,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "PhoneNumber": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7888,6 +7925,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "PhoneNumberPage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7984,6 +8022,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "PineconeVectorDatabase": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8123,6 +8162,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "PineconeVectorDatabaseParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8218,6 +8258,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "PineconeVectorDatabaseUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8439,6 +8480,7 @@ exports[`open api parser vocode parse open api 1`] = `
       ],
     },
     "PlayHtVoice": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8560,6 +8602,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "PlayHtVoiceParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8637,6 +8680,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "PlayHtVoiceUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8795,6 +8839,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "RimeVoice": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8872,6 +8917,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "RimeVoiceParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8905,6 +8951,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "RimeVoiceUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8965,6 +9012,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "TransferCallAction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9035,6 +9083,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "TransferCallActionParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9061,6 +9110,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "TransferCallActionUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9114,6 +9164,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "TransferCallConfig": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9147,6 +9198,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "Undefined": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9157,6 +9209,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "UpdateNumberRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9274,6 +9327,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "Usage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9368,6 +9422,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "ValidationError": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9480,6 +9535,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "VoicePage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9706,6 +9762,7 @@ exports[`open api parser vocode parse open api 1`] = `
       },
     },
     "Webhook": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9827,6 +9884,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "WebhookPage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9923,6 +9981,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "WebhookParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10000,6 +10059,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "type": "object",
     },
     "WebhookUpdateParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

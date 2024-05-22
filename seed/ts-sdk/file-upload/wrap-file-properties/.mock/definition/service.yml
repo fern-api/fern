@@ -1,0 +1,54 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: ""
+      method: POST
+      request:
+        name: MyRequest
+        body:
+          properties:
+            maybeString: optional<string>
+            integer: integer
+            file: file
+            fileList: list<file>
+            maybeFile: optional<file>
+            maybeFileList: optional<list<file>>
+            maybeInteger: optional<integer>
+            optionalListOfStrings: optional<list<string>>
+            listOfObjects: list<MyObject>
+    
+    justFile:
+      path: /just-file
+      method: POST
+      request:
+        name: JustFileRequet
+        body:
+          properties:
+            file: file
+    
+    justFileWithQueryParams:
+      path: /just-file-with-query-params
+      method: POST
+      request:
+        name: JustFileWithQueryParamsRequet
+        query-parameters:
+          maybeString: optional<string>
+          integer: integer
+          maybeInteger: optional<integer>
+          listOfStrings:
+            type: string
+            allow-multiple: true
+          optionalListOfStrings:
+            type: optional<string>
+            allow-multiple: true
+        body:
+          properties:
+            file: file
+
+types:
+
+  MyObject:
+    properties:
+      foo: string

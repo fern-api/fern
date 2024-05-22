@@ -1,3 +1,5 @@
+using SeedSingleUrlEnvironmentDefault.Core;
+
 namespace SeedSingleUrlEnvironmentDefault;
 
 public partial class ClientOptions
@@ -5,7 +7,7 @@ public partial class ClientOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string? BaseUrl { get; init; }
+    public string BaseUrl { get; init; } = Environments.PRODUCTION;
 
     /// <summary>
     /// The http client used to make requests.

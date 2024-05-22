@@ -273,6 +273,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -870,9 +871,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1178,9 +1181,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1686,9 +1691,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -3644,6 +3651,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -4249,9 +4257,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -4812,9 +4822,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5358,9 +5370,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5725,6 +5739,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -5968,6 +5983,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -6227,6 +6243,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -6680,9 +6697,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -7077,9 +7096,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -7695,9 +7716,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -8963,6 +8986,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -9188,6 +9212,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -9430,6 +9455,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -9595,6 +9621,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -9826,6 +9853,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -9978,6 +10006,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -10209,6 +10238,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -10258,6 +10288,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -10307,6 +10338,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -12041,6 +12073,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -12241,6 +12274,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -12441,6 +12475,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -12677,6 +12712,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter for events to be included in the bulk retry, use query parameters of [Event](#events)",
@@ -13085,6 +13121,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -13318,6 +13355,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "primitive",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -13569,6 +13607,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "primitive",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -13737,6 +13776,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -13978,6 +14018,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "primitive",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -14148,6 +14189,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "primitive",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -14384,6 +14426,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -14435,6 +14478,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -14486,6 +14530,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -15390,9 +15435,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -15413,6 +15460,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Filter properties for the events to be included in the bulk retry",
@@ -15821,6 +15869,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -16054,6 +16103,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   "type": "primitive",
                                 },
                                 {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -16305,6 +16355,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   "type": "primitive",
                                 },
                                 {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -16473,6 +16524,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -16714,6 +16766,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   "type": "primitive",
                                 },
                                 {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -16884,6 +16937,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   "type": "primitive",
                                 },
                                 {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -17120,6 +17174,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -17171,6 +17226,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -17222,6 +17278,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -17453,6 +17510,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter properties for the events to be included in the bulk retry",
@@ -17861,6 +17919,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -18094,6 +18153,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "primitive",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -18345,6 +18405,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "primitive",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -18513,6 +18574,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -18754,6 +18816,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "primitive",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -18924,6 +18987,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "primitive",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -19160,6 +19224,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -19211,6 +19276,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -19262,6 +19328,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -20102,6 +20169,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -20302,6 +20370,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -20502,6 +20571,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -20738,6 +20808,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter by the bulk retry ignored event query object",
@@ -21385,9 +21456,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -21408,6 +21481,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Filter by the bulk retry ignored event query object",
@@ -21694,6 +21768,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter by the bulk retry ignored event query object",
@@ -22812,9 +22887,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -23352,9 +23429,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -24509,6 +24588,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter by aggregation keys",
@@ -24722,6 +24802,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -24922,6 +25003,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -25122,6 +25204,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -25322,6 +25405,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -26352,6 +26436,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter by aggregation keys",
@@ -26565,6 +26650,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -26765,6 +26851,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -26965,6 +27052,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -27165,6 +27253,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -27816,9 +27905,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -28356,6 +28447,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "reference",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -28556,6 +28648,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -28804,6 +28897,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -29134,6 +29228,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -29183,6 +29278,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -29232,6 +29328,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -29303,6 +29400,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -29468,6 +29566,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -30754,9 +30853,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -31502,6 +31603,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -31727,6 +31829,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -31969,6 +32072,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -32134,6 +32238,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -32365,6 +32470,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -32517,6 +32623,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -32748,6 +32855,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -32797,6 +32905,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -32846,6 +32955,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -34037,6 +34147,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -34237,6 +34348,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -34437,6 +34549,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -34695,6 +34808,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
@@ -34847,6 +34961,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "reference",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -35050,6 +35165,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -35300,6 +35416,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -35636,6 +35753,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -35687,6 +35805,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -35738,6 +35857,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -35813,6 +35933,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -35980,6 +36101,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -36931,9 +37053,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -36954,6 +37078,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
@@ -37106,6 +37231,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   "type": "reference",
                                 },
                                 {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -37309,6 +37435,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -37559,6 +37686,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -37895,6 +38023,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -37946,6 +38075,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -37997,6 +38127,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -38072,6 +38203,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -38239,6 +38371,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -38562,6 +38695,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
@@ -38714,6 +38848,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "type": "reference",
                             },
                             {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -38917,6 +39052,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -39167,6 +39303,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -39503,6 +39640,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -39554,6 +39692,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -39605,6 +39744,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -39680,6 +39820,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -39847,6 +39988,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "primitive",
                           },
                           {
+                            "additionalProperties": false,
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": null,
@@ -40841,6 +40983,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -41324,6 +41467,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -41858,9 +42002,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -42095,9 +42241,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -42524,9 +42672,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -43279,6 +43429,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -43522,6 +43673,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -43727,6 +43879,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -44172,9 +44325,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -44391,9 +44546,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -44837,9 +44994,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -45370,9 +45529,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -46193,9 +46354,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -46499,9 +46662,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -47011,9 +47176,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -47321,9 +47488,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -47344,6 +47513,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Key-value environment variables to be passed to the transformation",
@@ -47455,6 +47625,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Request input to use for the transformation execution",
@@ -47526,6 +47697,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "nameOverride": null,
                             "schemas": [
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -47641,6 +47813,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
+                          "additionalProperties": false,
                           "allOf": [],
                           "allOfPropertyConflicts": [],
                           "description": "JSON representation of the query params",
@@ -48284,6 +48457,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -49374,6 +49548,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -49739,6 +49914,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -49966,6 +50142,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                   },
                   {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -50726,9 +50903,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -50843,6 +51022,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Destination input object",
@@ -51082,6 +51262,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Source input object",
@@ -51129,6 +51310,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Ruleset input object",
@@ -51659,9 +51841,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -51776,6 +51960,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Destination input object",
@@ -52015,6 +52200,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Source input object",
@@ -52062,6 +52248,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Ruleset input object",
@@ -53010,9 +53197,11 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -53062,6 +53251,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Ruleset input object",
@@ -54861,6 +55051,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
   ],
   "schemas": {
     "APIErrorResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Error response model",
@@ -54948,6 +55139,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -54964,6 +55156,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "APIKeyIntegrationConfigs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55019,6 +55212,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "AlertRule": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55078,6 +55272,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "AttachedIntegrationToSource": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55552,6 +55747,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "BasicAuthIntegrationConfigs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55607,6 +55803,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "BatchOperation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56103,6 +56300,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "BatchOperationPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56195,6 +56393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "BatchOperationPlan": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56311,6 +56510,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "Bookmark": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56555,6 +56755,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "BookmarkPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56647,6 +56848,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "Connection": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57000,6 +57202,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "primitive",
             },
             {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -57015,6 +57218,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "ConnectionPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57107,6 +57311,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "ConsoleLine": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57216,6 +57421,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "DelayRule": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57250,6 +57456,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "DeletedBookmarkResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57283,6 +57490,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "DeletedIntegration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57316,6 +57524,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "DeletedIssueTriggerResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57349,6 +57558,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "DeliveryIssue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Delivery issue",
@@ -57678,6 +57888,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "DeliveryIssueAggregationKeys": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Keys used as the aggregation keys a 'delivery' type issue",
@@ -57770,6 +57981,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "Delivery issue data",
@@ -57826,6 +58038,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "DeliveryIssueReference": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Reference to the event and attempt an issue is being created for.",
@@ -57881,6 +58094,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "DeliveryIssueWithData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Delivery issue",
@@ -58232,6 +58446,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "Destination": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Associated [Destination](#destination-object) object",
@@ -58536,6 +58751,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "DestinationPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58680,6 +58896,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "DetachedIntegrationFromSource": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58690,6 +58907,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "Event": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58893,6 +59111,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -59007,6 +59226,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -59156,6 +59376,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -59519,6 +59740,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": null,
@@ -59729,6 +59951,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "nameOverride": null,
                 "type": "nullable",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Response body from the destination",
@@ -60128,6 +60351,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "EventAttemptPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60220,6 +60444,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "EventPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60381,6 +60606,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "FilterRule": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60594,6 +60820,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "HMACIntegrationConfigs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60704,6 +60931,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "HandledHMACConfigs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60737,6 +60965,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "IgnoredEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60991,6 +61220,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "IgnoredEventPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61083,6 +61313,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "Integration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61364,6 +61595,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "IntegrationPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61771,6 +62003,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "IssueCount": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61862,6 +62095,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "IssueTrigger": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62115,6 +62349,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "IssueTriggerBackpressureConfigs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Configurations for a 'Backpressure' issue trigger",
@@ -62219,6 +62454,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "Notification channels object for the specific channel type",
@@ -62297,6 +62533,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "IssueTriggerDeliveryConfigs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Configurations for a 'delivery' issue trigger",
@@ -62379,6 +62616,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "IssueTriggerEmailChannel": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Email channel for an issue trigger",
@@ -62389,6 +62627,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "IssueTriggerIntegrationChannel": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Integration channel for an issue trigger",
@@ -62399,6 +62638,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "IssueTriggerPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62527,6 +62767,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "IssueTriggerSlackChannel": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Slack channel for an issue trigger",
@@ -62593,6 +62834,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "IssueTriggerTransformationConfigs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Configurations for a 'Transformation' issue trigger",
@@ -62750,6 +62992,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "IssueWithDataPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62899,6 +63142,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "RawBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62932,6 +63176,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "Request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -63411,6 +63656,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -63525,6 +63771,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -63674,6 +63921,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "primitive",
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -63777,6 +64025,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "RequestPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -63986,6 +64235,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "RetriedEvent": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64027,6 +64277,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "RetryRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64089,6 +64340,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "RetryRule": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64282,6 +64534,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "Associated [Ruleset](#ruleset-object) object",
@@ -64464,6 +64717,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "RulesetPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64556,6 +64810,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "SeekPagination": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64767,6 +65022,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "ShopifyIntegrationConfigs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64999,6 +65255,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": null,
@@ -65113,6 +65370,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         },
                       },
                       {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -65262,6 +65520,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "primitive",
                       },
                       {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -65326,6 +65585,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "Source": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Associated [Source](#source-object) object",
@@ -65476,6 +65736,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Integration object",
@@ -65639,6 +65900,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "SourcePaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65731,6 +65993,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "ToggleWebhookNotifications": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65874,6 +66137,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "TransformFull": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65948,6 +66212,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "You can optionally define a new transformation while creating a transform rule",
@@ -66072,6 +66337,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "TransformReference": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66151,6 +66417,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "Transformation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66420,6 +66687,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "TransformationExecution": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66783,6 +67051,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
     "TransformationExecutionPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66875,6 +67144,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "TransformationExecutorOutput": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67024,6 +67294,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -67160,6 +67431,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "nameOverride": null,
                                 "type": "nullable",
                                 "value": {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -67241,6 +67513,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -67306,6 +67579,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                               },
                               {
+                                "additionalProperties": false,
                                 "allOf": [],
                                 "allOfPropertyConflicts": [],
                                 "description": null,
@@ -67368,6 +67642,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "TransformationFailedMeta": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67401,6 +67676,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "TransformationIssue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Transformation issue",
@@ -67730,6 +68006,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "TransformationIssueAggregationKeys": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Keys used as the aggregation keys a 'transformation' type issue",
@@ -67791,6 +68068,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "Transformation issue data",
@@ -67840,6 +68118,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
     },
     "TransformationIssueReference": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Reference to the event request transformation an issue is being created for.",
@@ -67909,6 +68188,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "TransformationIssueWithData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Transformation issue",
@@ -68260,6 +68540,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "object",
     },
     "TransformationPaginatedResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

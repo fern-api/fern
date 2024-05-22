@@ -253,6 +253,7 @@ exports[`open api parser hume parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -553,6 +554,7 @@ exports[`open api parser hume parse open api 1`] = `
   ],
   "schemas": {
     "BaseRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1056,6 +1058,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       ],
     },
     "BoundingBox": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A bounding box around a face.",
@@ -1159,6 +1162,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "BurstPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1229,6 +1233,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Completed": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1355,6 +1360,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "DescriptionsScore": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1443,6 +1449,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       ],
     },
     "EmotionScore": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1524,6 +1531,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "Error": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1579,6 +1587,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Face": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1772,6 +1781,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "FacePrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1947,6 +1957,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "FacemeshPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -1980,6 +1991,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "FacsScore": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2035,6 +2047,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Failed": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2137,6 +2150,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "File": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2285,6 +2299,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       ],
     },
     "GroupedPredictions_BurstPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2340,6 +2355,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "GroupedPredictions_FacePrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2395,6 +2411,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "GroupedPredictions_FacemeshPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2450,6 +2467,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "GroupedPredictions_LanguagePrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2505,6 +2523,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "GroupedPredictions_NerPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2560,6 +2579,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "GroupedPredictions_ProsodyPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2615,6 +2635,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "InProgress": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2672,6 +2693,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "JobId": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2705,6 +2727,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Job_Request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2790,6 +2813,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Language": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -2891,6 +2915,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "LanguagePrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3103,6 +3128,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Models": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3246,6 +3272,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "ModelsPredictions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3389,6 +3416,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Ner": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3424,6 +3452,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "NerPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3692,6 +3721,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       },
     },
     "PositionInterval": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
@@ -3749,6 +3779,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Prediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3797,6 +3828,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Predictions_optional_Null_BurstPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3852,6 +3884,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Predictions_optional_Null_FacePrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3907,6 +3940,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Predictions_optional_Null_FacemeshPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3962,6 +3996,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Predictions_optional_TranscriptionMetadata_LanguagePrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4017,6 +4052,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Predictions_optional_TranscriptionMetadata_NerPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4072,6 +4108,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Predictions_optional_TranscriptionMetadata_ProsodyPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4127,6 +4164,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Prosody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
@@ -4206,6 +4244,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "ProsodyPrediction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4343,6 +4382,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Queued": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4377,6 +4417,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "type": "object",
     },
     "Request": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4545,6 +4586,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Results": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4600,6 +4642,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "SentimentScore": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4730,6 +4773,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "SourceResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4807,6 +4851,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Source_File": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -4825,6 +4870,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Source_Url": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -4889,6 +4935,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "State_Completed": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -4907,6 +4954,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "State_Failed": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -4925,6 +4973,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "State_InProgress": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -4943,6 +4992,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "State_Queued": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -5018,6 +5068,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       ],
     },
     "TimeInterval": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A time range with a beginning and end, measured in seconds.",
@@ -5075,6 +5126,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "ToxicityScore": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5130,6 +5182,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Transcription": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5163,6 +5216,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "TranscriptionMetadata": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Transcription metadata for your media file.",
@@ -5219,6 +5273,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "type": "object",
     },
     "Url": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -5285,6 +5340,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       ],
     },
     "Window": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

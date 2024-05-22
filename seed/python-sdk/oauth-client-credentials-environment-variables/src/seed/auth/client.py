@@ -58,12 +58,7 @@ class AuthClient:
             scope="string",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {
-            "client_id": client_id,
-            "client_secret": client_secret,
-            "audience": "https://api.example.com",
-            "grant_type": "client_credentials",
-        }
+        _request: typing.Dict[str, typing.Any] = {"client_id": client_id, "client_secret": client_secret}
         if scope is not OMIT:
             _request["scope"] = scope
         _response = self._client_wrapper.httpx_client.request(
@@ -147,8 +142,6 @@ class AuthClient:
             "client_id": client_id,
             "client_secret": client_secret,
             "refresh_token": refresh_token,
-            "audience": "https://api.example.com",
-            "grant_type": "refresh_token",
         }
         if scope is not OMIT:
             _request["scope"] = scope
@@ -230,12 +223,7 @@ class AsyncAuthClient:
             scope="string",
         )
         """
-        _request: typing.Dict[str, typing.Any] = {
-            "client_id": client_id,
-            "client_secret": client_secret,
-            "audience": "https://api.example.com",
-            "grant_type": "client_credentials",
-        }
+        _request: typing.Dict[str, typing.Any] = {"client_id": client_id, "client_secret": client_secret}
         if scope is not OMIT:
             _request["scope"] = scope
         _response = await self._client_wrapper.httpx_client.request(
@@ -319,8 +307,6 @@ class AsyncAuthClient:
             "client_id": client_id,
             "client_secret": client_secret,
             "refresh_token": refresh_token,
-            "audience": "https://api.example.com",
-            "grant_type": "refresh_token",
         }
         if scope is not OMIT:
             _request["scope"] = scope

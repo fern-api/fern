@@ -11,7 +11,12 @@ import (
 type ClientOptions struct {
 	Value string `json:"value" url:"value"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (c *ClientOptions) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
 }
 
 func (c *ClientOptions) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (c *ClientOptions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = ClientOptions(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+
 	c._rawJSON = json.RawMessage(data)
 	return nil
 }

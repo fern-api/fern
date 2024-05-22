@@ -150,7 +150,6 @@ class ServiceClient:
             "title": title,
             "from": from_,
             "rating": rating,
-            "type": "movie",
             "tag": tag,
             "metadata": metadata,
         }
@@ -459,7 +458,6 @@ class AsyncServiceClient:
             "title": title,
             "from": from_,
             "rating": rating,
-            "type": "movie",
             "tag": tag,
             "metadata": metadata,
         }
