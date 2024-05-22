@@ -3602,6 +3602,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "ListKeyMetadata": "map<string, unknown>",
       "ListMetadata": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "checksum": "optional<string>",
           "description": {
@@ -8054,6 +8055,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "ListKeyMetadata": "map<string, unknown>",
       "ListMetadata": {
         "docs": undefined,
+        "extra-properties": true,
         "properties": {
           "checksum": "optional<string>",
           "description": {

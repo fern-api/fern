@@ -214,11 +214,11 @@ class SnippetTestFactory:
         for pathpart in fern_filepath.package_path:
             directories += (
                 Filepath.DirectoryFilepathPart(
-                    module_name=pathpart.snake_case.unsafe_name,
+                    module_name=pathpart.snake_case.safe_name,
                 ),
             )
 
-        module_name = fern_filepath.file.snake_case.unsafe_name if fern_filepath.file is not None else "root"
+        module_name = fern_filepath.file.snake_case.safe_name if fern_filepath.file is not None else "root"
         return Filepath(
             directories=directories,
             file=Filepath.FilepathPart(module_name=f"test_{module_name}"),
@@ -386,7 +386,7 @@ class SnippetTestFactory:
             components += [fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([component.snake_case.unsafe_name for component in components]) + "."
+        return ".".join([component.snake_case.safe_name for component in components]) + "."
 
     def _generate_service_test(self, service: ir_types.HttpService, snippet_writer: SnippetWriter) -> None:
         fern_filepath = service.name.fern_filepath
@@ -415,7 +415,7 @@ class SnippetTestFactory:
                 )
             ):
                 continue
-            endpoint_name = endpoint.name.get_as_name().snake_case.unsafe_name
+            endpoint_name = endpoint.name.get_as_name().snake_case.safe_name
 
             # TODO: We should make the mock server return the specified error response
             # if we want to test that as well, then we can test each example, but that seems less pressing.

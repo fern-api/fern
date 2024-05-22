@@ -18,6 +18,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -97,6 +98,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -154,6 +156,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -211,6 +214,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -507,6 +511,7 @@ exports[`open api parser dopt parse open api 1`] = `
         "description": "Default Response",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -606,6 +611,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "state",
               "nameOverride": null,
               "schema": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -846,6 +852,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "nameOverride": null,
                     "schemas": {
                       "boolean": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -903,6 +910,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "type": "object",
                       },
                       "number": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -966,6 +974,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "type": "object",
                       },
                       "string": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -1057,6 +1066,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -1136,6 +1146,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -1193,6 +1204,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -1250,6 +1262,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -1451,6 +1464,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -1530,6 +1544,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -1587,6 +1602,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -1644,6 +1660,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -2054,6 +2071,7 @@ exports[`open api parser dopt parse open api 1`] = `
         "description": "Default Response",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -2171,6 +2189,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "state",
               "nameOverride": null,
               "schema": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2252,6 +2271,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "nameOverride": null,
                   "type": "array",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -2351,6 +2371,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "state",
                         "nameOverride": null,
                         "schema": {
+                          "additionalProperties": false,
                           "allOf": [],
                           "allOfPropertyConflicts": [],
                           "description": null,
@@ -2591,6 +2612,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "nameOverride": null,
                               "schemas": {
                                 "boolean": {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -2648,6 +2670,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "type": "object",
                                 },
                                 "number": {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -2711,6 +2734,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "type": "object",
                                 },
                                 "string": {
+                                  "additionalProperties": false,
                                   "allOf": [],
                                   "allOfPropertyConflicts": [],
                                   "description": null,
@@ -2808,6 +2832,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -2887,6 +2912,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -2944,6 +2970,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -3001,6 +3028,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -3283,6 +3311,7 @@ exports[`open api parser dopt parse open api 1`] = `
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "BadRequestErrorResponseBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3356,6 +3385,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "BlockTransitionQueryString": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3470,6 +3500,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "BlockTransitionRequestParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3503,6 +3534,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "FlowIntentQueryString": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3588,6 +3620,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "FlowIntentRequestParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3685,6 +3718,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "GetBlockQueryString": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3741,6 +3775,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "GetBlockRequestParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3774,6 +3809,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "GetFlowQueryString": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3884,6 +3920,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "GetFlowRequestParams": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3917,6 +3954,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "HealthCheckResponseBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -3973,6 +4011,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "InternalServerErrorResponseBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4024,6 +4063,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "NotFoundErrorResponseBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4075,6 +4115,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "TimeoutErrorResponseBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -4126,6 +4167,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "type": "object",
     },
     "UnauthorizedErrorResponseBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

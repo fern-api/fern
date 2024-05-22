@@ -464,6 +464,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -908,6 +909,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2212,6 +2214,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3071,6 +3074,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3975,6 +3979,7 @@ You will be assigned as owner of the new team automatically.",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4404,6 +4409,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6129,6 +6135,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6300,6 +6307,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6767,6 +6775,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7247,6 +7256,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7758,6 +7768,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7915,6 +7926,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8576,6 +8588,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -14892,6 +14905,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -15805,6 +15819,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -16439,6 +16454,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -16906,6 +16922,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -17387,6 +17404,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -17854,6 +17872,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -18321,6 +18340,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -19696,6 +19716,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -19936,6 +19957,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -20881,6 +20903,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -22543,6 +22566,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -22959,6 +22983,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -25838,6 +25863,7 @@ You will be assigned as owner of the new team automatically.",
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -26300,6 +26326,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -27321,6 +27348,7 @@ You will be assigned as owner of the new team automatically.",
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -27824,6 +27852,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -28547,6 +28576,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -30121,6 +30151,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -30392,6 +30423,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -30899,6 +30931,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -32999,6 +33032,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -33209,6 +33243,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -34709,6 +34744,7 @@ You will be assigned as owner of the new team automatically.",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -36162,6 +36198,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -36411,6 +36448,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -36797,6 +36835,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -37153,6 +37192,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -38623,6 +38663,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -39891,6 +39932,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -40305,6 +40347,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -41149,6 +41192,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -41598,6 +41642,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -42122,6 +42167,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -42424,6 +42470,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -43230,6 +43277,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -44946,6 +44994,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -45239,6 +45288,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -46030,6 +46080,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -46478,6 +46529,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -47276,6 +47328,7 @@ You will be assigned as owner of the new app automatically.",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -48116,6 +48169,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -48532,6 +48586,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -49070,6 +49125,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -49615,6 +49671,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -49951,6 +50008,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -50473,6 +50531,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "AddFieldDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50557,6 +50616,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AddLanguageDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50590,6 +50650,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AddRoleDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50623,6 +50684,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AddWorkflowDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50656,6 +50718,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AlgoliaRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50777,6 +50840,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AllContentsByPostDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51020,6 +51084,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AnnotateAssetDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51224,6 +51289,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AppDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -51584,6 +51650,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AppLanguageDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -51710,6 +51777,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AppLanguagesDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -51751,6 +51819,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AppSettingsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -51871,6 +51940,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ArrayFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51999,6 +52069,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AssetChangedRuleTriggerDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -52046,6 +52117,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AssetDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -52659,6 +52731,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AssetFolderDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -52812,6 +52885,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "AssetFoldersDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -52898,6 +52972,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AssetMeta": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -52976,6 +53051,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "AssetScriptsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -53327,6 +53403,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "AssetsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -53391,6 +53468,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AssetsFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54057,6 +54135,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AssignContributorDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54150,6 +54229,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "AzureQueueRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54227,6 +54307,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "BackupJobDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -54377,6 +54458,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "BackupJobsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -54451,6 +54533,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "BooleanFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54547,6 +54630,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "BulkResultDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54720,6 +54804,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "BulkUpdateAssetsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54839,6 +54924,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "BulkUpdateAssetsJobDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55270,6 +55356,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "BulkUpdateContentsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55447,6 +55534,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "BulkUpdateContentsJobDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55771,6 +55859,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CallsUsageDtoDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56009,6 +56098,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CallsUsagePerDateDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56111,6 +56201,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ChangeCategoryDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56158,6 +56249,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ChangePlanDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56191,6 +56283,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ChangeStatusDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56279,6 +56372,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ClientDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -56463,6 +56557,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ClientsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -56504,6 +56599,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CommentDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56634,6 +56730,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CommentRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56689,6 +56786,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CommentRuleTriggerDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56736,6 +56834,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CommentsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56885,6 +56984,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ComponentFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56939,6 +57039,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ComponentsFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57110,6 +57211,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ConfigureFieldRulesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57193,6 +57295,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "ConfigureUIFieldsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57290,6 +57393,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ContentChangedRuleTriggerDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57419,6 +57523,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "ContentDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -57942,6 +58047,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "ContentsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -58028,6 +58134,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ContributorDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -58149,6 +58256,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ContributorsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -58235,6 +58343,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ContributorsMetadata": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58268,6 +58377,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CreateAppDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58337,6 +58447,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CreateAssetFolderDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58399,6 +58510,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CreateClientDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58432,6 +58544,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CreateContentRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58526,6 +58639,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CreateRuleDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58567,6 +58681,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CreateSchemaDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -58640,6 +58755,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CreateTeamDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58673,6 +58789,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CreateUserDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58779,6 +58896,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "CurrentStorageDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58902,6 +59020,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "DateTimeFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -59101,6 +59220,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "DiscourseRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -59296,6 +59416,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "EditorDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -59351,6 +59472,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ElasticSearchRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -59494,6 +59616,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "EmailRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -59682,6 +59805,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ErrorDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -59889,6 +60013,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "EventConsumerDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -60059,6 +60184,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "EventConsumersDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -60136,6 +60262,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "FastlyRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60191,6 +60318,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "FeatureDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60246,6 +60374,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "FeaturesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60302,6 +60431,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "FieldDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -60825,6 +60955,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "FieldRuleDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60920,6 +61051,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "GeolocationFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -60946,6 +61078,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "HistoryEventDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61190,6 +61323,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "ImportContentsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61352,6 +61486,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "JsonFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61399,6 +61534,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "LanguageDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61675,6 +61811,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "LogDownloadDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61722,6 +61859,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ManualRuleTriggerDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61732,6 +61870,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "MediumRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61892,6 +62031,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "MoveAssetDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61932,6 +62072,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "MoveAssetFolderDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -61972,6 +62113,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "NestedFieldDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -62102,6 +62244,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "NotificationRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62258,6 +62401,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "NumberFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62495,6 +62639,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "OpenSearchRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62638,6 +62783,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "PatternDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62729,6 +62875,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "PlanChangedDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -62776,6 +62923,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "PlanDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -63089,6 +63237,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "PlansDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -63324,6 +63473,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "PrerenderRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -63401,6 +63551,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "QueryDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -63546,6 +63697,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "QueryJsonDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -63809,6 +63961,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "ReferencesFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64068,6 +64221,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ReferralInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64145,6 +64299,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RenameAssetFolderDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64178,6 +64333,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RenameTagDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64211,6 +64367,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ReorderFieldsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64345,6 +64502,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "Resource": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64392,6 +64550,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ResourceLink": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64483,6 +64642,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ResourcesDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -64501,6 +64661,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RestoreJobDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64626,6 +64787,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RestoreRequestDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -64695,6 +64857,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RoleDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -64861,6 +65024,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RolesDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -65060,6 +65224,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "RuleDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -65362,6 +65527,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RuleElementDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65583,6 +65749,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RuleElementPropertyDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -65766,6 +65933,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RuleEventDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -65988,6 +66156,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "RuleEventsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -66357,6 +66526,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "RulesDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -66434,6 +66604,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ScheduleJobDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66550,6 +66721,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SchemaChangedRuleTriggerDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66597,6 +66769,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SchemaCondition": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -66666,6 +66839,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SchemaDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -67090,6 +67264,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SchemaPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67341,6 +67516,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SchemaScriptsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67613,6 +67789,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "SchemasDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -67654,6 +67831,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "ScriptRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67687,6 +67865,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SearchResultDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -67860,6 +68039,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "SignalRRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -67998,6 +68178,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SimulatedRuleEventDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68236,6 +68417,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SimulatedRuleEventsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -68441,6 +68623,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "SlackRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68496,6 +68679,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SortNode": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68570,6 +68754,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "StatusInfoDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68625,6 +68810,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "StorageUsagePerDateDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -68878,6 +69064,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "StringFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69461,6 +69648,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "SynchronizeSchemaDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -69559,6 +69747,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "TagsFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -69784,6 +69973,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "TeamDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -69940,6 +70130,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "TemplateDetailsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -69981,6 +70172,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "TemplateDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -70083,6 +70275,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "TemplatesDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -70124,6 +70317,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "TransferToTeamDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70171,6 +70365,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "TranslateDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70255,6 +70450,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "TranslationDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70398,6 +70594,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "TweetRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70475,6 +70672,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "TypesenseRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70607,6 +70805,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
     },
     "UIFieldPropertiesDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70633,6 +70832,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UISettingsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70678,6 +70878,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateAppDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70761,6 +70962,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateAppSettingsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -70864,6 +71066,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateAssetScriptsDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71127,6 +71330,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateClientDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71315,6 +71519,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateFieldDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71341,6 +71546,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateLanguageDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71450,6 +71656,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateRoleDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71530,6 +71737,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateRuleDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71652,6 +71860,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateSchemaDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71903,6 +72112,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateSettingDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71926,6 +72136,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateTeamDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -71959,6 +72170,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateUserDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72079,6 +72291,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpdateWorkflowDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72227,6 +72440,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpsertCommentDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72296,6 +72510,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpsertSchemaDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72626,6 +72841,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpsertSchemaFieldDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72797,6 +73013,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UpsertSchemaNestedFieldDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72896,6 +73113,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UsageRuleTriggerDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -72967,6 +73185,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UserDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -73098,6 +73317,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UserProperty": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73153,6 +73373,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "UsersDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -73286,6 +73507,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
     },
     "WebhookRuleActionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73422,6 +73644,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "WorkflowDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -73621,6 +73844,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "WorkflowStepDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73838,6 +74062,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "WorkflowTransitionDto": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -73928,6 +74153,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "type": "object",
     },
     "WorkflowsDto": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,

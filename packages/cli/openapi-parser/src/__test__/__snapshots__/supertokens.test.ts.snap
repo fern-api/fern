@@ -231,9 +231,11 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -344,6 +346,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "DEVICE_ALREADY_EXISTS_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -354,6 +357,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -617,9 +621,11 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -706,6 +712,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "DEVICE_ALREADY_EXISTS_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -716,6 +723,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -726,6 +734,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "TOTP_NOT_ENABLED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -736,6 +745,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "UNKNOWN_DEVICE_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -1029,6 +1039,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -1055,6 +1066,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "nameOverride": null,
                         "type": "array",
                         "value": {
+                          "additionalProperties": false,
                           "allOf": [],
                           "allOfPropertyConflicts": [],
                           "description": null,
@@ -1185,6 +1197,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "TOTP_NOT_ENABLED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -1418,9 +1431,11 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1485,6 +1500,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -1520,6 +1536,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "TOTP_NOT_ENABLED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -1753,9 +1770,11 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1837,6 +1856,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "INVALID_TOTP_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -1847,6 +1867,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "LIMIT_REACHED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -1888,6 +1909,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -1898,6 +1920,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "TOTP_NOT_ENABLED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2138,9 +2161,11 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -2227,6 +2252,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "INVALID_TOTP_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2237,6 +2263,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "LIMIT_REACHED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2278,6 +2305,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2313,6 +2341,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "TOTP_NOT_ENABLED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2323,6 +2352,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "UNKNOWN_DEVICE_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2656,6 +2686,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2733,6 +2764,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "UNKNOWN_MAPPING_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -2959,9 +2991,11 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -3079,6 +3113,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -3089,6 +3124,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "UNKNOWN_SUPERTOKENS_USER_ID_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -3099,6 +3135,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "USER_ID_MAPPING_ALREADY_EXISTS_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -3371,9 +3408,11 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -3489,6 +3528,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         "description": "Indicates success with the status property",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -3751,9 +3791,11 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -3884,6 +3926,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -3894,6 +3937,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               "UNKNOWN_MAPPING_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4157,6 +4201,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4168,6 +4213,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4209,6 +4255,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4283,6 +4330,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4362,6 +4410,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4480,6 +4529,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4772,6 +4822,7 @@ Passing the optional deviceId signifies a resend code flow.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4783,6 +4834,7 @@ Passing the optional deviceId signifies a resend code flow.
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4831,6 +4883,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4879,6 +4932,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -4945,6 +4999,7 @@ Passing the optional deviceId signifies a resend code flow.
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -5132,6 +5187,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -5396,9 +5452,11 @@ Passing the optional deviceId signifies a resend code flow.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5431,6 +5489,7 @@ Passing the optional deviceId signifies a resend code flow.
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5848,6 +5907,7 @@ Passing the optional deviceId signifies a resend code flow.
         "description": "List of all active passwordless codes of the user",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5896,6 +5956,7 @@ Passing the optional deviceId signifies a resend code flow.
                   "nameOverride": null,
                   "type": "array",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -6018,6 +6079,7 @@ Passing the optional deviceId signifies a resend code flow.
                             "nameOverride": null,
                             "type": "array",
                             "value": {
+                              "additionalProperties": false,
                               "allOf": [],
                               "allOfPropertyConflicts": [],
                               "description": null,
@@ -6309,6 +6371,7 @@ Passing the optional deviceId signifies a resend code flow.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6320,6 +6383,7 @@ Passing the optional deviceId signifies a resend code flow.
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -6346,6 +6410,7 @@ Passing the optional deviceId signifies a resend code flow.
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -6382,6 +6447,7 @@ Passing the optional deviceId signifies a resend code flow.
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -6752,6 +6818,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -6807,6 +6874,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -7081,9 +7149,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -7160,6 +7230,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         "description": "update user's information",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -7465,9 +7536,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -7539,6 +7612,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -7807,9 +7881,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -7881,6 +7957,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "nameOverride": null,
             "schemas": {
               "EMAIL_ALREADY_EXISTS_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -7891,6 +7968,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -8220,6 +8298,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -8275,6 +8354,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -8528,9 +8608,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -8614,6 +8696,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         "description": "update user's information",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -8888,9 +8971,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -8940,6 +9025,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -9320,6 +9406,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         "description": "get user's information",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -9608,9 +9695,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -9714,6 +9803,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -9747,6 +9837,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "type": "object",
               },
               "RESET_PASSWORD_INVALID_TOKEN_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -9964,6 +10055,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         "description": "Get number of users",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -10254,9 +10346,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -10384,6 +10478,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         "description": "import user response",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -10709,9 +10804,11 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -10795,6 +10892,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         "description": "Signin/up a user",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -11213,6 +11311,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -11268,6 +11367,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -11587,6 +11687,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "description": "Get all users associated with given email",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -11997,6 +12098,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "description": "Get user's information.",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -12285,6 +12387,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "description": "Get number of users",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -12552,6 +12655,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -12579,6 +12683,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "nameOverride": null,
             "schemas": {
               "EMAIL_ALREADY_VERIFIED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -12589,6 +12694,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -12820,6 +12926,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -12837,6 +12944,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "description": "OK response",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -13152,6 +13260,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "description": "Verify an email",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -13418,9 +13527,11 @@ Note that there is an invisible character at the end of the path, this was to av
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -13495,6 +13606,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "nameOverride": null,
             "schemas": {
               "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -13505,6 +13617,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -13758,6 +13871,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -13775,6 +13889,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "description": "OK response",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -14125,6 +14240,7 @@ Note that there is an invisible character at the end of the path, this was to av
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -14468,9 +14584,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -14532,6 +14650,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -14781,9 +14900,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -14823,6 +14944,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -15075,9 +15197,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -15135,6 +15259,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -15401,9 +15526,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -15461,6 +15588,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -15748,6 +15876,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -16063,6 +16192,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -16324,9 +16454,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -16395,6 +16527,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -16705,6 +16838,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -16969,9 +17103,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -17050,6 +17186,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -17312,6 +17449,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -17590,9 +17728,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -17625,6 +17765,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -17890,6 +18031,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -18270,6 +18412,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -18718,9 +18861,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -18850,6 +18995,7 @@ e.g.:
         "description": "Create a new Session",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -19177,6 +19323,7 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -19188,6 +19335,7 @@ e.g.:
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -19221,6 +19369,7 @@ e.g.:
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -19264,6 +19413,7 @@ e.g.:
         "description": "Delete a session",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -19582,9 +19732,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -19726,6 +19878,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -19781,6 +19934,7 @@ e.g.:
                 "type": "object",
               },
               "TRY_REFRESH_TOKEN": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -20137,9 +20291,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -20219,6 +20375,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -20318,6 +20475,7 @@ e.g.:
                 "type": "object",
               },
               "TOKEN_THEFT_DETECTED": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -20338,6 +20496,7 @@ e.g.:
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -20657,6 +20816,7 @@ e.g.:
         "description": "Get user Session Handles",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -20975,9 +21135,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -21049,6 +21211,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -21378,6 +21541,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -21591,9 +21755,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -21875,9 +22041,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -22017,6 +22185,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -22057,6 +22226,7 @@ e.g.:
                 "type": "object",
               },
               "UNSUPPORTED_ALGORITHM_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -22211,6 +22381,7 @@ e.g.:
         "description": "Retrieve JWKs for JWT verification, containing both static and dynamic keys.",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -22513,6 +22684,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -22726,9 +22898,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -22869,6 +23043,7 @@ e.g.:
           "generatedName": "PaymentRequiredError",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -23114,9 +23289,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -23202,6 +23379,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "EMAIL_ALREADY_EXISTS_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23212,6 +23390,7 @@ e.g.:
                 "type": "object",
               },
               "INVALID_EMAIL_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23222,6 +23401,7 @@ e.g.:
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23242,6 +23422,7 @@ e.g.:
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -23346,6 +23527,7 @@ e.g.:
                 "type": "object",
               },
               "PASSWORD_WEAK_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23613,6 +23795,7 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -23624,6 +23807,7 @@ e.g.:
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23722,6 +23906,7 @@ e.g.:
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23840,6 +24025,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "EMAIL_ALREADY_EXISTS_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23850,6 +24036,7 @@ e.g.:
                 "type": "object",
               },
               "INVALID_EMAIL_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23860,6 +24047,7 @@ e.g.:
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -23880,6 +24068,7 @@ e.g.:
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -23984,6 +24173,7 @@ e.g.:
                 "type": "object",
               },
               "PASSWORD_WEAK_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -24024,6 +24214,7 @@ e.g.:
                 "type": "object",
               },
               "UNKNOWN_USER_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -24317,6 +24508,7 @@ e.g.:
         "description": "Indicates success with the status property",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -24608,6 +24800,7 @@ e.g.:
         "description": "get a list of dashboard users",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -24659,6 +24852,7 @@ e.g.:
                   "nameOverride": null,
                   "type": "array",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -24985,9 +25179,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -25044,6 +25240,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "INVAlID_SESSION_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -25054,6 +25251,7 @@ e.g.:
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -25064,6 +25262,7 @@ e.g.:
                 "type": "object",
               },
               "USER_SUSPENDED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -25343,6 +25542,7 @@ e.g.:
         "description": "Indicates success with the status property",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -25580,9 +25780,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -25668,6 +25870,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "INVAlID_CREDENTIALS_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -25678,6 +25881,7 @@ e.g.:
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -25718,6 +25922,7 @@ e.g.:
                 "type": "object",
               },
               "USER_SUSPENDED_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -26028,6 +26233,7 @@ e.g.:
         "description": "get a list of sessions for dashboard user",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -26054,6 +26260,7 @@ e.g.:
                   "nameOverride": null,
                   "type": "array",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -26327,6 +26534,7 @@ e.g.:
         "description": "get api version",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -26590,6 +26798,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "NOT_ALLOWED": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -26600,6 +26809,7 @@ e.g.:
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -27187,6 +27397,7 @@ e.g.:
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -27251,6 +27462,7 @@ e.g.:
                 "type": "object",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -27504,6 +27716,7 @@ e.g.:
         "description": "Get number of users",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -27775,6 +27988,7 @@ e.g.:
         "description": "Get number of active users",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -28341,6 +28555,7 @@ e.g.:
         "description": "User Pagination",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -28389,6 +28604,7 @@ e.g.:
                   "nameOverride": null,
                   "type": "array",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -28675,9 +28891,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -28717,6 +28935,7 @@ e.g.:
         "description": "Returns OK if the operation succeeded (even if the user didn't exist before the call)",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -28930,6 +29149,7 @@ e.g.:
         "description": "Returns available tags for search",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -29215,6 +29435,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -29498,6 +29719,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "NO_LICENSE_KEY_FOUND_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -29508,6 +29730,7 @@ e.g.:
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -29707,9 +29930,11 @@ e.g.:
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -29766,6 +29991,7 @@ e.g.:
             "nameOverride": null,
             "schemas": {
               "INVALID_LICENSE_KEY_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -29776,6 +30002,7 @@ e.g.:
                 "type": "object",
               },
               "MISSING_EE_FOLDER_ERROR": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -29786,6 +30013,7 @@ e.g.:
                 "type": "object",
               },
               "OK": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -29954,6 +30182,7 @@ e.g.:
         "description": "The operation was successful",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -30082,6 +30311,7 @@ e.g.:
       "type": "primitive",
     },
     "cookieInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30226,6 +30456,7 @@ e.g.:
       "type": "primitive",
     },
     "emailVerificationVerifyTokenRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30369,6 +30600,7 @@ e.g.:
       "type": "primitive",
     },
     "jwk": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A JWK that can be used to verify a JWT",
@@ -30638,6 +30870,7 @@ e.g.:
       "type": "primitive",
     },
     "passwordlessUser": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30793,6 +31026,7 @@ e.g.:
       "type": "primitive",
     },
     "session": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30896,6 +31130,7 @@ e.g.:
       },
     },
     "statusOKResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30906,6 +31141,7 @@ e.g.:
       "type": "object",
     },
     "thirdPartyEmail": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30954,6 +31190,7 @@ e.g.:
       "type": "primitive",
     },
     "thirdPartyUser": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31040,6 +31277,7 @@ e.g.:
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -31184,6 +31422,7 @@ e.g.:
       },
     },
     "unauthorisedMessageResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31228,6 +31467,7 @@ e.g.:
       },
     },
     "unknownRoleResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31238,6 +31478,7 @@ e.g.:
       "type": "object",
     },
     "unknownUserIdResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31248,6 +31489,7 @@ e.g.:
       "type": "object",
     },
     "user": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31459,6 +31701,7 @@ e.g.:
       },
     },
     "wrongCredentialsResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

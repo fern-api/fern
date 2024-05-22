@@ -465,6 +465,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
   ],
   "schemas": {
     "SpeechBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -556,6 +557,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "type": "object",
     },
     "SpeechBodyStream": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -716,6 +718,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "type": "object",
     },
     "request-model": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

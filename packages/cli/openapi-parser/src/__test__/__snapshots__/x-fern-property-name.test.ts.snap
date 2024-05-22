@@ -12,6 +12,7 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "BaseUser": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,

@@ -11,6 +11,29 @@ import (
 
 type Bar struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Bar) UnmarshalJSON(data []byte) error {
+	type unmarshaler Bar
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Bar(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	return nil
 }
 
 func (b *Bar) String() string {
@@ -22,6 +45,29 @@ func (b *Bar) String() string {
 
 type Foo struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+	type unmarshaler Foo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	return nil
 }
 
 func (f *Foo) String() string {
@@ -792,6 +838,29 @@ func (u *UnionWithoutKey) Accept(visitor UnionWithoutKeyVisitor) error {
 
 type Circle struct {
 	Radius float64 `json:"radius" url:"radius"`
+
+	extraProperties map[string]interface{}
+}
+
+func (c *Circle) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *Circle) UnmarshalJSON(data []byte) error {
+	type unmarshaler Circle
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = Circle(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+
+	return nil
 }
 
 func (c *Circle) String() string {
@@ -803,6 +872,29 @@ func (c *Circle) String() string {
 
 type GetShapeRequest struct {
 	Id string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+}
+
+func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
+}
+
+func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
+	type unmarshaler GetShapeRequest
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*g = GetShapeRequest(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+
+	return nil
 }
 
 func (g *GetShapeRequest) String() string {
@@ -814,6 +906,29 @@ func (g *GetShapeRequest) String() string {
 
 type Square struct {
 	Length float64 `json:"length" url:"length"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *Square) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *Square) UnmarshalJSON(data []byte) error {
+	type unmarshaler Square
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = Square(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
+	return nil
 }
 
 func (s *Square) String() string {

@@ -14,6 +14,10 @@ type User struct {
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
 }
 
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.ExtraProperties
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type embed User
 	var unmarshaler = struct {

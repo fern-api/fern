@@ -105,6 +105,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -845,6 +846,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -1649,6 +1651,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2442,6 +2445,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -3235,6 +3239,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -4039,6 +4044,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -5404,6 +5410,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -6336,6 +6343,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7458,6 +7466,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -7927,6 +7936,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8231,6 +8241,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8703,6 +8714,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -8927,6 +8939,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -9152,6 +9165,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -9553,6 +9567,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -10842,6 +10857,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -11628,6 +11644,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -11862,6 +11879,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -12397,6 +12415,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -12979,6 +12998,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -13796,6 +13816,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -14869,6 +14890,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -15522,6 +15544,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -16515,6 +16538,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -17408,6 +17432,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -17625,6 +17650,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -17827,6 +17853,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -19359,6 +19386,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -19811,6 +19839,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -20034,6 +20063,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -20236,6 +20266,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -21986,6 +22017,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -23371,6 +23403,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -25717,6 +25750,7 @@ exports[`open api parser deel parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -26463,6 +26497,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -27161,6 +27196,7 @@ exports[`open api parser deel parse open api 1`] = `
   ],
   "schemas": {
     "Agreement": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -27242,6 +27278,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "msa",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -27304,6 +27341,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client_legal_entity",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -27367,6 +27405,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "provider_legal_entity",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -27442,6 +27481,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "AgreementListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -27520,6 +27560,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "primitive",
     },
     "AgreementsSearchForm": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Convenient model to encapsulate query parameters to get a list of agreements.",
@@ -27604,6 +27645,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "AlternateEmailItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -27662,6 +27704,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "ApiError": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -27731,6 +27774,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ApiErrorContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -27793,6 +27837,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ApiErrorRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -28009,6 +28054,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "BasicContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -28298,6 +28344,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "BasicInvoiceAdjustment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -28591,6 +28638,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -28708,6 +28756,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -28816,6 +28865,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -28893,6 +28943,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment_cycle",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -28941,6 +28992,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reported_by",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -29001,6 +29053,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "BasicLegalEntity": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -29087,6 +29140,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "BasicOrganization": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -29143,6 +29197,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "BasicTeam": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -29199,6 +29254,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "BasicTimesheet": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -29506,6 +29562,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -29623,6 +29680,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -29731,6 +29789,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -29814,6 +29873,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -29877,6 +29937,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reported_by",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -29943,6 +30004,7 @@ exports[`open api parser deel parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": null,
@@ -30083,6 +30145,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "ClientOfBasicContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30122,6 +30185,7 @@ exports[`open api parser deel parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": null,
@@ -30218,6 +30282,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "CompensationDetailsOfContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30413,6 +30478,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "CompensationDetailsOfContractToCreate_Shared": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30658,6 +30724,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "CompensationDetailsOfContractToCreate_ongoing_time_based": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30707,6 +30774,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "CompensationDetailsOfContractToCreate_pay_as_you_go_time_based": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -30756,6 +30824,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "Contract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31197,6 +31266,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31223,6 +31293,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractContainer_ongoing_time_based": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31249,6 +31320,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractContainer_pay_as_you_go_time_based": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31275,6 +31347,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractContainer_payg_milestones": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31301,6 +31374,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractContainer_payg_tasks": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31327,6 +31401,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractCustomField": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Customized attributes on contracts (Employee ID, Project code, etc).",
@@ -31396,6 +31471,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractDetailsToAmend": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "You can specify any combination of data points that need changing.",
@@ -31859,6 +31935,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractDocumentContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31885,6 +31962,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractExternalIdPatchedContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31919,6 +31997,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "reference",
     },
     "ContractExternalIdToPatch": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -31985,6 +32064,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "ContractInvitationToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -32033,6 +32113,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractInvitationToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -32074,6 +32155,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "ContractListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -32158,6 +32240,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "ContractSearchFormWithCursor": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "This is a model to make it easier to understand and restrict search parameters",
@@ -32227,6 +32310,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractSearchFormWithoutCursor": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "This is a model to make it easier to understand and restrict search parameters",
@@ -32566,6 +32650,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractSignatureToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -32636,6 +32721,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractSignatureToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -32881,6 +32967,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "ContractTemplateListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -32914,6 +33001,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractTemplateSummary": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -32970,6 +33058,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractTerminationResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33032,6 +33121,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractTerminationResultContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33058,6 +33148,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToAmendDetailsContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33128,6 +33219,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "ContractToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33154,6 +33246,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreateContainer_ongoing_time_based": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33180,6 +33273,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreateContainer_pay_as_you_go_time_based": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33206,6 +33300,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreateContainer_payg_milestones": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33232,6 +33327,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreateContainer_payg_tasks": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -33258,6 +33354,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreate_Shared": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of contract to create",
@@ -33468,6 +33565,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -33482,6 +33580,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "legal_entity",
                 "nameOverride": null,
                 "schema": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
@@ -33523,6 +33622,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "team",
                 "nameOverride": null,
                 "schema": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": "Choose the Deel team for this contract. Use teams endpoint to retrieve a list of teams in your organization.",
@@ -33568,6 +33668,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "job_title",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Worker's job title. You can enter a custom job title or use a pre-defiled job title using the Id retrieved in job-titles endpoint.",
@@ -33671,6 +33772,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Job seniority level. Please use the seniority levels endpoint to retrieve the list of seniority levels.",
@@ -33835,6 +33937,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Worker properties",
@@ -33946,6 +34049,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreate_ongoing_time_based": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -33986,6 +34090,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "compensation_details",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [
               {
                 "description": null,
@@ -34024,6 +34129,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreate_pay_as_you_go_time_based": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -34064,6 +34170,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "compensation_details",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [
               {
                 "description": null,
@@ -34102,6 +34209,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreate_payg_milestones": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -34154,6 +34262,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToCreate_payg_tasks": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -34206,6 +34315,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToTerminate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -34292,6 +34402,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ContractToTerminateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -34657,6 +34768,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "Country": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -34857,6 +34969,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "CountryListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -34883,6 +34996,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "CreateTimeoff": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -35127,6 +35241,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "CreateTimeoffContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -35153,6 +35268,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "CreateWebhookRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -35364,6 +35480,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "Currency": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -35472,6 +35589,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "CurrencyListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -35621,6 +35739,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "primitive",
     },
     "EmployeeList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -36083,6 +36202,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "array",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -36255,6 +36375,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -36455,6 +36576,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -36501,6 +36623,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EmployeeListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -36534,6 +36657,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "Employment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -37113,6 +37237,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EmploymentDetailsOfContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -37303,6 +37428,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorClientTimeoffRequests": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -37510,6 +37636,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorClientTimeoffs": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -37566,6 +37693,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorClientTimeoffsContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -37592,6 +37720,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorContractCreated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -37736,6 +37865,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -38018,6 +38148,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -38038,6 +38169,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "nameOverride": null,
                     "type": "optional",
                     "value": {
+                      "additionalProperties": false,
                       "allOf": [],
                       "allOfPropertyConflicts": [],
                       "description": null,
@@ -38097,6 +38229,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -38246,6 +38379,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -38393,6 +38527,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -38490,6 +38625,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorContractCreatedContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -38516,6 +38652,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorContractToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -38536,6 +38673,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -38657,6 +38795,7 @@ exports[`open api parser deel parse open api 1`] = `
                       "nameOverride": null,
                       "type": "nullable",
                       "value": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -38827,6 +38966,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "employment",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -39197,6 +39337,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "seniority",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -39245,6 +39386,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -39265,6 +39407,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "nameOverride": null,
                   "type": "optional",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -39320,6 +39463,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "nameOverride": null,
                   "type": "optional",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -39380,6 +39524,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "compensation_details",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -39542,6 +39687,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Some countries require additional employee information for employment contracts.",
@@ -39693,6 +39839,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorContractToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -39719,6 +39866,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorCountryValidations": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -39739,6 +39887,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Range of the number of holidays.",
@@ -39793,6 +39942,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Holiday type and range for part-time contracts.",
@@ -39906,6 +40056,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -39989,6 +40140,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Salary range.",
@@ -40072,6 +40224,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Probation period range.",
@@ -40156,6 +40309,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Probation period range for part-time contracts.",
@@ -40241,6 +40395,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Employee's Work schedule in days and hours.",
@@ -40261,6 +40416,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "nameOverride": null,
                     "type": "optional",
                     "value": {
+                      "additionalProperties": false,
                       "allOf": [],
                       "allOfPropertyConflicts": [],
                       "description": null,
@@ -40315,6 +40471,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "nameOverride": null,
                     "type": "optional",
                     "value": {
+                      "additionalProperties": false,
                       "allOf": [],
                       "allOfPropertyConflicts": [],
                       "description": null,
@@ -40491,6 +40648,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Conditions to make definitive contract.",
@@ -40640,6 +40798,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -40708,6 +40867,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorCountryValidationsContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -40734,6 +40894,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorEntitlementListItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Entitlement Item for a given year.",
@@ -41232,6 +41393,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorEntitlements": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Time-off Entitlements for EOR contracts.",
@@ -41265,6 +41427,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorEntitlementsContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41375,6 +41538,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "EorTimeoffsBaseItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41881,6 +42045,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorTimeoffsContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -41907,6 +42072,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorTimeoffsEmployeeItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -42096,6 +42262,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorTimeoffsItem": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -42382,6 +42549,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EorTimeoffsItemContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -42408,6 +42576,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EstimateFirstPayment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of pro rata payment to create.",
@@ -42467,6 +42636,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "compensation_details",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -42775,6 +42945,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "EstimateFirstPaymentContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -42801,6 +42972,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ExchangeRates": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -42888,6 +43060,7 @@ exports[`open api parser deel parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "This object is used for linking file attachments to your records.",
@@ -42944,6 +43117,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "FileObject": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "This is the file you will upload in a multi-part form.",
@@ -43053,6 +43227,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "FinalPaymentCalculated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43133,6 +43308,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "last_cycle",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "The last payment cycle.",
@@ -43324,6 +43500,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "FinalPaymentCalculatedContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43350,6 +43527,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "FirstPaymentDate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "First payment date",
@@ -43383,6 +43561,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "GenericReportReviewCreated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43446,6 +43625,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "GenericReportReviewCreatedContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43487,6 +43667,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "GenericResultCreated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43501,6 +43682,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "data",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -43533,6 +43715,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "GenericResultDeleted": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43547,6 +43730,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "data",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -43579,6 +43763,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "GenericResultUpdated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -43593,6 +43778,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "data",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -43625,6 +43811,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HealthInsuranceProvider": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Health insurance provider.",
@@ -43902,6 +44089,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "array",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -44046,6 +44234,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "array",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -44256,6 +44445,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "HrisCompensation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44306,6 +44496,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisContractBase": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44406,6 +44597,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisContractFullTime": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -44424,6 +44616,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisContractPartTime": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -44466,6 +44659,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisDirectEmployee": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44609,6 +44803,7 @@ exports[`open api parser deel parse open api 1`] = `
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -44671,6 +44866,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisDirectEmployeeContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44697,6 +44893,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisDirectEmployeeDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44869,6 +45066,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisDirectEmployeeResponse": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -44917,6 +45115,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisJobInformationBase": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -44951,6 +45150,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisJobInformationTitleId": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -44993,6 +45193,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisJobInformationTitleName": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -45034,6 +45235,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "HrisTeamInformation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45091,6 +45293,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InputToCreateFileRef": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45105,6 +45308,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "data",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -45135,6 +45339,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InputToCreatePgoTask": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45161,6 +45366,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InputToDeletePgoTask": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45187,6 +45393,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InputToPatchContractExternalId": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45213,6 +45420,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InputToShieldContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45227,6 +45435,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "data",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -45265,6 +45474,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvitationsOfBasicContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45320,6 +45530,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "Invoice": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45845,6 +46056,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustment": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -45870,6 +46082,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentApprover": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45957,6 +46170,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "InvoiceAdjustmentApproversContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -45983,6 +46197,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -46009,6 +46224,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentCreated": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of invoice adjustment created.",
@@ -46125,6 +46341,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentCreatedContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -46166,6 +46383,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "InvoiceAdjustmentListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -46207,6 +46425,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentReviewToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -46294,6 +46513,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentReviewToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -46320,6 +46540,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentReviewsToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -46422,6 +46643,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentReviewsToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -46448,6 +46670,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentSearchContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "This is a model to make it easier to understand and restrict search parameters",
@@ -46833,6 +47056,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "InvoiceAdjustmentToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of invoice adjustment to create.",
@@ -46985,6 +47209,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -47011,6 +47236,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentToCreateWithFile": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -47036,6 +47262,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentToUpdate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of invoice adjustment to update.",
@@ -47099,6 +47326,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceAdjustmentToUpdateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -47638,6 +47866,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "InvoiceContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -47815,6 +48044,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "InvoiceContractor": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -47848,6 +48078,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceDownloadContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -47874,6 +48105,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceDownloadObject": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -47982,6 +48214,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "InvoiceListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -48008,6 +48241,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "InvoiceObject": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -48332,6 +48566,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "JobTitle": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -48403,6 +48638,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "JobTitleListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -48432,6 +48668,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "page",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -48499,6 +48736,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "LegalEntityListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -48580,6 +48818,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "MetaDataOfContractToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Additional custom info about a contract",
@@ -48632,6 +48871,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "Milestone": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -48714,6 +48954,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": "Reviewer's information.",
@@ -48778,6 +49019,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reported_by",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": "Milestone creator.",
@@ -48919,6 +49161,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "MilestoneContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -48960,6 +49203,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "MilestoneListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -48986,6 +49230,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "MilestoneProperties": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49063,6 +49308,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "MilestoneReviewToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49150,6 +49396,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "MilestoneReviewToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49176,6 +49423,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "MilestoneReviewsToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49293,6 +49541,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "MilestoneReviewsToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49327,6 +49576,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "reference",
     },
     "MilestoneToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49353,6 +49603,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "MilestoneToCreateFormWithFile": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -49378,6 +49629,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "MonthlyPayment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Monthly payment details for the user",
@@ -49435,6 +49687,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "primitive",
     },
     "OffCyclePayment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49596,6 +49849,7 @@ exports[`open api parser deel parse open api 1`] = `
             "nameOverride": null,
             "type": "nullable",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -49704,6 +49958,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reported_by",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -49764,6 +50019,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "OffCyclePaymentContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49805,6 +50061,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "OffCyclePaymentListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49831,6 +50088,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "OffCyclePaymentToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of invoice adjustment to create.",
@@ -49909,6 +50167,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "OffCyclePaymentToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49961,6 +50220,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "OrganizationListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -49987,6 +50247,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "OutputToCreateFileRef": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50042,6 +50303,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "OutputToCreateFileRefContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50068,6 +50330,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PageInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50124,6 +50387,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PageInfoWithoutCursor": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50158,6 +50422,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PageInfoWithoutCursorNew": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50238,6 +50503,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PatchWebhookRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50427,6 +50693,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "Payment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -50596,6 +50863,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PaymentBreakDown": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51419,6 +51687,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PaymentBreakDownContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51467,6 +51736,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "PaymentListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51493,6 +51763,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PaymentMethod": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51711,6 +51982,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "PaymentObject": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51774,6 +52046,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PaymentStatementInitiatedWebhook": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -51893,6 +52166,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "PaymentWorker": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -52006,6 +52280,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "People": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "People object representing a Deel",
@@ -52964,6 +53239,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PeopleClientLegalEntity": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -53034,6 +53310,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PeopleContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -53067,6 +53344,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PeopleMe": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "People object representing a Deel",
@@ -53567,6 +53845,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "reference",
     },
     "PeoplePayment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -53695,6 +53974,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PgoTask": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -53825,6 +54105,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PgoTaskReviewsByIdToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -53912,6 +54193,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PgoTaskReviewsToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54029,6 +54311,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PgoTaskToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54128,6 +54411,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PgoTaskToDelete": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54206,6 +54490,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PremiumResultAdded": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54265,6 +54550,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "misclassification_guarantee",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -54341,6 +54627,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "penalties",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -54417,6 +54704,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "third_party_liabilities",
           "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -54490,6 +54778,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PremiumResultAddedContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54516,6 +54805,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PremiumToAdd": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54561,6 +54851,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "PremiumToAddContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -54587,6 +54878,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ProRata": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of the pro rata for the first payment",
@@ -54980,6 +55272,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55006,6 +55299,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "RequestBodyToCreatePgoTaskReviewsReviewsContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55032,6 +55326,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ResponseEstimateFirstPayment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55094,6 +55389,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "ResponseEstimateFirstPaymentContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55126,6 +55422,7 @@ exports[`open api parser deel parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "Seniority describes level of expertise at a job e.g. junior",
@@ -55235,6 +55532,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "SeniorityListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55261,6 +55559,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "SeniorityRequired": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Seniority describes level of expertise at a job e.g. junior",
@@ -55340,6 +55639,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "SignaturesOfBasicContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55403,6 +55703,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "SignaturesOfContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55536,6 +55837,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "StateOfCountry": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "It may be called states, provinces, prefectures or regions, or none at all",
@@ -55606,6 +55908,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "TaskListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55632,6 +55935,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "Team": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55717,6 +56021,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "TeamListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55743,6 +56048,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TeamOfBasicContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55813,6 +56119,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TeamOfContract": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55869,6 +56176,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimeoffReview": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55926,6 +56234,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimeoffToReviewContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -55974,6 +56283,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "TimeoffTypeListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56015,6 +56325,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "TimeoffsAttachmentsItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A item in attachments array. 2022-09-08 FE only allows for "SICK LEAVE"",
@@ -56114,6 +56425,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimeoffsProfile": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56328,6 +56640,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
     },
     "Timesheet": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -56365,6 +56678,7 @@ exports[`open api parser deel parse open api 1`] = `
         "nameOverride": null,
         "type": "array",
         "value": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -56407,6 +56721,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
+                  "additionalProperties": false,
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": null,
@@ -56469,6 +56784,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "TimesheetApprover": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56556,6 +56872,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "TimesheetApproversContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56582,6 +56899,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56673,6 +56991,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "TimesheetListContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56714,6 +57033,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetReviewToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56801,6 +57121,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetReviewToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56827,6 +57148,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetReviewsToCreate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56929,6 +57251,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetReviewsToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -56955,6 +57278,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetSearchContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "This is a model to make it easier to understand and restrict search parameters",
@@ -57303,6 +57627,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetSharedProperties": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of timesheet to create; a client, contractor or EOR may create a timesheet",
@@ -57441,6 +57766,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "reference",
     },
     "TimesheetToCreateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57475,6 +57801,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "reference",
     },
     "TimesheetToCreateWithFile": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -57500,6 +57827,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetToUpdate": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Details of timesheet to create; a client, contractor or EOR may update a timesheet",
@@ -57556,6 +57884,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "TimesheetToUpdateContainer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57688,6 +58017,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "primitive",
     },
     "WebhookItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -57997,6 +58327,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "WebhookItemResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58023,6 +58354,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "object",
     },
     "WebhookListResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58511,6 +58843,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
     },
     "WorkerLegalEntity": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -58587,6 +58920,7 @@ exports[`open api parser deel parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": null,
@@ -58703,6 +59037,7 @@ exports[`open api parser deel parse open api 1`] = `
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": null,

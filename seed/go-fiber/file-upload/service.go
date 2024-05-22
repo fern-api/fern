@@ -3,6 +3,7 @@
 package fileupload
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/file-upload/fern/core"
 )
@@ -25,6 +26,29 @@ type MyRequest struct {
 
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *MyObject) UnmarshalJSON(data []byte) error {
+	type unmarshaler MyObject
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MyObject(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
+	return nil
 }
 
 func (m *MyObject) String() string {

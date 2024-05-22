@@ -11,7 +11,12 @@ import (
 type String struct {
 	Value string `json:"value" url:"value"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *String) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *String) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (s *String) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = String(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }
