@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.12 - 2024-05-22]
 
-- Fix: If a LICENSE is specified, Tte C# generator now packages the license in the `.csproj` file.
+- Fix: If a LICENSE is specified, the generator now packages the license in the `.csproj` file.
 
   ```xml
     <ItemGroup>
