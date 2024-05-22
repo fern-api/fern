@@ -106,7 +106,7 @@ public class RawClient
 
     private string BuildUrl(string path, Dictionary<string, object> query)
     {
-        var url = $"{_clientOptions.BaseUrl}/{path}";
+        var url = $"{_clientOptions.BaseUrl}{path}";
         if (query.Count > 0)
         {
             url += "?";

@@ -1,16 +1,8 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { SingleBaseUrlEnvironment } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-
-export const BASE_URL_FIELD = csharp.field({
-    access: "public",
-    name: "BaseUrl",
-    get: true,
-    init: true,
-    type: csharp.Type.optional(csharp.Type.string()),
-    summary: "The Base URL for the API."
-});
 
 export const HTTP_CLIENT_FIELD = csharp.field({
     access: "public",
@@ -56,7 +48,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             partial: true,
             access: "public"
         });
-        class_.addField(BASE_URL_FIELD);
+        class_.addField(this.getBaseUrlField());
         class_.addField(HTTP_CLIENT_FIELD);
         class_.addField(MAX_RETRIES_FIELD);
         class_.addField(TIMEOUT_IN_SECONDS);
@@ -71,5 +63,37 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             this.context.project.filepaths.getCoreFilesDirectory(),
             RelativeFilePath.of(`${CLIENT_OPTIONS_CLASS_NAME}.cs`)
         );
+    }
+
+    private getBaseUrlField(): csharp.Field {
+        let defaultEnvironment: SingleBaseUrlEnvironment | undefined = undefined;
+        if (
+            this.context.ir.environments?.defaultEnvironment != null &&
+            this.context.ir.environments?.environments.type === "singleBaseUrl"
+        ) {
+            const singleBaseUrlDefault = this.context.ir.environments.environments.environments.filter(
+                (singleBaseUrl) => {
+                    return singleBaseUrl.id === this.context.ir.environments?.defaultEnvironment;
+                }
+            );
+            if (singleBaseUrlDefault[0] != null) {
+                defaultEnvironment = singleBaseUrlDefault[0];
+            }
+        }
+        return csharp.field({
+            access: "public",
+            name: "BaseUrl",
+            get: true,
+            init: true,
+            type: csharp.Type.string(),
+            summary: "The Base URL for the API.",
+            initializer:
+                defaultEnvironment != null
+                    ? csharp.codeblock((writer) => {
+                          writer.writeNode(this.context.getEnvironmentsClassReference());
+                          writer.write(`.${defaultEnvironment?.name.screamingSnakeCase}`);
+                      })
+                    : undefined
+        });
     }
 }
