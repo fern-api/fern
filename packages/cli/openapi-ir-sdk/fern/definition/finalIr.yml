@@ -324,7 +324,7 @@ types:
     properties:
       schema: Schema
       contentType: optional<string>
-      extraProperties: boolean
+      additionalProperties: boolean
 
   MultipartRequest:
     extends: commons.WithDescription
@@ -455,7 +455,7 @@ types:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
-      extraProperties: boolean
+      additionalProperties: boolean
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.

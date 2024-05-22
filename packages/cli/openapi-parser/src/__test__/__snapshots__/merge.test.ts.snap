@@ -10446,9 +10446,9 @@ exports[`open api parser merge parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "EmployeesCreateRequestBody",
@@ -14570,9 +14570,9 @@ exports[`open api parser merge parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "EmployeesIgnoreCreateRequestBody",
@@ -16646,9 +16646,9 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "GenerateKeyCreateRequest",
@@ -18304,9 +18304,9 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "LinkTokenCreateRequest",
@@ -20136,9 +20136,9 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "PassthroughCreateRequestBody",
@@ -22139,9 +22139,9 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "RegenerateKeyCreateRequest",
@@ -22471,9 +22471,9 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "SelectiveSyncConfigurationsUpdateRequestBody",
@@ -25411,9 +25411,9 @@ exports[`open api parser merge parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "TimeOffCreateRequestBody",
@@ -27469,9 +27469,9 @@ exports[`open api parser merge parse open api 1`] = `
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "WebhookReceiversCreateRequestBody",
@@ -27610,10 +27610,10 @@ exports[`open api parser merge parse open api 1`] = `
   ],
   "schemas": {
     "AccountDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "AccountDetails",
       "groupName": null,
       "nameOverride": null,
@@ -27914,6 +27914,7 @@ exports[`open api parser merge parse open api 1`] = `
       "type": "object",
     },
     "AccountDetailsAndActions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The LinkedAccount Object
@@ -27922,7 +27923,6 @@ The \`LinkedAccount\` object is used to represent an end user's link with a spec
 
 ### Usage Example
 View a list of your organization's \`LinkedAccount\` objects.",
-      "extraProperties": false,
       "generatedName": "AccountDetailsAndActions",
       "groupName": null,
       "nameOverride": null,
@@ -28167,10 +28167,10 @@ View a list of your organization's \`LinkedAccount\` objects.",
       "type": "object",
     },
     "AccountDetailsAndActionsIntegration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "AccountDetailsAndActionsIntegration",
       "groupName": null,
       "nameOverride": null,
@@ -28418,10 +28418,10 @@ View a list of your organization's \`LinkedAccount\` objects.",
       ],
     },
     "AccountIntegration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "AccountIntegration",
       "groupName": null,
       "nameOverride": null,
@@ -28675,10 +28675,10 @@ View a list of your organization's \`LinkedAccount\` objects.",
       "type": "object",
     },
     "AccountToken": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "AccountToken",
       "groupName": null,
       "nameOverride": null,
@@ -28758,6 +28758,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
       ],
     },
     "AvailableActions": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The AvailableActions Object
@@ -28766,7 +28767,6 @@ The \`Activity\` object is used to see all available model/operation combination
 
 ### Usage Example
 Fetch all the actions available for the \`Zenefits\` integration.",
-      "extraProperties": false,
       "generatedName": "AvailableActions",
       "groupName": null,
       "nameOverride": null,
@@ -28836,6 +28836,7 @@ Fetch all the actions available for the \`Zenefits\` integration.",
       "type": "object",
     },
     "BankInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The BankInfo Object
@@ -28844,7 +28845,6 @@ The \`BankInfo\` object is used to represent the Bank Account information for an
 
 ### Usage Example
 Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank information.",
-      "extraProperties": false,
       "generatedName": "BankInfo",
       "groupName": null,
       "nameOverride": null,
@@ -29286,6 +29286,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
       "type": "object",
     },
     "Benefit": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Benefit Object
@@ -29294,7 +29295,6 @@ The \`Benefit\` object is used to represent a benefit that an employee has enrol
 
 ### Usage Example
 Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benefits.",
-      "extraProperties": false,
       "generatedName": "Benefit",
       "groupName": null,
       "nameOverride": null,
@@ -29941,10 +29941,10 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
       ],
     },
     "CommonModelScopesBodyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "CommonModelScopesBodyRequest",
       "groupName": null,
       "nameOverride": null,
@@ -30026,6 +30026,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
       "type": "object",
     },
     "Company": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Company Object
@@ -30034,7 +30035,6 @@ The \`Company\` object is used to represent a company within the HRIS / Payroll 
 
 ### Usage Example
 Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all companies.",
-      "extraProperties": false,
       "generatedName": "Company",
       "groupName": null,
       "nameOverride": null,
@@ -30361,10 +30361,10 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
       "type": "object",
     },
     "ConditionSchema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "ConditionSchema",
       "groupName": null,
       "nameOverride": null,
@@ -33922,6 +33922,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
       ],
     },
     "DataPassthroughRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The DataPassthrough Object
@@ -33930,7 +33931,6 @@ The \`DataPassthrough\` object is used to send information to an otherwise-unsup
 
 ### Usage Example
 Create a \`DataPassthrough\` to get team hierarchies from your Rippling integration.",
-      "extraProperties": false,
       "generatedName": "DataPassthroughRequest",
       "groupName": null,
       "nameOverride": null,
@@ -34184,10 +34184,10 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
       "type": "object",
     },
     "DebugModeLog": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "DebugModeLog",
       "groupName": null,
       "nameOverride": null,
@@ -34255,10 +34255,10 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
       "type": "object",
     },
     "DebugModelLogSummary": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "DebugModelLogSummary",
       "groupName": null,
       "nameOverride": null,
@@ -34334,6 +34334,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
       "type": "object",
     },
     "Deduction": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Deduction Object
@@ -34342,7 +34343,6 @@ The \`Deduction\` object is used to represent an array of the wages withheld fro
 
 ### Usage Example
 Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all deductions.",
-      "extraProperties": false,
       "generatedName": "Deduction",
       "groupName": null,
       "nameOverride": null,
@@ -34693,6 +34693,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
       "type": "object",
     },
     "Earning": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Earning Object
@@ -34701,7 +34702,6 @@ The \`Earning\` object is used to represent an array of different compensations 
 
 ### Usage Example
 Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earnings.",
-      "extraProperties": false,
       "generatedName": "Earning",
       "groupName": null,
       "nameOverride": null,
@@ -35105,6 +35105,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
       ],
     },
     "Employee": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Employee Object
@@ -35113,7 +35114,6 @@ The \`Employee\` object is used to represent any person who has been employed by
 
 ### Usage Example
 Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all employees.",
-      "extraProperties": false,
       "generatedName": "Employee",
       "groupName": null,
       "nameOverride": null,
@@ -36456,10 +36456,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "type": "object",
     },
     "EmployeeEndpointRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "EmployeeEndpointRequest",
       "groupName": null,
       "nameOverride": null,
@@ -36483,6 +36483,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "type": "object",
     },
     "EmployeePayrollRun": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The EmployeePayrollRun Object
@@ -36491,7 +36492,6 @@ The \`EmployeePayrollRun\` object is used to represent an employee's pay stateme
 
 ### Usage Example
 Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show all employee payroll runs.",
-      "extraProperties": false,
       "generatedName": "EmployeePayrollRun",
       "groupName": null,
       "nameOverride": null,
@@ -37022,6 +37022,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
       "type": "object",
     },
     "EmployeeRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Employee Object
@@ -37030,7 +37031,6 @@ The \`Employee\` object is used to represent any person who has been employed by
 
 ### Usage Example
 Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all employees.",
-      "extraProperties": false,
       "generatedName": "EmployeeRequest",
       "groupName": null,
       "nameOverride": null,
@@ -38193,10 +38193,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "type": "object",
     },
     "EmployeeResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "EmployeeResponse",
       "groupName": null,
       "nameOverride": null,
@@ -38293,6 +38293,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
       "type": "object",
     },
     "Employment": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Employment Object
@@ -38303,7 +38304,6 @@ Please note: When there is a change in pay or title, integrations with historica
 
 ### Usage Example
 Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all employees.",
-      "extraProperties": false,
       "generatedName": "Employment",
       "groupName": null,
       "nameOverride": null,
@@ -39841,10 +39841,10 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       ],
     },
     "EndUserDetailsRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "EndUserDetailsRequest",
       "groupName": null,
       "nameOverride": null,
@@ -40074,10 +40074,10 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       "type": "object",
     },
     "ErrorValidationProblem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "ErrorValidationProblem",
       "groupName": null,
       "nameOverride": null,
@@ -40419,6 +40419,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
       ],
     },
     "GenerateRemoteKeyRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The GenerateRemoteKey Object
@@ -40427,7 +40428,6 @@ The \`GenerateRemoteKey\` object is used to represent a request for a new remote
 
 ### Usage Example
 Post a \`GenerateRemoteKey\` to create a new remote key.",
-      "extraProperties": false,
       "generatedName": "GenerateRemoteKeyRequest",
       "groupName": null,
       "nameOverride": null,
@@ -40458,6 +40458,7 @@ Post a \`GenerateRemoteKey\` to create a new remote key.",
       "type": "object",
     },
     "Group": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Group Object
@@ -40466,7 +40467,6 @@ The \`Group\` object is used to represent any subset of employees, such as \`Pay
 
 ### Usage Example
 Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee's groups.",
-      "extraProperties": false,
       "generatedName": "Group",
       "groupName": null,
       "nameOverride": null,
@@ -40884,10 +40884,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       ],
     },
     "IgnoreCommonModelRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "IgnoreCommonModelRequest",
       "groupName": null,
       "nameOverride": null,
@@ -40967,10 +40967,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "Issue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "Issue",
       "groupName": null,
       "nameOverride": null,
@@ -41278,10 +41278,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       ],
     },
     "LinkToken": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LinkToken",
       "groupName": null,
       "nameOverride": null,
@@ -41370,10 +41370,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountCondition": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LinkedAccountCondition",
       "groupName": null,
       "nameOverride": null,
@@ -41532,10 +41532,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountConditionRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LinkedAccountConditionRequest",
       "groupName": null,
       "nameOverride": null,
@@ -41600,10 +41600,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountSelectiveSyncConfiguration": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LinkedAccountSelectiveSyncConfiguration",
       "groupName": null,
       "nameOverride": null,
@@ -41641,10 +41641,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountSelectiveSyncConfigurationListRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LinkedAccountSelectiveSyncConfigurationListRequest",
       "groupName": null,
       "nameOverride": null,
@@ -41675,10 +41675,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountSelectiveSyncConfigurationRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LinkedAccountSelectiveSyncConfigurationRequest",
       "groupName": null,
       "nameOverride": null,
@@ -41709,10 +41709,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "LinkedAccountStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LinkedAccountStatus",
       "groupName": null,
       "nameOverride": null,
@@ -41760,6 +41760,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
       "type": "object",
     },
     "Location": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Location Object
@@ -41768,7 +41769,6 @@ The \`Location\` object is used to represent an address that can be associated w
 
 ### Usage Example
 Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all office locations.",
-      "extraProperties": false,
       "generatedName": "Location",
       "groupName": null,
       "nameOverride": null,
@@ -42950,10 +42950,10 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
       ],
     },
     "MetaResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "MetaResponse",
       "groupName": null,
       "nameOverride": null,
@@ -43190,6 +43190,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
       ],
     },
     "ModelOperation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The ModelOperation Object
@@ -43198,7 +43199,6 @@ The \`ModelOperation\` object is used to represent the operations that are curre
 
 ### Usage Example
 View what operations are supported for the \`Candidate\` endpoint.",
-      "extraProperties": false,
       "generatedName": "ModelOperation",
       "groupName": null,
       "nameOverride": null,
@@ -43316,6 +43316,7 @@ View what operations are supported for the \`Candidate\` endpoint.",
       "type": "object",
     },
     "MultipartFormFieldRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The MultipartFormField Object
@@ -43324,7 +43325,6 @@ The \`MultipartFormField\` object is used to represent fields in an HTTP request
 
 ### Usage Example
 Create a \`MultipartFormField\` to define a multipart form entry.",
-      "extraProperties": false,
       "generatedName": "MultipartFormFieldRequest",
       "groupName": null,
       "nameOverride": null,
@@ -43513,10 +43513,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "OperatorSchema": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "OperatorSchema",
       "groupName": null,
       "nameOverride": null,
@@ -43578,10 +43578,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedAccountDetailsAndActionsList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedAccountDetailsAndActionsList",
       "groupName": null,
       "nameOverride": null,
@@ -43691,10 +43691,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedBankInfoList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedBankInfoList",
       "groupName": null,
       "nameOverride": null,
@@ -43804,10 +43804,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedBenefitList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedBenefitList",
       "groupName": null,
       "nameOverride": null,
@@ -43917,10 +43917,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedCompanyList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedCompanyList",
       "groupName": null,
       "nameOverride": null,
@@ -44030,10 +44030,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedConditionSchemaList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedConditionSchemaList",
       "groupName": null,
       "nameOverride": null,
@@ -44143,10 +44143,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedEmployeeList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedEmployeeList",
       "groupName": null,
       "nameOverride": null,
@@ -44256,10 +44256,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedEmployeePayrollRunList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedEmployeePayrollRunList",
       "groupName": null,
       "nameOverride": null,
@@ -44369,10 +44369,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedEmploymentList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedEmploymentList",
       "groupName": null,
       "nameOverride": null,
@@ -44482,10 +44482,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedGroupList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedGroupList",
       "groupName": null,
       "nameOverride": null,
@@ -44595,10 +44595,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedIssueList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedIssueList",
       "groupName": null,
       "nameOverride": null,
@@ -44708,10 +44708,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedLocationList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedLocationList",
       "groupName": null,
       "nameOverride": null,
@@ -44821,10 +44821,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedPayGroupList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedPayGroupList",
       "groupName": null,
       "nameOverride": null,
@@ -44934,10 +44934,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedPayrollRunList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedPayrollRunList",
       "groupName": null,
       "nameOverride": null,
@@ -45047,10 +45047,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedSyncStatusList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedSyncStatusList",
       "groupName": null,
       "nameOverride": null,
@@ -45160,10 +45160,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedTeamList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedTeamList",
       "groupName": null,
       "nameOverride": null,
@@ -45273,10 +45273,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedTimeOffBalanceList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedTimeOffBalanceList",
       "groupName": null,
       "nameOverride": null,
@@ -45386,10 +45386,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       "type": "object",
     },
     "PaginatedTimeOffList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PaginatedTimeOffList",
       "groupName": null,
       "nameOverride": null,
@@ -49610,6 +49610,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
       ],
     },
     "PayGroup": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The PayGroup Object
@@ -49618,7 +49619,6 @@ The \`PayGroup\` object is used to represent a subset of employees that are put 
 
 ### Usage Example
 Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay group information.",
-      "extraProperties": false,
       "generatedName": "PayGroup",
       "groupName": null,
       "nameOverride": null,
@@ -49984,6 +49984,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
       ],
     },
     "PayrollRun": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The PayrollRun Object
@@ -49992,7 +49993,6 @@ The \`PayrollRun\` object is used to represent a group of pay statements for a s
 
 ### Usage Example
 Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all payroll runs.",
-      "extraProperties": false,
       "generatedName": "PayrollRun",
       "groupName": null,
       "nameOverride": null,
@@ -50559,10 +50559,10 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
       ],
     },
     "RemoteData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "RemoteData",
       "groupName": null,
       "nameOverride": null,
@@ -50633,6 +50633,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
       "type": "object",
     },
     "RemoteKey": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The RemoteKey Object
@@ -50641,7 +50642,6 @@ The \`RemoteKey\` object is used to represent a request for a new remote key.
 
 ### Usage Example
 Post a \`GenerateRemoteKey\` to receive a new \`RemoteKey\`.",
-      "extraProperties": false,
       "generatedName": "RemoteKey",
       "groupName": null,
       "nameOverride": null,
@@ -50694,6 +50694,7 @@ Post a \`GenerateRemoteKey\` to receive a new \`RemoteKey\`.",
       "type": "object",
     },
     "RemoteKeyForRegenerationRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The RemoteKeyForRegeneration Object
@@ -50702,7 +50703,6 @@ The \`RemoteKeyForRegeneration\` object is used to exchange an old remote key fo
 
 ### Usage Example
 Post a \`RemoteKeyForRegeneration\` to swap out an old remote key for a new one",
-      "extraProperties": false,
       "generatedName": "RemoteKeyForRegenerationRequest",
       "groupName": null,
       "nameOverride": null,
@@ -50733,6 +50733,7 @@ Post a \`RemoteKeyForRegeneration\` to swap out an old remote key for a new one"
       "type": "object",
     },
     "RemoteResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The RemoteResponse Object
@@ -50741,7 +50742,6 @@ The \`RemoteResponse\` object is used to represent information returned from a t
 
 ### Usage Example
 View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
-      "extraProperties": false,
       "generatedName": "RemoteResponse",
       "groupName": null,
       "nameOverride": null,
@@ -51305,6 +51305,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
       ],
     },
     "SyncStatus": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The SyncStatus Object
@@ -51313,7 +51314,6 @@ The \`SyncStatus\` object is used to represent the syncing state of an account
 
 ### Usage Example
 View the \`SyncStatus\` for an account to see how recently its models were synced.",
-      "extraProperties": false,
       "generatedName": "SyncStatus",
       "groupName": null,
       "nameOverride": null,
@@ -51554,6 +51554,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
       ],
     },
     "Tax": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Tax Object
@@ -51562,7 +51563,6 @@ The \`Tax\` object is used to represent an array of the tax deductions for a giv
 
 ### Usage Example
 Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
-      "extraProperties": false,
       "generatedName": "Tax",
       "groupName": null,
       "nameOverride": null,
@@ -51907,6 +51907,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
       "type": "object",
     },
     "Team": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The Team Object
@@ -51915,7 +51916,6 @@ The \`Team\` object is used to represent a subdivision of the company, usually a
 
 ### Usage Example
 If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endpoint to fetch the \`Teams\`, and then use the \`ID\` of the team your user selects to filter the \`GET Employees\` endpoint.",
-      "extraProperties": false,
       "generatedName": "Team",
       "groupName": null,
       "nameOverride": null,
@@ -52192,6 +52192,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
       "type": "object",
     },
     "TimeOff": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The TimeOff Object
@@ -52200,7 +52201,6 @@ The \`TimeOff\` object is used to represent all employees' Time Off entries.
 
 ### Usage Example
 Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time off requests.",
-      "extraProperties": false,
       "generatedName": "TimeOff",
       "groupName": null,
       "nameOverride": null,
@@ -52812,6 +52812,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "TimeOffBalance": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The TimeOffBalance Object
@@ -52820,7 +52821,6 @@ The \`TimeOffBalance\` object is used to represent current balances for an emplo
 
 ### Usage Example
 Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show all time off balances.",
-      "extraProperties": false,
       "generatedName": "TimeOffBalance",
       "groupName": null,
       "nameOverride": null,
@@ -53205,10 +53205,10 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
       "type": "object",
     },
     "TimeOffEndpointRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TimeOffEndpointRequest",
       "groupName": null,
       "nameOverride": null,
@@ -53232,6 +53232,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
       "type": "object",
     },
     "TimeOffRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "# The TimeOff Object
@@ -53240,7 +53241,6 @@ The \`TimeOff\` object is used to represent all employees' Time Off entries.
 
 ### Usage Example
 Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time off requests.",
-      "extraProperties": false,
       "generatedName": "TimeOffRequest",
       "groupName": null,
       "nameOverride": null,
@@ -53750,10 +53750,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "TimeOffResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TimeOffResponse",
       "groupName": null,
       "nameOverride": null,
@@ -53957,10 +53957,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       ],
     },
     "ValidationProblemSource": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "ValidationProblemSource",
       "groupName": null,
       "nameOverride": null,
@@ -53991,10 +53991,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "WarningValidationProblem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "WarningValidationProblem",
       "groupName": null,
       "nameOverride": null,
@@ -54091,10 +54091,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "WebhookReceiver": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "WebhookReceiver",
       "groupName": null,
       "nameOverride": null,
@@ -54171,10 +54171,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "type": "object",
     },
     "WebhookReceiverRequest": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "WebhookReceiverRequest",
       "groupName": null,
       "nameOverride": null,

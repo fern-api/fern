@@ -1905,9 +1905,9 @@ The parameter should map to a JSON encoded list of strings.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "TranscriptCreateRequest",
@@ -5311,9 +5311,9 @@ The parameter should map to a JSON encoded list of strings.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "RealtimeCreateTemporaryTokenRequest",
@@ -5506,9 +5506,9 @@ The parameter should map to a JSON encoded list of strings.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "LemurSummaryRequest",
@@ -5735,9 +5735,9 @@ The parameter should map to a JSON encoded list of strings.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "LemurQuestionAnswerRequest",
@@ -5930,9 +5930,9 @@ The parameter should map to a JSON encoded list of strings.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "LemurActionItemsRequest",
@@ -6132,9 +6132,9 @@ The parameter should map to a JSON encoded list of strings.
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
-        "extraProperties": false,
         "schema": {
           "description": null,
           "generatedName": "LemurTaskRequest",
@@ -6443,10 +6443,10 @@ The LLM response data, as well as any context provided in the original request w
   ],
   "schemas": {
     "AudioData": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "AudioData",
       "groupName": null,
       "nameOverride": null,
@@ -6510,10 +6510,10 @@ The LLM response data, as well as any context provided in the original request w
       ],
     },
     "AutoHighlightResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "AutoHighlightResult",
       "groupName": null,
       "nameOverride": null,
@@ -6614,12 +6614,12 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "nameOverride": null,
       "type": "nullable",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
-        "extraProperties": false,
         "generatedName": "AutoHighlightsResult",
         "groupName": null,
         "nameOverride": null,
@@ -6651,10 +6651,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       },
     },
     "Chapter": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Chapter of the audio file",
-      "extraProperties": false,
       "generatedName": "Chapter",
       "groupName": null,
       "nameOverride": null,
@@ -6775,10 +6775,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "type": "object",
     },
     "ContentSafetyLabel": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "ContentSafetyLabel",
       "groupName": null,
       "nameOverride": null,
@@ -6855,10 +6855,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "type": "object",
     },
     "ContentSafetyLabelResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "ContentSafetyLabelResult",
       "groupName": null,
       "nameOverride": null,
@@ -7052,10 +7052,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "type": "object",
     },
     "CreateRealtimeTemporaryTokenParameters": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "CreateRealtimeTemporaryTokenParameters",
       "groupName": null,
       "nameOverride": null,
@@ -7087,10 +7087,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
       "type": "object",
     },
     "CreateTranscriptOptionalParameters": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The parameters for creating a transcript",
-      "extraProperties": false,
       "generatedName": "CreateTranscriptOptionalParameters",
       "groupName": null,
       "nameOverride": null,
@@ -8011,6 +8011,7 @@ Valid values are in the range [0, 1] inclusive.
       "type": "object",
     },
     "CreateTranscriptParameters": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8022,7 +8023,6 @@ Valid values are in the range [0, 1] inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": "The parameters for creating a transcript",
-      "extraProperties": false,
       "generatedName": "CreateTranscriptParameters",
       "groupName": null,
       "nameOverride": null,
@@ -8053,10 +8053,10 @@ Valid values are in the range [0, 1] inclusive.
       "type": "object",
     },
     "Entity": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A detected entity",
-      "extraProperties": false,
       "generatedName": "Entity",
       "groupName": null,
       "nameOverride": null,
@@ -8508,10 +8508,10 @@ Valid values are in the range [0, 1] inclusive.
       ],
     },
     "Error": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "Error",
       "groupName": null,
       "nameOverride": null,
@@ -8567,6 +8567,7 @@ Valid values are in the range [0, 1] inclusive.
       "type": "object",
     },
     "FinalTranscript": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8578,7 +8579,6 @@ Valid values are in the range [0, 1] inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "FinalTranscript",
       "groupName": null,
       "nameOverride": null,
@@ -8647,6 +8647,7 @@ Valid values are in the range [0, 1] inclusive.
       "type": "reference",
     },
     "LemurActionItemsResponse": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8658,7 +8659,6 @@ Valid values are in the range [0, 1] inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurActionItemsResponse",
       "groupName": null,
       "nameOverride": null,
@@ -8689,10 +8689,10 @@ Valid values are in the range [0, 1] inclusive.
       "type": "object",
     },
     "LemurBaseParameters": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurBaseParameters",
       "groupName": null,
       "nameOverride": null,
@@ -8876,10 +8876,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "LemurBaseResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurBaseResponse",
       "groupName": null,
       "nameOverride": null,
@@ -8944,10 +8944,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
     },
     "LemurQuestion": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurQuestion",
       "groupName": null,
       "nameOverride": null,
@@ -9112,10 +9112,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "LemurQuestionAnswer": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "An answer generated by LeMUR and its question.",
-      "extraProperties": false,
       "generatedName": "LemurQuestionAnswer",
       "groupName": null,
       "nameOverride": null,
@@ -9168,6 +9168,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "LemurQuestionAnswerParameters": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9179,7 +9180,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurQuestionAnswerParameters",
       "groupName": null,
       "nameOverride": null,
@@ -9210,6 +9210,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "LemurQuestionAnswerResponse": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9221,7 +9222,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurQuestionAnswerResponse",
       "groupName": null,
       "nameOverride": null,
@@ -9252,6 +9252,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "LemurSummaryParameters": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9263,7 +9264,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurSummaryParameters",
       "groupName": null,
       "nameOverride": null,
@@ -9302,6 +9302,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "LemurSummaryResponse": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9313,7 +9314,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurSummaryResponse",
       "groupName": null,
       "nameOverride": null,
@@ -9344,6 +9344,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "LemurTaskParameters": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9355,7 +9356,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurTaskParameters",
       "groupName": null,
       "nameOverride": null,
@@ -9386,6 +9386,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "LemurTaskResponse": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9397,7 +9398,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "LemurTaskResponse",
       "groupName": null,
       "nameOverride": null,
@@ -9485,10 +9485,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
     },
     "PageDetails": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PageDetails",
       "groupName": null,
       "nameOverride": null,
@@ -9623,10 +9623,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "ParagraphsResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "ParagraphsResponse",
       "groupName": null,
       "nameOverride": null,
@@ -9725,6 +9725,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "PartialTranscript": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9736,7 +9737,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PartialTranscript",
       "groupName": null,
       "nameOverride": null,
@@ -10096,10 +10096,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
     },
     "PurgeLemurRequestDataResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "PurgeLemurRequestDataResponse",
       "groupName": null,
       "nameOverride": null,
@@ -10169,10 +10169,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "RealtimeBaseMessage": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "RealtimeBaseMessage",
       "groupName": null,
       "nameOverride": null,
@@ -10196,10 +10196,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "RealtimeBaseTranscript": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "RealtimeBaseTranscript",
       "groupName": null,
       "nameOverride": null,
@@ -10338,10 +10338,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "RealtimeError": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "RealtimeError",
       "groupName": null,
       "nameOverride": null,
@@ -10424,10 +10424,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       },
     },
     "RealtimeTemporaryTokenResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "RealtimeTemporaryTokenResponse",
       "groupName": null,
       "nameOverride": null,
@@ -10519,10 +10519,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
     },
     "RedactedAudioResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "RedactedAudioResponse",
       "groupName": null,
       "nameOverride": null,
@@ -10579,10 +10579,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       },
     },
     "SentencesResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "SentencesResponse",
       "groupName": null,
       "nameOverride": null,
@@ -10726,10 +10726,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
     },
     "SentimentAnalysisResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The result of the sentiment analysis model.",
-      "extraProperties": false,
       "generatedName": "SentimentAnalysisResult",
       "groupName": null,
       "nameOverride": null,
@@ -10880,6 +10880,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "SessionBegins": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -10891,7 +10892,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "SessionBegins",
       "groupName": null,
       "nameOverride": null,
@@ -10961,6 +10961,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "SessionTerminated": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -10972,7 +10973,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "SessionTerminated",
       "groupName": null,
       "nameOverride": null,
@@ -11003,10 +11003,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "SeverityScoreSummary": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "SeverityScoreSummary",
       "groupName": null,
       "nameOverride": null,
@@ -11271,6 +11271,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
     },
     "TerminateSession": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -11282,7 +11283,6 @@ Can be any value between 0.0 and 1.0 inclusive.
       ],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TerminateSession",
       "groupName": null,
       "nameOverride": null,
@@ -11308,10 +11308,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "Timestamp": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Timestamp containing a start and end property in milliseconds.",
-      "extraProperties": false,
       "generatedName": "Timestamp",
       "groupName": null,
       "nameOverride": null,
@@ -11366,10 +11366,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "TopicDetectionResult": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "THe result of the topic detection model.",
-      "extraProperties": false,
       "generatedName": "TopicDetectionResult",
       "groupName": null,
       "nameOverride": null,
@@ -11415,10 +11415,10 @@ Can be any value between 0.0 and 1.0 inclusive.
               "nameOverride": null,
               "type": "array",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
-                "extraProperties": false,
                 "generatedName": "TopicDetectionResultLabelsItem",
                 "groupName": null,
                 "nameOverride": null,
@@ -11500,10 +11500,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "type": "object",
     },
     "Transcript": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "A transcript object",
-      "extraProperties": false,
       "generatedName": "Transcript",
       "groupName": null,
       "nameOverride": null,
@@ -12562,12 +12562,12 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
-                "extraProperties": false,
                 "generatedName": "TranscriptContentSafetyLabels",
                 "groupName": null,
                 "nameOverride": null,
@@ -12667,12 +12667,12 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
               "nameOverride": null,
               "type": "nullable",
               "value": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
 See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
 ",
-                "extraProperties": false,
                 "generatedName": "TranscriptIabCategoriesResult",
                 "groupName": null,
                 "nameOverride": null,
@@ -13411,10 +13411,10 @@ Valid values are in the range [0, 1] inclusive.
       ],
     },
     "TranscriptCustomSpelling": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Object containing words or phrases to replace, and the word or phrase to replace with",
-      "extraProperties": false,
       "generatedName": "TranscriptCustomSpelling",
       "groupName": null,
       "nameOverride": null,
@@ -13734,10 +13734,10 @@ The default value is 'en_us'.
       },
     },
     "TranscriptList": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TranscriptList",
       "groupName": null,
       "nameOverride": null,
@@ -13783,10 +13783,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "TranscriptListItem": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TranscriptListItem",
       "groupName": null,
       "nameOverride": null,
@@ -13917,10 +13917,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "TranscriptListParameters": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TranscriptListParameters",
       "groupName": null,
       "nameOverride": null,
@@ -14092,10 +14092,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "TranscriptParagraph": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TranscriptParagraph",
       "groupName": null,
       "nameOverride": null,
@@ -14217,10 +14217,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "TranscriptSentence": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TranscriptSentence",
       "groupName": null,
       "nameOverride": null,
@@ -14399,10 +14399,10 @@ The default value is 'en_us'.
       ],
     },
     "TranscriptUtterance": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TranscriptUtterance",
       "groupName": null,
       "nameOverride": null,
@@ -14546,10 +14546,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "TranscriptWord": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "TranscriptWord",
       "groupName": null,
       "nameOverride": null,
@@ -14685,10 +14685,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "UploadedFile": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "UploadedFile",
       "groupName": null,
       "nameOverride": null,
@@ -14719,10 +14719,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "Word": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "Word",
       "groupName": null,
       "nameOverride": null,
@@ -14822,10 +14822,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "WordSearchMatch": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "WordSearchMatch",
       "groupName": null,
       "nameOverride": null,
@@ -14931,10 +14931,10 @@ The default value is 'en_us'.
       "type": "object",
     },
     "WordSearchResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "WordSearchResponse",
       "groupName": null,
       "nameOverride": null,

@@ -424,7 +424,7 @@ function getRequest({
         if (extendedSchemas.length > 0) {
             requestBodySchema.extends = extendedSchemas;
         }
-        if (request.extraProperties) {
+        if (request.additionalProperties) {
             requestBodySchema["extra-properties"] = true;
         }
 

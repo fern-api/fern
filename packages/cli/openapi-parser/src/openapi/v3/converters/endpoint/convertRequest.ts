@@ -173,7 +173,7 @@ export function convertRequest({
         schema: requestSchema,
         contentType: undefined,
         fullExamples: jsonMediaObject.examples,
-        extraProperties:
+        additionalProperties:
             !isReferenceObject(jsonMediaObject.schema) &&
             isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties)
     });

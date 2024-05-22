@@ -255,7 +255,7 @@ export function wrapObject({
                 allOfPropertyConflicts,
                 groupName,
                 fullExamples,
-                extraProperties: isAdditionalPropertiesAny(additionalProperties)
+                additionalProperties: isAdditionalPropertiesAny(additionalProperties)
             }),
             description,
             groupName
@@ -270,7 +270,7 @@ export function wrapObject({
         allOfPropertyConflicts,
         groupName,
         fullExamples,
-        extraProperties: isAdditionalPropertiesAny(additionalProperties)
+        additionalProperties: isAdditionalPropertiesAny(additionalProperties)
     });
 }
 

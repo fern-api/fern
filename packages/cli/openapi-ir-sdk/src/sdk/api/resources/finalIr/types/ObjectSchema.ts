@@ -11,5 +11,5 @@ export interface ObjectSchema
     allOf: FernOpenapiIr.ReferencedSchema[];
     properties: FernOpenapiIr.ObjectProperty[];
     allOfPropertyConflicts: FernOpenapiIr.AllOfPropertyConflict[];
-    extraProperties: boolean;
+    additionalProperties: boolean;
 }

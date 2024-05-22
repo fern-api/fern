@@ -12,10 +12,10 @@ exports[`open api parser gen-yml-use-title parse open api 1`] = `
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "SchemaWithALongNameIsRightHereAndNotSomewhereElse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElse",
       "groupName": null,
       "nameOverride": null,

@@ -465,10 +465,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
   ],
   "schemas": {
     "SpeechBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "SpeechBody",
       "groupName": null,
       "nameOverride": "SpeechBody",
@@ -557,10 +557,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "type": "object",
     },
     "SpeechBodyStream": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "SpeechBodyStream",
       "groupName": null,
       "nameOverride": "SpeechBodyStream",
@@ -718,10 +718,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "type": "object",
     },
     "request-model": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "RequestModel",
       "groupName": null,
       "nameOverride": null,

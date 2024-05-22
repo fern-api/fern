@@ -22,7 +22,7 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
                 fullExamples: undefined,
-                extraProperties: schema.extraProperties
+                additionalProperties: schema.additionalProperties
             });
         case "array":
             return SchemaWithExample.array({

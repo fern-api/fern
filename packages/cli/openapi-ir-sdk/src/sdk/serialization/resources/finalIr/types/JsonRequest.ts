@@ -11,7 +11,7 @@ export const JsonRequest: core.serialization.ObjectSchema<serializers.JsonReques
         .objectWithoutOptionalProperties({
             schema: core.serialization.lazy(async () => (await import("../../..")).Schema),
             contentType: core.serialization.string().optional(),
-            extraProperties: core.serialization.boolean(),
+            additionalProperties: core.serialization.boolean(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -19,6 +19,6 @@ export declare namespace JsonRequest {
     interface Raw extends serializers.WithDescription.Raw {
         schema: serializers.Schema.Raw;
         contentType?: string | null;
-        extraProperties: boolean;
+        additionalProperties: boolean;
     }
 }

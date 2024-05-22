@@ -8,5 +8,5 @@ export interface JsonRequestWithExample extends FernOpenapiIr.WithDescription {
     schema: FernOpenapiIr.SchemaWithExample;
     contentType: string | undefined;
     fullExamples: FernOpenapiIr.NamedFullExample[] | undefined;
-    extraProperties: boolean;
+    additionalProperties: boolean;
 }

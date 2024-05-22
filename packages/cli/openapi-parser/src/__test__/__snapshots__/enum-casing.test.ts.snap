@@ -96,10 +96,10 @@ exports[`examples enum-casing parse open api 1`] = `
   ],
   "schemas": {
     "ExampleResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "ExampleResponse",
       "groupName": null,
       "nameOverride": null,

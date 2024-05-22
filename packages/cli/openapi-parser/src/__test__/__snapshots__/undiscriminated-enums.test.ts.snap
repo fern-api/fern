@@ -83,10 +83,10 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       },
     },
     "Farewell": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "Farewell",
       "groupName": null,
       "nameOverride": null,
@@ -157,10 +157,10 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       ],
     },
     "Greeting": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "Greeting",
       "groupName": null,
       "nameOverride": null,

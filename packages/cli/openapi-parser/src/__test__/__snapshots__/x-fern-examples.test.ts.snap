@@ -58,10 +58,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
-                "extraProperties": false,
                 "generatedName": "NotFound",
                 "groupName": null,
                 "nameOverride": null,
@@ -115,10 +115,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                 "type": "reference",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
-                "extraProperties": false,
                 "generatedName": "GetExampleResponseMessage",
                 "groupName": null,
                 "nameOverride": null,
@@ -176,10 +176,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
   ],
   "schemas": {
     "Schema1": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "Schema1",
       "groupName": null,
       "nameOverride": null,
@@ -247,10 +247,10 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       "type": "object",
     },
     "Schema2": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
-      "extraProperties": false,
       "generatedName": "Schema2",
       "groupName": null,
       "nameOverride": null,
