@@ -95,8 +95,9 @@ scripts:
       # - poetry run mypy .
       # The global python version is 3.8
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
-      - npm config set cache ./cache --local
-      - poetry config virtualenvs.in-project true
+      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+      - export HOME="$(pwd)/"
+      - poetry config virtualenvs.path .
       - poetry install && fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   - response-property

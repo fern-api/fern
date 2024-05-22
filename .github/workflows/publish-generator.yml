@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - ab/readd-tests-py
     paths:
       - "generators/openapi/VERSION"
       - "generators/python/sdk/VERSION"
