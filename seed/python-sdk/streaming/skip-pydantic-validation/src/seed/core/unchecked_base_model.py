@@ -82,7 +82,6 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
                     fields_values[key] = value
 
         if IS_PYDANTIC_V2:
-            print("we're in v2")
             object.__setattr__(m, "__pydantic_private__", None)
             object.__setattr__(m, "__pydantic_extra__", _extra)
             object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
