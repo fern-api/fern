@@ -92,10 +92,10 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
         )
 
     def _get_file_property_name(self, property: ir_types.FileProperty) -> str:
-        return property.get_as_union().key.name.snake_case.unsafe_name
+        return property.get_as_union().key.name.snake_case.safe_name
 
     def _get_body_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
-        return property.name.name.snake_case.unsafe_name
+        return property.name.name.snake_case.safe_name
 
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         def write(writer: AST.NodeWriter) -> None:

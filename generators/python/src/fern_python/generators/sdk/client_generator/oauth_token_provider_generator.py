@@ -340,7 +340,7 @@ class OAuthTokenProviderGenerator:
     ) -> AST.CodeWriterFunction:
         def _write_response_property_setter(writer: AST.NodeWriter) -> None:
             property_path = response_property.property_path
-            property_name = response_property.property.name.name.snake_case.unsafe_name
+            property_name = response_property.property.name.name.snake_case.safe_name
             writer.write_line(
                 f"self.{member_name} = token_response.{self._get_response_property_path(property_path)}{property_name}"
             )
@@ -354,7 +354,7 @@ class OAuthTokenProviderGenerator:
     ) -> AST.CodeWriterFunction:
         def _write_expires_at_setter(writer: AST.NodeWriter) -> None:
             property_path = expires_in_property.property_path
-            property_name = expires_in_property.property.name.name.snake_case.unsafe_name
+            property_name = expires_in_property.property.name.name.snake_case.safe_name
             writer.write(f"self.{member_name} = ")
             writer.write_node(
                 node=AST.FunctionInvocation(
@@ -378,7 +378,7 @@ class OAuthTokenProviderGenerator:
     def _get_response_property_path(self, property_path: Optional[List[ir_types.Name]]) -> str:
         if property_path is None or len(property_path) == 0:
             return ""
-        return ".".join([name.snake_case.unsafe_name for name in property_path]) + "."
+        return ".".join([name.snake_case.safe_name for name in property_path]) + "."
 
     def _get_refresh_function_invocation(
         self, client_credentials: ir_types.OAuthClientCredentials
@@ -401,7 +401,7 @@ class OAuthTokenProviderGenerator:
             return AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(
-                        f"self.{self._get_auth_client_member_name()}.{token_endpoint.name.get_as_name().snake_case.unsafe_name}",
+                        f"self.{self._get_auth_client_member_name()}.{token_endpoint.name.get_as_name().snake_case.safe_name}",
                     ),
                 ),
                 kwargs=kwargs,
@@ -419,7 +419,7 @@ class OAuthTokenProviderGenerator:
         return AST.FunctionInvocation(
             function_definition=AST.Reference(
                 qualified_name_excluding_import=(
-                    f"self.{self._get_refresh_client_member_name()}.{refresh_token_endpoint.name.get_as_name().snake_case.unsafe_name}",
+                    f"self.{self._get_refresh_client_member_name()}.{refresh_token_endpoint.name.get_as_name().snake_case.safe_name}",
                 ),
             ),
             kwargs=kwargs,

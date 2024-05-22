@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0-rc0] - 2024-05-21
+
+- Fix: The Python SDK generator now uses safe names wherever string concat is not used (like in client generation naming), so this will update module and parameter names.
+
 ## [2.3.4] - 2024-05-21
 
 - Fix: Snippets and unit tests now correctly write optional request bodies when `inline_request_params` is set to `True`. Previously the generator wrote snippets that inlined these parameters, which does not match the generated SDK itself.

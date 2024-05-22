@@ -550,7 +550,7 @@ class EndpointFunctionGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([component.snake_case.unsafe_name for component in components]) + "."
+        return ".".join([component.snake_case.safe_name for component in components]) + "."
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)
@@ -1212,7 +1212,7 @@ class EndpointFunctionSnippetGenerator:
     def _get_request_parameter_name(self) -> str:
         if self.endpoint.sdk_request is None:
             raise Exception("request body is referenced but SDKRequestBody is not defined")
-        return self.endpoint.sdk_request.request_parameter_name.snake_case.unsafe_name
+        return self.endpoint.sdk_request.request_parameter_name.snake_case.safe_name
 
     def _is_query_literal(self, query_parameter_wire_value: str) -> bool:
         param = next(
@@ -1252,7 +1252,7 @@ class EndpointFunctionSnippetGenerator:
 
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    return endpoint.name.get_as_name().snake_case.unsafe_name
+    return endpoint.name.get_as_name().snake_case.safe_name
 
 
 def get_parameter_name(name: ir_types.Name) -> str:
