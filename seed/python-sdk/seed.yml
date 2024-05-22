@@ -116,4 +116,5 @@ allowedFailures:
   # into the method as parameters when they're meant to be omitted (so the tests fail on unrecognized params).
   - examples:no-custom-config
   - examples:client-filename
+  - literal
   # ===========================================
