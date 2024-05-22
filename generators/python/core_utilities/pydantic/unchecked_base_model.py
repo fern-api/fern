@@ -58,6 +58,7 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
                 else:
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
                     fields_values[name] = construct_type(object_=values[key], type_=type_)
+                _fields_set.add(name)
             elif not field.required:
                 default = field.get_default()
                 fields_values[name] = default
@@ -73,10 +74,13 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
         for key, value in values.items():
             if key not in _fields_set:
                 _extra[key] = value
-                _fields_set.add(key)
-                fields_values[key] = value
+                # In v2 we'll need to exclude extra fields from fields_values
+                if not IS_PYDANTIC_V2:
+                    _fields_set.add(key)
+                    fields_values[key] = value
 
         if IS_PYDANTIC_V2:
+            print("we're in v2")
             object.__setattr__(m, "__pydantic_private__", None)
             object.__setattr__(m, "__pydantic_extra__", _extra)
             object.__setattr__(m, "__pydantic_fields_set__", _fields_set)
@@ -207,11 +211,7 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
 
     if base_type == bool:
         try:
-            if isinstance(object_, str):
-                object_ = object_.lower()
-                return object_ == "true" or object_ == "1"
-            elif isinstance(object_, int):
-                return bool(object_)
+            return bool(object_)
         except Exception:
             return object_
 

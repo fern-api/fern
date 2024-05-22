@@ -128,7 +128,7 @@ def test_construct_invalid() -> None:
     assert cast_response.integer == ["string"]
     assert cast_response.long_ == "hello world"
     assert cast_response.double == 1.1
-    assert cast_response.bool_ == "False"
+    assert cast_response.bool_ == False
     assert cast_response.datetime == "2023-01-15"
     assert cast_response.date == "SGVsbG8gd29ybGQh"
     assert cast_response.uuid_ == "1234"
