@@ -405,7 +405,7 @@ class EndpointFunctionGenerator:
                     method=method,
                     query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint),
                     request_body=AST.Expression(AST.CodeWriter(write_request_body))
-                    if (method != "GET" and method != "DELETE")
+                    if (method != "GET")
                     else None,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=self._context.core_utilities.httpx_tuple_converter(files) if files is not None else None,
