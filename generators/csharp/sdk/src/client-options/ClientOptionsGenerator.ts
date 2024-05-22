@@ -91,7 +91,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 defaultEnvironment != null
                     ? csharp.codeblock((writer) => {
                           writer.writeNode(this.context.getEnvironmentsClassReference());
-                          writer.write(`.${defaultEnvironment?.name.screamingSnakeCase}`);
+                          writer.write(`.${defaultEnvironment?.name.screamingSnakeCase.safeName}`);
                       })
                     : undefined
         });
