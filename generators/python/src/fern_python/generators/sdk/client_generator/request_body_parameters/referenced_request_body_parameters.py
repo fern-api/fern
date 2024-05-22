@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 import fern.ir.resources as ir_types
 
@@ -29,6 +29,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             context.custom_config.inline_request_params and self._type_id is not None
         )
         self._are_any_properties_optional = self.should_inline_request_parameters
+        self.parameter_name_rewrites: Dict[ir_types.Name, str] = {}
 
     def _get_type_id_from_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
         return type_reference.visit(
@@ -73,6 +74,8 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                 if names_to_deconflict is not None and property_name in names_to_deconflict:
                     maybe_body_name = self.get_body_name()
                     property_name = f'{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else "request")}_{property_name}'
+                
+                self.parameter_name_rewrites[property.name] = property_name
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=property_name,
@@ -167,3 +170,6 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             primitive=lambda _: None,
             unknown=lambda: None,
         )
+
+    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]:
+        return self.parameter_name_rewrites

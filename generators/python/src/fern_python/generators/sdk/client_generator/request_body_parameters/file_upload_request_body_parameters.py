@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 import fern.ir.resources as ir_types
 
@@ -133,3 +133,6 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
 
     def get_content(self) -> Optional[AST.Expression]:
         return None
+
+    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]:
+        return {}

@@ -1,5 +1,5 @@
 import json
-from typing import Any, List, Optional
+from typing import Any, Dict, List, Optional
 
 import fern.ir.resources as ir_types
 
@@ -85,6 +85,7 @@ class SnippetWriter:
     def get_snippet_for_object_properties(
         self,
         example: ir_types.ExampleObjectType,
+        request_parameter_names: Dict[ir_types.Name, str]
     ) -> List[AST.Expression]:
         args: List[AST.Expression] = []
         for property in example.properties:
@@ -104,9 +105,10 @@ class SnippetWriter:
                 ),
             )
             if value is not None:
+                maybe_rewritten_name = request_parameter_names.get(property.name) or property.name.name.snake_case.safe_name
                 args.append(
                     self.get_snippet_for_named_parameter(
-                        parameter_name=property.name.name.snake_case.safe_name,
+                        parameter_name=maybe_rewritten_name,
                         value=value,
                     ),
                 )

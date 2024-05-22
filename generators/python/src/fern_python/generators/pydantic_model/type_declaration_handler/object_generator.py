@@ -80,6 +80,7 @@ class ObjectSnippetGenerator:
                 ),
                 args=self.snippet_writer.get_snippet_for_object_properties(
                     example=self.example,
+                    request_parameter_names={}
                 ),
             ),
         )

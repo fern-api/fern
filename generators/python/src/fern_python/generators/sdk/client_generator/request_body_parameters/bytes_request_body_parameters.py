@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 import fern.ir.resources as ir_types
 
@@ -49,3 +49,6 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
 
     def get_content(self) -> Optional[AST.Expression]:
         return AST.Expression(self._get_request_parameter_name())
+
+    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]:
+        return {}

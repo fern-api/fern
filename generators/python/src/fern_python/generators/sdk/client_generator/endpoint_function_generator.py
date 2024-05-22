@@ -109,8 +109,10 @@ class EndpointFunctionGenerator:
             idempotency_headers=self._idempotency_headers,
         )
 
+        self._request_parameter_name_rewrites = self.request_body_parameters.get_parameter_name_rewrites() if self.request_body_parameters is not None else {}
+
         self._path_parameter_names = dict()
-        _named_parameter_names: List[str] = [param.name for param in self.named_parameters]
+        _named_parameter_names: List[str] = [param.name for param in self._named_parameters]
         for path_parameter in self._endpoint.all_path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
                 name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
@@ -479,6 +481,17 @@ class EndpointFunctionGenerator:
                 writer.write_newline_if_last_line_not()
 
         return AST.CodeWriter(write)
+    
+    def _generate_endpoint_snippet_raw(self, example: ir_types.HttpEndpointExample) -> AST.Expression:
+        return EndpointFunctionSnippetGenerator(
+            context=self._context,
+            snippet_writer=self.snippet_writer,
+            service=self._service,
+            endpoint=self._endpoint,
+            example=example,
+            path_parameter_names=self._path_parameter_names,
+            request_parameter_names=self._request_parameter_name_rewrites
+        ).generate_snippet()
 
     def _generate_endpoint_snippet(
         self,
@@ -508,6 +521,7 @@ class EndpointFunctionGenerator:
             endpoint=endpoint,
             example=example,
             path_parameter_names=self._path_parameter_names,
+            request_parameter_names=self._request_parameter_name_rewrites
         )
 
         endpoint_snippet = endpoint_snippet_generator.generate_snippet()
@@ -1044,6 +1058,7 @@ class EndpointFunctionSnippetGenerator:
         endpoint: ir_types.HttpEndpoint,
         example: ir_types.HttpEndpointExample,
         path_parameter_names: Dict[ir_types.Name, str],
+        request_parameter_names: Dict[ir_types.Name, str],
     ):
         self.context = context
         self.snippet_writer = snippet_writer
@@ -1051,6 +1066,7 @@ class EndpointFunctionSnippetGenerator:
         self.endpoint = endpoint
         self.example = example.get_as_union()
         self.path_parameter_names = path_parameter_names
+        self.request_parameter_names = request_parameter_names
 
     # TODO: It should be sufficient for this to just take in the example and client
     def generate_snippet(self) -> AST.Expression:
@@ -1128,6 +1144,7 @@ class EndpointFunctionSnippetGenerator:
                     reference=lambda reference: self._get_snippet_for_request_reference(
                         example_type_reference=reference,
                         is_optional=is_optional,
+                        request_parameter_names=self.request_parameter_names,
                     ),
                 ),
             )
@@ -1188,22 +1205,23 @@ class EndpointFunctionSnippetGenerator:
         return []
 
     def _get_snippet_for_request_reference_flattened(
-        self, example_object: ir_types.ExampleObjectType
+        self, example_object: ir_types.ExampleObjectType, request_parameter_names: Dict[ir_types.Name, str],
     ) -> List[AST.Expression]:
-        return self.snippet_writer.get_snippet_for_object_properties(example_object)
+        return self.snippet_writer.get_snippet_for_object_properties(example_object, request_parameter_names)
 
     def _get_snippet_for_request_reference(
         self,
         example_type_reference: ir_types.ExampleTypeReference,
         is_optional: bool,
+        request_parameter_names: Dict[ir_types.Name, str],
     ) -> List[AST.Expression]:
         if self.context.custom_config.inline_request_params and not is_optional:
             if example_type_reference.shape.get_as_union().type == "named":
                 inner_shape = example_type_reference.shape.get_as_union().shape
                 if inner_shape.get_as_union().type == "alias":
-                    return self._get_snippet_for_request_reference(example_type_reference, is_optional)
+                    return self._get_snippet_for_request_reference(example_type_reference, is_optional, request_parameter_names)
                 if inner_shape.get_as_union().type == "object":
-                    return self._get_snippet_for_request_reference_flattened(inner_shape.get_as_union())
+                    return self._get_snippet_for_request_reference_flattened(inner_shape.get_as_union(), request_parameter_names)
             return self._get_snippet_for_request_reference_default(example_type_reference)
         else:
             return self._get_snippet_for_request_reference_default(example_type_reference)

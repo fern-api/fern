@@ -14,6 +14,7 @@ from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
     GeneratorExecWrapper,
 )
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
+    EndpointFunctionGenerator,
     EndpointFunctionSnippetGenerator,
 )
 from fern_python.generators.sdk.client_generator.generated_root_client import (
@@ -21,6 +22,7 @@ from fern_python.generators.sdk.client_generator.generated_root_client import (
     RootClient,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.generators.sdk.declaration_referencers import subpackage_async_client_declaration_referencer
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     MultipleBaseUrlsEnvironmentGenerator,
 )
@@ -435,14 +437,11 @@ class SnippetTestFactory:
             _path_parameter_names = dict()
             for path_parameter in endpoint.all_path_parameters:
                 _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
-            endpoint_snippet = EndpointFunctionSnippetGenerator(
-                context=self._context,
+            endpoint_snippet = self._function_generator(
                 snippet_writer=snippet_writer,
                 service=service,
                 endpoint=endpoint,
-                example=example,
-                path_parameter_names=_path_parameter_names,
-            ).generate_snippet()
+            )._generate_endpoint_snippet_raw(example=example)
 
             sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
             async_snippet = self._client_snippet(True, package_path, endpoint_snippet)
@@ -490,6 +489,27 @@ class SnippetTestFactory:
 
         if source_file:
             self._service_test_files[filepath] = source_file
+
+    def _function_generator(self, service: ir_types.HttpService, endpoint: ir_types.HttpEndpoint, snippet_writer: SnippetWriter) -> EndpointFunctionGenerator:
+        return EndpointFunctionGenerator(
+            context=self._context,
+            service=service,
+            endpoint=endpoint,
+            idempotency_headers=[],
+            client_wrapper_member_name="client",
+            generated_root_client=self._generated_root_client,
+            snippet_writer=snippet_writer,
+            # Package doesn't matter here
+            package=ir_types.Package(
+                fern_filepath=service.name.fern_filepath,
+                types=[],
+                errors=[],
+                subpackages=[],
+                has_endpoints_in_tree=True,
+            ),
+            # This doesn't matter here either
+            is_async=False,
+        )
 
     def _write_test_files(self) -> None:
         for filepath, test_file in self._service_test_files.items():
