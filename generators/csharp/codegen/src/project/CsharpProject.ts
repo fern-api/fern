@@ -312,7 +312,7 @@ class CsProj {
 
         if (this.license != null) {
             result.push(`<ItemGroup>
-    <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
+    <None Include="..\\..\\${this.license}" Pack="true" PackagePath=""/>
 </ItemGroup>`);
         }
 
