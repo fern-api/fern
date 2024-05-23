@@ -198,15 +198,18 @@ navigation:
           - page: Quickstart
             slug: quickstart
             path: ./pages/docs/introduction/quickstart.mdx
-          - page: Showcase 
+          - page: Showcase
             slug: showcase
             path: ./pages/docs/introduction/showcase.mdx
           - page: Local Development
             slug: development
             path: ./pages/docs/introduction/development.mdx
-          - page: Project Structure 
+          - page: Project Structure
             slug: project-structure
             path: ./pages/docs/introduction/project-structure.mdx
+          - page: Custom domain
+            path: ./pages/docs/introduction/custom-domain.mdx
+            hidden: true
       - section: Configuration
         slug: config
         contents:

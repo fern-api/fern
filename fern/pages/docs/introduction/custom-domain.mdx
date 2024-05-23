@@ -1,0 +1,238 @@
+---
+subtitle: "Host your docs on your own domain"
+---
+
+## Option 1: Subdomain (recommended)
+
+To host your documentation on a subdomain, i.e. `docs.mydomain.com`, you need to create a CNAME record in your DNS settings.
+
+<Steps>
+
+### Create a CNAME record
+
+1. Log in to your domain registrar's dashboard.
+2. Navigate to the DNS settings for your domain.
+3. Add a new CNAME record with the following details:
+   - **Type**: `CNAME`
+   - **Name**: `docs`
+   - **Value**: `cname.vercel-dns.com.`
+
+### Update the domain in docs.yml
+
+```yaml
+instances:
+ - url: myorg.docs.buildwithfern.com
+   custom-domain: docs.mydomain.com
+```
+
+Merge your changes into `main`.
+
+### Reach out to us
+
+Once you've completed the above steps, ask a member of the Fern team to complete the setup on our end.
+
+If you have an existing project in Vercel, we may need you to verify our access to your subdomain via a TXT record, which we'll provide you with.
+
+### Verify the setup
+
+Once we've completed the setup on our end, you should be able to access your documentation at `docs.mydomain.com`. SSL will be automatically provisioned for your domain, but it may take a few minutes to propagate globally.
+
+</Steps>
+
+## Option 2: Subpath
+
+To host your documentation on a subpath, i.e. `mydomain.com/docs`, you will need to setup a reverse proxy on your server (also known as rewrites). This is a more complex setup. If you need help setting up a reverse proxy, please reach out to a member of the Fern team. 
+
+<Steps>
+
+### Add rewrite rules to your server
+
+<Tabs>
+
+<Tab title="Next.js">
+
+In your `next.config.js`, add the following rewrites:
+
+```js
+module.exports = {
+  async rewrites() {
+    return [
+      {
+        source: '/docs',
+        destination: 'https://myorg.docs.buildwithfern.com/docs',
+      },
+      {
+        source: '/docs/:path*',
+        destination: 'https://myorg.docs.buildwithfern.com/docs/:path*',
+      },
+    ]
+  },
+}
+```
+
+</Tab>
+
+<Tab title="Netlify">
+In your `_redirects` file, add the following rules:
+
+```txt
+/docs https://myorg.docs.buildwithfern.com/docs 200
+/docs/* https://myorg.docs.buildwithfern.com/docs/:splat 200
+```
+
+</Tab>
+
+<Tab title="Cloudflare">
+
+### Option 1: Origin Rules
+
+If your Cloudflare account has access to Origin Rules (Enterprise), you can cheaply configure a reverse proxy using the following rule:
+
+```txt
+
+If...
+
+When incoming requests match...
+
+Custom filter expression: starts_with(http.request.uri.path, "/docs")
+
+Then...
+
+Rewrite to: myorg.docs.buildwithfern.com
+
+```
+
+### Option 2: Cloudflare Workers
+
+In your Cloudflare Worker script, add the following rule:
+
+```js
+const DOCS_URL = "myorg.docs.buildwithfern.com/docs"
+
+
+// do not modify below this line
+addEventListener("fetch", event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  const url = new URL(request.url)
+    const docsUrl = new URL(`https://${DOCS_URL}`)
+    const forwardedHost = url.hostname
+
+  if (url.pathname.startsWith(docsUrl.pathname)) {
+    // Rewrite the request URL to the new origin
+    url.hostname = docsUrl.hostname
+
+    // Make a new request using the modified URL
+    const rewrittenRequest = new Request(url, request)
+    rewrittenRequest.headers.set("Host", docsUrl.hostname)
+    rewrittenRequest.headers.set("X-Forwarded-Host", forwardedHost)
+    rewrittenRequest.headers.set("X-Forwarded-Proto", "https")
+    return fetch(rewrittenRequest)
+  }
+  
+  return fetch(request)
+}
+```
+
+Then, deploy your worker script to Cloudflare, and add a trigger to match the `/docs` path: `mydomain.com/docs/*`.
+
+</Tab>
+
+<Tab title="NGINX">
+
+```
+location /docs {
+    rewrite ^/docs$ https://myorg.docs.buildwithfern.com/docs permanent;
+}
+
+location ~ ^/docs/(.*) {
+    rewrite ^/docs/(.*)$ https://myorg.docs.buildwithfern.com/docs/$1 permanent;
+}
+```
+
+</Tab>
+
+<Tab title="Apache">
+
+In `.htaccess`, add the following rules:
+
+```apache
+RewriteEngine On
+RewriteRule ^docs$ https://myorg.docs.buildwithfern.com/docs [R=301,L]
+RewriteRule ^docs/(.*)$ https://myorg.docs.buildwithfern.com/docs/$1 [R=301,L]
+```
+
+</Tab>
+
+<Tab title="Express/Node.js">
+
+```js
+const express = require('express');
+const app = express();
+
+app.get('/docs', (req, res) => {
+res.redirect(301, 'https://myorg.docs.buildwithfern.com/docs');
+});
+
+app.get('/docs/:path', (req, res) => {
+res.redirect(301, `https://myorg.docs.buildwithfern.com/docs/${req.params.path}`);
+});
+
+app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
+```
+
+</Tab>
+
+<Tab title="Django/Python">
+
+Install the `django-shortcuts` package:
+```shell
+pip install django-shortcuts
+```
+
+Add the following views and URLs to your Django project:
+```python
+# views.py
+from django.shortcuts import redirect
+
+def docs_redirect(request):
+    return redirect('https://myorg.docs.buildwithfern.com/docs', permanent=True)
+
+def docs_path_redirect(request, path):
+    return redirect(f'https://myorg.docs.buildwithfern.com/docs/{path}', permanent=True)
+
+
+# urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('docs', views.docs_redirect),
+    path('docs/<str:path>', views.docs_path_redirect),
+]
+
+```
+</Tab>
+
+</Tabs>
+
+### Update the domain in docs.yml
+
+```yaml
+instances:
+ - url: myorg.docs.buildwithfern.com
+   custom-domain: mydomain.com/docs
+```
+
+Merge your changes into `main`.
+
+</Steps>
+
+<Note>
+
+Ideally, your reverse proxy should be as close to the origin as possible to minimize latency, such as on a CDN or a load balancer. If latency is a concern, please reach out to a member of the Fern team for guidance.
+
+</Note>
+
