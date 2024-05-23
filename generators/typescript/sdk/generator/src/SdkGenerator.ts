@@ -781,36 +781,40 @@ export class SdkGenerator {
                     }
                 }
 
+                for (const example in endpoint.examples) {
+                    if (example != undefined) {
+                        const snippet = this.withSnippet({
+                            run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
+                                return this.runWithSnippet({
+                                    sourceFile,
+                                    importsManager,
+                                    rootPackage,
+                                    packageId,
+                                    endpoint,
+                                    example,
+                                    includeImports: true
+                                });
+                            },
+                            includeImports: true
+                        });
+                        if (snippet != null) {
+                            this.endpointSnippets.push({
+                                id: {
+                                    path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
+                                    method: endpoint.method,
+                                    identifierOverride: endpoint.id
+                                },
+                                snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                                    client: snippet
+                                }),
+                                exampleIdentifier: example.name?.originalName
+                            });
+                        }
+                    }
+                }
+
                 const example = endpoint.examples[0];
                 if (example != null) {
-                    const snippet = this.withSnippet({
-                        run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
-                            return this.runWithSnippet({
-                                sourceFile,
-                                importsManager,
-                                rootPackage,
-                                packageId,
-                                endpoint,
-                                example,
-                                includeImports: true
-                            });
-                        },
-                        includeImports: true
-                    });
-                    if (snippet != null) {
-                        this.endpointSnippets.push({
-                            id: {
-                                path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                                method: endpoint.method,
-                                identifierOverride: endpoint.id
-                            },
-                            snippet: FernGeneratorExec.EndpointSnippet.typescript({
-                                client: snippet
-                            }),
-                            exampleIdentifier: example.name?.originalName
-                        });
-                    }
-
                     if (serviceReference !== undefined) {
                         let returnType = undefined;
                         let endpointClientAccess: ts.Expression | undefined = undefined;
