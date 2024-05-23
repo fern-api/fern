@@ -9,7 +9,20 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedMixedCaseClient } from \"@fern/mixed-case\";\n\nconst seedMixedCase = new SeedMixedCaseClient;\nawait seedMixedCase.service.getResource(\"rsc-xyz\");\n"
-            }
+            },
+            "example_identifier": null
+        },
+        {
+            "id": {
+                "path": "/resource/{ResourceID}",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getResource"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMixedCaseClient } from \"@fern/mixed-case\";\n\nconst seedMixedCase = new SeedMixedCaseClient;\nawait seedMixedCase.service.getResource(\"string\");\n"
+            },
+            "example_identifier": null
         },
         {
             "id": {
@@ -20,7 +33,20 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedMixedCaseClient } from \"@fern/mixed-case\";\n\nconst seedMixedCase = new SeedMixedCaseClient;\nawait seedMixedCase.service.listResources({\n    page_limit: 10,\n    beforeDate: \"2023-01-01\"\n});\n"
-            }
+            },
+            "example_identifier": "One"
+        },
+        {
+            "id": {
+                "path": "/resource",
+                "method": "GET",
+                "identifier_override": "endpoint_service.listResources"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMixedCaseClient } from \"@fern/mixed-case\";\n\nconst seedMixedCase = new SeedMixedCaseClient;\nawait seedMixedCase.service.listResources({\n    page_limit: 1,\n    beforeDate: \"2023-01-15\"\n});\n"
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

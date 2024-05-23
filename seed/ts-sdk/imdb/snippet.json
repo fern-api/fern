@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst seedApi = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait seedApi.imdb.createMovie({\n    title: \"string\",\n    rating: 1.1\n});\n"
-            }
+            },
+            "example_identifier": null
         },
         {
             "id": {
@@ -20,7 +21,20 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst seedApi = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait seedApi.imdb.getMovie(\"string\");\n"
-            }
+            },
+            "example_identifier": null
+        },
+        {
+            "id": {
+                "path": "/movies/{movieId}",
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.getMovie"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/imdb\";\n\nconst seedApi = new SeedApiClient({ token: \"YOUR_TOKEN\" });\nawait seedApi.imdb.getMovie(\"string\");\n"
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

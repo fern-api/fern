@@ -9,7 +9,20 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedCodeSamplesClient } from \"@fern/code-samples\";\n\nconst seedCodeSamples = new SeedCodeSamplesClient;\nawait seedCodeSamples.service.hello({\n    numEvents: 5\n});\n"
-            }
+            },
+            "example_identifier": null
+        },
+        {
+            "id": {
+                "path": "/hello",
+                "method": "POST",
+                "identifier_override": "endpoint_service.hello"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCodeSamplesClient } from \"@fern/code-samples\";\n\nconst seedCodeSamples = new SeedCodeSamplesClient;\nawait seedCodeSamples.service.hello({\n    numEvents: 5\n});\n"
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

@@ -761,8 +761,8 @@ func maybeWriteSnippets(
 			endpoints = append(
 				endpoints,
 				&generatorexec.Endpoint{
-					Id: generatedEndpoint.Identifier,
-					ExampleIdentifier: &generatedSnippet.ExampleIdentifier,
+					Id:                generatedEndpoint.Identifier,
+					ExampleIdentifier: generatedSnippet.ExampleIdentifier,
 					Snippet: generatorexec.NewEndpointSnippetFromGo(
 						&generatorexec.GoEndpointSnippet{
 							Client: client,

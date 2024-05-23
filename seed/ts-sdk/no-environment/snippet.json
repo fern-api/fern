@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedNoEnvironmentClient } from \"@fern/no-environment\";\n\nconst seedNoEnvironment = new SeedNoEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait seedNoEnvironment.dummy.getDummy();\n"
-            }
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

@@ -781,8 +781,8 @@ export class SdkGenerator {
                     }
                 }
 
-                for (const example in endpoint.examples) {
-                    if (example != undefined) {
+                for (const example of endpoint.examples) {
+                    if (example != null) {
                         const snippet = this.withSnippet({
                             run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
                                 return this.runWithSnippet({

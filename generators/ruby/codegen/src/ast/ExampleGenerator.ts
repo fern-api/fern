@@ -2,6 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     ExampleContainer,
+    ExampleEndpointCall,
     ExamplePrimitive,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
@@ -89,7 +90,7 @@ export class ExampleGenerator {
         return url.startsWith("/") ? url : `/${url}`;
     }
 
-    public registerSnippet(func: Function_, endpoint: HttpEndpoint): void {
+    public registerSnippet(func: Function_, endpoint: HttpEndpoint, example: ExampleEndpointCall): void {
         const nodes: (AstNode | string)[] = [this.generateClientSnippet()];
         const funcExample = this.generateEndpointSnippet(func);
         if (funcExample != null) {
@@ -107,7 +108,7 @@ export class ExampleGenerator {
                 snippet: FernGeneratorExec.EndpointSnippet.ruby({
                     client: exampleNode.write({ startingTabSpaces: 0 })
                 }),
-                exampleIdentifier: endpoint.name.originalName
+                exampleIdentifier: example.name?.originalName
             });
         }
     }

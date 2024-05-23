@@ -9,7 +9,20 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait seedCustomAuth.customAuth.getWithCustomAuth();\n"
-            }
+            },
+            "example_identifier": null
+        },
+        {
+            "id": {
+                "path": "/custom-auth",
+                "method": "GET",
+                "identifier_override": "endpoint_custom-auth.getWithCustomAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait seedCustomAuth.customAuth.getWithCustomAuth();\n"
+            },
+            "example_identifier": null
         },
         {
             "id": {
@@ -20,7 +33,32 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait seedCustomAuth.customAuth.postWithCustomAuth({\n    \"key\": \"value\"\n});\n"
-            }
+            },
+            "example_identifier": null
+        },
+        {
+            "id": {
+                "path": "/custom-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_custom-auth.postWithCustomAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait seedCustomAuth.customAuth.postWithCustomAuth({\n    \"key\": \"value\"\n});\n"
+            },
+            "example_identifier": null
+        },
+        {
+            "id": {
+                "path": "/custom-auth",
+                "method": "POST",
+                "identifier_override": "endpoint_custom-auth.postWithCustomAuth"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedCustomAuthClient } from \"@fern/custom-auth\";\n\nconst seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\nawait seedCustomAuth.customAuth.postWithCustomAuth({\n    \"key\": \"value\"\n});\n"
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

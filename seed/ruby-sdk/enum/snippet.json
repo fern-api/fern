@@ -9,8 +9,7 @@
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN, operand_or_color: RED)",
                 "type": "ruby"
-            },
-            "exampleIdentifier": "send"
+            }
         },
         {
             "id": {
@@ -21,8 +20,7 @@
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN, operand_or_color: RED)",
                 "type": "ruby"
-            },
-            "exampleIdentifier": "send"
+            }
         },
         {
             "id": {
@@ -33,8 +31,7 @@
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(\n  operand: GREATER_THAN,\n  maybe_operand: LESS_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
                 "type": "ruby"
-            },
-            "exampleIdentifier": "send"
+            }
         },
         {
             "id": {
@@ -45,8 +42,7 @@
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(\n  operand: GREATER_THAN,\n  maybe_operand: LESS_THAN,\n  operand_or_color: RED,\n  maybe_operand_or_color: RED\n)",
                 "type": "ruby"
-            },
-            "exampleIdentifier": "send"
+            }
         },
         {
             "id": {
@@ -57,8 +53,7 @@
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN)",
                 "type": "ruby"
-            },
-            "exampleIdentifier": "send"
+            }
         },
         {
             "id": {
@@ -69,8 +64,7 @@
             "snippet": {
                 "client": "require \"fern_enum\"\n\nenum = SeedEnumClient::Client.new(base_url: \"https://api.example.com\")\nenum.send(operand: GREATER_THAN)",
                 "type": "ruby"
-            },
-            "exampleIdentifier": "send"
+            }
         }
     ],
     "types": {}

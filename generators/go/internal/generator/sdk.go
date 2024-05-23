@@ -809,12 +809,12 @@ type GeneratedClient struct {
 
 type GeneratedEndpoint struct {
 	Identifier *generatorexec.EndpointIdentifier
-	Snippets    []*GeneratedSnippet
+	Snippets   []*GeneratedSnippet
 }
 
 type GeneratedSnippet struct {
-	ExampleIdentifier string
-	Snippet    ast.Expr
+	ExampleIdentifier *string
+	Snippet           ast.Expr
 }
 
 // WriteClient writes a client for interacting with the given service.
@@ -1576,7 +1576,7 @@ func newGeneratedEndpoint(
 	}
 	return &GeneratedEndpoint{
 		Identifier: endpointToIdentifier(endpoint),
-		Snippets: snippets,
+		Snippets:   snippets,
 	}
 }
 
@@ -1659,8 +1659,13 @@ func newEndpointSnippet(
 			call,
 		},
 	}
+
+	var exampleId *string
+	if example.Name != nil {
+		exampleId = &example.Name.OriginalName
+	}
 	return &GeneratedSnippet{
-		ExampleIdentifier: example.Name.OriginalName,
+		ExampleIdentifier: exampleId,
 		Snippet: &ast.Block{
 			Exprs: []ast.Expr{
 				rootClientInstantiation,

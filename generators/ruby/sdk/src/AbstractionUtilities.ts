@@ -73,6 +73,12 @@ export function generateEndpoints(
     fileUploadUtility: FileUploadUtility,
     packagePath: string[]
 ): Function_[] {
+    const responseVariable = new Variable({
+        name: "response",
+        type: GenericClassReference,
+        variableType: VariableType.LOCAL
+    });
+
     return endpoints
         .map((endpoint) => {
             if (EndpointGenerator.isStreamingResponse(endpoint)) {
@@ -81,11 +87,6 @@ export function generateEndpoints(
             const path = [irBasePath, serviceBasePath, generateRubyPathTemplate(endpoint.pathParameters, endpoint.path)]
                 .filter((pathPart) => pathPart !== "")
                 .join("/");
-            const responseVariable = new Variable({
-                name: "response",
-                type: GenericClassReference,
-                variableType: VariableType.LOCAL
-            });
 
             const endpointRequestOptions = endpoint.idempotent ? idempotencyRequestOptions : requestOptions;
             const requestOptionsVariable = new Variable({
@@ -93,62 +94,127 @@ export function generateEndpoints(
                 type: endpointRequestOptions.classReference,
                 variableType: VariableType.LOCAL
             });
-            const generator = new EndpointGenerator(
+
+            const func = generateEndpointFunction({
+                crf,
+                eg,
                 endpoint,
                 requestOptionsVariable,
+                requestClientVariable,
+                responseVariable,
                 endpointRequestOptions,
-                crf,
-                eg,
+                isAsync,
                 generatedClasses,
-                fileUploadUtility
-            );
-
-            const shouldOverwriteUrl = endpoint.baseUrl !== undefined;
-            const functionCore: AstNode[] = [
-                new Expression({
-                    leftSide: responseVariable,
-                    rightSide: new FunctionInvocation({
-                        // TODO: Do this field access on the client better
-                        onObject: `${requestClientVariable.write({})}.conn`,
-                        baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
-                        block: generator.getFaradayBlock(requestClientVariable, path, shouldOverwriteUrl)
-                    }),
-                    isAssignment: true
-                }),
-                // TODO: parse and throw the custom exception here. Disable the faraday middleware that does this generically.
-                ...(generator.getResponseExpressions(responseVariable) ?? [])
-            ];
-
-            const func = new Function_({
-                name: endpoint.name.snakeCase.safeName,
-                parameters: generator.getEndpointParameters(),
-                functionBody: isAsync
-                    ? [
-                          new FunctionInvocation({
-                              onObject: new ClassReference({
-                                  name: "Async",
-                                  import_: new Import({ from: "async", isExternal: true })
-                              }),
-                              block: { expressions: functionCore }
-                          })
-                      ]
-                    : functionCore,
-                returnValue: generator.getResponseType(),
-                crf,
-                eg,
                 flattenedProperties,
-                documentation: endpoint.docs,
+                fileUploadUtility,
                 packagePath,
-                skipExample: !generator.endpointHasExamples
+                path
             });
 
-            if (generator.endpointHasExamples) {
-                eg.registerSnippet(func, endpoint);
+            if (endpoint.examples.length > 0) {
+                for (const example of endpoint.examples) {
+                    const exampleFunc = generateEndpointFunction({
+                        crf,
+                        eg,
+                        endpoint,
+                        requestOptionsVariable,
+                        requestClientVariable,
+                        responseVariable,
+                        endpointRequestOptions,
+                        isAsync,
+                        generatedClasses,
+                        flattenedProperties,
+                        fileUploadUtility,
+                        packagePath,
+                        path
+                    });
+                    eg.registerSnippet(exampleFunc, endpoint, example);
+                }
             }
 
             return func;
         })
         .filter((fun) => fun !== undefined) as Function_[];
+}
+
+function generateEndpointFunction({
+    crf,
+    eg,
+    endpoint,
+    requestOptionsVariable,
+    requestClientVariable,
+    responseVariable,
+    endpointRequestOptions,
+    isAsync,
+    generatedClasses,
+    flattenedProperties,
+    fileUploadUtility,
+    packagePath,
+    path
+}: {
+    crf: ClassReferenceFactory;
+    eg: ExampleGenerator;
+    endpoint: HttpEndpoint;
+    requestOptionsVariable: Variable;
+    requestClientVariable: Variable;
+    responseVariable: Variable;
+    endpointRequestOptions: RequestOptions;
+    isAsync: boolean;
+    generatedClasses: Map<TypeId, Class_>;
+    flattenedProperties: Map<TypeId, ObjectProperty[]>;
+    fileUploadUtility: FileUploadUtility;
+    packagePath: string[];
+    path: string;
+}): Function_ {
+    const generator = new EndpointGenerator(
+        endpoint,
+        requestOptionsVariable,
+        endpointRequestOptions,
+        crf,
+        eg,
+        generatedClasses,
+        fileUploadUtility
+    );
+
+    const shouldOverwriteUrl = endpoint.baseUrl !== undefined;
+    const functionCore: AstNode[] = [
+        new Expression({
+            leftSide: responseVariable,
+            rightSide: new FunctionInvocation({
+                // TODO: Do this field access on the client better
+                onObject: `${requestClientVariable.write({})}.conn`,
+                baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
+                block: generator.getFaradayBlock(requestClientVariable, path, shouldOverwriteUrl)
+            }),
+            isAssignment: true
+        }),
+        // TODO: parse and throw the custom exception here. Disable the faraday middleware that does this generically.
+        ...(generator.getResponseExpressions(responseVariable) ?? [])
+    ];
+
+    const func = new Function_({
+        name: endpoint.name.snakeCase.safeName,
+        parameters: generator.getEndpointParameters(),
+        functionBody: isAsync
+            ? [
+                  new FunctionInvocation({
+                      onObject: new ClassReference({
+                          name: "Async",
+                          import_: new Import({ from: "async", isExternal: true })
+                      }),
+                      block: { expressions: functionCore }
+                  })
+              ]
+            : functionCore,
+        returnValue: generator.getResponseType(),
+        crf,
+        eg,
+        flattenedProperties,
+        documentation: endpoint.docs,
+        packagePath,
+        skipExample: !generator.endpointHasExamples
+    });
+    return func;
 }
 
 // HACK: we generate the root package at the end to have all the subpackages generated, but we also need to know
