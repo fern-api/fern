@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.6.3] - 2024-05-23
+
+- Internal: SDK snippets now specify their example ID and we create a snippet per example
+
 ## [0.6.1] - 2024-05-17
 
 - Internal: The generator now uses the latest FDR SDK.

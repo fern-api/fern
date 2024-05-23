@@ -742,32 +742,35 @@ func maybeWriteSnippets(
 	}
 	var endpoints []*generatorexec.Endpoint
 	for _, generatedEndpoint := range generatedClient.Endpoints {
-		client, err := ast.NewSourceCodeBuilder(generatedEndpoint.Snippet).BuildSnippet()
-		if err != nil {
-			// Log the warning and continue. We don't want to fail generation just
-			// because there's a bug in the snippet generator.
-			_ = coordinator.Log(
-				generatorexec.LogLevelWarn,
-				fmt.Sprintf(
-					"Failed to generate snippet for endpoint %s %q: %v",
-					generatedEndpoint.Identifier.Method,
-					generatedEndpoint.Identifier.Path,
-					err,
-				),
+		for _, generatedSnippet := range generatedEndpoint.Snippets {
+			client, err := ast.NewSourceCodeBuilder(generatedSnippet.Snippet).BuildSnippet()
+			if err != nil {
+				// Log the warning and continue. We don't want to fail generation just
+				// because there's a bug in the snippet generator.
+				_ = coordinator.Log(
+					generatorexec.LogLevelWarn,
+					fmt.Sprintf(
+						"Failed to generate snippet for endpoint %s %q: %v",
+						generatedEndpoint.Identifier.Method,
+						generatedEndpoint.Identifier.Path,
+						err,
+					),
+				)
+				continue
+			}
+			endpoints = append(
+				endpoints,
+				&generatorexec.Endpoint{
+					Id: generatedEndpoint.Identifier,
+					ExampleIdentifier: &generatedSnippet.ExampleIdentifier,
+					Snippet: generatorexec.NewEndpointSnippetFromGo(
+						&generatorexec.GoEndpointSnippet{
+							Client: client,
+						},
+					),
+				},
 			)
-			continue
 		}
-		endpoints = append(
-			endpoints,
-			&generatorexec.Endpoint{
-				Id: generatedEndpoint.Identifier,
-				Snippet: generatorexec.NewEndpointSnippetFromGo(
-					&generatorexec.GoEndpointSnippet{
-						Client: client,
-					},
-				),
-			},
-		)
 	}
 	// Sort the endpoints for deterministic results.
 	sort.Slice(

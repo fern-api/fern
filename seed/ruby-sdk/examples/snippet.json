@@ -9,7 +9,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.notification.get_exception(notification_id: \"notification-hsy129x\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getException"
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.notification.get_exception(notification_id: \"notification-hsy129x\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getException"
         },
         {
             "id": {
@@ -31,7 +33,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.get_file(filename: \"file.txt\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getFile"
         },
         {
             "id": {
@@ -42,7 +45,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.get_file(filename: \"file.txt\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getFile"
         },
         {
             "id": {
@@ -53,7 +57,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.notification.get_exception(notification_id: \"notification-hsy129x\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getException"
         },
         {
             "id": {
@@ -64,7 +69,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.notification.get_exception(notification_id: \"notification-hsy129x\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getException"
         },
         {
             "id": {
@@ -75,7 +81,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.get_file(filename: \"file.txt\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getFile"
         },
         {
             "id": {
@@ -86,7 +93,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.get_file(filename: \"file.txt\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getFile"
         },
         {
             "id": {
@@ -97,7 +105,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.check(id: \"id-2sdx82h\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "check"
         },
         {
             "id": {
@@ -108,7 +117,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.ping",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "ping"
         },
         {
             "id": {
@@ -119,7 +129,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.check(id: \"id-2sdx82h\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "check"
         },
         {
             "id": {
@@ -130,7 +141,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.ping",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "ping"
         },
         {
             "id": {
@@ -141,7 +153,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.check(id: \"id-2sdx82h\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "check"
         },
         {
             "id": {
@@ -152,7 +165,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.ping",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "ping"
         },
         {
             "id": {
@@ -163,7 +177,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.check(id: \"id-2sdx82h\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "check"
         },
         {
             "id": {
@@ -174,7 +189,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.ping",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "ping"
         },
         {
             "id": {
@@ -185,7 +201,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_movie(movie_id: \"movie-c06a4ad7\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getMovie"
         },
         {
             "id": {
@@ -196,7 +213,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} } })",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "createMovie"
         },
         {
             "id": {
@@ -207,7 +225,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_metadata(\n  x_api_version: \"0.0.1\",\n  shallow: false,\n  tag: \"development\"\n)",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getMetadata"
         },
         {
             "id": {
@@ -218,7 +237,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_response",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getResponse"
         },
         {
             "id": {
@@ -229,7 +249,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_movie(movie_id: \"movie-c06a4ad7\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getMovie"
         },
         {
             "id": {
@@ -240,7 +261,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} } })",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "createMovie"
         },
         {
             "id": {
@@ -251,7 +273,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_metadata(\n  x_api_version: \"0.0.1\",\n  shallow: false,\n  tag: \"development\"\n)",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getMetadata"
         },
         {
             "id": {
@@ -262,7 +285,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.get_response",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "getResponse"
         },
         {
             "id": {
@@ -273,7 +297,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.echo(request: \"Hello world!\\n\\nwith\\n\\tnewlines\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "echo"
         },
         {
             "id": {
@@ -284,7 +309,8 @@
             "snippet": {
                 "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.echo(request: \"Hello world!\\n\\nwith\\n\\tnewlines\")",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "echo"
         }
     ],
     "types": {}

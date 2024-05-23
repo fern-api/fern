@@ -67,12 +67,14 @@ class SnippetRegistry:
         example_id: Optional[str],
     ) -> None:
         init = self._async_client_endpoint_snippets.get(endpoint.id) or []
-        init.append(EndpointExpression(
-            endpoint_id=self._endpoint_to_identifier(endpoint),
-            expr=expr,
-            example_id=example_id,
-        ))
-        
+        init.append(
+            EndpointExpression(
+                endpoint_id=self._endpoint_to_identifier(endpoint),
+                expr=expr,
+                example_id=example_id,
+            )
+        )
+
         self._async_client_endpoint_snippets[endpoint.id] = init
 
     def register_sync_client_endpoint_snippet(
@@ -82,12 +84,14 @@ class SnippetRegistry:
         example_id: Optional[str],
     ) -> None:
         init = self._sync_client_endpoint_snippets.get(endpoint.id) or []
-        init.append(EndpointExpression(
-            endpoint_id=self._endpoint_to_identifier(endpoint),
-            expr=expr,
-            example_id=example_id,
-        ))
-        
+        init.append(
+            EndpointExpression(
+                endpoint_id=self._endpoint_to_identifier(endpoint),
+                expr=expr,
+                example_id=example_id,
+            )
+        )
+
         self._sync_client_endpoint_snippets[endpoint.id] = init
 
     def _endpoint_to_identifier(

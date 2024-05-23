@@ -38,6 +38,7 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
     ]
 )
 
+
 @dataclass
 class GeneratedEndpointFunctionSnippet:
     example_id: Optional[str]
@@ -300,6 +301,7 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
 
 def raise_json_nested_property_as_response_unsupported() -> Never:
     raise RuntimeError("nested property json response is unsupported")
+
 
 class EndpointFunctionGenerator:
     REQUEST_OPTIONS_VARIABLE = "request_options"
@@ -780,26 +782,27 @@ class EndpointFunctionGenerator:
             example = user_provided_examples[0]
 
         endpoint_snippet_generator = EndpointFunctionSnippetGenerator(
-                context=self._context,
-                snippet_writer=snippet_writer,
-                service=service,
-                endpoint=endpoint,
-                example=example,
-                path_parameter_names=self._path_parameter_names,
-                request_parameter_names=self._request_parameter_name_rewrites,
-            )   
+            context=self._context,
+            snippet_writer=snippet_writer,
+            service=service,
+            endpoint=endpoint,
+            example=example,
+            path_parameter_names=self._path_parameter_names,
+            request_parameter_names=self._request_parameter_name_rewrites,
+        )
 
         endpoint_snippet = endpoint_snippet_generator.generate_snippet()
 
         return GeneratedEndpointFunctionSnippet(
-            example_id=example.get_as_union().name,
+            example_id=example.get_as_union().name.original_name if example.get_as_union().name is not None else None,
             snippet=self._snippet_code_writer(
                 package=package,
                 endpoint_snippet=endpoint_snippet,
                 endpoint_snippet_generator=endpoint_snippet_generator,
                 is_async=is_async,
                 generated_root_client=generated_root_client,
-            ))
+            ),
+        )
 
     def _generate_endpoint_snippets(
         self,
@@ -817,7 +820,6 @@ class EndpointFunctionGenerator:
         if len(user_provided_examples) == 0:
             return None
 
-
         snippets: List[GeneratedEndpointFunctionSnippet] = []
         for example in user_provided_examples:
             endpoint_snippet_generator = EndpointFunctionSnippetGenerator(
@@ -828,23 +830,32 @@ class EndpointFunctionGenerator:
                 example=example,
                 path_parameter_names=self._path_parameter_names,
                 request_parameter_names=self._request_parameter_name_rewrites,
-            )   
+            )
 
             endpoint_snippet = endpoint_snippet_generator.generate_snippet()
 
-            snippets.append(GeneratedEndpointFunctionSnippet(
-                example_id=example.get_as_union().name,
-                snippet=self._snippet_code_writer(
-                    package=package,
-                    endpoint_snippet=endpoint_snippet,
-                    endpoint_snippet_generator=endpoint_snippet_generator,
-                    is_async=is_async,
-                    generated_root_client=generated_root_client,
-                ))
+            snippets.append(
+                GeneratedEndpointFunctionSnippet(
+                    example_id=example.get_as_union().name,
+                    snippet=self._snippet_code_writer(
+                        package=package,
+                        endpoint_snippet=endpoint_snippet,
+                        endpoint_snippet_generator=endpoint_snippet_generator,
+                        is_async=is_async,
+                        generated_root_client=generated_root_client,
+                    ),
+                )
             )
         return snippets
 
-    def _snippet_code_writer(self, package: ir_types.Package, endpoint_snippet: AST.Expression, endpoint_snippet_generator: EndpointFunctionSnippetGenerator, is_async: bool, generated_root_client: GeneratedRootClient,) -> AST.Expression:
+    def _snippet_code_writer(
+        self,
+        package: ir_types.Package,
+        endpoint_snippet: AST.Expression,
+        endpoint_snippet_generator: EndpointFunctionSnippetGenerator,
+        is_async: bool,
+        generated_root_client: GeneratedRootClient,
+    ) -> AST.Expression:
         response_name = "response"
         endpoint_usage = endpoint_snippet_generator.generate_usage(is_async=is_async, response_name=response_name)
 
@@ -872,7 +883,6 @@ class EndpointFunctionGenerator:
             writer.write_newline_if_last_line_not()
 
         return AST.Expression(AST.CodeWriter(write))
-
 
     def _get_subpackage_client_accessor(
         self,
@@ -1366,4 +1376,3 @@ def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
         and type_reference.get_as_union().request_body_type.get_as_union().type == "container"
         and type_reference.get_as_union().request_body_type.get_as_union().container.get_as_union().type == "optional"
     )
-

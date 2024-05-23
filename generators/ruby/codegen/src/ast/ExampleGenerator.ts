@@ -106,7 +106,8 @@ export class ExampleGenerator {
                 },
                 snippet: FernGeneratorExec.EndpointSnippet.ruby({
                     client: exampleNode.write({ startingTabSpaces: 0 })
-                })
+                }),
+                exampleIdentifier: endpoint.name.originalName
             });
         }
     }

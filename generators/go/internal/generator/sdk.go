@@ -809,11 +809,11 @@ type GeneratedClient struct {
 
 type GeneratedEndpoint struct {
 	Identifier *generatorexec.EndpointIdentifier
-	Snippet    []*GeneratedSnippet
+	Snippets    []*GeneratedSnippet
 }
 
 type GeneratedSnippet struct {
-	ExampleIdentifer string
+	ExampleIdentifier string
 	Snippet    ast.Expr
 }
 
@@ -1516,7 +1516,6 @@ func NewGeneratedClient(
 			fernFilepath,
 			rootClientInstantiation,
 			endpoint,
-			endpoint.Examples,
 		)
 		if generatedEndpoint == nil {
 			continue
@@ -1557,24 +1556,27 @@ func newGeneratedEndpoint(
 	fernFilepath *ir.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
-	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
-	var generatedEndpoints []*GeneratedEndpoint
+	var snippets []*GeneratedSnippet
 	for _, endpointExample := range endpoint.Examples {
 		example := exampleEndpointCallFromEndpointExample(endpointExample)
-		generatedEndpoint := &GeneratedEndpoint{
-			Identifier: endpointToIdentifier(endpoint),
-			Snippet: newEndpointSnippet(
-				f,
-				fernFilepath,
-				rootClientInstantiation,
-				endpoint,
-				example,
-			),
-			ExampleIdentifer: example.Name,
-		}
+		snippet := newEndpointSnippet(
+			f,
+			fernFilepath,
+			rootClientInstantiation,
+			endpoint,
+			example,
+		)
 
-		generatedEndpoints = append(generatedEndpoints, generatedEndpoint)
+		snippets = append(snippets, snippet)
+	}
+
+	if len(snippets) == 0 {
+		return nil
+	}
+	return &GeneratedEndpoint{
+		Identifier: endpointToIdentifier(endpoint),
+		Snippets: snippets,
 	}
 }
 
@@ -1622,7 +1624,7 @@ func newEndpointSnippet(
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
-) *ast.Block {
+) *GeneratedSnippet {
 	methodName := getEndpointMethodName(fernFilepath, endpoint)
 	parameters := getEndpointParameters(
 		f,
@@ -1657,10 +1659,13 @@ func newEndpointSnippet(
 			call,
 		},
 	}
-	return &ast.Block{
-		Exprs: []ast.Expr{
-			rootClientInstantiation,
-			endpointCall,
+	return &GeneratedSnippet{
+		ExampleIdentifier: example.Name.OriginalName,
+		Snippet: &ast.Block{
+			Exprs: []ast.Expr{
+				rootClientInstantiation,
+				endpointCall,
+			},
 		},
 	}
 }

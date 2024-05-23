@@ -806,7 +806,8 @@ export class SdkGenerator {
                             },
                             snippet: FernGeneratorExec.EndpointSnippet.typescript({
                                 client: snippet
-                            })
+                            }),
+                            exampleIdentifier: example.name?.originalName
                         });
                     }
 
