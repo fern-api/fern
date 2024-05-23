@@ -89,6 +89,7 @@ service:
 
     load:
       path: /load
+      docs: Load all SDK snippets with optional filters
       display-name: Load all snippets
       method: POST
       availability: pre-release
