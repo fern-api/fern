@@ -60,6 +60,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             );
         }
 
+        const addJsonAnnotations = this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0;
+
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 class_.addField(
@@ -83,7 +85,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             access: "public",
                             get: true,
                             init: true,
-                            summary: property.docs
+                            summary: property.docs,
+                            jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined
                         })
                     );
                 }

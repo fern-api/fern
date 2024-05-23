@@ -1,11 +1,14 @@
+using System.Text.Json.Serialization;
 using SeedTrace;
 
 namespace SeedTrace;
 
 public class GetDefaultStarterFilesRequest
 {
+    [JsonPropertyName("inputParams")]
     public List<VariableTypeAndName> InputParams { get; init; }
 
+    [JsonPropertyName("outputType")]
     public VariableType OutputType { get; init; }
 
     /// <summary>
@@ -17,5 +20,6 @@ public class GetDefaultStarterFilesRequest
     ///   - Period `.`
     ///
     /// </summary>
+    [JsonPropertyName("methodName")]
     public string MethodName { get; init; }
 }
