@@ -44,14 +44,13 @@ import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractGeneratorCli<
-        T extends com.fern.java.ICustomConfig, K extends com.fern.java.DownloadFilesCustomConfig> {
+public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends DownloadFilesCustomConfig> {
 
     @Value.Immutable
     @StagedBuilderImmutablesStyle
     interface MavenPackageCoordinate {
-        static com.fern.java.ImmutableMavenPackageCoordinate.PackageCoordinateBuildStage builder() {
-            return com.fern.java.ImmutableMavenPackageCoordinate.builder();
+        static ImmutableMavenPackageCoordinate.PackageCoordinateBuildStage builder() {
+            return ImmutableMavenPackageCoordinate.builder();
         }
 
         PackageCoordinate packageCoordinate();
@@ -96,8 +95,8 @@ public abstract class AbstractGeneratorCli<
             ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
             pb.environment().putAll(environment);
             Process process = pb.start();
-            com.fern.java.StreamGobbler errorGobbler = new com.fern.java.StreamGobbler(process.getErrorStream());
-            com.fern.java.StreamGobbler outputGobbler = new com.fern.java.StreamGobbler(process.getInputStream());
+            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
+            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
             errorGobbler.start();
             outputGobbler.start();
             return process;
@@ -115,8 +114,7 @@ public abstract class AbstractGeneratorCli<
     public final void run(String... args) {
         String pluginPath = args[0];
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
-        com.fern.java.DefaultGeneratorExecClient generatorExecClient =
-                new com.fern.java.DefaultGeneratorExecClient(generatorConfig);
+        DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
             IntermediateRepresentation ir = getIr(generatorConfig);
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
@@ -159,7 +157,7 @@ public abstract class AbstractGeneratorCli<
     }
 
     public final void runInDownloadFilesMode(
-            com.fern.java.DefaultGeneratorExecClient generatorExecClient,
+            DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             K customConfig) {
@@ -169,13 +167,13 @@ public abstract class AbstractGeneratorCli<
     }
 
     public abstract void runInDownloadFilesModeHook(
-            com.fern.java.DefaultGeneratorExecClient generatorExecClient,
+            DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             K customConfig);
 
     public final void runInGithubMode(
-            com.fern.java.DefaultGeneratorExecClient generatorExecClient,
+            DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             T customConfig,
@@ -184,7 +182,7 @@ public abstract class AbstractGeneratorCli<
                 .getPublishInfo()
                 .flatMap(githubPublishInfo -> githubPublishInfo.getMaven().map(mavenGithubPublishInfo -> {
                     MavenArtifactAndGroup mavenArtifactAndGroup =
-                            com.fern.java.MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
+                            MavenCoordinateParser.parse(mavenGithubPublishInfo.getCoordinate());
                     return MavenCoordinate.builder()
                             .group(mavenArtifactAndGroup.group())
                             .artifact(mavenArtifactAndGroup.artifact())
@@ -209,14 +207,14 @@ public abstract class AbstractGeneratorCli<
     }
 
     public abstract void runInGithubModeHook(
-            com.fern.java.DefaultGeneratorExecClient generatorExecClient,
+            DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             T customConfig,
             GithubOutputMode githubOutputMode);
 
     public final void runInPublishMode(
-            com.fern.java.DefaultGeneratorExecClient generatorExecClient,
+            DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             T customConfig,
@@ -225,7 +223,7 @@ public abstract class AbstractGeneratorCli<
         MavenRegistryConfigV2 mavenRegistryConfigV2 =
                 publishOutputMode.getRegistriesV2().getMaven();
         MavenArtifactAndGroup mavenArtifactAndGroup =
-                com.fern.java.MavenCoordinateParser.parse(mavenRegistryConfigV2.getCoordinate());
+                MavenCoordinateParser.parse(mavenRegistryConfigV2.getCoordinate());
         MavenCoordinate mavenCoordinate = MavenCoordinate.builder()
                 .group(mavenArtifactAndGroup.group())
                 .artifact(mavenArtifactAndGroup.artifact())
@@ -275,7 +273,7 @@ public abstract class AbstractGeneratorCli<
     }
 
     public abstract void runInPublishModeHook(
-            com.fern.java.DefaultGeneratorExecClient generatorExecClient,
+            DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
             T customConfig,
@@ -285,9 +283,9 @@ public abstract class AbstractGeneratorCli<
 
     public abstract List<String> getSubProjects();
 
-    public abstract <T extends com.fern.java.ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
+    public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
-    public abstract <K extends com.fern.java.DownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
+    public abstract <K extends DownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
             GeneratorConfig generatorConfig);
 
     protected final void addGeneratedFile(GeneratedFile generatedFile) {
@@ -351,6 +349,6 @@ public abstract class AbstractGeneratorCli<
                         .map(project -> "include '" + project + "'")
                         .collect(Collectors.joining("\n")))
                 .build());
-        addGeneratedFile(com.fern.java.GitIgnoreGenerator.getGitignore());
+        addGeneratedFile(GitIgnoreGenerator.getGitignore());
     }
 }
