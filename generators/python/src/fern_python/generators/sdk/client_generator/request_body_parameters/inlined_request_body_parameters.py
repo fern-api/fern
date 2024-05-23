@@ -3,7 +3,9 @@ from typing import Dict, List, Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
-from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import NamedFunctionParameter
+from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
+    NamedFunctionParameter,
+)
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -53,7 +55,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     ),
                 )
         return parameters
-    
+
     def _get_non_parameter_properties(self) -> List[AST.NamedFunctionParameter]:
         non_param_properties = []
 
@@ -101,7 +103,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 ]
             )
         return properties
-    
+
     def _get_properties(self) -> List[NamedFunctionParameter]:
         return self.get_parameters() + self._get_non_parameter_properties()
 
