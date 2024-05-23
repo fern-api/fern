@@ -158,13 +158,13 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         clientCredentials.getTokenPrefix().orElse("Bearer") + " ",
                         ACCESS_TOKEN_FIELD_NAME);
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
-            .addModifiers(Modifier.PUBLIC)
-            .addParameter(String.class, CLIENT_ID_FIELD_NAME)
-            .addParameter(String.class, CLIENT_SECRET_FIELD_NAME)
-            .addParameter(authClientClassName, AUTH_CLIENT_NAME)
-            .addStatement("this.$L = $L", CLIENT_ID_FIELD_NAME, CLIENT_ID_FIELD_NAME)
-            .addStatement("this.$L = $L", CLIENT_SECRET_FIELD_NAME, CLIENT_SECRET_FIELD_NAME)
-            .addStatement("this.$L = $L", AUTH_CLIENT_NAME, AUTH_CLIENT_NAME)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(String.class, CLIENT_ID_FIELD_NAME)
+                .addParameter(String.class, CLIENT_SECRET_FIELD_NAME)
+                .addParameter(authClientClassName, AUTH_CLIENT_NAME)
+                .addStatement("this.$L = $L", CLIENT_ID_FIELD_NAME, CLIENT_ID_FIELD_NAME)
+                .addStatement("this.$L = $L", CLIENT_SECRET_FIELD_NAME, CLIENT_SECRET_FIELD_NAME)
+                .addStatement("this.$L = $L", AUTH_CLIENT_NAME, AUTH_CLIENT_NAME);
         if (refreshRequired) {
             constructorBuilder.addStatement("this.$L = $T.now()", EXPIRES_AT_FIELD_NAME, Instant.class);
         }
