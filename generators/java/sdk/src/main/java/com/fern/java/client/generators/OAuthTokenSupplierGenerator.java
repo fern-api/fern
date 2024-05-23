@@ -5,6 +5,7 @@ import com.fern.irV42.model.auth.OAuthClientCredentials;
 import com.fern.irV42.model.commons.EndpointId;
 import com.fern.irV42.model.commons.EndpointReference;
 import com.fern.irV42.model.http.HttpEndpoint;
+import com.fern.irV42.model.http.HttpResponse;
 import com.fern.irV42.model.http.HttpService;
 import com.fern.irV42.model.http.JsonResponseBody;
 import com.fern.irV42.model.http.ResponseProperty;
@@ -94,8 +95,12 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getUnsafeName();
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         // todo: handle other response types
-        JsonResponseBody jsonResponseBody =
-                httpEndpoint.getResponse().get().getJson().get().getResponse().get();
+        HttpResponse tokenHttpResponse = httpEndpoint.getResponse().get();
+        JsonResponseBody jsonResponseBody = tokenHttpResponse
+                .getJson()
+                .orElseThrow(() -> new RuntimeException("Unexpected non json response type for token endpoint"))
+                .getResponse()
+                .get();
         TypeName fetchTokenReturnType = clientGeneratorContext
                 .getPoetTypeNameMapper()
                 .convertToTypeName(true, jsonResponseBody.getResponseBodyType());
