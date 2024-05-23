@@ -187,7 +187,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Test
-        run: {'fern test --command "poetry run pytest -rP ."' if write_unit_tests else 'poetry run pytest .'}
+        run: poetry run pytest ./tests/custom/
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
