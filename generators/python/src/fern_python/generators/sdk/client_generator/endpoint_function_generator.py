@@ -768,8 +768,9 @@ class EndpointFunctionGenerator:
 
         endpoint_snippet = endpoint_snippet_generator.generate_snippet()
 
+        example_name = example.get_as_union().name
         return GeneratedEndpointFunctionSnippet(
-            example_id=example.get_as_union().name.original_name if example.get_as_union().name is not None else None,
+            example_id=example_name.original_name if example_name is not None else None,
             snippet=self._snippet_code_writer(
                 package=package,
                 endpoint_snippet=endpoint_snippet,
@@ -1351,6 +1352,7 @@ def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
         and type_reference.get_as_union().request_body_type.get_as_union().type == "container"
         and type_reference.get_as_union().request_body_type.get_as_union().container.get_as_union().type == "optional"
     )
+
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
     if endpoint.name.get_as_name().original_name == "list":
