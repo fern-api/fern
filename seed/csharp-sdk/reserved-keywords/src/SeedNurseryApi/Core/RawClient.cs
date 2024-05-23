@@ -56,7 +56,7 @@ public class RawClient
                 WriteIndented = true,
             };
             httpRequest.Content = new StringContent(
-                JsonSerializer.Serialize(request.Body),
+                JsonSerializer.Serialize(request.Body, serializerOptions),
                 Encoding.UTF8,
                 "application/json"
             );

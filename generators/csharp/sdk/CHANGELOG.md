@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.16 - 2024-05-23]
+
+- Fix: Misc. fixes including `.csproj` indentation, setting `X-Fern-SDK-Name` to the top level
+  namespace, and passing through serializer options when serializing JSON messages.
+
 ## [0.0.15 - 2024-05-23]
 
 - Fix: Inlined requests that are strictly bodies should be JSON serializable. To achieve this
