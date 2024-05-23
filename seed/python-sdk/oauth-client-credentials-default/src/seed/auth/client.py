@@ -60,10 +60,14 @@ class AuthClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder({"client_id": client_id, "client_secret": client_secret})
+            json=jsonable_encoder(
+                {"client_id": client_id, "client_secret": client_secret, "grant_type": "client_credentials"}
+            )
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"client_id": client_id, "client_secret": client_secret}),
+                **jsonable_encoder(
+                    {"client_id": client_id, "client_secret": client_secret, "grant_type": "client_credentials"}
+                ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -132,10 +136,14 @@ class AsyncAuthClient:
                     request_options.get("additional_query_parameters") if request_options is not None else None
                 )
             ),
-            json=jsonable_encoder({"client_id": client_id, "client_secret": client_secret})
+            json=jsonable_encoder(
+                {"client_id": client_id, "client_secret": client_secret, "grant_type": "client_credentials"}
+            )
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"client_id": client_id, "client_secret": client_secret}),
+                **jsonable_encoder(
+                    {"client_id": client_id, "client_secret": client_secret, "grant_type": "client_credentials"}
+                ),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(

@@ -63,8 +63,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAsIsFiles(): string[] {
-        return [AsIsFiles.RawClient];
-        // return [AsIsFiles.StringEnum, AsIsFiles.OneOfJsonConverter, AsIsFiles.EnumConverter];
+        return [AsIsFiles.RawClient, AsIsFiles.JsonEnumMemberStringEnumConverter];
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {

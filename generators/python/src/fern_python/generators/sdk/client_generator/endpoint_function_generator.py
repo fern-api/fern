@@ -278,31 +278,6 @@ class EndpointFunctionSnippetGenerator:
         return False
 
 
-def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    return endpoint.name.get_as_name().snake_case.safe_name
-
-
-def get_parameter_name(name: ir_types.Name) -> str:
-    return name.snake_case.safe_name
-
-
-def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
-    return len(endpoint.full_path.head) == 0 and len(endpoint.full_path.parts) == 0
-
-
-def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
-    type_as_union = type_reference.get_as_union()
-    if type_as_union.type == "container":
-        container_as_union = type_as_union.container.get_as_union()
-        if container_as_union.type == "optional":
-            return unwrap_optional_type(container_as_union.optional)
-    return type_reference
-
-
-def raise_json_nested_property_as_response_unsupported() -> Never:
-    raise RuntimeError("nested property json response is unsupported")
-
-
 class EndpointFunctionGenerator:
     REQUEST_OPTIONS_VARIABLE = "request_options"
 
@@ -1376,3 +1351,29 @@ def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
         and type_reference.get_as_union().request_body_type.get_as_union().type == "container"
         and type_reference.get_as_union().request_body_type.get_as_union().container.get_as_union().type == "optional"
     )
+
+def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
+    if endpoint.name.get_as_name().original_name == "list":
+        return "list"
+    return endpoint.name.get_as_name().snake_case.safe_name
+
+
+def get_parameter_name(name: ir_types.Name) -> str:
+    return name.snake_case.safe_name
+
+
+def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
+    return len(endpoint.full_path.head) == 0 and len(endpoint.full_path.parts) == 0
+
+
+def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+    type_as_union = type_reference.get_as_union()
+    if type_as_union.type == "container":
+        container_as_union = type_as_union.container.get_as_union()
+        if container_as_union.type == "optional":
+            return unwrap_optional_type(container_as_union.optional)
+    return type_reference
+
+
+def raise_json_nested_property_as_response_unsupported() -> Never:
+    raise RuntimeError("nested property json response is unsupported")
