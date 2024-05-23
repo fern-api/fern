@@ -38,13 +38,268 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
     ]
 )
 
+@dataclass
+class GeneratedEndpointFunctionSnippet:
+    example_id: Optional[str]
+    snippet: AST.Expression
+
 
 @dataclass
 class GeneratedEndpointFunction:
     function: AST.FunctionDeclaration
     is_default_body_parameter_used: bool
-    snippet: Optional[AST.Expression]
+    snippet: List[GeneratedEndpointFunctionSnippet]
 
+
+# TODO: this is effectively what should be exposed when creating the snippets API.
+class EndpointFunctionSnippetGenerator:
+    def __init__(
+        self,
+        context: SdkGeneratorContext,
+        snippet_writer: SnippetWriter,
+        service: ir_types.HttpService,
+        endpoint: ir_types.HttpEndpoint,
+        example: ir_types.HttpEndpointExample,
+        path_parameter_names: Dict[ir_types.Name, str],
+        request_parameter_names: Dict[ir_types.Name, str],
+    ):
+        self.context = context
+        self.snippet_writer = snippet_writer
+        self.service = service
+        self.endpoint = endpoint
+        self.example = example.get_as_union()
+        self.path_parameter_names = path_parameter_names
+        self.request_parameter_names = request_parameter_names
+
+    # TODO: It should be sufficient for this to just take in the example and client
+    def generate_snippet(self) -> AST.Expression:
+        args: List[AST.Expression] = []
+        all_path_parameters = (
+            self.example.root_path_parameters
+            + self.example.service_path_parameters
+            + self.example.endpoint_path_parameters
+        )
+        for path_parameter in all_path_parameters:
+            path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
+                example_type_reference=path_parameter.value,
+            )
+            if not self._is_path_literal(path_parameter.name.original_name):
+                args.append(
+                    self.snippet_writer.get_snippet_for_named_parameter(
+                        parameter_name=self.path_parameter_names[path_parameter.name],
+                        # If there's no value put a None in place as path parameters are unnamed and cannot be skipped
+                        value=path_parameter_value
+                        if path_parameter_value is not None
+                        else AST.Expression(AST.TypeHint.none()),
+                    ),
+                )
+
+        # TODO(amckinney): Idempotency headers aren't included in the example IR yet.
+        # We need to include those examples when they're available.
+        headers: Dict[str, ir_types.HttpHeader] = {}
+        for header in self.service.headers + self.endpoint.headers:
+            headers[header.name.wire_value] = header
+
+        all_example_headers = self.example.service_headers + self.example.endpoint_headers
+        for example_header in all_example_headers:
+            if (
+                example_header.name.wire_value in headers
+                and self.context.get_literal_header_value(headers[example_header.name.wire_value]) is not None
+            ):
+                continue
+            example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
+                example_type_reference=example_header.value,
+            )
+            if (
+                not self._is_header_literal(example_header.name.wire_value)
+                and example_header_parameter_value is not None
+            ):
+                args.append(
+                    self.snippet_writer.get_snippet_for_named_parameter(
+                        parameter_name=get_parameter_name(example_header.name.name),
+                        value=example_header_parameter_value,
+                    ),
+                )
+
+        for query_parameter in self.example.query_parameters:
+            query_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
+                example_type_reference=query_parameter.value,
+            )
+            if not self._is_query_literal(query_parameter.name.wire_value) and query_parameter_value is not None:
+                args.append(
+                    self.snippet_writer.get_snippet_for_named_parameter(
+                        parameter_name=get_parameter_name(query_parameter.name.name),
+                        value=query_parameter_value,
+                    ),
+                )
+
+        if self.example.request is not None:
+            # For some reason the example type reference is not marking it's type as optional, so we need to specify it so the
+            # snippets (and thus unit tests) write correctly
+            is_optional = self.endpoint.request_body is not None and _is_type_reference_optional(
+                self.endpoint.request_body
+            )
+            args.extend(
+                self.example.request.visit(
+                    inlined_request_body=lambda inlined_request_body: self._get_snippet_for_inlined_request_body_properties(
+                        example_inlined_request_body=inlined_request_body,
+                    ),
+                    reference=lambda reference: self._get_snippet_for_request_reference(
+                        example_type_reference=reference,
+                        is_optional=is_optional,
+                        request_parameter_names=self.request_parameter_names,
+                    ),
+                ),
+            )
+
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(get_endpoint_name(self.endpoint),),
+                ),
+                args=args,
+            ),
+        )
+
+    def generate_usage(self, response_name: str, is_async: bool) -> Optional[AST.Expression]:
+        if self.endpoint.response is not None and self.endpoint.response.get_as_union().type == "streaming":
+
+            def snippet_writer(writer: AST.NodeWriter) -> None:
+                if is_async:
+                    writer.write("async ")
+                writer.write_line(f"for chunk in {response_name}:")
+                with writer.indent():
+                    writer.write_line("yield chunk")
+
+            return AST.Expression(AST.CodeWriter(snippet_writer))
+        return None
+
+    def _get_snippet_for_inlined_request_body_properties(
+        self,
+        example_inlined_request_body: ir_types.ExampleInlinedRequestBody,
+    ) -> List[AST.Expression]:
+        snippets: List[AST.Expression] = []
+        for example_property in example_inlined_request_body.properties:
+            property_value = self.snippet_writer.get_snippet_for_example_type_reference(
+                example_type_reference=example_property.value,
+            )
+            if not self._is_inlined_request_literal(example_property.name.wire_value) and property_value is not None:
+                snippets.append(
+                    self.snippet_writer.get_snippet_for_named_parameter(
+                        parameter_name=get_parameter_name(example_property.name.name),
+                        value=property_value,
+                    ),
+                )
+        return snippets
+
+    def _get_snippet_for_request_reference_default(
+        self, example_type_reference: ir_types.ExampleTypeReference
+    ) -> List[AST.Expression]:
+        request_value = self.snippet_writer.get_snippet_for_example_type_reference(
+            example_type_reference=example_type_reference,
+        )
+        if request_value is not None:
+            return [
+                self.snippet_writer.get_snippet_for_named_parameter(
+                    parameter_name=self._get_request_parameter_name(),
+                    value=request_value,
+                )
+            ]
+        return []
+
+    def _get_snippet_for_request_reference_flattened(
+        self,
+        example_object: ir_types.ExampleObjectType,
+        request_parameter_names: Dict[ir_types.Name, str],
+    ) -> List[AST.Expression]:
+        return self.snippet_writer.get_snippet_for_object_properties(example_object, request_parameter_names)
+
+    def _get_snippet_for_request_reference(
+        self,
+        example_type_reference: ir_types.ExampleTypeReference,
+        is_optional: bool,
+        request_parameter_names: Dict[ir_types.Name, str],
+    ) -> List[AST.Expression]:
+        if self.context.custom_config.inline_request_params and not is_optional:
+            if example_type_reference.shape.get_as_union().type == "named":
+                inner_shape = example_type_reference.shape.get_as_union().shape
+                if inner_shape.get_as_union().type == "alias":
+                    return self._get_snippet_for_request_reference(
+                        example_type_reference, is_optional, request_parameter_names
+                    )
+                if inner_shape.get_as_union().type == "object":
+                    return self._get_snippet_for_request_reference_flattened(
+                        inner_shape.get_as_union(), request_parameter_names
+                    )
+            return self._get_snippet_for_request_reference_default(example_type_reference)
+        else:
+            return self._get_snippet_for_request_reference_default(example_type_reference)
+
+    def _get_request_parameter_name(self) -> str:
+        if self.endpoint.sdk_request is None:
+            raise Exception("request body is referenced but SDKRequestBody is not defined")
+        return self.endpoint.sdk_request.request_parameter_name.snake_case.safe_name
+
+    def _is_query_literal(self, query_parameter_wire_value: str) -> bool:
+        param = next(
+            filter(lambda q: q.name.wire_value == query_parameter_wire_value, self.endpoint.query_parameters), None
+        )
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
+
+    def _is_path_literal(self, path_parameter_original_name: str) -> bool:
+        param = next(
+            filter(lambda p: p.name.original_name == path_parameter_original_name, self.endpoint.all_path_parameters),
+            None,
+        )
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
+
+    def _is_header_literal(self, header_wire_value: str) -> bool:
+        param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers), None)
+        if param is not None:
+            return self.context.get_literal_value(param.value_type) is not None
+        return False
+
+    def _is_inlined_request_literal(self, property_wire_value: str) -> bool:
+        if self.endpoint.request_body is None:
+            return False
+        request_body_union = self.endpoint.request_body.get_as_union()
+        if request_body_union.type == "inlinedRequestBody":
+            param = next(
+                filter(lambda p: p.name.wire_value == property_wire_value, request_body_union.properties), None
+            )
+            if param is not None:
+                return self.context.get_literal_value(param.value_type) is not None
+            return False
+        return False
+
+
+def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
+    return endpoint.name.get_as_name().snake_case.safe_name
+
+
+def get_parameter_name(name: ir_types.Name) -> str:
+    return name.snake_case.safe_name
+
+
+def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
+    return len(endpoint.full_path.head) == 0 and len(endpoint.full_path.parts) == 0
+
+
+def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+    type_as_union = type_reference.get_as_union()
+    if type_as_union.type == "container":
+        container_as_union = type_as_union.container.get_as_union()
+        if container_as_union.type == "optional":
+            return unwrap_optional_type(container_as_union.optional)
+    return type_reference
+
+
+def raise_json_nested_property_as_response_unsupported() -> Never:
+    raise RuntimeError("nested property json response is unsupported")
 
 class EndpointFunctionGenerator:
     REQUEST_OPTIONS_VARIABLE = "request_options"
@@ -153,7 +408,7 @@ class EndpointFunctionGenerator:
                 endpoint=self._endpoint,
                 named_parameters=self._named_parameters,
                 path_parameters=self._endpoint.all_path_parameters,
-                snippet=endpoint_snippet,
+                snippet=endpoint_snippet.snippet if endpoint_snippet is not None else None,
             ),
             signature=AST.FunctionSignature(
                 parameters=unnamed_parameters,
@@ -171,10 +426,18 @@ class EndpointFunctionGenerator:
                 named_parameters=self._named_parameters,
             ),
         )
+        endpoint_snippets = self._generate_endpoint_snippets(
+            package=self._package,
+            service=self._service,
+            endpoint=self._endpoint,
+            generated_root_client=self._generated_root_client,
+            snippet_writer=self.snippet_writer,
+            is_async=self._is_async,
+        )
         return GeneratedEndpointFunction(
             function=function_declaration,
             is_default_body_parameter_used=self.request_body_parameters is not None,
-            snippet=endpoint_snippet,
+            snippet=endpoint_snippets or [],
         )
 
     def _get_endpoint_return_type(self) -> AST.TypeHint:
@@ -503,7 +766,7 @@ class EndpointFunctionGenerator:
         generated_root_client: GeneratedRootClient,
         snippet_writer: SnippetWriter,
         is_async: bool,
-    ) -> Optional[AST.Expression]:
+    ) -> Optional[GeneratedEndpointFunctionSnippet]:
         if len(endpoint.examples) == 0:
             return None
 
@@ -517,17 +780,71 @@ class EndpointFunctionGenerator:
             example = user_provided_examples[0]
 
         endpoint_snippet_generator = EndpointFunctionSnippetGenerator(
-            context=self._context,
-            snippet_writer=snippet_writer,
-            service=service,
-            endpoint=endpoint,
-            example=example,
-            path_parameter_names=self._path_parameter_names,
-            request_parameter_names=self._request_parameter_name_rewrites,
-        )
+                context=self._context,
+                snippet_writer=snippet_writer,
+                service=service,
+                endpoint=endpoint,
+                example=example,
+                path_parameter_names=self._path_parameter_names,
+                request_parameter_names=self._request_parameter_name_rewrites,
+            )   
 
         endpoint_snippet = endpoint_snippet_generator.generate_snippet()
 
+        return GeneratedEndpointFunctionSnippet(
+            example_id=example.get_as_union().name,
+            snippet=self._snippet_code_writer(
+                package=package,
+                endpoint_snippet=endpoint_snippet,
+                endpoint_snippet_generator=endpoint_snippet_generator,
+                is_async=is_async,
+                generated_root_client=generated_root_client,
+            ))
+
+    def _generate_endpoint_snippets(
+        self,
+        package: ir_types.Package,
+        service: ir_types.HttpService,
+        endpoint: ir_types.HttpEndpoint,
+        generated_root_client: GeneratedRootClient,
+        snippet_writer: SnippetWriter,
+        is_async: bool,
+    ) -> Optional[List[GeneratedEndpointFunctionSnippet]]:
+        user_provided_examples = list(
+            filter(lambda ex: ex.get_as_union().example_type == "userProvided", endpoint.examples)
+        )
+
+        if len(user_provided_examples) == 0:
+            return None
+
+
+        snippets: List[GeneratedEndpointFunctionSnippet] = []
+        for example in user_provided_examples:
+            endpoint_snippet_generator = EndpointFunctionSnippetGenerator(
+                context=self._context,
+                snippet_writer=snippet_writer,
+                service=service,
+                endpoint=endpoint,
+                example=example,
+                path_parameter_names=self._path_parameter_names,
+                request_parameter_names=self._request_parameter_name_rewrites,
+            )   
+
+            endpoint_snippet = endpoint_snippet_generator.generate_snippet()
+
+            snippets.append(GeneratedEndpointFunctionSnippet(
+                example_id=example.get_as_union().name,
+                snippet=self._snippet_code_writer(
+                    package=package,
+                    endpoint_snippet=endpoint_snippet,
+                    endpoint_snippet_generator=endpoint_snippet_generator,
+                    is_async=is_async,
+                    generated_root_client=generated_root_client,
+                ))
+            )
+        return snippets
+
+    def _snippet_code_writer(self, package: ir_types.Package, endpoint_snippet: AST.Expression, endpoint_snippet_generator: EndpointFunctionSnippetGenerator, is_async: bool, generated_root_client: GeneratedRootClient,) -> AST.Expression:
         response_name = "response"
         endpoint_usage = endpoint_snippet_generator.generate_usage(is_async=is_async, response_name=response_name)
 
@@ -555,6 +872,7 @@ class EndpointFunctionGenerator:
             writer.write_newline_if_last_line_not()
 
         return AST.Expression(AST.CodeWriter(write))
+
 
     def _get_subpackage_client_accessor(
         self,
@@ -1049,253 +1367,3 @@ def _is_type_reference_optional(type_reference: ir_types.TypeReference) -> bool:
         and type_reference.get_as_union().request_body_type.get_as_union().container.get_as_union().type == "optional"
     )
 
-
-# TODO: this is effectively what should be exposed when creating the snippets API.
-class EndpointFunctionSnippetGenerator:
-    def __init__(
-        self,
-        context: SdkGeneratorContext,
-        snippet_writer: SnippetWriter,
-        service: ir_types.HttpService,
-        endpoint: ir_types.HttpEndpoint,
-        example: ir_types.HttpEndpointExample,
-        path_parameter_names: Dict[ir_types.Name, str],
-        request_parameter_names: Dict[ir_types.Name, str],
-    ):
-        self.context = context
-        self.snippet_writer = snippet_writer
-        self.service = service
-        self.endpoint = endpoint
-        self.example = example.get_as_union()
-        self.path_parameter_names = path_parameter_names
-        self.request_parameter_names = request_parameter_names
-
-    # TODO: It should be sufficient for this to just take in the example and client
-    def generate_snippet(self) -> AST.Expression:
-        args: List[AST.Expression] = []
-        all_path_parameters = (
-            self.example.root_path_parameters
-            + self.example.service_path_parameters
-            + self.example.endpoint_path_parameters
-        )
-        for path_parameter in all_path_parameters:
-            path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
-                example_type_reference=path_parameter.value,
-            )
-            if not self._is_path_literal(path_parameter.name.original_name):
-                args.append(
-                    self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=self.path_parameter_names[path_parameter.name],
-                        # If there's no value put a None in place as path parameters are unnamed and cannot be skipped
-                        value=path_parameter_value
-                        if path_parameter_value is not None
-                        else AST.Expression(AST.TypeHint.none()),
-                    ),
-                )
-
-        # TODO(amckinney): Idempotency headers aren't included in the example IR yet.
-        # We need to include those examples when they're available.
-        headers: Dict[str, ir_types.HttpHeader] = {}
-        for header in self.service.headers + self.endpoint.headers:
-            headers[header.name.wire_value] = header
-
-        all_example_headers = self.example.service_headers + self.example.endpoint_headers
-        for example_header in all_example_headers:
-            if (
-                example_header.name.wire_value in headers
-                and self.context.get_literal_header_value(headers[example_header.name.wire_value]) is not None
-            ):
-                continue
-            example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
-                example_type_reference=example_header.value,
-            )
-            if (
-                not self._is_header_literal(example_header.name.wire_value)
-                and example_header_parameter_value is not None
-            ):
-                args.append(
-                    self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=get_parameter_name(example_header.name.name),
-                        value=example_header_parameter_value,
-                    ),
-                )
-
-        for query_parameter in self.example.query_parameters:
-            query_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
-                example_type_reference=query_parameter.value,
-            )
-            if not self._is_query_literal(query_parameter.name.wire_value) and query_parameter_value is not None:
-                args.append(
-                    self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=get_parameter_name(query_parameter.name.name),
-                        value=query_parameter_value,
-                    ),
-                )
-
-        if self.example.request is not None:
-            # For some reason the example type reference is not marking it's type as optional, so we need to specify it so the
-            # snippets (and thus unit tests) write correctly
-            is_optional = self.endpoint.request_body is not None and _is_type_reference_optional(
-                self.endpoint.request_body
-            )
-            args.extend(
-                self.example.request.visit(
-                    inlined_request_body=lambda inlined_request_body: self._get_snippet_for_inlined_request_body_properties(
-                        example_inlined_request_body=inlined_request_body,
-                    ),
-                    reference=lambda reference: self._get_snippet_for_request_reference(
-                        example_type_reference=reference,
-                        is_optional=is_optional,
-                        request_parameter_names=self.request_parameter_names,
-                    ),
-                ),
-            )
-
-        return AST.Expression(
-            AST.FunctionInvocation(
-                function_definition=AST.Reference(
-                    qualified_name_excluding_import=(get_endpoint_name(self.endpoint),),
-                ),
-                args=args,
-            ),
-        )
-
-    def generate_usage(self, response_name: str, is_async: bool) -> Optional[AST.Expression]:
-        if self.endpoint.response is not None and self.endpoint.response.get_as_union().type == "streaming":
-
-            def snippet_writer(writer: AST.NodeWriter) -> None:
-                if is_async:
-                    writer.write("async ")
-                writer.write_line(f"for chunk in {response_name}:")
-                with writer.indent():
-                    writer.write_line("yield chunk")
-
-            return AST.Expression(AST.CodeWriter(snippet_writer))
-        return None
-
-    def _get_snippet_for_inlined_request_body_properties(
-        self,
-        example_inlined_request_body: ir_types.ExampleInlinedRequestBody,
-    ) -> List[AST.Expression]:
-        snippets: List[AST.Expression] = []
-        for example_property in example_inlined_request_body.properties:
-            property_value = self.snippet_writer.get_snippet_for_example_type_reference(
-                example_type_reference=example_property.value,
-            )
-            if not self._is_inlined_request_literal(example_property.name.wire_value) and property_value is not None:
-                snippets.append(
-                    self.snippet_writer.get_snippet_for_named_parameter(
-                        parameter_name=get_parameter_name(example_property.name.name),
-                        value=property_value,
-                    ),
-                )
-        return snippets
-
-    def _get_snippet_for_request_reference_default(
-        self, example_type_reference: ir_types.ExampleTypeReference
-    ) -> List[AST.Expression]:
-        request_value = self.snippet_writer.get_snippet_for_example_type_reference(
-            example_type_reference=example_type_reference,
-        )
-        if request_value is not None:
-            return [
-                self.snippet_writer.get_snippet_for_named_parameter(
-                    parameter_name=self._get_request_parameter_name(),
-                    value=request_value,
-                )
-            ]
-        return []
-
-    def _get_snippet_for_request_reference_flattened(
-        self,
-        example_object: ir_types.ExampleObjectType,
-        request_parameter_names: Dict[ir_types.Name, str],
-    ) -> List[AST.Expression]:
-        return self.snippet_writer.get_snippet_for_object_properties(example_object, request_parameter_names)
-
-    def _get_snippet_for_request_reference(
-        self,
-        example_type_reference: ir_types.ExampleTypeReference,
-        is_optional: bool,
-        request_parameter_names: Dict[ir_types.Name, str],
-    ) -> List[AST.Expression]:
-        if self.context.custom_config.inline_request_params and not is_optional:
-            if example_type_reference.shape.get_as_union().type == "named":
-                inner_shape = example_type_reference.shape.get_as_union().shape
-                if inner_shape.get_as_union().type == "alias":
-                    return self._get_snippet_for_request_reference(
-                        example_type_reference, is_optional, request_parameter_names
-                    )
-                if inner_shape.get_as_union().type == "object":
-                    return self._get_snippet_for_request_reference_flattened(
-                        inner_shape.get_as_union(), request_parameter_names
-                    )
-            return self._get_snippet_for_request_reference_default(example_type_reference)
-        else:
-            return self._get_snippet_for_request_reference_default(example_type_reference)
-
-    def _get_request_parameter_name(self) -> str:
-        if self.endpoint.sdk_request is None:
-            raise Exception("request body is referenced but SDKRequestBody is not defined")
-        return self.endpoint.sdk_request.request_parameter_name.snake_case.safe_name
-
-    def _is_query_literal(self, query_parameter_wire_value: str) -> bool:
-        param = next(
-            filter(lambda q: q.name.wire_value == query_parameter_wire_value, self.endpoint.query_parameters), None
-        )
-        if param is not None:
-            return self.context.get_literal_value(param.value_type) is not None
-        return False
-
-    def _is_path_literal(self, path_parameter_original_name: str) -> bool:
-        param = next(
-            filter(lambda p: p.name.original_name == path_parameter_original_name, self.endpoint.all_path_parameters),
-            None,
-        )
-        if param is not None:
-            return self.context.get_literal_value(param.value_type) is not None
-        return False
-
-    def _is_header_literal(self, header_wire_value: str) -> bool:
-        param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers), None)
-        if param is not None:
-            return self.context.get_literal_value(param.value_type) is not None
-        return False
-
-    def _is_inlined_request_literal(self, property_wire_value: str) -> bool:
-        if self.endpoint.request_body is None:
-            return False
-        request_body_union = self.endpoint.request_body.get_as_union()
-        if request_body_union.type == "inlinedRequestBody":
-            param = next(
-                filter(lambda p: p.name.wire_value == property_wire_value, request_body_union.properties), None
-            )
-            if param is not None:
-                return self.context.get_literal_value(param.value_type) is not None
-            return False
-        return False
-
-
-def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    return endpoint.name.get_as_name().snake_case.safe_name
-
-
-def get_parameter_name(name: ir_types.Name) -> str:
-    return name.snake_case.safe_name
-
-
-def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
-    return len(endpoint.full_path.head) == 0 and len(endpoint.full_path.parts) == 0
-
-
-def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
-    type_as_union = type_reference.get_as_union()
-    if type_as_union.type == "container":
-        container_as_union = type_as_union.container.get_as_union()
-        if container_as_union.type == "optional":
-            return unwrap_optional_type(container_as_union.optional)
-    return type_reference
-
-
-def raise_json_nested_property_as_response_unsupported() -> Never:
-    raise RuntimeError("nested property json response is unsupported")

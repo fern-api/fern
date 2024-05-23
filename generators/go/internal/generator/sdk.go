@@ -809,6 +809,11 @@ type GeneratedClient struct {
 
 type GeneratedEndpoint struct {
 	Identifier *generatorexec.EndpointIdentifier
+	Snippet    []*GeneratedSnippet
+}
+
+type GeneratedSnippet struct {
+	ExampleIdentifer string
 	Snippet    ast.Expr
 }
 
@@ -1506,19 +1511,19 @@ func NewGeneratedClient(
 		if len(endpoint.Examples) == 0 {
 			continue
 		}
-		example := exampleEndpointCallFromEndpointExample(endpoint.Examples[0])
-		if example == nil {
+		generatedEndpoint := newGeneratedEndpoint(
+			f,
+			fernFilepath,
+			rootClientInstantiation,
+			endpoint,
+			endpoint.Examples,
+		)
+		if generatedEndpoint == nil {
 			continue
 		}
 		generatedEndpoints = append(
 			generatedEndpoints,
-			newGeneratedEndpoint(
-				f,
-				fernFilepath,
-				rootClientInstantiation,
-				endpoint,
-				example,
-			),
+			generatedEndpoint,
 		)
 	}
 	return &GeneratedClient{
@@ -1554,15 +1559,22 @@ func newGeneratedEndpoint(
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
-	return &GeneratedEndpoint{
-		Identifier: endpointToIdentifier(endpoint),
-		Snippet: newEndpointSnippet(
-			f,
-			fernFilepath,
-			rootClientInstantiation,
-			endpoint,
-			example,
-		),
+	var generatedEndpoints []*GeneratedEndpoint
+	for _, endpointExample := range endpoint.Examples {
+		example := exampleEndpointCallFromEndpointExample(endpointExample)
+		generatedEndpoint := &GeneratedEndpoint{
+			Identifier: endpointToIdentifier(endpoint),
+			Snippet: newEndpointSnippet(
+				f,
+				fernFilepath,
+				rootClientInstantiation,
+				endpoint,
+				example,
+			),
+			ExampleIdentifer: example.Name,
+		}
+
+		generatedEndpoints = append(generatedEndpoints, generatedEndpoint)
 	}
 }
 

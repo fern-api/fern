@@ -27,6 +27,7 @@
     },
     "endpoints": [
         {
+            "example_identifier": null,
             "id": {
                 "path": "/",
                 "method": "POST",
@@ -39,6 +40,7 @@
             }
         },
         {
+            "example_identifier": null,
             "id": {
                 "path": "/file/notification/{notificationId}",
                 "method": "GET",
@@ -51,6 +53,7 @@
             }
         },
         {
+            "example_identifier": null,
             "id": {
                 "path": "/file/{filename}",
                 "method": "GET",
@@ -63,6 +66,7 @@
             }
         },
         {
+            "example_identifier": null,
             "id": {
                 "path": "/check/{id}",
                 "method": "GET",
@@ -75,6 +79,7 @@
             }
         },
         {
+            "example_identifier": null,
             "id": {
                 "path": "/ping",
                 "method": "GET",
@@ -87,6 +92,7 @@
             }
         },
         {
+            "example_identifier": null,
             "id": {
                 "path": "/movie/{movieId}",
                 "method": "GET",
@@ -99,6 +105,7 @@
             }
         },
         {
+            "example_identifier": null,
             "id": {
                 "path": "/movie",
                 "method": "POST",
@@ -111,6 +118,7 @@
             }
         },
         {
+            "example_identifier": null,
             "id": {
                 "path": "/metadata",
                 "method": "GET",
@@ -123,6 +131,7 @@
             }
         },
         {
+            "example_identifier": null,
             "id": {
                 "path": "/response",
                 "method": "POST",
