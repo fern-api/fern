@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Internal: SDK snippets now specify their example ID and we create a snippet per example
 
+## [2.5.0-rc2] - 2024-05-23
+
+- Fix: Do not attempt to run `fern test` in CI until the command is more widely rolled out.
+
 ## [2.5.0-rc1] - 2024-05-22
 
 - Fix: Address `propogate` -> `propagate` typo in python codegen.
