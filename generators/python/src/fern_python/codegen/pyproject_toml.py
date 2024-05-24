@@ -8,7 +8,6 @@ from typing import List, Optional, Set, cast
 
 from fern.generator_exec.resources import (
     BasicLicense,
-    CustomLicense,
     GithubOutputMode,
     LicenseConfig,
     LicenseId,
