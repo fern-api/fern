@@ -8781,7 +8781,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/fetcher", "workspace:generators/typescript/utils/core-utilities/fetcher"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
+            ["@types/node", "npm:20.12.12"],\
             ["@types/node-fetch", "npm:2.6.9"],\
             ["@types/qs", "npm:6.9.8"],\
             ["depcheck", "npm:1.4.6"],\
@@ -10939,6 +10939,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-node-npm-18.7.18-5bcc3f839f-8aec61f0f9.zip/node_modules/@types/node/",\
           "packageDependencies": [\
             ["@types/node", "npm:18.7.18"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:20.12.12", {\
+          "packageLocation": "./.yarn/cache/@types-node-npm-20.12.12-3a45001f1f-5373983874.zip/node_modules/@types/node/",\
+          "packageDependencies": [\
+            ["@types/node", "npm:20.12.12"],\
+            ["undici-types", "npm:5.26.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -28825,6 +28833,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["unbzip2-stream", "npm:1.4.3"],\
             ["buffer", "npm:5.7.1"],\
             ["through", "npm:2.3.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["undici-types", [\
+        ["npm:5.26.5", {\
+          "packageLocation": "./.yarn/cache/undici-types-npm-5.26.5-de4f7c7bb9-3192ef6f3f.zip/node_modules/undici-types/",\
+          "packageDependencies": [\
+            ["undici-types", "npm:5.26.5"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -13,6 +13,7 @@ export declare namespace SeedObjectsWithImportsClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

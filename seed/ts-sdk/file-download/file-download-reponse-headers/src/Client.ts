@@ -13,6 +13,7 @@ export declare namespace SeedFileDownloadClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

@@ -15,6 +15,7 @@ export declare namespace SeedOauthClientCredentialsClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

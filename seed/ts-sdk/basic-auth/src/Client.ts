@@ -15,6 +15,7 @@ export declare namespace SeedBasicAuthClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

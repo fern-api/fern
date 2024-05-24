@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.0] - 2024-05-20
+
+- Feature: Add `abortSignal` to `RequestOptions`. SDK consumers can now specify an
+  an arbitrary abort signal that can interrupt the API call.
+
+  ```ts
+  const controller = new AbortController();
+  client.endpoint.call(..., {
+    abortSignal: controller.signal,
+  })
+  ```
+
 ## [0.19.0] - 2024-05-20
 
 - Feature: Add `inlineFileProperties` configuration to support generating file upload properties
