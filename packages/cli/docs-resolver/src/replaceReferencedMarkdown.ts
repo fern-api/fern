@@ -31,7 +31,6 @@ export async function replaceReferencedMarkdown({
 
     let newMarkdown = markdown;
 
-
     // while match is found, replace the match with the content of the referenced markdown file
     let match: RegExpExecArray | null;
     while ((match = regex.exec(markdown)) != null) {
