@@ -14,6 +14,7 @@ For example:
 ```bash
 fern
 └── pages
+    └── my-tutorial.mdx
 └── assets
 └── snippets
     |── herbs.mdx  
@@ -21,20 +22,18 @@ fern
     └── trees.mdx
 ```
 
-In each snippet file, define the content you want to reuse. For example, `my-first-snippet.mdx` might contain:
+In each snippet file, define the content you want to reuse. For example, `peace-lily.mdx` might contain:
 
-<CodeBlock title="snippets/peace-lily.mdx">
-```jsx
+```mdx snippets/peace-lily.mdx
 <Warning> Remember to water your plant at least twice a week. </Warning>
 ```
-</CodeBlock>
 
 ## Use a reusable snippet
 
 To use a snippet in your documentation, reference it by its file name (without the `.mdx` extension) in your content. For example, to include the `peace-lily` snippet in your content, use:
 
-<CodeBlock title="snippets/my-tutorial.mdx">
-```jsx
+
+```mdx pages/my-tutorial.mdx
 ---
 title: Getting started with your peace lily
 description: Peace lily care tips for beginners
@@ -44,8 +43,8 @@ description: Peace lily care tips for beginners
 
 Peace lilies are easy to grow and relatively trouble-free.
 
-<snippet peace-lily>
+<Markdown src="../snippets/peace-lily.mdx" />
 ```
-</CodeBlock>
+
 
 
