@@ -168,6 +168,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     }) {
         const REQUEST_PARAMETER_NAME = "req";
         const RESPONSE_PARAMETER_NAME = "res";
+        const NEXT_PARAMETER_NAME = "next";
 
         const COOKIE_PARAMETER_NAME = "cookie";
         const COOKIE_VALUE_PARAMETER_NAME = "value";
@@ -303,6 +304,10 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             )
                         ])
                     )
+                },
+                {
+                    name: NEXT_PARAMETER_NAME,
+                    type: getTextOfTsNode(context.externalDependencies.express.NextFunction._getReferenceToType())
                 }
             ],
             returnType: getTextOfTsNode(
@@ -673,7 +678,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                     )
                                 ],
                                 true
-                            )
+                            ),
+                            next
                         ]
                     )
                 )

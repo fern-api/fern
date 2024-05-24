@@ -13,7 +13,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getWithHeader(
         req: express.Request<never, string, never, never>,
@@ -21,7 +22,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -45,17 +47,21 @@ export class ServiceService {
     public toRouter(): express.Router {
         this.router.get("/apiKey", async (req, res, next) => {
             try {
-                await this.methods.getWithApiKey(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.service.getWithApiKey.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getWithApiKey(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.service.getWithApiKey.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedAuthEnvironmentVariablesError) {
@@ -73,17 +79,21 @@ export class ServiceService {
         });
         this.router.get("/apiKeyInHeader", async (req, res, next) => {
             try {
-                await this.methods.getWithHeader(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.service.getWithHeader.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getWithHeader(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.service.getWithHeader.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedAuthEnvironmentVariablesError) {

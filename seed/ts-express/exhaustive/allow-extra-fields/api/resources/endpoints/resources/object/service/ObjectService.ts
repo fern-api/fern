@@ -19,7 +19,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnWithRequiredField(
         req: express.Request<
@@ -32,7 +33,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithRequiredField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnWithMapOfMap(
         req: express.Request<
@@ -45,7 +47,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithMapOfMap) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnNestedWithOptionalField(
         req: express.Request<
@@ -58,7 +61,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.NestedObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnNestedWithRequiredField(
         req: express.Request<
@@ -73,7 +77,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.NestedObjectWithRequiredField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnNestedWithRequiredFieldAsList(
         req: express.Request<
@@ -86,7 +91,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.NestedObjectWithRequiredField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -113,19 +119,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnWithOptionalField(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.getAndReturnWithOptionalField(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
@@ -154,19 +164,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnWithRequiredField(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithRequiredField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.getAndReturnWithRequiredField(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
@@ -195,19 +209,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnWithMapOfMap(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithMapOfMap.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.getAndReturnWithMapOfMap(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithMapOfMap.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
@@ -236,19 +254,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnNestedWithOptionalField(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.getAndReturnNestedWithOptionalField(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
@@ -277,19 +299,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnNestedWithRequiredField(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.getAndReturnNestedWithRequiredField(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
@@ -320,19 +346,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnNestedWithRequiredFieldAsList(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.getAndReturnNestedWithRequiredFieldAsList(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {

@@ -20,7 +20,8 @@ export interface ParamsServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getWithQuery(
         req: express.Request<
@@ -36,7 +37,8 @@ export interface ParamsServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getWithAllowMultipleQuery(
         req: express.Request<
@@ -52,7 +54,8 @@ export interface ParamsServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getWithPathAndQuery(
         req: express.Request<
@@ -69,7 +72,8 @@ export interface ParamsServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     modifyWithPath(
         req: express.Request<
@@ -84,7 +88,8 @@ export interface ParamsServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -108,17 +113,21 @@ export class ParamsService {
     public toRouter(): express.Router {
         this.router.get("/path/:param", async (req, res, next) => {
             try {
-                await this.methods.getWithPath(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.endpoints.params.getWithPath.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getWithPath(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.endpoints.params.getWithPath.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {
@@ -136,13 +145,17 @@ export class ParamsService {
         });
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.getWithQuery(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.getWithQuery(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {
@@ -160,13 +173,17 @@ export class ParamsService {
         });
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.getWithAllowMultipleQuery(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.getWithAllowMultipleQuery(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {
@@ -184,13 +201,17 @@ export class ParamsService {
         });
         this.router.get("/path-query/:param", async (req, res, next) => {
             try {
-                await this.methods.getWithPathAndQuery(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.getWithPathAndQuery(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {
@@ -211,17 +232,22 @@ export class ParamsService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.modifyWithPath(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.endpoints.params.modifyWithPath.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.modifyWithPath(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.endpoints.params.modifyWithPath.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
