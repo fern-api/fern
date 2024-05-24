@@ -56,6 +56,7 @@ export class Completions {
                         breadcrumbsPrefix: ["response"],
                     });
                 },
+                signal: requestOptions?.abortSignal,
                 eventShape: {
                     type: "sse",
                     streamTerminator: "[[DONE]]",

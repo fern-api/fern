@@ -176,6 +176,7 @@ describe("Fetcher Tests", () => {
             if (i === 10) {
                 controller.abort();
             }
+            // eslint-disable-next-line no-console
             console.log(JSON.stringify(event));
             i += 1;
         }
