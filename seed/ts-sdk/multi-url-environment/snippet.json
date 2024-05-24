@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait seedMultiUrlEnvironment.ec2.bootInstance({\n    size: \"string\"\n});\n"
-            }
+            },
+            "example_identifier": null
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait seedMultiUrlEnvironment.s3.getPresignedUrl({\n    s3Key: \"string\"\n});\n"
-            }
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

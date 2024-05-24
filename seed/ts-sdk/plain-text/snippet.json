@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedPlainTextClient } from \"@fern/plain-text\";\n\nconst seedPlainText = new SeedPlainTextClient;\nawait seedPlainText.service.getText();\n"
-            }
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

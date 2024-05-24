@@ -809,7 +809,12 @@ type GeneratedClient struct {
 
 type GeneratedEndpoint struct {
 	Identifier *generatorexec.EndpointIdentifier
-	Snippet    ast.Expr
+	Snippets   []*GeneratedSnippet
+}
+
+type GeneratedSnippet struct {
+	ExampleIdentifier *string
+	Snippet           ast.Expr
 }
 
 // WriteClient writes a client for interacting with the given service.
@@ -1506,19 +1511,18 @@ func NewGeneratedClient(
 		if len(endpoint.Examples) == 0 {
 			continue
 		}
-		example := exampleEndpointCallFromEndpointExample(endpoint.Examples[0])
-		if example == nil {
+		generatedEndpoint := newGeneratedEndpoint(
+			f,
+			fernFilepath,
+			rootClientInstantiation,
+			endpoint,
+		)
+		if generatedEndpoint == nil {
 			continue
 		}
 		generatedEndpoints = append(
 			generatedEndpoints,
-			newGeneratedEndpoint(
-				f,
-				fernFilepath,
-				rootClientInstantiation,
-				endpoint,
-				example,
-			),
+			generatedEndpoint,
 		)
 	}
 	return &GeneratedClient{
@@ -1552,17 +1556,27 @@ func newGeneratedEndpoint(
 	fernFilepath *ir.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
-	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
-	return &GeneratedEndpoint{
-		Identifier: endpointToIdentifier(endpoint),
-		Snippet: newEndpointSnippet(
+	var snippets []*GeneratedSnippet
+	for _, endpointExample := range endpoint.Examples {
+		example := exampleEndpointCallFromEndpointExample(endpointExample)
+		snippet := newEndpointSnippet(
 			f,
 			fernFilepath,
 			rootClientInstantiation,
 			endpoint,
 			example,
-		),
+		)
+
+		snippets = append(snippets, snippet)
+	}
+
+	if len(snippets) == 0 {
+		return nil
+	}
+	return &GeneratedEndpoint{
+		Identifier: endpointToIdentifier(endpoint),
+		Snippets:   snippets,
 	}
 }
 
@@ -1610,7 +1624,7 @@ func newEndpointSnippet(
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
-) *ast.Block {
+) *GeneratedSnippet {
 	methodName := getEndpointMethodName(fernFilepath, endpoint)
 	parameters := getEndpointParameters(
 		f,
@@ -1645,10 +1659,18 @@ func newEndpointSnippet(
 			call,
 		},
 	}
-	return &ast.Block{
-		Exprs: []ast.Expr{
-			rootClientInstantiation,
-			endpointCall,
+
+	var exampleId *string
+	if example.Name != nil {
+		exampleId = &example.Name.OriginalName
+	}
+	return &GeneratedSnippet{
+		ExampleIdentifier: exampleId,
+		Snippet: &ast.Block{
+			Exprs: []ast.Expr{
+				rootClientInstantiation,
+				endpointCall,
+			},
 		},
 	}
 }

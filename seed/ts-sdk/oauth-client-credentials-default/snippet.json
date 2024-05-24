@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedOauthClientCredentialsDefaultClient } from \"@fern/oauth-client-credentials-default\";\n\nconst seedOauthClientCredentialsDefault = new SeedOauthClientCredentialsDefaultClient({ clientId: \"YOUR_CLIENT_ID\", clientSecret: \"YOUR_CLIENT_SECRET\" });\nawait seedOauthClientCredentialsDefault.auth.getToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    grantType: \"client_credentials\"\n});\n"
-            }
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

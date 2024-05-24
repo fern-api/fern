@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient;\nawait seedAudiences.folderA.service.getDirectThread();\n"
-            }
+            },
+            "example_identifier": null
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedAudiencesClient } from \"@fern/audiences\";\n\nconst seedAudiences = new SeedAudiencesClient;\nawait seedAudiences.foo.find({\n    optionalString: \"string\",\n    publicProperty: \"string\",\n    privateProperty: 1\n});\n"
-            }
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

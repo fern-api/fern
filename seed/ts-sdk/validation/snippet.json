@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst seedValidation = new SeedValidationClient;\nawait seedValidation.create({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
-            }
+            },
+            "example_identifier": null
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedValidationClient } from \"@fern/validation\";\n\nconst seedValidation = new SeedValidationClient;\nawait seedValidation.get({\n    decimal: 1.1,\n    even: 1,\n    name: \"string\"\n});\n"
-            }
+            },
+            "example_identifier": null
         }
     ],
     "types": {}

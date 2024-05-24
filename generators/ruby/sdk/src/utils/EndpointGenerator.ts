@@ -72,10 +72,11 @@ export class EndpointGenerator {
         crf: ClassReferenceFactory,
         eg: ExampleGenerator,
         generatedClasses: Map<TypeId, Class_>,
-        fileUploadUtility: FileUploadUtility
+        fileUploadUtility: FileUploadUtility,
+        example?: ExampleEndpointCall
     ) {
         this.endpoint = endpoint;
-        this.example = endpoint.examples[0];
+        this.example = example ?? endpoint.examples[0];
         this.endpointHasExamples = this.example !== undefined;
         this.eg = eg;
         this.blockArg = "req";

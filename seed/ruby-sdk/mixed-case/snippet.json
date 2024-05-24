@@ -20,7 +20,8 @@
             "snippet": {
                 "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "One"
         },
         {
             "id": {
@@ -42,7 +43,8 @@
             "snippet": {
                 "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))",
                 "type": "ruby"
-            }
+            },
+            "exampleIdentifier": "One"
         }
     ],
     "types": {}

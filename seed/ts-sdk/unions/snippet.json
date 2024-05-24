@@ -9,7 +9,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst seedUnions = new SeedUnionsClient;\nawait seedUnions.union.get(\"string\");\n"
-            }
+            },
+            "example_identifier": null
         },
         {
             "id": {
@@ -20,7 +21,8 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedUnionsClient } from \"@fern/unions\";\n\nconst seedUnions = new SeedUnionsClient;\nawait seedUnions.union.update({\n    type: \"circle\",\n    id: \"string\",\n    radius: 1.1\n});\n"
-            }
+            },
+            "example_identifier": null
         }
     ],
     "types": {}
