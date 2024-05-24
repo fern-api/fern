@@ -810,9 +810,10 @@ class EndpointFunctionGenerator:
 
             endpoint_snippet = endpoint_snippet_generator.generate_snippet()
 
+            example_name = example.get_as_union().name
             snippets.append(
                 GeneratedEndpointFunctionSnippet(
-                    example_id=example.get_as_union().name,
+                    example_id=example_name.original_name if example_name is not None else None,
                     snippet=self._snippet_code_writer(
                         package=package,
                         endpoint_snippet=endpoint_snippet,
