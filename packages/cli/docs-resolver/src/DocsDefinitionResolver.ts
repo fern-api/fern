@@ -69,8 +69,8 @@ export class DocsDefinitionResolver {
         // this will be used to resolve relative markdown links to their final URLs
         this.markdownFilesToFullSlugs = this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
 
-        const filesToUploadSet = collectFilesFromDocsConfig(this.parsedDocsConfig);
-
+        // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
+        // this should happen before we parse image paths, as the referenced markdown files may contain images.
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
                 markdown,
@@ -79,6 +79,8 @@ export class DocsDefinitionResolver {
                 context: this.taskContext
             });
         }
+
+        const filesToUploadSet = collectFilesFromDocsConfig(this.parsedDocsConfig);
 
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
@@ -236,8 +238,7 @@ export class DocsDefinitionResolver {
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
                             const convertedNavigation = await this.convertUnversionedNavigationConfig({
                                 navigationConfig: version.navigation,
-                                tabs: version.tabs,
-                                version: version.version
+                                tabs: version.tabs
                             });
                             return {
                                 version: version.version,
@@ -361,12 +362,10 @@ export class DocsDefinitionResolver {
 
     private async convertUnversionedNavigationConfig({
         navigationConfig,
-        tabs,
-        version
+        tabs
     }: {
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
         tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined;
-        version: string;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
         switch (navigationConfig.type) {
             case "untabbed": {

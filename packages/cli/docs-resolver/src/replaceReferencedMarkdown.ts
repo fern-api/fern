@@ -27,7 +27,13 @@ export async function replaceReferencedMarkdown({
         const src = match[1];
 
         if (matchString == null || src == null) {
-            context.failAndThrow(`Invalid match found in markdown: ${matchString}`);
+            throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMdx}`);
+        }
+
+        if (!src.endsWith(".md") && !src.endsWith(".mdx")) {
+            context.failAndThrow(
+                `Referenced markdown file "${src}" must have a .md or .mdx extension in ${absolutePathToMdx}`
+            );
             break;
         }
 
