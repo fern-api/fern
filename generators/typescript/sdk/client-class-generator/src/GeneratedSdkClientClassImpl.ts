@@ -202,7 +202,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             errorResolver,
                             response,
-                            includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse
+                            includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
+                            clientClass: this
                         });
                     }
                 };

@@ -1,1 +1,13 @@
-{ "ignores": ["@types/jest", "@types/node", "node-fetch", "qs", "@types/node-fetch", "@types/qs"], "ignore-patterns": ["lib"] }
+{
+  "ignores": [
+    "@types/jest",
+    "@types/node",
+    "@types/jest",
+    "@types/node",
+    "node-fetch",
+    "qs",
+    "@types/node-fetch",
+    "@types/qs"
+  ],
+  "ignore-patterns": ["lib"]
+}

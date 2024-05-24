@@ -57,6 +57,7 @@ export class Dummy {
                         breadcrumbsPrefix: ["response"],
                     });
                 },
+                signal: requestOptions?.abortSignal,
                 eventShape: {
                     type: "json",
                     messageTerminator: "\n",
