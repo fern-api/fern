@@ -20,6 +20,7 @@ export declare namespace Endpoints {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

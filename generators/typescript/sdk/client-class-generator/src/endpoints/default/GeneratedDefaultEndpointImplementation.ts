@@ -6,6 +6,7 @@ import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpoi
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { buildUrl } from "../utils/buildUrl";
 import {
+    getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression,
@@ -206,6 +207,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     this.generatedSdkClientClass
                 )
             }),
+            abortSignal: getAbortSignalExpression({
+                abortSignalReference: this.generatedSdkClientClass.getReferenceToAbortSignal.bind(
+                    this.generatedSdkClientClass
+                )
+            }),
+
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
 

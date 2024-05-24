@@ -13,7 +13,8 @@ export interface CustomAuthServiceMethods {
             send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     postWithCustomAuth(
         req: express.Request<never, boolean, unknown, never>,
@@ -21,7 +22,8 @@ export interface CustomAuthServiceMethods {
             send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -45,17 +47,21 @@ export class CustomAuthService {
     public toRouter(): express.Router {
         this.router.get("/custom-auth", async (req, res, next) => {
             try {
-                await this.methods.getWithCustomAuth(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.customAuth.getWithCustomAuth.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getWithCustomAuth(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.customAuth.getWithCustomAuth.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedCustomAuthError) {
@@ -78,17 +84,21 @@ export class CustomAuthService {
         });
         this.router.post("/custom-auth", async (req, res, next) => {
             try {
-                await this.methods.postWithCustomAuth(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.customAuth.postWithCustomAuth.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.postWithCustomAuth(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.customAuth.postWithCustomAuth.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedCustomAuthError) {

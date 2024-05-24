@@ -1,0 +1,53 @@
+---
+title: 'Global options'
+description: 'Global options for the Fern CLI'
+---
+
+Global options are available to use with many Fern CLI commands. Read more below.
+
+## help
+
+Use the `--help` option with any Fern CLI command to see an explanation and available options. 
+
+<CodeBlocks>
+```bash maxLines=10 title="fern add --help"
+$ fern add --help
+fern add <generator>
+
+Add a code generator to generators.yml
+
+Positionals:
+  generator                                                [string] [required]
+
+Options:
+  --help     Show help                                               [boolean]
+  --log-level    [choices: "debug", "info", "warn", "error"] [default: "info"]
+  --api      Only run the command on the provided API                 [string]
+  --group    Add the generator to the specified group                 [string]
+```
+
+```bash maxLines=10 title="fern write-definition --help"
+$ fern write-definition --help
+fern write-definition
+
+Write underlying Fern Definition for OpenAPI specs and API Dependencies.
+
+Options:
+  --help     Show help                                               [boolean]
+  --log-level    [choices: "debug", "info", "warn", "error"] [default: "info"]
+  --api      Only run the command on the provided API                 [string]
+```
+</CodeBlocks>
+
+## log-level
+
+Use the `--log-level` option to see more information about Fern's actions.
+
+- debug: Debug messages, informational messages, warnings, and errors are logged.
+- **info [default]**: Informational messages, warnings, and errors are logged.
+- warn: Warnings and errors are logged.
+- error: Only error messages are logged.
+
+```bash
+fern generate --log-level debug
+```

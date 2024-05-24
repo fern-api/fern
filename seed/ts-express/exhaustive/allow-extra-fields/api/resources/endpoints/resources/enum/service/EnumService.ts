@@ -14,7 +14,8 @@ export interface EnumServiceMethods {
             send: (responseBody: SeedExhaustive.types.WeatherReport) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -41,19 +42,23 @@ export class EnumService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnEnum(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.WeatherReport.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.getAndReturnEnum(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.WeatherReport.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {

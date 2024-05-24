@@ -13,7 +13,8 @@ export interface BasicAuthServiceMethods {
             send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     postWithBasicAuth(
         req: express.Request<never, boolean, unknown, never>,
@@ -21,7 +22,8 @@ export interface BasicAuthServiceMethods {
             send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -45,17 +47,21 @@ export class BasicAuthService {
     public toRouter(): express.Router {
         this.router.get("/basic-auth", async (req, res, next) => {
             try {
-                await this.methods.getWithBasicAuth(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.basicAuth.getWithBasicAuth.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getWithBasicAuth(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.basicAuth.getWithBasicAuth.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedBasicAuthEnvironmentVariablesError) {
@@ -78,17 +84,21 @@ export class BasicAuthService {
         });
         this.router.post("/basic-auth", async (req, res, next) => {
             try {
-                await this.methods.postWithBasicAuth(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.basicAuth.postWithBasicAuth.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.postWithBasicAuth(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.basicAuth.postWithBasicAuth.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedBasicAuthEnvironmentVariablesError) {

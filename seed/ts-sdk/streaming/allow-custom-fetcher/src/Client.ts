@@ -14,6 +14,7 @@ export declare namespace SeedStreamingClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

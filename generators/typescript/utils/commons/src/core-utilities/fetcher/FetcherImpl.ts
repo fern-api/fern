@@ -38,7 +38,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
-                responseType: "responseType"
+                responseType: "responseType",
+                abortSignal: "abortSignal"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -130,6 +131,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         this.Fetcher.Args.properties.withCredentials,
                         ts.factory.createTrue()
                     )
+                );
+            }
+            if (args.abortSignal) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.abortSignal, args.abortSignal)
                 );
             }
 

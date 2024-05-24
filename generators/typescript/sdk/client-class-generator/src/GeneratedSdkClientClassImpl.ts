@@ -69,6 +69,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
     private static IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = "IdempotentRequestOptions";
     private static TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
+    private static ABORT_SIGNAL_PROPERTY_NAME = "abortSignal";
     private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "_options";
@@ -201,7 +202,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             errorResolver,
                             response,
-                            includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse
+                            includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
+                            clientClass: this
                         });
                     }
                 };
@@ -766,6 +768,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     name: GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME,
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true
+                },
+                {
+                    name: GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME,
+                    type: getTextOfTsNode(ts.factory.createIdentifier("AbortSignal")),
+                    hasQuestionToken: true
                 }
             ]
         };
@@ -1123,6 +1130,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                   referenceToRequestOptions,
                   ts.factory.createIdentifier(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)
               );
+    }
+
+    public getReferenceToAbortSignal({
+        referenceToRequestOptions
+    }: {
+        referenceToRequestOptions: ts.Expression;
+    }): ts.Expression {
+        return ts.factory.createPropertyAccessChain(
+            referenceToRequestOptions,
+            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.ABORT_SIGNAL_PROPERTY_NAME)
+        );
     }
 
     public getReferenceToOptions(): ts.Expression {

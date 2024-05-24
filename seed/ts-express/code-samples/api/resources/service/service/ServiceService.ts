@@ -14,7 +14,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedCodeSamples.MyResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -41,17 +42,21 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.hello(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.MyResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.hello(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.MyResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedCodeSamplesError) {

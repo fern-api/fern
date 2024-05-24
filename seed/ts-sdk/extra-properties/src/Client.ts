@@ -13,6 +13,7 @@ export declare namespace SeedExtraPropertiesClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
