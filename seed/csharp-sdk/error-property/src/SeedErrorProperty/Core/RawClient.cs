@@ -49,8 +49,14 @@ public class RawClient
         // Add the request body to the request
         if (request.Body != null)
         {
+            var serializerOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonEnumMemberStringEnumConverter() },
+                // Set other options as required:
+                WriteIndented = true,
+            };
             httpRequest.Content = new StringContent(
-                JsonSerializer.Serialize(request.Body),
+                JsonSerializer.Serialize(request.Body, serializerOptions),
                 Encoding.UTF8,
                 "application/json"
             );

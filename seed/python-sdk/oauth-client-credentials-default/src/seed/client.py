@@ -11,7 +11,7 @@ from .core.oauth_token_provider import OAuthTokenProvider
 
 class SeedOauthClientCredentialsDefault:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -77,7 +77,7 @@ class SeedOauthClientCredentialsDefault:
 
 class AsyncSeedOauthClientCredentialsDefault:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------

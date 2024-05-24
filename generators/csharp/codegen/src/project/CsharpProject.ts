@@ -251,6 +251,8 @@ declare namespace CsProj {
     }
 }
 
+const FOUR_SPACES = "    ";
+
 class CsProj {
     private version: string | undefined;
     private license: string | undefined;
@@ -271,17 +273,18 @@ class CsProj {
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <NuGetAudit>false</NuGetAudit>
-        ${propertyGroups.join("\n        ")}
+        ${propertyGroups.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
     </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="OneOf" Version="3.0.263" />
+        <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    </ItemGroup>
 
     <ItemGroup>
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.263" />
-      <PackageReference Include="System.Text.Json" Version="8.0.3" />
-    </ItemGroup>
+${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
 </Project>
 `;
@@ -302,6 +305,20 @@ class CsProj {
         if (this.githubUrl != null) {
             result.push(`<PackageProjectUrl>${this.githubUrl}</PackageProjectUrl>`);
         }
+        return result;
+    }
+
+    private getAdditionalItemGroups(): string[] {
+        const result: string[] = [];
+
+        if (this.license != null) {
+            result.push(`
+<ItemGroup>
+    <None Include="..\\..\\${this.license}" Pack="true" PackagePath=""/>
+</ItemGroup>
+`);
+        }
+
         return result;
     }
 }

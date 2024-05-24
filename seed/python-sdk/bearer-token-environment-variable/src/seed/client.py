@@ -12,7 +12,7 @@ from .service.client import AsyncServiceClient, ServiceClient
 
 class SeedBearerTokenEnvironmentVariable:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------
@@ -68,7 +68,7 @@ class SeedBearerTokenEnvironmentVariable:
 
 class AsyncSeedBearerTokenEnvironmentVariable:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
     Parameters
     ----------

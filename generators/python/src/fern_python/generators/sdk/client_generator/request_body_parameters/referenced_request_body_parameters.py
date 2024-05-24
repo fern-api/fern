@@ -1,8 +1,11 @@
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
+from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
+    NamedFunctionParameter,
+)
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
@@ -29,6 +32,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             context.custom_config.inline_request_params and self._type_id is not None
         )
         self._are_any_properties_optional = self.should_inline_request_parameters
+        self.parameter_name_rewrites: Dict[ir_types.Name, str] = {}
 
     def _get_type_id_from_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
         return type_reference.visit(
@@ -73,6 +77,8 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                 if names_to_deconflict is not None and property_name in names_to_deconflict:
                     maybe_body_name = self.get_body_name()
                     property_name = f'{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else "request")}_{property_name}'
+
+                self.parameter_name_rewrites[property.name] = property_name
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=property_name,
@@ -88,6 +94,32 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                 )
         return parameters
 
+    def _get_non_parameter_properties(self) -> List[AST.NamedFunctionParameter]:
+        non_param_properties = []
+
+        parameters: List[AST.NamedFunctionParameter] = self.get_parameters()
+        parameter_names = [parameter.name for parameter in parameters]
+        for property in self._get_all_properties_for_inlined_request_body():
+            if not self._get_property_name(property) in parameter_names:
+                type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    property.value_type,
+                    in_endpoint=True,
+                )
+                non_param_properties.append(
+                    AST.NamedFunctionParameter(
+                        name=self._get_property_name(property),
+                        docs=property.docs,
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            property.value_type,
+                            in_endpoint=True,
+                        ),
+                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
+                        raw_type=property.value_type,
+                        raw_name=property.name.wire_value,
+                    ),
+                )
+        return non_param_properties
+
     def _get_property_name(self, property: ir_types.InlinedRequestBodyProperty) -> str:
         return property.name.name.snake_case.safe_name
 
@@ -97,6 +129,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
             self._type_id
         )
+
         inlined_properties = []
         for prop in object_properties:
             inlined_properties.append(
@@ -120,13 +153,16 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             )
         ]
 
+    def _get_properties(self, names_to_deconflict: Optional[List[str]]) -> List[NamedFunctionParameter]:
+        return self.get_parameters(names_to_deconflict) + self._get_non_parameter_properties()
+
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
         return (
             AST.Expression(self._get_request_parameter_name())
             if not self.should_inline_request_parameters
             else get_json_body_for_inlined_request(
                 self._context,
-                self._get_inlined_request_parameters(names_to_deconflict),
+                self._get_properties(names_to_deconflict),
                 self._are_any_properties_optional,
             )
         )
@@ -145,7 +181,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             if not self.should_inline_request_parameters
             else get_pre_fetch_statements_for_inlined_request(
                 self._context,
-                self._get_inlined_request_parameters(names_to_deconflict),
+                self._get_properties(names_to_deconflict),
                 self._are_any_properties_optional,
             )
         )
@@ -166,3 +202,6 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             primitive=lambda _: None,
             unknown=lambda: None,
         )
+
+    def get_parameter_name_rewrites(self) -> Dict[ir_types.Name, str]:
+        return self.parameter_name_rewrites

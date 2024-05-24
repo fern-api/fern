@@ -5,6 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.16 - 2024-05-23]
+
+- Fix: Misc. fixes including `.csproj` indentation, setting `X-Fern-SDK-Name` to the top level
+  namespace, and passing through serializer options when serializing JSON messages.
+
+## [0.0.15 - 2024-05-23]
+
+- Fix: Inlined requests that are strictly bodies should be JSON serializable. To achieve this
+  these types of inlined requests now have JSON annotations.
+
+  ```csharp
+  public class SearchRequest
+  {
+      [JsonPropertyName("query")] // added
+      public string Query { get; init; }
+  }
+  ```
+
+## [0.0.14 - 2024-05-23]
+
+- Fix: The SDK now adds a `JsonEnumMemberStringEnumConverter` which reads `EnumMember(Value="...")`
+  annotations on enum values and appropriately serializes them as strings.
+
+## [0.0.13 - 2024-05-22]
+
+- Fix: If a LICENSE is specified, the generator now packages the license in the `.csproj` file.
+
+  ```xml
+    <ItemGroup>
+        <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+    </ItemGroup>
+  ```
+
 ## [0.0.12 - 2024-05-22]
 
 - Improvement: The C# generator now generates an `Environments.cs` file which contains
