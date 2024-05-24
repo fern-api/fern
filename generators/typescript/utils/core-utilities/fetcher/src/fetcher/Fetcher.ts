@@ -15,6 +15,7 @@ export declare namespace Fetcher {
         timeoutMs?: number;
         maxRetries?: number;
         withCredentials?: boolean;
+        abortSignal?: AbortSignal;
         responseType?: "json" | "blob" | "streaming" | "text";
     }
 
@@ -103,21 +104,33 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             : ((await import("node-fetch")).default as any);
 
     const makeRequest = async (): Promise<Response> => {
-        const controller = new AbortController();
-        let abortId = undefined;
+        const signals: AbortSignal[] = [];
+
+        // Add timeout signal
+        let timeoutAbortId: NodeJS.Timeout | undefined = undefined;
         if (args.timeoutMs != null) {
-            abortId = setTimeout(() => controller.abort(), args.timeoutMs);
+            const { signal, abortId } = getTimeoutSignal(args.timeoutMs);
+            timeoutAbortId = abortId;
+            signals.push(signal);
         }
+
+        // Add arbitrary signal
+        if (args.abortSignal != null) {
+            signals.push(args.abortSignal);
+        }
+
         const response = await fetchFn(url, {
             method: args.method,
             headers,
             body,
-            signal: controller.signal,
+            signal: anySignal(signals),
             credentials: args.withCredentials ? "include" : undefined
         });
-        if (abortId != null) {
-            clearTimeout(abortId);
+
+        if (timeoutAbortId != null) {
+            clearTimeout(timeoutAbortId);
         }
+
         return response;
     };
 
@@ -181,7 +194,15 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             };
         }
     } catch (error) {
-        if (error instanceof Error && error.name === "AbortError") {
+        if (args.abortSignal != null && args.abortSignal.aborted) {
+            return {
+                ok: false,
+                error: {
+                    reason: "unknown",
+                    errorMessage: "The user aborted a request"
+                }
+            };
+        } else if (error instanceof Error && error.name === "AbortError") {
             return {
                 ok: false,
                 error: {
@@ -206,6 +227,45 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             }
         };
     }
+}
+
+const TIMEOUT = "timeout";
+
+function getTimeoutSignal(timeoutMs: number): { signal: AbortSignal; abortId: NodeJS.Timeout } {
+    const controller = new AbortController();
+    const abortId = setTimeout(() => controller.abort(TIMEOUT), timeoutMs);
+    return { signal: controller.signal, abortId };
+}
+
+/**
+ * Returns an abort signal that is getting aborted when
+ * at least one of the specified abort signals is aborted.
+ *
+ * Requires at least node.js 18.
+ */
+function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal {
+    // Allowing signals to be passed either as array
+    // of signals or as multiple arguments.
+    const signals = <AbortSignal[]>(args.length === 1 && Array.isArray(args[0]) ? args[0] : args);
+
+    const controller = new AbortController();
+
+    for (const signal of signals) {
+        if (signal.aborted) {
+            // Exiting early if one of the signals
+            // is already aborted.
+            controller.abort((signal as any)?.reason);
+            break;
+        }
+
+        // Listening for signals and removing the listeners
+        // when at least one symbol is aborted.
+        signal.addEventListener("abort", () => controller.abort((signal as any)?.reason), {
+            signal: controller.signal
+        });
+    }
+
+    return controller.signal;
 }
 
 export const fetcher: FetchFunction = fetcherImpl;

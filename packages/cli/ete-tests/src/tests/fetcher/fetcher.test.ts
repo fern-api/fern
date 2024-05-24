@@ -115,4 +115,69 @@ describe("Fetcher Tests", () => {
             process.stdout.write(JSON.stringify(message));
         }
     }, 90_000);
+
+    it.skip("abort while making request", async () => {
+        const controller = new AbortController();
+        const call = fetcher<stream.Readable>({
+            url: "https://api.cohere.ai/v1/chat",
+            method: "POST",
+            responseType: "streaming",
+            headers: {
+                Authorization: "Bearer <>",
+                "Content-Type": "application/json"
+            },
+            body: {
+                message: "Write a long essay about devtools",
+                stream: true
+            },
+            // timeoutMs: 10,
+            abortSignal: controller.signal
+        });
+        controller.abort();
+        const response = await call;
+        expect(response.ok).toEqual(false);
+        if (response.ok) {
+            throw new Error("Expected response to fail");
+        }
+        expect(response.error.reason === "unknown" && response.error.errorMessage.includes("aborted")).toBe(true);
+    }, 90_000);
+
+    it.skip("abort while streaming events", async () => {
+        const controller = new AbortController();
+        const response = await fetcher<stream.Readable>({
+            url: "https://api.cohere.ai/v1/chat",
+            method: "POST",
+            responseType: "streaming",
+            headers: {
+                Authorization: "Bearer ",
+                "Content-Type": "application/json"
+            },
+            body: {
+                message: "Write a long essay about devtools",
+                stream: true
+            },
+            // timeoutMs: 10,
+            abortSignal: controller.signal
+        });
+        expect(response.ok).toEqual(true);
+        if (!response.ok) {
+            throw new Error("Response failed");
+        }
+        const stream = new Stream<unknown>({
+            stream: response.body,
+            parse: async (data) => data,
+            eventShape: {
+                type: "json",
+                messageTerminator: "\n"
+            }
+        });
+        let i = 1;
+        for await (const event of stream) {
+            if (i === 10) {
+                controller.abort();
+            }
+            console.log(JSON.stringify(event));
+            i += 1;
+        }
+    }, 90_000);
 });

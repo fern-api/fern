@@ -90,6 +90,7 @@ export declare namespace Fetcher {
         contentType?: string | ts.Expression;
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
+        abortSignal: ts.Expression | undefined;
         withCredentials: boolean;
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
