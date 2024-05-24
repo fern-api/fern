@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/token",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedOauthClientCredentialsDefault\n\nclient = SeedOauthClientCredentialsDefault(\n    base_url=\"https://yourhost.com/path/to/api\",\n    client_id=\"YOUR_CLIENT_ID\",\n    client_secret=\"YOUR_CLIENT_SECRET\",\n)\nclient.auth.get_token(\n    client_id=\"string\",\n    client_secret=\"string\",\n)\n",

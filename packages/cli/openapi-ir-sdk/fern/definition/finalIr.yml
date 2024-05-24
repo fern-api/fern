@@ -324,6 +324,7 @@ types:
     properties:
       schema: Schema
       contentType: optional<string>
+      additionalProperties: boolean
 
   MultipartRequest:
     extends: commons.WithDescription
@@ -396,18 +397,39 @@ types:
 
   PrimitiveSchemaValue:
     union:
-      int: {}
+      int: IntSchema
       int64: {}
       float: {}
-      double: {}
+      double: DoubleSchema
       string: StringSchema
       datetime: {}
       date: {}
       base64: {}
       boolean: {}
 
+  IntSchema:
+    properties:
+      default: optional<integer>
+      minimum: optional<integer>
+      maximum: optional<integer>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<integer>
+
+  DoubleSchema:
+    properties:
+      default: optional<double>
+      minimum: optional<double>
+      maximum: optional<double>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<double>
+
   StringSchema:
     properties:
+      default: optional<string>
+      pattern: optional<string>
+      format: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
 
@@ -433,6 +455,7 @@ types:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
+      additionalProperties: boolean
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.

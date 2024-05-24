@@ -44,6 +44,8 @@ export * from "./JsonResponse";
 export * from "./Schema";
 export * from "./PrimitiveSchema";
 export * from "./PrimitiveSchemaValue";
+export * from "./IntSchema";
+export * from "./DoubleSchema";
 export * from "./StringSchema";
 export * from "./LiteralSchema";
 export * from "./LiteralSchemaValue";

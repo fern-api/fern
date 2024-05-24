@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { DeclarationSchema } from "./DeclarationSchema";
 import { DeclarationWithNameSchema } from "./DeclarationWithNameSchema";
+import { ValidationSchema } from "./ValidationSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 // This return type is too crazy to write explicitly!
@@ -10,7 +11,9 @@ export function extendTypeReferenceSchema<T extends z.ZodRawShape>(extension: T)
         z.string(),
         z
             .strictObject({
-                type: z.string()
+                type: z.string(),
+                default: z.unknown().optional(),
+                validation: z.optional(ValidationSchema)
             })
             .extend(extension)
     ]);
@@ -34,3 +37,10 @@ export const TypeReferenceDeclarationWithEnvOverride = extendTypeReferenceSchema
     }).shape
 );
 export type TypeReferenceDeclarationWithEnvOverride = z.infer<typeof TypeReferenceDeclarationWithEnvOverride>;
+
+export const TypeReferenceWithDefaultAndValidationSchema = z.strictObject({
+    type: z.string(),
+    default: z.unknown().optional(),
+    validation: z.optional(ValidationSchema)
+});
+export type TypeReferenceWithDefaultAndValidationSchema = z.infer<typeof TypeReferenceWithDefaultAndValidationSchema>;

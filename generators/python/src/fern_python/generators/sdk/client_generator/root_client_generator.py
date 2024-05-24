@@ -182,7 +182,7 @@ class RootClientGenerator:
 
     def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
         writer.write_line(
-            "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions."
+            "Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions."
         )
 
     def _create_class_declaration(

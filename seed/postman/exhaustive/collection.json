@@ -614,16 +614,23 @@
               "request": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field",
+                  "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field/:string",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
                     "object",
-                    "get-and-return-nested-with-required-field"
+                    "get-and-return-nested-with-required-field",
+                    ":string"
                   ],
                   "query": [],
-                  "variable": []
+                  "variable": [
+                    {
+                      "key": "string",
+                      "value": "",
+                      "description": null
+                    }
+                  ]
                 },
                 "header": [],
                 "method": "POST",

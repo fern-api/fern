@@ -14,7 +14,7 @@ from fern_python.generator_exec_wrapper.generator_exec_wrapper import (
     GeneratorExecWrapper,
 )
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
-    EndpointFunctionSnippetGenerator,
+    EndpointFunctionGenerator,
 )
 from fern_python.generators.sdk.client_generator.generated_root_client import (
     GeneratedRootClient,
@@ -214,11 +214,11 @@ class SnippetTestFactory:
         for pathpart in fern_filepath.package_path:
             directories += (
                 Filepath.DirectoryFilepathPart(
-                    module_name=pathpart.snake_case.unsafe_name,
+                    module_name=pathpart.snake_case.safe_name,
                 ),
             )
 
-        module_name = fern_filepath.file.snake_case.unsafe_name if fern_filepath.file is not None else "root"
+        module_name = fern_filepath.file.snake_case.safe_name if fern_filepath.file is not None else "root"
         return Filepath(
             directories=directories,
             file=Filepath.FilepathPart(module_name=f"test_{module_name}"),
@@ -318,9 +318,8 @@ class SnippetTestFactory:
                     if response_body is not None
                     else None
                 )
-                if expectations is not None:
-                    maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
-                    writer.write_line(f"{type_expectation_name} = {maybe_stringify_expectations}")
+                maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
+                writer.write_line(f"{type_expectation_name} = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:
                     writer.write(f"{response_name} = ")
@@ -386,7 +385,7 @@ class SnippetTestFactory:
             components += [fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([component.snake_case.unsafe_name for component in components]) + "."
+        return ".".join([component.snake_case.safe_name for component in components]) + "."
 
     def _generate_service_test(self, service: ir_types.HttpService, snippet_writer: SnippetWriter) -> None:
         fern_filepath = service.name.fern_filepath
@@ -415,7 +414,7 @@ class SnippetTestFactory:
                 )
             ):
                 continue
-            endpoint_name = endpoint.name.get_as_name().snake_case.unsafe_name
+            endpoint_name = endpoint.name.get_as_name().snake_case.safe_name
 
             # TODO: We should make the mock server return the specified error response
             # if we want to test that as well, then we can test each example, but that seems less pressing.
@@ -433,13 +432,14 @@ class SnippetTestFactory:
                 continue
 
             example = successful_examples[0]
-            endpoint_snippet = EndpointFunctionSnippetGenerator(
-                context=self._context,
+            _path_parameter_names = dict()
+            for path_parameter in endpoint.all_path_parameters:
+                _path_parameter_names[path_parameter.name] = path_parameter.name.snake_case.safe_name
+            endpoint_snippet = self._function_generator(
                 snippet_writer=snippet_writer,
                 service=service,
                 endpoint=endpoint,
-                example=example,
-            ).generate_snippet()
+            )._generate_endpoint_snippet_raw(example=example)
 
             sync_snippet = self._client_snippet(False, package_path, endpoint_snippet)
             async_snippet = self._client_snippet(True, package_path, endpoint_snippet)
@@ -487,6 +487,29 @@ class SnippetTestFactory:
 
         if source_file:
             self._service_test_files[filepath] = source_file
+
+    def _function_generator(
+        self, service: ir_types.HttpService, endpoint: ir_types.HttpEndpoint, snippet_writer: SnippetWriter
+    ) -> EndpointFunctionGenerator:
+        return EndpointFunctionGenerator(
+            context=self._context,
+            service=service,
+            endpoint=endpoint,
+            idempotency_headers=[],
+            client_wrapper_member_name="client",
+            generated_root_client=self._generated_root_client,
+            snippet_writer=snippet_writer,
+            # Package doesn't matter here
+            package=ir_types.Package(
+                fern_filepath=service.name.fern_filepath,
+                types=[],
+                errors=[],
+                subpackages=[],
+                has_endpoints_in_tree=True,
+            ),
+            # This doesn't matter here either
+            is_async=False,
+        )
 
     def _write_test_files(self) -> None:
         for filepath, test_file in self._service_test_files.items():

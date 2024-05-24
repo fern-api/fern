@@ -1,6 +1,7 @@
 import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
+import { getDefaultAsString } from "../../../schema/defaults/getDefault";
 import { getGeneratedTypeName } from "../../../schema/utils/getSchemaName";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
@@ -23,8 +24,11 @@ export function getVariableDefinitions(document: OpenAPIV3.Document): Record<str
                         nameOverride: undefined,
                         generatedName: getGeneratedTypeName([variableName]),
                         schema: PrimitiveSchemaValue.string({
-                            minLength: undefined,
-                            maxLength: undefined
+                            default: getDefaultAsString(schema),
+                            pattern: schema.pattern,
+                            format: schema.format,
+                            minLength: schema.minLength,
+                            maxLength: schema.maxLength
                         }),
                         description: schema.description,
                         groupName: undefined

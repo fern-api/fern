@@ -61,7 +61,7 @@ class AbstractDeclarationReferencer(ABC, Generic[T]):
     ) -> Tuple[Filepath.DirectoryFilepathPart, ...]:
         return (
             Filepath.DirectoryFilepathPart(
-                module_name=fern_filepath_part.snake_case.unsafe_name,
+                module_name=fern_filepath_part.snake_case.safe_name,
                 export_strategy=export_strategy,
             ),
         )

@@ -89,7 +89,7 @@ class EnumGenerator(AbstractTypeGenerator):
         return enum_value.name.name.snake_case.safe_name
 
     def _get_class_name(self) -> str:
-        return self._name.name.pascal_case.unsafe_name
+        return self._name.name.pascal_case.safe_name
 
 
 class EnumSnippetGenerator:
@@ -122,4 +122,4 @@ class EnumSnippetGenerator:
 
 
 def _get_class_var_name(name: ir_types.Name) -> str:
-    return name.screaming_snake_case.unsafe_name
+    return name.screaming_snake_case.safe_name

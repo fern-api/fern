@@ -171,13 +171,13 @@ wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
 name = "fern-fern-fdr-sdk"
-version = "0.0.5407"
+version = "0.0.5435"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_fdr_sdk-0.0.5407-py3-none-any.whl", hash = "sha256:a4f158870ff24babd457d66158895ab7423113abd4097eb148242a9b6d02ac96"},
-    {file = "fern_fern_fdr_sdk-0.0.5407.tar.gz", hash = "sha256:306e80715737e42fad757437399a2488e0edfbdbeb550b234e0a284cc3c28bb1"},
+    {file = "fern_fern_fdr_sdk-0.0.5435-py3-none-any.whl", hash = "sha256:7701cf64469a8989dc769f419b6ec341bbd992f43584a4007c85f9fcca785e3b"},
+    {file = "fern_fern_fdr_sdk-0.0.5435.tar.gz", hash = "sha256:dd57c2ea1c4c8beb2288d3447f1e9a66b24de9c915fa0e28d9c3f25d317f599a"},
 ]
 
 [package.dependencies]
@@ -192,13 +192,13 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-generator-exec-sdk"
-version = "0.0.804"
+version = "0.0.831"
 description = ""
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_generator_exec_sdk-0.0.804-py3-none-any.whl", hash = "sha256:8b3ad9fe297bf3f55b3578d82face92f17f853e17f61d2657f6a1696b1896b9c"},
-    {file = "fern_fern_generator_exec_sdk-0.0.804.tar.gz", hash = "sha256:6254d219897b666db89f199dc801d0e0410f4394850924389973a76d039f0c82"},
+    {file = "fern_fern_generator_exec_sdk-0.0.831-py3-none-any.whl", hash = "sha256:8d233eab25a0210d75660a437237a5c619c60062b0c91e42df052f1b550c6541"},
+    {file = "fern_fern_generator_exec_sdk-0.0.831.tar.gz", hash = "sha256:da8134c94f6f9089b1c97328430054d9a9cdd6d6d635606eb0cd47f5b3ba96e6"},
 ]
 
 [package.dependencies]
@@ -484,13 +484,13 @@ files = [
 
 [[package]]
 name = "platformdirs"
-version = "4.2.1"
+version = "4.2.2"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "platformdirs-4.2.1-py3-none-any.whl", hash = "sha256:17d5a1161b3fd67b390023cb2d3b026bbd40abde6fdb052dfbd3a29c3ba22ee1"},
-    {file = "platformdirs-4.2.1.tar.gz", hash = "sha256:031cd18d4ec63ec53e82dceaac0417d218a6863f7745dfcc9efe7793b7039bdf"},
+    {file = "platformdirs-4.2.2-py3-none-any.whl", hash = "sha256:2d7a1657e36a80ea911db832a8a6ece5ee53d8de21edd5cc5879af6530b1bfee"},
+    {file = "platformdirs-4.2.2.tar.gz", hash = "sha256:38b7b51f512eed9e84a22788b4bce1de17c0adb134d6becb09836e37d8654cd3"},
 ]
 
 [package.extras]
@@ -960,4 +960,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "a3c0f31d0091a55f152b1f4d8233b45e72afba1b481f8e98e4bce6aa73d0b70e"
+content-hash = "3d70877837f4e00f1bac00cacd8ef5b83b141f6d8bfe18ac59fd2b9a01cbd9fc"

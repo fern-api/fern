@@ -62,7 +62,9 @@ export interface ObjectServiceMethods {
     ): void | Promise<void>;
     getAndReturnNestedWithRequiredField(
         req: express.Request<
-            never,
+            {
+                string: string;
+            },
             SeedExhaustive.types.NestedObjectWithRequiredField,
             SeedExhaustive.types.NestedObjectWithRequiredField,
             never
@@ -270,7 +272,7 @@ export class ObjectService {
                 next(request.errors);
             }
         });
-        this.router.post("/get-and-return-nested-with-required-field", async (req, res, next) => {
+        this.router.post("/get-and-return-nested-with-required-field/:string", async (req, res, next) => {
             const request = await serializers.types.NestedObjectWithRequiredField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;

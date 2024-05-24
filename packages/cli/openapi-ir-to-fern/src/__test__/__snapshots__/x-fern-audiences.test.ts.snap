@@ -47,7 +47,15 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
             "audiences": [
               "public",
             ],
+            "default": undefined,
+            "docs": undefined,
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -110,7 +118,15 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
             "audiences": [
               "public",
             ],
+            "default": undefined,
+            "docs": undefined,
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },

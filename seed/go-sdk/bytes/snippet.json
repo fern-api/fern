@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/upload-content",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.upload"
             },
             "snippet": {
                 "type": "go",

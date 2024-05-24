@@ -407,6 +407,7 @@ class ObjectClient:
 
     def get_and_return_nested_with_required_field(
         self,
+        string_: str,
         *,
         string: str,
         nested_object: ObjectWithOptionalField,
@@ -415,6 +416,8 @@ class ObjectClient:
         """
         Parameters
         ----------
+        string_ : str
+
         string : str
 
         nested_object : ObjectWithOptionalField
@@ -439,6 +442,7 @@ class ObjectClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.object.get_and_return_nested_with_required_field(
+            string_="string",
             string="string",
             nested_object=ObjectWithOptionalField(
                 string="string",
@@ -466,7 +470,8 @@ class ObjectClient:
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
             ),
             params=encode_query(
                 jsonable_encoder(
@@ -982,6 +987,7 @@ class AsyncObjectClient:
 
     async def get_and_return_nested_with_required_field(
         self,
+        string_: str,
         *,
         string: str,
         nested_object: ObjectWithOptionalField,
@@ -990,6 +996,8 @@ class AsyncObjectClient:
         """
         Parameters
         ----------
+        string_ : str
+
         string : str
 
         nested_object : ObjectWithOptionalField
@@ -1014,6 +1022,7 @@ class AsyncObjectClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.endpoints.object.get_and_return_nested_with_required_field(
+            string_="string",
             string="string",
             nested_object=ObjectWithOptionalField(
                 string="string",
@@ -1041,7 +1050,8 @@ class AsyncObjectClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
             ),
             params=encode_query(
                 jsonable_encoder(

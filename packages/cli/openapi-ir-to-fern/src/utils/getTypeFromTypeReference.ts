@@ -13,3 +13,21 @@ export function getDocsFromTypeReference(typeReference: RawSchemas.TypeReference
     }
     return typeReference.docs;
 }
+
+export function getDefaultFromTypeReference(
+    typeReference: RawSchemas.TypeReferenceWithDocsSchema
+): unknown | undefined {
+    if (typeof typeReference === "string") {
+        return undefined;
+    }
+    return typeReference.default;
+}
+
+export function getValidationFromTypeReference(
+    typeReference: RawSchemas.TypeReferenceWithDocsSchema
+): RawSchemas.ValidationSchema | undefined {
+    if (typeof typeReference === "string") {
+        return undefined;
+    }
+    return typeReference.validation;
+}

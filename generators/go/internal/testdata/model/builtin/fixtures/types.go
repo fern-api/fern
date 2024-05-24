@@ -31,6 +31,12 @@ type Type struct {
 	Nineteen  *time.Time       `json:"nineteen,omitempty" url:"nineteen,omitempty"`
 	Twenty    *time.Time       `json:"twenty,omitempty" url:"twenty,omitempty" format:"date"`
 	eighteen  string
+
+	extraProperties map[string]interface{}
+}
+
+func (t *Type) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *Type) Eighteen() string {
@@ -57,6 +63,13 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	t.Nineteen = unmarshaler.Nineteen.TimePtr()
 	t.Twenty = unmarshaler.Twenty.TimePtr()
 	t.eighteen = "fern"
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t, "eighteen")
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	return nil
 }
 

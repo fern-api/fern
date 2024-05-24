@@ -62,6 +62,7 @@ function convertService(
                     ? convertIrEnvironments({ environmentsConfig: ir.environments, endpoint: irEndpoint })
                     : undefined,
             id: irEndpoint.name.originalName,
+            originalEndpointId: irEndpoint.id,
             name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
             path: {
                 pathParameters: [...irService.pathParameters, ...irEndpoint.pathParameters].map(

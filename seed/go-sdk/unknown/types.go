@@ -13,7 +13,12 @@ type MyAlias = interface{}
 type MyObject struct {
 	Unknown interface{} `json:"unknown,omitempty" url:"unknown,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *MyObject) UnmarshalJSON(data []byte) error {
@@ -23,6 +28,13 @@ func (m *MyObject) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*m = MyObject(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }

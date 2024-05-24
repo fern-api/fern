@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/custom-auth",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_custom-auth.getWithCustomAuth"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
@@ -30,7 +31,8 @@
         },
         "endpointId": {
             "path": "/custom-auth",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_custom-auth.postWithCustomAuth"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",

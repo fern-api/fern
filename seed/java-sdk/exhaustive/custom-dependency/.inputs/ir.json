@@ -30573,15 +30573,83 @@
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
-                        "head": "/get-and-return-nested-with-required-field",
-                        "parts": []
+                        "head": "/get-and-return-nested-with-required-field/",
+                        "parts": [
+                            {
+                                "pathParameter": "string",
+                                "tail": ""
+                            }
+                        ]
                     },
                     "fullPath": {
-                        "head": "/object/get-and-return-nested-with-required-field",
-                        "parts": []
+                        "head": "/object/get-and-return-nested-with-required-field/",
+                        "parts": [
+                            {
+                                "pathParameter": "string",
+                                "tail": ""
+                            }
+                        ]
                     },
-                    "pathParameters": [],
-                    "allPathParameters": [],
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "string",
+                                "camelCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STRING",
+                                    "safeName": "STRING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "String",
+                                    "safeName": "String"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "string",
+                                "camelCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STRING",
+                                    "safeName": "STRING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "String",
+                                    "safeName": "String"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
@@ -30944,10 +31012,44 @@
                     "examples": [
                         {
                             "exampleType": "generated",
-                            "url": "/get-and-return-nested-with-required-field",
+                            "url": "/get-and-return-nested-with-required-field/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
-                            "endpointPathParameters": [],
+                            "endpointPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "string",
+                                        "camelCase": {
+                                            "unsafeName": "string",
+                                            "safeName": "string"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "string",
+                                            "safeName": "string"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STRING",
+                                            "safeName": "STRING"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "String",
+                                            "safeName": "String"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
                             "serviceHeaders": [],
                             "endpointHeaders": [],
                             "queryParameters": [],

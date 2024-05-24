@@ -16,7 +16,12 @@ type Type struct {
 	Id   TypeId `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (t *Type) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *Type) UnmarshalJSON(data []byte) error {
@@ -26,6 +31,13 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = Type(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	t._rawJSON = json.RawMessage(data)
 	return nil
 }

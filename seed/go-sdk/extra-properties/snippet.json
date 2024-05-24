@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/user",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
             },
             "snippet": {
                 "type": "go",

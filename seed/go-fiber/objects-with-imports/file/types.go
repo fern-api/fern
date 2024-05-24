@@ -3,6 +3,7 @@
 package file
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	fern "github.com/objects-with-imports/fern"
 	core "github.com/objects-with-imports/fern/core"
@@ -12,6 +13,29 @@ type Directory struct {
 	Name        string       `json:"name" url:"name"`
 	Files       []*fern.File `json:"files,omitempty" url:"files,omitempty"`
 	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (d *Directory) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *Directory) UnmarshalJSON(data []byte) error {
+	type unmarshaler Directory
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Directory(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+
+	return nil
 }
 
 func (d *Directory) String() string {

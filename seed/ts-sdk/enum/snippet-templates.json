@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/inlined",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_inlined-request.send"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
@@ -81,7 +82,8 @@
         },
         "endpointId": {
             "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_path-param.send"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
@@ -155,7 +157,8 @@
         },
         "endpointId": {
             "path": "/query",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_query-param.send"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
@@ -229,7 +232,8 @@
         },
         "endpointId": {
             "path": "/query-list",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_query-param.sendList"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",

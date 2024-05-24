@@ -150,9 +150,9 @@ class ServiceClient:
             "title": title,
             "from": from_,
             "rating": rating,
-            "type": "movie",
             "tag": tag,
             "metadata": metadata,
+            "type": "movie",
         }
         if prequel is not OMIT:
             _request["prequel"] = prequel
@@ -459,9 +459,9 @@ class AsyncServiceClient:
             "title": title,
             "from": from_,
             "rating": rating,
-            "type": "movie",
             "tag": tag,
             "metadata": metadata,
+            "type": "movie",
         }
         if prequel is not OMIT:
             _request["prequel"] = prequel

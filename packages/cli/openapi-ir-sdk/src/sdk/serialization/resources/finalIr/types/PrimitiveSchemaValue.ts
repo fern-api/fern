@@ -11,10 +11,10 @@ export const PrimitiveSchemaValue: core.serialization.Schema<
     FernOpenapiIr.PrimitiveSchemaValue
 > = core.serialization
     .union("type", {
-        int: core.serialization.object({}),
+        int: core.serialization.lazyObject(async () => (await import("../../..")).IntSchema),
         int64: core.serialization.object({}),
         float: core.serialization.object({}),
-        double: core.serialization.object({}),
+        double: core.serialization.lazyObject(async () => (await import("../../..")).DoubleSchema),
         string: core.serialization.lazyObject(async () => (await import("../../..")).StringSchema),
         datetime: core.serialization.object({}),
         date: core.serialization.object({}),
@@ -25,13 +25,13 @@ export const PrimitiveSchemaValue: core.serialization.Schema<
         transform: (value) => {
             switch (value.type) {
                 case "int":
-                    return FernOpenapiIr.PrimitiveSchemaValue.int();
+                    return FernOpenapiIr.PrimitiveSchemaValue.int(value);
                 case "int64":
                     return FernOpenapiIr.PrimitiveSchemaValue.int64();
                 case "float":
                     return FernOpenapiIr.PrimitiveSchemaValue.float();
                 case "double":
-                    return FernOpenapiIr.PrimitiveSchemaValue.double();
+                    return FernOpenapiIr.PrimitiveSchemaValue.double(value);
                 case "string":
                     return FernOpenapiIr.PrimitiveSchemaValue.string(value);
                 case "datetime":
@@ -61,7 +61,7 @@ export declare namespace PrimitiveSchemaValue {
         | PrimitiveSchemaValue.Base64
         | PrimitiveSchemaValue.Boolean;
 
-    interface Int {
+    interface Int extends serializers.IntSchema.Raw {
         type: "int";
     }
 
@@ -73,7 +73,7 @@ export declare namespace PrimitiveSchemaValue {
         type: "float";
     }
 
-    interface Double {
+    interface Double extends serializers.DoubleSchema.Raw {
         type: "double";
     }
 

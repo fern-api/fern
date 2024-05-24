@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_unknown.post"
             },
             "snippet": {
                 "type": "go",

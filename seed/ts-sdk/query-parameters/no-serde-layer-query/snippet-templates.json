@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/user",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_user.getUsername"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedQueryParameters = new SeedQueryParametersClient;\n",

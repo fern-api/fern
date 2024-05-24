@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_unknown.post"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedUnknownAsAny = new SeedUnknownAsAnyClient;\n",

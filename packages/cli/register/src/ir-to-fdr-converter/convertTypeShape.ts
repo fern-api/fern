@@ -174,19 +174,13 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                 type: "primitive",
                 value: Ir.types.PrimitiveTypeV1._visit<APIV1Write.PrimitiveType>(primitive.v1, {
                     integer: () => {
-                        return {
-                            type: "integer"
-                        };
+                        return convertInteger(primitive.v2);
                     },
                     double: () => {
-                        return {
-                            type: "double"
-                        };
+                        return convertDouble(primitive.v2);
                     },
                     string: () => {
-                        return {
-                            type: "string"
-                        };
+                        return convertString(primitive.v2);
                     },
                     long: () => {
                         return {
@@ -225,7 +219,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                         };
                     },
                     _other: () => {
-                        throw new Error("Unknown primitive: " + primitive);
+                        throw new Error("Unknown primitive: " + primitive.v1);
                     }
                 })
             };
@@ -239,4 +233,38 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
             throw new Error("Unknown Type reference: " + irTypeReference.type);
         }
     });
+}
+
+function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): APIV1Write.PrimitiveType {
+    const rules: Ir.StringValidationRules | undefined =
+        primitive != null && primitive.type === "string" ? primitive.validation : undefined;
+    return {
+        type: "string",
+        regex: rules != null ? rules.pattern : undefined,
+        minLength: rules != null ? rules.minLength : undefined,
+        maxLength: rules != null ? rules.minLength : undefined,
+        default: primitive != null && primitive.type === "string" ? primitive.default : undefined
+    };
+}
+
+function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): APIV1Write.PrimitiveType {
+    const rules: Ir.IntegerValidationRules | undefined =
+        primitive != null && primitive.type === "integer" ? primitive.validation : undefined;
+    return {
+        type: "integer",
+        minimum: rules != null ? rules.min : undefined,
+        maximum: rules != null ? rules.max : undefined,
+        default: primitive != null && primitive.type === "integer" ? primitive.default : undefined
+    };
+}
+
+function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): APIV1Write.PrimitiveType {
+    const rules: Ir.DoubleValidationRules | undefined =
+        primitive != null && primitive.type === "double" ? primitive.validation : undefined;
+    return {
+        type: "double",
+        minimum: rules != null ? rules.min : undefined,
+        maximum: rules != null ? rules.max : undefined,
+        default: primitive != null && primitive.type === "double" ? primitive.default : undefined
+    };
 }

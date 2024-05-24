@@ -16,6 +16,8 @@ describe("parse inline types", () => {
         const dummyFilepath = RelativeFilePath.of("a/b/c");
         const parsedTypeReference = parseInlineType({
             type: "optional<list<" + dummyTypeName + ">>",
+            _default: undefined,
+            validation: undefined,
             file: constructFernFileContext({
                 relativeFilepath: dummyFilepath,
                 definitionFile: {},

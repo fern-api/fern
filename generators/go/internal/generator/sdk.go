@@ -1568,8 +1568,9 @@ func newGeneratedEndpoint(
 
 func endpointToIdentifier(endpoint *ir.HttpEndpoint) *generatorexec.EndpointIdentifier {
 	return &generatorexec.EndpointIdentifier{
-		Path:   fullPathForEndpoint(endpoint),
-		Method: irMethodToGeneratorExecMethod(endpoint.Method),
+		Path:               fullPathForEndpoint(endpoint),
+		Method:             irMethodToGeneratorExecMethod(endpoint.Method),
+		IdentifierOverride: &endpoint.Id,
 	}
 }
 
@@ -2534,7 +2535,7 @@ func (f *fileWriter) WriteRequestType(
 	}
 	if requestBody.extraProperties {
 		f.P()
-		writeExtractExtraProperties(f, literals, receiver)
+		writeExtractExtraProperties(f, literals, receiver, getExtraPropertiesFieldName(requestBody.extraProperties))
 	}
 	f.P("return nil")
 	f.P("}")
