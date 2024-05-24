@@ -36,10 +36,15 @@ export async function replaceReferencedMarkdown({
             RelativeFilePath.of(src.replace(/^\//, ""))
         );
 
-        // strip frontmatter from the referenced markdown
-        const { content } = grayMatter(await readFile(filepath));
+        try {
+            // strip frontmatter from the referenced markdown
+            const { content } = grayMatter(await readFile(filepath));
 
-        markdown = markdown.replace(matchString, content);
+            markdown = markdown.replace(matchString, content);
+        } catch (e) {
+            context.failAndThrow(`Failed to read markdown file "${src}" referenced in ${absolutePathToMdx}`, e);
+            break;
+        }
     }
 
     return markdown;
