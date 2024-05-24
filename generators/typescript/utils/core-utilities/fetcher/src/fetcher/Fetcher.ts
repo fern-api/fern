@@ -193,7 +193,15 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             };
         }
     } catch (error) {
-        if (error instanceof Error && error.name === "AbortError") {
+        if (args.abortSignal != null && args.abortSignal.aborted) {
+            return {
+                ok: false,
+                error: {
+                    reason: "unknown",
+                    errorMessage: "The user aborted a request"
+                }
+            };
+        } else if (error instanceof Error && error.name === "AbortError") {
             return {
                 ok: false,
                 error: {
@@ -220,9 +228,11 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
     }
 }
 
+const TIMEOUT = "timeout";
+
 function getTimeoutSignal(timeoutMs: number): { signal: AbortSignal; abortId: NodeJS.Timeout } {
     const controller = new AbortController();
-    const abortId = setTimeout(() => controller.abort(), timeoutMs);
+    const abortId = setTimeout(() => controller.abort(TIMEOUT), timeoutMs);
     return { signal: controller.signal, abortId };
 }
 
@@ -243,7 +253,7 @@ function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal {
         if (signal.aborted) {
             // Exiting early if one of the signals
             // is already aborted.
-            controller.abort(signal?.reason ?? "");
+            controller.abort(signal.reason);
             break;
         }
 
