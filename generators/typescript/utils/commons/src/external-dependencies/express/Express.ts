@@ -28,6 +28,9 @@ export interface Express {
         locals: (args: { referenceToExpressResponse: ts.Expression }) => ts.Expression;
         _getReferenceToType: () => ts.TypeNode;
     };
+    NextFunction: {
+        _getReferenceToType: () => ts.TypeNode;
+    };
     App: {
         use: (args: { referenceToApp: ts.Expression; path: ts.Expression; router: ts.Expression }) => ts.Expression;
     };

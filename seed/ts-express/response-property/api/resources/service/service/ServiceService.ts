@@ -14,7 +14,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedResponseProperty.Response) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getMovieDocs(
         req: express.Request<never, SeedResponseProperty.Response, string, never>,
@@ -22,7 +23,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedResponseProperty.Response) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getMovieName(
         req: express.Request<never, SeedResponseProperty.StringResponse, string, never>,
@@ -30,7 +32,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedResponseProperty.StringResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getMovieMetadata(
         req: express.Request<never, SeedResponseProperty.Response, string, never>,
@@ -38,7 +41,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedResponseProperty.Response) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getOptionalMovie(
         req: express.Request<never, SeedResponseProperty.Response | undefined, string, never>,
@@ -46,7 +50,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedResponseProperty.Response | undefined) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getOptionalMovieDocs(
         req: express.Request<never, SeedResponseProperty.OptionalWithDocs | undefined, string, never>,
@@ -54,7 +59,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedResponseProperty.OptionalWithDocs | undefined) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getOptionalMovieName(
         req: express.Request<never, SeedResponseProperty.OptionalStringResponse | undefined, string, never>,
@@ -62,7 +68,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedResponseProperty.OptionalStringResponse | undefined) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -89,17 +96,21 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getMovie(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getMovie(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedResponsePropertyError) {
@@ -128,17 +139,21 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getMovieDocs(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getMovieDocs(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedResponsePropertyError) {
@@ -167,17 +182,21 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getMovieName(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.StringResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getMovieName(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.StringResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedResponsePropertyError) {
@@ -206,17 +225,21 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getMovieMetadata(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getMovieMetadata(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedResponsePropertyError) {
@@ -245,17 +268,21 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getOptionalMovie(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.service.getOptionalMovie.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getOptionalMovie(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.service.getOptionalMovie.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedResponsePropertyError) {
@@ -284,17 +311,21 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getOptionalMovieDocs(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.OptionalWithDocs.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getOptionalMovieDocs(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.OptionalWithDocs.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedResponsePropertyError) {
@@ -323,17 +354,21 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getOptionalMovieName(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.OptionalStringResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getOptionalMovieName(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.OptionalStringResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedResponsePropertyError) {
