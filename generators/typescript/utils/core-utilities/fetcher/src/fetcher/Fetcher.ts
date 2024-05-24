@@ -77,6 +77,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
 
     if (RUNTIME.type === "node") {
         if (args.body instanceof (await import("formdata-node")).FormData) {
+            // @ts-expect-error
             body = args.body;
         } else {
             body = maybeStringifyBody(args.body);
@@ -253,13 +254,15 @@ function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal {
         if (signal.aborted) {
             // Exiting early if one of the signals
             // is already aborted.
-            controller.abort(signal.reason);
+            controller.abort((signal as any)?.reason);
             break;
         }
 
         // Listening for signals and removing the listeners
         // when at least one symbol is aborted.
-        signal.addEventListener("abort", () => controller.abort(signal.reason), { signal: controller.signal });
+        signal.addEventListener("abort", () => controller.abort((signal as any)?.reason), {
+            signal: controller.signal
+        });
     }
 
     return controller.signal;
