@@ -6,7 +6,6 @@ package com.seed.oauthClientCredentialsDefault.core;
 import com.seed.oauthClientCredentialsDefault.resources.auth.AuthClient;
 import com.seed.oauthClientCredentialsDefault.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentialsDefault.resources.auth.types.TokenResponse;
-import java.time.Instant;
 import java.util.function.Supplier;
 
 public final class OAuthTokenSupplier implements Supplier<String> {
@@ -22,7 +21,6 @@ public final class OAuthTokenSupplier implements Supplier<String> {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.authClient = authClient;
-        this.expiresAt = Instant.now();
     }
 
     public TokenResponse fetchToken() {
