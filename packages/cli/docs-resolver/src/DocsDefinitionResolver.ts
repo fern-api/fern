@@ -14,6 +14,7 @@ import { convertIrToNavigation } from "./convertIrToNavigation";
 import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
 import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
 import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
+import { replaceReferencedMarkdown } from "./replaceReferencedMarkdown";
 import { wrapWithHttps } from "./wrapWithHttps";
 
 export interface FilePathPair {
@@ -70,6 +71,15 @@ export class DocsDefinitionResolver {
 
         const filesToUploadSet = collectFilesFromDocsConfig(this.parsedDocsConfig);
 
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+                markdown,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+                absolutePathToMdx: this.resolveFilepath(relativePath),
+                context: this.taskContext
+            });
+        }
+
         // preprocess markdown files to extract image paths
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
@@ -82,7 +92,7 @@ export class DocsDefinitionResolver {
 
             // store the image filepaths to upload
             for (const filepath of filepaths) {
-                filesToUploadSet.add(this.resolveFilepath(filepath));
+                filesToUploadSet.add(filepath);
             }
         }
 

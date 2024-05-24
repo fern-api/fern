@@ -1,0 +1,46 @@
+import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
+import { readFile } from "fs/promises";
+import grayMatter from "gray-matter";
+
+export async function replaceReferencedMarkdown({
+    markdown,
+    absolutePathToFernFolder,
+    absolutePathToMdx,
+    context
+}: {
+    markdown: string;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToMdx: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<string> {
+    if (!markdown.includes("<Markdown")) {
+        return markdown;
+    }
+
+    const regex = /<Markdown\s+src={?['"]([^'"]+)['"](?! \+)}?\s*\/>/g;
+
+    // while match is found, replace the match with the content of the referenced markdown file
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(markdown)) != null) {
+        const matchString = match[0];
+        const src = match[1];
+
+        if (matchString == null || src == null) {
+            context.failAndThrow(`Invalid match found in markdown: ${matchString}`);
+            break;
+        }
+
+        const filepath = resolve(
+            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMdx),
+            RelativeFilePath.of(src.replace(/^\//, ""))
+        );
+
+        // strip frontmatter from the referenced markdown
+        const { content } = grayMatter(await readFile(filepath));
+
+        markdown = markdown.replace(matchString, content);
+    }
+
+    return markdown;
+}
