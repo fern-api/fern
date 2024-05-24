@@ -251,6 +251,8 @@ declare namespace CsProj {
     }
 }
 
+const FOUR_SPACES = "    ";
+
 class CsProj {
     private version: string | undefined;
     private license: string | undefined;
@@ -271,7 +273,7 @@ class CsProj {
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <NuGetAudit>false</NuGetAudit>
-        ${propertyGroups.join("\n        ")}
+        ${propertyGroups.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
     </PropertyGroup>
 
     <ItemGroup>
@@ -282,8 +284,7 @@ class CsProj {
     <ItemGroup>
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
-
-    ${this.getAdditionalItemGroups().join("\n    ")}
+${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
 
 </Project>
 `;
@@ -311,9 +312,11 @@ class CsProj {
         const result: string[] = [];
 
         if (this.license != null) {
-            result.push(`<ItemGroup>
+            result.push(`
+<ItemGroup>
     <None Include="..\\..\\${this.license}" Pack="true" PackagePath=""/>
-</ItemGroup>`);
+</ItemGroup>
+`);
         }
 
         return result;
