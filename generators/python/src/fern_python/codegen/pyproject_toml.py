@@ -129,6 +129,7 @@ name = "{self.name}"'''
                     project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
 
             if self.license_ is not None:
+                # TODO(armandobelardo): verify poetry handles custom licenses on it's side
                 if self.license_.get_as_union().type == "basic":
                     license_id = cast(BasicLicense, self.license_.get_as_union()).id
                     if license_id == LicenseId.MIT:
@@ -137,9 +138,6 @@ name = "{self.name}"'''
                     elif license_id == LicenseId.APACHE_2:
                         license_evaluated = 'license = "Apache-2.0"'
                         classifiers.append("License :: OSI Approved :: Apache Software License")
-                else:
-                    license_filename = cast(CustomLicense, self.license_.get_as_union()).filename
-                    license_evaluated = f"license = {{ file = '{license_filename}' }}"
 
             if self.github_output_mode is not None:
                 project_urls.append(f"Repository = '{self.github_output_mode.repo_url}'")
