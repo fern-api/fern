@@ -24,7 +24,8 @@ export interface PlaylistServiceMethods {
             send: (responseBody: SeedTrace.Playlist) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getPlaylists(
         req: express.Request<
@@ -45,7 +46,8 @@ export interface PlaylistServiceMethods {
             send: (responseBody: SeedTrace.Playlist[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getPlaylist(
         req: express.Request<
@@ -61,7 +63,8 @@ export interface PlaylistServiceMethods {
             send: (responseBody: SeedTrace.Playlist) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     updatePlaylist(
         req: express.Request<
@@ -77,7 +80,8 @@ export interface PlaylistServiceMethods {
             send: (responseBody: SeedTrace.Playlist | undefined) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     deletePlaylist(
         req: express.Request<
@@ -93,7 +97,8 @@ export interface PlaylistServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -120,17 +125,21 @@ export class PlaylistService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.createPlaylist(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.Playlist.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.createPlaylist(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.Playlist.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedTraceError) {
@@ -156,17 +165,21 @@ export class PlaylistService {
         });
         this.router.get("/all", async (req, res, next) => {
             try {
-                await this.methods.getPlaylists(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.playlist.getPlaylists.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getPlaylists(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.playlist.getPlaylists.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
@@ -184,15 +197,21 @@ export class PlaylistService {
         });
         this.router.get("/:playlistId", async (req, res, next) => {
             try {
-                await this.methods.getPlaylist(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.Playlist.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                        );
+                await this.methods.getPlaylist(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Playlist.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
@@ -219,17 +238,21 @@ export class PlaylistService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.updatePlaylist(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.playlist.updatePlaylist.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.updatePlaylist(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.playlist.updatePlaylist.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedTraceError) {
@@ -260,13 +283,17 @@ export class PlaylistService {
         });
         this.router.delete("/:playlist_id", async (req, res, next) => {
             try {
-                await this.methods.deletePlaylist(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.deletePlaylist(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {

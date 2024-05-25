@@ -18,6 +18,7 @@ export declare namespace Dummy {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -43,6 +44,7 @@ export class Dummy {
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 2000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return new core.Stream({
@@ -55,6 +57,7 @@ export class Dummy {
                         breadcrumbsPrefix: ["response"],
                     });
                 },
+                signal: requestOptions?.abortSignal,
                 eventShape: {
                     type: "json",
                     messageTerminator: "\n",

@@ -23,11 +23,13 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
                 ({
                     stream,
                     parse,
-                    eventShape
+                    eventShape,
+                    signal
                 }: {
                     stream: ts.Expression;
                     parse: ts.Expression;
                     eventShape: StreamingFetcher.SSEEventShape | StreamingFetcher.MessageEventShape;
+                    signal: ts.Expression;
                 }): ts.Expression => {
                     const eventShapeProperties: ts.ObjectLiteralElementLike[] = [];
                     if (eventShape.type === "sse") {
@@ -64,6 +66,7 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
                             [
                                 ts.factory.createPropertyAssignment(ts.factory.createIdentifier("stream"), stream),
                                 ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse),
+                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("signal"), signal),
                                 ts.factory.createPropertyAssignment(
                                     ts.factory.createIdentifier("eventShape"),
                                     ts.factory.createObjectLiteralExpression(eventShapeProperties, true)

@@ -14,7 +14,8 @@ export interface RootServiceMethods {
             send: (responseBody: SeedValidation.Type) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     get(
         req: express.Request<
@@ -31,7 +32,8 @@ export interface RootServiceMethods {
             send: (responseBody: SeedValidation.Type) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -58,15 +60,21 @@ export class RootService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.create(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.Type.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                    await this.methods.create(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.Type.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedValidationError) {
@@ -92,13 +100,19 @@ export class RootService {
         });
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.get(req as any, {
-                    send: async (responseBody) => {
-                        res.json(await serializers.Type.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
+                await this.methods.get(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Type.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedValidationError) {

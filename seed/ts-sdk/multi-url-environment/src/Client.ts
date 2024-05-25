@@ -18,6 +18,7 @@ export declare namespace SeedMultiUrlEnvironmentClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

@@ -21,7 +21,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedMixedCase.Resource) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     listResources(
         req: express.Request<
@@ -37,7 +38,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedMixedCase.Resource[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -61,15 +63,21 @@ export class ServiceService {
     public toRouter(): express.Router {
         this.router.get("/:ResourceID", async (req, res, next) => {
             try {
-                await this.methods.getResource(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.Resource.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                        );
+                await this.methods.getResource(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Resource.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedMixedCaseError) {
@@ -87,17 +95,21 @@ export class ServiceService {
         });
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.listResources(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.service.listResources.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.listResources(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.service.listResources.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedMixedCaseError) {

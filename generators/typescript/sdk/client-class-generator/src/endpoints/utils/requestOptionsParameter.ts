@@ -63,3 +63,13 @@ export const getMaxRetriesExpression = ({
         isNullable: true
     });
 };
+
+export const getAbortSignalExpression = ({
+    abortSignalReference
+}: {
+    abortSignalReference: (args: { referenceToRequestOptions: ts.Expression }) => ts.Expression;
+}): ts.Expression => {
+    return abortSignalReference({
+        referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME)
+    });
+};

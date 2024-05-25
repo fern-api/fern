@@ -11,6 +11,10 @@ export declare namespace Stream {
          * The event shape to use for parsing the stream data.
          */
         eventShape: JsonEvent | SseEvent;
+        /**
+         * An abort signal to stop the stream.
+         */
+        signal?: AbortSignal;
     }
 
     interface JsonEvent {
@@ -36,8 +40,9 @@ export class Stream<T> implements AsyncIterable<T> {
     private prefix: string | undefined;
     private messageTerminator: string;
     private streamTerminator: string | undefined;
+    private controller: AbortController = new AbortController();
 
-    constructor({ stream, parse, eventShape }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
+    constructor({ stream, parse, eventShape, signal }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
         if (eventShape.type === "sse") {
@@ -47,9 +52,11 @@ export class Stream<T> implements AsyncIterable<T> {
         } else {
             this.messageTerminator = eventShape.messageTerminator;
         }
+        signal?.addEventListener("abort", () => this.controller.abort());
     }
 
     private async *iterMessages(): AsyncGenerator<T, void> {
+        this.controller.signal;
         const stream = readableStreamAsyncIterable<any>(this.stream);
         let buf = "";
         let prefixSeen = false;

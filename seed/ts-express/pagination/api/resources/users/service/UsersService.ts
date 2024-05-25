@@ -24,7 +24,8 @@ export interface UsersServiceMethods {
             send: (responseBody: SeedPagination.ListUsersPaginationResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     listWithOffsetPagination(
         req: express.Request<
@@ -42,7 +43,8 @@ export interface UsersServiceMethods {
             send: (responseBody: SeedPagination.ListUsersPaginationResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     listWithExtendedResults(
         req: express.Request<
@@ -57,7 +59,8 @@ export interface UsersServiceMethods {
             send: (responseBody: SeedPagination.ListUsersExtendedResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     listUsernames(
         req: express.Request<
@@ -72,7 +75,8 @@ export interface UsersServiceMethods {
             send: (responseBody: SeedPagination.UsernameCursor) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     listWithGlobalConfig(
         req: express.Request<
@@ -87,7 +91,8 @@ export interface UsersServiceMethods {
             send: (responseBody: SeedPagination.UsernameContainer) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -111,17 +116,21 @@ export class UsersService {
     public toRouter(): express.Router {
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.listWithCursorPagination(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.listWithCursorPagination(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedPaginationError) {
@@ -139,17 +148,21 @@ export class UsersService {
         });
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.listWithOffsetPagination(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.listWithOffsetPagination(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedPaginationError) {
@@ -167,17 +180,21 @@ export class UsersService {
         });
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.listWithExtendedResults(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.ListUsersExtendedResponse.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.listWithExtendedResults(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.ListUsersExtendedResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedPaginationError) {
@@ -195,17 +212,21 @@ export class UsersService {
         });
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.listUsernames(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.UsernameCursor.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.listUsernames(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.UsernameCursor.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedPaginationError) {
@@ -223,17 +244,21 @@ export class UsersService {
         });
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.listWithGlobalConfig(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.UsernameContainer.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.listWithGlobalConfig(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.UsernameContainer.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedPaginationError) {

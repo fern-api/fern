@@ -6,6 +6,17 @@ export class ExpressImpl extends ExternalDependency implements Express {
     protected override PACKAGE = { name: "express", version: "4.18.2" };
     protected override TYPES_PACKAGE = { name: "@types/express", version: "4.17.16" };
 
+    public NextFunction = {
+        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+            withImport(() => {
+                return ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "NextFunction"),
+                    []
+                );
+            })
+        )
+    };
+
     public Request = {
         body: "body" as const,
         _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>

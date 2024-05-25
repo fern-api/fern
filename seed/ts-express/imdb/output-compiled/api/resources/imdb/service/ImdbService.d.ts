@@ -9,14 +9,14 @@ export interface ImdbServiceMethods {
         send: (responseBody: SeedApi.MovieId) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
-    }): void | Promise<void>;
+    }, next: express.NextFunction): void | Promise<void>;
     getMovie(req: express.Request<{
         movieId: serializers.MovieId.Raw;
     }, SeedApi.Movie, never, never>, res: {
         send: (responseBody: SeedApi.Movie) => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
-    }): void | Promise<void>;
+    }, next: express.NextFunction): void | Promise<void>;
 }
 export declare class ImdbService {
     private readonly methods;
