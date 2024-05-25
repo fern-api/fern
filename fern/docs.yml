@@ -6,8 +6,6 @@ instances:
         owner: fern-api
         repo: fern
         branch: main
-  # - url: fern-beta.docs.buildwithfern.com/learn
-  #   custom-domain: staging.buildwithfern.com/learn
 title: Fern
 
 tabs:
@@ -118,7 +116,7 @@ navigation:
           - page: Auto-Pagination
             path: ./pages/sdks/features/auto-pagination.mdx
             icon: pro
-          - page: OAuth
+          - page: OAuth token refresh
             path: ./pages/sdks/features/oauth.mdx
             icon: pro
           - page: Retries with backoff
@@ -148,8 +146,6 @@ navigation:
           - page: WebSockets
             path: ./pages/sdks/features/websockets.mdx
             icon: pro
-          # - page: OAuth token refresh
-          #   path: ./pages/sdks/features/dummy.mdx
           #   icon: pro
           # - page: Object oriented SDKs
           #   path: ./pages/sdks/features/dummy.mdx
@@ -160,37 +156,6 @@ navigation:
           # - page: GitHub integration
           #   path: ./pages/sdks/features/dummy.mdx
           #   icon: pro
-
-      # - section: Other generators
-      #   contents:
-      #     - section: Server-side
-      #       contents:
-      #         - page: Express.js
-      #           path: ./pages/fern-sdks/other-generators/server-side/express.mdx
-      #           slug: express
-      #         - page: FastAPI
-      #           path: ./pages/fern-sdks/other-generators/server-side/fastapi.mdx
-      #           slug: fastapi
-      #         - page: Spring
-      #           path: ./pages/fern-sdks/other-generators/server-side/spring.mdx
-      #     - section: Specification
-      #       slug: spec
-      #       contents:
-      #         - page: OpenAPI generator
-      #           slug: openapi
-      #           path: ./pages/fern-sdks/other-generators/spec/openapi-generator.mdx
-      #         - page: Postman Collection generator
-      #           slug: postman
-      #           path: ./pages/fern-sdks/other-generators/spec/postman-collection.mdx
-      # - section: Guides
-      #   contents:
-      #     - page: Publish to Maven Central
-      #       path: ./pages/fern-sdks/guides/publish-to-maven-central.mdx
-      #       slug: publish-maven
-      #     - page: Update SDKs with Fern's GitHub Bot
-      #       path: ./pages/fern-sdks/guides/github-bot.mdx
-      #       slug: github-bot
-      #       icon:
   - tab: docs
     layout:
       - section: Getting Started
@@ -204,29 +169,21 @@ navigation:
           - page: Project Structure 
             slug: project-structure
             path: ./pages/docs/introduction/project-structure.mdx
+
       - section: Building Your Docs 
         contents: 
           - page: Navigation
             path: ./pages/docs/building-your-docs/navigation.mdx
           - page: Customize Styling 
             path: ./pages/docs/building-your-docs/styling.mdx
-          - page: Writing Content
-            path: ./pages/docs/building-your-docs/writing-content.mdx
           - page: Pull Request Preview
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Local Development
             path: ./pages/docs/building-your-docs/local-development.mdx
-          - page: API Reference 
-            path: ./pages/docs/building-your-docs/api-reference.mdx
           - page: Custom Domain
             path: ./pages/docs/building-your-docs/custom-domain.mdx
-      - section: Configuration
-        slug: config
-        contents:
-          - page: Overview
-            path: ./pages/fern-docs/config/config-overview.mdx
 
-      - section: Write content
+      - section: Writing Content
         slug: content
         contents:
           - page: Write Markdown content
@@ -236,7 +193,8 @@ navigation:
             path: ./pages/fern-docs/content/front-matter.mdx
           - page: Reusable snippets
             path: ./pages/fern-docs/content/reusable-snippets.mdx
-      - section: API references
+
+      - section: API References
         contents:
           - page: Generate API reference
             path: ./pages/fern-docs/content/generate-api-ref.mdx
@@ -255,24 +213,32 @@ navigation:
       - section: Components
         slug: components
         contents:
-          - page: Accordion
+          - page: Overview 
+            path: ./pages/docs/components/overview.mdx
+          - page: Accordions
             path: ./pages/docs/components/accordions.mdx
+            slug: accordions
             icon: "square-caret-down"
           - page: Accordion Groups
             path: ./pages/docs/components/accordion-groups.mdx
             icon: table-rows
+            slug: accordion-groups
           - page: Aside
             path: ./pages/docs/components/asides.mdx
             icon: align-right
+            slug: aside
           - page: Callouts
             path: ./pages/docs/components/callouts.mdx
             icon: "circle-exclamation"
+            slug: callouts
           - page: Cards
             path: ./pages/docs/components/cards.mdx
             icon: "rectangle"
+            slug: cards
           - page: Card Groups
             path: ./pages/docs/components/card-groups.mdx
             icon: "rectangles-mixed"
+            slug: card-groups
           - page: Code Blocks
             path: ./pages/docs/components/code-blocks.mdx
             slug: code-blocks
@@ -280,18 +246,23 @@ navigation:
           - page: Steps
             path: ./pages/docs/components/steps.mdx
             icon: "arrow-progress"
+            slug: steps
           - page: Frames
             path: ./pages/docs/components/frames.mdx
             icon: "frame"
+            slug: frames
           - page: Tabs
             path: ./pages/docs/components/tabs.mdx
             icon: "window-restore"
+            slug: tabs
           - page: Endpoint Request Snippet
             path: ./pages/docs/components/endpoint-request-snippet.mdx
             icon: "turn-up"
+            slug: request-snippet
           - page: Endpoint Response Snippet
             path: ./pages/docs/components/endpoint-response-snippet.mdx
             icon: "turn-down"
+            slug: response-snippet
   - tab: cli-api
     layout:
       - section: CLI Reference
