@@ -18,6 +18,7 @@ export declare namespace Playlist {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -77,6 +78,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -162,6 +164,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -220,6 +223,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -308,6 +312,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -384,6 +389,7 @@ export class Playlist {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

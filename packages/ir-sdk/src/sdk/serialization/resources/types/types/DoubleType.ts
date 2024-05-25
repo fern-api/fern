@@ -10,13 +10,13 @@ export const DoubleType: core.serialization.ObjectSchema<serializers.DoubleType.
     core.serialization.objectWithoutOptionalProperties({
         default: core.serialization.number().optional(),
         validation: core.serialization
-            .lazyObject(async () => (await import("../../..")).IntegerValidationRules)
+            .lazyObject(async () => (await import("../../..")).DoubleValidationRules)
             .optional(),
     });
 
 export declare namespace DoubleType {
     interface Raw {
         default?: number | null;
-        validation?: serializers.IntegerValidationRules.Raw | null;
+        validation?: serializers.DoubleValidationRules.Raw | null;
     }
 }

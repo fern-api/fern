@@ -18,6 +18,7 @@ export declare namespace Migration {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -61,6 +62,7 @@ export class Migration {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {

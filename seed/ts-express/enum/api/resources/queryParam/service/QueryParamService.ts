@@ -23,7 +23,8 @@ export interface QueryParamServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     sendList(
         req: express.Request<
@@ -41,7 +42,8 @@ export interface QueryParamServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -65,13 +67,17 @@ export class QueryParamService {
     public toRouter(): express.Router {
         this.router.post("/query", async (req, res, next) => {
             try {
-                await this.methods.send(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.send(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedEnumError) {
@@ -89,13 +95,17 @@ export class QueryParamService {
         });
         this.router.post("/query-list", async (req, res, next) => {
             try {
-                await this.methods.sendList(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.sendList(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedEnumError) {

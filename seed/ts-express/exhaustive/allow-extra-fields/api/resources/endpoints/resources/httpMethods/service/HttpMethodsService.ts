@@ -21,7 +21,8 @@ export interface HttpMethodsServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     testPost(
         req: express.Request<
@@ -34,7 +35,8 @@ export interface HttpMethodsServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     testPut(
         req: express.Request<
@@ -49,7 +51,8 @@ export interface HttpMethodsServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     testPatch(
         req: express.Request<
@@ -64,7 +67,8 @@ export interface HttpMethodsServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     testDelete(
         req: express.Request<
@@ -79,7 +83,8 @@ export interface HttpMethodsServiceMethods {
             send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -103,19 +108,23 @@ export class HttpMethodsService {
     public toRouter(): express.Router {
         this.router.get("/:id", async (req, res, next) => {
             try {
-                await this.methods.testGet(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.endpoints.httpMethods.testGet.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                            })
-                        );
+                await this.methods.testGet(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.endpoints.httpMethods.testGet.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {
@@ -136,19 +145,23 @@ export class HttpMethodsService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.testPost(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.testPost(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
@@ -177,19 +190,23 @@ export class HttpMethodsService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.testPut(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.testPut(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
@@ -218,19 +235,23 @@ export class HttpMethodsService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.testPatch(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.testPatch(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedExhaustiveError) {
@@ -256,19 +277,23 @@ export class HttpMethodsService {
         });
         this.router.delete("/:id", async (req, res, next) => {
             try {
-                await this.methods.testDelete(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.endpoints.httpMethods.testDelete.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                            })
-                        );
+                await this.methods.testDelete(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.endpoints.httpMethods.testDelete.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedExhaustiveError) {

@@ -72,10 +72,12 @@ export function parseAsyncAPI({
                             ? convertSchema(parameter.schema, false, context, breadcrumbs)
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
-                                      example: undefined,
+                                      default: undefined,
+                                      pattern: undefined,
                                       format: undefined,
                                       maxLength: undefined,
-                                      minLength: undefined
+                                      minLength: undefined,
+                                      example: undefined
                                   }),
                                   description: undefined,
                                   generatedName: "",

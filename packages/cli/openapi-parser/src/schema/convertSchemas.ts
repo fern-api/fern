@@ -21,6 +21,7 @@ import { convertLiteral } from "./convertLiteral";
 import { convertNumber } from "./convertNumber";
 import { convertObject } from "./convertObject";
 import { convertUndiscriminatedOneOf } from "./convertUndiscriminatedOneOf";
+import { getDefaultAsNumber, getDefaultAsString } from "./defaults/getDefault";
 import { getExampleAsArray, getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
@@ -156,10 +157,12 @@ export function convertSchemaObject(
                 nameOverride,
                 generatedName,
                 primitive: PrimitiveSchemaValueWithExample.string({
-                    minLength: undefined,
-                    maxLength: undefined,
-                    example: getExamplesString(schema),
-                    format: schema.format
+                    default: getDefaultAsString(schema),
+                    minLength: schema.minLength,
+                    maxLength: schema.maxLength,
+                    pattern: schema.pattern,
+                    format: schema.format,
+                    example: getExamplesString(schema)
                 }),
                 groupName,
                 wrapAsNullable,
@@ -287,6 +290,12 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             format: schema.format,
+            _default: schema.default,
+            minimum: schema.minimum,
+            maximum: schema.maximum,
+            exclusiveMinimum: schema.exclusiveMinimum,
+            exclusiveMaximum: schema.exclusiveMaximum,
+            multipleOf: schema.multipleOf,
             description,
             wrapAsNullable,
             example: getExampleAsNumber(schema),
@@ -298,6 +307,12 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.int({
+                default: getDefaultAsNumber(schema),
+                minimum: schema.minimum,
+                maximum: schema.maximum,
+                exclusiveMinimum: schema.exclusiveMinimum,
+                exclusiveMaximum: schema.exclusiveMaximum,
+                multipleOf: schema.multipleOf,
                 example: getExampleAsNumber(schema)
             }),
             wrapAsNullable,
@@ -310,6 +325,12 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             format: "float",
+            _default: schema.default,
+            minimum: schema.minimum,
+            maximum: schema.maximum,
+            exclusiveMinimum: schema.exclusiveMinimum,
+            exclusiveMaximum: schema.exclusiveMaximum,
+            multipleOf: schema.multipleOf,
             description,
             wrapAsNullable,
             example: getExampleAsNumber(schema),
@@ -354,10 +375,12 @@ export function convertSchemaObject(
             nameOverride,
             generatedName,
             primitive: PrimitiveSchemaValueWithExample.string({
-                maxLength: schema.maxLength,
+                default: getDefaultAsString(schema),
+                pattern: schema.pattern,
+                format: schema.format,
                 minLength: schema.minLength,
-                example: getExamplesString(schema),
-                format: schema.format
+                maxLength: schema.maxLength,
+                example: getExamplesString(schema)
             }),
             groupName,
             wrapAsNullable,
@@ -601,7 +624,8 @@ export function convertSchemaObject(
             context,
             propertiesToExclude,
             groupName,
-            fullExamples
+            fullExamples,
+            additionalProperties: schema.additionalProperties
         });
     }
 
@@ -617,10 +641,12 @@ export function convertSchemaObject(
                 generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
-                    minLength: undefined,
-                    maxLength: undefined,
-                    example: undefined,
-                    format: schema.format
+                    default: getDefaultAsString(schema),
+                    pattern: schema.pattern,
+                    format: schema.format,
+                    minLength: schema.minLength,
+                    maxLength: schema.maxLength,
+                    example: getExamplesString(schema)
                 }),
                 groupName
             },

@@ -18,6 +18,7 @@ export declare namespace SeedExhaustiveClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

@@ -7,21 +7,21 @@ Types describe the data model of your API.
 
 ## Built-in types
 
-- **`string`**
-- **`integer`**
-- **`long`**
-- **`double`**
-- **`boolean`**
-- **`datetime`** _An [RFC 3339, section 5.6 datetime](https://ijmacd.github.io/rfc3339-iso8601/). For example, `2017-07-21T17:32:28Z`._
-- **`date`** _An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, `2017-07-21`._
-- **`uuid`**
-- **`base64`**
-- **`list`** _e.g., list\<string\>_
-- **`set`** _e.g., set\<string\>_
-- **`map`** _e.g., map\<string, integer\>_
-- **`optional`** _e.g., optional\<string\>_
-- **`literal`** _e.g., literal\<"Plants"\>_
-- **`unknown`** _Represents arbitrary JSON._
+- `string`
+- `integer`
+- `long`
+- `double`
+- `boolean`
+- `datetime` _An [RFC 3339, section 5.6 datetime](https://ijmacd.github.io/rfc3339-iso8601/). For example, `2017-07-21T17:32:28Z`._
+- `date` _An RFC 3339, section 5.6 date (YYYY-MM-DD). For example, `2017-07-21`._
+- `uuid`
+- `base64`
+- `list` _e.g., list\<string\>_
+- `set` _e.g., set\<string\>_
+- `map` _e.g., map\<string, integer\>_
+- `optional` _e.g., optional\<string\>_
+- `literal` _e.g., literal\<"Plants"\>_
+- `unknown` _Represents arbitrary JSON._
 
 ## Custom types
 
@@ -33,7 +33,7 @@ The most common custom types are **objects**.
 
 In Fern, you use the `"properties"` key to create an object:
 
-```yaml
+```yaml {3,8}
 types:
   Person:
     properties: # <---
@@ -67,7 +67,7 @@ These represent JSON objects:
 
 You can also use **extends** to compose objects:
 
-```yaml
+```yaml {6}
 types:
   Pet:
     properties:
@@ -80,7 +80,7 @@ types:
 
 You can extend multiple objects:
 
-```yaml
+```yaml {3-5}
 types:
   GoldenRetriever:
     extends:
@@ -142,7 +142,7 @@ polymorphism. This is similar to the `oneOf` concept in OpenAPI.
 
 In Fern, you use the `"union"` key to create an union:
 
-```yaml
+```yaml {3-5}
 types:
   Animal:
     union:
@@ -169,7 +169,7 @@ discriminant property:
 
 You can customize the discriminant property using the "discriminant" key:
 
-```diff
+```diff {3}
  types:
    Animal:
 +    discriminant: animalType

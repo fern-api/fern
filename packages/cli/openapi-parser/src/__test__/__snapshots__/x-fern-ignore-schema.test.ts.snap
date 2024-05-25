@@ -12,6 +12,7 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "SchemaToKeep": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -37,8 +38,11 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uuid",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",

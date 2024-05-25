@@ -10,11 +10,23 @@ export const IntWithExample: core.serialization.ObjectSchema<
     serializers.IntWithExample.Raw,
     FernOpenapiIr.IntWithExample
 > = core.serialization.objectWithoutOptionalProperties({
+    default: core.serialization.number().optional(),
+    minimum: core.serialization.number().optional(),
+    maximum: core.serialization.number().optional(),
+    exclusiveMinimum: core.serialization.boolean().optional(),
+    exclusiveMaximum: core.serialization.boolean().optional(),
+    multipleOf: core.serialization.number().optional(),
     example: core.serialization.number().optional(),
 });
 
 export declare namespace IntWithExample {
     interface Raw {
+        default?: number | null;
+        minimum?: number | null;
+        maximum?: number | null;
+        exclusiveMinimum?: boolean | null;
+        exclusiveMaximum?: boolean | null;
+        multipleOf?: number | null;
         example?: number | null;
     }
 }

@@ -1,13 +1,23 @@
+
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
+        <NuGetAudit>false</NuGetAudit>
+        <Version>0.0.1</Version>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/auth-environment-variables/fern</PackageProjectUrl>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="OneOf" Version="3.0.263" />
-      <PackageReference Include="System.Text.Json" Version="8.0.3" />
+        <PackageReference Include="OneOf" Version="3.0.263" />
+        <PackageReference Include="System.Text.Json" Version="8.0.3" />
     </ItemGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+    </ItemGroup>
+
 
 </Project>

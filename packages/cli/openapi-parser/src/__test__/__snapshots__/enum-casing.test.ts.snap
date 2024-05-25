@@ -96,6 +96,7 @@ exports[`examples enum-casing parse open api 1`] = `
   ],
   "schemas": {
     "ExampleResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -168,8 +169,11 @@ exports[`examples enum-casing parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -198,8 +202,11 @@ exports[`examples enum-casing parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
               },
@@ -211,8 +218,11 @@ exports[`examples enum-casing parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",

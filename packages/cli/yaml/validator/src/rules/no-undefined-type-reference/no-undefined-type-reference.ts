@@ -152,34 +152,39 @@ function getAllNamedTypes({
     relativeFilepath: RelativeFilePath;
     imports: Record<string, RelativeFilePath>;
 }): ReferenceToTypeName[] {
-    return recursivelyVisitRawTypeReference<ReferenceToTypeName[]>(type, {
-        primitive: () => [],
-        unknown: () => [],
-        map: ({ keyType: namesInKeyType, valueType: namesInValueType }) => {
-            return [...namesInKeyType, ...namesInValueType];
-        },
-        list: (namesInValueType) => namesInValueType,
-        set: (namesInValueType) => namesInValueType,
-        optional: (namesInValueType) => namesInValueType,
-        literal: () => [],
-        named: (named) => {
-            const reference = parseReferenceToTypeName({
-                reference: named,
-                referencedIn: relativeFilepath,
-                imports
-            });
-            return [
-                {
-                    fullyQualifiedName: named,
-                    parsed:
-                        reference != null
-                            ? {
-                                  typeName: reference.typeName,
-                                  relativeFilepath: reference.relativeFilepath
-                              }
-                            : undefined
-                }
-            ];
+    return recursivelyVisitRawTypeReference<ReferenceToTypeName[]>({
+        type,
+        _default: undefined,
+        validation: undefined,
+        visitor: {
+            primitive: () => [],
+            unknown: () => [],
+            map: ({ keyType: namesInKeyType, valueType: namesInValueType }) => {
+                return [...namesInKeyType, ...namesInValueType];
+            },
+            list: (namesInValueType) => namesInValueType,
+            set: (namesInValueType) => namesInValueType,
+            optional: (namesInValueType) => namesInValueType,
+            literal: () => [],
+            named: (named) => {
+                const reference = parseReferenceToTypeName({
+                    reference: named,
+                    referencedIn: relativeFilepath,
+                    imports
+                });
+                return [
+                    {
+                        fullyQualifiedName: named,
+                        parsed:
+                            reference != null
+                                ? {
+                                      typeName: reference.typeName,
+                                      relativeFilepath: reference.relativeFilepath
+                                  }
+                                : undefined
+                    }
+                ];
+            }
         }
     });
 }

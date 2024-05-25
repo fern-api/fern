@@ -25,4 +25,5 @@ export interface SdkCustomConfig {
     tolerateRepublish: boolean;
     retainOriginalCasing: boolean | undefined;
     allowExtraFields: boolean | undefined;
+    inlineFileProperties: boolean | undefined;
 }

@@ -10,6 +10,29 @@ import (
 
 type ImportingA struct {
 	A *A `json:"a,omitempty" url:"a,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (i *ImportingA) GetExtraProperties() map[string]interface{} {
+	return i.extraProperties
+}
+
+func (i *ImportingA) UnmarshalJSON(data []byte) error {
+	type unmarshaler ImportingA
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = ImportingA(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+
+	return nil
 }
 
 func (i *ImportingA) String() string {
@@ -21,6 +44,29 @@ func (i *ImportingA) String() string {
 
 type RootType struct {
 	S string `json:"s" url:"s"`
+
+	extraProperties map[string]interface{}
+}
+
+func (r *RootType) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *RootType) UnmarshalJSON(data []byte) error {
+	type unmarshaler RootType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = RootType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
+	return nil
 }
 
 func (r *RootType) String() string {
@@ -32,6 +78,29 @@ func (r *RootType) String() string {
 
 type A struct {
 	S string `json:"s" url:"s"`
+
+	extraProperties map[string]interface{}
+}
+
+func (a *A) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *A) UnmarshalJSON(data []byte) error {
+	type unmarshaler A
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = A(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+
+	return nil
 }
 
 func (a *A) String() string {
@@ -231,6 +300,29 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
 	Value *FieldValue `json:"value,omitempty" url:"value,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (o *ObjectFieldValue) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
+}
+
+func (o *ObjectFieldValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectFieldValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectFieldValue(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
+	return nil
 }
 
 func (o *ObjectFieldValue) String() string {
@@ -241,6 +333,28 @@ func (o *ObjectFieldValue) String() string {
 }
 
 type ObjectValue struct {
+	extraProperties map[string]interface{}
+}
+
+func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
+}
+
+func (o *ObjectValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectValue(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
+	return nil
 }
 
 func (o *ObjectValue) String() string {

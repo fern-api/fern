@@ -23,9 +23,9 @@ tabs:
   sdks:
     display-name: SDKs
     slug: sdks
-  api:
-    display-name: API Reference
-    slug: api
+  cli-api:
+    display-name: CLI & API Reference
+    slug: cli-api
 
 css: ./assets/styles.css
 
@@ -293,8 +293,16 @@ navigation:
           - page: Endpoint Response Snippet
             path: ./pages/docs/components/endpoint-response-snippet.mdx
             icon: "turn-down"
-  - tab: api
+  - tab: cli-api
     layout:
+      - section: CLI Reference
+        contents:
+          - page: CLI Overview
+            path: ./pages/cli/overview.mdx
+          - page: Global Options
+            path: ./pages/cli/global-options.mdx
+          - page: Commands
+            path: ./pages/cli/commands.mdx
       - api: API Reference
         api-name: public-api
         # audiences:

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.lang.Exception;
 import java.lang.Object;
 import java.lang.RuntimeException;
+import java.lang.String;
 import java.util.List;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -203,16 +204,17 @@ public class ObjectClient {
     }
   }
 
-  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
+  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(String string,
       NestedObjectWithRequiredField request) {
-    return getAndReturnNestedWithRequiredField(request,null);
+    return getAndReturnNestedWithRequiredField(string,request,null);
   }
 
-  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
+  public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(String string,
       NestedObjectWithRequiredField request, RequestOptions requestOptions) {
     HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("object")
       .addPathSegments("get-and-return-nested-with-required-field")
+      .addPathSegment(string)
       .build();
     RequestBody body;
     try {

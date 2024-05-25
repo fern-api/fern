@@ -54,7 +54,7 @@ class ObjectGenerator(AbstractTypeGenerator):
             for property in self._properties:
                 pydantic_model.add_field(
                     name=property.name.name.snake_case.safe_name,
-                    pascal_case_field_name=property.name.name.pascal_case.unsafe_name,
+                    pascal_case_field_name=property.name.name.pascal_case.safe_name,
                     type_reference=property.value_type,
                     json_field_name=property.name.wire_value,
                     description=property.docs,
@@ -79,7 +79,7 @@ class ObjectSnippetGenerator:
                     name=self.name,
                 ),
                 args=self.snippet_writer.get_snippet_for_object_properties(
-                    example=self.example,
+                    example=self.example, request_parameter_names={}
                 ),
             ),
         )

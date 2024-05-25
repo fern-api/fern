@@ -49,8 +49,14 @@ public class RawClient
         // Add the request body to the request
         if (request.Body != null)
         {
+            var serializerOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonEnumMemberStringEnumConverter() },
+                // Set other options as required:
+                WriteIndented = true,
+            };
             httpRequest.Content = new StringContent(
-                JsonSerializer.Serialize(request.Body),
+                JsonSerializer.Serialize(request.Body, serializerOptions),
                 Encoding.UTF8,
                 "application/json"
             );
@@ -106,7 +112,7 @@ public class RawClient
 
     private string BuildUrl(string path, Dictionary<string, object> query)
     {
-        var url = $"{_clientOptions.BaseUrl}/{path}";
+        var url = $"{_clientOptions.BaseUrl}{path}";
         if (query.Count > 0)
         {
             url += "?";

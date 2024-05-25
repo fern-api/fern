@@ -6,6 +6,7 @@ export interface StreamUtils {
             stream: ts.Expression;
             parse: ts.Expression;
             eventShape: StreamingFetcher.SSEEventShape | StreamingFetcher.MessageEventShape;
+            signal: ts.Expression;
         }) => ts.Expression;
         _getReferenceToType: (response: ts.TypeNode) => ts.TypeNode;
     };

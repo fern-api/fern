@@ -14,7 +14,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.CreateProblemResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     updateProblem(
         req: express.Request<
@@ -29,7 +30,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.UpdateProblemResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     deleteProblem(
         req: express.Request<
@@ -44,7 +46,8 @@ export interface ProblemServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getDefaultStarterFiles(
         req: express.Request<
@@ -57,7 +60,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.GetDefaultStarterFilesResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -84,17 +88,21 @@ export class ProblemService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.createProblem(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.CreateProblemResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.createProblem(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.CreateProblemResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedTraceError) {
@@ -123,17 +131,21 @@ export class ProblemService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.updateProblem(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.UpdateProblemResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.updateProblem(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.UpdateProblemResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedTraceError) {
@@ -159,13 +171,17 @@ export class ProblemService {
         });
         this.router.delete("/delete/:problemId", async (req, res, next) => {
             try {
-                await this.methods.deleteProblem(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.deleteProblem(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
@@ -186,17 +202,21 @@ export class ProblemService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getDefaultStarterFiles(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getDefaultStarterFiles(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.GetDefaultStarterFilesResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
                     if (error instanceof errors.SeedTraceError) {

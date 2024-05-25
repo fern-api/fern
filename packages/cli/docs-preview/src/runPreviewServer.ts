@@ -55,6 +55,11 @@ export async function runPreviewServer({
     const wss = new WebSocketServer({ server: httpServer });
 
     const connections = new Set<WebSocket>();
+    function sendData(data: unknown) {
+        for (const connection of connections) {
+            connection.send(JSON.stringify(data));
+        }
+    }
 
     wss.on("connection", function connection(ws) {
         connections.add(ws);
@@ -103,18 +108,19 @@ export async function runPreviewServer({
     });
     watcher.on("all", async (event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
+        sendData({
+            version: 1,
+            type: "startReload"
+        });
         // after the docsDefinition is reloaded, send a message to all connected clients to reload the page
         const reloadedDocsDefinition = await reloadDocsDefinition();
         if (reloadedDocsDefinition != null) {
             docsDefinition = reloadedDocsDefinition;
         }
-        for (const connection of connections) {
-            connection.send(
-                JSON.stringify({
-                    reload: true
-                })
-            );
-        }
+        sendData({
+            version: 1,
+            type: "finishReload"
+        });
     });
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {

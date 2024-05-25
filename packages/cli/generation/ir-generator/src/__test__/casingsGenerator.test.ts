@@ -221,4 +221,28 @@ describe("casingsGenerator", () => {
         const actual = casingsGenerator.generateName(expected.originalName);
         expect(actual).toEqual(expected);
     });
+
+    it("saml", () => {
+        const expected: Name = {
+            originalName: "get_saml_code_request",
+            camelCase: {
+                safeName: "getSAMLCodeRequest",
+                unsafeName: "getSAMLCodeRequest"
+            },
+            pascalCase: {
+                safeName: "GetSAMLCodeRequest",
+                unsafeName: "GetSAMLCodeRequest"
+            },
+            snakeCase: {
+                safeName: "get_saml_code_request",
+                unsafeName: "get_saml_code_request"
+            },
+            screamingSnakeCase: {
+                safeName: "GET_SAML_CODE_REQUEST",
+                unsafeName: "GET_SAML_CODE_REQUEST"
+            }
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 });

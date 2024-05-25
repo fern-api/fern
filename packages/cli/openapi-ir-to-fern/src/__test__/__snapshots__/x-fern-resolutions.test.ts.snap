@@ -62,7 +62,17 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
       "User": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },
@@ -139,7 +149,17 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
       "User": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },

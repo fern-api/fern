@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: 1.0.0
+paths:
+  /example:
+    get:
+      summary: Default and validation rules
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Schema"
+                  - type: object
+                    properties:
+                      message:
+                        type: string
+components:
+  schemas:
+    Schema:
+      type: object
+      properties:
+        id:
+          type: integer
+          default: 50
+          minimum: 10
+          maximum: 100
+          exclusiveMinimum: true
+          exclusiveMaximum: false
+          multipleOf: 10
+        name:
+          type: string
+          default: type
+          minLength: 3
+          maxLength: 10
+          pattern: "^[a-zA-Z0-9]*$"
+          format: custom
+        value:
+          type: number
+          format: double
+          default: 1.1
+          minimum: 1.1
+          maximum: 2.2
+          multipleOf: 1.1

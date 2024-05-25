@@ -208,7 +208,7 @@ class EndpointGenerator:
                 writer.write_line(",")
                 writer.write("**")
                 default_tag = ".".join(
-                    [package.snake_case.unsafe_name for package in self._service.name.fern_filepath.all_parts]
+                    [package.snake_case.safe_name for package in self._service.name.fern_filepath.all_parts]
                 )
                 writer.write_node(
                     self._context.core_utilities.get_route_args(
@@ -293,7 +293,7 @@ class EndpointGenerator:
         )
 
     def _get_method_name(self) -> str:
-        return self._endpoint.name.get_as_name().snake_case.unsafe_name
+        return self._endpoint.name.get_as_name().snake_case.safe_name
 
     def _get_reference_to_method_on_cls(self) -> str:
         return f"cls.{self._get_method_name()}"

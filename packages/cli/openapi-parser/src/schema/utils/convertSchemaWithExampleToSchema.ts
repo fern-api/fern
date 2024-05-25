@@ -20,7 +20,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                additionalProperties: schema.additionalProperties
             });
         case "array":
             return Schema.array({
@@ -180,10 +181,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
 function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWithExample): PrimitiveSchemaValue {
     switch (primitiveSchema.type) {
         case "string":
-            return PrimitiveSchemaValue.string({
-                maxLength: primitiveSchema.maxLength,
-                minLength: primitiveSchema.minLength
-            });
+            return PrimitiveSchemaValue.string(primitiveSchema);
         case "base64":
             return PrimitiveSchemaValue.base64();
         case "boolean":
@@ -193,11 +191,11 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
         case "datetime":
             return PrimitiveSchemaValue.datetime();
         case "double":
-            return PrimitiveSchemaValue.double();
+            return PrimitiveSchemaValue.double(primitiveSchema);
         case "float":
             return PrimitiveSchemaValue.float();
         case "int":
-            return PrimitiveSchemaValue.int();
+            return PrimitiveSchemaValue.int(primitiveSchema);
         case "int64":
             return PrimitiveSchemaValue.int64();
         default:

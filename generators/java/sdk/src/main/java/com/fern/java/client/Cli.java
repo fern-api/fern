@@ -206,7 +206,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         Optional<GeneratedJavaFile> generatedOAuthTokenSupplier =
                 maybeOAuthScheme.map(it -> new OAuthTokenSupplierGenerator(
                                 context,
-                                it.getConfiguration().getClientCredentials().get())
+                                it.getConfiguration()
+                                        .getClientCredentials()
+                                        .orElseThrow(() ->
+                                                new RuntimeException("Only client credentials oAuth scheme supported")))
                         .generateFile());
         generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 

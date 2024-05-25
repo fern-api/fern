@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { PublishingMetadata } from "@fern-fern/fiddle-sdk/api";
+import { OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
@@ -25,6 +25,8 @@ import {
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
+import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
+import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -33,6 +35,7 @@ export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): Promise<GeneratorsConfiguration> {
+    const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: await parseAPIConfiguration(rawGeneratorsConfiguration),
@@ -45,7 +48,8 @@ export async function convertGeneratorsConfiguration({
                           convertGroup({
                               absolutePathToGeneratorsConfiguration,
                               groupName,
-                              group
+                              group,
+                              maybeTopLevelMetadata
                           })
                       )
                   )
@@ -147,33 +151,52 @@ async function parseAPIConfiguration(
 async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
-    group
+    group,
+    maybeTopLevelMetadata
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
 }): Promise<GeneratorGroup> {
+    const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
         groupName,
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
         generators: await Promise.all(
-            group.generators.map((generator) => convertGenerator({ absolutePathToGeneratorsConfiguration, generator }))
+            group.generators.map((generator) =>
+                convertGenerator({
+                    absolutePathToGeneratorsConfiguration,
+                    generator,
+                    maybeTopLevelMetadata,
+                    maybeGroupLevelMetadata
+                })
+            )
         )
     };
 }
 
 async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
-    generator
+    generator,
+    maybeGroupLevelMetadata,
+    maybeTopLevelMetadata
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
 }): Promise<GeneratorInvocation> {
     return {
         name: generator.name,
         version: generator.version,
         config: generator.config,
-        outputMode: await convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
+        outputMode: await convertOutputMode({
+            absolutePathToGeneratorsConfiguration,
+            generator,
+            maybeGroupLevelMetadata,
+            maybeTopLevelMetadata
+        }),
         smartCasing: generator["smart-casing"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
@@ -214,19 +237,42 @@ function getPublishMetadata({
     return undefined;
 }
 
+function _getPypiMetadata({
+    pypiOutputMetadata,
+    maybeGroupLevelMetadata,
+    maybeTopLevelMetadata
+}: {
+    pypiOutputMetadata: PypiOutputMetadataSchema | undefined;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
+}): PypiMetadata | undefined {
+    let maybePyPiMetadata: PypiMetadata | undefined;
+    if (pypiOutputMetadata != null) {
+        maybePyPiMetadata = getPyPiMetadata(pypiOutputMetadata);
+        maybePyPiMetadata = { ...maybeTopLevelMetadata, ...maybeGroupLevelMetadata, ...maybePyPiMetadata };
+    }
+    return maybePyPiMetadata;
+}
 async function convertOutputMode({
     absolutePathToGeneratorsConfiguration,
-    generator
+    generator,
+    maybeGroupLevelMetadata = {},
+    maybeTopLevelMetadata = {}
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
+    maybeGroupLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelMetadata: OutputMetadata | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
-        const publishInfo = generator.output != null ? getGithubPublishInfo(generator.output) : undefined;
+        const publishInfo =
+            generator.output != null
+                ? getGithubPublishInfo(generator.output, maybeGroupLevelMetadata, maybeTopLevelMetadata)
+                : undefined;
         const licenseSchema = getGithubLicenseSchema(generator);
         const license =
             licenseSchema != null
@@ -323,7 +369,12 @@ async function convertOutputMode({
                     username: generator.output.token != null ? "__token__" : generator.output.password ?? "",
                     password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
-                    downloadSnippets
+                    downloadSnippets,
+                    pypiMetadata: _getPypiMetadata({
+                        pypiOutputMetadata: generator.output.metadata,
+                        maybeGroupLevelMetadata,
+                        maybeTopLevelMetadata
+                    })
                 })
             );
         case "nuget":
@@ -380,7 +431,11 @@ async function getGithubLicense({
     });
 }
 
-function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {
+function getGithubPublishInfo(
+    output: GeneratorOutputSchema,
+    maybeGroupLevelMetadata: OutputMetadata | undefined,
+    maybeTopLevelMetadata: OutputMetadata | undefined
+): FernFiddle.GithubPublishInfo {
     switch (output.location) {
         case "local-file-system":
             throw new Error("Cannot use local-file-system with github publishing");
@@ -428,7 +483,12 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                         : {
                               username: output.username ?? "",
                               password: output.password ?? ""
-                          }
+                          },
+                pypiMetadata: _getPypiMetadata({
+                    pypiOutputMetadata: output.metadata,
+                    maybeGroupLevelMetadata,
+                    maybeTopLevelMetadata
+                })
             });
         case "nuget":
             return FernFiddle.GithubPublishInfo.nuget({
@@ -485,4 +545,25 @@ function getGithubLicenseSchema(generator: GeneratorInvocationSchema): GithubLic
         return generator.metadata.license;
     }
     return generator.github?.license;
+}
+
+function getOutputMetadata(metadata: OutputMetadataSchema | undefined): OutputMetadata | undefined {
+    return metadata != null
+        ? {
+              description: metadata.description,
+              authors: metadata.authors?.map((author) => ({ name: author.name, email: author.email }))
+          }
+        : undefined;
+}
+
+function getPyPiMetadata(metadata: PypiOutputMetadataSchema | undefined): PypiMetadata | undefined {
+    return metadata != null
+        ? {
+              description: metadata.description,
+              authors: metadata.authors?.map((author) => ({ name: author.name, email: author.email })),
+              keywords: metadata.keywords,
+              documentationLink: metadata["documentation-link"],
+              homepageLink: metadata["homepage-link"]
+          }
+        : undefined;
 }

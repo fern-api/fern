@@ -37,6 +37,6 @@ public final class OAuthTokenSupplier implements Supplier<String> {
             TokenResponse authResponse = fetchToken();
             this.accessToken = authResponse.getAccessToken();
         }
-        return "Bearer " + (accessToken != null ? accessToken : fetchToken());
+        return "Bearer " + accessToken;
     }
 }

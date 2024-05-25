@@ -3,6 +3,7 @@
 package pagination
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
 	core "github.com/pagination/fern/core"
@@ -46,6 +47,29 @@ type ListUsersOffsetPaginationRequest struct {
 
 type UsernameCursor struct {
 	Cursor *UsernamePage `json:"cursor,omitempty" url:"cursor,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *UsernameCursor) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UsernameCursor) UnmarshalJSON(data []byte) error {
+	type unmarshaler UsernameCursor
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UsernameCursor(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
 }
 
 func (u *UsernameCursor) String() string {
@@ -60,6 +84,29 @@ type ListUsersExtendedResponse struct {
 	Next *uuid.UUID         `json:"next,omitempty" url:"next,omitempty"`
 	// The totall number of /users
 	TotalCount int `json:"total_count" url:"total_count"`
+
+	extraProperties map[string]interface{}
+}
+
+func (l *ListUsersExtendedResponse) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
+}
+
+func (l *ListUsersExtendedResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersExtendedResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersExtendedResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+
+	return nil
 }
 
 func (l *ListUsersExtendedResponse) String() string {
@@ -74,6 +121,29 @@ type ListUsersPaginationResponse struct {
 	// The totall number of /users
 	TotalCount int     `json:"total_count" url:"total_count"`
 	Data       []*User `json:"data,omitempty" url:"data,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (l *ListUsersPaginationResponse) GetExtraProperties() map[string]interface{} {
+	return l.extraProperties
+}
+
+func (l *ListUsersPaginationResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUsersPaginationResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUsersPaginationResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+
+	return nil
 }
 
 func (l *ListUsersPaginationResponse) String() string {
@@ -107,6 +177,29 @@ func (o Order) Ptr() *Order {
 
 type UsernameContainer struct {
 	Results []string `json:"results,omitempty" url:"results,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *UsernameContainer) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *UsernameContainer) UnmarshalJSON(data []byte) error {
+	type unmarshaler UsernameContainer
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UsernameContainer(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
 }
 
 func (u *UsernameContainer) String() string {

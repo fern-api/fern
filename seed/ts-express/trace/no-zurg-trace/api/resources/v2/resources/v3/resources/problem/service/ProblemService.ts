@@ -13,7 +13,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.v2.v3.LightweightProblemInfoV2[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getProblems(
         req: express.Request<never, SeedTrace.v2.v3.ProblemInfoV2[], never, never>,
@@ -21,7 +22,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.v2.v3.ProblemInfoV2[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getLatestProblem(
         req: express.Request<
@@ -36,7 +38,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.v2.v3.ProblemInfoV2) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getProblemVersion(
         req: express.Request<
@@ -52,7 +55,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.v2.v3.ProblemInfoV2) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -76,13 +80,17 @@ export class ProblemService {
     public toRouter(): express.Router {
         this.router.get("/lightweight-problem-info", async (req, res, next) => {
             try {
-                await this.methods.getLightweightProblems(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.getLightweightProblems(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
@@ -100,13 +108,17 @@ export class ProblemService {
         });
         this.router.get("/problem-info", async (req, res, next) => {
             try {
-                await this.methods.getProblems(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.getProblems(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
@@ -124,13 +136,17 @@ export class ProblemService {
         });
         this.router.get("/problem-info/:problemId", async (req, res, next) => {
             try {
-                await this.methods.getLatestProblem(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.getLatestProblem(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {
@@ -148,13 +164,17 @@ export class ProblemService {
         });
         this.router.get("/problem-info/:problemId/version/:problemVersion", async (req, res, next) => {
             try {
-                await this.methods.getProblemVersion(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.getProblemVersion(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
                 if (error instanceof errors.SeedTraceError) {

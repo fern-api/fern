@@ -1929,7 +1929,7 @@
             "type": "typescript"
         },
         "endpointId": {
-            "path": "/object/get-and-return-nested-with-required-field",
+            "path": "/object/get-and-return-nested-with-required-field/{string}",
             "method": "POST",
             "identifierOverride": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField"
         },
@@ -1941,6 +1941,34 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "string",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
                     {
                         "value": {
                             "imports": [],

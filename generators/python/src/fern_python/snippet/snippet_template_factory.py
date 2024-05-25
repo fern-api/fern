@@ -120,7 +120,7 @@ class SnippetTemplateFactory:
             components += [fern_filepath.file]
         if len(components) == 0:
             return ""
-        return ".".join([component.snake_case.unsafe_name for component in components]) + "."
+        return ".".join([component.snake_case.safe_name for component in components]) + "."
 
     def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
         return self._context.get_literal_value(reference=type_reference) is not None
@@ -481,7 +481,7 @@ class SnippetTemplateFactory:
             if template_input is not None:
                 template_inputs.append(template_input)
 
-        object_class_name = type_name.name.pascal_case.unsafe_name
+        object_class_name = type_name.name.pascal_case.safe_name
         return Template.factory.generic(
             GenericTemplate(
                 imports=[self._imports_manager._get_import_as_string(object_reference.import_)]
