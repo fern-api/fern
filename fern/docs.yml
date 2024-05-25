@@ -201,32 +201,31 @@ navigation:
           - page: Showcase 
             slug: showcase
             path: ./pages/docs/introduction/showcase.mdx
-          - page: Local Development
-            slug: development
-            path: ./pages/docs/introduction/development.mdx
           - page: Project Structure 
             slug: project-structure
             path: ./pages/docs/introduction/project-structure.mdx
+      - section: Building Your Docs 
+        contents: 
+          - page: Navigation
+            path: ./pages/docs/building-your-docs/navigation.mdx
+          - page: Customize Styling 
+            path: ./pages/docs/building-your-docs/styling.mdx
+          - page: Writing Content
+            path: ./pages/docs/building-your-docs/writing-content.mdx
+          - page: Pull Request Preview
+            path: ./pages/docs/building-your-docs/pr-preview.mdx
+          - page: Local Development
+            path: ./pages/docs/building-your-docs/local-development.mdx
+          - page: API Reference 
+            path: ./pages/docs/building-your-docs/api-reference.mdx
+          - page: Custom Domain
+            path: ./pages/docs/building-your-docs/custom-domain.mdx
       - section: Configuration
         slug: config
         contents:
           - page: Overview
             path: ./pages/fern-docs/config/config-overview.mdx
-          - page: Navigation
-            path: ./pages/fern-docs/config/navigation.mdx
-          - page: PR previews
-            slug: previews
-            path: ./pages/fern-docs/config/previews.mdx
-          - section: Customize branding
-            slug: branding
-            contents:
-              - page: Colors, fonts, and background image
-                path: ./pages/fern-docs/config/branding/colors-fonts-background-image.mdx
-                slug: colors-fonts-background-image
-              - page: Logo and favicon
-                path: ./pages/fern-docs/config/branding/logo-and-favicon.mdx
-              - page: Custom domain
-                path: ./pages/fern-docs/config/branding/custom-domain.mdx
+
       - section: Write content
         slug: content
         contents:
