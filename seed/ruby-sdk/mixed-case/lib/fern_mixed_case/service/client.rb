@@ -22,7 +22,7 @@ module SeedMixedCaseClient
     # @return [SeedMixedCaseClient::Service::Resource]
     # @example
     #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_case.get_resource(resource_id: "rsc-xyz")
+    #  mixed_case.service.get_resource(resource_id: "rsc-xyz")
     def get_resource(resource_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -38,7 +38,7 @@ module SeedMixedCaseClient
     # @return [Array<SeedMixedCaseClient::Service::Resource>]
     # @example
     #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))
+    #  mixed_case.service.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))
     def list_resources(page_limit:, before_date:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -73,7 +73,7 @@ module SeedMixedCaseClient
     # @return [SeedMixedCaseClient::Service::Resource]
     # @example
     #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_case.get_resource(resource_id: "rsc-xyz")
+    #  mixed_case.service.get_resource(resource_id: "rsc-xyz")
     def get_resource(resource_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -91,7 +91,7 @@ module SeedMixedCaseClient
     # @return [Array<SeedMixedCaseClient::Service::Resource>]
     # @example
     #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
-    #  mixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))
+    #  mixed_case.service.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))
     def list_resources(page_limit:, before_date:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

@@ -7,7 +7,7 @@
                 "identifierOverride": "endpoint_service.nop"
             },
             "snippet": {
-                "client": "require \"fern_package_yml\"\n\npackage_yml = SeedPackageYmlClient::Client.new(base_url: \"https://api.example.com\")\npackage_yml.nop(id: \"id-a2ijs82\", nested_id: \"id-219xca8\")",
+                "client": "require \"fern_package_yml\"\n\npackage_yml = SeedPackageYmlClient::Client.new(base_url: \"https://api.example.com\")\npackage_yml.service.nop(id: \"id-a2ijs82\", nested_id: \"id-219xca8\")",
                 "type": "ruby"
             }
         },
@@ -18,7 +18,7 @@
                 "identifierOverride": "endpoint_service.nop"
             },
             "snippet": {
-                "client": "require \"fern_package_yml\"\n\npackage_yml = SeedPackageYmlClient::Client.new(base_url: \"https://api.example.com\")\npackage_yml.nop(id: \"id-a2ijs82\", nested_id: \"id-219xca8\")",
+                "client": "require \"fern_package_yml\"\n\npackage_yml = SeedPackageYmlClient::Client.new(base_url: \"https://api.example.com\")\npackage_yml.service.nop(id: \"id-a2ijs82\", nested_id: \"id-219xca8\")",
                 "type": "ruby"
             }
         },

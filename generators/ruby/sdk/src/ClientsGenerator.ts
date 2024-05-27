@@ -99,15 +99,9 @@ export class ClientsGenerator {
         this.subpackages = new Map(Object.entries(intermediateRepresentation.subpackages));
         // Maps the subpackage by ID to it's subpackage path (e.g. the package route)
         this.subpackagePaths = new Map<string, string[]>();
-        this.subpackages.forEach((subpackage, _) => {
-            subpackage.subpackages.forEach((subpackageId) => {
-                const currentPath = this.subpackagePaths.get(subpackageId) ?? [];
-
-                this.subpackagePaths.set(subpackageId, [
-                    getSubpackagePropertyNameFromIr(subpackage.name),
-                    ...currentPath
-                ]);
-            });
+        this.subpackages.forEach((subpackage, subpackageId) => {
+            const path = subpackage.fernFilepath.allParts.map((part) => getSubpackagePropertyNameFromIr(part));
+            this.subpackagePaths.set(subpackageId, path);
         });
 
         this.irBasePath = generateRubyPathTemplate(
@@ -122,7 +116,10 @@ export class ClientsGenerator {
         let environmentClass: Class_ | undefined;
         if (this.intermediateRepresentation.environments !== undefined) {
             this.gc.logger.debug("[Ruby] Preparing environment files.");
-            this.defaultEnvironment = getDefaultEnvironmentUrl(this.intermediateRepresentation.environments);
+            this.defaultEnvironment = getDefaultEnvironmentUrl(
+                this.clientName,
+                this.intermediateRepresentation.environments
+            );
 
             environmentClass = generateEnvironmentConstants(
                 this.intermediateRepresentation.environments,
