@@ -11,22 +11,14 @@ You can use:
 
 <Tip>This feature is available on the Starter plan and above. [Contact us](https://buildwithfern.com/contact) to get set up.</Tip>
 
-## Option 1: Subdomain
+<AccordionGroup>
+<Accordion title = "Subdomain">
 
 To host your documentation on a subdomain, i.e. `docs.mydomain.com`, you need to create a CNAME record in your DNS settings.
 
 <Steps>
 
-### Create a CNAME record
-
-1. Log in to your domain registrar's dashboard.
-2. Navigate to the DNS settings for your domain.
-3. Add a new CNAME record with the following details:
-   - **Type**: `CNAME`
-   - **Name**: `docs` (or any subdomain you want to use)
-   - **Value**: `cname.vercel-dns.com.`
-
-### Update the domain in `docs.yml`
+### Step 1: Update the domain in `docs.yml`
 
 ```yaml
 instances:
@@ -36,31 +28,40 @@ instances:
 
 Merge your changes into `main`. [Here's an example](https://github.com/octoml/fern-config/blob/389b67679953856ba0716537981a6d749635556f/fern/docs.yml#L1-L3 ).
 
-### Reach out to us
 
-Once you've completed the above steps, ask a member of the Fern team to complete the setup on our end.
+### Step 2: Create a CNAME record
 
-If you have an existing project in Vercel, we may need you to verify our access to your subdomain via a TXT record, which we'll provide you with.
+1. Log in to your domain registrar's dashboard.
+2. Navigate to the DNS settings for your domain.
+3. Add a new CNAME record with the following details:
+   - **Type**: `CNAME`
+   - **Name**: `docs` (or any subdomain you want to use)
+   - **Value**: `cname.vercel-dns.com.`
 
-### Verify the setup
+### Step 3: Reach out to us
+
+Once you've completed the steps above, reach out via your dedicated Slack channel or [email](mailto:support@buildwithfern.com).
+
+You may need to create a TXT record to verify your domain. If you do, we'll provide you with the record to add.
+
+### Step 4: Verify the setup
 
 Once we've completed the setup on our end, you should be able to access your documentation at `docs.mydomain.com`. SSL will be automatically provisioned for your domain, but it may take a few minutes to propagate globally.
 
+<Tip>It's helpful to check that you can acces your new docs site from a mobile device or incognito browser.</Tip>
+
 </Steps>
+</Accordion>
 
-## Option 2: Subpath
+<Accordion title = "Subpath">
 
-## Steps
+To host your documentation on a subpath, i.e. `mydomain.com/docs`, you need to edit your `docs.yml` configuration and then get provider-specific instructions for setting up the subpath. Common providers include Cloudflare, AWS Route53 and Cloudfront, Netlify, and Vercel.
 
 <Steps>
 
-### Step 1: Open `docs.yml`
+### Step 1: Configure the `url` in `docs.yml`
 
-Open the `docs.yml` file, which lives in the `fern/` folder of your Fern Docs repository.
-
-### Step 2: Configure the `url`
-
-Append that subpath to the end of the `url`:
+Append that subpath to the end of the `url`. This example use `docs` for the subpath, but you can use any word you like, such as `reference` or `developer`.
 
 <CodeBlock title="docs.yml example for subpath">
 ```yaml
@@ -69,9 +70,7 @@ instances:
 ```
 </CodeBlock>
 
-<Tip>This use `docs` for the subpath specified in `custom-domain`, but you can use any word you like, such as `reference` or `learn`.</Tip>
-
-### Step 3: Configure the `custom-domain`
+### Step 2: Configure the `custom-domain`
 
 Below the `url`, add a `custom-domain` key as shown in the examples below.
 
@@ -85,14 +84,16 @@ instances:
 
 [Here's an example.](https://github.com/fern-api/fern/blob/7d8631c6119787a8aaccb4ba49837e73c985db28/fern/docs.yml#L1-L3)
 
-### Step 4: Update the Fern Docs site
+### Step 3: Update the Fern Docs site
 
 If you created your Fern Docs site using one of our [Docs Quickstarts](/learn/docs/getting-started/quickstart), push the changes you made to your GitHub repository. This runs a GitHub Action to update the site with your new configuration.
 
 If you need to update your Fern Docs site manually, run `fern generate --docs`.
 
-### Step 5: Create DNS records to point at Fern Docs
+### Step 4: Create DNS records to point at Fern Docs
 
 This feature is available on the Fern Docs Starter plan and above. Reach out to [sales@buildwithfern.com](mailto:sales@buildwithfern.com) to set up your subscription and obtain DNS records information for your domain registrar. 
 
 </Steps>
+</Accordion>
+</AccordionGroup>
