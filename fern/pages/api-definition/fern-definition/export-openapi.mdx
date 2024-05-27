@@ -7,12 +7,7 @@ To prevent lock-in to the Fern Definition format, we provide a generator that wi
 This lets you switch to using OpenAPI at any time, or use your API definition with OpenAPI tools.
 To convert your Fern Definition to OpenAPI, use the `fern-openapi` generator. 
 
-Run the following command from the CLI, or update your generators.yml file directly.
-<CodeBlocks>
-```bash title="CLI"
-fern add fernapi/fern-openapi
-fern generate
-```
+Update your `generators.yml` file:
 
 ```yaml title="generators.yml"
 - name: fernapi/fern-openapi
