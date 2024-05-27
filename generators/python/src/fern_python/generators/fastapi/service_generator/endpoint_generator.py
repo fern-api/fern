@@ -96,7 +96,7 @@ class EndpointGenerator:
         for i, part in enumerate(self._endpoint.full_path.parts):
             parameter_obj = self._endpoint.all_path_parameters[i]
             full_path += self._get_path_parameter_part_as_str(parameter_obj, part.tail)
-        
+
         return full_path
 
     def _get_path_parameter_part_as_str(self, path_parameter: ir_types.PathParameter, tail: str) -> str:
