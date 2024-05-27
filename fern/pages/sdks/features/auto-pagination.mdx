@@ -1,16 +1,13 @@
 ---
 title: Auto Pagination
-description: Paginate through API responses easily
+description: Paginate through API responses easily with offset, cursor, and link-based pagination.
 ---
 
 <Warning title='Pro Feature'>
-  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact) 
-  or [email us](mailto:support@buildwithfern.com) to get started. 
+  This feature is only available on paid plans. [Contact us](https://buildwithfern.com/contact) to get started. 
 </Warning>
 
-Instead of forcing SDK users to learn the intricacies of your 
-pagination system, Fern SDKs will return an iterator so that user's can 
-simply loop through all the results.
+Instead of forcing SDK users to learn the intricacies of your pagination system, Fern SDKs will return an iterator so that user's can simply loop through all the results.
 
 <Tabs>
 <Tab title="TypeScript">
@@ -114,8 +111,8 @@ MyResponseObject:
 
 <Tabs>
 <Tab title="OpenAPI">
-<CodeBlocks>
-<CodeBlock>
+<Tabs>
+<Tab>
 ```yaml Offset
 ...
 paths:
@@ -125,8 +122,8 @@ paths:
       results: $response.results
 ...
 ```
-</CodeBlock>
-<CodeBlock>
+</Tab>
+<Tab>
 ```yaml Cursor
 ...
 paths:
@@ -137,13 +134,13 @@ paths:
       results: $response.results
 ...
 ```
-</CodeBlock>
-</CodeBlocks>
+</Tab>
+</Tabs>
 </Tab>
 
 <Tab title="Fern Definition">
-<CodeBlocks>
-<CodeBlock>
+<Tabs>
+<Tab>
 ```yaml Offset
 service:
   endpoints:
@@ -152,8 +149,8 @@ service:
         offset: $request.page
         results: $response.data
 ```
-</CodeBlock>
-<CodeBlock>
+</Tab>
+<Tab>
 ```yaml Cursor
 service:
   endpoints:
@@ -163,7 +160,7 @@ service:
         next_cursor: $response.page.next.starting_after
         results: $response.data
 ```
-</CodeBlock>
-</CodeBlocks>
+</Tab>
+</Tabs>
 </Tab>
 </Tabs>
