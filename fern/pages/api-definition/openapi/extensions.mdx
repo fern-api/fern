@@ -35,6 +35,20 @@ paths:
       x-fern-sdk-method-name: create_user
 ```
 
+If you add more than one `x-fern-sdk-group-name` extension, then the generated SDK will nested group names. The order of the group names is preserved in the generated SDK method.
+
+For example, the following OpenAPI will generate `client.admin.users.create()`:
+
+```yaml title="openapi.yaml"
+paths:
+  /users:
+    post:
+      x-fern-sdk-group-name: 
+        - admin
+        - users
+      x-fern-sdk-method-name: create
+```
+
 ## Authentication overrides
 
 For authentication within your SDK, you may want to customize the:
