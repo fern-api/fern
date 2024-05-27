@@ -26,7 +26,18 @@ paths:
 ```
 
 If you omit the `x-fern-sdk-group-name` extension, then the generated SDK method will live at the root.
-For example, the following OpenAPI will generate `client.create_user()`:
+For example, the following OpenAPI will generate `client.admin,users.create()`:
+
+```yaml title="openapi.yaml"
+paths:
+  /users:
+    post:
+      x-fern-sdk-group-name: admin
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: create
+```
+
+If you add more than one `x-fern-sdk-group-name` extension, then the generated SDK will have nested methods.
 
 ```yaml title="openapi.yaml"
 paths:
