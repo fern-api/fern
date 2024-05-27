@@ -72,7 +72,7 @@ class AbstractRootService(AbstractFernService):
         wrapper.__globals__.update(cls.create.__globals__)
 
         router.post(
-            path="//create",
+            path="/create",
             response_model=Type,
             description=AbstractRootService.create.__doc__,
             **get_route_args(cls.create, default_tag=""),
