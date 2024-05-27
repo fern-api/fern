@@ -16,16 +16,16 @@ tabs:
     slug: home
   api-definition:
     display-name: API Definition
-    slug: api-definition
+    slug: api-definition/introduction/what-is-an-api-definition
   docs:
     display-name: Docs
-    slug: docs
+    slug: docs/getting-started/quickstart
   sdks:
     display-name: SDKs
-    slug: sdks
+    slug: sdks/introduction/overview
   cli-api:
     display-name: CLI & API Reference
-    slug: cli-api
+    slug: cli-api/cli-reference/cli-overview
 
 css: ./assets/styles.css
 
