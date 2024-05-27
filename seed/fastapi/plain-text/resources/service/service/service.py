@@ -63,7 +63,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.get_text.__globals__)
 
         router.post(
-            path="//text",
+            path="/text",
             response_model=str,
             description=AbstractServiceService.get_text.__doc__,
             **get_route_args(cls.get_text, default_tag="service"),
