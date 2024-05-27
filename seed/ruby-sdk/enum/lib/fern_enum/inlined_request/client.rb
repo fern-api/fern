@@ -24,7 +24,7 @@ module SeedEnumClient
     # @return [Void]
     # @example
     #  enum = SeedEnumClient::Client.new(base_url: "https://api.example.com")
-    #  enum.send(operand: GREATER_THAN, operand_or_color: RED)
+    #  enum.inlined_request.send(operand: GREATER_THAN, operand_or_color: RED)
     def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -59,7 +59,7 @@ module SeedEnumClient
     # @return [Void]
     # @example
     #  enum = SeedEnumClient::Client.new(base_url: "https://api.example.com")
-    #  enum.send(operand: GREATER_THAN, operand_or_color: RED)
+    #  enum.inlined_request.send(operand: GREATER_THAN, operand_or_color: RED)
     def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
       Async do
         @request_client.conn.post do |req|

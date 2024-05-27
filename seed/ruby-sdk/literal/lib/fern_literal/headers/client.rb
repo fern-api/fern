@@ -26,7 +26,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
+    #  literal.headers.send(
     #    endpoint_version: "02-12-2024",
     #    async: true,
     #    query: "What is the weather today"
@@ -73,7 +73,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
+    #  literal.headers.send(
     #    endpoint_version: "02-12-2024",
     #    async: true,
     #    query: "What is the weather today"
