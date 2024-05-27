@@ -16,10 +16,10 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.5.7"
     },
     [GeneratorName.JAVA_SDK]: {
-        version: "0.8.7"
+        version: "0.9.3"
     },
     [GeneratorName.JAVA_SPRING]: {
-        version: "0.5.7",
+        version: "0.8.0-rc0",
         output: {
             location: "local-file-system",
             path: "../src/main/java/com/fern"
@@ -35,7 +35,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.7.2"
     },
     [GeneratorName.TYPESCRIPT_NODE_SDK]: {
-        version: "0.12.9",
+        version: "0.20.0-rc1",
         output: {
             location: "local-file-system",
             path: "../sdks/typescript"
@@ -49,17 +49,17 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         }
     },
     [GeneratorName.PYTHON_PYDANTIC]: {
-        version: "0.6.0"
+        version: "0.9.0"
     },
     [GeneratorName.PYTHON_FASTAPI]: {
-        version: "0.6.0",
+        version: "0.9.2",
         output: {
             location: "local-file-system",
             path: "../src/fern"
         }
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "1.0.1",
+        version: "2.5.3",
         output: {
             location: "local-file-system",
             path: "../sdks/python"
@@ -72,7 +72,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.9.0"
     },
     [GeneratorName.GO_SDK]: {
-        version: "0.19.0",
+        version: "0.22.0",
         output: {
             location: "local-file-system",
             path: "../sdks/go"
@@ -82,17 +82,17 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         }
     },
     [GeneratorName.RUBY_MODEL]: {
-        version: "0.0.1"
+        version: "0.0.8"
     },
     [GeneratorName.RUBY_SDK]: {
-        version: "0.4.0",
+        version: "0.6.2",
         output: {
             location: "local-file-system",
             path: "../sdks/ruby"
         }
     },
     [GeneratorName.OPENAPI]: {
-        version: "0.0.28",
+        version: "0.0.31",
         config: {
             format: "yaml"
         },
@@ -101,34 +101,18 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
             path: "../openapi"
         }
     },
-    [GeneratorName.STOPLIGHT]: {
-        version: "0.0.24",
-        config: {
-            format: "yaml"
-        }
-    },
     [GeneratorName.POSTMAN]: {
-        version: "0.0.45",
+        version: "0.1.1",
         output: {
             location: "local-file-system",
             path: "../postman"
         }
     },
-    [GeneratorName.OPENAPI_PYTHON_CLIENT]: {
-        version: "0.0.11",
-        output: {
-            location: "local-file-system",
-            path: "../sdks/python"
-        },
-        config: {
-            format: "yaml"
-        }
-    },
     [GeneratorName.CSHARP_MODEL]: {
-        version: "0.0.0"
+        version: "0.0.2"
     },
     [GeneratorName.CSHARP_SDK]: {
-        version: "0.0.1",
+        version: "0.0.16",
         output: {
             location: "local-file-system",
             path: "../sdks/csharp"
