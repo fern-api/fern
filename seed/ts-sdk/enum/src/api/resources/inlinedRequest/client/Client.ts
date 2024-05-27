@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedEnum from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedEnum from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace InlinedRequest {
     interface Options {
@@ -16,12 +16,23 @@ export declare namespace InlinedRequest {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class InlinedRequest {
     constructor(protected readonly _options: InlinedRequest.Options) {}
 
+    /**
+     * @param {SeedEnum.SendEnumInlinedRequest} request
+     * @param {InlinedRequest.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedEnum.inlinedRequest.send({
+     *         operand: SeedEnum.Operand.GreaterThan,
+     *         operandOrColor: SeedEnum.Color.Red
+     *     })
+     */
     public async send(
         request: SeedEnum.SendEnumInlinedRequest,
         requestOptions?: InlinedRequest.RequestOptions
@@ -40,6 +51,7 @@ export class InlinedRequest {
             body: await serializers.SendEnumInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

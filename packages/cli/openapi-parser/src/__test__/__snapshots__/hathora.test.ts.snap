@@ -2,6 +2,7 @@
 
 exports[`open api parser hathora parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -10,7 +11,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -211,6 +212,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetApps",
+      "pagination": null,
       "path": "/apps/v1/list",
       "pathParameters": [],
       "queryParameters": [],
@@ -248,10 +250,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-        500,
-      ],
+      "errors": {
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -362,13 +404,16 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateApp",
+      "pagination": null,
       "path": "/apps/v1/create",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -381,7 +426,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createAppRequestAuthConfiguration",
               "key": "authConfiguration",
+              "nameOverride": null,
               "schema": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -394,6 +441,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationGoogle",
                     "key": "google",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "createAppRequestAuthConfigurationGoogle",
@@ -401,6 +449,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -413,14 +462,18 @@ exports[`open api parser hathora parse open api 1`] = `
                             "conflict": {},
                             "generatedName": "createAppRequestAuthConfigurationGoogleClientId",
                             "key": "clientId",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "CreateAppRequestAuthConfigurationGoogleClientId",
                               "groupName": null,
                               "nameOverride": null,
                               "schema": {
+                                "default": null,
+                                "format": null,
                                 "maxLength": null,
                                 "minLength": null,
+                                "pattern": null,
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -436,6 +489,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationNickname",
                     "key": "nickname",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "createAppRequestAuthConfigurationNickname",
@@ -457,6 +511,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "createAppRequestAuthConfigurationAnonymous",
                     "key": "anonymous",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "createAppRequestAuthConfigurationAnonymous",
@@ -482,14 +537,18 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createAppRequestAppName",
               "key": "appName",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateAppRequestAppName",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -526,11 +585,71 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -652,6 +771,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "UpdateApp",
+      "pagination": null,
       "path": "/apps/v1/update/{appId}",
       "pathParameters": [
         {
@@ -670,9 +790,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -685,7 +807,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "updateAppRequestAuthConfiguration",
               "key": "authConfiguration",
+              "nameOverride": null,
               "schema": {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -698,6 +822,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationGoogle",
                     "key": "google",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateAppRequestAuthConfigurationGoogle",
@@ -705,6 +830,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "additionalProperties": false,
                         "allOf": [],
                         "allOfPropertyConflicts": [],
                         "description": null,
@@ -717,14 +843,18 @@ exports[`open api parser hathora parse open api 1`] = `
                             "conflict": {},
                             "generatedName": "updateAppRequestAuthConfigurationGoogleClientId",
                             "key": "clientId",
+                            "nameOverride": null,
                             "schema": {
                               "description": null,
                               "generatedName": "UpdateAppRequestAuthConfigurationGoogleClientId",
                               "groupName": null,
                               "nameOverride": null,
                               "schema": {
+                                "default": null,
+                                "format": null,
                                 "maxLength": null,
                                 "minLength": null,
+                                "pattern": null,
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -740,6 +870,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationNickname",
                     "key": "nickname",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateAppRequestAuthConfigurationNickname",
@@ -761,6 +892,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "updateAppRequestAuthConfigurationAnonymous",
                     "key": "anonymous",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "updateAppRequestAuthConfigurationAnonymous",
@@ -786,14 +918,18 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "updateAppRequestAppName",
               "key": "appName",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "UpdateAppRequestAppName",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -830,9 +966,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -939,6 +1095,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetAppInfo",
+      "pagination": null,
       "path": "/apps/v1/info/{appId}",
       "pathParameters": [
         {
@@ -983,10 +1140,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1016,6 +1213,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "DeleteApp",
+      "pagination": null,
       "path": "/apps/v1/delete/{appId}",
       "pathParameters": [
         {
@@ -1048,9 +1246,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1091,6 +1309,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "LoginAnonymous",
+      "pagination": null,
       "path": "/auth/v1/{appId}/login/anonymous",
       "pathParameters": [
         {
@@ -1114,6 +1333,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1126,14 +1346,18 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "loginAnonymousResponseToken",
               "key": "token",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "LoginAnonymousResponseToken",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1156,9 +1380,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1210,6 +1454,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "LoginNickname",
+      "pagination": null,
       "path": "/auth/v1/{appId}/login/nickname",
       "pathParameters": [
         {
@@ -1228,9 +1473,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1243,14 +1490,18 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "loginNicknameRequestNickname",
               "key": "nickname",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "LoginNicknameRequestNickname",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1266,6 +1517,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1278,14 +1530,18 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "loginNicknameResponseToken",
               "key": "token",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "LoginNicknameResponseToken",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1308,10 +1564,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1363,6 +1659,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "LoginGoogle",
+      "pagination": null,
       "path": "/auth/v1/{appId}/login/google",
       "pathParameters": [
         {
@@ -1381,9 +1678,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1396,14 +1695,18 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "loginGoogleRequestIdToken",
               "key": "idToken",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "LoginGoogleRequestIdToken",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1419,6 +1722,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "description": "Ok",
         "responseProperty": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -1431,14 +1735,18 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "loginGoogleResponseToken",
               "key": "token",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "LoginGoogleResponseToken",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1461,9 +1769,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1583,6 +1911,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetBuilds",
+      "pagination": null,
       "path": "/builds/v1/{appId}/list",
       "pathParameters": [
         {
@@ -1634,9 +1963,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1761,6 +2110,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetBuildInfo",
+      "pagination": null,
       "path": "/builds/v1/{appId}/info/{buildId}",
       "pathParameters": [
         {
@@ -1818,11 +2168,71 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1937,6 +2347,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateBuild",
+      "pagination": null,
       "path": "/builds/v1/{appId}/create",
       "pathParameters": [
         {
@@ -1981,52 +2392,57 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
             },
-            {
-              "name": "buildId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
+            "type": "primitive",
           },
-          "response": null,
-          "type": "full",
         },
-      ],
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
+      "examples": [],
       "generatedRequestName": "RunBuildRequest",
       "headers": [],
       "internal": null,
       "method": "POST",
       "operationId": "RunBuild",
+      "pagination": null,
       "path": "/builds/v1/{appId}/run/{buildId}",
       "pathParameters": [
         {
@@ -2074,7 +2490,10 @@ exports[`open api parser hathora parse open api 1`] = `
         "type": "multipart",
       },
       "requestNameOverride": null,
-      "response": null,
+      "response": {
+        "description": "Ok",
+        "type": "file",
+      },
       "sdkName": null,
       "server": [],
       "summary": null,
@@ -2087,11 +2506,71 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2131,6 +2610,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "DELETE",
       "operationId": "DeleteBuild",
+      "pagination": null,
       "path": "/builds/v1/{appId}/delete/{buildId}",
       "pathParameters": [
         {
@@ -2176,9 +2656,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2312,6 +2812,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetDeployments",
+      "pagination": null,
       "path": "/deployments/v1/{appId}/list",
       "pathParameters": [
         {
@@ -2363,9 +2864,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2504,6 +3025,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetDeploymentInfo",
+      "pagination": null,
       "path": "/deployments/v1/{appId}/info/{deploymentId}",
       "pathParameters": [
         {
@@ -2561,11 +3083,71 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2754,6 +3336,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateDeployment",
+      "pagination": null,
       "path": "/deployments/v1/{appId}/create/{buildId}",
       "pathParameters": [
         {
@@ -2785,6 +3368,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
@@ -2823,7 +3407,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2869,6 +3453,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetPingServiceEndpoints",
+      "pagination": null,
       "path": "/discovery/v1/ping",
       "pathParameters": [],
       "queryParameters": [],
@@ -2899,13 +3484,113 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2960,8 +3645,11 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -2971,6 +3659,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreatePrivateLobbyDeprecated",
+      "pagination": null,
       "path": "/lobby/v1/{appId}/create/private",
       "pathParameters": [
         {
@@ -3058,13 +3747,113 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3119,8 +3908,11 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -3130,6 +3922,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreatePublicLobbyDeprecated",
+      "pagination": null,
       "path": "/lobby/v1/{appId}/create/public",
       "pathParameters": [
         {
@@ -3217,10 +4010,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3379,8 +4212,11 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -3390,6 +4226,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListActivePublicLobbiesDeprecated",
+      "pagination": null,
       "path": "/lobby/v1/{appId}/list",
       "pathParameters": [
         {
@@ -3484,13 +4321,113 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3656,8 +4593,11 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -3667,6 +4607,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreatePrivateLobby",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/create/private",
       "pathParameters": [
         {
@@ -3706,9 +4647,11 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -3721,6 +4664,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createPrivateLobbyRequestInitialConfig",
               "key": "initialConfig",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreatePrivateLobbyRequestInitialConfig",
@@ -3731,8 +4675,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                 },
@@ -3750,6 +4697,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createPrivateLobbyRequestRegion",
               "key": "region",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreatePrivateLobbyRequestRegion",
@@ -3790,13 +4738,113 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3962,8 +5010,11 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -3973,6 +5024,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreatePublicLobby",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/create/public",
       "pathParameters": [
         {
@@ -4012,9 +5064,11 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -4027,6 +5081,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createPublicLobbyRequestInitialConfig",
               "key": "initialConfig",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreatePublicLobbyRequestInitialConfig",
@@ -4037,8 +5092,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                 },
@@ -4056,6 +5114,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createPublicLobbyRequestRegion",
               "key": "region",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreatePublicLobbyRequestRegion",
@@ -4096,13 +5155,113 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4268,8 +5427,11 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -4279,6 +5441,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateLocalLobby",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/create/local",
       "pathParameters": [
         {
@@ -4318,9 +5481,11 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -4333,6 +5498,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createLocalLobbyRequestInitialConfig",
               "key": "initialConfig",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateLocalLobbyRequestInitialConfig",
@@ -4343,8 +5509,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                 },
@@ -4362,6 +5531,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createLocalLobbyRequestRegion",
               "key": "region",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateLocalLobbyRequestRegion",
@@ -4402,13 +5572,113 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4578,8 +5848,11 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -4589,6 +5862,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateLobby",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/create",
       "pathParameters": [
         {
@@ -4628,9 +5902,11 @@ exports[`open api parser hathora parse open api 1`] = `
         },
       ],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -4643,6 +5919,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createLobbyRequestVisibility",
               "key": "visibility",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateLobbyRequestVisibility",
@@ -4694,6 +5971,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createLobbyRequestInitialConfig",
               "key": "initialConfig",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateLobbyRequestInitialConfig",
@@ -4704,8 +5982,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                 },
@@ -4723,6 +6004,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createLobbyRequestRegion",
               "key": "region",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateLobbyRequestRegion",
@@ -4763,7 +6045,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4903,6 +6185,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "ListActivePublicLobbies",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/list/public",
       "pathParameters": [
         {
@@ -4975,9 +6258,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5122,6 +6425,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetLobbyInfo",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/info/{roomId}",
       "pathParameters": [
         {
@@ -5179,10 +6483,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5335,6 +6679,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "SetLobbyState",
+      "pagination": null,
       "path": "/lobby/v2/{appId}/setState/{roomId}",
       "pathParameters": [
         {
@@ -5366,9 +6711,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -5381,6 +6728,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "setLobbyStateRequestState",
               "key": "state",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "SetLobbyStateRequestState",
@@ -5391,8 +6739,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                 },
@@ -5436,38 +6787,36 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
             },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
+            "type": "primitive",
+          },
         },
-      ],
+      },
+      "examples": [],
       "generatedRequestName": "GetLogsForAppRequest",
       "headers": [],
       "internal": null,
       "method": "GET",
       "operationId": "GetLogsForApp",
+      "pagination": null,
       "path": "/logs/v1/{appId}/all",
       "pathParameters": [
         {
@@ -5523,6 +6872,12 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 100,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -5552,7 +6907,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "request": null,
       "requestNameOverride": null,
-      "response": null,
+      "response": {
+        "description": "Ok",
+        "type": "file",
+      },
       "sdkName": null,
       "server": [],
       "summary": null,
@@ -5565,48 +6923,36 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
             },
-            {
-              "name": "processId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "processId",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
+            "type": "primitive",
+          },
         },
-      ],
+      },
+      "examples": [],
       "generatedRequestName": "GetLogsForProcessRequest",
       "headers": [],
       "internal": null,
       "method": "GET",
       "operationId": "GetLogsForProcess",
+      "pagination": null,
       "path": "/logs/v1/{appId}/process/{processId}",
       "pathParameters": [
         {
@@ -5675,6 +7021,12 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 100,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -5684,7 +7036,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "request": null,
       "requestNameOverride": null,
-      "response": null,
+      "response": {
+        "description": "Ok",
+        "type": "file",
+      },
       "sdkName": null,
       "server": [],
       "summary": null,
@@ -5697,46 +7052,36 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
             },
-            {
-              "name": "deploymentId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
+            "type": "primitive",
+          },
         },
-      ],
+      },
+      "examples": [],
       "generatedRequestName": "GetLogsForDeploymentRequest",
       "headers": [],
       "internal": null,
       "method": "GET",
       "operationId": "GetLogsForDeployment",
+      "pagination": null,
       "path": "/logs/v1/{appId}/deployment/{deploymentId}",
       "pathParameters": [
         {
@@ -5805,6 +7150,12 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 100,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -5830,10 +7181,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5973,6 +7364,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetMetrics",
+      "pagination": null,
       "path": "/metrics/v1/{appId}/process/{processId}",
       "pathParameters": [
         {
@@ -6046,6 +7438,12 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -6068,6 +7466,12 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -6090,6 +7494,12 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 60,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -6124,9 +7534,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6309,6 +7739,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetRunningProcesses",
+      "pagination": null,
       "path": "/processes/v1/{appId}/list/running",
       "pathParameters": [
         {
@@ -6381,9 +7812,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6531,6 +7982,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetStoppedProcesses",
+      "pagination": null,
       "path": "/processes/v1/{appId}/list/stopped",
       "pathParameters": [
         {
@@ -6603,9 +8055,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6758,6 +8230,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetProcessInfo",
+      "pagination": null,
       "path": "/processes/v1/{appId}/info/{processId}",
       "pathParameters": [
         {
@@ -6815,10 +8288,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6862,6 +8375,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "CreateRoom",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/create",
       "pathParameters": [
         {
@@ -6880,9 +8394,11 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -6895,6 +8411,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "conflict": {},
               "generatedName": "createRoomRequestRegion",
               "key": "region",
+              "nameOverride": null,
               "schema": {
                 "description": null,
                 "generatedName": "CreateRoomRequestRegion",
@@ -6935,9 +8452,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7070,6 +8607,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetRoomInfo",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/info/{roomId}",
       "pathParameters": [
         {
@@ -7127,9 +8665,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7229,6 +8787,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetActiveRoomsForProcess",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/list/{processId}/active",
       "pathParameters": [
         {
@@ -7293,9 +8852,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7395,6 +8974,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "GetInactiveRoomsForProcess",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/list/{processId}/inactive",
       "pathParameters": [
         {
@@ -7459,10 +9039,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7502,6 +9122,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "DestroyRoom",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
       "pathParameters": [
         {
@@ -7547,10 +9168,50 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7590,6 +9251,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "SuspendRoom",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
       "pathParameters": [
         {
@@ -7635,17 +9297,78 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetConnectionInfoRequest",
       "headers": [],
       "internal": null,
       "method": "GET",
       "operationId": "GetConnectionInfo",
+      "pagination": null,
       "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
       "pathParameters": [
         {
@@ -7699,93 +9422,6 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
   ],
-  "errors": {
-    "401": {
-      "description": null,
-      "generatedName": "UnauthorizedError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "UnauthorizedErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "404": {
-      "description": null,
-      "generatedName": "NotFoundError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "NotFoundErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "422": {
-      "description": null,
-      "generatedName": "UnprocessableEntityError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "UnprocessableEntityErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "429": {
-      "description": null,
-      "generatedName": "TooManyRequestsError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "TooManyRequestsErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "500": {
-      "description": null,
-      "generatedName": "InternalServerError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "InternalServerErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-  },
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
@@ -7824,6 +9460,7 @@ exports[`open api parser hathora parse open api 1`] = `
   ],
   "schemas": {
     "ActiveConnectionInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7836,6 +9473,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "activeConnectionInfoTransportType",
           "key": "transportType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ActiveConnectionInfoTransportType",
@@ -7850,12 +9488,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "activeConnectionInfoPort",
           "key": "port",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ActiveConnectionInfoPort",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -7866,14 +9511,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "activeConnectionInfoHost",
           "key": "host",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ActiveConnectionInfoHost",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -7884,6 +9533,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "activeConnectionInfoRoomId",
           "key": "roomId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ActiveConnectionInfoRoomId",
@@ -7902,13 +9552,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": null,
         "type": "string",
       },
       "type": "primitive",
     },
     "Application": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -7921,6 +9575,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationDeletedBy",
           "key": "deletedBy",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationDeletedBy",
@@ -7933,8 +9588,11 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -7946,6 +9604,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationDeletedAt",
           "key": "deletedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationDeletedAt",
@@ -7969,6 +9628,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationCreatedAt",
           "key": "createdAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationCreatedAt",
@@ -7985,14 +9645,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationCreatedBy",
           "key": "createdBy",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationCreatedBy",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -8003,6 +9667,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationOrgId",
           "key": "orgId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationOrgId",
@@ -8017,7 +9682,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationAuthConfiguration",
           "key": "authConfiguration",
+          "nameOverride": null,
           "schema": {
+            "additionalProperties": false,
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
@@ -8030,6 +9697,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationGoogle",
                 "key": "google",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "applicationAuthConfigurationGoogle",
@@ -8037,6 +9705,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "nameOverride": null,
                   "type": "optional",
                   "value": {
+                    "additionalProperties": false,
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": null,
@@ -8049,14 +9718,18 @@ exports[`open api parser hathora parse open api 1`] = `
                         "conflict": {},
                         "generatedName": "applicationAuthConfigurationGoogleClientId",
                         "key": "clientId",
+                        "nameOverride": null,
                         "schema": {
                           "description": null,
                           "generatedName": "ApplicationAuthConfigurationGoogleClientId",
                           "groupName": null,
                           "nameOverride": null,
                           "schema": {
+                            "default": null,
+                            "format": null,
                             "maxLength": null,
                             "minLength": null,
+                            "pattern": null,
                             "type": "string",
                           },
                           "type": "primitive",
@@ -8072,6 +9745,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationNickname",
                 "key": "nickname",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "applicationAuthConfigurationNickname",
@@ -8093,6 +9767,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "conflict": {},
                 "generatedName": "applicationAuthConfigurationAnonymous",
                 "key": "anonymous",
+                "nameOverride": null,
                 "schema": {
                   "description": null,
                   "generatedName": "applicationAuthConfigurationAnonymous",
@@ -8118,14 +9793,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationAppSecret",
           "key": "appSecret",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationAppSecret",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -8136,14 +9815,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationAppId",
           "key": "appId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationAppId",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -8154,14 +9837,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationAppName",
           "key": "appName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationAppName",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -8171,6 +9858,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "ApplicationWithDeployment": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8191,6 +9879,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "applicationWithDeploymentDeployment",
           "key": "deployment",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ApplicationWithDeploymentDeployment",
@@ -8204,6 +9893,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "Build": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8216,6 +9906,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildRegionalContainerTags",
           "key": "regionalContainerTags",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildRegionalContainerTags",
@@ -8223,6 +9914,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "nameOverride": null,
             "type": "array",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -8235,14 +9927,18 @@ exports[`open api parser hathora parse open api 1`] = `
                   "conflict": {},
                   "generatedName": "buildRegionalContainerTagsItemContainerTag",
                   "key": "containerTag",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "BuildRegionalContainerTagsItemContainerTag",
                     "groupName": null,
                     "nameOverride": null,
                     "schema": {
+                      "default": null,
+                      "format": null,
                       "maxLength": null,
                       "minLength": null,
+                      "pattern": null,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -8253,6 +9949,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "conflict": {},
                   "generatedName": "buildRegionalContainerTagsItemRegion",
                   "key": "region",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "BuildRegionalContainerTagsItemRegion",
@@ -8272,12 +9969,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildImageSize",
           "key": "imageSize",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildImageSize",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -8288,6 +9992,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildStatus",
@@ -8351,6 +10056,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildDeletedAt",
           "key": "deletedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildDeletedAt",
@@ -8374,6 +10080,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildFinishedAt",
           "key": "finishedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildFinishedAt",
@@ -8397,6 +10104,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildStartedAt",
           "key": "startedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildStartedAt",
@@ -8420,6 +10128,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildCreatedAt",
           "key": "createdAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildCreatedAt",
@@ -8436,14 +10145,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildCreatedBy",
           "key": "createdBy",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildCreatedBy",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -8454,6 +10167,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildBuildId",
           "key": "buildId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildBuildId",
@@ -8468,6 +10182,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "buildAppId",
           "key": "appId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "BuildAppId",
@@ -8486,6 +10201,12 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "exclusiveMaximum": null,
+        "exclusiveMinimum": null,
+        "maximum": null,
+        "minimum": null,
+        "multipleOf": null,
         "type": "double",
       },
       "type": "primitive",
@@ -8521,6 +10242,7 @@ exports[`open api parser hathora parse open api 1`] = `
       },
     },
     "Deployment": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -8541,6 +10263,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentCreatedAt",
           "key": "createdAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentCreatedAt",
@@ -8557,14 +10280,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentCreatedBy",
           "key": "createdBy",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentCreatedBy",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -8575,12 +10302,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentRequestedMemoryMb",
           "key": "requestedMemoryMB",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentRequestedMemoryMb",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -8591,12 +10325,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentRequestedCpu",
           "key": "requestedCPU",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentRequestedCpu",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -8607,6 +10348,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentDeploymentId",
           "key": "deploymentId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentDeploymentId",
@@ -8621,6 +10363,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentBuildId",
           "key": "buildId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentBuildId",
@@ -8635,6 +10378,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentAppId",
           "key": "appId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentAppId",
@@ -8648,6 +10392,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "DeploymentConfig": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8660,6 +10405,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentConfigEnv",
           "key": "env",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentConfigEnv",
@@ -8667,6 +10413,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "nameOverride": null,
             "type": "array",
             "value": {
+              "additionalProperties": false,
               "allOf": [],
               "allOfPropertyConflicts": [],
               "description": null,
@@ -8679,14 +10426,18 @@ exports[`open api parser hathora parse open api 1`] = `
                   "conflict": {},
                   "generatedName": "deploymentConfigEnvItemValue",
                   "key": "value",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "DeploymentConfigEnvItemValue",
                     "groupName": null,
                     "nameOverride": null,
                     "schema": {
+                      "default": null,
+                      "format": null,
                       "maxLength": null,
                       "minLength": null,
+                      "pattern": null,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -8697,14 +10448,18 @@ exports[`open api parser hathora parse open api 1`] = `
                   "conflict": {},
                   "generatedName": "deploymentConfigEnvItemName",
                   "key": "name",
+                  "nameOverride": null,
                   "schema": {
                     "description": null,
                     "generatedName": "DeploymentConfigEnvItemName",
                     "groupName": null,
                     "nameOverride": null,
                     "schema": {
+                      "default": null,
+                      "format": null,
                       "maxLength": null,
                       "minLength": null,
+                      "pattern": null,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -8720,12 +10475,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentConfigRoomsPerProcess",
           "key": "roomsPerProcess",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentConfigRoomsPerProcess",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -8736,6 +10498,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentConfigPlanName",
           "key": "planName",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentConfigPlanName",
@@ -8750,6 +10513,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentConfigTransportType",
           "key": "transportType",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentConfigTransportType",
@@ -8764,12 +10528,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "deploymentConfigContainerPort",
           "key": "containerPort",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "DeploymentConfigContainerPort",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -8784,6 +10555,12 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "exclusiveMaximum": null,
+        "exclusiveMinimum": null,
+        "maximum": null,
+        "minimum": null,
+        "multipleOf": null,
         "type": "double",
       },
       "type": "primitive",
@@ -8795,6 +10572,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "type": "array",
       "value": {
+        "additionalProperties": false,
         "allOf": [],
         "allOfPropertyConflicts": [],
         "description": null,
@@ -8807,12 +10585,19 @@ exports[`open api parser hathora parse open api 1`] = `
             "conflict": {},
             "generatedName": "discoveryResponseItemPort",
             "key": "port",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "DiscoveryResponseItemPort",
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -8823,14 +10608,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "conflict": {},
             "generatedName": "discoveryResponseItemHost",
             "key": "host",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "DiscoveryResponseItemHost",
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -8841,6 +10630,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "conflict": {},
             "generatedName": "discoveryResponseItemRegion",
             "key": "region",
+            "nameOverride": null,
             "schema": {
               "description": null,
               "generatedName": "DiscoveryResponseItemRegion",
@@ -8855,6 +10645,7 @@ exports[`open api parser hathora parse open api 1`] = `
       },
     },
     "Lobby": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -8867,6 +10658,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "lobbyState",
@@ -8883,8 +10675,11 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
               },
@@ -8903,6 +10698,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyInitialConfig",
           "key": "initialConfig",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LobbyInitialConfig",
@@ -8913,8 +10709,11 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
             },
@@ -8932,6 +10731,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyCreatedAt",
           "key": "createdAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LobbyCreatedAt",
@@ -8948,14 +10748,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyCreatedBy",
           "key": "createdBy",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LobbyCreatedBy",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -8966,6 +10770,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyLocal",
           "key": "local",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LobbyLocal",
@@ -8982,6 +10787,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyVisibility",
           "key": "visibility",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LobbyVisibility",
@@ -9033,6 +10839,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyRegion",
           "key": "region",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LobbyRegion",
@@ -9047,6 +10854,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyRoomId",
           "key": "roomId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LobbyRoomId",
@@ -9061,6 +10869,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "lobbyAppId",
           "key": "appId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "LobbyAppId",
@@ -9131,6 +10940,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
     "MetricValue": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9143,12 +10953,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "metricValueValue",
           "key": "value",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "MetricValueValue",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -9159,12 +10976,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "metricValueTimestamp",
           "key": "timestamp",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "MetricValueTimestamp",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -9195,13 +11019,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": null,
         "type": "string",
       },
       "type": "primitive",
     },
     "Pick_Room.Exclude_keyofRoom.allocations__": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "From T, pick a set of properties whose keys are in the union K",
@@ -9214,6 +11042,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsAppId",
           "key": "appId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsAppId",
@@ -9228,6 +11057,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsRoomId",
           "key": "roomId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsRoomId",
@@ -9242,6 +11072,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsStatus",
@@ -9256,6 +11087,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "pickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
           "key": "currentAllocation",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
@@ -9333,6 +11165,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
     "Process": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9345,12 +11178,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processEgressedBytes",
           "key": "egressedBytes",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessEgressedBytes",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -9361,6 +11201,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processIdleSince",
           "key": "idleSince",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessIdleSince",
@@ -9384,12 +11225,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processActiveConnections",
           "key": "activeConnections",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessActiveConnections",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -9400,12 +11248,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processRoomSlotsAvailable",
           "key": "roomSlotsAvailable",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessRoomSlotsAvailable",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -9416,6 +11271,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processDraining",
           "key": "draining",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessDraining",
@@ -9432,6 +11288,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processTerminatedAt",
           "key": "terminatedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessTerminatedAt",
@@ -9455,6 +11312,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processStoppingAt",
           "key": "stoppingAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessStoppingAt",
@@ -9478,6 +11336,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processStartedAt",
           "key": "startedAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessStartedAt",
@@ -9501,6 +11360,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processStartingAt",
           "key": "startingAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessStartingAt",
@@ -9517,12 +11377,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processRoomsPerProcess",
           "key": "roomsPerProcess",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessRoomsPerProcess",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -9533,12 +11400,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processPort",
           "key": "port",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessPort",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -9549,14 +11423,18 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processHost",
           "key": "host",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessHost",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -9567,6 +11445,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processRegion",
           "key": "region",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessRegion",
@@ -9581,6 +11460,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processProcessId",
           "key": "processId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessProcessId",
@@ -9595,6 +11475,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processDeploymentId",
           "key": "deploymentId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessDeploymentId",
@@ -9609,6 +11490,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processAppId",
           "key": "appId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessAppId",
@@ -9627,13 +11509,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": null,
         "type": "string",
       },
       "type": "primitive",
     },
     "ProcessWithRooms": {
+      "additionalProperties": false,
       "allOf": [
         {
           "description": null,
@@ -9654,6 +11540,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processWithRoomsRooms",
           "key": "rooms",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessWithRoomsRooms",
@@ -9675,12 +11562,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "processWithRoomsTotalRooms",
           "key": "totalRooms",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "ProcessWithRoomsTotalRooms",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "exclusiveMaximum": null,
+              "exclusiveMinimum": null,
+              "maximum": null,
+              "minimum": null,
+              "multipleOf": null,
               "type": "double",
             },
             "type": "primitive",
@@ -9690,6 +11584,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "Record_Partial_MetricName_.MetricValue-Array_": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Construct a type with a set of properties K of type T",
@@ -9702,6 +11597,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
           "key": "cpu",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
@@ -9730,6 +11626,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
           "key": "memory",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
@@ -9758,6 +11655,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
           "key": "rate_egress",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
@@ -9786,6 +11684,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
           "key": "total_egress",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
@@ -9813,6 +11712,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "Record_string.never_": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "Construct a type with a set of properties K of type T",
@@ -9952,6 +11852,7 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
     "Room": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -9964,6 +11865,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomCurrentAllocation",
           "key": "currentAllocation",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomCurrentAllocation",
@@ -9985,6 +11887,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomStatus",
@@ -9999,6 +11902,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomAllocations",
           "key": "allocations",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomAllocations",
@@ -10020,6 +11924,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomRoomId",
           "key": "roomId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomRoomId",
@@ -10034,6 +11939,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomAppId",
           "key": "appId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomAppId",
@@ -10047,6 +11953,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "object",
     },
     "RoomAllocation": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10059,6 +11966,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomAllocationUnscheduledAt",
           "key": "unscheduledAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomAllocationUnscheduledAt",
@@ -10082,6 +11990,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomAllocationScheduledAt",
           "key": "scheduledAt",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomAllocationScheduledAt",
@@ -10098,6 +12007,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomAllocationProcessId",
           "key": "processId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomAllocationProcessId",
@@ -10112,6 +12022,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "roomAllocationRoomAllocationId",
           "key": "roomAllocationId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RoomAllocationRoomAllocationId",
@@ -10130,8 +12041,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": null,
         "type": "string",
       },
       "type": "primitive",
@@ -10142,8 +12056,11 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": {
+        "default": null,
+        "format": null,
         "maxLength": null,
         "minLength": null,
+        "pattern": null,
         "type": "string",
       },
       "type": "primitive",
@@ -10214,6 +12131,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "type": "reference",
     },
     "StartingConnectionInfo": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -10226,6 +12144,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "conflict": {},
           "generatedName": "startingConnectionInfoRoomId",
           "key": "roomId",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "StartingConnectionInfoRoomId",

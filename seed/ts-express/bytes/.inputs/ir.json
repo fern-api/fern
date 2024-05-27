@@ -157,7 +157,10 @@
                             }
                         }
                     },
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {

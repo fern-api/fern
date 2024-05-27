@@ -1,0 +1,1 @@
+export { SeedExtraPropertiesError } from "./SeedExtraPropertiesError";

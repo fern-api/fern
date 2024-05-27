@@ -1,0 +1,26 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/plain-text",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/text",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.getText"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedPlainText = new SeedPlainTextClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedPlainText.service.getText()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

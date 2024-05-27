@@ -1,3 +1,3 @@
-export { GetWithQuery } from "./GetWithQuery";
-export { GetWithMultipleQuery } from "./GetWithMultipleQuery";
-export { GetWithPathAndQuery } from "./GetWithPathAndQuery";
+export { type GetWithQuery } from "./GetWithQuery";
+export { type GetWithMultipleQuery } from "./GetWithMultipleQuery";
+export { type GetWithPathAndQuery } from "./GetWithPathAndQuery";

@@ -1,9 +1,17 @@
-irVersion: v37
+irVersion: v43
 docker: fernapi/fern-typescript-node-sdk:local
 dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
+local: 
+  workingDirectory: generators/typescript
+  buildCommand: 
+    - yarn workspace @fern-typescript/sdk-generator-cli compile 
+    - yarn workspace @fern-typescript/sdk-generator-cli build:node
+  runCommand: node sdk/cli/dist/nodeCli.cjs
+  env: 
+    NODE_ENV: test
 fixtures:
   streaming:
     - customConfig: null
@@ -34,6 +42,9 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
     - customConfig:
+        allowExtraFields: true
+      outputFolder: allow-extra-fields
+    - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
         namespaceExport: "Fiddle"
@@ -63,6 +74,12 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-reponse-headers
+  file-upload:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        inlineFileProperties: true
+      outputFolder: wrap-file-properties
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -109,7 +126,10 @@ fixtures:
 scripts:
   - docker: fernapi/ts-seed
     commands:
-      - yarn install && yarn build
+      - mkdir cache
+      - cp -r /yarn-cache-template ./cache
+      - yarn install --cache-folder ./cache
+      - yarn build 
 allowedFailures:
   - response-property
   - bytes
@@ -117,7 +137,11 @@ allowedFailures:
   - alias
   - api-wide-base-path
   - auth-environment-variables
+  - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences
   - enum # throws b/c of undiscriminated union examples
+  - oauth-client-credentials
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables

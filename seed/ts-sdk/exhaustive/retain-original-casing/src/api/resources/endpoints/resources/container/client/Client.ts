@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../../../core";
-import * as serializers from "../../../../../../serialization";
+import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
-import * as SeedExhaustive from "../../../../..";
+import * as errors from "../../../../../../errors/index";
+import * as SeedExhaustive from "../../../../../index";
 
 export declare namespace Container {
     interface Options {
@@ -17,12 +17,20 @@ export declare namespace Container {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Container {
     constructor(protected readonly _options: Container.Options) {}
 
+    /**
+     * @param {string[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnListOfPrimitives(["string"])
+     */
     public async getAndReturnListOfPrimitives(
         request: string[],
         requestOptions?: Container.RequestOptions
@@ -44,6 +52,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
@@ -79,6 +88,15 @@ export class Container {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnListOfObjects([{
+     *             string: "string"
+     *         }])
+     */
     public async getAndReturnListOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions
@@ -100,6 +118,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(
@@ -135,6 +154,13 @@ export class Container {
         }
     }
 
+    /**
+     * @param {Set<string>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
         requestOptions?: Container.RequestOptions
@@ -156,6 +182,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
@@ -191,6 +218,15 @@ export class Container {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *             string: "string"
+     *         }]))
+     */
     public async getAndReturnSetOfObjects(
         request: SeedExhaustive.types.ObjectWithRequiredField[],
         requestOptions?: Container.RequestOptions
@@ -212,6 +248,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(
@@ -247,6 +284,15 @@ export class Container {
         }
     }
 
+    /**
+     * @param {Record<string, string>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnMapPrimToPrim({
+     *         "string": "string"
+     *     })
+     */
     public async getAndReturnMapPrimToPrim(
         request: Record<string, string>,
         requestOptions?: Container.RequestOptions
@@ -268,6 +314,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(
@@ -303,6 +350,17 @@ export class Container {
         }
     }
 
+    /**
+     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject({
+     *         "string": {
+     *             string: "string"
+     *         }
+     *     })
+     */
     public async getAndReturnMapOfPrimToObject(
         request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
         requestOptions?: Container.RequestOptions
@@ -324,6 +382,7 @@ export class Container {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
@@ -359,6 +418,15 @@ export class Container {
         }
     }
 
+    /**
+     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.container.getAndReturnOptional({
+     *         string: "string"
+     *     })
+     */
     public async getAndReturnOptional(
         request?: SeedExhaustive.types.ObjectWithRequiredField,
         requestOptions?: Container.RequestOptions
@@ -383,6 +451,7 @@ export class Container {
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
@@ -415,7 +484,7 @@ export class Container {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

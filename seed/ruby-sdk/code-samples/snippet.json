@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/hello",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.hello"
+            },
+            "snippet": {
+                "client": "require \"fern_code_samples\"\n\ncode_samples = SeedCodeSamplesClient::Client.new(base_url: \"https://api.example.com\")\ncode_samples.service.hello(num_events: 5)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/hello",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.hello"
+            },
+            "snippet": {
+                "client": "require \"fern_code_samples\"\n\ncode_samples = SeedCodeSamplesClient::Client.new(base_url: \"https://api.example.com\")\ncode_samples.service.hello(num_events: 5)",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

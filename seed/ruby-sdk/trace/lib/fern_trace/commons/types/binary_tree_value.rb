@@ -43,7 +43,11 @@ module SeedTraceClient
           v = v.to_json
           SeedTraceClient::Commons::BinaryTreeNodeValue.from_json(json_object: v)
         end
-        new(root: root, nodes: nodes, additional_properties: struct)
+        new(
+          root: root,
+          nodes: nodes,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of BinaryTreeValue to a JSON object

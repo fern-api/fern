@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../core";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Unknown {
     interface Options {
@@ -14,12 +14,22 @@ export declare namespace Unknown {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Unknown {
     constructor(protected readonly _options: Unknown.Options) {}
 
+    /**
+     * @param {any} request
+     * @param {Unknown.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedUnknownAsAny.unknown.post({
+     *         "key": "value"
+     *     })
+     */
     public async post(request?: any, requestOptions?: Unknown.RequestOptions): Promise<any[]> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -35,6 +45,7 @@ export class Unknown {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.unknown.post.Response.parseOrThrow(_response.body, {

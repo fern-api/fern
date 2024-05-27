@@ -3,7 +3,7 @@
  */
 
 import * as core from "../../../../core";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 import { Service } from "../resources/service/client/Client";
 
 export declare namespace Folder {
@@ -14,12 +14,19 @@ export declare namespace Folder {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Folder {
     constructor(protected readonly _options: Folder.Options) {}
 
+    /**
+     * @param {Folder.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApi.folder.foo()
+     */
     public async foo(requestOptions?: Folder.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -34,6 +41,7 @@ export class Folder {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

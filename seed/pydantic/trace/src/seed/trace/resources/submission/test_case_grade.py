@@ -2,26 +2,60 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-from .test_case_hidden_grade import TestCaseHiddenGrade
-from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
+from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ..commons.variable_value import VariableValue
+from .exception_v_2 import ExceptionV2
 
 
-class TestCaseGrade_Hidden(TestCaseHiddenGrade):
+class TestCaseGrade_Hidden(pydantic_v1.BaseModel):
+    passed: bool
     type: typing.Literal["hidden"] = "hidden"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
-class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
+class TestCaseGrade_NonHidden(pydantic_v1.BaseModel):
+    passed: bool
+    actual_result: typing.Optional[VariableValue] = pydantic_v1.Field(alias="actualResult", default=None)
+    exception: typing.Optional[ExceptionV2] = None
+    stdout: str
     type: typing.Literal["nonHidden"] = "nonHidden"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]

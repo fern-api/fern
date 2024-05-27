@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedExhaustive from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedExhaustive from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace ReqWithHeaders {
     interface Options {
@@ -17,12 +17,24 @@ export declare namespace ReqWithHeaders {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class ReqWithHeaders {
     constructor(protected readonly _options: ReqWithHeaders.Options) {}
 
+    /**
+     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.reqWithHeaders.getWithCustomHeader({
+     *         "X-TEST-SERVICE-HEADER": "string",
+     *         "X-TEST-ENDPOINT-HEADER": "string",
+     *         body: "string"
+     *     })
+     */
     public async getWithCustomHeader(
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions
@@ -51,6 +63,7 @@ export class ReqWithHeaders {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -78,7 +91,7 @@ export class ReqWithHeaders {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

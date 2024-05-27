@@ -3,8 +3,8 @@
 package enum
 
 type SendEnumInlinedRequest struct {
-	Operand             Operand         `json:"operand,omitempty" url:"operand,omitempty"`
-	MaybeOperand        *Operand        `json:"maybeOperand,omitempty" url:"maybeOperand,omitempty"`
-	OperandOrColor      *ColorOrOperand `json:"operandOrColor,omitempty" url:"operandOrColor,omitempty"`
-	MaybeOperandOrColor *ColorOrOperand `json:"maybeOperandOrColor,omitempty" url:"maybeOperandOrColor,omitempty"`
+	Operand             Operand         `json:"operand" url:"-"`
+	MaybeOperand        *Operand        `json:"maybeOperand,omitempty" url:"-"`
+	OperandOrColor      *ColorOrOperand `json:"operandOrColor,omitempty" url:"-"`
+	MaybeOperandOrColor *ColorOrOperand `json:"maybeOperandOrColor,omitempty" url:"-"`
 }

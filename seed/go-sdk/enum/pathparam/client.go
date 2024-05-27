@@ -4,7 +4,6 @@ package pathparam
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/enum/fern"
 	core "github.com/enum/fern/core"
 	option "github.com/enum/fern/option"
@@ -48,7 +47,13 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"path/%v/%v/%v/%v", operand, maybeOperand, operandOrColor, maybeOperandOrColor)
+	endpointURL := core.EncodeURL(
+		baseURL+"/path/%v/%v/%v/%v",
+		operand,
+		maybeOperand,
+		operandOrColor,
+		maybeOperandOrColor,
+	)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

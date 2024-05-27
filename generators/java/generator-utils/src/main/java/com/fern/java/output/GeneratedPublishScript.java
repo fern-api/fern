@@ -13,19 +13,19 @@ public class GeneratedPublishScript extends GeneratedFile {
     public String filename() {
         return "prepare.sh";
     }
+
     @Override
     public Optional<String> directoryPrefix() {
         return Optional.of(".publish");
     }
 
     private String contents() {
-        return "# Write key ring file\n" +
-            "echo \"$MAVEN_SIGNATURE_SECRET_KEY\" > armored_key.asc\n" +
-            "gpg -o publish_key.gpg --dearmor armored_key.asc\n\n" +
-            "# Generate gradle.properties file\n" +
-            "echo \"signing.keyId=$MAVEN_SIGNATURE_KID\" > gradle.properties\n" +
-            "echo \"signing.secretKeyRingFile=publish_key.gpg\" >> gradle.properties\n" +
-            "echo \"signing.password=$MAVEN_SIGNATURE_PASSWORD\" >> gradle.properties\n";
+        return "# Write key ring file\n" + "echo \"$MAVEN_SIGNATURE_SECRET_KEY\" > armored_key.asc\n"
+                + "gpg -o publish_key.gpg --dearmor armored_key.asc\n\n"
+                + "# Generate gradle.properties file\n"
+                + "echo \"signing.keyId=$MAVEN_SIGNATURE_KID\" > gradle.properties\n"
+                + "echo \"signing.secretKeyRingFile=publish_key.gpg\" >> gradle.properties\n"
+                + "echo \"signing.password=$MAVEN_SIGNATURE_PASSWORD\" >> gradle.properties\n";
     }
 
     @Override
@@ -34,7 +34,8 @@ public class GeneratedPublishScript extends GeneratedFile {
         Path resolvedPath = directory.resolve(filename());
         Files.writeString(directory.resolve(filename()), contents());
 
-        Set<PosixFilePermission> perms = Files.readAttributes(resolvedPath, PosixFileAttributes.class).permissions();
+        Set<PosixFilePermission> perms =
+                Files.readAttributes(resolvedPath, PosixFileAttributes.class).permissions();
 
         perms.add(PosixFilePermission.OWNER_WRITE);
         perms.add(PosixFilePermission.OWNER_READ);
@@ -47,5 +48,4 @@ public class GeneratedPublishScript extends GeneratedFile {
     }
 
     public GeneratedPublishScript() {}
-
 }

@@ -56,7 +56,9 @@ export function buildUrl({
             }
 
             return ts.factory.createTemplateSpan(
-                referenceToPathParameterValue,
+                ts.factory.createCallExpression(ts.factory.createIdentifier("encodeURIComponent"), undefined, [
+                    referenceToPathParameterValue
+                ]),
                 index === endpoint.fullPath.parts.length - 1
                     ? ts.factory.createTemplateTail(part.tail)
                     : ts.factory.createTemplateMiddle(part.tail)

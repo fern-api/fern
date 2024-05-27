@@ -1,25 +1,30 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/objects-with-imports/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "npm",
                 "registryUrl": "",
                 "packageName": "@fern/objects-with-imports",
-                "tokenEnvironmentVariable": "",
-                "type": "npm"
-            },
-            "type": "github"
+                "tokenEnvironmentVariable": ""
+            }
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "objects-with-imports",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,
-    "writeUnitTests": true
+    "writeUnitTests": true,
+    "generateOauthClients": true,
+    "generatePaginatedClients": true
 }

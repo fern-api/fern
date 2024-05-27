@@ -1,5 +1,92 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
+{
+  "definitionFiles": {
+    "user.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "get": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "response": {
+                  "body": {
+                    "id": "id",
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "pagination": undefined,
+            "path": "/user",
+            "response": {
+              "docs": "Success",
+              "type": "root.User",
+            },
+          },
+          "get_all": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "response": {
+                  "body": [
+                    {
+                      "id": "id",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "pagination": undefined,
+            "path": "/users",
+            "response": {
+              "docs": "Success",
+              "type": "list<root.User>",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "User": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-sdk-group-name\` for schemas",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
 exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
 {
   "definitionFiles": {
@@ -24,6 +111,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user",
             "response": {
               "docs": "Success",
@@ -45,6 +133,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/users",
             "response": {
               "docs": "Success",
@@ -60,7 +149,17 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
       "User": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },

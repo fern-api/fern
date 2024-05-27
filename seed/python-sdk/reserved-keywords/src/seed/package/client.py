@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 
@@ -16,11 +17,19 @@ class PackageClient:
 
     def test(self, *, for_: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - for_: str.
+        Parameters
+        ----------
+        for_ : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedNurseryApi
 
         client = SeedNurseryApi(
@@ -31,18 +40,20 @@ class PackageClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "for": for_,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "for": for_,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
@@ -77,11 +88,19 @@ class AsyncPackageClient:
 
     async def test(self, *, for_: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - for_: str.
+        Parameters
+        ----------
+        for_ : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedNurseryApi
 
         client = AsyncSeedNurseryApi(
@@ -92,18 +111,20 @@ class AsyncPackageClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "for": for_,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "for": for_,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))

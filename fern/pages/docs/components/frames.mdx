@@ -1,0 +1,41 @@
+---
+title: 'Frames'
+description: 'Wrap images in a container with the frame component'
+---
+
+<Frame caption="Beautiful mountains">
+  <img src="https://images.pexels.com/photos/1867601/pexels-photo-1867601.jpeg" alt="Sample photo of mountains"/>
+</Frame>
+
+<Aside>
+
+<CodeBlock title="Default">
+  ```jsx title="Default"
+    <Frame
+      caption="Beautiful mountains"
+    >
+        // Or a relative path to an image in the project
+        <img src="https://images.pexels.com/photos/1867601.jpeg" alt="Sample photo of mountains" />
+    </Frame>
+  ```
+</CodeBlock>
+
+</Aside>
+
+### Adding a subtle background
+
+In the scenario where you want to draw more attention to your framed images or your content blends with the main background of your documentation, you can use the `background="subtle"` prop to add a subtle background to the frame.
+
+<Frame caption="Beautiful mountains" background="subtle">
+  <img src="https://images.pexels.com/photos/1867601/pexels-photo-1867601.jpeg" />
+</Frame>
+
+```jsx title="Subtle background" {3}
+  <Frame
+    caption="Beautiful mountains"
+    background="subtle"
+  >
+      // Or a relative path to an image in the project
+      <img src="https://images.pexels.com/photos/1867601.jpeg" />
+  </Frame>
+```

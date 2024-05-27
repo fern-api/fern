@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedExhaustive from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedExhaustive from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace InlinedRequests {
     interface Options {
@@ -17,6 +17,7 @@ export declare namespace InlinedRequests {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -25,6 +26,10 @@ export class InlinedRequests {
 
     /**
      * POST with custom object in request body, response is an object
+     *
+     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
@@ -68,6 +73,7 @@ export class InlinedRequests {
             body: await serializers.PostWithObjectBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
@@ -112,7 +118,7 @@ export class InlinedRequests {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

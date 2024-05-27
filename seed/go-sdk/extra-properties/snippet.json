@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/user",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/extra-properties/fern\"\n\tfernclient \"github.com/extra-properties/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.CreateUser(\n\tcontext.TODO(),\n\t\u0026fern.CreateUserRequest{},\n)\n"
+            }
+        }
+    ]
+}

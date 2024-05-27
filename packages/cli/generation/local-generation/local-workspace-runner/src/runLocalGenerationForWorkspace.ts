@@ -37,13 +37,16 @@ export async function runLocalGenerationForWorkspace({
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
                         absolutePathToLocalSnippetJSON: undefined,
+                        absolutePathToLocalSnippetTemplateJSON: undefined,
                         audiences: generatorGroup.audiences,
                         workspaceTempDir,
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride: generatorInvocation.irVersionOverride,
                         outputVersionOverride: undefined,
-                        writeUnitTests: false
+                        writeUnitTests: false,
+                        generateOauthClients: false,
+                        generatePaginatedClients: false
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)

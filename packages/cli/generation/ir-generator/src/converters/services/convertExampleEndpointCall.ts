@@ -1,7 +1,8 @@
-import { isPlainObject } from "@fern-api/core-utils";
+import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
     ExampleCodeSample,
     ExampleEndpointCall,
+    ExampleEndpointSuccessResponse,
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
@@ -17,7 +18,8 @@ import {
     parseBytesRequest,
     parseRawFileType,
     RawSchemas,
-    visitExampleCodeSampleSchema
+    visitExampleCodeSampleSchema,
+    visitExampleResponseSchema
 } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -319,7 +321,7 @@ function convertHeaders({
                     })
                 });
             } else {
-                throw new Error(`Heder ${wireKey} does not exist`);
+                throw new Error(`Header ${wireKey} does not exist`);
             }
         }
     }
@@ -464,30 +466,95 @@ function convertExampleResponse({
     file: FernFileContext;
     workspace: FernWorkspace;
 }): ExampleResponse {
-    if (example.response?.error != null) {
-        const errorDeclaration = errorResolver.getDeclarationOrThrow(example.response.error, file);
-        return ExampleResponse.error({
-            error: parseErrorName({
-                errorName: example.response.error,
-                file
-            }),
-            body:
-                errorDeclaration.declaration.type != null
-                    ? convertTypeReferenceExample({
-                          example: example.response.body,
-                          rawTypeBeingExemplified: errorDeclaration.declaration.type,
-                          typeResolver,
-                          exampleResolver,
-                          fileContainingRawTypeReference: errorDeclaration.file,
-                          fileContainingExample: file,
-                          workspace
-                      })
-                    : undefined
-        });
+    if (example.response == null) {
+        return ExampleResponse.ok(ExampleEndpointSuccessResponse.body(undefined));
     }
+    return visitExampleResponseSchema(endpoint, example.response, {
+        body: (example) => {
+            if (example.error != null) {
+                const errorDeclaration = errorResolver.getDeclarationOrThrow(example.error, file);
+                return ExampleResponse.error({
+                    error: parseErrorName({
+                        errorName: example.error,
+                        file
+                    }),
+                    body:
+                        errorDeclaration.declaration.type != null
+                            ? convertTypeReferenceExample({
+                                  example: example.body,
+                                  rawTypeBeingExemplified: errorDeclaration.declaration.type,
+                                  typeResolver,
+                                  exampleResolver,
+                                  fileContainingRawTypeReference: errorDeclaration.file,
+                                  fileContainingExample: file,
+                                  workspace
+                              })
+                            : undefined
+                });
+            }
 
-    return ExampleResponse.ok({
-        body: convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.body(
+                    convertExampleResponseBody({ endpoint, example, typeResolver, exampleResolver, file, workspace })
+                )
+            );
+        },
+        stream: (example) => {
+            const rawTypeBeingExemplified =
+                typeof endpoint["response-stream"] === "string"
+                    ? endpoint["response-stream"]
+                    : endpoint["response-stream"]?.type;
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.stream(
+                    example.stream
+                        .map((data) => {
+                            if (rawTypeBeingExemplified == null) {
+                                return undefined;
+                            }
+
+                            return convertTypeReferenceExample({
+                                example: data,
+                                rawTypeBeingExemplified,
+                                typeResolver,
+                                exampleResolver,
+                                fileContainingRawTypeReference: file,
+                                fileContainingExample: file,
+                                workspace
+                            });
+                        })
+                        .filter(isNonNullish)
+                )
+            );
+        },
+        events: (example) => {
+            const rawTypeBeingExemplified =
+                typeof endpoint["response-stream"] === "string"
+                    ? endpoint["response-stream"]
+                    : endpoint["response-stream"]?.type;
+            return ExampleResponse.ok(
+                ExampleEndpointSuccessResponse.sse(
+                    example.stream
+                        .map(({ event, data }) => {
+                            if (rawTypeBeingExemplified == null) {
+                                return undefined;
+                            }
+
+                            const convertedExample = convertTypeReferenceExample({
+                                example: data,
+                                rawTypeBeingExemplified,
+                                typeResolver,
+                                exampleResolver,
+                                fileContainingRawTypeReference: file,
+                                fileContainingExample: file,
+                                workspace
+                            });
+
+                            return { event, data: convertedExample };
+                        })
+                        .filter(isNonNullish)
+                )
+            );
+        }
     });
 }
 
@@ -500,7 +567,7 @@ function convertExampleResponseBody({
     workspace
 }: {
     endpoint: RawSchemas.HttpEndpointSchema;
-    example: RawSchemas.ExampleEndpointCallSchema;
+    example: RawSchemas.ExampleBodyResponseSchema;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     file: FernFileContext;
@@ -510,11 +577,11 @@ function convertExampleResponseBody({
     if (responseBodyType == null) {
         return undefined;
     }
-    if (example.response?.body == null) {
+    if (example.body == null) {
         return undefined;
     }
     return convertTypeReferenceExample({
-        example: example.response.body,
+        example: example.body,
         rawTypeBeingExemplified: responseBodyType,
         typeResolver,
         exampleResolver,

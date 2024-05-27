@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../../requests"
+require "json"
 require "date"
 require "async"
 
@@ -27,7 +28,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/string"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [Integer]
@@ -41,7 +42,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/integer"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [Long]
@@ -55,7 +56,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/long"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [Float]
@@ -69,7 +70,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/double"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [Boolean]
@@ -83,7 +84,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/boolean"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [DateTime]
@@ -97,9 +98,10 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/datetime"
         end
-        return if response.body.nil?
+        parsed_json = JSON.parse(response.body)
+        return if parsed_json.nil?
 
-        DateTime.parse(response.body)
+        DateTime.parse(parsed_json)
       end
 
       # @param request [Date]
@@ -113,9 +115,10 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/date"
         end
-        return if response.body.nil?
+        parsed_json = JSON.parse(response.body)
+        return if parsed_json.nil?
 
-        Date.parse(response.body)
+        Date.parse(parsed_json)
       end
 
       # @param request [String]
@@ -129,7 +132,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/uuid"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [String]
@@ -143,7 +146,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/primitive/base64"
         end
-        response.body
+        JSON.parse(response.body)
       end
     end
 
@@ -169,7 +172,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/string"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -185,7 +189,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/integer"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -201,7 +206,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/long"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -217,7 +223,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/double"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -233,7 +240,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/boolean"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -249,7 +257,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/datetime"
           end
-          DateTime.parse(response.body) unless response.body.nil?
+          parsed_json = JSON.parse(response.body)
+          DateTime.parse(parsed_json) unless parsed_json.nil?
         end
       end
 
@@ -265,7 +274,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/date"
           end
-          Date.parse(response.body) unless response.body.nil?
+          parsed_json = JSON.parse(response.body)
+          Date.parse(parsed_json) unless parsed_json.nil?
         end
       end
 
@@ -281,7 +291,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/uuid"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -297,7 +308,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/primitive/base64"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
     end

@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedTrace from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Admin {
     interface Options {
@@ -19,12 +19,23 @@ export declare namespace Admin {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Admin {
     constructor(protected readonly _options: Admin.Options = {}) {}
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TestSubmissionStatus} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *         type: "stopped"
+     *     })
+     */
     public async updateTestSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionStatus,
@@ -33,7 +44,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-test-submission-status/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -52,6 +65,7 @@ export class Admin {
             body: await serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -79,6 +93,20 @@ export class Admin {
         }
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TestSubmissionUpdate} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
+     *         updateInfo: {
+     *             type: "running",
+     *             value: SeedTrace.RunningSubmissionState.QueueingSubmission
+     *         }
+     *     })
+     */
     public async sendTestSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TestSubmissionUpdate,
@@ -87,7 +115,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status-v2/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-test-submission-status-v2/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -106,6 +136,7 @@ export class Admin {
             body: await serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -133,6 +164,16 @@ export class Admin {
         }
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.WorkspaceSubmissionStatus} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *         type: "stopped"
+     *     })
+     */
     public async updateWorkspaceSubmissionStatus(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionStatus,
@@ -141,7 +182,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-submission-status/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -160,6 +203,7 @@ export class Admin {
             body: await serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -187,6 +231,20 @@ export class Admin {
         }
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.WorkspaceSubmissionUpdate} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
+     *         updateInfo: {
+     *             type: "running",
+     *             value: SeedTrace.RunningSubmissionState.QueueingSubmission
+     *         }
+     *     })
+     */
     public async sendWorkspaceSubmissionUpdate(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.WorkspaceSubmissionUpdate,
@@ -195,8 +253,8 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status-v2/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
+                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -216,6 +274,7 @@ export class Admin {
             body: await serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -243,6 +302,31 @@ export class Admin {
         }
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {string} testCaseId
+     * @param {SeedTrace.StoreTracedTestCaseRequest} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
+     *         result: {
+     *             result: {},
+     *             stdout: "string"
+     *         },
+     *         traceResponses: [{
+     *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 lineNumber: 1,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {},
+     *                 stack: {},
+     *                 stdout: "string"
+     *             }]
+     *     })
+     */
     public async storeTracedTestCase(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: string,
@@ -252,9 +336,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace/submission/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
-                )}/testCase/${testCaseId}`
+                `/admin/store-test-trace/submission/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}/testCase/${encodeURIComponent(testCaseId)}`
             ),
             method: "POST",
             headers: {
@@ -275,6 +359,7 @@ export class Admin {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -302,6 +387,26 @@ export class Admin {
         }
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.v2.TestCaseId} testCaseId
+     * @param {SeedTrace.TraceResponseV2[]} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [{
+     *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             lineNumber: 1,
+     *             file: {},
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {},
+     *             stack: {},
+     *             stdout: "string"
+     *         }])
+     */
     public async storeTracedTestCaseV2(
         submissionId: SeedTrace.SubmissionId,
         testCaseId: SeedTrace.v2.TestCaseId,
@@ -311,9 +416,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace-v2/submission/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
-                )}/testCase/${await serializers.v2.TestCaseId.jsonOrThrow(testCaseId)}`
+                `/admin/store-test-trace-v2/submission/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}/testCase/${encodeURIComponent(await serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`
             ),
             method: "POST",
             headers: {
@@ -334,6 +439,7 @@ export class Admin {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -361,6 +467,33 @@ export class Admin {
         }
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.StoreTracedWorkspaceRequest} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+     *         workspaceRunDetails: {
+     *             exceptionV2: {
+     *                 type: "generic"
+     *             },
+     *             exception: {},
+     *             stdout: "string"
+     *         },
+     *         traceResponses: [{
+     *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *                 lineNumber: 1,
+     *                 returnValue: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 expressionLocation: {},
+     *                 stack: {},
+     *                 stdout: "string"
+     *             }]
+     *     })
+     */
     public async storeTracedWorkspace(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.StoreTracedWorkspaceRequest,
@@ -369,7 +502,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace/submission/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-trace/submission/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -390,6 +525,7 @@ export class Admin {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -417,6 +553,25 @@ export class Admin {
         }
     }
 
+    /**
+     * @param {SeedTrace.SubmissionId} submissionId
+     * @param {SeedTrace.TraceResponseV2[]} request
+     * @param {Admin.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [{
+     *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             lineNumber: 1,
+     *             file: {},
+     *             returnValue: {
+     *                 type: "integerValue",
+     *                 value: 1
+     *             },
+     *             expressionLocation: {},
+     *             stack: {},
+     *             stdout: "string"
+     *         }])
+     */
     public async storeTracedWorkspaceV2(
         submissionId: SeedTrace.SubmissionId,
         request: SeedTrace.TraceResponseV2[],
@@ -425,7 +580,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace-v2/submission/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -446,6 +603,7 @@ export class Admin {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -473,7 +631,7 @@ export class Admin {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

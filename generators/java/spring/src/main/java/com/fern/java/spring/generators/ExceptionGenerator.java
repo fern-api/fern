@@ -16,10 +16,10 @@
 package com.fern.java.spring.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.ir.ErrorDiscriminationByPropertyStrategy;
-import com.fern.ir.model.ir.ErrorDiscriminationStrategy;
-import com.fern.ir.model.types.TypeReference;
+import com.fern.irV42.model.errors.ErrorDeclaration;
+import com.fern.irV42.model.ir.ErrorDiscriminationByPropertyStrategy;
+import com.fern.irV42.model.ir.ErrorDiscriminationStrategy;
+import com.fern.irV42.model.types.TypeReference;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.spring.GeneratedSpringException;

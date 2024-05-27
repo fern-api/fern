@@ -1,0 +1,70 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_a/b.foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.A.B.Foo(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_a/c.foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.A.C.Foo(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_folder.foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Foo(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Foo(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/service",
+                "method": "GET",
+                "identifier_override": "endpoint_folder/service.endpoint"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.Endpoint(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/service",
+                "method": "POST",
+                "identifier_override": "endpoint_folder/service.unknownRequest"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.UnknownRequest(\n\tcontext.TODO(),\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

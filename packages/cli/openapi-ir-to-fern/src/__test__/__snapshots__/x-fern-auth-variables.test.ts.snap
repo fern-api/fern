@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
+exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
@@ -21,6 +21,7 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user",
             "response": {
               "docs": "Success",
@@ -42,6 +43,7 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/users",
             "response": {
               "docs": "Success",
@@ -54,13 +56,146 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
         "UserGetAllResponseItem": {
           "docs": undefined,
           "properties": {
-            "id": "optional<string>",
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
         "UserGetResponse": {
           "docs": undefined,
           "properties": {
-            "id": "optional<string>",
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {},
+  "rootApiFile": {
+    "auth": "BasicAuthScheme",
+    "auth-schemes": {
+      "BasicAuthScheme": {
+        "password": {
+          "env": "MY_PaSSwoOD",
+          "name": "password",
+        },
+        "scheme": "basic",
+        "username": {
+          "env": "MY_USERNAME",
+          "name": "username",
+        },
+      },
+    },
+    "display-name": "Test extension \`x-fern-parameter-name\` for parameters.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
+{
+  "definitionFiles": {
+    "user.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "get": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "response": {
+                  "body": {
+                    "id": "id",
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "pagination": undefined,
+            "path": "/user",
+            "response": {
+              "docs": "Success",
+              "type": "UserGetResponse",
+            },
+          },
+          "get_all": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "response": {
+                  "body": [
+                    {
+                      "id": "id",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "pagination": undefined,
+            "path": "/users",
+            "response": {
+              "docs": "Success",
+              "type": "list<UserGetAllResponseItem>",
+            },
+          },
+        },
+      },
+      "types": {
+        "UserGetAllResponseItem": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+          },
+        },
+        "UserGetResponse": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
       },

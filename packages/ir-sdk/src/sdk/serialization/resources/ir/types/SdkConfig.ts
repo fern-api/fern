@@ -10,6 +10,7 @@ export const SdkConfig: core.serialization.ObjectSchema<serializers.SdkConfig.Ra
     core.serialization.objectWithoutOptionalProperties({
         isAuthMandatory: core.serialization.boolean(),
         hasStreamingEndpoints: core.serialization.boolean(),
+        hasPaginatedEndpoints: core.serialization.boolean(),
         hasFileDownloadEndpoints: core.serialization.boolean(),
         platformHeaders: core.serialization.lazyObject(async () => (await import("../../..")).PlatformHeaders),
     });
@@ -18,6 +19,7 @@ export declare namespace SdkConfig {
     interface Raw {
         isAuthMandatory: boolean;
         hasStreamingEndpoints: boolean;
+        hasPaginatedEndpoints: boolean;
         hasFileDownloadEndpoints: boolean;
         platformHeaders: serializers.PlatformHeaders.Raw;
     }

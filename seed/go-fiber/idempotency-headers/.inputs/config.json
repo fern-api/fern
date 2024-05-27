@@ -1,13 +1,17 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/idempotency-headers/fern",
             "version": "0.0.1",
-            "type": "github"
+            "publishInfo": null
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "customConfig": {
         "packageName": "fern",
         "module": {
@@ -18,9 +22,11 @@
     "workspaceName": "idempotency-headers",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,
-    "writeUnitTests": true
+    "writeUnitTests": true,
+    "generateOauthClients": true,
+    "generatePaginatedClients": true
 }

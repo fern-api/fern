@@ -47,7 +47,7 @@ func (c *Client) Endpoint(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "service"
+	endpointURL := baseURL + "/service"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -80,7 +80,7 @@ func (c *Client) UnknownRequest(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "service"
+	endpointURL := baseURL + "/service"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

@@ -7,6 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.importing_type import ImportingType
@@ -29,15 +30,23 @@ class FooClient:
         request_options: typing.Optional[RequestOptions] = None
     ) -> ImportingType:
         """
-        Parameters:
-            - optional_string: OptionalString.
+        Parameters
+        ----------
+        optional_string : OptionalString
 
-            - public_property: typing.Optional[str].
+        public_property : typing.Optional[str]
 
-            - private_property: typing.Optional[int].
+        private_property : typing.Optional[int]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ImportingType
+
+        Examples
+        --------
         from seed.client import SeedAudiences
 
         client = SeedAudiences(
@@ -55,18 +64,20 @@ class FooClient:
         if private_property is not OMIT:
             _request["privateProperty"] = private_property
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "optionalString": optional_string,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "optionalString": optional_string,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             json=jsonable_encoder(_request)
@@ -111,15 +122,23 @@ class AsyncFooClient:
         request_options: typing.Optional[RequestOptions] = None
     ) -> ImportingType:
         """
-        Parameters:
-            - optional_string: OptionalString.
+        Parameters
+        ----------
+        optional_string : OptionalString
 
-            - public_property: typing.Optional[str].
+        public_property : typing.Optional[str]
 
-            - private_property: typing.Optional[int].
+        private_property : typing.Optional[int]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ImportingType
+
+        Examples
+        --------
         from seed.client import AsyncSeedAudiences
 
         client = AsyncSeedAudiences(
@@ -137,18 +156,20 @@ class AsyncFooClient:
         if private_property is not OMIT:
             _request["privateProperty"] = private_property
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "optionalString": optional_string,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "optionalString": optional_string,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             json=jsonable_encoder(_request)

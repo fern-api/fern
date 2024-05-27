@@ -50,7 +50,11 @@ module SeedTraceClient
           cause = parsed_json["cause"].to_json
           cause = SeedTraceClient::Submission::InvalidRequestCause.from_json(json_object: cause)
         end
-        new(request: request, cause: cause, additional_properties: struct)
+        new(
+          request: request,
+          cause: cause,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of InvalidRequestResponse to a JSON object

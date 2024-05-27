@@ -7,6 +7,7 @@ import (
 	core "github.com/bearer-token-environment-variable/fern/core"
 	option "github.com/bearer-token-environment-variable/fern/option"
 	http "net/http"
+	os "os"
 )
 
 type Client struct {
@@ -17,6 +18,9 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.ApiKey == "" {
+		options.ApiKey = os.Getenv("COURIER_API_KEY")
+	}
 	return &Client{
 		baseURL: options.BaseURL,
 		caller: core.NewCaller(
@@ -43,7 +47,7 @@ func (c *Client) GetWithBearerToken(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "apiKey"
+	endpointURL := baseURL + "/apiKey"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

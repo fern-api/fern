@@ -13,7 +13,8 @@ export async function convertObjectTypeDeclaration({
 }): Promise<Type> {
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
-        properties: await getObjectPropertiesFromRawObjectSchema(object, file)
+        properties: await getObjectPropertiesFromRawObjectSchema(object, file),
+        extraProperties: object["extra-properties"] ?? false
     });
 }
 

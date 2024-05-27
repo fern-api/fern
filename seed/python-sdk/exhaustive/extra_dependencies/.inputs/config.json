@@ -1,20 +1,23 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/exhaustive/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "pypi",
                 "registryUrl": "",
                 "packageName": "fern_exhaustive",
                 "usernameEnvironmentVariable": "",
-                "passwordEnvironmentVariable": "",
-                "type": "pypi"
-            },
-            "type": "github"
+                "passwordEnvironmentVariable": ""
+            }
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "customConfig": {
         "extra_dependencies": {
             "boto3": "1.28.57"
@@ -23,9 +26,11 @@
     "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,
-    "writeUnitTests": true
+    "writeUnitTests": true,
+    "generateOauthClients": true,
+    "generatePaginatedClients": true
 }

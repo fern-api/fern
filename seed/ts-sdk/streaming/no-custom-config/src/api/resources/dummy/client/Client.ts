@@ -3,11 +3,11 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedStreaming from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedStreaming from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 import * as stream from "stream";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
     interface Options {
@@ -17,6 +17,7 @@ export declare namespace Dummy {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -42,11 +43,11 @@ export class Dummy {
             responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return new core.Stream({
                 stream: _response.body,
-                terminator: "\n",
                 parse: async (data) => {
                     return await serializers.StreamResponse.parseOrThrow(data, {
                         unrecognizedObjectKeys: "passthrough",
@@ -54,6 +55,11 @@ export class Dummy {
                         allowUnrecognizedEnumValues: true,
                         breadcrumbsPrefix: ["response"],
                     });
+                },
+                signal: requestOptions?.abortSignal,
+                eventShape: {
+                    type: "json",
+                    messageTerminator: "\n",
                 },
             });
         }

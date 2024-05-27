@@ -40,6 +40,7 @@ module SeedResponsePropertyClient
       # @return [SeedResponsePropertyClient::Service::Response]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         if parsed_json["data"].nil?
           data = nil
         else
@@ -48,7 +49,12 @@ module SeedResponsePropertyClient
         end
         metadata = struct["metadata"]
         docs = struct["docs"]
-        new(data: data, metadata: metadata, docs: docs, additional_properties: struct)
+        new(
+          data: data,
+          metadata: metadata,
+          docs: docs,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Response to a JSON object

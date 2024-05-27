@@ -2,6 +2,7 @@
 
 from .datetime_utils import serialize_datetime
 from .exceptions import FernHTTPException, UnauthorizedException, default_exception_handler, fern_http_exception_handler, http_exception_handler
+from .pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .route_args import route_args
 from .security import BearerToken
-__all__ = ["BearerToken", "FernHTTPException", "UnauthorizedException", "default_exception_handler", "fern_http_exception_handler", "http_exception_handler", "route_args", "serialize_datetime"]
+__all__ = ["BearerToken", "FernHTTPException", "UnauthorizedException", "deep_union_pydantic_dicts", "default_exception_handler", "fern_http_exception_handler", "http_exception_handler", "pydantic_v1", "route_args", "serialize_datetime"]

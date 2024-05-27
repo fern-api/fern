@@ -7,7 +7,6 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
-	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures/option"
@@ -49,7 +48,7 @@ func (c *Client) Get(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

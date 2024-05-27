@@ -2,7 +2,7 @@ import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/confi
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
-import { camelCase } from "lodash-es";
+import { camelCase, isEqual } from "lodash-es";
 import { basename, extname } from "path";
 
 export interface FernDefinitionBuilder {
@@ -22,6 +22,8 @@ export interface FernDefinitionBuilder {
 
     setDefaultEnvironment(name: string): void;
 
+    setBasePath(basePath: string): void;
+
     getEnvironmentType(): "single" | "multi" | undefined;
 
     addAudience(name: string): void;
@@ -38,6 +40,11 @@ export interface FernDefinitionBuilder {
     addError(
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.ErrorDeclarationSchema }
+    ): void;
+
+    addErrorExample(
+        file: RelativeFilePath,
+        { name, example }: { name: string; example: RawSchemas.ExampleTypeSchema }
     ): void;
 
     addEndpoint(
@@ -58,7 +65,11 @@ export interface FernDefinitionBuilder {
 
     setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
 
+    addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
+
     build(): FernDefinition;
+
+    readonly enableUniqueErrorsPerEndpoint: boolean;
 }
 
 export interface FernDefinition {
@@ -72,7 +83,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
 
-    public constructor(ir: OpenApiIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
+    public constructor(
+        ir: OpenApiIntermediateRepresentation,
+        private readonly modifyBasePaths: boolean,
+        public readonly enableUniqueErrorsPerEndpoint: boolean
+    ) {
         this.rootApiFile = {
             name: "api",
             "error-discrimination": {
@@ -128,6 +143,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public setDefaultEnvironment(name: string): void {
         this.rootApiFile["default-environment"] = name;
+    }
+
+    public setBasePath(basePath: string): void {
+        this.rootApiFile["base-path"] = basePath;
     }
 
     public getEnvironmentType(): "single" | "multi" | undefined {
@@ -211,6 +230,27 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         fernFile.types[name] = schema;
     }
 
+    public addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.types == null) {
+            fernFile.types = {};
+        }
+        const type = fernFile.types[name];
+        if (type != null) {
+            if (typeof type === "string") {
+                fernFile.types[name] = {
+                    type,
+                    examples: [convertedExample]
+                };
+            } else {
+                if (type.examples == null) {
+                    type.examples = [];
+                }
+                type.examples.push(convertedExample);
+            }
+        }
+    }
+
     public addError(
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.ErrorDeclarationSchema }
@@ -219,7 +259,38 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (fernFile.errors == null) {
             fernFile.errors = {};
         }
-        fernFile.errors[name] = schema;
+        if (fernFile.errors[name] == null) {
+            fernFile.errors[name] = schema;
+        } else if (fernFile.errors[name]?.type !== schema.type) {
+            fernFile.errors[name] = {
+                "status-code": schema["status-code"],
+                type: "unknown"
+            };
+        }
+    }
+
+    public addErrorExample(
+        file: RelativeFilePath,
+        { name, example }: { name: string; example: RawSchemas.ExampleTypeSchema }
+    ): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.errors == null) {
+            return;
+        }
+        const errorDeclaration = fernFile.errors[name];
+        if (errorDeclaration == null) {
+            return;
+        }
+        if (errorDeclaration.examples == null) {
+            errorDeclaration.examples = [];
+        }
+        const alreadyAdded =
+            errorDeclaration.examples.some((existingExample) => {
+                return isEqual(existingExample, example);
+            }) ?? false;
+        if (!alreadyAdded) {
+            errorDeclaration.examples?.push(example);
+        }
     }
 
     public addEndpoint(

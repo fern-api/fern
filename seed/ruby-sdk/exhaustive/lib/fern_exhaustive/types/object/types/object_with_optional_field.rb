@@ -94,6 +94,7 @@ module SeedExhaustiveClient
         # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          parsed_json = JSON.parse(json_object)
           string = struct["string"]
           integer = struct["integer"]
           long = struct["long"]
@@ -111,8 +112,21 @@ module SeedExhaustiveClient
             set = Set.new(set)
           end
           map = struct["map"]
-          new(string: string, integer: integer, long: long, double: double, bool: bool, datetime: datetime, date: date,
-              uuid: uuid, base_64: base_64, list: list, set: set, map: map, additional_properties: struct)
+          new(
+            string: string,
+            integer: integer,
+            long: long,
+            double: double,
+            bool: bool,
+            datetime: datetime,
+            date: date,
+            uuid: uuid,
+            base_64: base_64,
+            list: list,
+            set: set,
+            map: map,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of ObjectWithOptionalField to a JSON object

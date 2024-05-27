@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 
@@ -16,9 +17,17 @@ class ServiceClient:
 
     def download_file(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[bytes]:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[bytes]
+
+        Examples
+        --------
         from seed.client import SeedFileDownload
 
         client = SeedFileDownload(
@@ -27,10 +36,12 @@ class ServiceClient:
         client.service.download_file()
         """
         with self._client_wrapper.httpx_client.stream(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None
@@ -69,9 +80,17 @@ class AsyncServiceClient:
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[bytes]
+
+        Examples
+        --------
         from seed.client import AsyncSeedFileDownload
 
         client = AsyncSeedFileDownload(
@@ -80,10 +99,12 @@ class AsyncServiceClient:
         await client.service.download_file()
         """
         async with self._client_wrapper.httpx_client.stream(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None

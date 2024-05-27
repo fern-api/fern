@@ -14,11 +14,15 @@ export const WebsocketHandshake: core.serialization.ObjectSchema<
         core.serialization.lazyObject(async () => (await import("../../..")).QueryParameter)
     ),
     headers: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Header)),
+    pathParameters: core.serialization.list(
+        core.serialization.lazyObject(async () => (await import("../../..")).PathParameter)
+    ),
 });
 
 export declare namespace WebsocketHandshake {
     interface Raw {
         queryParameters: serializers.QueryParameter.Raw[];
         headers: serializers.Header.Raw[];
+        pathParameters: serializers.PathParameter.Raw[];
     }
 }

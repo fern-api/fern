@@ -52,7 +52,12 @@ module SeedExamplesClient
           v = v.to_json
           SeedExamplesClient::Types::Tree.from_json(json_object: v)
         end
-        new(name: name, nodes: nodes, trees: trees, additional_properties: struct)
+        new(
+          name: name,
+          nodes: nodes,
+          trees: trees,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Node to a JSON object

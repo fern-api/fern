@@ -45,7 +45,7 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "query"
+	endpointURL := baseURL + "/query"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {

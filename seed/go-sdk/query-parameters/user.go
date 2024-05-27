@@ -29,7 +29,12 @@ type NestedUser struct {
 	Name string `json:"name" url:"name"`
 	User *User  `json:"user,omitempty" url:"user,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (n *NestedUser) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
 }
 
 func (n *NestedUser) UnmarshalJSON(data []byte) error {
@@ -39,6 +44,13 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedUser(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
 	n._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -59,7 +71,12 @@ type User struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
@@ -69,6 +86,13 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

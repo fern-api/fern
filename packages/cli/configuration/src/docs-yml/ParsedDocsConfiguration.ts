@@ -5,20 +5,34 @@ import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
-    absoluteFilepath: AbsoluteFilePath;
     instances: DocsInstances[];
-    tabs?: Record<RelativeFilePath, TabConfig>;
-    navigation: DocsNavigationConfiguration;
     title: string | undefined;
-    logo: Logo | undefined;
-    favicon: ImageReference | undefined;
-    backgroundImage: BackgroundImage | undefined;
-    colors: DocsV1Write.ColorsConfigV3 | undefined;
-    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
-    typography: TypographyConfig | undefined;
-    layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
+
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
+
+    /* navigation */
+    tabs?: Record<RelativeFilePath, TabConfig>;
+    navigation: DocsNavigationConfiguration;
+    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
+    footerLinks: DocsV1Write.FooterLink[] | undefined;
+
+    /* seo */
+    metadata: ParsedMetadataConfig | undefined;
+    redirects: DocsV1Write.RedirectConfig[] | undefined;
+
+    /* branding */
+    logo: Logo | undefined;
+    favicon: AbsoluteFilePath | undefined;
+    backgroundImage: BackgroundImage | undefined;
+    colors: DocsV1Write.ColorsConfigV3 | undefined;
+    typography: TypographyConfig | undefined;
+    layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
+
+    /* integrations */
+    integrations: DocsV1Write.IntegrationsConfig | undefined;
+
+    /* scripts */
     css: DocsV1Write.CssConfig | undefined;
     js: JavascriptConfig | undefined;
 }
@@ -38,6 +52,13 @@ export interface DocsColorsConfiguration {
     background: ColorConfiguration | undefined;
 }
 
+export interface ParsedMetadataConfig
+    extends Omit<WithoutQuestionMarks<DocsV1Write.MetadataConfig>, "og:image" | "og:logo" | "twitter:image"> {
+    "og:image": FilepathOrUrl | undefined;
+    "og:logo": FilepathOrUrl | undefined;
+    "twitter:image": FilepathOrUrl | undefined;
+}
+
 export type ColorConfiguration =
     | {
           type: "themed";
@@ -50,15 +71,15 @@ export type ColorConfiguration =
       };
 
 export interface Logo {
-    dark: ImageReference | undefined;
-    light: ImageReference | undefined;
+    dark: AbsoluteFilePath | undefined;
+    light: AbsoluteFilePath | undefined;
     height: DocsV1Write.Height | undefined;
     href: DocsV1Write.Url | undefined;
 }
 
 export interface BackgroundImage {
-    dark: ImageReference | undefined;
-    light: ImageReference | undefined;
+    dark: AbsoluteFilePath | undefined;
+    light: AbsoluteFilePath | undefined;
 }
 
 export interface FontConfig {
@@ -92,9 +113,7 @@ export interface TypographyConfig {
     codeFont: FontConfig | undefined;
 }
 
-export interface ImageReference {
-    filepath: AbsoluteFilePath;
-}
+export type FilepathOrUrl = { type: "filepath"; value: AbsoluteFilePath } | { type: "url"; value: string };
 
 export interface UntabbedDocsNavigation {
     type: "untabbed";
@@ -112,6 +131,7 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
+    tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;
@@ -124,7 +144,7 @@ export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | Tabbed
 
 export interface TabbedNavigation {
     tab: string;
-    layout: DocsNavigationItem[];
+    layout?: DocsNavigationItem[];
 }
 
 export type DocsNavigationItem =
@@ -165,7 +185,9 @@ export declare namespace DocsNavigationItem {
         summaryAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiNavigationItem[];
         hidden: boolean | undefined;
+        slug: string | undefined;
         skipUrlSlug: boolean | undefined;
+        flattened: boolean | undefined;
     }
 
     export interface Link {
@@ -174,11 +196,16 @@ export declare namespace DocsNavigationItem {
         url: string;
     }
 
+    export interface VersionedSnippetLanguageConfiguration {
+        package: string;
+        version: string;
+    }
+
     export interface SnippetsConfiguration {
-        python: string | undefined;
-        typescript: string | undefined;
-        go: string | undefined;
-        java: string | undefined;
+        python: string | VersionedSnippetLanguageConfiguration | undefined;
+        typescript: string | VersionedSnippetLanguageConfiguration | undefined;
+        go: string | VersionedSnippetLanguageConfiguration | undefined;
+        java: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
 

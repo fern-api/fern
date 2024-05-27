@@ -44,7 +44,11 @@ module SeedTraceClient
           error_info = parsed_json["errorInfo"].to_json
           error_info = SeedTraceClient::Submission::ErrorInfo.from_json(json_object: error_info)
         end
-        new(submission_id: submission_id, error_info: error_info, additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          error_info: error_info,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ErroredResponse to a JSON object

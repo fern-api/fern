@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/dummy",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_dummy.getDummy"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedSingleUrlEnvironmentDefault\n\nclient = SeedSingleUrlEnvironmentDefault(\n    token=\"YOUR_TOKEN\",\n)\nclient.dummy.get_dummy()\n",

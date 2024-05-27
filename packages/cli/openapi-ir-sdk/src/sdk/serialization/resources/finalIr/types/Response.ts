@@ -11,6 +11,7 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
         file: core.serialization.lazyObject(async () => (await import("../../..")).FileResponse),
         json: core.serialization.lazyObject(async () => (await import("../../..")).JsonResponse),
         text: core.serialization.lazyObject(async () => (await import("../../..")).TextResponse),
+        streamingSse: core.serialization.lazyObject(async () => (await import("../../..")).JsonResponse),
         streamingText: core.serialization.lazyObject(async () => (await import("../../..")).TextResponse),
         streamingJson: core.serialization.lazyObject(async () => (await import("../../..")).JsonResponse),
     })
@@ -23,6 +24,8 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
                     return FernOpenapiIr.Response.json(value);
                 case "text":
                     return FernOpenapiIr.Response.text(value);
+                case "streamingSse":
+                    return FernOpenapiIr.Response.streamingSse(value);
                 case "streamingText":
                     return FernOpenapiIr.Response.streamingText(value);
                 case "streamingJson":
@@ -35,7 +38,13 @@ export const Response: core.serialization.Schema<serializers.Response.Raw, FernO
     });
 
 export declare namespace Response {
-    type Raw = Response.File | Response.Json | Response.Text | Response.StreamingText | Response.StreamingJson;
+    type Raw =
+        | Response.File
+        | Response.Json
+        | Response.Text
+        | Response.StreamingSse
+        | Response.StreamingText
+        | Response.StreamingJson;
 
     interface File extends serializers.FileResponse.Raw {
         type: "file";
@@ -47,6 +56,10 @@ export declare namespace Response {
 
     interface Text extends serializers.TextResponse.Raw {
         type: "text";
+    }
+
+    interface StreamingSse extends serializers.JsonResponse.Raw {
+        type: "streamingSse";
     }
 
     interface StreamingText extends serializers.TextResponse.Raw {

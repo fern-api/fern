@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Homepage {
     interface Options {
@@ -19,12 +19,19 @@ export declare namespace Homepage {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Homepage {
     constructor(protected readonly _options: Homepage.Options = {}) {}
 
+    /**
+     * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.homepage.getHomepageProblems()
+     */
     public async getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<SeedTrace.ProblemId[]> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -47,6 +54,7 @@ export class Homepage {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
@@ -79,6 +87,13 @@ export class Homepage {
         }
     }
 
+    /**
+     * @param {SeedTrace.ProblemId[]} request
+     * @param {Homepage.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.homepage.setHomepageProblems(["string"])
+     */
     public async setHomepageProblems(
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions
@@ -107,6 +122,7 @@ export class Homepage {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -134,7 +150,7 @@ export class Homepage {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

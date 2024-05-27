@@ -1,0 +1,33 @@
+imports:
+  streaming: ./streaming.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    stream:
+      method: POST
+      path: /stream
+      request:
+        name: streaming.StreamCompletionRequest
+        body:
+          properties:
+            query: string
+      response-stream:
+        type: streaming.StreamedCompletion
+        format: sse
+        terminator: "[[DONE]]"
+      examples:
+        - name: "Stream completions"
+          request:
+            query: "foo"
+          response:
+            stream:
+              - event: discriminant-1
+                data:
+                  delta: "foo"
+                  tokens: 1
+              - event: discriminant-2
+                data:
+                  delta: "bar"
+                  tokens: 2

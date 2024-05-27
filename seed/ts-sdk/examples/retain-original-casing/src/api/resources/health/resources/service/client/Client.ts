@@ -5,8 +5,8 @@
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
-import * as serializers from "../../../../../../serialization";
+import * as errors from "../../../../../../errors/index";
+import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace Service {
     interface Options {
@@ -17,6 +17,7 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,15 +27,15 @@ export class Service {
     /**
      * This endpoint checks the health of a resource.
      *
-     * @example
-     *     await seedExamples.health.service.check("id-2sdx82h")
+     * @param {string} id - The id to check
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExamples.health.service.check("string")
+     *     await seedExamples.health.service.check("id-2sdx82h")
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/check/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/check/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -47,6 +48,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -77,6 +79,8 @@ export class Service {
     /**
      * This endpoint checks the health of the service.
      *
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedExamples.health.service.ping()
      */
@@ -95,6 +99,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.health.service.ping.Response.parseOrThrow(_response.body, {
@@ -127,7 +132,7 @@ export class Service {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

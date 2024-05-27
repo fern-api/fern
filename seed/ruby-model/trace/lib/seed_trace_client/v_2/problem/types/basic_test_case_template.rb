@@ -50,6 +50,7 @@ module SeedTraceClient
         # @return [SeedTraceClient::V2::Problem::BasicTestCaseTemplate]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          parsed_json = JSON.parse(json_object)
           template_id = struct["templateId"]
           name = struct["name"]
           if parsed_json["description"].nil?
@@ -59,8 +60,13 @@ module SeedTraceClient
             description = SeedTraceClient::V2::Problem::TestCaseImplementationDescription.from_json(json_object: description)
           end
           expected_value_parameter_id = struct["expectedValueParameterId"]
-          new(template_id: template_id, name: name, description: description,
-              expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
+          new(
+            template_id: template_id,
+            name: name,
+            description: description,
+            expected_value_parameter_id: expected_value_parameter_id,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of BasicTestCaseTemplate to a JSON object

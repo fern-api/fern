@@ -10,6 +10,7 @@ from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
 from .core.pydantic_utilities import pydantic_v1
+from .core.query_encoder import encode_query
 from .core.remove_none_from_dict import remove_none_from_dict
 from .core.request_options import RequestOptions
 from .service.client import AsyncServiceClient, ServiceClient
@@ -20,17 +21,24 @@ OMIT = typing.cast(typing.Any, ...)
 
 class SeedPackageYml:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
-    Parameters:
-        - base_url: str. The base url to use for requests from the client.
+    Parameters
+    ----------
+    base_url : str
+        The base url to use for requests from the client.
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
-        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
-        - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
-    ---
+    httpx_client : typing.Optional[httpx.Client]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+
+    Examples
+    --------
     from seed.client import SeedPackageYml
 
     client = SeedPackageYml(
@@ -43,7 +51,7 @@ class SeedPackageYml:
         *,
         base_url: str,
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
@@ -60,13 +68,21 @@ class SeedPackageYml:
 
     def echo(self, id: str, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request: str.
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedPackageYml
 
         client = SeedPackageYml(
@@ -78,10 +94,12 @@ class SeedPackageYml:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}/"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}/"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -109,17 +127,24 @@ class SeedPackageYml:
 
 class AsyncSeedPackageYml:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
-    Parameters:
-        - base_url: str. The base url to use for requests from the client.
+    Parameters
+    ----------
+    base_url : str
+        The base url to use for requests from the client.
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
-        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
-        - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
-    ---
+    httpx_client : typing.Optional[httpx.AsyncClient]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+
+    Examples
+    --------
     from seed.client import AsyncSeedPackageYml
 
     client = AsyncSeedPackageYml(
@@ -132,7 +157,7 @@ class AsyncSeedPackageYml:
         *,
         base_url: str,
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
@@ -149,13 +174,21 @@ class AsyncSeedPackageYml:
 
     async def echo(self, id: str, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request: str.
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(
@@ -167,10 +200,12 @@ class AsyncSeedPackageYml:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}/"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}/"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(

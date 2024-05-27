@@ -6,5 +6,5 @@ namespace SeedTrace;
 public class MapValue
 {
     [JsonPropertyName("keyValuePairs")]
-    public List<List<KeyValuePair>> KeyValuePairs { get; init; }
+    public List<KeyValuePair> KeyValuePairs { get; init; }
 }

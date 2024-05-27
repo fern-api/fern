@@ -4,9 +4,9 @@
 
 import * as core from "../../../../../../core";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
-import * as SeedApi from "../../../../..";
-import * as serializers from "../../../../../../serialization";
+import * as errors from "../../../../../../errors/index";
+import * as SeedApi from "../../../../../index";
+import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace Service {
     interface Options {
@@ -16,12 +16,19 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApi.folder.service.endpoint()
+     */
     public async endpoint(requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/service"),
@@ -36,6 +43,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -64,6 +72,9 @@ export class Service {
     }
 
     /**
+     * @param {unknown} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedApi.folder.NotFoundError}
      *
      * @example
@@ -86,6 +97,7 @@ export class Service {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

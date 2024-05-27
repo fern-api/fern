@@ -36,6 +36,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::TracedTestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         if parsed_json["result"].nil?
           result = nil
         else
@@ -43,7 +44,11 @@ module SeedTraceClient
           result = SeedTraceClient::Submission::TestCaseResultWithStdout.from_json(json_object: result)
         end
         trace_responses_size = struct["traceResponsesSize"]
-        new(result: result, trace_responses_size: trace_responses_size, additional_properties: struct)
+        new(
+          result: result,
+          trace_responses_size: trace_responses_size,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TracedTestCase to a JSON object

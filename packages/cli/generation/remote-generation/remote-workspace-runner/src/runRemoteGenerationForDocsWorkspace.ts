@@ -27,49 +27,38 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    if (instances.length === 1 && instances[0] != null) {
-        const instance = instances[0];
-        await context.runInteractiveTask({ name: instance.url }, async () => {
-            await publishDocs({
-                docsWorkspace,
-                customDomains: instance.customDomain != null ? [instance.customDomain] : [],
-                domain: instance.url,
-                token,
-                organization,
-                context,
-                fernWorkspaces,
-                version: "",
-                preview,
-                audiences: instance.audiences,
-                editThisPage: instance.editThisPage,
-                isPrivate: instance.private
-            });
-        });
-        return;
-    }
-
     if (instances.length > 1 && instanceUrl == null) {
         context.failAndThrow(`More than one docs instances. Please specify one (e.g. --instance ${instances[0]?.url})`);
         return;
     }
 
-    const maybeInstance = instances.find((instance) => instance.url === instanceUrl);
+    const maybeInstance = instances.find((instance) => instance.url === instanceUrl) ?? instances[0];
 
     if (maybeInstance == null) {
         context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`);
         return;
     }
 
+    // TODO: validate custom domains
+    const customDomains: string[] = [];
+
+    if (maybeInstance.customDomain != null) {
+        if (typeof maybeInstance.customDomain === "string") {
+            customDomains.push(maybeInstance.customDomain);
+        } else if (Array.isArray(maybeInstance.customDomain)) {
+            customDomains.push(...maybeInstance.customDomain);
+        }
+    }
+
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
         await publishDocs({
             docsWorkspace,
-            customDomains: maybeInstance.customDomain != null ? [maybeInstance.customDomain] : [],
+            customDomains,
             domain: maybeInstance.url,
             token,
             organization,
             context,
             fernWorkspaces,
-            version: "",
             preview,
             audiences: maybeInstance.audiences,
             editThisPage: maybeInstance.editThisPage,

@@ -49,7 +49,13 @@ module SeedTraceClient
         val = struct["val"]
         right = struct["right"]
         left = struct["left"]
-        new(node_id: node_id, val: val, right: right, left: left, additional_properties: struct)
+        new(
+          node_id: node_id,
+          val: val,
+          right: right,
+          left: left,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of BinaryTreeNodeValue to a JSON object

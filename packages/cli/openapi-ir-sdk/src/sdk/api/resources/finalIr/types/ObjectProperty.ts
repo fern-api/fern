@@ -11,5 +11,7 @@ export interface ObjectProperty {
     conflict: Record<FernOpenapiIr.SchemaId, FernOpenapiIr.ObjectPropertyConflictInfo>;
     /** A unique name for the property. */
     generatedName: string;
+    /** An optional name override populated via `x-fern-property-name`. */
+    nameOverride: string | undefined;
     audiences: string[];
 }

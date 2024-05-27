@@ -42,7 +42,12 @@ module SeedApiClient
         id = struct["id"]
         title = struct["title"]
         rating = struct["rating"]
-        new(id: id, title: title, rating: rating, additional_properties: struct)
+        new(
+          id: id,
+          title: title,
+          rating: rating,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Movie to a JSON object

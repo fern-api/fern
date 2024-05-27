@@ -14,8 +14,11 @@ module SeedVariablesClient
     # @param timeout_in_seconds [Long]
     # @return [SeedVariablesClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedVariablesClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                               timeout_in_seconds: timeout_in_seconds)
+      @request_client = SeedVariablesClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @service = SeedVariablesClient::ServiceClient.new(request_client: @request_client)
     end
   end
@@ -29,8 +32,11 @@ module SeedVariablesClient
     # @param timeout_in_seconds [Long]
     # @return [SeedVariablesClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedVariablesClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                          timeout_in_seconds: timeout_in_seconds)
+      @async_request_client = SeedVariablesClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @service = SeedVariablesClient::AsyncServiceClient.new(request_client: @async_request_client)
     end
   end

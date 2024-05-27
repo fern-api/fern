@@ -3,6 +3,7 @@
 package fileupload
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/file-upload/fern/core"
 )
@@ -16,15 +17,38 @@ type JustFileWithQueryParamsRequet struct {
 }
 
 type MyRequest struct {
-	MaybeString           *string     `json:"maybeString,omitempty" url:"maybeString,omitempty"`
-	Integer               int         `json:"integer" url:"integer"`
-	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"maybeInteger,omitempty"`
-	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"optionalListOfStrings,omitempty"`
-	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"listOfObjects,omitempty"`
+	MaybeString           *string     `json:"maybeString,omitempty" url:"-"`
+	Integer               int         `json:"integer" url:"-"`
+	MaybeInteger          *int        `json:"maybeInteger,omitempty" url:"-"`
+	OptionalListOfStrings []string    `json:"optionalListOfStrings,omitempty" url:"-"`
+	ListOfObjects         []*MyObject `json:"listOfObjects,omitempty" url:"-"`
 }
 
 type MyObject struct {
 	Foo string `json:"foo" url:"foo"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *MyObject) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *MyObject) UnmarshalJSON(data []byte) error {
+	type unmarshaler MyObject
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = MyObject(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
+	return nil
 }
 
 func (m *MyObject) String() string {

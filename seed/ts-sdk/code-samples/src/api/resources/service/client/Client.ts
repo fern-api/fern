@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedCodeSamples from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedCodeSamples from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -16,12 +16,22 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {SeedCodeSamples.MyRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedCodeSamples.service.hello({
+     *         numEvents: 5
+     *     })
+     */
     public async hello(
         request: SeedCodeSamples.MyRequest,
         requestOptions?: Service.RequestOptions
@@ -40,6 +50,7 @@ export class Service {
             body: await serializers.MyRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.MyResponse.parseOrThrow(_response.body, {

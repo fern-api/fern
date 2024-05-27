@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedUnions from "../../..";
+import * as SeedUnions from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Union {
     interface Options {
@@ -16,15 +16,23 @@ export declare namespace Union {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Union {
     constructor(protected readonly _options: Union.Options) {}
 
+    /**
+     * @param {string} id
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedUnions.union.get("string")
+     */
     public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -36,6 +44,7 @@ export class Union {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Shape.parseOrThrow(_response.body, {
@@ -68,6 +77,17 @@ export class Union {
         }
     }
 
+    /**
+     * @param {SeedUnions.Shape} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedUnions.union.update({
+     *         type: "circle",
+     *         id: "string",
+     *         radius: 1.1
+     *     })
+     */
     public async update(request: SeedUnions.Shape, requestOptions?: Union.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -83,6 +103,7 @@ export class Union {
             body: await serializers.Shape.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.union.update.Response.parseOrThrow(_response.body, {

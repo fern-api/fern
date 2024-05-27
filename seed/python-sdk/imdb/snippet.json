@@ -4,18 +4,20 @@
         {
             "id": {
                 "path": "/movies/create-movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_imdb.createMovie"
             },
             "snippet": {
-                "sync_client": "from seed import CreateMovieRequest\nfrom seed.client import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.imdb.create_movie(\n    request=CreateMovieRequest(\n        title=\"string\",\n        rating=1.1,\n    ),\n)\n",
-                "async_client": "from seed import CreateMovieRequest\nfrom seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.imdb.create_movie(\n    request=CreateMovieRequest(\n        title=\"string\",\n        rating=1.1,\n    ),\n)\n",
+                "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.imdb.create_movie(\n    title=\"string\",\n    rating=1.1,\n)\n",
+                "async_client": "from seed.client import AsyncSeedApi\n\nclient = AsyncSeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.imdb.create_movie(\n    title=\"string\",\n    rating=1.1,\n)\n",
                 "type": "python"
             }
         },
         {
             "id": {
                 "path": "/movies/{movieId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_imdb.getMovie"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedApi\n\nclient = SeedApi(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.imdb.get_movie(\n    movie_id=\"string\",\n)\n",

@@ -14,6 +14,12 @@ import { generateIr as generateIrFromV3 } from "./v3/generateIr";
 export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    settings?: SpecImportSettings;
+}
+
+export interface SpecImportSettings {
+    audiences: string[];
+    shouldUseTitleAsName: boolean;
 }
 
 export interface RawOpenAPIFile {
@@ -38,6 +44,7 @@ export async function parse({
     let ir: OpenApiIntermediateRepresentation = {
         title: undefined,
         description: undefined,
+        basePath: undefined,
         servers: [],
         tags: {
             tagsById: {},
@@ -48,7 +55,6 @@ export async function parse({
         webhooks: [],
         channel: [],
         schemas: {},
-        errors: {},
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
@@ -68,14 +74,18 @@ export async function parse({
                 const openapiIr = generateIrFromV3({
                     openApi: openApiDocument,
                     taskContext,
-                    disableExamples: false
+                    disableExamples: false,
+                    audiences: spec.settings?.audiences ?? [],
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
                 const openapiIr = await generateIrFromV2({
                     openApi: openApiDocument,
                     taskContext,
-                    disableExamples: false
+                    disableExamples: false,
+                    audiences: spec.settings?.audiences ?? [],
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -86,7 +96,11 @@ export async function parse({
                 context: taskContext,
                 absoluteFilePathToAsyncAPIOverrides: spec.absoluteFilepathToOverrides
             });
-            const parsedAsyncAPI = parseAsyncAPI({ document: asyncAPI, taskContext });
+            const parsedAsyncAPI = parseAsyncAPI({
+                document: asyncAPI,
+                taskContext,
+                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+            });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
             }
@@ -111,6 +125,7 @@ function merge(
     return {
         title: ir1.title ?? ir2.title,
         description: ir1.description ?? ir2.description,
+        basePath: ir1.basePath ?? ir2.basePath,
         servers: [...ir1.servers, ...ir2.servers],
         tags: {
             tagsById: {
@@ -129,10 +144,6 @@ function merge(
         schemas: {
             ...ir1.schemas,
             ...ir2.schemas
-        },
-        errors: {
-            ...ir1.errors,
-            ...ir2.errors
         },
         variables: {
             ...ir1.variables,

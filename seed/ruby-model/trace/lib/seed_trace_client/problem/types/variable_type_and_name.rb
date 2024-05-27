@@ -36,6 +36,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Problem::VariableTypeAndName]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         if parsed_json["variableType"].nil?
           variable_type = nil
         else
@@ -43,7 +44,11 @@ module SeedTraceClient
           variable_type = SeedTraceClient::Commons::VariableType.from_json(json_object: variable_type)
         end
         name = struct["name"]
-        new(variable_type: variable_type, name: name, additional_properties: struct)
+        new(
+          variable_type: variable_type,
+          name: name,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of VariableTypeAndName to a JSON object

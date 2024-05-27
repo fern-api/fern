@@ -82,6 +82,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
+    "hasPaginatedEndpoints": true,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {
@@ -314,27 +315,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                   "type": "container",
                 },
               },
-              "propertyPath": [
-                {
-                  "camelCase": {
-                    "safeName": "users",
-                    "unsafeName": "users",
-                  },
-                  "originalName": "users",
-                  "pascalCase": {
-                    "safeName": "Users",
-                    "unsafeName": "Users",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "USERS",
-                    "unsafeName": "USERS",
-                  },
-                  "snakeCase": {
-                    "safeName": "users",
-                    "unsafeName": "users",
-                  },
-                },
-              ],
+              "propertyPath": [],
             },
             "type": "offset",
           },
@@ -722,6 +703,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,
@@ -901,6 +883,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,

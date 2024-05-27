@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedEnum from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedEnum from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace PathParam {
     interface Options {
@@ -16,12 +16,23 @@ export declare namespace PathParam {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class PathParam {
     constructor(protected readonly _options: PathParam.Options) {}
 
+    /**
+     * @param {SeedEnum.Operand} operand
+     * @param {SeedEnum.Operand | undefined} maybeOperand
+     * @param {SeedEnum.ColorOrOperand} operandOrColor
+     * @param {SeedEnum.ColorOrOperand | undefined} maybeOperandOrColor
+     * @param {PathParam.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan, SeedEnum.Operand.LessThan, SeedEnum.Color.Red, SeedEnum.Color.Red)
+     */
     public async send(
         operand: SeedEnum.Operand,
         maybeOperand: SeedEnum.Operand | undefined,
@@ -32,11 +43,11 @@ export class PathParam {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `path/${await serializers.Operand.jsonOrThrow(
-                    operand
-                )}/${maybeOperand}/${await serializers.ColorOrOperand.jsonOrThrow(
-                    operandOrColor
-                )}/${maybeOperandOrColor}`
+                `path/${encodeURIComponent(await serializers.Operand.jsonOrThrow(operand))}/${encodeURIComponent(
+                    maybeOperand
+                )}/${encodeURIComponent(
+                    await serializers.ColorOrOperand.jsonOrThrow(operandOrColor)
+                )}/${encodeURIComponent(maybeOperandOrColor)}`
             ),
             method: "POST",
             headers: {
@@ -49,6 +60,7 @@ export class PathParam {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

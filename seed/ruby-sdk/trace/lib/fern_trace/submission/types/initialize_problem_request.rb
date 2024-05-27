@@ -39,7 +39,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         problem_id = struct["problemId"]
         problem_version = struct["problemVersion"]
-        new(problem_id: problem_id, problem_version: problem_version, additional_properties: struct)
+        new(
+          problem_id: problem_id,
+          problem_version: problem_version,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of InitializeProblemRequest to a JSON object

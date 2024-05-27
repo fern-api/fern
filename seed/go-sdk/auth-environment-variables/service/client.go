@@ -9,6 +9,7 @@ import (
 	core "github.com/auth-environment-variables/fern/core"
 	option "github.com/auth-environment-variables/fern/option"
 	http "net/http"
+	os "os"
 )
 
 type Client struct {
@@ -19,6 +20,12 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.ApiKey == "" {
+		options.ApiKey = os.Getenv("FERN_API_KEY")
+	}
+	if options.XAnotherHeader == "" {
+		options.XAnotherHeader = os.Getenv("ANOTHER_ENV_VAR")
+	}
 	return &Client{
 		baseURL: options.BaseURL,
 		caller: core.NewCaller(
@@ -45,7 +52,7 @@ func (c *Client) GetWithApiKey(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "apiKey"
+	endpointURL := baseURL + "/apiKey"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -81,7 +88,7 @@ func (c *Client) GetWithHeader(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "apiKeyInHeader"
+	endpointURL := baseURL + "/apiKeyInHeader"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))

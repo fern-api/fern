@@ -4,7 +4,7 @@
 
 import * as core from "../../../../core";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -15,21 +15,34 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} serviceParam
+     * @param {string} resourceParam
+     * @param {number} endpointParam
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApiWideBasePath.service.post("string", "string", 1)
+     */
     public async post(
         serviceParam: string,
+        resourceParam: string,
         endpointParam: number,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/test/${this._options.pathParam}/${serviceParam}/${endpointParam}`
+                `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(
+                    serviceParam
+                )}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`
             ),
             method: "POST",
             headers: {
@@ -42,6 +55,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

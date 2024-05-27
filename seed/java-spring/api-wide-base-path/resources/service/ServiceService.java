@@ -5,6 +5,7 @@
 package resources.service;
 
 import java.lang.Integer;
+import java.lang.String;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
     path = "/{serviceParam}"
 )
 public interface ServiceService {
-  @PostMapping("/{endpointParam}")
-  void post(@PathVariable("endpointParam") Integer endpointParam);
+  @PostMapping("/{endpointParam}/{resourceParam}")
+  void post(@PathVariable("resourceParam") String resourceParam,
+      @PathVariable("endpointParam") Integer endpointParam);
 }

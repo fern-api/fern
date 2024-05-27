@@ -46,7 +46,11 @@ module SeedTraceClient
               signature = parsed_json["signature"].to_json
               signature = SeedTraceClient::V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
             end
-            new(method_name: method_name, signature: signature, additional_properties: struct)
+            new(
+              method_name: method_name,
+              signature: signature,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of GetBasicSolutionFileRequest to a JSON object

@@ -1,0 +1,126 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/idempotency-headers",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/payment",
+            "method": "POST",
+            "identifierOverride": "endpoint_payment.create"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ token: \"YOUR_TOKEN\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedIdempotencyHeaders.payment.create(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "amount: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "amount",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "values": {
+                                            "USD": "SeedIdempotencyHeaders.Currency.Usd",
+                                            "YEN": "SeedIdempotencyHeaders.Currency.Yen"
+                                        },
+                                        "templateString": "currency: $FERN_INPUT",
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "currency",
+                                            "type": "payload"
+                                        },
+                                        "type": "enum"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/idempotency-headers",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/payment/{paymentId}",
+            "method": "DELETE",
+            "identifierOverride": "endpoint_payment.delete"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ token: \"YOUR_TOKEN\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedIdempotencyHeaders.payment.delete(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "$FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "PATH",
+                                                "path": "paymentId",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

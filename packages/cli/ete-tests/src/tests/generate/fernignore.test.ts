@@ -1,5 +1,5 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { writeFile } from "fs/promises";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
@@ -29,7 +29,7 @@ describe("fern generate --local", () => {
         });
 
         // write custom files and override
-        const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("generated/sdks/typescript"));
+        const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("sdks/typescript"));
 
         const absolutePathToFernignore = join(absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME));
         await writeFile(absolutePathToFernignore, FERNIGNORE_FILECONTENTS);

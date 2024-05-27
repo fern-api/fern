@@ -16,14 +16,15 @@ module SeedApiWideBasePathClient
 
     # @param path_param [String]
     # @param service_param [String]
+    # @param resource_param [String]
     # @param endpoint_param [Integer]
     # @param request_options [SeedApiWideBasePathClient::RequestOptions]
     # @return [Void]
-    def post(path_param:, service_param:, endpoint_param:, request_options: nil)
+    def post(path_param:, service_param:, resource_param:, endpoint_param:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
-        req.url "#{@request_client.get_url(request_options: request_options)}/test/#{path_param}/#{service_param}/#{endpoint_param}"
+        req.url "#{@request_client.get_url(request_options: request_options)}/test/#{path_param}/#{service_param}/#{resource_param}/#{endpoint_param}"
       end
     end
   end
@@ -40,15 +41,16 @@ module SeedApiWideBasePathClient
 
     # @param path_param [String]
     # @param service_param [String]
+    # @param resource_param [String]
     # @param endpoint_param [Integer]
     # @param request_options [SeedApiWideBasePathClient::RequestOptions]
     # @return [Void]
-    def post(path_param:, service_param:, endpoint_param:, request_options: nil)
+    def post(path_param:, service_param:, resource_param:, endpoint_param:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
-          req.url "#{@request_client.get_url(request_options: request_options)}/test/#{path_param}/#{service_param}/#{endpoint_param}"
+          req.url "#{@request_client.get_url(request_options: request_options)}/test/#{path_param}/#{service_param}/#{resource_param}/#{endpoint_param}"
         end
       end
     end

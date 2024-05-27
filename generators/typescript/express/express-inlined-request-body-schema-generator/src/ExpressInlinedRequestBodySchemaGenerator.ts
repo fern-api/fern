@@ -6,6 +6,7 @@ import { GeneratedExpressInlinedRequestBodySchemaImpl } from "./GeneratedExpress
 export declare namespace ExpressInlinedRequestBodySchemaGenerator {
     export interface Init {
         includeSerdeLayer: boolean;
+        skipRequestValidation: boolean;
     }
 
     export namespace generateInlinedRequestBodySchema {
@@ -19,9 +20,11 @@ export declare namespace ExpressInlinedRequestBodySchemaGenerator {
 
 export class ExpressInlinedRequestBodySchemaGenerator {
     private includeSerdeLayer: boolean;
+    private skipRequestValidation: boolean;
 
-    constructor({ includeSerdeLayer }: ExpressInlinedRequestBodySchemaGenerator.Init) {
+    constructor({ includeSerdeLayer, skipRequestValidation }: ExpressInlinedRequestBodySchemaGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
+        this.skipRequestValidation = skipRequestValidation;
     }
 
     public generateInlinedRequestBodySchema({
@@ -37,7 +40,8 @@ export class ExpressInlinedRequestBodySchemaGenerator {
             endpoint,
             inlinedRequestBody: endpoint.requestBody,
             typeName,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            skipRequestValidation: this.skipRequestValidation
         });
     }
 }

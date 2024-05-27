@@ -60,6 +60,9 @@ export declare namespace ExpressGenerator {
         includeSerdeLayer: boolean;
         outputEsm: boolean;
         retainOriginalCasing: boolean;
+        allowExtraFields: boolean;
+        skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
     }
 }
 
@@ -191,15 +194,21 @@ export class ExpressGenerator {
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
         this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            skipRequestValidation: config.skipRequestValidation
         });
         this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields,
+            skipRequestValidation: config.skipRequestValidation,
+            skipResponseValidation: config.skipResponseValidation
         });
         this.expressServiceGenerator = new ExpressServiceGenerator({
             packageResolver: this.packageResolver,
             doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            skipRequestValidation: config.skipRequestValidation,
+            skipResponseValidation: config.skipResponseValidation
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             packageResolver: this.packageResolver,
@@ -210,7 +219,8 @@ export class ExpressGenerator {
         this.genericApiExpressErrorGenerator = new GenericAPIExpressErrorGenerator();
         this.expressErrorGenerator = new ExpressErrorGenerator();
         this.expressErrorSchemaGenerator = new ExpressErrorSchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
     }
 

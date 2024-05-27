@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedCustomAuth from "../../..";
+import * as SeedCustomAuth from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace CustomAuth {
     interface Options {
@@ -17,6 +17,7 @@ export declare namespace CustomAuth {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -25,6 +26,9 @@ export class CustomAuth {
 
     /**
      * GET request with custom auth scheme
+     *
+     * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      *
      * @example
@@ -45,6 +49,7 @@ export class CustomAuth {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
@@ -91,6 +96,10 @@ export class CustomAuth {
 
     /**
      * POST request with custom auth scheme
+     *
+     * @param {unknown} request
+     * @param {CustomAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      * @throws {@link SeedCustomAuth.BadRequest}
      *
@@ -115,6 +124,7 @@ export class CustomAuth {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {

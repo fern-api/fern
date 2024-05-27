@@ -36,7 +36,11 @@ module SeedExtendsClient
       struct = JSON.parse(json_object, object_class: OpenStruct)
       name = struct["name"]
       docs = struct["docs"]
-      new(name: name, docs: docs, additional_properties: struct)
+      new(
+        name: name,
+        docs: docs,
+        additional_properties: struct
+      )
     end
 
     # Serialize an instance of ExampleType to a JSON object

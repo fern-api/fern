@@ -9,10 +9,10 @@ public class TestCaseNonHiddenGrade
     public bool Passed { get; init; }
 
     [JsonPropertyName("actualResult")]
-    public List<VariableValue?> ActualResult { get; init; }
+    public VariableValue? ActualResult { get; init; }
 
     [JsonPropertyName("exception")]
-    public List<ExceptionV2?> Exception { get; init; }
+    public ExceptionV2? Exception { get; init; }
 
     [JsonPropertyName("stdout")]
     public string Stdout { get; init; }

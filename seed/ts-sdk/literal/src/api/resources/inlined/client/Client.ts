@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedLiteral from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedLiteral from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Inlined {
     interface Options {
@@ -16,12 +16,25 @@ export declare namespace Inlined {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Inlined {
     constructor(protected readonly _options: Inlined.Options) {}
 
+    /**
+     * @param {SeedLiteral.SendLiteralsInlinedRequest} request
+     * @param {Inlined.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedLiteral.inlined.send({
+     *         temperature: 10.1,
+     *         prompt: "You are a helpful assistant",
+     *         stream: false,
+     *         query: "What is the weather today"
+     *     })
+     */
     public async send(
         request: SeedLiteral.SendLiteralsInlinedRequest,
         requestOptions?: Inlined.RequestOptions
@@ -48,6 +61,7 @@ export class Inlined {
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.SendResponse.parseOrThrow(_response.body, {

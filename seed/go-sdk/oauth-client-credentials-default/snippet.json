@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-default/fern\"\n\tfernclient \"github.com/oauth-client-credentials-default/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetToken(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

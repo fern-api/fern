@@ -6,6 +6,9 @@ import { GeneratedExpressEndpointTypeSchemasImpl } from "./GeneratedExpressEndpo
 export declare namespace ExpressEndpointTypeSchemasGenerator {
     export interface Init {
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
+        skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
     }
 
     export namespace generateEndpointTypeSchemas {
@@ -19,9 +22,20 @@ export declare namespace ExpressEndpointTypeSchemasGenerator {
 
 export class ExpressEndpointTypeSchemasGenerator {
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
+    private skipRequestValidation: boolean;
+    private skipResponseValidation: boolean;
 
-    constructor({ includeSerdeLayer }: ExpressEndpointTypeSchemasGenerator.Init) {
+    constructor({
+        includeSerdeLayer,
+        allowExtraFields,
+        skipRequestValidation,
+        skipResponseValidation
+    }: ExpressEndpointTypeSchemasGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
+        this.skipRequestValidation = skipRequestValidation;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public generateEndpointTypeSchemas({
@@ -33,7 +47,10 @@ export class ExpressEndpointTypeSchemasGenerator {
             packageId,
             service,
             endpoint,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            allowExtraFields: this.allowExtraFields,
+            skipRequestValidation: this.skipRequestValidation,
+            skipResponseValidation: this.skipResponseValidation
         });
     }
 }

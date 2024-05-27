@@ -2,6 +2,7 @@
 
 exports[`optional-multipart optional-multipart parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -10,34 +11,8 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": "speech",
-      "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "voice_id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "voice_id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "errors": {},
+      "examples": [],
       "generatedRequestName": "SpeechOperationRequest",
       "headers": [
         {
@@ -57,8 +32,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -69,6 +47,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "speech_operation",
+      "pagination": null,
       "path": "/v1/speech/{voice_id}",
       "pathParameters": [
         {
@@ -80,8 +59,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -106,6 +88,12 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -118,7 +106,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         "name": "SpeechBody",
         "properties": [
           {
-            "description": null,
+            "description": "The audio file.",
             "key": "audio",
             "schema": {
               "isArray": false,
@@ -133,9 +121,9 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "SpeechOperationRequestModelId",
+                "generatedName": "speechOperationRequestModelId",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBody",
                 "type": "optional",
                 "value": {
                   "description": null,
@@ -143,8 +131,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": "model-1",
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -158,10 +149,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
-                "description": "Voice settings.",
-                "generatedName": "SpeechOperationRequestVoiceSettings",
+                "description": null,
+                "generatedName": "speechOperationRequestVoiceSettings",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBody",
                 "type": "optional",
                 "value": {
                   "description": "Voice settings.",
@@ -169,8 +160,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -196,7 +190,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": "speech_stream",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -243,8 +237,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -255,6 +252,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "speech_stream_operation",
+      "pagination": null,
       "path": "/v1/speech/{voice_id}/stream",
       "pathParameters": [
         {
@@ -266,8 +264,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -292,6 +293,12 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -304,7 +311,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         "name": "SpeechBodyStream",
         "properties": [
           {
-            "description": null,
+            "description": "The audio file.",
             "key": "audio",
             "schema": {
               "isArray": false,
@@ -319,9 +326,9 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "SpeechStreamOperationRequestModelId",
+                "generatedName": "speechStreamOperationRequestModelId",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "description": null,
@@ -329,8 +336,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": "model-1",
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -344,10 +354,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
-                "description": "Voice settings.",
-                "generatedName": "SpeechStreamOperationRequestVoiceSettings",
+                "description": null,
+                "generatedName": "speechStreamOperationRequestVoiceSettings",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "description": "Voice settings.",
@@ -355,8 +365,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -371,9 +384,9 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "SpeechStreamOperationRequestMyEnum",
+                "generatedName": "speechStreamOperationRequestMyEnum",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "description": null,
@@ -418,9 +431,9 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "SpeechStreamOperationRequestMyRef",
+                "generatedName": "speechStreamOperationRequestMyRef",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "description": null,
@@ -444,7 +457,6 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
@@ -453,6 +465,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
   ],
   "schemas": {
     "SpeechBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -465,14 +478,18 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyAudio",
           "key": "audio",
+          "nameOverride": null,
           "schema": {
             "description": "The audio file.",
             "generatedName": "SpeechBodyAudio",
             "groupName": null,
             "nameOverride": "Audio",
             "schema": {
+              "default": null,
+              "format": "binary",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -483,6 +500,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyModelId",
           "key": "model_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyModelId",
@@ -495,8 +513,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "model-1",
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -508,6 +529,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyVoiceSettings",
           "key": "voice_settings",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyVoiceSettings",
@@ -520,8 +542,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -532,6 +557,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "type": "object",
     },
     "SpeechBodyStream": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -544,14 +570,18 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamAudio",
           "key": "audio",
+          "nameOverride": null,
           "schema": {
             "description": "The audio file.",
             "generatedName": "SpeechBodyStreamAudio",
             "groupName": null,
             "nameOverride": "Audio",
             "schema": {
+              "default": null,
+              "format": "binary",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -562,6 +592,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamModelId",
           "key": "model_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyStreamModelId",
@@ -574,8 +605,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "model-1",
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -587,6 +621,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamVoiceSettings",
           "key": "voice_settings",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyStreamVoiceSettings",
@@ -599,8 +634,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -612,6 +650,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamMyEnum",
           "key": "my_enum",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyStreamMyEnum",
@@ -658,6 +697,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "speechBodyStreamMyRef",
           "key": "my_ref",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "speechBodyStreamMyRef",
@@ -678,6 +718,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "type": "object",
     },
     "request-model": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -690,14 +731,18 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           "conflict": {},
           "generatedName": "requestModelVoiceId",
           "key": "voice_id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "RequestModelVoiceId",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",

@@ -191,15 +191,18 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [
@@ -371,15 +374,18 @@
                         }
                     },
                     "response": {
-                        "type": "json",
-                        "value": {
-                            "type": "response",
-                            "responseBodyType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "docs": null
-                        }
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [

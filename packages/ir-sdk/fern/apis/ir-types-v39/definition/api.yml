@@ -1,0 +1,4 @@
+name: ir-v39
+docs: |
+ Adds the concept of an OAuth scheme (starting with the client-credentials flow)
+ to the API definition.

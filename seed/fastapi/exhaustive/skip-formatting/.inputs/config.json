@@ -1,20 +1,24 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
             "type": "downloadFiles"
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null
     },
+    "publish": null,
     "customConfig": {
         "skip_formatting": true
     },
     "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,
-    "writeUnitTests": true
+    "writeUnitTests": true,
+    "generateOauthClients": true,
+    "generatePaginatedClients": true
 }

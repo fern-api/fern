@@ -3,9 +3,9 @@
  */
 
 import * as core from "./core";
-import * as serializers from "./serialization";
+import * as serializers from "./serialization/index";
 import urlJoin from "url-join";
-import * as errors from "./errors";
+import * as errors from "./errors/index";
 import { Service } from "./api/resources/service/client/Client";
 
 export declare namespace SeedPackageYmlClient {
@@ -17,15 +17,26 @@ export declare namespace SeedPackageYmlClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class SeedPackageYmlClient {
     constructor(protected readonly _options: SeedPackageYmlClient.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {SeedPackageYmlClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPackageYml.echo("Hello world!")
+     */
     public async echo(request: string, requestOptions?: SeedPackageYmlClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${this._options.id}/`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/${encodeURIComponent(this._options.id)}/`
+            ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -38,6 +49,7 @@ export class SeedPackageYmlClient {
             body: await serializers.echo.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.echo.Response.parseOrThrow(_response.body, {

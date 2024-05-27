@@ -1,4 +1,3 @@
-import { default as FormData } from "form-data";
 import qs from "qs";
 import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
@@ -16,7 +15,7 @@ export declare namespace Fetcher {
         timeoutMs?: number;
         maxRetries?: number;
         withCredentials?: boolean;
-        responseType?: "json" | "blob" | "streaming";
+        responseType?: "json" | "blob" | "streaming" | "text";
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -67,13 +66,28 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             : args.url;
 
     let body: BodyInit | undefined = undefined;
-    if (args.body instanceof FormData) {
-        // @ts-expect-error
-        body = args.body;
-    } else if (args.body instanceof Uint8Array) {
-        body = args.body;
+    const maybeStringifyBody = (body: any) => {
+        if (body instanceof Uint8Array) {
+            return body;
+        } else {
+            return JSON.stringify(body);
+        }
+    };
+
+    if (RUNTIME.type === "node") {
+        if (args.body instanceof (await import("formdata-node")).FormData) {
+            // @ts-expect-error
+            body = args.body;
+        } else {
+            body = maybeStringifyBody(args.body);
+        }
     } else {
-        body = JSON.stringify(args.body);
+        if (args.body instanceof (await import("form-data")).default) {
+            // @ts-expect-error
+            body = args.body;
+        } else {
+            body = maybeStringifyBody(args.body);
+        }
     }
 
     // In Node.js environments, the SDK always uses`node-fetch`.
@@ -83,10 +97,10 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         RUNTIME.type === "node"
             ? // `.default` is required due to this issue:
               // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
-              require("node-fetch").default
+              ((await import("node-fetch")).default as any)
             : typeof fetch == "function"
             ? fetch
-            : require("node-fetch").default;
+            : ((await import("node-fetch")).default as any);
 
     const makeRequest = async (): Promise<Response> => {
         const controller = new AbortController();
@@ -130,6 +144,8 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             body = await response.blob();
         } else if (response.body != null && args.responseType === "streaming") {
             body = response.body;
+        } else if (response.body != null && args.responseType === "text") {
+            body = await response.text();
         } else {
             const text = await response.text();
             if (text.length > 0) {

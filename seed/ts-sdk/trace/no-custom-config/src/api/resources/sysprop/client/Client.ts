@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedTrace from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Sysprop {
     interface Options {
@@ -19,12 +19,21 @@ export declare namespace Sysprop {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Sysprop {
     constructor(protected readonly _options: Sysprop.Options = {}) {}
 
+    /**
+     * @param {SeedTrace.Language} language
+     * @param {number} numWarmInstances
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1)
+     */
     public async setNumWarmInstances(
         language: SeedTrace.Language,
         numWarmInstances: number,
@@ -33,7 +42,9 @@ export class Sysprop {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${await serializers.Language.jsonOrThrow(language)}/${numWarmInstances}`
+                `/sysprop/num-warm-instances/${encodeURIComponent(
+                    await serializers.Language.jsonOrThrow(language)
+                )}/${encodeURIComponent(numWarmInstances)}`
             ),
             method: "PUT",
             headers: {
@@ -51,6 +62,7 @@ export class Sysprop {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -78,6 +90,12 @@ export class Sysprop {
         }
     }
 
+    /**
+     * @param {Sysprop.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.sysprop.getNumWarmInstances()
+     */
     public async getNumWarmInstances(
         requestOptions?: Sysprop.RequestOptions
     ): Promise<Record<SeedTrace.Language, number | undefined>> {
@@ -102,6 +120,7 @@ export class Sysprop {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
@@ -134,7 +153,7 @@ export class Sysprop {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

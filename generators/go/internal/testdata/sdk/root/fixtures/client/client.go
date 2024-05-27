@@ -7,7 +7,6 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
-	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
 	nestedclient "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/nested/client"
@@ -52,7 +51,7 @@ func (c *Client) GetFoo(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "foo"
+	endpointURL := baseURL + "/foo"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -87,7 +86,7 @@ func (c *Client) PostFoo(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "foo"
+	endpointURL := baseURL + "/foo"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -150,7 +149,7 @@ func (c *Client) GetFooFooId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
+	endpointURL := core.EncodeURL(baseURL+"/foo/%v", fooId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -206,7 +205,7 @@ func (c *Client) PatchFooFooId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
+	endpointURL := core.EncodeURL(baseURL+"/foo/%v", fooId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -276,7 +275,7 @@ func (c *Client) DeleteFooFooId(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
+	endpointURL := core.EncodeURL(baseURL+"/foo/%v", fooId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -329,7 +328,7 @@ func (c *Client) PostFooFooIdRun(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v/run", fooId)
+	endpointURL := core.EncodeURL(baseURL+"/foo/%v/run", fooId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -391,7 +390,7 @@ func (c *Client) PostFooBatchCreate(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "foo/batch-create"
+	endpointURL := baseURL + "/foo/batch-create"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -468,7 +467,7 @@ func (c *Client) PostFooBatchDelete(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "foo/batch-delete"
+	endpointURL := baseURL + "/foo/batch-delete"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

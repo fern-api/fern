@@ -2,6 +2,7 @@
 
 exports[`x-fern-examples x-fern-examples parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -10,7 +11,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "type": "unknown",
@@ -39,6 +40,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/example",
       "pathParameters": [],
       "queryParameters": [],
@@ -56,6 +58,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -68,6 +71,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "notFoundMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "notFoundMessage",
@@ -80,8 +84,11 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
+                          "format": null,
                           "maxLength": null,
                           "minLength": null,
+                          "pattern": null,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -108,6 +115,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                 "type": "reference",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -120,6 +128,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                     "conflict": {},
                     "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
+                    "nameOverride": null,
                     "schema": {
                       "description": null,
                       "generatedName": "getExampleResponseMessageMessage",
@@ -132,8 +141,11 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
+                          "format": null,
                           "maxLength": null,
                           "minLength": null,
+                          "pattern": null,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -155,7 +167,6 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
@@ -165,6 +176,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
   ],
   "schemas": {
     "Schema1": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -177,6 +189,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           "conflict": {},
           "generatedName": "schema1Id",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schema1Id",
@@ -189,6 +202,12 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -200,6 +219,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           "conflict": {},
           "generatedName": "schema1Name",
           "key": "name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schema1Name",
@@ -212,8 +232,11 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -224,6 +247,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       "type": "object",
     },
     "Schema2": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -236,6 +260,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           "conflict": {},
           "generatedName": "schema2Email",
           "key": "email",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schema2Email",
@@ -248,8 +273,11 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -261,6 +289,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
           "conflict": {},
           "generatedName": "schema2Age",
           "key": "age",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "schema2Age",
@@ -273,6 +302,12 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",

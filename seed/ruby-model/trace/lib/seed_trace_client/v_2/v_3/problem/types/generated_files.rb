@@ -58,8 +58,12 @@ module SeedTraceClient
               v = v.to_json
               SeedTraceClient::V2::V3::Problem::Files.from_json(json_object: v)
             end
-            new(generated_test_case_files: generated_test_case_files,
-                generated_template_files: generated_template_files, other: other, additional_properties: struct)
+            new(
+              generated_test_case_files: generated_test_case_files,
+              generated_template_files: generated_template_files,
+              other: other,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of GeneratedFiles to a JSON object

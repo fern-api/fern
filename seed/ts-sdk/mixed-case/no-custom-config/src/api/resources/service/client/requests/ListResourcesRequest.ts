@@ -8,12 +8,6 @@
  *         pageLimit: 10,
  *         beforeDate: "2023-01-01"
  *     }
- *
- * @example
- *     {
- *         pageLimit: 1,
- *         beforeDate: "2023-01-15"
- *     }
  */
 export interface ListResourcesRequest {
     pageLimit: number;

@@ -23,7 +23,7 @@ To edit the docs, you can modify `docs.yml` or any of the markdown that it refer
 
 To validate that the docs, run:
 
-```
+```sh
 npm install -g fern-api
 fern check
 ```
@@ -43,7 +43,7 @@ Fork by clicking [here](https://github.com/fern-api/fern/fork).
 
 **Step 2: Clone your fork and open in VSCode**
 
-```
+```sh
 git clone <your fork>
 cd fern
 code .
@@ -51,7 +51,7 @@ code .
 
 **Step 3: Install dependencies**
 
-```
+```sh
 yarn
 ```
 
@@ -91,7 +91,7 @@ To build the CLI, run either:
 
 To run the locally-generated CLI, run:
 
-```
+```sh
 FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
 ```
 
@@ -139,3 +139,62 @@ that depends on a lower IR version can continue to be run from our CLI.
 
 In the `ir-migrations` package, introduce a new migration.
 You can copy the latest migration as a starting point.
+
+## Generator Testing (Seed CLI)
+
+To test our generators we have built a CLI tool called seed.
+
+Seed handles building the generators from source and running them against all of the
+test definitions that are present in the repository. It also handles running scripts
+against the generated code to make sure that all the generated code compiles and
+works as intended.
+
+To build seed, simply run
+
+```sh
+yarn seed:build
+```
+
+Each generator has a folder in the top level `seed` directory. For example, the folder
+for the typescript sdk generator is `seed/ts-sdk`. This folder contains a config file
+called `seed.yml` as well as all the generated code for each test case.
+
+To trigger seed tests on a specific generator run
+
+```sh
+yarn seed test --generator python-sdk --fixture file-download --skip-scripts
+```
+
+You can specify as many fixtures as you want. If you don't specify one, it will
+run on all the fields available.
+
+### Running seed on a custom fixture
+
+It may be valuable to run seed on a particular Fern definition or OpenAPI spec. To do this,
+you can use the `seed run` command and point it at the fern folder:
+
+```sh
+yarn seed run --generator ts-sdk --path /Users/jdoe/fern
+```
+
+If the fern folder that you are pointing to has multiple APIs, then you must point it at the
+specific API that you are looking to generate:
+
+```sh
+yarn seed test --generator ts-sdk --path /Users/jdoe/fern/apis/imdb
+```
+
+### Running generators from source
+
+By default, seed will build the docker container for the generator and execute the docker. Building a docker
+adds extra time to your iteration cycle so we also have a mode to run the generators directly from source. All you
+have to do is use the `--local` flag.
+
+For example, to run the TypeScript SDK generator from source, you can:
+
+```sh
+yarn seed test --generator ts-sdk --fixture imdb --local
+```
+
+The local flag will only work if the generator has configured the `local` configuration in its seed.yml.
+See [here](https://github.com/fern-api/fern/blob/bf3c28f1c08447e37949ba938f90228c575194d2/seed/ts-sdk/seed.yml#L7-L14).

@@ -2,6 +2,7 @@
 
 exports[`open api parser application-pdf-content-type parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -10,25 +11,14 @@ exports[`open api parser application-pdf-content-type parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "errors": {},
+      "examples": [],
       "generatedRequestName": "PdfGetRequest",
       "headers": [],
       "internal": null,
       "method": "GET",
       "operationId": "pdf_get",
+      "pagination": null,
       "path": "/pdf",
       "pathParameters": [],
       "queryParameters": [],
@@ -46,7 +36,6 @@ exports[`open api parser application-pdf-content-type parse open api 1`] = `
       ],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

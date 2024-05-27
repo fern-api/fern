@@ -2,6 +2,7 @@
 
 require_relative "../../requests"
 require_relative "types/migration"
+require "json"
 require "async"
 
 module SeedTraceClient
@@ -30,7 +31,8 @@ module SeedTraceClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/migration-info/all"
       end
-      response.body&.map do |v|
+      parsed_json = JSON.parse(response.body)
+      parsed_json&.map do |v|
         v = v.to_json
         SeedTraceClient::Migration::Migration.from_json(json_object: v)
       end
@@ -63,7 +65,8 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/migration-info/all"
         end
-        response.body&.map do |v|
+        parsed_json = JSON.parse(response.body)
+        parsed_json&.map do |v|
           v = v.to_json
           SeedTraceClient::Migration::Migration.from_json(json_object: v)
         end

@@ -164,7 +164,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -320,7 +321,8 @@
                                 },
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "extra-properties": false
                     },
                     "sdkRequest": {
                         "shape": {
@@ -386,9 +388,9 @@
                     },
                     "response": {
                         "type": "streaming",
-                        "dataEventType": {
+                        "value": {
                             "type": "json",
-                            "json": {
+                            "payload": {
                                 "_type": "named",
                                 "name": {
                                     "originalName": "StreamResponse",
@@ -453,13 +455,74 @@
                                     }
                                 },
                                 "typeId": "type_dummy:StreamResponse"
-                            }
-                        },
-                        "terminator": null,
-                        "docs": null
+                            },
+                            "terminator": null,
+                            "docs": null
+                        }
                     },
                     "errors": [],
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/generate-stream",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "inlinedRequestBody",
+                                "properties": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "num_events",
+                                                "camelCase": {
+                                                    "unsafeName": "numEvents",
+                                                    "safeName": "numEvents"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "num_events",
+                                                    "safeName": "num_events"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "NUM_EVENTS",
+                                                    "safeName": "NUM_EVENTS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "NumEvents",
+                                                    "safeName": "NumEvents"
+                                                }
+                                            },
+                                            "wireValue": "num_events"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "integer",
+                                                    "integer": 1
+                                                }
+                                            },
+                                            "jsonExample": 1
+                                        },
+                                        "originalTypeDeclaration": null
+                                    }
+                                ],
+                                "jsonExample": {
+                                    "num_events": 1
+                                }
+                            },
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "pagination": null,
                     "availability": null,
                     "docs": null

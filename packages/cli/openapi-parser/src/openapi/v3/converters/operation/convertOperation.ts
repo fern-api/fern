@@ -6,6 +6,7 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getFernAsyncExtension } from "../../extensions/getFernAsyncExtension";
 import { getFernStreamingExtension } from "../../extensions/getFernStreamingExtension";
+import { getFernPaginationExtension } from "../../extensions/getPaginationExtension";
 import { OperationContext, PathItemContext } from "../contexts";
 import { convertAsyncSyncOperation } from "./convertAsyncSyncOperation";
 import { convertHttpOperation } from "./convertHttpOperation";
@@ -58,6 +59,7 @@ export function convertOperation({
     }
 
     const sdkMethodName = getSdkGroupAndMethod(operation);
+    const pagination = getFernPaginationExtension(context.document, operation);
 
     const operationContext: OperationContext = {
         ...pathItemContext,
@@ -69,7 +71,8 @@ export function convertOperation({
             path: pathItemContext.path
         }),
         operation,
-        operationParameters: operation.parameters ?? []
+        operationParameters: operation.parameters ?? [],
+        pagination
     };
 
     if (isWebhook({ operation })) {
@@ -112,7 +115,8 @@ export function convertOperation({
 
     const convertedHttpOperation = convertHttpOperation({
         context,
-        operationContext
+        operationContext,
+        streamFormat: undefined
     });
     return { type: "http", value: convertedHttpOperation };
 }

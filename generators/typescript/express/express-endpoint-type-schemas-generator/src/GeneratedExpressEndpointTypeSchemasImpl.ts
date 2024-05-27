@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
-import { PackageId } from "@fern-typescript/commons";
+import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
@@ -12,6 +12,9 @@ export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
         service: HttpService;
         endpoint: HttpEndpoint;
         includeSerdeLayer: boolean;
+        skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -23,10 +26,24 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
+    private skipRequestValidation: boolean;
+    private skipResponseValidation: boolean;
 
-    constructor({ packageId, service, endpoint, includeSerdeLayer }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
+    constructor({
+        packageId,
+        service,
+        endpoint,
+        includeSerdeLayer,
+        allowExtraFields,
+        skipRequestValidation,
+        skipResponseValidation
+    }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
+        this.skipRequestValidation = skipRequestValidation;
+        this.skipResponseValidation = skipResponseValidation;
 
         if (includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -54,8 +71,8 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 }
             }
 
-            if (endpoint.response?.type === "json") {
-                switch (endpoint.response.value.responseBodyType.type) {
+            if (endpoint.response?.body?.type === "json") {
+                switch (endpoint.response.body.value.responseBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -63,7 +80,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                             service,
                             endpoint,
                             typeName: GeneratedExpressEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                            type: endpoint.response.value.responseBodyType
+                            type: endpoint.response.body.value.responseBodyType
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -73,7 +90,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.value.responseBodyType);
+                        assertNever(endpoint.response.body.value.responseBodyType);
                 }
             }
         }
@@ -109,7 +126,18 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         switch (this.endpoint.requestBody.requestBodyType.type) {
             case "unknown":
                 return referenceToRawRequest;
-            case "named":
+            case "named": {
+                if (this.skipRequestValidation) {
+                    return context.typeSchema
+                        .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
+                        .parse(referenceToRawRequest, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedEnumValues: true,
+                            allowUnrecognizedUnionMembers: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: []
+                        });
+                }
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .parse(referenceToRawRequest, {
@@ -119,10 +147,21 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         skipValidation: false,
                         breadcrumbsPrefix: []
                     });
+            }
+
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {
                     throw new Error("No request schema was generated");
+                }
+                if (this.skipRequestValidation) {
+                    return this.generatedRequestSchema.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: []
+                    });
                 }
                 return this.generatedRequestSchema.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
                     unrecognizedObjectKeys: "fail",
@@ -137,17 +176,17 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     }
 
     public serializeResponse(referenceToParsedResponse: ts.Expression, context: ExpressContext): ts.Expression {
-        if (this.endpoint.response == null) {
-            throw new Error("Cannot deserialize response because it's not defined");
+        if (this.endpoint.response?.body == null) {
+            throw new Error("Cannot serialize response because it's not defined");
         }
 
-        if (this.endpoint.response.type === "fileDownload") {
+        if (this.endpoint.response.body?.type === "fileDownload") {
             throw new Error("Cannot serialize file");
         }
-        if (this.endpoint.response.type === "streaming") {
+        if (this.endpoint.response.body?.type === "streaming") {
             throw new Error("Streaming response is not supported");
         }
-        if (this.endpoint.response.type === "text") {
+        if (this.endpoint.response.body?.type === "text") {
             throw new Error("Text response is not supported");
         }
 
@@ -155,18 +194,19 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             return referenceToParsedResponse;
         }
 
-        switch (this.endpoint.response.value.responseBodyType.type) {
+        switch (this.endpoint.response.body.value.responseBodyType.type) {
             case "unknown":
                 return referenceToParsedResponse;
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.value.responseBodyType, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.body.value.responseBodyType, {
+                        isGeneratingSchema: false
+                    })
                     .jsonOrThrow(referenceToParsedResponse, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields,
+                            skipValidation: this.skipResponseValidation
+                        })
                     });
             case "primitive":
             case "container":
@@ -176,14 +216,13 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 return this.generatedResponseSchema
                     .getReferenceToZurgSchema(context)
                     .jsonOrThrow(referenceToParsedResponse, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields,
+                            skipValidation: this.skipResponseValidation
+                        })
                     });
             default:
-                assertNever(this.endpoint.response.value.responseBodyType);
+                assertNever(this.endpoint.response.body?.value.responseBodyType);
         }
     }
 }

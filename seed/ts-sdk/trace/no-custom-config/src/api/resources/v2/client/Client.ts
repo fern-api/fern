@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 import { Problem } from "../resources/problem/client/Client";
 import { V3 } from "../resources/v3/client/Client";
 
@@ -18,12 +18,19 @@ export declare namespace V2 {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class V2 {
     constructor(protected readonly _options: V2.Options = {}) {}
 
+    /**
+     * @param {V2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.v2.test()
+     */
     public async test(requestOptions?: V2.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
@@ -43,6 +50,7 @@ export class V2 {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -82,7 +90,7 @@ export class V2 {
         return (this._v3 ??= new V3(this._options));
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

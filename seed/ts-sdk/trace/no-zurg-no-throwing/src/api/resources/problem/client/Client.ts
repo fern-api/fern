@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Problem {
@@ -17,6 +17,7 @@ export declare namespace Problem {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -25,6 +26,9 @@ export class Problem {
 
     /**
      * Creates a problem
+     *
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.createProblem({
@@ -98,6 +102,7 @@ export class Problem {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -114,6 +119,10 @@ export class Problem {
 
     /**
      * Updates a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.updateProblem("string", {
@@ -169,7 +178,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${problemId}`
+                `/problem-crud/update/${encodeURIComponent(problemId)}`
             ),
             method: "POST",
             headers: {
@@ -188,6 +197,7 @@ export class Problem {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -205,6 +215,9 @@ export class Problem {
     /**
      * Soft deletes a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.problem.deleteProblem("string")
      */
@@ -215,7 +228,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${problemId}`
+                `/problem-crud/delete/${encodeURIComponent(problemId)}`
             ),
             method: "DELETE",
             headers: {
@@ -233,6 +246,7 @@ export class Problem {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -249,6 +263,9 @@ export class Problem {
 
     /**
      * Returns default starter files for problem
+     *
+     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.getDefaultStarterFiles({
@@ -292,6 +309,7 @@ export class Problem {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -306,7 +324,7 @@ export class Problem {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

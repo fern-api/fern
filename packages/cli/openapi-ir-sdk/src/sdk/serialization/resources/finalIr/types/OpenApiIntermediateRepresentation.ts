@@ -12,6 +12,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
+    basePath: core.serialization.string().optional(),
     servers: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Server)),
     groups: core.serialization.record(
         core.serialization.string(),
@@ -27,10 +28,6 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     schemas: core.serialization.record(
         core.serialization.lazy(async () => (await import("../../..")).SchemaId),
         core.serialization.lazy(async () => (await import("../../..")).Schema)
-    ),
-    errors: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).StatusCode),
-        core.serialization.lazyObject(async () => (await import("../../..")).HttpError)
     ),
     variables: core.serialization.record(
         core.serialization.string(),
@@ -52,6 +49,7 @@ export declare namespace OpenApiIntermediateRepresentation {
     interface Raw {
         title?: string | null;
         description?: string | null;
+        basePath?: string | null;
         servers: serializers.Server.Raw[];
         groups: Record<string, serializers.SdkGroupInfo.Raw>;
         tags: serializers.Tags.Raw;
@@ -60,7 +58,6 @@ export declare namespace OpenApiIntermediateRepresentation {
         webhooks: serializers.Webhook.Raw[];
         channel: serializers.WebsocketChannel.Raw[];
         schemas: Record<serializers.SchemaId.Raw, serializers.Schema.Raw>;
-        errors: Record<serializers.StatusCode.Raw, serializers.HttpError.Raw>;
         variables: Record<string, serializers.PrimitiveSchema.Raw>;
         nonRequestReferencedSchemas: serializers.SchemaId.Raw[];
         securitySchemes: Record<serializers.SecuritySchemeId.Raw, serializers.SecurityScheme.Raw>;

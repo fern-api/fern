@@ -4,8 +4,8 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import * as serializers from "./serialization";
-import * as errors from "./errors";
+import * as serializers from "./serialization/index";
+import * as errors from "./errors/index";
 import { File_ } from "./api/resources/file/client/Client";
 import { Health } from "./api/resources/health/client/Client";
 import { Service } from "./api/resources/service/client/Client";
@@ -19,12 +19,20 @@ export declare namespace SeedExamplesClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class SeedExamplesClient {
     constructor(protected readonly _options: SeedExamplesClient.Options) {}
 
+    /**
+     * @param {string} request
+     * @param {SeedExamplesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines")
+     */
     public async echo(request: string, requestOptions?: SeedExamplesClient.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -41,6 +49,7 @@ export class SeedExamplesClient {
             body: await serializers.echo.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.echo.Response.parseOrThrow(_response.body, {
@@ -91,7 +100,7 @@ export class SeedExamplesClient {
         return (this._service ??= new Service(this._options));
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

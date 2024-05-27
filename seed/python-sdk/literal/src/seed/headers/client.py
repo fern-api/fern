@@ -8,6 +8,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
@@ -22,11 +23,19 @@ class HeadersClient:
 
     def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed.client import SeedLiteral
 
         client = SeedLiteral(
@@ -37,10 +46,12 @@ class HeadersClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "headers"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "headers"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"query": query})
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -79,11 +90,19 @@ class AsyncHeadersClient:
 
     async def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedLiteral
 
         client = AsyncSeedLiteral(
@@ -94,10 +113,12 @@ class AsyncHeadersClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "headers"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "headers"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"query": query})
             if request_options is None or request_options.get("additional_body_parameters") is None

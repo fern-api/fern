@@ -8,6 +8,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.shape import Shape
@@ -22,11 +23,19 @@ class UnionClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Shape:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Shape
+
+        Examples
+        --------
         from seed.client import SeedUnions
 
         client = SeedUnions(
@@ -37,10 +46,12 @@ class UnionClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -66,11 +77,19 @@ class UnionClient:
 
     def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Parameters:
-            - request: Shape.
+        Parameters
+        ----------
+        request : Shape
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed import Shape_Circle
         from seed.client import SeedUnions
 
@@ -85,10 +104,12 @@ class UnionClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "PATCH",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="PATCH",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -125,11 +146,19 @@ class AsyncUnionClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Shape:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Shape
+
+        Examples
+        --------
         from seed.client import AsyncSeedUnions
 
         client = AsyncSeedUnions(
@@ -140,10 +169,12 @@ class AsyncUnionClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -169,11 +200,19 @@ class AsyncUnionClient:
 
     async def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Parameters:
-            - request: Shape.
+        Parameters
+        ----------
+        request : Shape
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed import Shape_Circle
         from seed.client import AsyncSeedUnions
 
@@ -188,10 +227,12 @@ class AsyncUnionClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "PATCH",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="PATCH",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None

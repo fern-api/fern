@@ -9,13 +9,13 @@ from ...core.pydantic_utilities import pydantic_v1
 
 
 class UnionWithOptionalTime_Date(pydantic_v1.BaseModel):
+    value: typing.Optional[dt.date] = None
     type: typing.Literal["date"] = "date"
-    value: typing.Optional[dt.date]
 
 
 class UnionWithOptionalTime_Dateimte(pydantic_v1.BaseModel):
+    value: typing.Optional[dt.datetime] = None
     type: typing.Literal["dateimte"] = "dateimte"
-    value: typing.Optional[dt.datetime]
 
 
 UnionWithOptionalTime = typing.Union[UnionWithOptionalTime_Date, UnionWithOptionalTime_Dateimte]

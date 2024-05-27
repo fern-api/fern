@@ -1,5 +1,7 @@
 import {
     HeaderWithExample,
+    PathParameterWithExample,
+    PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
     Schema,
     SchemaId,
@@ -27,10 +29,12 @@ export interface AsyncAPIIntermediateRepresentation {
 
 export function parseAsyncAPI({
     document,
-    taskContext
+    taskContext,
+    shouldUseTitleAsName
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
+    shouldUseTitleAsName: boolean;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
@@ -39,7 +43,7 @@ export function parseAsyncAPI({
         breadcrumbs.push("websocket");
     }
 
-    const context = new AsyncAPIV2ParserContext({ document, taskContext });
+    const context = new AsyncAPIV2ParserContext({ document, taskContext, shouldUseTitleAsName });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     let parsedChannel: WebsocketChannel | undefined = undefined;
@@ -55,6 +59,34 @@ export function parseAsyncAPI({
         if (channel.bindings?.ws == null) {
             context.logger.error(`Channel ${channelPath} does not have websocket bindings. Skipping.`);
             continue;
+        }
+
+        const pathParameters: PathParameterWithExample[] = [];
+        if (channel.parameters != null) {
+            for (const [name, parameter] of Object.entries(channel.parameters ?? {})) {
+                pathParameters.push({
+                    name,
+                    description: parameter.description,
+                    schema:
+                        parameter.schema != null
+                            ? convertSchema(parameter.schema, false, context, breadcrumbs)
+                            : SchemaWithExample.primitive({
+                                  schema: PrimitiveSchemaValueWithExample.string({
+                                      default: undefined,
+                                      pattern: undefined,
+                                      format: undefined,
+                                      maxLength: undefined,
+                                      minLength: undefined,
+                                      example: undefined
+                                  }),
+                                  description: undefined,
+                                  generatedName: "",
+                                  groupName: undefined,
+                                  nameOverride: undefined
+                              }),
+                    variableReference: undefined
+                });
+            }
         }
 
         const headers: HeaderWithExample[] = [];
@@ -148,6 +180,12 @@ export function parseAsyncAPI({
                         };
                     }),
                     queryParameters: queryParameters.map((param) => {
+                        return {
+                            ...param,
+                            schema: convertSchemaWithExampleToSchema(param.schema)
+                        };
+                    }),
+                    pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
                             schema: convertSchemaWithExampleToSchema(param.schema)

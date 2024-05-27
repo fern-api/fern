@@ -7,7 +7,6 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
-	fmt "fmt"
 	fern "github.com/imdb/fern"
 	core "github.com/imdb/fern/core"
 	option "github.com/imdb/fern/option"
@@ -50,7 +49,7 @@ func (c *Client) CreateMovie(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movies/create-movie"
+	endpointURL := baseURL + "/movies/create-movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -86,7 +85,7 @@ func (c *Client) GetMovie(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"movies/%v", movieId)
+	endpointURL := core.EncodeURL(baseURL+"/movies/%v", movieId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

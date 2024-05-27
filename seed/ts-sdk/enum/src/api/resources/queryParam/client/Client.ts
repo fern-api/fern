@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedEnum from "../../..";
+import * as SeedEnum from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace QueryParam {
     interface Options {
@@ -15,12 +15,23 @@ export declare namespace QueryParam {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class QueryParam {
     constructor(protected readonly _options: QueryParam.Options) {}
 
+    /**
+     * @param {SeedEnum.SendEnumAsQueryParamRequest} request
+     * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedEnum.queryParam.send({
+     *         operand: SeedEnum.Operand.GreaterThan,
+     *         operandOrColor: SeedEnum.Color.Red
+     *     })
+     */
     public async send(
         request: SeedEnum.SendEnumAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions
@@ -53,6 +64,7 @@ export class QueryParam {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -80,6 +92,18 @@ export class QueryParam {
         }
     }
 
+    /**
+     * @param {SeedEnum.SendEnumListAsQueryParamRequest} request
+     * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedEnum.queryParam.sendList({
+     *         operand: SeedEnum.Operand.GreaterThan,
+     *         maybeOperand: SeedEnum.Operand.GreaterThan,
+     *         operandOrColor: SeedEnum.Color.Red,
+     *         maybeOperandOrColor: SeedEnum.Color.Red
+     *     })
+     */
     public async sendList(
         request: SeedEnum.SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParam.RequestOptions
@@ -134,6 +158,7 @@ export class QueryParam {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

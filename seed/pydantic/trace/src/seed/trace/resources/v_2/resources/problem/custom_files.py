@@ -2,26 +2,47 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-from .....core.pydantic_utilities import pydantic_v1
+from .....core.datetime_utils import serialize_datetime
+from .....core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from ....commons.language import Language
-from .basic_custom_files import BasicCustomFiles
+from .basic_test_case_template import BasicTestCaseTemplate
 from .file_info_v_2 import FileInfoV2
 from .files import Files
+from .non_void_function_signature import NonVoidFunctionSignature
 
 
-class CustomFiles_Basic(BasicCustomFiles):
+class CustomFiles_Basic(pydantic_v1.BaseModel):
+    method_name: str = pydantic_v1.Field(alias="methodName")
+    signature: NonVoidFunctionSignature
+    additional_files: typing.Dict[Language, Files] = pydantic_v1.Field(alias="additionalFiles")
+    basic_test_case_template: BasicTestCaseTemplate = pydantic_v1.Field(alias="basicTestCaseTemplate")
     type: typing.Literal["basic"] = "basic"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class CustomFiles_Custom(pydantic_v1.BaseModel):
-    type: typing.Literal["custom"] = "custom"
     value: typing.Dict[Language, Files]
+    type: typing.Literal["custom"] = "custom"
 
 
 CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]

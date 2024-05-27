@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedUndiscriminatedUnions from "../../..";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as SeedUndiscriminatedUnions from "../../../index";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Union {
     interface Options {
@@ -15,12 +15,20 @@ export declare namespace Union {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Union {
     constructor(protected readonly _options: Union.Options) {}
 
+    /**
+     * @param {SeedUndiscriminatedUnions.MyUnion} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedUndiscriminatedUnions.union.get("string")
+     */
     public async get(
         request: SeedUndiscriminatedUnions.MyUnion,
         requestOptions?: Union.RequestOptions
@@ -39,6 +47,7 @@ export class Union {
             body: await serializers.MyUnion.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.MyUnion.parseOrThrow(_response.body, {

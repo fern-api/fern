@@ -5,7 +5,7 @@ import {
     GeneratorNotificationService,
     parseGeneratorConfig
 } from "@fern-api/generator-commons";
-import { Logger, LogLevel } from "@fern-api/logger";
+import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { cp, readdir } from "fs/promises";
@@ -25,14 +25,18 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         const generatorNotificationService = new GeneratorNotificationService(config.environment);
 
         try {
-            const customConfig = this.parseCustomConfig(config.customConfig);
             const generatorContext = new GeneratorContextImpl(config, generatorNotificationService);
+            generatorContext.logger.debug("[Ruby] Beginning generator-specific logic.");
+            const customConfig = this.parseCustomConfig(config.customConfig);
+            generatorContext.logger.debug("[Ruby] Custom configuration has been parsed, beginning core execution.");
+
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate ruby project.");
             }
 
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
+                    generatorContext.logger.debug("[Ruby] Entering `publish` generation flow.");
                     await this.publishPackage(
                         config,
                         customConfig,
@@ -41,6 +45,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     );
                 },
                 github: async (githubOutputMode: FernGeneratorExec.GithubOutputMode) => {
+                    generatorContext.logger.debug("[Ruby] Entering `github` generation flow.");
                     await this.writeForGithub(
                         config,
                         customConfig,
@@ -50,6 +55,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     );
                 },
                 downloadFiles: async () => {
+                    generatorContext.logger.debug("[Ruby] Entering `downloadFiles` generation flow.");
                     await this.writeForDownload(
                         config,
                         customConfig,

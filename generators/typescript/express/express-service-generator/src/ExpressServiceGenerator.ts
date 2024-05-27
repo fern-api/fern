@@ -9,6 +9,8 @@ export declare namespace ExpressServiceGenerator {
         doNotHandleUnrecognizedErrors: boolean;
         packageResolver: PackageResolver;
         includeSerdeLayer: boolean;
+        skipRequestValidation: boolean;
+        skipResponseValidation: boolean;
     }
 
     export namespace generateService {
@@ -24,11 +26,21 @@ export class ExpressServiceGenerator {
     private doNotHandleUnrecognizedErrors: boolean;
     private packageResolver: PackageResolver;
     private includeSerdeLayer: boolean;
+    private skipRequestValidation: boolean;
+    private skipResponseValidation: boolean;
 
-    constructor({ packageResolver, doNotHandleUnrecognizedErrors, includeSerdeLayer }: ExpressServiceGenerator.Init) {
+    constructor({
+        packageResolver,
+        doNotHandleUnrecognizedErrors,
+        includeSerdeLayer,
+        skipRequestValidation,
+        skipResponseValidation
+    }: ExpressServiceGenerator.Init) {
         this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
         this.packageResolver = packageResolver;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.skipRequestValidation = skipRequestValidation;
+        this.skipResponseValidation = skipResponseValidation;
     }
 
     public generateService({
@@ -43,7 +55,9 @@ export class ExpressServiceGenerator {
             service,
             serviceClassName,
             doNotHandleUnrecognizedErrors: this.doNotHandleUnrecognizedErrors,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            skipRequestValidation: this.skipRequestValidation,
+            skipResponseValidation: this.skipResponseValidation
         });
     }
 }

@@ -6,11 +6,9 @@ import {
     maybeFileFromResolvedType,
     maybePrimitiveType,
     resolvedTypeHasProperty,
-    resolveResponseType,
-    validateQueryParameterProperty,
-    validateResponseProperty,
-    validateResultsProperty
-} from "./validateUtils";
+    resolveResponseType
+} from "../../utils/propertyValidatorUtils";
+import { validateQueryParameterProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils";
 
 export function validateCursorPagination({
     endpointId,
@@ -141,7 +139,7 @@ function isValidCursorProperty({
     });
 }
 
-function isValidCursorType(resolvedType: ResolvedType | undefined): boolean {
+function isValidCursorType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
     const primitiveType = maybePrimitiveType(resolvedType);
     if (primitiveType == null) {
         return false;

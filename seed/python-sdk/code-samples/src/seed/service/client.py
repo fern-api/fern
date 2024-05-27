@@ -8,6 +8,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.my_response import MyResponse
@@ -22,11 +23,19 @@ class ServiceClient:
 
     def hello(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> MyResponse:
         """
-        Parameters:
-            - num_events: int.
+        Parameters
+        ----------
+        num_events : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MyResponse
+
+        Examples
+        --------
         from seed.client import SeedCodeSamples
 
         client = SeedCodeSamples(
@@ -37,10 +46,12 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "hello"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "hello"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"num_events": num_events})
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -77,11 +88,19 @@ class AsyncServiceClient:
 
     async def hello(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> MyResponse:
         """
-        Parameters:
-            - num_events: int.
+        Parameters
+        ----------
+        num_events : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MyResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedCodeSamples
 
         client = AsyncSeedCodeSamples(
@@ -92,10 +111,12 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "hello"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "hello"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"num_events": num_events})
             if request_options is None or request_options.get("additional_body_parameters") is None

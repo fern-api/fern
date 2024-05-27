@@ -1,0 +1,68 @@
+---
+title: Pull request previews
+description: Fern's PR previews feature lets you preview changes to your docs from pull requests before merging to the live docs site. Use manually or in GitHub Actions.
+---
+
+`PR previews` offer a way to preview changes from pull requests (PRs) before merging code to a production branch. This is useful for reviewing documentation changes before publishing them to your live documentation site. Use manually or in GitHub Actions.
+
+## Usage
+
+```bash
+fern generate --docs --preview
+```
+
+## Example
+
+```bash
+fern generate --docs --preview
+
+[docs]: Found 0 errors and 1 warnings. Run fern check --warnings to print out the warnings.
+[docs]: Published docs to https://fern-preview-ce3459d6-8a76-4747-963a-33c71ee13959.docs.buildwithfern.com
+┌─
+│ ✓  docs.example.com
+└─
+```
+
+## Usage in GitHub Actions  
+
+The following is a GitHub Action workflow that generates a preview URL for every pull request.x
+
+<CodeBlock title = ".github/workflows/preview-docs.yml">
+```yaml
+name: preview-docs
+
+on:
+  pull_request
+
+jobs:
+    run:
+        runs-on: ubuntu-latest
+        permissions: write-all
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Install Fern
+              run: npm install -g fern-api
+
+            - name: Generate preview URL
+              id: generate-docs
+              env:
+                  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+              run: |
+                  OUTPUT=$(fern generate --docs --preview 2>&1) || true
+                  echo "$OUTPUT"
+                  URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
+                  echo "Preview URL: $URL"
+                  echo "🌿 Preview your docs: $URL" > preview_url.txt
+
+            - name: Comment URL in PR
+              uses: thollander/actions-comment-pull-request@v2.4.3
+              with:
+                  filePath: preview_url.txt
+```
+</CodeBlock>
+
+## Link expiration
+
+Preview links do not expire. However, the time to live (TTL) is subject to change in the future.

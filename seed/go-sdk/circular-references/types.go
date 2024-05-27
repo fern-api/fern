@@ -11,7 +11,12 @@ import (
 type ImportingA struct {
 	A *A `json:"a,omitempty" url:"a,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (i *ImportingA) GetExtraProperties() map[string]interface{} {
+	return i.extraProperties
 }
 
 func (i *ImportingA) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (i *ImportingA) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = ImportingA(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+
 	i._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -40,7 +52,12 @@ func (i *ImportingA) String() string {
 type RootType struct {
 	S string `json:"s" url:"s"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (r *RootType) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
 }
 
 func (r *RootType) UnmarshalJSON(data []byte) error {
@@ -50,6 +67,13 @@ func (r *RootType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = RootType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
 	r._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -69,7 +93,12 @@ func (r *RootType) String() string {
 type A struct {
 	S string `json:"s" url:"s"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (a *A) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
 }
 
 func (a *A) UnmarshalJSON(data []byte) error {
@@ -79,6 +108,13 @@ func (a *A) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = A(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+
 	a._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -209,7 +245,7 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "primitive_value":
 		var valueUnmarshaler struct {
-			PrimitiveValue PrimitiveValue `json:"value,omitempty"`
+			PrimitiveValue PrimitiveValue `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -240,21 +276,14 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 	case "primitive_value":
 		var marshaler = struct {
 			Type           string         `json:"type"`
-			PrimitiveValue PrimitiveValue `json:"value,omitempty"`
+			PrimitiveValue PrimitiveValue `json:"value"`
 		}{
 			Type:           "primitive_value",
 			PrimitiveValue: f.PrimitiveValue,
 		}
 		return json.Marshal(marshaler)
 	case "object_value":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ObjectValue
-		}{
-			Type:        "object_value",
-			ObjectValue: f.ObjectValue,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(f.ObjectValue, "type", "object_value")
 	case "container_value":
 		var marshaler = struct {
 			Type           string          `json:"type"`
@@ -287,7 +316,12 @@ func (f *FieldValue) Accept(visitor FieldValueVisitor) error {
 }
 
 type ObjectValue struct {
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
 }
 
 func (o *ObjectValue) UnmarshalJSON(data []byte) error {
@@ -297,6 +331,13 @@ func (o *ObjectValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = ObjectValue(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
 	o._rawJSON = json.RawMessage(data)
 	return nil
 }

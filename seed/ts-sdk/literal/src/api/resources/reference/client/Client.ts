@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedLiteral from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedLiteral from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Reference {
     interface Options {
@@ -16,12 +16,24 @@ export declare namespace Reference {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Reference {
     constructor(protected readonly _options: Reference.Options) {}
 
+    /**
+     * @param {SeedLiteral.SendRequest} request
+     * @param {Reference.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedLiteral.reference.send({
+     *         prompt: "You are a helpful assistant",
+     *         stream: false,
+     *         query: "What is the weather today"
+     *     })
+     */
     public async send(
         request: SeedLiteral.SendRequest,
         requestOptions?: Reference.RequestOptions
@@ -42,6 +54,7 @@ export class Reference {
             body: await serializers.SendRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.SendResponse.parseOrThrow(_response.body, {

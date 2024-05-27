@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedLiteral from "../../..";
+import * as SeedLiteral from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Query {
     interface Options {
@@ -16,12 +16,24 @@ export declare namespace Query {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Query {
     constructor(protected readonly _options: Query.Options) {}
 
+    /**
+     * @param {SeedLiteral.SendLiteralsInQueryRequest} request
+     * @param {Query.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedLiteral.query.send({
+     *         prompt: "You are a helpful assistant",
+     *         stream: false,
+     *         query: "What is the weather today"
+     *     })
+     */
     public async send(
         request: SeedLiteral.SendLiteralsInQueryRequest,
         requestOptions?: Query.RequestOptions
@@ -47,6 +59,7 @@ export class Query {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.SendResponse.parseOrThrow(_response.body, {

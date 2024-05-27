@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../../../core";
-import * as Fiddle from "../../../../..";
+import * as Fiddle from "../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../serialization";
+import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace Params {
     interface Options {
@@ -16,6 +16,7 @@ export declare namespace Params {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -25,6 +26,9 @@ export class Params {
     /**
      * GET with path param
      *
+     * @param {string} param
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.getWithPath("string")
      */
@@ -33,7 +37,10 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path/${encodeURIComponent(param)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -46,6 +53,7 @@ export class Params {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -67,6 +75,9 @@ export class Params {
 
     /**
      * GET with query param
+     *
+     * @param {Fiddle.endpoints.GetWithQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await fiddle.endpoints.params.getWithQuery({
@@ -97,6 +108,7 @@ export class Params {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -113,6 +125,9 @@ export class Params {
 
     /**
      * GET with multiple of same query param
+     *
+     * @param {Fiddle.endpoints.GetWithMultipleQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await fiddle.endpoints.params.getWithAllowMultipleQuery({
@@ -153,6 +168,7 @@ export class Params {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -170,6 +186,10 @@ export class Params {
     /**
      * GET with path and query params
      *
+     * @param {string} param
+     * @param {Fiddle.endpoints.GetWithPathAndQuery} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.getWithPathAndQuery("string", {
      *         query: "string"
@@ -184,7 +204,10 @@ export class Params {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path-query/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path-query/${encodeURIComponent(param)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -198,6 +221,7 @@ export class Params {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -215,6 +239,10 @@ export class Params {
     /**
      * PUT to update with path param
      *
+     * @param {string} param
+     * @param {string} request
+     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await fiddle.endpoints.params.modifyWithPath("string", "string")
      */
@@ -224,7 +252,10 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path/${encodeURIComponent(param)}`
+            ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -240,6 +271,7 @@ export class Params {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -259,7 +291,7 @@ export class Params {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

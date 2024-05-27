@@ -6,51 +6,15 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const HttpResponse: core.serialization.Schema<serializers.HttpResponse.Raw, FernIr.HttpResponse> =
-    core.serialization
-        .union("type", {
-            json: core.serialization.object({
-                value: core.serialization.lazy(async () => (await import("../../..")).JsonResponse),
-            }),
-            fileDownload: core.serialization.lazyObject(async () => (await import("../../..")).FileDownloadResponse),
-            text: core.serialization.lazyObject(async () => (await import("../../..")).TextResponse),
-            streaming: core.serialization.lazyObject(async () => (await import("../../..")).StreamingResponse),
-        })
-        .transform<FernIr.HttpResponse>({
-            transform: (value) => {
-                switch (value.type) {
-                    case "json":
-                        return FernIr.HttpResponse.json(value.value);
-                    case "fileDownload":
-                        return FernIr.HttpResponse.fileDownload(value);
-                    case "text":
-                        return FernIr.HttpResponse.text(value);
-                    case "streaming":
-                        return FernIr.HttpResponse.streaming(value);
-                    default:
-                        return value as FernIr.HttpResponse;
-                }
-            },
-            untransform: ({ _visit, ...value }) => value as any,
-        });
+export const HttpResponse: core.serialization.ObjectSchema<serializers.HttpResponse.Raw, FernIr.HttpResponse> =
+    core.serialization.objectWithoutOptionalProperties({
+        statusCode: core.serialization.property("status-code", core.serialization.number().optional()),
+        body: core.serialization.lazy(async () => (await import("../../..")).HttpResponseBody).optional(),
+    });
 
 export declare namespace HttpResponse {
-    type Raw = HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Text | HttpResponse.Streaming;
-
-    interface Json {
-        type: "json";
-        value: serializers.JsonResponse.Raw;
-    }
-
-    interface FileDownload extends serializers.FileDownloadResponse.Raw {
-        type: "fileDownload";
-    }
-
-    interface Text extends serializers.TextResponse.Raw {
-        type: "text";
-    }
-
-    interface Streaming extends serializers.StreamingResponse.Raw {
-        type: "streaming";
+    interface Raw {
+        "status-code"?: number | null;
+        body?: serializers.HttpResponseBody.Raw | null;
     }
 }

@@ -1,7 +1,14 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
-import { ExampleEndpointCall, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    HttpEndpoint,
+    HttpService,
+    IntermediateRepresentation,
+    OAuthScheme
+} from "@fern-fern/ir-sdk/api";
+import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 import {
     BundledTypescriptProject,
     convertExportedFilePathToFilePath,
@@ -25,6 +32,7 @@ import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typ
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import { SdkClientClassGenerator } from "@fern-typescript/sdk-client-class-generator";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import { SdkEndpointTypeSchemasGenerator } from "@fern-typescript/sdk-endpoint-type-schemas-generator";
 import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
@@ -35,6 +43,7 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { writeFile } from "fs/promises";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import urlJoin from "url-join";
+import { v4 as uuidv4 } from "uuid";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -46,6 +55,7 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { ReferenceGenerator, ReferenceParameterDeclaration } from "./ReferenceGenerator";
+import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 
 const FILE_HEADER = `/**
@@ -70,7 +80,9 @@ export declare namespace SdkGenerator {
 
     export interface Config {
         whitelabel: boolean;
+        generateOAuthClients: boolean;
         snippetFilepath: AbsoluteFilePath | undefined;
+        snippetTemplateFilepath: AbsoluteFilePath | undefined;
         shouldBundle: boolean;
         shouldUseBrandedStringAliases: boolean;
         isPackagePrivate: boolean;
@@ -93,6 +105,12 @@ export declare namespace SdkGenerator {
         includeApiReference: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
+        allowExtraFields: boolean;
+        writeUnitTests: boolean;
+        inlineFileProperties: boolean;
+        executionEnvironment: "local" | "dev" | "prod";
+        organization: string;
+        apiName: string;
     }
 }
 
@@ -102,11 +120,13 @@ export class SdkGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
+    private generateOAuthClients: boolean;
     private generateJestTests: boolean;
     private extraFiles: Record<string, string> = {};
     private extraScripts: Record<string, string> = {};
 
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
+    private endpointSnippetTemplates: FdrSnippetTemplate.SnippetRegistryEntry[] = [];
 
     private project: Project;
     private rootDirectory: Directory;
@@ -143,7 +163,10 @@ export class SdkGenerator {
     private sdkClientClassGenerator: SdkClientClassGenerator;
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
+    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
+    private FdrClient: FdrSnippetTemplateClient | undefined;
+    private generatedOAuthClients = false;
 
     constructor({
         namespaceExport,
@@ -159,6 +182,9 @@ export class SdkGenerator {
         this.config = config;
         this.npmPackage = npmPackage;
         this.generateJestTests = generateJestTests;
+        this.generateOAuthClients =
+            this.config.generateOAuthClients &&
+            this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
 
         this.exportsManager = new ExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager();
@@ -271,10 +297,12 @@ export class SdkGenerator {
             intermediateRepresentation,
             shouldGenerateErrors: config.neverThrowErrors,
             skipResponseValidation: config.skipResponseValidation,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
+        this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator(intermediateRepresentation);
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation,
             errorResolver: this.errorResolver,
@@ -288,18 +316,32 @@ export class SdkGenerator {
             targetRuntime: config.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: config.includeSerdeLayer,
-            retainOriginalCasing: config.retainOriginalCasing
+            retainOriginalCasing: config.retainOriginalCasing,
+            inlineFileProperties: config.inlineFileProperties,
+            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
         this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
         this.jestTestGenerator = new JestTestGenerator(
             intermediateRepresentation,
             this.dependencyManager,
-            this.rootDirectory
+            this.rootDirectory,
+            this.config.writeUnitTests
         );
+
+        this.FdrClient =
+            this.config.executionEnvironment !== "local"
+                ? new FdrSnippetTemplateClient({
+                      environment:
+                          this.config.executionEnvironment === "dev"
+                              ? FdrSnippetTemplateEnvironment.Dev
+                              : FdrSnippetTemplateEnvironment.Prod
+                  })
+                : undefined;
     }
 
     public async generate(): Promise<TypescriptProject> {
@@ -330,12 +372,23 @@ export class SdkGenerator {
             this.generateInlinedRequestBodySchemas();
             this.context.logger.debug("Generated serde layer.");
         }
+
+        if (this.generateOAuthClients) {
+            const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
+            if (oauthScheme != null && oauthScheme.type === "oauth") {
+                this.generateOAuthTokenProvider(oauthScheme);
+                this.generatedOAuthClients = true;
+            }
+        }
+
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         this.context.logger.debug("Generated exports");
 
-        if (this.generateJestTests) {
+        if (this.generateJestTests && this.config.writeUnitTests) {
             this.generateTestFiles();
+        }
+        if (this.generateJestTests) {
             this.jestTestGenerator.addExtras();
             this.extraScripts = {
                 ...this.extraScripts,
@@ -363,6 +416,32 @@ export class SdkGenerator {
                 this.config.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
             );
+            if (this.config.snippetTemplateFilepath != null) {
+                this.context.logger.debug(
+                    `Generating snippet templates for Org: ${this.config.organization}, API: ${
+                        this.config.apiName
+                    } for package ${this.npmPackage?.packageName ?? "package_unknown"} at version: ${
+                        this.npmPackage?.version ?? "0.0.0"
+                    }.`
+                );
+                await writeFile(
+                    this.config.snippetTemplateFilepath,
+                    JSON.stringify(this.endpointSnippetTemplates, undefined, 4)
+                );
+                if (this.FdrClient != null) {
+                    this.context.logger.debug("FDR Client found, registering snippet templates.");
+                    try {
+                        await this.FdrClient.templates.registerBatch({
+                            orgId: this.config.organization,
+                            apiId: this.config.apiName,
+                            apiDefinitionId: uuidv4(),
+                            snippets: this.endpointSnippetTemplates
+                        });
+                    } catch (e) {
+                        this.context.logger.warn("Failed to register snippet templates with FDR, this is OK");
+                    }
+                }
+            }
             if (this.config.includeApiReference && refGenerator !== undefined) {
                 this.extraFiles["reference.md"] = refGenerator.write();
             }
@@ -495,7 +574,8 @@ export class SdkGenerator {
                             context.requestWrapper
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
-                        }
+                        },
+                        addExportTypeModifier: true
                     });
                 }
             }
@@ -538,6 +618,25 @@ export class SdkGenerator {
                 }
             });
         }
+    }
+
+    private generateOAuthTokenProvider(oauthScheme: OAuthScheme) {
+        this.context.logger.debug("Generating OAuth token provider...");
+        this.withSourceFile({
+            filepath: this.oauthTokenProviderGenerator.getExportedFilePath(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                const file = this.oauthTokenProviderGenerator.buildFile({
+                    context,
+                    oauthScheme
+                });
+                sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
+            }
+        });
+        this.coreUtilitiesManager.addAuthOverride({
+            filepath: RelativeFilePath.of("index.ts"),
+            content: this.oauthTokenProviderGenerator.buildIndexFile().toString()
+        });
     }
 
     private generateTestFiles() {
@@ -633,6 +732,55 @@ export class SdkGenerator {
                         endpoint.displayName ?? endpoint.name.pascalCase.unsafeName
                     );
                 }
+
+                if (this.config.snippetTemplateFilepath != null && this.npmPackage != null) {
+                    const project = new Project({
+                        useInMemoryFileSystem: true
+                    });
+                    const sourceFile = project.createSourceFile("snippet-test", undefined, { overwrite: true });
+                    const importsManager = new ImportsManager();
+                    const endpointContext = this.generateSdkContext(
+                        { sourceFile, importsManager },
+                        { isForSnippet: true }
+                    );
+
+                    const clientSourceFile = project.createSourceFile("snippet-client", undefined, { overwrite: true });
+                    const clientImportsManager = new ImportsManager();
+                    const clientContext = this.generateSdkContext(
+                        { sourceFile: clientSourceFile, importsManager: clientImportsManager },
+                        { isForSnippet: true }
+                    );
+
+                    const snippetTemplate = new TemplateGenerator({
+                        endpointContext,
+                        clientContext,
+                        npmPackage: this.npmPackage,
+                        endpoint,
+                        packageId,
+                        rootPackageId: rootPackage,
+                        retainOriginalCasing: this.config.retainOriginalCasing,
+                        inlineFileProperties: this.config.inlineFileProperties
+                    }).generateSnippetTemplate();
+                    if (snippetTemplate != null) {
+                        const endpointPath = FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint));
+                        this.context.logger.debug(
+                            `Snippet template created for endpoint: ${endpoint.method} ${endpointPath}`
+                        );
+                        this.endpointSnippetTemplates.push({
+                            sdk: FdrSnippetTemplate.Sdk.typescript({
+                                package: this.npmPackage.packageName,
+                                version: this.npmPackage.version
+                            }),
+                            endpointId: {
+                                path: endpointPath,
+                                method: endpoint.method,
+                                identifierOverride: endpoint.id
+                            },
+                            snippetTemplate
+                        });
+                    }
+                }
+
                 const example = endpoint.examples[0];
                 if (example != null) {
                     const snippet = this.withSnippet({
@@ -653,7 +801,8 @@ export class SdkGenerator {
                         this.endpointSnippets.push({
                             id: {
                                 path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                                method: endpoint.method
+                                method: endpoint.method,
+                                identifierOverride: endpoint.id
                             },
                             snippet: FernGeneratorExec.EndpointSnippet.typescript({
                                 client: snippet
@@ -713,7 +862,7 @@ export class SdkGenerator {
                             // clientPath: getTextOfTsNode(statement),
                             clientPath: statement,
                             functionPath: serviceFilepath,
-                            functionName: endpoint.name.camelCase.unsafeName,
+                            functionName: this.getEndpointFunctionName(endpoint),
                             returnType,
                             parameters,
                             codeSnippet: referenceSnippet,
@@ -723,6 +872,10 @@ export class SdkGenerator {
                 }
             }
         });
+    }
+
+    private getEndpointFunctionName(endpoint: HttpEndpoint): string {
+        return endpoint.name.camelCase.unsafeName;
     }
 
     // TODO(dsinghvi): HACKHACK Move this to IR
@@ -803,15 +956,19 @@ export class SdkGenerator {
 
     private withSourceFile({
         run,
-        filepath
+        filepath,
+        addExportTypeModifier,
+        overwrite
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
+        addExportTypeModifier?: boolean;
+        overwrite?: boolean;
     }) {
         const filepathStr = convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
 
-        const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
+        const sourceFile = this.rootDirectory.createSourceFile(filepathStr, undefined, { overwrite });
         const importsManager = new ImportsManager();
 
         run({ sourceFile, importsManager });
@@ -821,7 +978,7 @@ export class SdkGenerator {
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
             importsManager.writeImportsToSourceFile(sourceFile);
-            this.exportsManager.addExportsForFilepath(filepath);
+            this.exportsManager.addExportsForFilepath(filepath, addExportTypeModifier);
 
             // this needs to be last.
             // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
@@ -905,7 +1062,9 @@ export class SdkGenerator {
             treatUnknownAsAny: this.config.treatUnknownAsAny,
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,
-            targetRuntime: this.config.targetRuntime
+            targetRuntime: this.config.targetRuntime,
+            inlineFileProperties: this.config.inlineFileProperties,
+            generateOAuthClients: this.generateOAuthClients
         });
     }
 }

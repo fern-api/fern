@@ -11,6 +11,7 @@ import {
     Class_,
     ConditionalStatement,
     DateReference,
+    ExampleGenerator,
     Expression,
     FieldsetProperty,
     FileClassReference,
@@ -29,6 +30,7 @@ import {
 } from "@fern-api/ruby-codegen";
 import {
     BytesRequest,
+    ExampleEndpointCall,
     FileProperty,
     FileUploadRequest,
     HttpEndpoint,
@@ -45,10 +47,13 @@ import { RequestOptions } from "./RequestOptionsClass";
 import { isTypeOptional } from "./TypeUtilities";
 
 export class EndpointGenerator {
+    public endpointHasExamples: boolean;
+
     private endpoint: HttpEndpoint;
     private blockArg: string;
     private requestOptions: RequestOptions;
     private crf: ClassReferenceFactory;
+    private eg: ExampleGenerator;
     private requestOptionsVariable: Variable;
 
     private pathParametersAsProperties: Property[];
@@ -58,50 +63,70 @@ export class EndpointGenerator {
     private streamProcessingBlock: Parameter | undefined;
     private fileUploadUtility: FileUploadUtility;
 
+    public example: ExampleEndpointCall | undefined;
+
     constructor(
         endpoint: HttpEndpoint,
         requestOptionsVariable: Variable,
         requestOptions: RequestOptions | IdempotencyRequestOptions,
         crf: ClassReferenceFactory,
+        eg: ExampleGenerator,
         generatedClasses: Map<TypeId, Class_>,
         fileUploadUtility: FileUploadUtility
     ) {
         this.endpoint = endpoint;
+        this.example = endpoint.examples[0];
+        this.endpointHasExamples = this.example !== undefined;
+        this.eg = eg;
         this.blockArg = "req";
         this.requestOptions = requestOptions;
         this.crf = crf;
 
         this.requestOptionsVariable = requestOptionsVariable;
 
-        this.pathParametersAsProperties = this.endpoint.allPathParameters.map(
-            (pp) =>
-                new Property({
-                    name: pp.name.snakeCase.safeName,
-                    type: crf.fromTypeReference(pp.valueType),
-                    isOptional: isTypeOptional(pp.valueType),
-                    documentation: pp.docs
-                })
-        );
-        this.queryParametersAsProperties = this.endpoint.queryParameters.map(
-            (qp) =>
-                new Property({
-                    name: qp.name.name.snakeCase.safeName,
-                    wireValue: qp.name.wireValue,
-                    type: crf.fromTypeReference(qp.valueType),
-                    isOptional: isTypeOptional(qp.valueType),
-                    documentation: qp.docs
-                })
-        );
-        this.headersAsProperties = this.endpoint.headers.map(
-            (header) =>
-                new Property({
-                    name: header.name.name.snakeCase.safeName,
-                    wireValue: header.name.wireValue,
-                    type: crf.fromTypeReference(header.valueType),
-                    isOptional: isTypeOptional(header.valueType),
-                    documentation: header.docs
-                })
-        );
+        const pathParameterExamples = (this.example?.rootPathParameters ?? [])
+            .concat(this.example?.servicePathParameters ?? [])
+            .concat(this.example?.endpointPathParameters ?? []);
+        this.pathParametersAsProperties = this.endpoint.allPathParameters.map((pp) => {
+            const ppEx = this.eg.convertExampleTypeReference(
+                pathParameterExamples.find((param) => pp.name.originalName === param.name.originalName)?.value
+            );
+            return new Property({
+                name: pp.name.snakeCase.safeName,
+                type: crf.fromTypeReference(pp.valueType),
+                isOptional: isTypeOptional(pp.valueType),
+                documentation: pp.docs,
+                example: ppEx
+            });
+        });
+
+        this.queryParametersAsProperties = this.endpoint.queryParameters.map((qp) => {
+            const qpEx = this.eg.convertExampleTypeReference(
+                this.example?.queryParameters.find((param) => qp.name.wireValue === param.name.wireValue)?.value
+            );
+            return new Property({
+                name: qp.name.name.snakeCase.safeName,
+                wireValue: qp.name.wireValue,
+                type: crf.fromTypeReference(qp.valueType),
+                isOptional: isTypeOptional(qp.valueType),
+                documentation: qp.docs,
+                example: qpEx
+            });
+        });
+
+        const headerExamples = (this.example?.serviceHeaders ?? []).concat(this.example?.endpointHeaders ?? []);
+        this.headersAsProperties = this.endpoint.headers.map((header) => {
+            const headerEx = this.eg.convertExampleTypeReference(
+                headerExamples.find((he) => header.name.wireValue === he.name.wireValue)?.value
+            );
+            return new Property({
+                name: header.name.name.snakeCase.safeName,
+                wireValue: header.name.wireValue,
+                type: crf.fromTypeReference(header.valueType),
+                isOptional: isTypeOptional(header.valueType),
+                example: headerEx
+            });
+        });
 
         const defaultBodyParameterName = "body";
         this.bodyAsProperties =
@@ -111,20 +136,32 @@ export class EndpointGenerator {
                         const properties: Property[] = irb.extends
                             .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
                             .filter((p) => p !== undefined) as Property[];
+                        const exampleRequestProperties =
+                            this.example?.request?.type === "inlinedRequestBody"
+                                ? this.example.request.properties
+                                : undefined;
                         return [
                             ...properties,
                             ...irb.properties.map((prop) => {
+                                const requestEx = this.eg.convertExampleTypeReference(
+                                    exampleRequestProperties?.find((erp) => prop.name.wireValue === erp.name.wireValue)
+                                        ?.value
+                                );
                                 return new Property({
                                     name: prop.name.name.snakeCase.safeName,
                                     wireValue: prop.name.wireValue,
                                     type: crf.fromTypeReference(prop.valueType),
                                     isOptional: isTypeOptional(prop.valueType),
-                                    documentation: prop instanceof Property ? prop.documentation : prop.docs
+                                    documentation: prop instanceof Property ? prop.documentation : prop.docs,
+                                    example: requestEx
                                 });
                             })
                         ];
                     },
                     reference: (rbr: HttpRequestBodyReference) => {
+                        const requestEx = this.eg.convertExampleTypeReference(
+                            this.example?.request?.type === "reference" ? this.example.request : undefined
+                        );
                         return [
                             new Property({
                                 name:
@@ -132,7 +169,8 @@ export class EndpointGenerator {
                                     defaultBodyParameterName,
                                 type: crf.fromTypeReference(rbr.requestBodyType),
                                 isOptional: isTypeOptional(rbr.requestBodyType),
-                                documentation: rbr.docs
+                                documentation: rbr.docs,
+                                example: requestEx
                             })
                         ];
                     },
@@ -144,8 +182,10 @@ export class EndpointGenerator {
                                         name: fp.key.name.snakeCase.safeName,
                                         isOptional: fp.isOptional,
                                         wireValue: fp.key.wireValue,
-                                        type: [StringClassReference, FileClassReference]
+                                        type: [StringClassReference, FileClassReference],
+                                        example: "my_file.txt"
                                     }),
+                                // TODO: add examples for fileUpload parameters
                                 bodyProperty: (irbp: InlinedRequestBodyProperty) =>
                                     new Property({
                                         name: irbp.name.name.snakeCase.safeName,
@@ -342,7 +382,6 @@ export class EndpointGenerator {
                                     arguments_: [
                                         new Argument({
                                             value: prop.toVariable(VariableType.LOCAL),
-                                            type: FileClassReference,
                                             isNamed: true,
                                             name: "file_like"
                                         })
@@ -507,7 +546,45 @@ export class EndpointGenerator {
             json: (jr: JsonResponse) => {
                 const responseCr = this.crf.fromTypeReference(jr.responseBodyType);
                 return jr._visit<AstNode[]>({
-                    response: () => [responseCr.fromJson(responseVariableBody) ?? responseVariableBody],
+                    response: () => {
+                        const hasFromJson =
+                            responseCr.fromJson(responseVariableBody) !== undefined &&
+                            !(responseCr instanceof ArrayReference) &&
+                            !(responseCr instanceof HashReference) &&
+                            !(responseCr instanceof DateReference) &&
+                            !(
+                                responseCr instanceof AliasReference &&
+                                (responseCr.aliasOf instanceof ArrayReference ||
+                                    responseCr.aliasOf instanceof HashReference ||
+                                    responseCr.aliasOf instanceof DateReference)
+                            );
+                        if (hasFromJson) {
+                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody];
+                        }
+
+                        const parsedJsonVariable = new Variable({
+                            name: "parsed_json",
+                            type: GenericClassReference,
+                            variableType: VariableType.LOCAL
+                        });
+                        return [
+                            new Expression({
+                                leftSide: parsedJsonVariable,
+                                rightSide: new FunctionInvocation({
+                                    onObject: JsonClassReference,
+                                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                    arguments_: [
+                                        new Argument({
+                                            value: responseVariableBody,
+                                            isNamed: false
+                                        })
+                                    ]
+                                }),
+                                isAssignment: true
+                            }),
+                            responseCr.fromJson(parsedJsonVariable) ?? parsedJsonVariable
+                        ];
+                    },
                     nestedPropertyAsResponse: (jrbwp: JsonResponseBodyWithProperty) => {
                         if (jrbwp.responseProperty !== undefined) {
                             // Turn to struct, then get the field, then reconvert to JSON (to_json)
@@ -525,7 +602,6 @@ export class EndpointGenerator {
                                         arguments_: [
                                             new Argument({
                                                 value: responseVariableBody,
-                                                type: GenericClassReference,
                                                 isNamed: false
                                             })
                                         ]

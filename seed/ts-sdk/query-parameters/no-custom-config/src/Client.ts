@@ -13,6 +13,7 @@ export declare namespace SeedQueryParametersClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

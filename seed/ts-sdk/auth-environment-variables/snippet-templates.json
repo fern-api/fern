@@ -1,0 +1,79 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/auth-environment-variables",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/apiKey",
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getWithApiKey"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedAuthEnvironmentVariables.service.getWithApiKey()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/auth-environment-variables",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/apiKeyInHeader",
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getWithHeader"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedAuthEnvironmentVariables.service.getWithHeader(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "xEndpointHeader: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "HEADERS",
+                                                "path": "X-Endpoint-Header",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

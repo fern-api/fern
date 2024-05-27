@@ -6,10 +6,9 @@ import {
     maybeFileFromResolvedType,
     maybePrimitiveType,
     resolvedTypeHasProperty,
-    resolveResponseType,
-    validateQueryParameterProperty,
-    validateResultsProperty
-} from "./validateUtils";
+    resolveResponseType
+} from "../../utils/propertyValidatorUtils";
+import { validateQueryParameterProperty, validateResultsProperty } from "./validateUtils";
 
 export function validateOffsetPagination({
     endpointId,
@@ -104,7 +103,7 @@ function isValidOffsetProperty({
     });
 }
 
-function isValidOffsetType(resolvedType: ResolvedType | undefined): boolean {
+function isValidOffsetType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
     const primitiveType = maybePrimitiveType(resolvedType);
     if (primitiveType == null) {
         return false;

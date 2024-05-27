@@ -3,7 +3,7 @@
  */
 
 import * as core from "./core";
-import * as errors from "./errors";
+import * as errors from "./errors/index";
 import { A } from "./api/resources/a/client/Client";
 import { Folder } from "./api/resources/folder/client/Client";
 
@@ -15,12 +15,19 @@ export declare namespace SeedApiClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class SeedApiClient {
     constructor(protected readonly _options: SeedApiClient.Options) {}
 
+    /**
+     * @param {SeedApiClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApi.foo()
+     */
     public async foo(requestOptions?: SeedApiClient.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -35,6 +42,7 @@ export class SeedApiClient {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

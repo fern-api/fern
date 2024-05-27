@@ -13,7 +13,12 @@ type OptionalStringResponse = *StringResponse
 type StringResponse struct {
 	Data string `json:"data" url:"data"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *StringResponse) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *StringResponse) UnmarshalJSON(data []byte) error {
@@ -23,6 +28,13 @@ func (s *StringResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = StringResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -46,7 +58,12 @@ type Response struct {
 	Docs     string            `json:"docs" url:"docs"`
 	Data     *Movie            `json:"data,omitempty" url:"data,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (r *Response) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
 }
 
 func (r *Response) UnmarshalJSON(data []byte) error {
@@ -56,6 +73,13 @@ func (r *Response) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = Response(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
 	r._rawJSON = json.RawMessage(data)
 	return nil
 }

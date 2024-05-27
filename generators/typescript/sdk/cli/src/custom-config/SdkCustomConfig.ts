@@ -24,4 +24,6 @@ export interface SdkCustomConfig {
     includeApiReference: boolean | undefined;
     tolerateRepublish: boolean;
     retainOriginalCasing: boolean | undefined;
+    allowExtraFields: boolean | undefined;
+    inlineFileProperties: boolean | undefined;
 }

@@ -4,6 +4,7 @@ import {
     fernConfigJson,
     GENERATORS_CONFIGURATION_FILENAME
 } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
@@ -21,7 +22,8 @@ export async function generateWorkspace({
     shouldLogS3Url,
     token,
     useLocalDocker,
-    keepDocker
+    keepDocker,
+    absolutePathToPreview
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -33,6 +35,7 @@ export async function generateWorkspace({
     token: FernToken;
     useLocalDocker: boolean;
     keepDocker: boolean;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -77,7 +80,8 @@ export async function generateWorkspace({
             version,
             shouldLogS3Url,
             token,
-            whitelabel: workspace.generatorsConfiguration.whitelabel
+            whitelabel: workspace.generatorsConfiguration.whitelabel,
+            absolutePathToPreview
         });
     }
 }

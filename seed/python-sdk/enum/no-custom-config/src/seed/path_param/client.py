@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.color_or_operand import ColorOrOperand
@@ -27,17 +28,25 @@ class PathParamClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: Operand.
+        Parameters
+        ----------
+        operand : Operand
 
-            - maybe_operand: typing.Optional[Operand].
+        maybe_operand : typing.Optional[Operand]
 
-            - operand_or_color: ColorOrOperand.
+        operand_or_color : ColorOrOperand
 
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
+        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedEnum
 
         client = SeedEnum(
@@ -51,13 +60,15 @@ class PathParamClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None
@@ -99,17 +110,25 @@ class AsyncPathParamClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: Operand.
+        Parameters
+        ----------
+        operand : Operand
 
-            - maybe_operand: typing.Optional[Operand].
+        maybe_operand : typing.Optional[Operand]
 
-            - operand_or_color: ColorOrOperand.
+        operand_or_color : ColorOrOperand
 
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
+        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(
@@ -123,13 +142,15 @@ class AsyncPathParamClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None

@@ -3,6 +3,7 @@
 package objectswithimports
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	commons "github.com/objects-with-imports/fern/commons"
 	core "github.com/objects-with-imports/fern/core"
@@ -12,6 +13,29 @@ type Node struct {
 	Id       string            `json:"id" url:"id"`
 	Label    *string           `json:"label,omitempty" url:"label,omitempty"`
 	Metadata *commons.Metadata `json:"metadata,omitempty" url:"metadata,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (n *Node) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *Node) UnmarshalJSON(data []byte) error {
+	type unmarshaler Node
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = Node(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
+	return nil
 }
 
 func (n *Node) String() string {
@@ -23,6 +47,29 @@ func (n *Node) String() string {
 
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (t *Tree) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *Tree) UnmarshalJSON(data []byte) error {
+	type unmarshaler Tree
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = Tree(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
+	return nil
 }
 
 func (t *Tree) String() string {
@@ -35,7 +82,30 @@ func (t *Tree) String() string {
 type File struct {
 	Name     string   `json:"name" url:"name"`
 	Contents string   `json:"contents" url:"contents"`
-	Info     FileInfo `json:"info,omitempty" url:"info,omitempty"`
+	Info     FileInfo `json:"info" url:"info"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *File) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *File) UnmarshalJSON(data []byte) error {
+	type unmarshaler File
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = File(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	return nil
 }
 
 func (f *File) String() string {

@@ -1,0 +1,26 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/bearer-token-environment-variable",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/apiKey",
+            "method": "GET",
+            "identifierOverride": "endpoint_service.getWithBearerToken"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({ apiKey: \"YOUR_API_KEY\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedBearerTokenEnvironmentVariable.service.getWithBearerToken()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

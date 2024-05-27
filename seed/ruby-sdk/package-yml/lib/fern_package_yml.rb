@@ -3,6 +3,7 @@
 require_relative "types_export"
 require_relative "requests"
 require_relative "fern_package_yml/service/client"
+require "json"
 
 module SeedPackageYmlClient
   class Client
@@ -14,8 +15,11 @@ module SeedPackageYmlClient
     # @param timeout_in_seconds [Long]
     # @return [SeedPackageYmlClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedPackageYmlClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                timeout_in_seconds: timeout_in_seconds)
+      @request_client = SeedPackageYmlClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @service = SeedPackageYmlClient::ServiceClient.new(request_client: @request_client)
     end
 
@@ -23,6 +27,9 @@ module SeedPackageYmlClient
     # @param request [String]
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
+    # @example
+    #  package_yml = SeedPackageYmlClient::Client.new(base_url: "https://api.example.com")
+    #  package_yml.echo(id: "id-ksfd9c1", request: "Hello world!")
     def echo(id:, request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -30,7 +37,7 @@ module SeedPackageYmlClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 
@@ -43,8 +50,11 @@ module SeedPackageYmlClient
     # @param timeout_in_seconds [Long]
     # @return [SeedPackageYmlClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedPackageYmlClient::AsyncRequestClient.new(base_url: base_url,
-                                                                           max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
+      @async_request_client = SeedPackageYmlClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @service = SeedPackageYmlClient::AsyncServiceClient.new(request_client: @async_request_client)
     end
 
@@ -52,6 +62,9 @@ module SeedPackageYmlClient
     # @param request [String]
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
+    # @example
+    #  package_yml = SeedPackageYmlClient::Client.new(base_url: "https://api.example.com")
+    #  package_yml.echo(id: "id-ksfd9c1", request: "Hello world!")
     def echo(id:, request:, request_options: nil)
       response = @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -59,7 +72,7 @@ module SeedPackageYmlClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/#{id}"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 end

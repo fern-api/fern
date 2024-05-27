@@ -1,0 +1,291 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_file/notification/service.getException"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.notification.service.get_exception(notification_id: \"notification-hsy129x\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_file/notification/service.getException"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.notification.service.get_exception(notification_id: \"notification-hsy129x\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET",
+                "identifierOverride": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.service.get_file(filename: \"file.txt\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET",
+                "identifierOverride": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.service.get_file(filename: \"file.txt\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_file/notification/service.getException"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.notification.service.get_exception(notification_id: \"notification-hsy129x\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_file/notification/service.getException"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.notification.service.get_exception(notification_id: \"notification-hsy129x\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET",
+                "identifierOverride": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.service.get_file(filename: \"file.txt\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET",
+                "identifierOverride": "endpoint_file/service.getFile"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.file.service.get_file(filename: \"file.txt\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.service.check(id: \"id-2sdx82h\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifierOverride": "endpoint_health/service.ping"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.service.ping",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.service.check(id: \"id-2sdx82h\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifierOverride": "endpoint_health/service.ping"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.service.ping",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.service.check(id: \"id-2sdx82h\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifierOverride": "endpoint_health/service.ping"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.service.ping",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET",
+                "identifierOverride": "endpoint_health/service.check"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.service.check(id: \"id-2sdx82h\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET",
+                "identifierOverride": "endpoint_health/service.ping"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.health.service.ping",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_service.getMovie"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.get_movie(movie_id: \"movie-c06a4ad7\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.createMovie"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET",
+                "identifierOverride": "endpoint_service.getMetadata"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.get_metadata(\n  x_api_version: \"0.0.1\",\n  shallow: false,\n  tag: \"development\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/response",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.getResponse"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.get_response",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_service.getMovie"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.get_movie(movie_id: \"movie-c06a4ad7\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.createMovie"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.create_movie(request: { id: \"movie-c06a4ad7\", prequel: \"movie-cv9b914f\", title: \"The Boy and the Heron\", from: \"Hayao Miyazaki\", rating: 8, type: \"movie\", tag: \"tag-wf9as23d\", metadata: { \"actors\": [\"Christian Bale\",\"Florence Pugh\",\"Willem Dafoe\"], \"releaseDate\": \"2023-12-08\", \"ratings\": {\"rottenTomatoes\":97,\"imdb\":7.6} } })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET",
+                "identifierOverride": "endpoint_service.getMetadata"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.get_metadata(\n  x_api_version: \"0.0.1\",\n  shallow: false,\n  tag: \"development\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/response",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.getResponse"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.service.get_response",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifierOverride": "endpoint_.echo"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.echo(request: \"Hello world!\\n\\nwith\\n\\tnewlines\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifierOverride": "endpoint_.echo"
+            },
+            "snippet": {
+                "client": "require \"fern_examples\"\n\nexamples = SeedExamplesClient::Client.new(base_url: \"https://api.example.com\", token: \"YOUR_AUTH_TOKEN\")\nexamples.echo(request: \"Hello world!\\n\\nwith\\n\\tnewlines\")",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

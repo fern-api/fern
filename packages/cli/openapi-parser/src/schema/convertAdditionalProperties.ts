@@ -17,7 +17,8 @@ export function convertAdditionalProperties({
     description,
     wrapAsNullable,
     context,
-    groupName
+    groupName,
+    example
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -27,8 +28,9 @@ export function convertAdditionalProperties({
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
+    example: unknown | undefined;
 }): SchemaWithExample {
-    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
+    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
         return wrapMap({
             nameOverride,
             generatedName,
@@ -39,6 +41,9 @@ export function convertAdditionalProperties({
                 generatedName: `${generatedName}Key`,
                 description: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
+                    default: undefined,
+                    pattern: undefined,
+                    format: undefined,
                     minLength: undefined,
                     maxLength: undefined,
                     example: undefined
@@ -52,7 +57,8 @@ export function convertAdditionalProperties({
                 example: undefined,
                 groupName: undefined
             }),
-            groupName
+            groupName,
+            example
         });
     }
     return wrapMap({
@@ -65,6 +71,9 @@ export function convertAdditionalProperties({
             generatedName: `${generatedName}Key`,
             description: undefined,
             schema: PrimitiveSchemaValueWithExample.string({
+                default: undefined,
+                pattern: undefined,
+                format: undefined,
                 minLength: undefined,
                 maxLength: undefined,
                 example: undefined
@@ -72,14 +81,9 @@ export function convertAdditionalProperties({
             groupName: undefined
         },
         valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
-        groupName
+        groupName,
+        example
     });
-}
-
-function isAdditionalPropertiesEmptyDictionary(
-    additionalProperties: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-) {
-    return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0;
 }
 
 export function wrapMap({
@@ -89,7 +93,8 @@ export function wrapMap({
     valueSchema,
     wrapAsNullable,
     description,
-    groupName
+    groupName,
+    example
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -98,6 +103,7 @@ export function wrapMap({
     wrapAsNullable: boolean;
     description: string | undefined;
     groupName: SdkGroupName | undefined;
+    example: unknown | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -109,7 +115,8 @@ export function wrapMap({
                 description,
                 key: keySchema,
                 value: valueSchema,
-                groupName
+                groupName,
+                example
             }),
             description,
             groupName
@@ -121,6 +128,19 @@ export function wrapMap({
         description,
         key: keySchema,
         value: valueSchema,
-        groupName
+        groupName,
+        example
     });
+}
+
+export function isAdditionalPropertiesAny(
+    additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined
+): boolean {
+    if (additionalProperties == null) {
+        return false;
+    }
+    if (typeof additionalProperties === "boolean") {
+        return additionalProperties;
+    }
+    return !isReferenceObject(additionalProperties) && Object.keys(additionalProperties).length === 0;
 }

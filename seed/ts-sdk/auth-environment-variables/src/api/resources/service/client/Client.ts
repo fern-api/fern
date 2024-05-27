@@ -4,9 +4,9 @@
 
 import * as core from "../../../../core";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
-import * as SeedAuthEnvironmentVariables from "../../..";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
+import * as SeedAuthEnvironmentVariables from "../../../index";
 
 export declare namespace Service {
     interface Options {
@@ -18,6 +18,7 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,6 +27,8 @@ export class Service {
 
     /**
      * GET request with custom api key
+     *
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedAuthEnvironmentVariables.service.getWithApiKey()
@@ -46,6 +49,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.service.getWithApiKey.Response.parseOrThrow(_response.body, {
@@ -81,6 +85,9 @@ export class Service {
     /**
      * GET request with custom api key
      *
+     * @param {SeedAuthEnvironmentVariables.HeaderAuthRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedAuthEnvironmentVariables.service.getWithHeader({
      *         xEndpointHeader: "string"
@@ -107,6 +114,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.service.getWithHeader.Response.parseOrThrow(_response.body, {

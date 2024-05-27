@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst seedMultiLineDocs = new SeedMultiLineDocsClient;\nawait seedMultiLineDocs.user.getUser(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";\n\nconst seedMultiLineDocs = new SeedMultiLineDocsClient;\nawait seedMultiLineDocs.user.createUser({\n    name: \"string\",\n    age: 1\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

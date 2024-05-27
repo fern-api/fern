@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-property-name x-fern-property-name docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "name": "renamed_id",
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-property-name\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-property-name x-fern-property-name simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "name": "renamed_id",
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-property-name\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

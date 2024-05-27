@@ -16,13 +16,13 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.model.http.BytesRequest;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpRequestBodyReference;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.SdkRequest;
-import com.fern.ir.model.http.SdkRequestBodyType;
-import com.fern.ir.model.types.TypeReference;
+import com.fern.irV42.model.http.BytesRequest;
+import com.fern.irV42.model.http.HttpEndpoint;
+import com.fern.irV42.model.http.HttpRequestBodyReference;
+import com.fern.irV42.model.http.HttpService;
+import com.fern.irV42.model.http.SdkRequest;
+import com.fern.irV42.model.http.SdkRequestBodyType;
+import com.fern.irV42.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -30,7 +30,6 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;

@@ -8,6 +8,7 @@ from .. import core
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.my_object import MyObject
@@ -23,39 +24,51 @@ class ServiceClient:
     def post(
         self,
         *,
-        maybe_string: typing.Optional[str] = None,
         integer: int,
         file: core.File,
         file_list: typing.List[core.File],
+        list_of_objects: typing.List[MyObject],
+        maybe_string: typing.Optional[str] = None,
         maybe_file: typing.Optional[core.File] = None,
         maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
-        list_of_objects: typing.List[MyObject],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - maybe_string: typing.Optional[str].
+        Parameters
+        ----------
+        integer : int
 
-            - integer: int.
+        file : core.File
+            See core.File for more documentation
 
-            - file: core.File. See core.File for more documentation
+        file_list : typing.List[core.File]
+            See core.File for more documentation
 
-            - file_list: typing.List[core.File]. See core.File for more documentation
+        list_of_objects : typing.List[MyObject]
 
-            - maybe_file: typing.Optional[core.File]. See core.File for more documentation
+        maybe_string : typing.Optional[str]
 
-            - maybe_file_list: typing.Optional[typing.List[core.File]]. See core.File for more documentation
+        maybe_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - maybe_integer: typing.Optional[int].
+        maybe_file_list : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
-            - optional_list_of_strings: typing.Optional[typing.List[str]].
+        maybe_integer : typing.Optional[int]
 
-            - list_of_objects: typing.List[MyObject].
+        optional_list_of_strings : typing.Optional[typing.List[str]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedFileUpload
 
         client = SeedFileUpload(
@@ -64,10 +77,12 @@ class ServiceClient:
         client.service.post()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             data=jsonable_encoder(
                 remove_none_from_dict(
@@ -124,11 +139,20 @@ class ServiceClient:
 
     def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - file: core.File. See core.File for more documentation
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedFileUpload
 
         client = SeedFileUpload(
@@ -137,10 +161,12 @@ class ServiceClient:
         client.service.just_file()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             data=jsonable_encoder(remove_none_from_dict({}))
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -174,30 +200,39 @@ class ServiceClient:
     def just_file_with_query_params(
         self,
         *,
-        maybe_string: typing.Optional[str] = None,
         integer: int,
-        maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.Union[str, typing.Sequence[str]],
-        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - maybe_string: typing.Optional[str].
+        Parameters
+        ----------
+        integer : int
 
-            - integer: int.
+        list_of_strings : typing.Union[str, typing.Sequence[str]]
 
-            - maybe_integer: typing.Optional[int].
+        file : core.File
+            See core.File for more documentation
 
-            - list_of_strings: typing.Union[str, typing.Sequence[str]].
+        maybe_string : typing.Optional[str]
 
-            - optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]].
+        maybe_integer : typing.Optional[int]
 
-            - file: core.File. See core.File for more documentation
+        optional_list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedFileUpload
 
         client = SeedFileUpload(
@@ -212,22 +247,24 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file-with-query-params"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "maybeString": maybe_string,
-                        "integer": integer,
-                        "maybeInteger": maybe_integer,
-                        "listOfStrings": list_of_strings,
-                        "optionalListOfStrings": optional_list_of_strings,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file-with-query-params"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "maybeString": maybe_string,
+                            "integer": integer,
+                            "maybeInteger": maybe_integer,
+                            "listOfStrings": list_of_strings,
+                            "optionalListOfStrings": optional_list_of_strings,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             data=jsonable_encoder(remove_none_from_dict({}))
@@ -267,39 +304,51 @@ class AsyncServiceClient:
     async def post(
         self,
         *,
-        maybe_string: typing.Optional[str] = None,
         integer: int,
         file: core.File,
         file_list: typing.List[core.File],
+        list_of_objects: typing.List[MyObject],
+        maybe_string: typing.Optional[str] = None,
         maybe_file: typing.Optional[core.File] = None,
         maybe_file_list: typing.Optional[typing.List[core.File]] = None,
         maybe_integer: typing.Optional[int] = None,
         optional_list_of_strings: typing.Optional[typing.List[str]] = None,
-        list_of_objects: typing.List[MyObject],
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - maybe_string: typing.Optional[str].
+        Parameters
+        ----------
+        integer : int
 
-            - integer: int.
+        file : core.File
+            See core.File for more documentation
 
-            - file: core.File. See core.File for more documentation
+        file_list : typing.List[core.File]
+            See core.File for more documentation
 
-            - file_list: typing.List[core.File]. See core.File for more documentation
+        list_of_objects : typing.List[MyObject]
 
-            - maybe_file: typing.Optional[core.File]. See core.File for more documentation
+        maybe_string : typing.Optional[str]
 
-            - maybe_file_list: typing.Optional[typing.List[core.File]]. See core.File for more documentation
+        maybe_file : typing.Optional[core.File]
+            See core.File for more documentation
 
-            - maybe_integer: typing.Optional[int].
+        maybe_file_list : typing.Optional[typing.List[core.File]]
+            See core.File for more documentation
 
-            - optional_list_of_strings: typing.Optional[typing.List[str]].
+        maybe_integer : typing.Optional[int]
 
-            - list_of_objects: typing.List[MyObject].
+        optional_list_of_strings : typing.Optional[typing.List[str]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
@@ -308,10 +357,12 @@ class AsyncServiceClient:
         await client.service.post()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             data=jsonable_encoder(
                 remove_none_from_dict(
@@ -368,11 +419,20 @@ class AsyncServiceClient:
 
     async def just_file(self, *, file: core.File, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - file: core.File. See core.File for more documentation
+        Parameters
+        ----------
+        file : core.File
+            See core.File for more documentation
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
@@ -381,10 +441,12 @@ class AsyncServiceClient:
         await client.service.just_file()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             data=jsonable_encoder(remove_none_from_dict({}))
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -418,30 +480,39 @@ class AsyncServiceClient:
     async def just_file_with_query_params(
         self,
         *,
-        maybe_string: typing.Optional[str] = None,
         integer: int,
-        maybe_integer: typing.Optional[int] = None,
         list_of_strings: typing.Union[str, typing.Sequence[str]],
-        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         file: core.File,
+        maybe_string: typing.Optional[str] = None,
+        maybe_integer: typing.Optional[int] = None,
+        optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - maybe_string: typing.Optional[str].
+        Parameters
+        ----------
+        integer : int
 
-            - integer: int.
+        list_of_strings : typing.Union[str, typing.Sequence[str]]
 
-            - maybe_integer: typing.Optional[int].
+        file : core.File
+            See core.File for more documentation
 
-            - list_of_strings: typing.Union[str, typing.Sequence[str]].
+        maybe_string : typing.Optional[str]
 
-            - optional_list_of_strings: typing.Optional[typing.Union[str, typing.Sequence[str]]].
+        maybe_integer : typing.Optional[int]
 
-            - file: core.File. See core.File for more documentation
+        optional_list_of_strings : typing.Optional[typing.Union[str, typing.Sequence[str]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedFileUpload
 
         client = AsyncSeedFileUpload(
@@ -456,22 +527,24 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file-with-query-params"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "maybeString": maybe_string,
-                        "integer": integer,
-                        "maybeInteger": maybe_integer,
-                        "listOfStrings": list_of_strings,
-                        "optionalListOfStrings": optional_list_of_strings,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file-with-query-params"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "maybeString": maybe_string,
+                            "integer": integer,
+                            "maybeInteger": maybe_integer,
+                            "listOfStrings": list_of_strings,
+                            "optionalListOfStrings": optional_list_of_strings,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             data=jsonable_encoder(remove_none_from_dict({}))

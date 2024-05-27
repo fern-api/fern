@@ -164,7 +164,7 @@ func (c *Client) JustFile(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "just-file"
+	endpointURL := baseURL + "/just-file"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -217,7 +217,7 @@ func (c *Client) JustFileWithQueryParams(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "just-file-with-query-params"
+	endpointURL := baseURL + "/just-file-with-query-params"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {

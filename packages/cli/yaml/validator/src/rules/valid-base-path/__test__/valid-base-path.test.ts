@@ -16,21 +16,9 @@ describe("valid-base-path", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                message: "base-path cannot end with a slash.",
-                nodePath: [],
-                relativeFilepath: RelativeFilePath.of("api.yml"),
-                severity: "error"
-            },
-            {
                 message: "base-path must be empty or start with a slash.",
                 nodePath: ["service"],
                 relativeFilepath: RelativeFilePath.of("no-leading-slash.yml"),
-                severity: "error"
-            },
-            {
-                message: "base-path cannot end with a slash.",
-                nodePath: ["service"],
-                relativeFilepath: RelativeFilePath.of("trailing-slash.yml"),
                 severity: "error"
             }
         ];

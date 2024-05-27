@@ -16,10 +16,10 @@ export declare namespace SdkClientClassContextImpl {
 }
 
 export class SdkClientClassContextImpl implements SdkClientClassContext {
-    private sourceFile: SourceFile;
-    private importsManager: ImportsManager;
-    private sdkClientClassGenerator: SdkClientClassGenerator;
-    private sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
+    public sourceFile: SourceFile;
+    public importsManager: ImportsManager;
+    public sdkClientClassGenerator: SdkClientClassGenerator;
+    public sdkClientClassDeclarationReferencer: SdkClientClassDeclarationReferencer;
 
     constructor({
         sourceFile,
@@ -35,6 +35,8 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
 
     public getGeneratedSdkClientClass(packageId: PackageId): GeneratedSdkClientClass {
         return this.sdkClientClassGenerator.generateService({
+            isRoot: packageId.isRoot,
+            importsManager: this.importsManager,
             packageId,
             serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(packageId)
         });

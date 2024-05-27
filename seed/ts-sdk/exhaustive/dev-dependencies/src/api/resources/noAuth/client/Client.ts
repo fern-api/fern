@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as Fiddle from "../../..";
+import * as Fiddle from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
+import * as serializers from "../../../../serialization/index";
 
 export declare namespace NoAuth {
     interface Options {
@@ -16,6 +16,7 @@ export declare namespace NoAuth {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -24,6 +25,9 @@ export class NoAuth {
 
     /**
      * POST request with no auth
+     *
+     * @param {unknown} request
+     * @param {NoAuth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await fiddle.noAuth.postWithNoAuth({
@@ -49,6 +53,7 @@ export class NoAuth {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -85,7 +90,7 @@ export class NoAuth {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

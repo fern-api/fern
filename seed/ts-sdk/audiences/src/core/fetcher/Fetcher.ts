@@ -1,4 +1,3 @@
-import { default as FormData } from "form-data";
 import qs from "qs";
 import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
@@ -16,7 +15,8 @@ export declare namespace Fetcher {
         timeoutMs?: number;
         maxRetries?: number;
         withCredentials?: boolean;
-        responseType?: "json" | "blob" | "streaming";
+        abortSignal?: AbortSignal;
+        responseType?: "json" | "blob" | "streaming" | "text";
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -67,13 +67,28 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             : args.url;
 
     let body: BodyInit | undefined = undefined;
-    if (args.body instanceof FormData) {
-        // @ts-expect-error
-        body = args.body;
-    } else if (args.body instanceof Uint8Array) {
-        body = args.body;
+    const maybeStringifyBody = (body: any) => {
+        if (body instanceof Uint8Array) {
+            return body;
+        } else {
+            return JSON.stringify(body);
+        }
+    };
+
+    if (RUNTIME.type === "node") {
+        if (args.body instanceof (await import("formdata-node")).FormData) {
+            // @ts-expect-error
+            body = args.body;
+        } else {
+            body = maybeStringifyBody(args.body);
+        }
     } else {
-        body = JSON.stringify(args.body);
+        if (args.body instanceof (await import("form-data")).default) {
+            // @ts-expect-error
+            body = args.body;
+        } else {
+            body = maybeStringifyBody(args.body);
+        }
     }
 
     // In Node.js environments, the SDK always uses`node-fetch`.
@@ -83,27 +98,39 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         RUNTIME.type === "node"
             ? // `.default` is required due to this issue:
               // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
-              require("node-fetch").default
+              ((await import("node-fetch")).default as any)
             : typeof fetch == "function"
             ? fetch
-            : require("node-fetch").default;
+            : ((await import("node-fetch")).default as any);
 
     const makeRequest = async (): Promise<Response> => {
-        const controller = new AbortController();
-        let abortId = undefined;
+        const signals: AbortSignal[] = [];
+
+        // Add timeout signal
+        let timeoutAbortId: NodeJS.Timeout | undefined = undefined;
         if (args.timeoutMs != null) {
-            abortId = setTimeout(() => controller.abort(), args.timeoutMs);
+            const { signal, abortId } = getTimeoutSignal(args.timeoutMs);
+            timeoutAbortId = abortId;
+            signals.push(signal);
         }
+
+        // Add arbitrary signal
+        if (args.abortSignal != null) {
+            signals.push(args.abortSignal);
+        }
+
         const response = await fetchFn(url, {
             method: args.method,
             headers,
             body,
-            signal: controller.signal,
+            signal: anySignal(signals),
             credentials: args.withCredentials ? "include" : undefined,
         });
-        if (abortId != null) {
-            clearTimeout(abortId);
+
+        if (timeoutAbortId != null) {
+            clearTimeout(timeoutAbortId);
         }
+
         return response;
     };
 
@@ -130,6 +157,8 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             body = await response.blob();
         } else if (response.body != null && args.responseType === "streaming") {
             body = response.body;
+        } else if (response.body != null && args.responseType === "text") {
+            body = await response.text();
         } else {
             const text = await response.text();
             if (text.length > 0) {
@@ -165,7 +194,15 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             };
         }
     } catch (error) {
-        if (error instanceof Error && error.name === "AbortError") {
+        if (args.abortSignal != null && args.abortSignal.aborted) {
+            return {
+                ok: false,
+                error: {
+                    reason: "unknown",
+                    errorMessage: "The user aborted a request",
+                },
+            };
+        } else if (error instanceof Error && error.name === "AbortError") {
             return {
                 ok: false,
                 error: {
@@ -190,6 +227,45 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             },
         };
     }
+}
+
+const TIMEOUT = "timeout";
+
+function getTimeoutSignal(timeoutMs: number): { signal: AbortSignal; abortId: NodeJS.Timeout } {
+    const controller = new AbortController();
+    const abortId = setTimeout(() => controller.abort(TIMEOUT), timeoutMs);
+    return { signal: controller.signal, abortId };
+}
+
+/**
+ * Returns an abort signal that is getting aborted when
+ * at least one of the specified abort signals is aborted.
+ *
+ * Requires at least node.js 18.
+ */
+function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal {
+    // Allowing signals to be passed either as array
+    // of signals or as multiple arguments.
+    const signals = <AbortSignal[]>(args.length === 1 && Array.isArray(args[0]) ? args[0] : args);
+
+    const controller = new AbortController();
+
+    for (const signal of signals) {
+        if (signal.aborted) {
+            // Exiting early if one of the signals
+            // is already aborted.
+            controller.abort((signal as any)?.reason);
+            break;
+        }
+
+        // Listening for signals and removing the listeners
+        // when at least one symbol is aborted.
+        signal.addEventListener("abort", () => controller.abort((signal as any)?.reason), {
+            signal: controller.signal,
+        });
+    }
+
+    return controller.signal;
 }
 
 export const fetcher: FetchFunction = fetcherImpl;

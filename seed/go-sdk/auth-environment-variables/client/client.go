@@ -7,6 +7,7 @@ import (
 	option "github.com/auth-environment-variables/fern/option"
 	service "github.com/auth-environment-variables/fern/service"
 	http "net/http"
+	os "os"
 )
 
 type Client struct {
@@ -19,6 +20,12 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.ApiKey == "" {
+		options.ApiKey = os.Getenv("FERN_API_KEY")
+	}
+	if options.XAnotherHeader == "" {
+		options.XAnotherHeader = os.Getenv("ANOTHER_ENV_VAR")
+	}
 	return &Client{
 		baseURL: options.BaseURL,
 		caller: core.NewCaller(

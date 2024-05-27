@@ -11,7 +11,7 @@
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 [![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
-[![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://docs.buildwithfern.com?utm_source=fern-api/fern/readme-read-our-documentation)
+[![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://buildwithfern.com/learn/home?utm_source=fern-api/fern/readme-read-our-documentation)
 
 </div>
 
@@ -77,10 +77,11 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 | Generator ID                           | Latest Version | Changelog                                                    | Entrypoint                                                                      |
 | -------------------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------- |
 | `fernapi/fern-typescript-node-sdk`     | [![Typescript Generator Version](https://img.shields.io/docker/v/fernapi/fern-typescript-node-sdk)](./generators/typescript/sdk/VERSION) | [CHANGELOG.md](./generators/typescript/sdk/CHANGELOG.md)     | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                        |
-| `fernapi/fern-python-sdk`              | [![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)](./generators/python/sdk/VERSION)                  | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)    | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-python-sdk`              | [![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)](./generators/python/sdk/VERSION)                  | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)         | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
 | `fernapi/fern-java-sdk`                | [![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)](./generators/java/sdk/VERSION)                        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
 | `fernapi/fern-ruby-sdk`                | [![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)](./generators/ruby/sdk/VERSION)                        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                      |
 | `fernapi/fern-go-sdk`                  | [![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)](./generators/go/sdk/VERSION)                              | [CHANGELOG.md](./generators/go/sdk/CHANGELOG.md)             | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
+| `fernapi/fern-csharp-sdk`              | [![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)](./generators/csharp/sdk/VERSION)                      | [CHANGELOG.md](./generators/csharp/sdk/CHANGELOG.md)         | [cli.ts](./generators/csharp/sdk/src/cli.ts)                                    |
 
 ### Server-side Generators
 

@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedPagination from "../../..";
+import * as SeedPagination from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Users {
     interface Options {
@@ -17,12 +17,25 @@ export declare namespace Users {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Users {
     constructor(protected readonly _options: Users.Options) {}
 
+    /**
+     * @param {SeedPagination.ListUsersCursorPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listWithCursorPagination({
+     *         page: 1,
+     *         perPage: 1,
+     *         order: SeedPagination.Order.Asc,
+     *         startingAfter: "string"
+     *     })
+     */
     public async listWithCursorPagination(
         request: SeedPagination.ListUsersCursorPaginationRequest = {},
         requestOptions?: Users.RequestOptions
@@ -60,6 +73,7 @@ export class Users {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
@@ -92,6 +106,18 @@ export class Users {
         }
     }
 
+    /**
+     * @param {SeedPagination.ListUsersOffsetPaginationRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listWithOffsetPagination({
+     *         page: 1,
+     *         perPage: 1,
+     *         order: SeedPagination.Order.Asc,
+     *         startingAfter: "string"
+     *     })
+     */
     public async listWithOffsetPagination(
         request: SeedPagination.ListUsersOffsetPaginationRequest = {},
         requestOptions?: Users.RequestOptions
@@ -129,6 +155,7 @@ export class Users {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
@@ -161,6 +188,15 @@ export class Users {
         }
     }
 
+    /**
+     * @param {SeedPagination.ListUsersExtendedRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listWithExtendedResults({
+     *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+     *     })
+     */
     public async listWithExtendedResults(
         request: SeedPagination.ListUsersExtendedRequest = {},
         requestOptions?: Users.RequestOptions
@@ -186,6 +222,7 @@ export class Users {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.ListUsersExtendedResponse.parseOrThrow(_response.body, {
@@ -218,6 +255,15 @@ export class Users {
         }
     }
 
+    /**
+     * @param {SeedPagination.ListUsernamesRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listUsernames({
+     *         startingAfter: "string"
+     *     })
+     */
     public async listUsernames(
         request: SeedPagination.ListUsernamesRequest = {},
         requestOptions?: Users.RequestOptions
@@ -243,6 +289,7 @@ export class Users {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.UsernameCursor.parseOrThrow(_response.body, {
@@ -275,6 +322,15 @@ export class Users {
         }
     }
 
+    /**
+     * @param {SeedPagination.ListWithGlobalConfigRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPagination.users.listWithGlobalConfig({
+     *         offset: 1
+     *     })
+     */
     public async listWithGlobalConfig(
         request: SeedPagination.ListWithGlobalConfigRequest = {},
         requestOptions?: Users.RequestOptions
@@ -300,6 +356,7 @@ export class Users {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.UsernameContainer.parseOrThrow(_response.body, {
@@ -332,7 +389,7 @@ export class Users {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

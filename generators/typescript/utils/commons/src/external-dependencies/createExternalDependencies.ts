@@ -2,7 +2,6 @@ import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ImportsManager } from "../imports-manager";
 import { ExpressImpl } from "./express/ExpressImpl";
 import { ExternalDependencies } from "./ExternalDependencies";
-import { FormDataImpl } from "./form-data/FormDataImpl";
 import { FsImpl } from "./fs/FsImpl";
 import { StreamImpl } from "./stream/StreamImpl";
 import { UrlJoinImpl } from "./url-join/UrlJoinImpl";
@@ -21,7 +20,6 @@ export function createExternalDependencies({
     return {
         urlJoin: new UrlJoinImpl({ importsManager, dependencyManager }),
         express: new ExpressImpl({ importsManager, dependencyManager }),
-        formData: new FormDataImpl({ importsManager, dependencyManager }),
         fs: new FsImpl({ importsManager, dependencyManager }),
         stream: new StreamImpl({ importsManager, dependencyManager })
     };

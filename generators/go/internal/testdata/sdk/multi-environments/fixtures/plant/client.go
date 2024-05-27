@@ -42,7 +42,7 @@ func (c *Client) GetPlant(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "plants"
+	endpointURL := baseURL + "/plants"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

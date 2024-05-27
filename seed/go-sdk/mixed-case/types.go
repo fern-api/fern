@@ -12,7 +12,12 @@ type NestedUser struct {
 	Name       string `json:"Name" url:"Name"`
 	NestedUser *User  `json:"NestedUser,omitempty" url:"NestedUser,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (n *NestedUser) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
 }
 
 func (n *NestedUser) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*n = NestedUser(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
 	n._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -41,7 +53,12 @@ func (n *NestedUser) String() string {
 type Organization struct {
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (o *Organization) GetExtraProperties() map[string]interface{} {
+	return o.extraProperties
 }
 
 func (o *Organization) UnmarshalJSON(data []byte) error {
@@ -51,6 +68,13 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*o = Organization(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+
 	o._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -94,7 +118,12 @@ type User struct {
 	MetadataTags    []string          `json:"metadata_tags,omitempty" url:"metadata_tags,omitempty"`
 	ExtraProperties map[string]string `json:"EXTRA_PROPERTIES,omitempty" url:"EXTRA_PROPERTIES,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
@@ -104,6 +133,13 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

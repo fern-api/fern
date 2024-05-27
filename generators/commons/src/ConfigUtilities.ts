@@ -1,5 +1,5 @@
-import { HttpPath, IntermediateRepresentation, PathParameter } from "@fern-fern/ir-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { HttpPath, PathParameter } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 
 export function getSdkVersion(config: FernGeneratorExec.GeneratorConfig): string | undefined {
@@ -21,6 +21,7 @@ export function getPackageName(config: FernGeneratorExec.GeneratorConfig): strin
                 npm: (nrc: FernGeneratorExec.NpmRegistryConfigV2) => nrc.packageName,
                 pypi: (prc: FernGeneratorExec.PypiRegistryConfig) => prc.packageName,
                 rubygems: (rgrc: FernGeneratorExec.RubyGemsRegistryConfig) => rgrc.packageName,
+                nuget: (nrc: FernGeneratorExec.NugetRegistryConfig) => nrc.packageName,
                 postman: () => undefined,
                 _other: () => undefined
             }),
@@ -31,6 +32,7 @@ export function getPackageName(config: FernGeneratorExec.GeneratorConfig): strin
                 npm: (nrc: FernGeneratorExec.NpmGithubPublishInfo) => nrc.packageName,
                 pypi: (prc: FernGeneratorExec.PypiGithubPublishInfo) => prc.packageName,
                 rubygems: (rgrc: FernGeneratorExec.RubyGemsGithubPublishInfo) => rgrc.packageName,
+                nuget: (nrc: FernGeneratorExec.NugetGithubPublishInfo) => nrc.packageName,
                 postman: () => undefined,
                 _other: () => undefined
             }),
@@ -60,11 +62,4 @@ export function generatePathTemplate(
     }
     // Strip leading and trailing slashes
     return pathParametersTemplate.replaceAll(/^\/+|\/+$/g, "");
-}
-export function hasFileUploadEndpoints(ir: IntermediateRepresentation): boolean {
-    return Object.entries(ir.services)
-        .flatMap(([_, service]) => service.endpoints)
-        .some((endpoint) => {
-            return endpoint.requestBody?.type === "fileUpload";
-        });
 }

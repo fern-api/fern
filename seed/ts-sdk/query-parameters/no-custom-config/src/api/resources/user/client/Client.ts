@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedQueryParameters from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedQueryParameters from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace User {
     interface Options {
@@ -16,12 +16,50 @@ export declare namespace User {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class User {
     constructor(protected readonly _options: User.Options) {}
 
+    /**
+     * @param {SeedQueryParameters.GetUsersRequest} request
+     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedQueryParameters.user.getUsername({
+     *         limit: 1,
+     *         id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *         date: "2023-01-15",
+     *         deadline: new Date("2024-01-15T09:30:00.000Z"),
+     *         bytes: "SGVsbG8gd29ybGQh",
+     *         user: {
+     *             name: "string",
+     *             tags: ["string"]
+     *         },
+     *         keyValue: {
+     *             "string": "string"
+     *         },
+     *         optionalString: "string",
+     *         nestedUser: {
+     *             name: "string",
+     *             user: {
+     *                 name: "string",
+     *                 tags: ["string"]
+     *             }
+     *         },
+     *         optionalUser: {
+     *             name: "string",
+     *             tags: ["string"]
+     *         },
+     *         excludeUser: {
+     *             name: "string",
+     *             tags: ["string"]
+     *         },
+     *         filter: "string"
+     *     })
+     */
     public async getUsername(
         request: SeedQueryParameters.GetUsersRequest,
         requestOptions?: User.RequestOptions
@@ -113,6 +151,7 @@ export class User {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.User.parseOrThrow(_response.body, {

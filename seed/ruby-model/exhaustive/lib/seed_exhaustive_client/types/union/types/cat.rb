@@ -38,7 +38,11 @@ module SeedExhaustiveClient
           struct = JSON.parse(json_object, object_class: OpenStruct)
           name = struct["name"]
           likes_to_meow = struct["likesToMeow"]
-          new(name: name, likes_to_meow: likes_to_meow, additional_properties: struct)
+          new(
+            name: name,
+            likes_to_meow: likes_to_meow,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of Cat to a JSON object

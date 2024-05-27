@@ -45,7 +45,11 @@ module SeedTraceClient
           update_info = parsed_json["updateInfo"].to_json
           update_info = SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: update_info)
         end
-        new(update_time: update_time, update_info: update_info, additional_properties: struct)
+        new(
+          update_time: update_time,
+          update_info: update_info,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of WorkspaceSubmissionUpdate to a JSON object

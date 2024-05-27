@@ -3,6 +3,7 @@
 require_relative "../../requests"
 require_relative "types/resource"
 require "date"
+require "json"
 require "async"
 
 module SeedMixedCaseClient
@@ -19,6 +20,9 @@ module SeedMixedCaseClient
     # @param resource_id [String]
     # @param request_options [SeedMixedCaseClient::RequestOptions]
     # @return [SeedMixedCaseClient::Service::Resource]
+    # @example
+    #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
+    #  mixed_case.service.get_resource(resource_id: "rsc-xyz")
     def get_resource(resource_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -32,6 +36,9 @@ module SeedMixedCaseClient
     # @param before_date [Date]
     # @param request_options [SeedMixedCaseClient::RequestOptions]
     # @return [Array<SeedMixedCaseClient::Service::Resource>]
+    # @example
+    #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
+    #  mixed_case.service.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))
     def list_resources(page_limit:, before_date:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -43,7 +50,8 @@ module SeedMixedCaseClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/resource"
       end
-      response.body&.map do |v|
+      parsed_json = JSON.parse(response.body)
+      parsed_json&.map do |v|
         v = v.to_json
         SeedMixedCaseClient::Service::Resource.from_json(json_object: v)
       end
@@ -63,6 +71,9 @@ module SeedMixedCaseClient
     # @param resource_id [String]
     # @param request_options [SeedMixedCaseClient::RequestOptions]
     # @return [SeedMixedCaseClient::Service::Resource]
+    # @example
+    #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
+    #  mixed_case.service.get_resource(resource_id: "rsc-xyz")
     def get_resource(resource_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -78,6 +89,9 @@ module SeedMixedCaseClient
     # @param before_date [Date]
     # @param request_options [SeedMixedCaseClient::RequestOptions]
     # @return [Array<SeedMixedCaseClient::Service::Resource>]
+    # @example
+    #  mixed_case = SeedMixedCaseClient::Client.new(base_url: "https://api.example.com")
+    #  mixed_case.service.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))
     def list_resources(page_limit:, before_date:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -90,7 +104,8 @@ module SeedMixedCaseClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/resource"
         end
-        response.body&.map do |v|
+        parsed_json = JSON.parse(response.body)
+        parsed_json&.map do |v|
           v = v.to_json
           SeedMixedCaseClient::Service::Resource.from_json(json_object: v)
         end

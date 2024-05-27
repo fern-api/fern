@@ -63,7 +63,6 @@ export abstract class AstNode {
         }
 
         if (appendToLastString && this.text.length > 0) {
-            // throw new Error("here we are" + this.text[-1]);
             this.text[this.text.length - 1] += stringContent;
         } else {
             stringContent = this.writePaddedString(startingTabSpaces, stringContent);

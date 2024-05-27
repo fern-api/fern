@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
@@ -23,11 +24,19 @@ class ParamsClient:
         """
         GET with path param
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -39,10 +48,14 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="GET",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"
+            ),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -72,13 +85,21 @@ class ParamsClient:
         """
         GET with query param
 
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - number: int.
+        number : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -91,19 +112,21 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "params"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "query": query,
-                        "number": number,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "params"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "query": query,
+                            "number": number,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -138,13 +161,21 @@ class ParamsClient:
         """
         GET with multiple of same query param
 
-        Parameters:
-            - query: typing.Union[str, typing.Sequence[str]].
+        Parameters
+        ----------
+        query : typing.Union[str, typing.Sequence[str]]
 
-            - numer: typing.Union[int, typing.Sequence[int]].
+        numer : typing.Union[int, typing.Sequence[int]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -157,19 +188,21 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "params"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "query": query,
-                        "numer": numer,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "params"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "query": query,
+                            "numer": numer,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -200,13 +233,21 @@ class ParamsClient:
         """
         GET with path and query params
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - query: str.
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -219,20 +260,22 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"params/path-query/{jsonable_encoder(param)}"
             ),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "query": query,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "query": query,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -263,13 +306,21 @@ class ParamsClient:
         """
         PUT to update with path param
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - request: str.
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -282,10 +333,14 @@ class ParamsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "PUT",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="PUT",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"
+            ),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -319,11 +374,19 @@ class AsyncParamsClient:
         """
         GET with path param
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -335,10 +398,14 @@ class AsyncParamsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="GET",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"
+            ),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -368,13 +435,21 @@ class AsyncParamsClient:
         """
         GET with query param
 
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - number: int.
+        number : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -387,19 +462,21 @@ class AsyncParamsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "params"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "query": query,
-                        "number": number,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "params"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "query": query,
+                            "number": number,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -434,13 +511,21 @@ class AsyncParamsClient:
         """
         GET with multiple of same query param
 
-        Parameters:
-            - query: typing.Union[str, typing.Sequence[str]].
+        Parameters
+        ----------
+        query : typing.Union[str, typing.Sequence[str]]
 
-            - numer: typing.Union[int, typing.Sequence[int]].
+        numer : typing.Union[int, typing.Sequence[int]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -453,19 +538,21 @@ class AsyncParamsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "params"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "query": query,
-                        "numer": numer,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "params"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "query": query,
+                            "numer": numer,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -496,13 +583,21 @@ class AsyncParamsClient:
         """
         GET with path and query params
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - query: str.
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -515,20 +610,22 @@ class AsyncParamsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"params/path-query/{jsonable_encoder(param)}"
             ),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "query": query,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "query": query,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -559,13 +656,21 @@ class AsyncParamsClient:
         """
         PUT to update with path param
 
-        Parameters:
-            - param: str.
+        Parameters
+        ----------
+        param : str
 
-            - request: str.
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -578,10 +683,14 @@ class AsyncParamsClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "PUT",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="PUT",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"params/path/{jsonable_encoder(param)}"
+            ),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(

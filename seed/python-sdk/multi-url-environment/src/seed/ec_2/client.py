@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 
@@ -20,11 +21,19 @@ class Ec2Client:
 
     def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - size: str.
+        Parameters
+        ----------
+        size : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedMultiUrlEnvironment
 
         client = SeedMultiUrlEnvironment(
@@ -35,10 +44,12 @@ class Ec2Client:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_environment().ec_2}/", "ec2/boot"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_environment().ec_2}/", "ec2/boot"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"size": size})
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -75,11 +86,19 @@ class AsyncEc2Client:
 
     async def boot_instance(self, *, size: str, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - size: str.
+        Parameters
+        ----------
+        size : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedMultiUrlEnvironment
 
         client = AsyncSeedMultiUrlEnvironment(
@@ -90,10 +109,12 @@ class AsyncEc2Client:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_environment().ec_2}/", "ec2/boot"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_environment().ec_2}/", "ec2/boot"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"size": size})
             if request_options is None or request_options.get("additional_body_parameters") is None

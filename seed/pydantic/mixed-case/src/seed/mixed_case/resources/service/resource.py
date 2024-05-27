@@ -6,14 +6,14 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import pydantic_v1
-from .organization import Organization
+from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .resource_status import ResourceStatus
-from .user import User
 
 
 class Base(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.mixed_case import Resource_User
 
     Resource_User(
@@ -30,28 +30,86 @@ class Base(pydantic_v1.BaseModel):
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Resource_User(User, Base):
+class Resource_User(pydantic_v1.BaseModel):
+    """
+    Examples
+    --------
+    from seed.mixed_case import Resource_User
+
+    Resource_User(
+        user_name="username",
+        metadata_tags=["tag1", "tag2"],
+        extra_properties={"foo": "bar", "baz": "qux"},
+    )
+    """
+
+    user_name: str = pydantic_v1.Field(alias="userName")
+    metadata_tags: typing.List[str]
+    extra_properties: typing.Dict[str, str] = pydantic_v1.Field(alias="EXTRA_PROPERTIES")
     resource_type: typing.Literal["user"] = "user"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Resource_Organization(Organization, Base):
+class Resource_Organization(pydantic_v1.BaseModel):
+    """
+    Examples
+    --------
+    from seed.mixed_case import Resource_User
+
+    Resource_User(
+        user_name="username",
+        metadata_tags=["tag1", "tag2"],
+        extra_properties={"foo": "bar", "baz": "qux"},
+    )
+    """
+
+    name: str
     resource_type: typing.Literal["Organization"] = "Organization"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 """

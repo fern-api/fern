@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 
@@ -17,13 +18,21 @@ class ServiceClient:
 
     def nop(self, id: str, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - nested_id: str.
+        nested_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedPackageYml
 
         client = SeedPackageYml(
@@ -35,12 +44,14 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}//{jsonable_encoder(nested_id)}"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -71,13 +82,21 @@ class AsyncServiceClient:
 
     async def nop(self, id: str, nested_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - nested_id: str.
+        nested_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedPackageYml
 
         client = AsyncSeedPackageYml(
@@ -89,12 +108,14 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"{jsonable_encoder(id)}//{jsonable_encoder(nested_id)}"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(

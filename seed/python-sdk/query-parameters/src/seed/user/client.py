@@ -11,6 +11,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.nested_user import NestedUser
@@ -31,41 +32,49 @@ class UserClient:
         bytes: str,
         user: User,
         key_value: typing.Dict[str, str],
-        optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
-        optional_user: typing.Optional[User] = None,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
+        optional_string: typing.Optional[str] = None,
+        optional_user: typing.Optional[User] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
-        Parameters:
-            - limit: int.
+        Parameters
+        ----------
+        limit : int
 
-            - id: uuid.UUID.
+        id : uuid.UUID
 
-            - date: dt.date.
+        date : dt.date
 
-            - deadline: dt.datetime.
+        deadline : dt.datetime
 
-            - bytes: str.
+        bytes : str
 
-            - user: User.
+        user : User
 
-            - key_value: typing.Dict[str, str].
+        key_value : typing.Dict[str, str]
 
-            - optional_string: typing.Optional[str].
+        nested_user : NestedUser
 
-            - nested_user: NestedUser.
+        exclude_user : typing.Union[User, typing.Sequence[User]]
 
-            - optional_user: typing.Optional[User].
+        filter : typing.Union[str, typing.Sequence[str]]
 
-            - exclude_user: typing.Union[User, typing.Sequence[User]].
+        optional_string : typing.Optional[str]
 
-            - filter: typing.Union[str, typing.Sequence[str]].
+        optional_user : typing.Optional[User]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -112,29 +121,31 @@ class UserClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "user"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "limit": limit,
-                        "id": jsonable_encoder(id),
-                        "date": str(date),
-                        "deadline": serialize_datetime(deadline),
-                        "bytes": jsonable_encoder(bytes),
-                        "user": jsonable_encoder(user),
-                        "keyValue": jsonable_encoder(key_value),
-                        "optionalString": optional_string,
-                        "nestedUser": jsonable_encoder(nested_user),
-                        "optionalUser": jsonable_encoder(optional_user),
-                        "excludeUser": jsonable_encoder(exclude_user),
-                        "filter": filter,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "user"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "limit": limit,
+                            "id": jsonable_encoder(id),
+                            "date": str(date),
+                            "deadline": serialize_datetime(deadline),
+                            "bytes": jsonable_encoder(bytes),
+                            "user": jsonable_encoder(user),
+                            "keyValue": jsonable_encoder(key_value),
+                            "optionalString": optional_string,
+                            "nestedUser": jsonable_encoder(nested_user),
+                            "optionalUser": jsonable_encoder(optional_user),
+                            "excludeUser": jsonable_encoder(exclude_user),
+                            "filter": filter,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -174,41 +185,49 @@ class AsyncUserClient:
         bytes: str,
         user: User,
         key_value: typing.Dict[str, str],
-        optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
-        optional_user: typing.Optional[User] = None,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
+        optional_string: typing.Optional[str] = None,
+        optional_user: typing.Optional[User] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
-        Parameters:
-            - limit: int.
+        Parameters
+        ----------
+        limit : int
 
-            - id: uuid.UUID.
+        id : uuid.UUID
 
-            - date: dt.date.
+        date : dt.date
 
-            - deadline: dt.datetime.
+        deadline : dt.datetime
 
-            - bytes: str.
+        bytes : str
 
-            - user: User.
+        user : User
 
-            - key_value: typing.Dict[str, str].
+        key_value : typing.Dict[str, str]
 
-            - optional_string: typing.Optional[str].
+        nested_user : NestedUser
 
-            - nested_user: NestedUser.
+        exclude_user : typing.Union[User, typing.Sequence[User]]
 
-            - optional_user: typing.Optional[User].
+        filter : typing.Union[str, typing.Sequence[str]]
 
-            - exclude_user: typing.Union[User, typing.Sequence[User]].
+        optional_string : typing.Optional[str]
 
-            - filter: typing.Union[str, typing.Sequence[str]].
+        optional_user : typing.Optional[User]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -255,29 +274,31 @@ class AsyncUserClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "user"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "limit": limit,
-                        "id": jsonable_encoder(id),
-                        "date": str(date),
-                        "deadline": serialize_datetime(deadline),
-                        "bytes": jsonable_encoder(bytes),
-                        "user": jsonable_encoder(user),
-                        "keyValue": jsonable_encoder(key_value),
-                        "optionalString": optional_string,
-                        "nestedUser": jsonable_encoder(nested_user),
-                        "optionalUser": jsonable_encoder(optional_user),
-                        "excludeUser": jsonable_encoder(exclude_user),
-                        "filter": filter,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "user"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "limit": limit,
+                            "id": jsonable_encoder(id),
+                            "date": str(date),
+                            "deadline": serialize_datetime(deadline),
+                            "bytes": jsonable_encoder(bytes),
+                            "user": jsonable_encoder(user),
+                            "keyValue": jsonable_encoder(key_value),
+                            "optionalString": optional_string,
+                            "nestedUser": jsonable_encoder(nested_user),
+                            "optionalUser": jsonable_encoder(optional_user),
+                            "excludeUser": jsonable_encoder(exclude_user),
+                            "filter": filter,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(

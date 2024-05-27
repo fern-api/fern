@@ -6,6 +6,7 @@ from typing import List, Optional, Sequence, Tuple, Type
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.codegen.ast.nodes.expressions import function_invocation
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
@@ -68,6 +69,7 @@ class FernAwarePydanticModel:
             pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
                 self._custom_config.version
             ),
+            require_optional_fields=custom_config.require_optional_fields,
         )
         self._pydantic_model.add_json_encoder(
             key=AST.Expression(
@@ -94,6 +96,7 @@ class FernAwarePydanticModel:
         json_field_name: str,
         type_reference: ir_types.TypeReference,
         description: Optional[str] = None,
+        default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
         field = self._create_pydantic_field(
             name=name,
@@ -101,6 +104,7 @@ class FernAwarePydanticModel:
             json_field_name=json_field_name,
             type_reference=type_reference,
             description=description,
+            default_value=default_value,
         )
         self._pydantic_model.add_field(field)
         return field
@@ -216,8 +220,8 @@ class FernAwarePydanticModel:
         else:
             unique_name = []
             if self._type_name is not None:
-                unique_name = [path.snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path]
-                unique_name.append(self._type_name.name.snake_case.unsafe_name)
+                unique_name = [path.snake_case.safe_name for path in self._type_name.fern_filepath.package_path]
+                unique_name.append(self._type_name.name.snake_case.safe_name)
             return PydanticValidatorsGenerator(
                 model=self._pydantic_model,
                 extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
@@ -232,8 +236,8 @@ class FernAwarePydanticModel:
             if shape_union.type == "object":
                 for property in shape_union.properties:
                     field = self._create_pydantic_field(
-                        name=property.name.name.snake_case.unsafe_name,
-                        pascal_case_field_name=property.name.name.pascal_case.unsafe_name,
+                        name=property.name.name.snake_case.safe_name,
+                        pascal_case_field_name=property.name.name.pascal_case.safe_name,
                         json_field_name=property.name.wire_value,
                         type_reference=property.value_type,
                         description=property.docs,
@@ -250,9 +254,10 @@ class FernAwarePydanticModel:
         json_field_name: str,
         type_reference: ir_types.TypeReference,
         description: Optional[str] = None,
+        default_value: Optional[AST.Expression] = None,
     ) -> PydanticField:
         type_hint = self.get_type_hint_for_type_reference(type_reference)
-        default_value = (
+        fallback_default_value = default_value or (
             AST.Expression("None")
             if type_hint.is_optional and self._custom_config.require_optional_fields is False
             else None
@@ -288,11 +293,23 @@ class FernAwarePydanticModel:
 
     def _override_dict(self) -> None:
         def write_dict_body(writer: AST.NodeWriter) -> None:
-            writer.write("kwargs_with_defaults: ")
+            writer.write("kwargs_with_defaults_exclude_unset: ")
             writer.write_node(AST.TypeHint.any())
-            writer.write(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
+            writer.write_line(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
+            writer.write("kwargs_with_defaults_exclude_none: ")
+            writer.write_node(AST.TypeHint.any())
+            writer.write_line(' = { "by_alias": True, "exclude_none": True, **kwargs }')
             writer.write_line()
-            writer.write_line("return super().dict(**kwargs_with_defaults)")
+
+            function_invocation = AST.FunctionInvocation(
+                function_definition=self._context.core_utilities.get_pydantic_deep_union_import(),
+                args=[
+                    AST.Expression("super().dict(**kwargs_with_defaults_exclude_unset)"),
+                    AST.Expression("super().dict(**kwargs_with_defaults_exclude_none)"),
+                ],
+            )
+            writer.write("return ")
+            writer.write_node(AST.Expression(function_invocation))
 
         self._pydantic_model.add_method(
             AST.FunctionDeclaration(

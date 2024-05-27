@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_union.update"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tunionsgo \"github.com/fern-api/unions-go\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Union.Update(\n\tcontext.TODO(),\n\t\u0026unionsgo.Shape{\n\t\tCircle: \u0026unionsgo.Circle{\n\t\t\tId:     \"string\",\n\t\t\tRadius: 1.1,\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_union.get"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tunionsgoclient \"github.com/fern-api/unions-go/client\"\n)\n\nclient := unionsgoclient.NewClient()\nresponse, err := client.Union.Get(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+            }
+        }
+    ]
+}

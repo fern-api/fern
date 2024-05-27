@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedAudiences from "../../..";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as SeedAudiences from "../../../index";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Foo {
     interface Options {
@@ -15,12 +15,24 @@ export declare namespace Foo {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Foo {
     constructor(protected readonly _options: Foo.Options) {}
 
+    /**
+     * @param {SeedAudiences.FindRequest} request
+     * @param {Foo.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedAudiences.foo.find({
+     *         optionalString: "string",
+     *         publicProperty: "string",
+     *         privateProperty: 1
+     *     })
+     */
     public async find(
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions
@@ -46,6 +58,7 @@ export class Foo {
             body: await serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.ImportingType.parseOrThrow(_response.body, {

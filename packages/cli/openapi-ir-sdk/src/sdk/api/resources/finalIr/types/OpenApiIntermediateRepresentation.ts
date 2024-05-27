@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../..";
 export interface OpenApiIntermediateRepresentation {
     title: string | undefined;
     description: string | undefined;
+    basePath: string | undefined;
     servers: FernOpenapiIr.Server[];
     /** Top level group information populated through `x-fern-groups`. */
     groups: Record<string, FernOpenapiIr.SdkGroupInfo>;
@@ -16,7 +17,6 @@ export interface OpenApiIntermediateRepresentation {
     webhooks: FernOpenapiIr.Webhook[];
     channel: FernOpenapiIr.WebsocketChannel[];
     schemas: Record<FernOpenapiIr.SchemaId, FernOpenapiIr.Schema>;
-    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpError>;
     variables: Record<string, FernOpenapiIr.PrimitiveSchema>;
     /** Whether the schema is directly referenced from a response, parameters, or other schemas */
     nonRequestReferencedSchemas: Set<FernOpenapiIr.SchemaId>;

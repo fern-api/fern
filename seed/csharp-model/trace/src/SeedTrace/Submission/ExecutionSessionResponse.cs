@@ -9,7 +9,7 @@ public class ExecutionSessionResponse
     public string SessionId { get; init; }
 
     [JsonPropertyName("executionSessionUrl")]
-    public List<string?> ExecutionSessionUrl { get; init; }
+    public string? ExecutionSessionUrl { get; init; }
 
     [JsonPropertyName("language")]
     public Language Language { get; init; }

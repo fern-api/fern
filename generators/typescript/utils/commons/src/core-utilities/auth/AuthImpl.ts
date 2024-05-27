@@ -8,7 +8,7 @@ export class AuthImpl extends CoreUtility implements Auth {
     public readonly MANIFEST = {
         name: "auth",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/auth/src"),
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/auth/src"),
             ignoreGlob: "**/__test__"
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/auth"),
@@ -93,6 +93,17 @@ export class AuthImpl extends CoreUtility implements Auth {
                         [header]
                     );
                 }
+        )
+    };
+
+    public readonly OAuthTokenProvider = {
+        _getExpression: this.withExportedName(
+            "OAuthTokenProvider",
+            (OAuthTokenProvider) => () => OAuthTokenProvider.getExpression()
+        ),
+        _getReferenceToType: this.withExportedName(
+            "OAuthTokenProvider",
+            (OAuthTokenProvider) => () => OAuthTokenProvider.getTypeNode()
         )
     };
 }

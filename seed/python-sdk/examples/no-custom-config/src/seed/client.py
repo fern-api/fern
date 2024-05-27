@@ -9,6 +9,7 @@ from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
 from .core.pydantic_utilities import pydantic_v1
+from .core.query_encoder import encode_query
 from .core.remove_none_from_dict import remove_none_from_dict
 from .core.request_options import RequestOptions
 from .environment import SeedExamplesEnvironment
@@ -22,21 +23,28 @@ OMIT = typing.cast(typing.Any, ...)
 
 class SeedExamples:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
-    Parameters:
-        - base_url: typing.Optional[str]. The base url to use for requests from the client.
+    Parameters
+    ----------
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
 
-        - environment: typing.Optional[SeedExamplesEnvironment]. The environment to use for requests from the client.
+    environment : typing.Optional[SeedExamplesEnvironment]
+        The environment to use for requests from the client.
 
-        - token: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
+    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
-        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+    httpx_client : typing.Optional[httpx.Client]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-        - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
-    ---
+    Examples
+    --------
     from seed.client import SeedExamples
     from seed.environment import SeedExamplesEnvironment
 
@@ -53,7 +61,7 @@ class SeedExamples:
         environment: typing.Optional[SeedExamplesEnvironment] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
@@ -73,11 +81,19 @@ class SeedExamples:
 
     def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -90,10 +106,12 @@ class SeedExamples:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -121,21 +139,28 @@ class SeedExamples:
 
 class AsyncSeedExamples:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
-    Parameters:
-        - base_url: typing.Optional[str]. The base url to use for requests from the client.
+    Parameters
+    ----------
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
 
-        - environment: typing.Optional[SeedExamplesEnvironment]. The environment to use for requests from the client.
+    environment : typing.Optional[SeedExamplesEnvironment]
+        The environment to use for requests from the client.
 
-        - token: typing.Optional[typing.Union[str, typing.Callable[[], str]]].
+    token : typing.Optional[typing.Union[str, typing.Callable[[], str]]]
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
-        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+    httpx_client : typing.Optional[httpx.AsyncClient]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-        - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
-    ---
+    Examples
+    --------
     from seed.client import AsyncSeedExamples
     from seed.environment import SeedExamplesEnvironment
 
@@ -152,7 +177,7 @@ class AsyncSeedExamples:
         environment: typing.Optional[SeedExamplesEnvironment] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
@@ -172,11 +197,19 @@ class AsyncSeedExamples:
 
     async def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -189,10 +222,12 @@ class AsyncSeedExamples:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(

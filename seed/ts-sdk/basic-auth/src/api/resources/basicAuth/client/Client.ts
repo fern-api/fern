@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedBasicAuth from "../../..";
+import * as SeedBasicAuth from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace BasicAuth {
     interface Options {
@@ -18,6 +18,7 @@ export declare namespace BasicAuth {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,6 +27,9 @@ export class BasicAuth {
 
     /**
      * GET request with basic auth scheme
+     *
+     * @param {BasicAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedBasicAuth.UnauthorizedRequest}
      *
      * @example
@@ -46,6 +50,7 @@ export class BasicAuth {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.basicAuth.getWithBasicAuth.Response.parseOrThrow(_response.body, {
@@ -92,6 +97,10 @@ export class BasicAuth {
 
     /**
      * POST request with basic auth scheme
+     *
+     * @param {unknown} request
+     * @param {BasicAuth.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedBasicAuth.UnauthorizedRequest}
      * @throws {@link SeedBasicAuth.BadRequest}
      *
@@ -116,6 +125,7 @@ export class BasicAuth {
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.basicAuth.postWithBasicAuth.Response.parseOrThrow(_response.body, {
@@ -162,7 +172,7 @@ export class BasicAuth {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         return core.BasicAuth.toAuthorizationHeader({
             username: await core.Supplier.get(this._options.username),
             password: await core.Supplier.get(this._options.password),

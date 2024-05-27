@@ -87,12 +87,13 @@ export declare namespace Fetcher {
         url: ts.Expression;
         method: ts.Expression;
         headers: ts.ObjectLiteralElementLike[];
-        contentType: string | ts.Expression;
+        contentType?: string | ts.Expression;
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
+        abortSignal: ts.Expression | undefined;
         withCredentials: boolean;
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
-        responseType?: "json" | "blob" | "streaming";
+        responseType?: "json" | "blob" | "streaming" | "text";
     }
 }

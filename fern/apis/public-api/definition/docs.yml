@@ -340,7 +340,7 @@ service:
     getGenerationStatus:
       display-name: Get Docs generation status
       path: /generate/{generationId}
-      docs: Get the status of a generation request
+      docs: Get the status of a docs generation request
       method: GET
       path-parameters: 
         generationId: 

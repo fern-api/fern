@@ -18,6 +18,13 @@ module SeedLiteralClient
     # @param id [String]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
+    # @example
+    #  literal = SeedLiteralClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    version: "Version",
+    #    audit_logging: "AuditLogging"
+    #  )
+    #  literal.path.send(id: "123")
     def send(id:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -46,6 +53,13 @@ module SeedLiteralClient
     # @param id [String]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
+    # @example
+    #  literal = SeedLiteralClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    version: "Version",
+    #    audit_logging: "AuditLogging"
+    #  )
+    #  literal.path.send(id: "123")
     def send(id:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

@@ -44,7 +44,11 @@ module SeedTraceClient
           full_tree = parsed_json["fullTree"].to_json
           full_tree = SeedTraceClient::Commons::BinaryTreeValue.from_json(json_object: full_tree)
         end
-        new(node_id: node_id, full_tree: full_tree, additional_properties: struct)
+        new(
+          node_id: node_id,
+          full_tree: full_tree,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of BinaryTreeNodeAndTreeValue to a JSON object

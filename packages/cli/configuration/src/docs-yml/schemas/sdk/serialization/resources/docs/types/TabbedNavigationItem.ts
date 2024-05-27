@@ -11,12 +11,14 @@ export const TabbedNavigationItem: core.serialization.ObjectSchema<
     FernDocsConfig.TabbedNavigationItem
 > = core.serialization.object({
     tab: core.serialization.lazy(async () => (await import("../../..")).TabId),
-    layout: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).NavigationItem)),
+    layout: core.serialization
+        .list(core.serialization.lazy(async () => (await import("../../..")).NavigationItem))
+        .optional(),
 });
 
 export declare namespace TabbedNavigationItem {
     interface Raw {
         tab: serializers.TabId.Raw;
-        layout: serializers.NavigationItem.Raw[];
+        layout?: serializers.NavigationItem.Raw[] | null;
     }
 }

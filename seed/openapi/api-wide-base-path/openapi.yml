@@ -3,13 +3,18 @@ info:
   title: api-wide-base-path
   version: ''
 paths:
-  /{serviceParam}/{endpointParam}:
+  /{serviceParam}/{endpointParam}/{resourceParam}:
     post:
       operationId: service_post
       tags:
         - Service
       parameters:
         - name: serviceParam
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: resourceParam
           in: path
           required: true
           schema:

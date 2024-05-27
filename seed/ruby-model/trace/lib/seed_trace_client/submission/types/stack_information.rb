@@ -46,7 +46,11 @@ module SeedTraceClient
           top_stack_frame = parsed_json["topStackFrame"].to_json
           top_stack_frame = SeedTraceClient::Submission::StackFrame.from_json(json_object: top_stack_frame)
         end
-        new(num_stack_frames: num_stack_frames, top_stack_frame: top_stack_frame, additional_properties: struct)
+        new(
+          num_stack_frames: num_stack_frames,
+          top_stack_frame: top_stack_frame,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of StackInformation to a JSON object

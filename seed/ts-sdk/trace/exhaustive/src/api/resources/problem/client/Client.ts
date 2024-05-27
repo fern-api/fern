@@ -4,8 +4,8 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedTrace from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Problem {
@@ -18,6 +18,7 @@ export declare namespace Problem {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,6 +27,9 @@ export class Problem {
 
     /**
      * Creates a problem
+     *
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.createProblem({
@@ -87,6 +91,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -108,6 +113,10 @@ export class Problem {
 
     /**
      * Updates a problem
+     *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {SeedTrace.CreateProblemRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.updateProblem(SeedTrace.ProblemId("string"), {
@@ -150,7 +159,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problem-crud/update/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "POST",
             headers: {
@@ -170,6 +179,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -192,6 +202,9 @@ export class Problem {
     /**
      * Soft deletes a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.problem.deleteProblem(SeedTrace.ProblemId("string"))
      */
@@ -202,7 +215,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problem-crud/delete/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "DELETE",
             headers: {
@@ -221,6 +234,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -237,6 +251,9 @@ export class Problem {
 
     /**
      * Returns default starter files for problem
+     *
+     * @param {SeedTrace.GetDefaultStarterFilesRequest} request
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.problem.getDefaultStarterFiles({
@@ -279,6 +296,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -298,7 +316,7 @@ export class Problem {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

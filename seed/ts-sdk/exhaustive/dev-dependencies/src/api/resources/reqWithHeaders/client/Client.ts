@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../core";
-import * as Fiddle from "../../..";
-import * as serializers from "../../../../serialization";
+import * as Fiddle from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace ReqWithHeaders {
@@ -16,12 +16,24 @@ export declare namespace ReqWithHeaders {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class ReqWithHeaders {
     constructor(protected readonly _options: ReqWithHeaders.Options) {}
 
+    /**
+     * @param {Fiddle.ReqWithHeaders} request
+     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.reqWithHeaders.getWithCustomHeader({
+     *         xTestServiceHeader: "string",
+     *         xTestEndpointHeader: "string",
+     *         body: "string"
+     *     })
+     */
     public async getWithCustomHeader(
         request: Fiddle.ReqWithHeaders,
         requestOptions?: ReqWithHeaders.RequestOptions
@@ -46,6 +58,7 @@ export class ReqWithHeaders {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -60,7 +73,7 @@ export class ReqWithHeaders {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

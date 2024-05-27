@@ -2,6 +2,7 @@
 
 exports[`file-upload file-upload parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -10,7 +11,7 @@ exports[`file-upload file-upload parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -32,6 +33,7 @@ exports[`file-upload file-upload parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "upload-file",
+      "pagination": null,
       "path": "/upload",
       "pathParameters": [],
       "queryParameters": [],
@@ -40,7 +42,7 @@ exports[`file-upload file-upload parse open api 1`] = `
         "name": null,
         "properties": [
           {
-            "description": null,
+            "description": "The file to upload",
             "key": "file",
             "schema": {
               "isArray": false,
@@ -58,7 +60,7 @@ exports[`file-upload file-upload parse open api 1`] = `
             },
           },
           {
-            "description": null,
+            "description": "The list of files to upload",
             "key": "file_list",
             "schema": {
               "isArray": true,
@@ -69,6 +71,15 @@ exports[`file-upload file-upload parse open api 1`] = `
           {
             "description": null,
             "key": "maybe_file_list",
+            "schema": {
+              "isArray": true,
+              "isOptional": true,
+              "type": "file",
+            },
+          },
+          {
+            "description": null,
+            "key": "maybe_files_allof_list",
             "schema": {
               "isArray": true,
               "isOptional": true,
@@ -86,7 +97,6 @@ exports[`file-upload file-upload parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

@@ -21,7 +21,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
-                fullExamples: undefined
+                fullExamples: undefined,
+                additionalProperties: schema.additionalProperties
             });
         case "array":
             return SchemaWithExample.array({
@@ -29,7 +30,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 value: convertSchemaToSchemaWithExample(schema.value),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                example: undefined
             });
         case "enum":
             return SchemaWithExample.enum({
@@ -85,7 +87,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 value: convertSchemaToSchemaWithExample(schema.value),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                example: undefined
             });
         case "reference":
             return SchemaWithExample.reference({
@@ -189,8 +192,11 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
     switch (primitiveSchema.type) {
         case "string":
             return PrimitiveSchemaValueWithExample.string({
-                maxLength: primitiveSchema.maxLength,
+                default: primitiveSchema.default,
+                pattern: primitiveSchema.pattern,
+                format: primitiveSchema.format,
                 minLength: primitiveSchema.minLength,
+                maxLength: primitiveSchema.maxLength,
                 example: undefined
             });
         case "base64":
@@ -211,6 +217,12 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             });
         case "double":
             return PrimitiveSchemaValueWithExample.double({
+                default: primitiveSchema.default,
+                minimum: primitiveSchema.minimum,
+                maximum: primitiveSchema.maximum,
+                exclusiveMinimum: primitiveSchema.exclusiveMinimum,
+                exclusiveMaximum: primitiveSchema.exclusiveMaximum,
+                multipleOf: primitiveSchema.multipleOf,
                 example: undefined
             });
         case "float":
@@ -219,6 +231,12 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             });
         case "int":
             return PrimitiveSchemaValueWithExample.int({
+                default: primitiveSchema.default,
+                minimum: primitiveSchema.minimum,
+                maximum: primitiveSchema.maximum,
+                exclusiveMinimum: primitiveSchema.exclusiveMinimum,
+                exclusiveMaximum: primitiveSchema.exclusiveMaximum,
+                multipleOf: primitiveSchema.multipleOf,
                 example: undefined
             });
         case "int64":
@@ -236,6 +254,7 @@ function convertToObjectProperty(objectProperty: ObjectProperty): ObjectProperty
         generatedName: objectProperty.generatedName,
         key: objectProperty.key,
         schema: convertSchemaToSchemaWithExample(objectProperty.schema),
-        audiences: objectProperty.audiences
+        audiences: objectProperty.audiences,
+        nameOverride: objectProperty.nameOverride
     };
 }

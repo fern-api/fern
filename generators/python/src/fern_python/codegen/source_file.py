@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from typing import Callable, List, TypeVar
+from typing import Callable, List, Optional, TypeVar
 
 from ordered_set import OrderedSet
 
@@ -36,11 +36,15 @@ class SourceFile(ClassParent):
         ...
 
     @abstractmethod
-    def to_str(self) -> str:
+    def to_str(self, include_imports: Optional[bool] = True) -> str:
         ...
 
     @abstractmethod
     def write_to_file(self, *, filepath: str) -> None:
+        ...
+
+    @abstractmethod
+    def get_imports_manager(self) -> ImportsManager:
         ...
 
 
@@ -69,6 +73,9 @@ class SourceFileImpl(SourceFile):
         self._should_format_as_snippet = should_format_as_snippet
         self._should_include_header = should_include_header
         self._whitelabel = whitelabel
+
+    def get_imports_manager(self) -> ImportsManager:
+        return self._imports_manager
 
     def add_declaration(
         self,
@@ -124,8 +131,8 @@ class SourceFileImpl(SourceFile):
     def add_footer_expression(self, expression: AST.Expression) -> None:
         self._footer_statements.append(TopLevelStatement(node=expression))
 
-    def to_str(self) -> str:
-        writer = self._prepare_for_writing()
+    def to_str(self, include_imports: Optional[bool] = True) -> str:
+        writer = self._prepare_for_writing(include_imports)
         return writer.to_str()
 
     def write_to_file(self, *, filepath: str) -> None:
@@ -135,7 +142,7 @@ class SourceFileImpl(SourceFile):
         if self._completion_listener is not None:
             self._completion_listener(self)
 
-    def _prepare_for_writing(self) -> NodeWriterImpl:
+    def _prepare_for_writing(self, include_imports: Optional[bool] = True) -> NodeWriterImpl:
         # metadata about the whole file's AST
         ast_metadata = AST.AstNodeMetadata()
 
@@ -167,9 +174,10 @@ class SourceFileImpl(SourceFile):
             self._reference_resolver.register_reference(reference)
 
             # track dependency if this references relies on an external dep
-            if reference.import_ is not None:
-                for dependency in reference.import_.module.get_dependencies():
-                    self._dependency_manager.add_dependency(dependency)
+            if include_imports:
+                if reference.import_ is not None:
+                    for dependency in reference.import_.module.get_dependencies():
+                        self._dependency_manager.add_dependency(dependency)
 
         for declaration in ast_metadata.declarations:
             self._reference_resolver.register_declaration(declaration)
@@ -189,16 +197,18 @@ class SourceFileImpl(SourceFile):
         )
         self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
         for statement in self._statements:
-            self._imports_manager.write_top_imports_for_statement(
-                statement_id=statement.id,
+            if include_imports:
+                self._imports_manager.write_top_imports_for_statement(
+                    statement_id=statement.id,
+                    writer=writer,
+                    reference_resolver=self._reference_resolver,
+                )
+            writer.write_node(statement.node)
+        if include_imports:
+            self._imports_manager.write_remaining_imports(
                 writer=writer,
                 reference_resolver=self._reference_resolver,
             )
-            writer.write_node(statement.node)
-        self._imports_manager.write_remaining_imports(
-            writer=writer,
-            reference_resolver=self._reference_resolver,
-        )
         for statement in self._footer_statements:
             writer.write_node(node=statement.node)
             writer.write_newline_if_last_line_not()

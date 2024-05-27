@@ -1,31 +1,30 @@
-import { MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
+import { MediaType } from "@fern-api/core-utils";
+import { MultipartRequestProperty, MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../../getExtension";
+import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
-import {
-    convertSchemaWithExampleToOptionalSchema,
-    convertSchemaWithExampleToSchema
-} from "../../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
-
-export const APPLICATION_JSON_CONTENT = "application/json";
-export const APPLICATION_JSON_REGEX = /^application.*json$/;
-
-export const MULTIPART_CONTENT = "multipart/form-data";
-
-export const OCTET_STREAM = "application/octet-stream";
 
 function getMultipartFormDataRequest(
     requestBody: OpenAPIV3.RequestBodyObject
 ): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return requestBody.content[MULTIPART_CONTENT]?.schema;
+    for (const [mediaType, mediaTypeObject] of Object.entries(requestBody.content)) {
+        if (MediaType.parse(mediaType)?.isMultipart()) {
+            return mediaTypeObject.schema;
+        }
+    }
+    return undefined;
 }
 
 function isOctetStreamRequest(requestBody: OpenAPIV3.RequestBodyObject): boolean {
-    return requestBody.content[OCTET_STREAM] != null;
+    for (const mediaType in requestBody.content) {
+        if (MediaType.parse(mediaType)?.isOctetStream()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function multipartRequestHasFile(
@@ -61,7 +60,7 @@ export function convertRequest({
         : requestBody;
 
     const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content);
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
     // convert as application/octet-stream
     if (isOctetStreamRequest(resolvedRequestBody)) {
@@ -81,6 +80,78 @@ export function convertRequest({
                   id: undefined,
                   schema: multipartSchema
               };
+        const convertedMultipartSchema = convertSchema(
+            resolvedMultipartSchema.schema,
+            false,
+            context,
+            requestBreadcrumbs
+        );
+        const properties: MultipartRequestProperty[] = [];
+        if (convertedMultipartSchema.type === "object") {
+            for (const property of convertedMultipartSchema.properties) {
+                if (
+                    property.schema.type === "primitive" &&
+                    property.schema.schema.type === "string" &&
+                    property.schema.schema.format === "binary"
+                ) {
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional: false, isArray: false }),
+                        description: property.schema.description
+                    });
+                    continue;
+                }
+
+                if (
+                    property.schema.type === "optional" &&
+                    property.schema.value.type === "primitive" &&
+                    property.schema.value.schema.type === "string" &&
+                    property.schema.value.schema.format === "binary"
+                ) {
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional: true, isArray: false }),
+                        description: property.schema.description
+                    });
+                    continue;
+                }
+
+                if (
+                    property.schema.type === "array" &&
+                    property.schema.value.type === "primitive" &&
+                    property.schema.value.schema.type === "string" &&
+                    property.schema.value.schema.format === "binary"
+                ) {
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional: false, isArray: true }),
+                        description: property.schema.description
+                    });
+                    continue;
+                }
+
+                if (
+                    property.schema.type === "optional" &&
+                    property.schema.value.type === "array" &&
+                    property.schema.value.value.type === "primitive" &&
+                    property.schema.value.value.schema.type === "string" &&
+                    property.schema.value.value.schema.format === "binary"
+                ) {
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional: true, isArray: true }),
+                        description: property.schema.description
+                    });
+                    continue;
+                }
+
+                properties.push({
+                    key: property.key,
+                    schema: MultipartSchema.json(property.schema),
+                    description: undefined
+                });
+            }
+        }
 
         return RequestWithExample.multipart({
             name:
@@ -88,35 +159,7 @@ export function convertRequest({
                     ? resolvedMultipartSchema.id
                     : undefined,
             description: undefined,
-            properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
-                const required: string[] | undefined = resolvedMultipartSchema.schema.required;
-                const isRequired = required !== undefined && required.includes(key);
-                if (
-                    !isReferenceObject(definition) &&
-                    ((definition.type === "string" && definition.format === "binary") ||
-                        (definition.type === "array" &&
-                            !isReferenceObject(definition.items) &&
-                            definition.items.type === "string" &&
-                            definition.items.format === "binary"))
-                ) {
-                    return {
-                        key,
-                        schema: MultipartSchema.file({ isOptional: !isRequired, isArray: definition.type === "array" }),
-                        description: undefined
-                    };
-                }
-                const schemaWithExample = convertSchema(definition, false, context, [...requestBreadcrumbs, key]);
-                const audiences = getExtension<string[]>(definition, FernOpenAPIExtension.AUDIENCES) ?? [];
-                const schema = isRequired
-                    ? convertSchemaWithExampleToSchema(schemaWithExample)
-                    : convertSchemaWithExampleToOptionalSchema(schemaWithExample);
-                return {
-                    key,
-                    audiences,
-                    schema: MultipartSchema.json(schema),
-                    description: undefined
-                };
-            })
+            properties
         });
     }
 
@@ -129,7 +172,10 @@ export function convertRequest({
         description: undefined,
         schema: requestSchema,
         contentType: undefined,
-        fullExamples: jsonMediaObject.examples
+        fullExamples: jsonMediaObject.examples,
+        additionalProperties:
+            !isReferenceObject(jsonMediaObject.schema) &&
+            isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties)
     });
 }
 

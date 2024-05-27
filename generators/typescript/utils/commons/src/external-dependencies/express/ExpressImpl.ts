@@ -6,6 +6,17 @@ export class ExpressImpl extends ExternalDependency implements Express {
     protected override PACKAGE = { name: "express", version: "4.18.2" };
     protected override TYPES_PACKAGE = { name: "@types/express", version: "4.17.16" };
 
+    public NextFunction = {
+        _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
+            withImport(() => {
+                return ts.factory.createTypeReferenceNode(
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "NextFunction"),
+                    []
+                );
+            })
+        )
+    };
+
     public Request = {
         body: "body" as const,
         _getReferenceToType: this.withDefaultImport("express", (withImport, express) =>
@@ -47,11 +58,27 @@ export class ExpressImpl extends ExternalDependency implements Express {
 
         json: ({
             referenceToExpressResponse,
-            valueToSend
+            valueToSend,
+            status
         }: {
             referenceToExpressResponse: ts.Expression;
             valueToSend: ts.Expression;
+            status?: number;
         }): ts.Expression => {
+            if (status != null) {
+                return ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createCallExpression(
+                            ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "status"),
+                            undefined,
+                            [ts.factory.createNumericLiteral(status)]
+                        ),
+                        "json"
+                    ),
+                    undefined,
+                    [valueToSend]
+                );
+            }
             return ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "json"),
                 undefined,

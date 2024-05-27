@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedExhaustive from "../../..";
+import * as SeedExhaustive from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace NoReqBody {
     interface Options {
@@ -17,12 +17,19 @@ export declare namespace NoReqBody {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class NoReqBody {
     constructor(protected readonly _options: NoReqBody.Options) {}
 
+    /**
+     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.noReqBody.getWithNoRequestBody()
+     */
     public async getWithNoRequestBody(
         requestOptions?: NoReqBody.RequestOptions
     ): Promise<SeedExhaustive.types.ObjectWithOptionalField> {
@@ -40,6 +47,7 @@ export class NoReqBody {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
@@ -72,6 +80,12 @@ export class NoReqBody {
         }
     }
 
+    /**
+     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.noReqBody.postWithNoRequestBody()
+     */
     public async postWithNoRequestBody(requestOptions?: NoReqBody.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/no-req-body"),
@@ -87,6 +101,7 @@ export class NoReqBody {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.noReqBody.postWithNoRequestBody.Response.parseOrThrow(_response.body, {
@@ -119,7 +134,7 @@ export class NoReqBody {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

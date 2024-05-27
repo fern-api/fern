@@ -227,7 +227,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_:TypeId"

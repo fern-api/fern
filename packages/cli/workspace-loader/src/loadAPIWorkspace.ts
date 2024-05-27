@@ -13,7 +13,7 @@ import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
-import { WorkspaceLoader } from "./types/Result";
+import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { APIChangelog, FernWorkspace, Spec } from "./types/Workspace";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
@@ -28,10 +28,10 @@ export async function loadAPIWorkspace({
     cliVersion: string;
     workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
-    let generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined = undefined;
-    try {
-        generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
-    } catch (err) {}
+    const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
+        absolutePathToWorkspace,
+        context
+    });
 
     let changelog: APIChangelog | undefined = undefined;
     try {
@@ -46,13 +46,44 @@ export async function loadAPIWorkspace({
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration.api.definitions.length > 0) {
         const specs: Spec[] = [];
+
         for (const definition of generatorsConfiguration.api.definitions) {
+            const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.path));
+            const absoluteFilepathToOverrides =
+                definition.overrides != null
+                    ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
+                    : undefined;
+            if (!(await doesPathExist(absoluteFilepath))) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(definition.path)]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
+            if (
+                definition.overrides != null &&
+                absoluteFilepathToOverrides != null &&
+                !(await doesPathExist(absoluteFilepathToOverrides))
+            ) {
+                return {
+                    didSucceed: false,
+                    failures: {
+                        [RelativeFilePath.of(definition.overrides)]: {
+                            type: WorkspaceLoaderFailureType.FILE_MISSING
+                        }
+                    }
+                };
+            }
             specs.push({
-                absoluteFilepath: join(absolutePathToWorkspace, RelativeFilePath.of(definition.path)),
-                absoluteFilepathToOverrides:
-                    definition.overrides != null
-                        ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
-                        : undefined
+                absoluteFilepath,
+                absoluteFilepathToOverrides,
+                settings: {
+                    audiences: definition.audiences ?? [],
+                    shouldUseTitleAsName: definition.shouldUseTitleAsName ?? true
+                }
             });
         }
         return {
@@ -89,6 +120,16 @@ export async function loadAPIWorkspace({
                 absoluteFilepath: absolutePathToAsyncAPI,
                 absoluteFilepathToOverrides: undefined
             });
+        }
+        if (absolutePathToOpenAPI != null && absolutePathToAsyncAPI != null) {
+            return {
+                didSucceed: false,
+                failures: {
+                    [RelativeFilePath.of("openapi/openapi.yml")]: {
+                        type: WorkspaceLoaderFailureType.FILE_MISSING
+                    }
+                }
+            };
         }
         return {
             didSucceed: true,

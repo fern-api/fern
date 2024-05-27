@@ -8,6 +8,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import pydantic_v1
+from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.errors.not_found_error import NotFoundError
@@ -24,13 +25,22 @@ class ServiceClient:
         """
         This endpoint returns a file by its name.
 
-        Parameters:
-            - filename: str. This is a filename
+        Parameters
+        ----------
+        filename : str
+            This is a filename
 
-            - x_file_api_version: str.
+        x_file_api_version : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        File
+
+        Examples
+        --------
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -44,16 +54,18 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"file/{jsonable_encoder(filename)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"file/{jsonable_encoder(filename)}"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-File-API-Version": str(x_file_api_version),
+                        "X-File-API-Version": str(x_file_api_version) if x_file_api_version is not None else None,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -85,13 +97,22 @@ class AsyncServiceClient:
         """
         This endpoint returns a file by its name.
 
-        Parameters:
-            - filename: str. This is a filename
+        Parameters
+        ----------
+        filename : str
+            This is a filename
 
-            - x_file_api_version: str.
+        x_file_api_version : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        File
+
+        Examples
+        --------
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
@@ -105,16 +126,18 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"file/{jsonable_encoder(filename)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"file/{jsonable_encoder(filename)}"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-File-API-Version": str(x_file_api_version),
+                        "X-File-API-Version": str(x_file_api_version) if x_file_api_version is not None else None,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )

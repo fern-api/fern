@@ -1,5 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -18,7 +19,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     version,
     shouldLogS3Url,
     token,
-    whitelabel
+    whitelabel,
+    absolutePathToPreview
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -28,6 +30,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -50,7 +53,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     shouldLogS3Url,
                     token,
                     whitelabel,
-                    irVersionOverride: generatorInvocation.irVersionOverride
+                    irVersionOverride: generatorInvocation.irVersionOverride,
+                    absolutePathToPreview
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

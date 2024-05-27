@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse docs 1`] = `
+{
+  "definitionFiles": {
+    "chatCompletions.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": false,
+            "docs": undefined,
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/completions/chat",
+            "request": {
+              "body": {
+                "properties": {
+                  "prompt": "string",
+                  "stream": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompletionRequest",
+              "query-parameters": undefined,
+            },
+            "response-stream": {
+              "docs": "Success!",
+              "format": "sse",
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Completion": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+      "CompletionChunk": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\` alongside \`x-fern-streaming\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse simple 1`] = `
+{
+  "definitionFiles": {
+    "chatCompletions.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": false,
+            "docs": undefined,
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/completions/chat",
+            "request": {
+              "body": {
+                "properties": {
+                  "prompt": "string",
+                  "stream": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompletionRequest",
+              "query-parameters": undefined,
+            },
+            "response-stream": {
+              "docs": "Success!",
+              "format": "sse",
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Completion": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+      "CompletionChunk": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\` alongside \`x-fern-streaming\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

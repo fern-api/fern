@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../../../../../environments";
 import * as core from "../../../../../../../../core";
-import * as SeedExamples from "../../../../../../..";
+import * as SeedExamples from "../../../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../../../serialization";
-import * as errors from "../../../../../../../../errors";
+import * as serializers from "../../../../../../../../serialization/index";
+import * as errors from "../../../../../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -18,18 +18,29 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} notificationId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExamples.file.notification.service.getException("notification-hsy129x")
+     */
     public async getException(
         notificationId: string,
         requestOptions?: Service.RequestOptions
     ): Promise<SeedExamples.Exception> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/notification/${notificationId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/file/notification/${encodeURIComponent(notificationId)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -42,6 +53,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Exception.parseOrThrow(_response.body, {
@@ -74,7 +86,7 @@ export class Service {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

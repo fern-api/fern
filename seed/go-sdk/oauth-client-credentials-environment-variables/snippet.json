@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-environment-variables/fern\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials-environment-variables/fern\"\n\tfernclient \"github.com/oauth-client-credentials-environment-variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tcontext.TODO(),\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t\tRefreshToken: \"string\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

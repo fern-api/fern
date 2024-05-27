@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../../requests"
+require "json"
 require "async"
 
 module SeedExamplesClient
@@ -20,6 +21,9 @@ module SeedExamplesClient
       # @param id [String] The id to check
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [Void]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.health.service.check(id: "id-2sdx82h")
       def check(id:, request_options: nil)
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -33,6 +37,9 @@ module SeedExamplesClient
       #
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [Boolean]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.health.service.ping
       def ping(request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -40,7 +47,7 @@ module SeedExamplesClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/ping"
         end
-        response.body
+        JSON.parse(response.body)
       end
     end
 
@@ -59,6 +66,9 @@ module SeedExamplesClient
       # @param id [String] The id to check
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [Void]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.health.service.check(id: "id-2sdx82h")
       def check(id:, request_options: nil)
         Async do
           @request_client.conn.get do |req|
@@ -74,6 +84,9 @@ module SeedExamplesClient
       #
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [Boolean]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.health.service.ping
       def ping(request_options: nil)
         Async do
           response = @request_client.conn.get do |req|
@@ -82,7 +95,8 @@ module SeedExamplesClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/ping"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
     end

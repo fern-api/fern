@@ -1,0 +1,54 @@
+---
+title: "Cards"
+description: Use cards to display content in a box
+---
+
+### Basic
+
+<Card 
+    title='Python' 
+    icon='brands python' 
+    href='https://github.com/fern-api/fern/tree/main/generators/python'
+>
+  The icon field references a Font Awesome icon. 
+</Card>
+
+
+### Custom Icon
+
+<Card 
+    title='Python' 
+    icon={<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python logo"/>} 
+    href='https://github.com/fern-api/fern/tree/main/generators/python'
+>
+  Pass in an image tag to use a custom icon.
+</Card>
+
+
+<Aside>
+  <CodeBlocks>
+      <CodeBlock title="Basic">
+        ```jsx
+        <Card 
+            title='Python' 
+            icon='brands python' 
+            href='https://github.com/fern-api/fern/tree/main/generators/python'
+        >
+        View Fern's Python SDK generator.
+        </Card>
+        ```
+      </CodeBlock>
+      <CodeBlock title="Custom Icon">
+        ```jsx
+        <Card 
+            title='Python' 
+            icon={<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python logo"/>} 
+            href='https://github.com/fern-api/fern/tree/main/generators/python'
+        >
+        View Fern's Python SDK generator.
+        </Card>
+        ```
+      </CodeBlock>
+  </CodeBlocks>
+</Aside>
+

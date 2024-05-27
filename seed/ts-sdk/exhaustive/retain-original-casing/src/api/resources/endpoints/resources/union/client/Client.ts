@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../../../core";
-import * as SeedExhaustive from "../../../../..";
-import * as serializers from "../../../../../../serialization";
+import * as SeedExhaustive from "../../../../../index";
+import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace Union {
     interface Options {
@@ -17,12 +17,24 @@ export declare namespace Union {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Union {
     constructor(protected readonly _options: Union.Options) {}
 
+    /**
+     * @param {SeedExhaustive.types.Animal} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedExhaustive.endpoints.union.getAndReturnUnion({
+     *         animal: "dog",
+     *         name: "string",
+     *         likesToWoof: true
+     *     })
+     */
     public async getAndReturnUnion(
         request: SeedExhaustive.types.Animal,
         requestOptions?: Union.RequestOptions
@@ -42,6 +54,7 @@ export class Union {
             body: await serializers.types.Animal.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.types.Animal.parseOrThrow(_response.body, {
@@ -74,7 +87,7 @@ export class Union {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

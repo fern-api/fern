@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
@@ -24,11 +25,19 @@ class ContainerClient:
         self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
-        Parameters:
-            - request: typing.Sequence[str].
+        Parameters
+        ----------
+        request : typing.Sequence[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[str]
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -40,10 +49,12 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-primitives"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-primitives"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -80,11 +91,19 @@ class ContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Sequence[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ObjectWithRequiredField]
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -101,10 +120,12 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-objects"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-objects"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -138,11 +159,19 @@ class ContainerClient:
         self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Set[str]:
         """
-        Parameters:
-            - request: typing.Set[str].
+        Parameters
+        ----------
+        request : typing.Set[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Set[str]
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -154,10 +183,12 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-primitives"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-primitives"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -194,11 +225,19 @@ class ContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Sequence[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ObjectWithRequiredField]
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -215,10 +254,12 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-objects"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-objects"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -252,11 +293,19 @@ class ContainerClient:
         self, *, request: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, str]:
         """
-        Parameters:
-            - request: typing.Dict[str, str].
+        Parameters
+        ----------
+        request : typing.Dict[str, str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, str]
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -268,10 +317,12 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-prim"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-prim"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -308,11 +359,19 @@ class ContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Dict[str, ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Dict[str, ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, ObjectWithRequiredField]
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -329,10 +388,12 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-object"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-object"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -369,11 +430,19 @@ class ContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Optional[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Optional[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[ObjectWithRequiredField]
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -388,10 +457,12 @@ class ContainerClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/opt-objects"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/opt-objects"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -430,11 +501,19 @@ class AsyncContainerClient:
         self, *, request: typing.Sequence[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[str]:
         """
-        Parameters:
-            - request: typing.Sequence[str].
+        Parameters
+        ----------
+        request : typing.Sequence[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[str]
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -446,10 +525,12 @@ class AsyncContainerClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-primitives"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-primitives"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -486,11 +567,19 @@ class AsyncContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Sequence[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ObjectWithRequiredField]
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -507,10 +596,12 @@ class AsyncContainerClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-objects"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-objects"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -544,11 +635,19 @@ class AsyncContainerClient:
         self, *, request: typing.Set[str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Set[str]:
         """
-        Parameters:
-            - request: typing.Set[str].
+        Parameters
+        ----------
+        request : typing.Set[str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Set[str]
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -560,10 +659,12 @@ class AsyncContainerClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-primitives"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-primitives"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -600,11 +701,19 @@ class AsyncContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Sequence[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[ObjectWithRequiredField]
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -621,10 +730,12 @@ class AsyncContainerClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-objects"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-objects"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -658,11 +769,19 @@ class AsyncContainerClient:
         self, *, request: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Dict[str, str]:
         """
-        Parameters:
-            - request: typing.Dict[str, str].
+        Parameters
+        ----------
+        request : typing.Dict[str, str]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, str]
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -674,10 +793,12 @@ class AsyncContainerClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-prim"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-prim"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -714,11 +835,19 @@ class AsyncContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Dict[str, ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Dict[str, ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Dict[str, ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Dict[str, ObjectWithRequiredField]
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -735,10 +864,12 @@ class AsyncContainerClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-object"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-object"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -775,11 +906,19 @@ class AsyncContainerClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[ObjectWithRequiredField]:
         """
-        Parameters:
-            - request: typing.Optional[ObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Optional[ObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.Optional[ObjectWithRequiredField]
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -794,10 +933,12 @@ class AsyncContainerClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/opt-objects"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/opt-objects"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None

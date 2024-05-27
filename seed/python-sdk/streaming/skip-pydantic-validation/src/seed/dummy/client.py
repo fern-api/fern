@@ -8,6 +8,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
@@ -25,25 +26,37 @@ class DummyClient:
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[StreamResponse]:
         """
-        Parameters:
-            - num_events: int.
+        Parameters
+        ----------
+        num_events : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamResponse]
+
+        Examples
+        --------
         from seed.client import SeedStreaming
 
         client = SeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.dummy.generate_stream(
+        response = client.dummy.generate_stream(
             num_events=1,
         )
+        for chunk in response:
+            yield chunk
         """
         with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"num_events": num_events})
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -87,25 +100,37 @@ class AsyncDummyClient:
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[StreamResponse]:
         """
-        Parameters:
-            - num_events: int.
+        Parameters
+        ----------
+        num_events : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamResponse]
+
+        Examples
+        --------
         from seed.client import AsyncSeedStreaming
 
         client = AsyncSeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.dummy.generate_stream(
+        response = await client.dummy.generate_stream(
             num_events=1,
         )
+        async for chunk in response:
+            yield chunk
         """
         async with self._client_wrapper.httpx_client.stream(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"num_events": num_events})
             if request_options is None or request_options.get("additional_body_parameters") is None

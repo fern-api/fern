@@ -78,6 +78,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
                         self._custom_config.version
                     ),
+                    require_optional_fields=self._custom_config.require_optional_fields,
                 ) as internal_pydantic_model_for_single_union_type:
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                     internal_single_union_types.append(internal_single_union_type)
@@ -92,8 +93,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     if shape.properties_type == "singleProperty":
                         internal_pydantic_model_for_single_union_type.add_field(
                             PydanticField(
-                                name=shape.name.name.snake_case.unsafe_name,
-                                pascal_case_field_name=shape.name.name.pascal_case.unsafe_name,
+                                name=shape.name.name.snake_case.safe_name,
+                                pascal_case_field_name=shape.name.name.pascal_case.safe_name,
                                 json_field_name=shape.name.wire_value,
                                 type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
                             )
@@ -325,14 +326,14 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         discriminant_value = self._get_discriminant_value_for_single_union_type(single_union_type)
         return PydanticField(
             name=self._get_discriminant_attr_name(),
-            pascal_case_field_name=self._union.discriminant.name.pascal_case.unsafe_name,
+            pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
             type_hint=AST.TypeHint.literal(discriminant_value),
             json_field_name=self._union.discriminant.wire_value,
             default_value=discriminant_value,
         )
 
     def _get_discriminant_attr_name(self) -> str:
-        return self._union.discriminant.name.snake_case.unsafe_name
+        return self._union.discriminant.name.snake_case.safe_name
 
     def _get_discriminant_value_for_single_union_type(
         self,
@@ -346,4 +347,4 @@ def assert_never(arg: Never) -> Never:
 
 
 def get_field_name_for_single_property(property: ir_types.SingleUnionTypeProperty) -> str:
-    return property.name.name.snake_case.unsafe_name
+    return property.name.name.snake_case.safe_name

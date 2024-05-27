@@ -46,7 +46,11 @@ module SeedApiClient
           value = parsed_json["value"].to_json
           value = SeedApiClient::Ast::FieldValue.from_json(json_object: value)
         end
-        new(name: name, value: value, additional_properties: struct)
+        new(
+          name: name,
+          value: value,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ObjectFieldValue to a JSON object

@@ -13,12 +13,22 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
     public document: AsyncAPIV2.Document;
     public taskContext: TaskContext;
     public DUMMY: SchemaParserContext;
+    public shouldUseTitleAsName: boolean;
 
-    constructor({ document, taskContext }: { document: AsyncAPIV2.Document; taskContext: TaskContext }) {
+    constructor({
+        document,
+        taskContext,
+        shouldUseTitleAsName
+    }: {
+        document: AsyncAPIV2.Document;
+        taskContext: TaskContext;
+        shouldUseTitleAsName: boolean;
+    }) {
         this.document = document;
         this.taskContext = taskContext;
         this.logger = taskContext.logger;
         this.DUMMY = this;
+        this.shouldUseTitleAsName = shouldUseTitleAsName;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -72,6 +82,24 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         return resolvedMessage;
     }
 
+    public referenceExists(ref: string): boolean {
+        // Step 1: Get keys
+        const keys = ref
+            .substring(2)
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"));
+
+        // Step 2: Index recursively into the document with all the keys
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let resolvedSchema: any = this.document;
+        for (const key of keys) {
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
+                return false;
+            }
+            resolvedSchema = resolvedSchema[key];
+        }
+        return true;
+    }
     public abstract markSchemaAsReferencedByNonRequest(schemaId: string): void;
 
     public abstract markSchemaAsReferencedByRequest(schemaId: string): void;
@@ -84,8 +112,16 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
 }
 
 export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
-    constructor({ document, taskContext }: { document: AsyncAPIV2.Document; taskContext: TaskContext }) {
-        super({ document, taskContext });
+    constructor({
+        document,
+        taskContext,
+        shouldUseTitleAsName
+    }: {
+        document: AsyncAPIV2.Document;
+        taskContext: TaskContext;
+        shouldUseTitleAsName: boolean;
+    }) {
+        super({ document, taskContext, shouldUseTitleAsName });
     }
 
     markSchemaAsReferencedByNonRequest(schemaId: string): void {

@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.color_or_operand import ColorOrOperand
@@ -21,23 +22,31 @@ class QueryParamClient:
         self,
         *,
         operand: Operand,
-        maybe_operand: typing.Optional[Operand] = None,
         operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = None,
         maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: Operand.
+        Parameters
+        ----------
+        operand : Operand
 
-            - maybe_operand: typing.Optional[Operand].
+        operand_or_color : ColorOrOperand
 
-            - operand_or_color: ColorOrOperand.
+        maybe_operand : typing.Optional[Operand]
 
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
+        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedEnum
 
         client = SeedEnum(
@@ -49,21 +58,23 @@ class QueryParamClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "operand": operand,
-                        "maybeOperand": maybe_operand,
-                        "operandOrColor": operand_or_color,
-                        "maybeOperandOrColor": maybe_operand_or_color,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "operand": operand,
+                            "maybeOperand": maybe_operand,
+                            "operandOrColor": operand_or_color,
+                            "maybeOperandOrColor": maybe_operand_or_color,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
@@ -95,23 +106,31 @@ class QueryParamClient:
         self,
         *,
         operand: typing.Union[Operand, typing.Sequence[Operand]],
-        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: typing.Union[Operand, typing.Sequence[Operand]].
+        Parameters
+        ----------
+        operand : typing.Union[Operand, typing.Sequence[Operand]]
 
-            - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
+        operand_or_color : typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]
 
-            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
+        maybe_operand : typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]]
 
-            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
+        maybe_operand_or_color : typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedEnum
 
         client = SeedEnum(
@@ -125,21 +144,23 @@ class QueryParamClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "operand": operand,
-                        "maybeOperand": maybe_operand,
-                        "operandOrColor": operand_or_color,
-                        "maybeOperandOrColor": maybe_operand_or_color,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "operand": operand,
+                            "maybeOperand": maybe_operand,
+                            "operandOrColor": operand_or_color,
+                            "maybeOperandOrColor": maybe_operand_or_color,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
@@ -176,23 +197,31 @@ class AsyncQueryParamClient:
         self,
         *,
         operand: Operand,
-        maybe_operand: typing.Optional[Operand] = None,
         operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = None,
         maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: Operand.
+        Parameters
+        ----------
+        operand : Operand
 
-            - maybe_operand: typing.Optional[Operand].
+        operand_or_color : ColorOrOperand
 
-            - operand_or_color: ColorOrOperand.
+        maybe_operand : typing.Optional[Operand]
 
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
+        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(
@@ -204,21 +233,23 @@ class AsyncQueryParamClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "operand": operand,
-                        "maybeOperand": maybe_operand,
-                        "operandOrColor": operand_or_color,
-                        "maybeOperandOrColor": maybe_operand_or_color,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "operand": operand,
+                            "maybeOperand": maybe_operand,
+                            "operandOrColor": operand_or_color,
+                            "maybeOperandOrColor": maybe_operand_or_color,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
@@ -250,23 +281,31 @@ class AsyncQueryParamClient:
         self,
         *,
         operand: typing.Union[Operand, typing.Sequence[Operand]],
-        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: typing.Union[Operand, typing.Sequence[Operand]].
+        Parameters
+        ----------
+        operand : typing.Union[Operand, typing.Sequence[Operand]]
 
-            - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
+        operand_or_color : typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]
 
-            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
+        maybe_operand : typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]]
 
-            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
+        maybe_operand_or_color : typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(
@@ -280,21 +319,23 @@ class AsyncQueryParamClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "operand": operand,
-                        "maybeOperand": maybe_operand,
-                        "operandOrColor": operand_or_color,
-                        "maybeOperandOrColor": maybe_operand_or_color,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "operand": operand,
+                            "maybeOperand": maybe_operand,
+                            "operandOrColor": operand_or_color,
+                            "maybeOperandOrColor": maybe_operand_or_color,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))

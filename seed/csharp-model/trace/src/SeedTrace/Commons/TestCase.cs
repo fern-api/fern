@@ -9,5 +9,5 @@ public class TestCase
     public string Id { get; init; }
 
     [JsonPropertyName("params")]
-    public List<List<VariableValue>> Params { get; init; }
+    public List<VariableValue> Params { get; init; }
 }

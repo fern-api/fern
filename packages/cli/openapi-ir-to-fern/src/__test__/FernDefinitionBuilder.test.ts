@@ -7,6 +7,7 @@ describe("Fern Definition Builder", () => {
             {
                 title: undefined,
                 description: undefined,
+                basePath: undefined,
                 servers: [],
                 tags: {
                     tagsById: {},
@@ -16,7 +17,6 @@ describe("Fern Definition Builder", () => {
                 endpoints: [],
                 webhooks: [],
                 schemas: {},
-                errors: {},
                 variables: {},
                 nonRequestReferencedSchemas: new Set(),
                 securitySchemes: {},
@@ -24,7 +24,8 @@ describe("Fern Definition Builder", () => {
                 groups: {},
                 channel: []
             },
-            true
+            true,
+            false
         );
         builder.addEnvironment({
             name: "Production",

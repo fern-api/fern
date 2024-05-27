@@ -2,6 +2,7 @@
 
 exports[`examples enum-casing parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -10,7 +11,7 @@ exports[`examples enum-casing parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62,6 +63,7 @@ exports[`examples enum-casing parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/example",
       "pathParameters": [],
       "queryParameters": [],
@@ -86,7 +88,6 @@ exports[`examples enum-casing parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
@@ -95,6 +96,7 @@ exports[`examples enum-casing parse open api 1`] = `
   ],
   "schemas": {
     "ExampleResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -107,6 +109,7 @@ exports[`examples enum-casing parse open api 1`] = `
           "conflict": {},
           "generatedName": "exampleResponseStatus",
           "key": "status",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "exampleResponseStatus",
@@ -153,6 +156,7 @@ exports[`examples enum-casing parse open api 1`] = `
           "conflict": {},
           "generatedName": "exampleResponseMessage",
           "key": "message",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "exampleResponseMessage",
@@ -165,8 +169,11 @@ exports[`examples enum-casing parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -178,6 +185,7 @@ exports[`examples enum-casing parse open api 1`] = `
           "conflict": {},
           "generatedName": "exampleResponseCustomFields",
           "key": "custom_fields",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "exampleResponseCustomFields",
@@ -194,8 +202,11 @@ exports[`examples enum-casing parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
               },
@@ -207,8 +218,11 @@ exports[`examples enum-casing parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "format": null,
                   "maxLength": null,
                   "minLength": null,
+                  "pattern": null,
                   "type": "string",
                 },
                 "type": "primitive",

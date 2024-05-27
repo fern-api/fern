@@ -1,17 +1,50 @@
-import { ErrorDeclaration } from "@fern-api/ir-sdk";
+import { ErrorDeclaration, FernIr } from "@fern-api/ir-sdk";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
+import { ExampleResolver } from "../resolvers/ExampleResolver";
+import { TypeResolver } from "../resolvers/TypeResolver";
 import { parseErrorName } from "../utils/parseErrorName";
+import { convertTypeReferenceExample } from "./type-declarations/convertExampleType";
 
 export function convertErrorDeclaration({
     errorName,
     errorDeclaration,
-    file
+    file,
+    typeResolver,
+    exampleResolver,
+    workspace
 }: {
     errorName: string;
     errorDeclaration: RawSchemas.ErrorDeclarationSchema;
     file: FernFileContext;
+    typeResolver: TypeResolver;
+    exampleResolver: ExampleResolver;
+    workspace: FernWorkspace;
 }): ErrorDeclaration {
+    const examples: FernIr.ExampleError[] = [];
+    if (errorDeclaration.type != null && errorDeclaration.examples != null) {
+        for (const example of errorDeclaration.examples) {
+            examples.push({
+                name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                docs: example.docs,
+                jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
+                    example: example.value,
+                    file
+                }).resolvedExample,
+                shape: convertTypeReferenceExample({
+                    example: example.value,
+                    rawTypeBeingExemplified: errorDeclaration.type,
+                    fileContainingRawTypeReference: file,
+                    fileContainingExample: file,
+                    typeResolver,
+                    exampleResolver,
+                    workspace
+                })
+            });
+        }
+    }
+
     return {
         name: parseErrorName({
             errorName,
@@ -23,6 +56,7 @@ export function convertErrorDeclaration({
         }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         statusCode: errorDeclaration["status-code"],
-        type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined
+        type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
+        examples
     };
 }

@@ -1,9 +1,19 @@
-irVersion: v37
+irVersion: v43
 docker: fernapi/fern-typescript-express:local
 dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
 language: typescript
 generatorType: Server
 defaultOutputMode: local_files
+defaultCustomConfig: 
+  outputSourceFiles: true
+local: 
+  workingDirectory: generators/typescript
+  buildCommand: 
+    - yarn workspace @fern-typescript/express-generator-cli compile 
+    - yarn workspace @fern-typescript/express-generator-cli build
+  runCommand: node express/cli/dist/cli.cjs
+  env: 
+    NODE_ENV: test
 fixtures:
   trace:
     - customConfig: null
@@ -15,14 +25,23 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        outputSourceFiles: true
-      outputFolder: output-source-files
+        outputSourceFiles: false
+      outputFolder: output-compiled
+    - customConfig: 
+        skipRequestValidation: true
+      outputFolder: skip-request-validation
+    - customConfig: 
+        skipResponseValidation: true
+      outputFolder: skip-response-validation
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
+    - customConfig:
+        allowExtraFields: true
+      outputFolder: allow-extra-fields
     - customConfig:
         doNotHandleUnrecognizedErrors: true
         includeUtilsOnUnionMembers: true
@@ -41,5 +60,6 @@ allowedFailures:
   - file-upload
   - plain-text
   - streaming
+  - server-sent-events
 
 

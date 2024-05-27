@@ -44,7 +44,11 @@ module SeedTraceClient
           full_list = parsed_json["fullList"].to_json
           full_list = SeedTraceClient::Commons::SinglyLinkedListValue.from_json(json_object: full_list)
         end
-        new(node_id: node_id, full_list: full_list, additional_properties: struct)
+        new(
+          node_id: node_id,
+          full_list: full_list,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of SinglyLinkedListNodeAndListValue to a JSON object

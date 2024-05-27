@@ -2,6 +2,7 @@
 
 exports[`examples examples parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -10,13 +11,13 @@ exports[`examples examples parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Example 1",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -139,6 +140,7 @@ exports[`examples examples parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "Search",
+      "pagination": null,
       "path": "/property/search",
       "pathParameters": [],
       "queryParameters": [],
@@ -170,7 +172,6 @@ exports[`examples examples parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
@@ -179,6 +180,7 @@ exports[`examples examples parse open api 1`] = `
   ],
   "schemas": {
     "PropertySearchResponse": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": "The PropertySearchResponse object is returned by the /properties/search endpoint.
@@ -192,14 +194,18 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseId",
           "key": "id",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PropertySearchResponseId",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -210,6 +216,7 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseLat",
           "key": "lat",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "propertySearchResponseLat",
@@ -222,6 +229,12 @@ It is a very simple property object that can then be used to query the /properti
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -233,6 +246,7 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseLon",
           "key": "lon",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "propertySearchResponseLon",
@@ -245,6 +259,12 @@ It is a very simple property object that can then be used to query the /properti
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",
@@ -256,6 +276,7 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseBuildingName",
           "key": "building_name",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PropertySearchResponseBuildingName",
@@ -268,8 +289,11 @@ It is a very simple property object that can then be used to query the /properti
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -281,6 +305,7 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseBuildingNameAlias",
           "key": "building_name_alias",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PropertySearchResponseBuildingNameAlias",
@@ -293,8 +318,11 @@ It is a very simple property object that can then be used to query the /properti
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -306,14 +334,18 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseStreetAddress",
           "key": "street_address",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PropertySearchResponseStreetAddress",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -324,6 +356,7 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseStreetAddressAlias",
           "key": "street_address_alias",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PropertySearchResponseStreetAddressAlias",
@@ -336,8 +369,11 @@ It is a very simple property object that can then be used to query the /properti
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -349,14 +385,18 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseCity",
           "key": "city",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PropertySearchResponseCity",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -367,14 +407,18 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseState",
           "key": "state",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PropertySearchResponseState",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -385,14 +429,18 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseZipCode",
           "key": "zip_code",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "PropertySearchResponseZipCode",
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -403,6 +451,7 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseNumberUnits",
           "key": "number_units",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "propertySearchResponseNumberUnits",
@@ -421,6 +470,12 @@ It is a very simple property object that can then be used to query the /properti
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "exclusiveMaximum": null,
+                  "exclusiveMinimum": null,
+                  "maximum": null,
+                  "minimum": null,
+                  "multipleOf": null,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -433,6 +488,7 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseYearBuilt",
           "key": "year_built",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "propertySearchResponseYearBuilt",
@@ -451,6 +507,12 @@ It is a very simple property object that can then be used to query the /properti
                 "groupName": null,
                 "nameOverride": null,
                 "schema": {
+                  "default": null,
+                  "exclusiveMaximum": null,
+                  "exclusiveMinimum": null,
+                  "maximum": null,
+                  "minimum": null,
+                  "multipleOf": null,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -463,6 +525,7 @@ It is a very simple property object that can then be used to query the /properti
           "conflict": {},
           "generatedName": "propertySearchResponseScore",
           "key": "score",
+          "nameOverride": null,
           "schema": {
             "description": null,
             "generatedName": "propertySearchResponseScore",
@@ -475,6 +538,12 @@ It is a very simple property object that can then be used to query the /properti
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "double",
               },
               "type": "primitive",

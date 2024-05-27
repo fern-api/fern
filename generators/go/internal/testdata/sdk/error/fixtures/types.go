@@ -11,7 +11,12 @@ import (
 type UserNotFoundErrorBody struct {
 	RequestedUserId string `json:"requestedUserId" url:"requestedUserId"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *UserNotFoundErrorBody) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *UserNotFoundErrorBody) UnmarshalJSON(data []byte) error {
@@ -21,6 +26,13 @@ func (u *UserNotFoundErrorBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UserNotFoundErrorBody(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

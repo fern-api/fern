@@ -41,7 +41,11 @@ module SeedTraceClient
             struct = JSON.parse(json_object, object_class: OpenStruct)
             impl = struct["impl"]
             imports = struct["imports"]
-            new(impl: impl, imports: imports, additional_properties: struct)
+            new(
+              impl: impl,
+              imports: imports,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of FunctionImplementation to a JSON object

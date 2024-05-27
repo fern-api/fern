@@ -6,6 +6,9 @@ export interface SchemaParserContext {
     logger: Logger;
     DUMMY: SchemaParserContext;
 
+    shouldUseTitleAsName: boolean;
+
+    referenceExists(ref: string): boolean;
     resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject;
     markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
     markSchemaAsReferencedByRequest(schemaId: SchemaId): void;

@@ -1,4 +1,4 @@
-import { EndpointSdkName, HttpMethod } from "@fern-api/openapi-ir-sdk";
+import { EndpointSdkName, HttpMethod, Pagination } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
 export interface OpenAPIDocumentContext {
@@ -17,4 +17,5 @@ export interface OperationContext extends PathItemContext {
     baseBreadcrumbs: string[];
     operationParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
     operation: OpenAPIV3.OperationObject;
+    pagination: Pagination | undefined;
 }

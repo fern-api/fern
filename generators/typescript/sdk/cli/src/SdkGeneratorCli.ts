@@ -49,7 +49,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             includeApiReference: parsed?.includeApiReference ?? false,
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
-            retainOriginalCasing: parsed?.retainOriginalCasing ?? false
+            retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
+            allowExtraFields: parsed?.allowExtraFields ?? false,
+            inlineFileProperties: parsed?.inlineFileProperties ?? false
         };
     }
 
@@ -75,12 +77,19 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             intermediateRepresentation,
             context: generatorContext,
             npmPackage,
-            generateJestTests: config.output.mode.type === "github" && config.writeUnitTests,
+            generateJestTests: config.output.mode.type === "github",
             config: {
+                organization: config.organization,
+                apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
+                generateOAuthClients: config.generateOauthClients,
                 snippetFilepath:
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
+                        : undefined,
+                snippetTemplateFilepath:
+                    config.output.snippetTemplateFilepath != null
+                        ? AbsoluteFilePath.of(config.output.snippetTemplateFilepath)
                         : undefined,
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
@@ -103,7 +112,11 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
                 noOptionalProperties: customConfig.noOptionalProperties,
                 includeApiReference: customConfig.includeApiReference ?? false,
-                tolerateRepublish: customConfig.tolerateRepublish
+                tolerateRepublish: customConfig.tolerateRepublish,
+                allowExtraFields: customConfig.allowExtraFields ?? false,
+                inlineFileProperties: customConfig.inlineFileProperties ?? false,
+                writeUnitTests: config.writeUnitTests,
+                executionEnvironment: this.exectuionEnvironment(config)
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -125,5 +138,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
         return customConfig.tolerateRepublish;
+    }
+
+    protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
+        return config.environment.type === "local"
+            ? "local"
+            : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
+            ? "dev"
+            : "prod";
     }
 }

@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{endpointParam}",
+                "method": "POST",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+            }
+        }
+    ]
+}

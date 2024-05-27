@@ -1,0 +1,26 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/file-download",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.downloadFile"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedFileDownload = new SeedFileDownloadClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedFileDownload.service.downloadFile()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

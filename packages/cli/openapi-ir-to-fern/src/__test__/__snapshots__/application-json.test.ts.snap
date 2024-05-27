@@ -1,5 +1,77 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`application-json application-json docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getApplicationJson": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "response": {
+                "body": {
+                  "bar": "bar",
+                  "foo": "foo",
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/application-json",
+          "response": {
+            "docs": "Success",
+            "type": "Data",
+          },
+        },
+        "getVndFernUserJsonVersion1": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "response": {
+                "body": {
+                  "bar": "bar",
+                  "foo": "foo",
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/vnd.fern.user+json;version=1",
+          "response": {
+            "docs": "Success",
+            "type": "Data",
+          },
+        },
+      },
+    },
+    "types": {
+      "Data": {
+        "docs": undefined,
+        "properties": {
+          "bar": "optional<string>",
+          "foo": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test vnd.fern.user+json;version=1 and /application-json",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
 exports[`application-json application-json simple 1`] = `
 {
   "definitionFiles": {},
@@ -22,6 +94,7 @@ exports[`application-json application-json simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/application-json",
           "response": {
             "docs": "Success",
@@ -42,6 +115,7 @@ exports[`application-json application-json simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/vnd.fern.user+json;version=1",
           "response": {
             "docs": "Success",

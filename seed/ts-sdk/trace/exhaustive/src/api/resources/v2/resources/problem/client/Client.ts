@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
-import * as SeedTrace from "../../../../..";
+import * as SeedTrace from "../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../serialization";
+import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace Problem {
     interface Options {
@@ -18,6 +18,7 @@ export declare namespace Problem {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,6 +27,8 @@ export class Problem {
 
     /**
      * Returns lightweight versions of all problems
+     *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.v2.problem.getLightweightProblems()
@@ -57,6 +60,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -78,6 +82,8 @@ export class Problem {
 
     /**
      * Returns latest versions of all problems
+     *
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.v2.problem.getProblems()
@@ -107,6 +113,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -129,6 +136,9 @@ export class Problem {
     /**
      * Returns latest version of a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.problem.getLatestProblem(SeedTrace.ProblemId("string"))
      */
@@ -139,7 +149,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${await serializers.ProblemId.jsonOrThrow(problemId)}`
+                `/problems-v2/problem-info/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "GET",
             headers: {
@@ -158,6 +168,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -180,6 +191,10 @@ export class Problem {
     /**
      * Returns requested version of a problem
      *
+     * @param {SeedTrace.ProblemId} problemId
+     * @param {number} problemVersion
+     * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.v2.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1)
      */
@@ -191,9 +206,9 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${await serializers.ProblemId.jsonOrThrow(
-                    problemId
-                )}/version/${problemVersion}`
+                `/problems-v2/problem-info/${encodeURIComponent(
+                    await serializers.ProblemId.jsonOrThrow(problemId)
+                )}/version/${encodeURIComponent(problemVersion)}`
             ),
             method: "GET",
             headers: {
@@ -212,6 +227,7 @@ export class Problem {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -231,7 +247,7 @@ export class Problem {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

@@ -4,7 +4,7 @@ import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-import { cp, mkdir, writeFile } from "fs/promises";
+import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
@@ -24,6 +24,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generatorInvocation,
     absolutePathToLocalOutput,
     absolutePathToLocalSnippetJSON,
+    absolutePathToLocalSnippetTemplateJSON,
     absolutePathToFernConfig,
     audiences,
     workspaceTempDir,
@@ -31,13 +32,16 @@ export async function writeFilesToDiskAndRunGenerator({
     context,
     irVersionOverride,
     outputVersionOverride,
-    writeUnitTests
+    writeUnitTests,
+    generateOauthClients,
+    generatePaginatedClients
 }: {
     organization: string;
     workspace: FernWorkspace;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     absolutePathToLocalOutput: AbsoluteFilePath;
     absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
+    absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
     audiences: Audiences;
     workspaceTempDir: DirectoryResult;
@@ -46,6 +50,8 @@ export async function writeFilesToDiskAndRunGenerator({
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
     writeUnitTests: boolean;
+    generateOauthClients: boolean;
+    generatePaginatedClients: boolean;
 }): Promise<GeneratorRunResponse> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -80,9 +86,19 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet.json to: " + absolutePathToTmpSnippetJSON);
     }
 
+    let absolutePathToTmpSnippetTemplatesJSON = undefined;
+    if (absolutePathToLocalSnippetTemplateJSON != null) {
+        const snippetTemplatesJsonFile = await tmp.file({
+            tmpdir: workspaceTempDir.path
+        });
+        absolutePathToTmpSnippetTemplatesJSON = AbsoluteFilePath.of(snippetTemplatesJsonFile.path);
+        context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
+    }
+
     await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
+        absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
@@ -91,7 +107,9 @@ export async function writeFilesToDiskAndRunGenerator({
         keepDocker,
         generatorInvocation,
         context,
-        writeUnitTests
+        writeUnitTests,
+        generateOauthClients,
+        generatePaginatedClients
     });
 
     const taskHandler = new LocalTaskHandler({
@@ -99,19 +117,11 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToLocalOutput,
         absolutePathToTmpOutputDirectory,
         absolutePathToLocalSnippetJSON,
-        absolutePathToTmpSnippetJSON
+        absolutePathToLocalSnippetTemplateJSON,
+        absolutePathToTmpSnippetJSON,
+        absolutePathToTmpSnippetTemplatesJSON
     });
     await taskHandler.copyGeneratedFiles();
-
-    if (writeUnitTests) {
-        context.logger.debug("Will write .mock to: " + absolutePathToLocalOutput);
-
-        await writeDotMock({
-            absolutePathToDotMockDirectory: absolutePathToLocalOutput,
-            absolutePathToFernDefinition,
-            absolutePathToFernConfig
-        });
-    }
 
     return {
         absolutePathToIr,
@@ -151,34 +161,6 @@ async function writeIrToFile({
     return absolutePathToIr;
 }
 
-// Copy Fern definition to output directory
-async function writeDotMock({
-    absolutePathToDotMockDirectory,
-    absolutePathToFernDefinition,
-    absolutePathToFernConfig
-}: {
-    absolutePathToDotMockDirectory: AbsoluteFilePath;
-    absolutePathToFernDefinition: AbsoluteFilePath | undefined;
-    absolutePathToFernConfig: AbsoluteFilePath | undefined;
-}): Promise<void> {
-    if (absolutePathToFernDefinition != null) {
-        await cp(`${absolutePathToFernDefinition}`, `${absolutePathToDotMockDirectory}/.mock/definition`, {
-            recursive: true
-        });
-    }
-    if (absolutePathToFernConfig != null) {
-        // Copy Fern config
-        await cp(`${absolutePathToFernConfig}`, `${absolutePathToDotMockDirectory}/.mock`);
-    } else if (absolutePathToFernDefinition != null) {
-        // If for whatever reason we don't have the fern config, just write a dummy ones
-        await mkdir(`${absolutePathToDotMockDirectory}/.mock`, { recursive: true });
-        await writeFile(
-            `${absolutePathToDotMockDirectory}/.mock/fern.config.json`,
-            '{"organization": "fern-test", "version": "0.19.0"}'
-        );
-    }
-}
-
 export declare namespace runGenerator {
     export interface Args {
         workspaceName: string;
@@ -188,11 +170,14 @@ export declare namespace runGenerator {
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
+        absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
         keepDocker: boolean;
         context: TaskContext;
         generatorInvocation: generatorsYml.GeneratorInvocation;
         writeUnitTests: boolean;
+        generateOauthClients: boolean;
+        generatePaginatedClients: boolean;
     }
 }
 
@@ -202,11 +187,14 @@ export async function runGenerator({
     outputVersion,
     absolutePathToOutput,
     absolutePathToSnippet,
+    absolutePathToSnippetTemplates,
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
     generatorInvocation,
-    writeUnitTests
+    writeUnitTests,
+    generateOauthClients,
+    generatePaginatedClients
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -223,7 +211,10 @@ export async function runGenerator({
         outputVersion,
         organization,
         absolutePathToSnippet,
-        writeUnitTests
+        absolutePathToSnippetTemplates,
+        writeUnitTests,
+        generateOauthClients,
+        generatePaginatedClients
     });
     binds.push(...bindsForGenerators);
 

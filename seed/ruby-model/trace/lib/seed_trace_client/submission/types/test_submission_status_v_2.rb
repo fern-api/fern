@@ -63,8 +63,13 @@ module SeedTraceClient
           problem_info = parsed_json["problemInfo"].to_json
           problem_info = SeedTraceClient::V2::Problem::ProblemInfoV2.from_json(json_object: problem_info)
         end
-        new(updates: updates, problem_id: problem_id, problem_version: problem_version, problem_info: problem_info,
-            additional_properties: struct)
+        new(
+          updates: updates,
+          problem_id: problem_id,
+          problem_version: problem_version,
+          problem_info: problem_info,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TestSubmissionStatusV2 to a JSON object

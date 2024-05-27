@@ -1,0 +1,74 @@
+[
+    {
+        "sdk": {
+            "package": "fern_variables",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/{endpointParam}",
+            "method": "POST",
+            "identifierOverride": "endpoint_service.post"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedVariables\n\nclient = SeedVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.service.post(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "endpoint_param=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "endpointParam",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedVariables\n\nclient = AsyncSeedVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "endpoint_param=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "PATH",
+                                        "path": "endpointParam",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    }
+]

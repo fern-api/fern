@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`x-fern-audiences x-fern-audiences simple 1`] = `
+exports[`x-fern-audiences x-fern-audiences docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -17,6 +17,7 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/v1/users",
           "request": {
             "body": {
@@ -46,7 +47,86 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
             "audiences": [
               "public",
             ],
+            "default": undefined,
+            "docs": undefined,
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-audiences x-fern-audiences simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getV1Users": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/v1/users",
+          "request": {
+            "body": {
+              "properties": {
+                "private_property": "optional<string>",
+                "public_property": {
+                  "audiences": [
+                    "public",
+                  ],
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "GetV1UsersRequest",
+            "query-parameters": undefined,
+          },
+        },
+      },
+    },
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "audiences": [
+              "public",
+            ],
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },

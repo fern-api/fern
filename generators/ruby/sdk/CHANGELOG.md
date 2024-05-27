@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.6.3] - 2024-05-27
+
+- Fix: Generated SDK snippets now leverage the full function module path.
+
+## [0.6.2] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
+## [0.6.1] - 2024-05-09
+
+- No changes.
+
+## [0.6.1-rc0] - 2024-04-23
+
+- Internal: Improve logging within the Ruby generator
+
+## [0.6.0-rc1] - 2024-04-12
+
+- Fix: fix regression where sometimes the parsed_json variable would not be instantiated, and so there'd be a nil ref in the generated code
+
+## [0.6.0-rc0] - 2024-04-12
+
+- Feature: Introduce code snippets and examples for Ruby SDKs.
+
+## [0.5.0-rc2] - 2024-04-12
+
+- Fix: Call JSON.parse prior to iterating through an iterable response
+
 ## [0.5.0-rc0] - 2024-04-09
 
 - Improvement: Consumers of the SDK can now pass in a base URL override into the root client, as well as the request's RequestOptions

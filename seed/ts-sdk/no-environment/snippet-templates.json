@@ -1,0 +1,26 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/no-environment",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/dummy",
+            "method": "GET",
+            "identifierOverride": "endpoint_dummy.getDummy"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedNoEnvironment = new SeedNoEnvironmentClient({ token: \"YOUR_TOKEN\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedNoEnvironment.dummy.getDummy()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

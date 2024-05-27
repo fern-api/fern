@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Playlist {
     interface Options {
@@ -18,6 +18,7 @@ export declare namespace Playlist {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,6 +27,10 @@ export class Playlist {
 
     /**
      * Create a new playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.CreatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.playlist.createPlaylist(1, {
@@ -52,7 +57,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/create`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/create`
             ),
             method: "POST",
             headers: {
@@ -72,6 +77,7 @@ export class Playlist {
             body: _body,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.Playlist;
@@ -101,6 +107,10 @@ export class Playlist {
 
     /**
      * Returns the user's playlists
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.GetPlaylistsRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedTrace.playlist.getPlaylists(1, {
@@ -141,7 +151,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/all`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/all`
             ),
             method: "GET",
             headers: {
@@ -160,6 +170,7 @@ export class Playlist {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.Playlist[];
@@ -189,6 +200,11 @@ export class Playlist {
 
     /**
      * Returns a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      * @throws {@link SeedTrace.UnauthorizedError}
      *
@@ -203,7 +219,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${playlistId}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`
             ),
             method: "GET",
             headers: {
@@ -221,6 +237,7 @@ export class Playlist {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.Playlist;
@@ -259,6 +276,12 @@ export class Playlist {
 
     /**
      * Updates a playlist
+     *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {SeedTrace.UpdatePlaylistRequest} request
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      *
      * @example
@@ -276,7 +299,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${playlistId}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`
             ),
             method: "PUT",
             headers: {
@@ -295,6 +318,7 @@ export class Playlist {
             body: request != null ? request : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return _response.body as SeedTrace.Playlist | undefined;
@@ -332,6 +356,10 @@ export class Playlist {
     /**
      * Deletes a playlist
      *
+     * @param {number} serviceParam
+     * @param {SeedTrace.PlaylistId} playlistId
+     * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @example
      *     await seedTrace.playlist.deletePlaylist(1, "string")
      */
@@ -343,7 +371,7 @@ export class Playlist {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${serviceParam}/${playlistId}`
+                `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(playlistId)}`
             ),
             method: "DELETE",
             headers: {
@@ -361,6 +389,7 @@ export class Playlist {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -388,7 +417,7 @@ export class Playlist {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

@@ -42,7 +42,11 @@ module SeedTraceClient
           v = v.to_json
           SeedTraceClient::Commons::VariableValue.from_json(json_object: v)
         end
-        new(id: id, params: params, additional_properties: struct)
+        new(
+          id: id,
+          params: params,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TestCase to a JSON object

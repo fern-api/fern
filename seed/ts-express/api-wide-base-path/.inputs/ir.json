@@ -150,6 +150,10 @@
                         "parts": [
                             {
                                 "pathParameter": "endpointParam",
+                                "tail": "/"
+                            },
+                            {
+                                "pathParameter": "resourceParam",
                                 "tail": ""
                             }
                         ]
@@ -167,11 +171,43 @@
                             },
                             {
                                 "pathParameter": "endpointParam",
+                                "tail": "/"
+                            },
+                            {
+                                "pathParameter": "resourceParam",
                                 "tail": ""
                             }
                         ]
                     },
                     "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "resourceParam",
+                                "camelCase": {
+                                    "unsafeName": "resourceParam",
+                                    "safeName": "resourceParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "resource_param",
+                                    "safeName": "resource_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESOURCE_PARAM",
+                                    "safeName": "RESOURCE_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ResourceParam",
+                                    "safeName": "ResourceParam"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        },
                         {
                             "name": {
                                 "originalName": "endpointParam",
@@ -260,6 +296,34 @@
                         },
                         {
                             "name": {
+                                "originalName": "resourceParam",
+                                "camelCase": {
+                                    "unsafeName": "resourceParam",
+                                    "safeName": "resourceParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "resource_param",
+                                    "safeName": "resource_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESOURCE_PARAM",
+                                    "safeName": "RESOURCE_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ResourceParam",
+                                    "safeName": "ResourceParam"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        },
+                        {
+                            "name": {
                                 "originalName": "endpointParam",
                                 "camelCase": {
                                     "unsafeName": "endpointParam",
@@ -291,7 +355,10 @@
                     "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
-                    "response": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -368,6 +435,39 @@
                                 }
                             ],
                             "endpointPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "resourceParam",
+                                        "camelCase": {
+                                            "unsafeName": "resourceParam",
+                                            "safeName": "resourceParam"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "resource_param",
+                                            "safeName": "resource_param"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RESOURCE_PARAM",
+                                            "safeName": "RESOURCE_PARAM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ResourceParam",
+                                            "safeName": "ResourceParam"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                },
                                 {
                                     "name": {
                                         "originalName": "endpointParam",

@@ -30,8 +30,12 @@ export const Mocks = {
     },
     sdkConfig(partialConfig?: Partial<SdkGenerator.Config>): SdkGenerator.Config {
         return {
+            organization: "test",
+            executionEnvironment: "local",
+            apiName: "test",
             whitelabel: false,
             snippetFilepath: undefined,
+            snippetTemplateFilepath: undefined,
             shouldUseBrandedStringAliases: false,
             isPackagePrivate: false,
             neverThrowErrors: false,
@@ -54,6 +58,10 @@ export const Mocks = {
             includeApiReference: false,
             tolerateRepublish: false,
             retainOriginalCasing: false,
+            allowExtraFields: false,
+            generateOAuthClients: false,
+            inlineFileProperties: false,
+            writeUnitTests: true,
             ...partialConfig
         };
     }

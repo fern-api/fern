@@ -4,6 +4,7 @@ require_relative "../../requests"
 require "date"
 require_relative "types/playlist_create_request"
 require_relative "types/playlist"
+require "json"
 require_relative "types/update_playlist_request"
 require "async"
 
@@ -73,7 +74,8 @@ module SeedTraceClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/all"
       end
-      response.body&.map do |v|
+      parsed_json = JSON.parse(response.body)
+      parsed_json&.map do |v|
         v = v.to_json
         SeedTraceClient::Playlist::Playlist.from_json(json_object: v)
       end
@@ -202,7 +204,8 @@ module SeedTraceClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/all"
         end
-        response.body&.map do |v|
+        parsed_json = JSON.parse(response.body)
+        parsed_json&.map do |v|
           v = v.to_json
           SeedTraceClient::Playlist::Playlist.from_json(json_object: v)
         end

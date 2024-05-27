@@ -8,6 +8,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.send_response import SendResponse
@@ -28,13 +29,21 @@ class InlinedClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendResponse:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - temperature: typing.Optional[float].
+        temperature : typing.Optional[float]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed.client import SeedLiteral
 
         client = SeedLiteral(
@@ -46,17 +55,19 @@ class InlinedClient:
         )
         """
         _request: typing.Dict[str, typing.Any] = {
-            "prompt": "You are a helpful assistant",
             "query": query,
+            "prompt": "You are a helpful assistant",
             "stream": False,
         }
         if temperature is not OMIT:
             _request["temperature"] = temperature
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -99,13 +110,21 @@ class AsyncInlinedClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendResponse:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - temperature: typing.Optional[float].
+        temperature : typing.Optional[float]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedLiteral
 
         client = AsyncSeedLiteral(
@@ -117,17 +136,19 @@ class AsyncInlinedClient:
         )
         """
         _request: typing.Dict[str, typing.Any] = {
-            "prompt": "You are a helpful assistant",
             "query": query,
+            "prompt": "You are a helpful assistant",
             "stream": False,
         }
         if temperature is not OMIT:
             _request["temperature"] = temperature
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None

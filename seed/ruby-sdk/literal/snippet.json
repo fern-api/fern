@@ -1,0 +1,115 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifierOverride": "endpoint_headers.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.headers.send(\n  endpoint_version: \"02-12-2024\",\n  async: true,\n  query: \"What is the weather today\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/headers",
+                "method": "POST",
+                "identifierOverride": "endpoint_headers.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.headers.send(\n  endpoint_version: \"02-12-2024\",\n  async: true,\n  query: \"What is the weather today\"\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/inlined",
+                "method": "POST",
+                "identifierOverride": "endpoint_inlined.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.inlined.send(\n  prompt: \"You are a helpful assistant\",\n  query: \"What is the weather today\",\n  temperature: 10.1,\n  stream: false\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/inlined",
+                "method": "POST",
+                "identifierOverride": "endpoint_inlined.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.inlined.send(\n  prompt: \"You are a helpful assistant\",\n  query: \"What is the weather today\",\n  temperature: 10.1,\n  stream: false\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/path/{id}",
+                "method": "POST",
+                "identifierOverride": "endpoint_path.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.path.send(id: \"123\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/path/{id}",
+                "method": "POST",
+                "identifierOverride": "endpoint_path.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.path.send(id: \"123\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/query",
+                "method": "POST",
+                "identifierOverride": "endpoint_query.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.query.send(\n  prompt: \"You are a helpful assistant\",\n  query: \"What is the weather today\",\n  stream: false\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/query",
+                "method": "POST",
+                "identifierOverride": "endpoint_query.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.query.send(\n  prompt: \"You are a helpful assistant\",\n  query: \"What is the weather today\",\n  stream: false\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/reference",
+                "method": "POST",
+                "identifierOverride": "endpoint_reference.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.reference.send(request: { prompt: \"You are a helpful assistant\", stream: false, query: \"What is the weather today\" })",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/reference",
+                "method": "POST",
+                "identifierOverride": "endpoint_reference.send"
+            },
+            "snippet": {
+                "client": "require \"fern_literal\"\n\nliteral = SeedLiteralClient::Client.new(\n  base_url: \"https://api.example.com\",\n  version: \"Version\",\n  audit_logging: \"AuditLogging\"\n)\nliteral.reference.send(request: { prompt: \"You are a helpful assistant\", stream: false, query: \"What is the weather today\" })",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

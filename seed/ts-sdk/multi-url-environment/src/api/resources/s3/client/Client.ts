@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedMultiUrlEnvironment from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedMultiUrlEnvironment from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace S3 {
     interface Options {
@@ -20,12 +20,22 @@ export declare namespace S3 {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class S3 {
     constructor(protected readonly _options: S3.Options) {}
 
+    /**
+     * @param {SeedMultiUrlEnvironment.GetPresignedUrlRequest} request
+     * @param {S3.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMultiUrlEnvironment.s3.getPresignedUrl({
+     *         s3Key: "string"
+     *     })
+     */
     public async getPresignedUrl(
         request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
         requestOptions?: S3.RequestOptions
@@ -51,6 +61,7 @@ export class S3 {
             body: await serializers.GetPresignedUrlRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.s3.getPresignedUrl.Response.parseOrThrow(_response.body, {
@@ -83,7 +94,7 @@ export class S3 {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

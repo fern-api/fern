@@ -7,10 +7,12 @@ import * as FernSeedConfig from "../../..";
 export interface SeedWorkspaceConfiguration {
     irVersion: string;
     language?: FernSeedConfig.Language;
+    defaultCustomConfig?: Record<string, unknown>;
     defaultOutputMode: FernSeedConfig.OutputMode;
     generatorType: FernSeedConfig.GeneratorType;
     docker: string;
     dockerCommand?: FernSeedConfig.DockerCommand;
+    local?: FernSeedConfig.LocalBuildInfo;
     /** Configuration that will be used for any custom fixture specified by --custom-fixture */
     customFixtureConfig?: FernSeedConfig.FixtureConfigurations;
     fixtures?: Record<string, FernSeedConfig.FixtureConfigurations[]>;

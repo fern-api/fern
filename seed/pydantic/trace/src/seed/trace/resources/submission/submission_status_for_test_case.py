@@ -2,33 +2,65 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
 from .test_case_grade import TestCaseGrade
+from .test_case_result import TestCaseResult
 from .test_case_result_with_stdout import TestCaseResultWithStdout
-from .traced_test_case import TracedTestCase
 
 
-class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
+class SubmissionStatusForTestCase_Graded(pydantic_v1.BaseModel):
+    result: TestCaseResult
+    stdout: str
     type: typing.Literal["graded"] = "graded"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
-        allow_population_by_field_name = True
-        populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 class SubmissionStatusForTestCase_GradedV2(pydantic_v1.BaseModel):
-    type: typing.Literal["gradedV2"] = "gradedV2"
     value: TestCaseGrade
+    type: typing.Literal["gradedV2"] = "gradedV2"
 
 
-class SubmissionStatusForTestCase_Traced(TracedTestCase):
+class SubmissionStatusForTestCase_Traced(pydantic_v1.BaseModel):
+    result: TestCaseResultWithStdout
+    trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
     type: typing.Literal["traced"] = "traced"
+
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 SubmissionStatusForTestCase = typing.Union[

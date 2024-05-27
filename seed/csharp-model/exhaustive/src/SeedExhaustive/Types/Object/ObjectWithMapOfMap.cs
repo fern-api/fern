@@ -5,5 +5,5 @@ namespace SeedExhaustive.Types;
 public class ObjectWithMapOfMap
 {
     [JsonPropertyName("map")]
-    public List<Dictionary<string, List<Dictionary<string, string>>>> Map { get; init; }
+    public Dictionary<string, Dictionary<string, string>> Map { get; init; }
 }

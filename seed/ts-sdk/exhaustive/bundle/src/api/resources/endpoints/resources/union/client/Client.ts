@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../../../core";
-import * as Fiddle from "../../../../..";
-import * as serializers from "../../../../../../serialization";
+import * as Fiddle from "../../../../../index";
+import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Union {
@@ -16,12 +16,23 @@ export declare namespace Union {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Union {
     constructor(protected readonly _options: Union.Options) {}
 
+    /**
+     * @param {Fiddle.types.Animal} request
+     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await fiddle.endpoints.union.getAndReturnUnion(Fiddle.types.Animal.dog({
+     *         name: "string",
+     *         likesToWoof: true
+     *     }))
+     */
     public async getAndReturnUnion(
         request: Fiddle.types.Animal,
         requestOptions?: Union.RequestOptions
@@ -41,6 +52,7 @@ export class Union {
             body: await serializers.types.Animal.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -60,7 +72,7 @@ export class Union {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

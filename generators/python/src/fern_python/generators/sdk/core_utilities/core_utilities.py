@@ -4,6 +4,8 @@ from typing import Optional, Set
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies.pydantic import (
     PYDANTIC_DEPENDENCY,
+    PYDANTIC_V1_DEPENDENCY,
+    PYDANTIC_V2_DEPENDENCY,
     Pydantic,
     PydanticVersionCompatibility,
 )
@@ -17,12 +19,16 @@ class CoreUtilities:
     ASYNC_CLIENT_WRAPPER_CLASS_NAME = "AsyncClientWrapper"
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
-    def __init__(self, allow_skipping_validation: bool) -> None:
+    def __init__(
+        self, allow_skipping_validation: bool, has_paginated_endpoints: bool, version: PydanticVersionCompatibility
+    ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
         self._allow_skipping_validation = allow_skipping_validation
+        self._has_paginated_endpoints = has_paginated_endpoints
+        self._version = version
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -96,8 +102,29 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"pydantic_v1"},
+            exports={"pydantic_v1", "deep_union_pydantic_dicts"},
         )
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="query_encoder.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="query_encoder"),
+            ),
+            exports={"encode_query"},
+        )
+
+        if self._has_paginated_endpoints:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="pagination.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="pagination"),
+                ),
+                exports={"SyncPager", "AsyncPager"},
+            )
 
         if self._allow_skipping_validation:
             self._copy_file_to_project(
@@ -111,7 +138,12 @@ class CoreUtilities:
             )
 
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
-        project.add_dependency(PYDANTIC_DEPENDENCY)
+        if self._version == PydanticVersionCompatibility.V1:
+            project.add_dependency(PYDANTIC_V1_DEPENDENCY)
+        elif self._version == PydanticVersionCompatibility.V2:
+            project.add_dependency(PYDANTIC_V2_DEPENDENCY)
+        else:
+            project.add_dependency(PYDANTIC_DEPENDENCY)
 
     def _copy_file_to_project(
         self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]
@@ -133,6 +165,14 @@ class CoreUtilities:
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "api_error"), named_import="ApiError"
+            ),
+        )
+
+    def get_oauth_token_provider(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "oauth_token_provider"), named_import="OAuthTokenProvider"
             ),
         )
 
@@ -332,4 +372,57 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="pydantic_v1"
             ),
+        )
+
+    def get_paginator_reference(self, is_async: bool) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pagination"),
+                named_import="AsyncPager" if is_async else "SyncPager",
+            ),
+        )
+
+    def get_paginator_type(self, inner_type: AST.TypeHint, is_async: bool) -> AST.TypeHint:
+        return AST.TypeHint(
+            type=self.get_paginator_reference(is_async),
+            type_parameters=[AST.TypeParameter(inner_type)],
+        )
+
+    def instantiate_paginator(
+        self, is_async: bool, has_next: AST.Expression, items: AST.Expression, get_next: AST.Expression
+    ) -> AST.Expression:
+        return AST.Expression(
+            AST.ClassInstantiation(
+                class_=self.get_paginator_reference(is_async),
+                args=[],
+                kwargs=[
+                    ("has_next", has_next),
+                    ("items", items),
+                    ("get_next", get_next),
+                ],
+            )
+        )
+
+    def get_pydantic_deep_union_import(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="deep_union_pydantic_dicts",
+            ),
+        )
+
+    def get_encode_query(self, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "query_encoder"),
+                        named_import="encode_query",
+                    ),
+                ),
+                args=[obj],
+            )
         )

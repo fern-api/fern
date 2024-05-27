@@ -7,6 +7,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.my_union import MyUnion
@@ -21,11 +22,19 @@ class UnionClient:
 
     def get(self, *, request: MyUnion, request_options: typing.Optional[RequestOptions] = None) -> MyUnion:
         """
-        Parameters:
-            - request: MyUnion.
+        Parameters
+        ----------
+        request : MyUnion
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MyUnion
+
+        Examples
+        --------
         from seed.client import SeedUndiscriminatedUnions
 
         client = SeedUndiscriminatedUnions(
@@ -36,10 +45,12 @@ class UnionClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -76,11 +87,19 @@ class AsyncUnionClient:
 
     async def get(self, *, request: MyUnion, request_options: typing.Optional[RequestOptions] = None) -> MyUnion:
         """
-        Parameters:
-            - request: MyUnion.
+        Parameters
+        ----------
+        request : MyUnion
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        MyUnion
+
+        Examples
+        --------
         from seed.client import AsyncSeedUndiscriminatedUnions
 
         client = AsyncSeedUndiscriminatedUnions(
@@ -91,10 +110,12 @@ class AsyncUnionClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None

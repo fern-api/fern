@@ -38,7 +38,13 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
     }
 
     public SeedAuthEnvironmentVariablesClient build() {
+        if (apiKey == null) {
+            throw new RuntimeException("Please provide apiKey or set the FERN_API_KEY environment variable.");
+        }
         this.clientOptionsBuilder.addHeader("X-FERN-API-KEY", this.apiKey);
+        if (xAnotherHeader == null) {
+            throw new RuntimeException("Please provide xAnotherHeader");
+        }
         this.clientOptionsBuilder.addHeader("X-Another-Header", this.xAnotherHeader);
         clientOptionsBuilder.environment(this.environment);
         return new SeedAuthEnvironmentVariablesClient(clientOptionsBuilder.build());

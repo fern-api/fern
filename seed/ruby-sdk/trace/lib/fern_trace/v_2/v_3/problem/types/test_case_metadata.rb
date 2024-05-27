@@ -44,7 +44,12 @@ module SeedTraceClient
             id = struct["id"]
             name = struct["name"]
             hidden = struct["hidden"]
-            new(id: id, name: name, hidden: hidden, additional_properties: struct)
+            new(
+              id: id,
+              name: name,
+              hidden: hidden,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of TestCaseMetadata to a JSON object

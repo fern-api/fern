@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_service.downloadFile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/file-download/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.DownloadFile(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedNurseryApi from "../../..";
-import * as errors from "../../../../errors";
+import * as SeedNurseryApi from "../../../index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Package {
     interface Options {
@@ -14,12 +14,22 @@ export declare namespace Package {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Package {
     constructor(protected readonly _options: Package.Options) {}
 
+    /**
+     * @param {SeedNurseryApi.TestRequest} request
+     * @param {Package.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedNurseryApi.package.test({
+     *         for: "string"
+     *     })
+     */
     public async test(request: SeedNurseryApi.TestRequest, requestOptions?: Package.RequestOptions): Promise<void> {
         const { for: for_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
@@ -38,6 +48,7 @@ export class Package {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

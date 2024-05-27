@@ -28,7 +28,12 @@ export interface Endpoint extends FernOpenapiIr.WithDescription {
     requestNameOverride: string | undefined;
     request: FernOpenapiIr.Request | undefined;
     response: FernOpenapiIr.Response | undefined;
-    errorStatusCode: FernOpenapiIr.StatusCode[];
+    /**
+     * Expected error status codes for this endpoint, and their corresponding schema and examples.
+     * SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
+     */
+    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpError>;
     server: FernOpenapiIr.Server[];
     examples: FernOpenapiIr.EndpointExample[];
+    pagination: FernOpenapiIr.Pagination | undefined;
 }

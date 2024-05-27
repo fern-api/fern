@@ -1,10 +1,10 @@
 package com.fern.java.client;
 
-import com.fern.ir.model.commons.FernFilepath;
-import com.fern.ir.model.errors.ErrorDeclaration;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.SdkRequestWrapper;
-import com.fern.ir.model.ir.Subpackage;
+import com.fern.irV42.model.commons.FernFilepath;
+import com.fern.irV42.model.errors.ErrorDeclaration;
+import com.fern.irV42.model.http.HttpService;
+import com.fern.irV42.model.http.SdkRequestWrapper;
+import com.fern.irV42.model.ir.Subpackage;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
 import java.util.List;

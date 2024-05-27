@@ -2,35 +2,85 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-from .custom_test_cases_unsupported import CustomTestCasesUnsupported
-from .submission_id_not_found import SubmissionIdNotFound
-from .unexpected_language_error import UnexpectedLanguageError
+from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import deep_union_pydantic_dicts, pydantic_v1
+from ..commons.language import Language
+from ..commons.problem_id import ProblemId
+from .submission_id import SubmissionId
 
 
-class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
+class InvalidRequestCause_SubmissionIdNotFound(pydantic_v1.BaseModel):
+    missing_submission_id: SubmissionId = pydantic_v1.Field(alias="missingSubmissionId")
     type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
-class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported):
+class InvalidRequestCause_CustomTestCasesUnsupported(pydantic_v1.BaseModel):
+    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
     type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
-class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
+class InvalidRequestCause_UnexpectedLanguage(pydantic_v1.BaseModel):
+    expected_language: Language = pydantic_v1.Field(alias="expectedLanguage")
+    actual_language: Language = pydantic_v1.Field(alias="actualLanguage")
     type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic_v1.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 InvalidRequestCause = typing.Union[

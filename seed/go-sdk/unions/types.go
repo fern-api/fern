@@ -12,7 +12,12 @@ import (
 type Bar struct {
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (b *Bar) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
 }
 
 func (b *Bar) UnmarshalJSON(data []byte) error {
@@ -22,6 +27,13 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*b = Bar(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
 	b._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -41,7 +53,12 @@ func (b *Bar) String() string {
 type Foo struct {
 	Name string `json:"name" url:"name"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (f *Foo) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
 }
 
 func (f *Foo) UnmarshalJSON(data []byte) error {
@@ -51,6 +68,13 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = Foo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
 	f._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -213,16 +237,7 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	}
 	if u.Foo != nil {
-		var marshaler = struct {
-			Type string `json:"type"`
-			Id   string `json:"id"`
-			*Foo
-		}{
-			Type: "foo",
-			Id:   u.Id,
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -660,14 +675,7 @@ func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 
 func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
 	if u.Foo != nil {
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Foo
-		}{
-			Type: "foo",
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	}
 	if u.Unknown != nil {
 		var marshaler = struct {
@@ -731,24 +739,10 @@ func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 
 func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 	if u.Foo != nil {
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Foo
-		}{
-			Type: "foo",
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	}
 	if u.Bar != nil {
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Bar
-		}{
-			Type: "bar",
-			Bar:  u.Bar,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -771,7 +765,12 @@ func (u *UnionWithoutKey) Accept(visitor UnionWithoutKeyVisitor) error {
 type Circle struct {
 	Radius float64 `json:"radius" url:"radius"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (c *Circle) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
 }
 
 func (c *Circle) UnmarshalJSON(data []byte) error {
@@ -781,6 +780,13 @@ func (c *Circle) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = Circle(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+
 	c._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -800,7 +806,12 @@ func (c *Circle) String() string {
 type GetShapeRequest struct {
 	Id string `json:"id" url:"id"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
+	return g.extraProperties
 }
 
 func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
@@ -810,6 +821,13 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*g = GetShapeRequest(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *g)
+	if err != nil {
+		return err
+	}
+	g.extraProperties = extraProperties
+
 	g._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -829,7 +847,12 @@ func (g *GetShapeRequest) String() string {
 type Square struct {
 	Length float64 `json:"length" url:"length"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (s *Square) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
 }
 
 func (s *Square) UnmarshalJSON(data []byte) error {
@@ -839,6 +862,13 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = Square(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }

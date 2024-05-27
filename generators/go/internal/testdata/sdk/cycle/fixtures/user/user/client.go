@@ -43,7 +43,7 @@ func (c *Client) List(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "users"
+	endpointURL := baseURL + "/users"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

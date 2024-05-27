@@ -6,6 +6,7 @@ from pathlib import Path
 from types import TracebackType
 from typing import List, Optional, Sequence, Set, Type
 
+from fern.generator_exec.resources import GithubOutputMode, LicenseConfig, PypiMetadata
 from isort import file
 
 from fern_python.codegen import AST
@@ -36,12 +37,15 @@ class Project:
         *,
         filepath: str,
         relative_path_to_project: str,
-        python_version: str = "3.8",
+        python_version: str = "^3.8",
         project_config: ProjectConfig = None,
         should_format_files: bool,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
         whitelabel: bool = False,
+        pypi_metadata: Optional[PypiMetadata],
+        github_output_mode: Optional[GithubOutputMode],
+        license_: Optional[LicenseConfig],
     ) -> None:
         if flat_layout:
             self._project_filepath = (
@@ -60,12 +64,18 @@ class Project:
         self._dependency_manager = DependencyManager()
         self._should_format_files = should_format_files
         self._whitelabel = whitelabel
+        self._github_output_mode = github_output_mode
+        self._pypi_metadata = pypi_metadata
+        self.license_ = license_
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
 
     def add_dependency(self, dependency: AST.Dependency) -> None:
         self._dependency_manager.add_dependency(dependency)
+
+    def add_dev_dependency(self, dependency: AST.Dependency) -> None:
+        self._dependency_manager.add_dev_dependency(dependency)
 
     def set_generate_readme(self, generate_readme: bool) -> None:
         self._generate_readme = generate_readme
@@ -154,6 +164,9 @@ class Project:
                 path=self._root_filepath,
                 dependency_manager=self._dependency_manager,
                 python_version=self._python_version,
+                github_output_mode=self._github_output_mode,
+                pypi_metadata=self._pypi_metadata,
+                license_=self.license_,
             )
             py_project_toml.write()
 

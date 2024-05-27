@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
-import * as SeedExamples from "../../../../..";
+import * as SeedExamples from "../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../serialization";
-import * as errors from "../../../../../../errors";
+import * as serializers from "../../../../../../serialization/index";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -18,6 +18,7 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -26,16 +27,16 @@ export class Service {
 
     /**
      * This endpoint returns a file by its name.
+     *
+     * @param {string} filename - This is a filename
+     * @param {SeedExamples.file.GetFileRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedExamples.NotFoundError}
      *
      * @example
      *     await seedExamples.file.service.getFile("file.txt", {
      *         "X-File-API-Version": "0.0.2"
-     *     })
-     *
-     * @example
-     *     await seedExamples.file.service.getFile("string", {
-     *         "X-File-API-Version": "string"
      *     })
      */
     public async getFile(
@@ -45,7 +46,7 @@ export class Service {
     ): Promise<SeedExamples.File_> {
         const { "X-File-API-Version": xFileApiVersion } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/${filename}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/file/${encodeURIComponent(filename)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -59,6 +60,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.File_.parseOrThrow(_response.body, {
@@ -103,7 +105,7 @@ export class Service {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

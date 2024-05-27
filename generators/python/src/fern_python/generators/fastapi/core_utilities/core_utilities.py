@@ -124,6 +124,15 @@ class CoreUtilities:
             ),
             exports={"serialize_datetime"},
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="pydantic_utilities.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="pydantic_utilities"),
+            ),
+            exports={"pydantic_v1", "deep_union_pydantic_dicts"},
+        )
         self._copy_security_to_project(project=project)
         self._copy_exceptions_to_project(project=project)
 

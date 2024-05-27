@@ -1,47 +1,47 @@
-import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import * as serializers from "@fern-fern/generator-exec-sdk/serialization";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { OutputMode } from "../../config/api";
-import { SeedWorkspace } from "../../loadSeedWorkspaces";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import {
     DUMMY_ORGANIZATION,
     INPUTS_DIRECTORY_NAME,
     INPUT_CONFIG_FILENAME,
     INPUT_IR_FILENAME
 } from "../../utils/constants";
-import { convertSeedWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
+import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
 import { getGeneratorInvocation } from "../../utils/getGeneratorInvocation";
 import { ParsedDockerName, parseDockerOrThrow } from "../../utils/parseDockerOrThrow";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 
 export async function rewriteInputsForWorkspace({
-    workspace,
+    generator,
     fixtures,
     taskContextFactory
 }: {
-    workspace: SeedWorkspace;
+    generator: GeneratorWorkspace;
     fixtures: string[];
     taskContextFactory: TaskContextFactory;
 }): Promise<void> {
     for (const fixture of fixtures) {
-        const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
-        const docker = parseDockerOrThrow(workspace.workspaceConfig.docker);
-        const absolutePathToFernDefinition = AbsoluteFilePath.of(
+        const fixtureConfig = generator.workspaceConfig.fixtures?.[fixture];
+        const docker = parseDockerOrThrow(generator.workspaceConfig.docker);
+        const absolutePathToAPIDefinition = AbsoluteFilePath.of(
             path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
         );
-        const absolutePathToOutput = join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture));
+        const absolutePathToOutput = join(generator.absolutePathToWorkspace, RelativeFilePath.of(fixture));
         if (fixtureConfig != null) {
             for (const fixtureConfigInstance of fixtureConfig) {
                 const taskContext = taskContextFactory.create(
-                    `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
+                    `${generator.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
                 );
-                const fernWorkspace = await convertSeedWorkspaceToFernWorkspace({
-                    absolutePathToWorkspace: absolutePathToFernDefinition,
+                const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+                    absolutePathToAPIDefinition,
                     taskContext,
                     fixture
                 });
@@ -57,21 +57,28 @@ export async function rewriteInputsForWorkspace({
                     fernWorkspace,
                     taskContext,
                     docker,
-                    language: workspace.workspaceConfig.language,
-                    customConfig: fixtureConfigInstance.customConfig,
+                    language: generator.workspaceConfig.language,
+                    customConfig:
+                        generator.workspaceConfig.defaultCustomConfig != null ||
+                        fixtureConfigInstance.customConfig != null
+                            ? {
+                                  ...(generator.workspaceConfig.defaultCustomConfig ?? {}),
+                                  ...((fixtureConfigInstance.customConfig as Record<string, unknown>) ?? {})
+                              }
+                            : undefined,
                     publishConfig: fixtureConfigInstance.publishConfig,
-                    outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
+                    outputMode: fixtureConfigInstance.outputMode ?? generator.workspaceConfig.defaultOutputMode,
                     fixtureName: fixture,
-                    irVersion: workspace.workspaceConfig.irVersion,
+                    irVersion: generator.workspaceConfig.irVersion,
                     publishMetadata: fixtureConfigInstance.publishMetadata,
                     workspaceName: fernWorkspace.name,
                     context: taskContext
                 });
             }
         } else {
-            const taskContext = taskContextFactory.create(`${workspace.workspaceName}:${fixture}`);
-            const fernWorkspace = await convertSeedWorkspaceToFernWorkspace({
-                absolutePathToWorkspace: absolutePathToFernDefinition,
+            const taskContext = taskContextFactory.create(`${generator.workspaceName}:${fixture}`);
+            const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+                absolutePathToAPIDefinition,
                 taskContext,
                 fixture
             });
@@ -84,12 +91,12 @@ export async function rewriteInputsForWorkspace({
                 fernWorkspace,
                 taskContext,
                 docker,
-                language: workspace.workspaceConfig.language,
-                customConfig: undefined,
+                language: generator.workspaceConfig.language,
+                customConfig: generator.workspaceConfig.defaultCustomConfig,
                 publishConfig: undefined,
-                outputMode: workspace.workspaceConfig.defaultOutputMode,
+                outputMode: generator.workspaceConfig.defaultOutputMode,
                 fixtureName: fixture,
-                irVersion: workspace.workspaceConfig.irVersion,
+                irVersion: generator.workspaceConfig.irVersion,
                 publishMetadata: undefined,
                 workspaceName: fernWorkspace.name,
                 context: taskContext
@@ -153,8 +160,13 @@ export async function writeInputs({
         workspaceName,
         outputVersion: undefined,
         organization: DUMMY_ORGANIZATION,
-        absolutePathToSnippet: undefined,
-        writeUnitTests: true
+        absolutePathToSnippetTemplates: undefined,
+        writeUnitTests: true,
+        generateOauthClients: true,
+        generatePaginatedClients: true,
+        absolutePathToSnippet: AbsoluteFilePath.of(
+            join(absolutePathToOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
+        )
     }).config;
     const absolutePathToInputsDirectory = AbsoluteFilePath.of(
         join(absolutePathToOutput, RelativeFilePath.of(INPUTS_DIRECTORY_NAME))
@@ -165,19 +177,10 @@ export async function writeInputs({
         join(absolutePathToInputsDirectory, RelativeFilePath.of(INPUT_IR_FILENAME)),
         JSON.stringify(ir, undefined, 4)
     );
-    // Update filepaths in config.json so that they
-    // are compatible with the local filesystem
-    const locallyCompatibleConfig: FernGeneratorExec.GeneratorConfig = {
-        ...config,
-        irFilepath: "./ir.json",
-        output: {
-            ...config.output,
-            path: "../"
-        }
-    };
+    const rawConfig = await serializers.GeneratorConfig.jsonOrThrow(config);
     await writeFile(
         join(absolutePathToInputsDirectory, RelativeFilePath.of(INPUT_CONFIG_FILENAME)),
-        JSON.stringify(locallyCompatibleConfig, undefined, 4)
+        JSON.stringify(rawConfig, undefined, 4)
     );
 
     context.logger.info(`Wrote inputs to ${absolutePathToInputsDirectory}`);

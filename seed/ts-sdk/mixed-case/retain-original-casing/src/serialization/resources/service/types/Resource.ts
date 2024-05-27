@@ -4,8 +4,8 @@
 
 import { ResourceStatus } from "./ResourceStatus";
 import * as core from "../../../../core";
-import * as serializers from "../../..";
-import * as SeedMixedCase from "../../../../api";
+import * as serializers from "../../../index";
+import * as SeedMixedCase from "../../../../api/index";
 import { User } from "./User";
 import { Organization } from "./Organization";
 

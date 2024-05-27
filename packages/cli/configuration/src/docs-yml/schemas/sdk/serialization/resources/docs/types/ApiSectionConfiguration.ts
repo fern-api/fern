@@ -18,8 +18,10 @@ export const ApiSectionConfiguration: core.serialization.ObjectSchema<
     summary: core.serialization.string().optional(),
     layout: core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems).optional(),
     icon: core.serialization.string().optional(),
+    slug: core.serialization.string().optional(),
     hidden: core.serialization.boolean().optional(),
     skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+    flattened: core.serialization.boolean().optional(),
 });
 
 export declare namespace ApiSectionConfiguration {
@@ -32,7 +34,9 @@ export declare namespace ApiSectionConfiguration {
         summary?: string | null;
         layout?: serializers.ApiNavigationItems.Raw | null;
         icon?: string | null;
+        slug?: string | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
+        flattened?: boolean | null;
     }
 }

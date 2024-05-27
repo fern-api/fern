@@ -11,23 +11,34 @@ from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
 
 class SeedSingleUrlEnvironmentDefault:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
-    Parameters:
-        - base_url: typing.Optional[str]. The base url to use for requests from the client.
+    Parameters
+    ----------
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
 
-        - environment: SeedSingleUrlEnvironmentDefaultEnvironment. The environment to use for requests from the client. from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
+    environment : SeedSingleUrlEnvironmentDefaultEnvironment
+        The environment to use for requests from the client. from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
 
-                                                                   Defaults to SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION
 
-        - token: typing.Union[str, typing.Callable[[], str]].
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        Defaults to SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION
 
-        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
-        - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
-    ---
+
+    token : typing.Union[str, typing.Callable[[], str]]
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
+    httpx_client : typing.Optional[httpx.Client]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+
+    Examples
+    --------
     from seed.client import SeedSingleUrlEnvironmentDefault
 
     client = SeedSingleUrlEnvironmentDefault(
@@ -42,7 +53,7 @@ class SeedSingleUrlEnvironmentDefault:
         environment: SeedSingleUrlEnvironmentDefaultEnvironment = SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION,
         token: typing.Union[str, typing.Callable[[], str]],
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
@@ -61,23 +72,34 @@ class SeedSingleUrlEnvironmentDefault:
 
 class AsyncSeedSingleUrlEnvironmentDefault:
     """
-    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propogate to these functions.
+    Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
-    Parameters:
-        - base_url: typing.Optional[str]. The base url to use for requests from the client.
+    Parameters
+    ----------
+    base_url : typing.Optional[str]
+        The base url to use for requests from the client.
 
-        - environment: SeedSingleUrlEnvironmentDefaultEnvironment. The environment to use for requests from the client. from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
+    environment : SeedSingleUrlEnvironmentDefaultEnvironment
+        The environment to use for requests from the client. from .environment import SeedSingleUrlEnvironmentDefaultEnvironment
 
-                                                                   Defaults to SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION
 
-        - token: typing.Union[str, typing.Callable[[], str]].
 
-        - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+        Defaults to SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION
 
-        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
-        - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
-    ---
+
+    token : typing.Union[str, typing.Callable[[], str]]
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
+    httpx_client : typing.Optional[httpx.AsyncClient]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
+
+    Examples
+    --------
     from seed.client import AsyncSeedSingleUrlEnvironmentDefault
 
     client = AsyncSeedSingleUrlEnvironmentDefault(
@@ -92,7 +114,7 @@ class AsyncSeedSingleUrlEnvironmentDefault:
         environment: SeedSingleUrlEnvironmentDefaultEnvironment = SeedSingleUrlEnvironmentDefaultEnvironment.PRODUCTION,
         token: typing.Union[str, typing.Callable[[], str]],
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None

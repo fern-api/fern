@@ -22,6 +22,7 @@ export interface Channel {
     bindings?: Bindings;
     publish?: PublishEvent;
     subscribe?: SubscribeEvent;
+    parameters?: Record<string, OpenAPIV3.ParameterObject>;
 }
 
 export interface Tag {

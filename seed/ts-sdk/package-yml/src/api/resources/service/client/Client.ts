@@ -4,7 +4,7 @@
 
 import * as core from "../../../../core";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -15,15 +15,26 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} nestedId
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedPackageYml.service.nop("id-219xca8")
+     */
     public async nop(nestedId: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${this._options.id}//${nestedId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/${encodeURIComponent(this._options.id)}//${encodeURIComponent(nestedId)}`
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -35,6 +46,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

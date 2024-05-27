@@ -84,7 +84,9 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         declaration = self.get_declaration_for_type_id(type_name)
         shape = declaration.shape.get_as_union()
         if shape.type != "object":
-            raise RuntimeError(f"Cannot get properties because {declaration.name.name.original_name} is not an object")
+            raise RuntimeError(
+                f"Cannot get properties because {declaration.name.name.original_name} is not an object, it's a {shape.type}"
+            )
 
         properties = shape.properties.copy()
         for extension in shape.extends:
@@ -100,10 +102,10 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_referenced_types_of_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:
         return type_reference.visit(
             container=lambda container: container.visit(
-                list=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
-                set=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                list_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                set_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
-                map=lambda map_type: (
+                map_=lambda map_type: (
                     self.get_referenced_types_of_type_reference(map_type.key_type).union(
                         self.get_referenced_types_of_type_reference(map_type.value_type)
                     )
@@ -120,10 +122,10 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:
         return type_reference.visit(
             container=lambda container: container.visit(
-                list=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
-                set=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                list_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                set_=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
                 optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
-                map=lambda map_type: (
+                map_=lambda map_type: (
                     self.get_referenced_types_of_type_reference(map_type.key_type).union(
                         self.get_referenced_types_of_type_reference(map_type.value_type)
                     )

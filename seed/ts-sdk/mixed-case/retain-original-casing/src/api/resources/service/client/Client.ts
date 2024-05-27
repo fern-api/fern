@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedMixedCase from "../../..";
+import * as SeedMixedCase from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -16,18 +16,29 @@ export declare namespace Service {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {string} ResourceID
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMixedCase.service.getResource("rsc-xyz")
+     */
     public async getResource(
         ResourceID: string,
         requestOptions?: Service.RequestOptions
     ): Promise<SeedMixedCase.Resource> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/resource/${ResourceID}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/resource/${encodeURIComponent(ResourceID)}`
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
@@ -39,6 +50,7 @@ export class Service {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Resource.parseOrThrow(_response.body, {
@@ -71,6 +83,16 @@ export class Service {
         }
     }
 
+    /**
+     * @param {SeedMixedCase.ListResourcesRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMixedCase.service.listResources({
+     *         page_limit: 10,
+     *         beforeDate: "2023-01-01"
+     *     })
+     */
     public async listResources(
         request: SeedMixedCase.ListResourcesRequest,
         requestOptions?: Service.RequestOptions
@@ -93,6 +115,7 @@ export class Service {
             queryParameters: _queryParams,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.service.listResources.Response.parseOrThrow(_response.body, {

@@ -10,8 +10,8 @@ from .foo import Foo
 
 
 class Union_Foo(pydantic_v1.BaseModel):
-    type: typing.Literal["foo"] = "foo"
     foo: Foo
+    type: typing.Literal["foo"] = "foo"
 
     class Config:
         frozen = True
@@ -19,8 +19,8 @@ class Union_Foo(pydantic_v1.BaseModel):
 
 
 class Union_Bar(pydantic_v1.BaseModel):
-    type: typing.Literal["bar"] = "bar"
     bar: Bar
+    type: typing.Literal["bar"] = "bar"
 
     class Config:
         frozen = True

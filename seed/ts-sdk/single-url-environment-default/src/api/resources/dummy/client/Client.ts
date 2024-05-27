@@ -5,8 +5,8 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
     interface Options {
@@ -17,12 +17,19 @@ export declare namespace Dummy {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Dummy {
     constructor(protected readonly _options: Dummy.Options) {}
 
+    /**
+     * @param {Dummy.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedSingleUrlEnvironmentDefault.dummy.getDummy()
+     */
     public async getDummy(requestOptions?: Dummy.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -42,6 +49,7 @@ export class Dummy {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.dummy.getDummy.Response.parseOrThrow(_response.body, {
@@ -74,7 +82,7 @@ export class Dummy {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

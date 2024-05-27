@@ -45,7 +45,7 @@ func (c *Client) GetMovie(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"movie/%v", movieId)
+	endpointURL := core.EncodeURL(baseURL+"/movie/%v", movieId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -80,7 +80,7 @@ func (c *Client) CreateMovie(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -116,7 +116,7 @@ func (c *Client) GetMetadata(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "metadata"
+	endpointURL := baseURL + "/metadata"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {
@@ -135,6 +135,40 @@ func (c *Client) GetMetadata(
 		&core.CallParams{
 			URL:         endpointURL,
 			Method:      http.MethodGet,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (c *Client) GetResponse(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (*fern.Response, error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/response"
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	var response *fern.Response
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:         endpointURL,
+			Method:      http.MethodPost,
 			MaxAttempts: options.MaxAttempts,
 			Headers:     headers,
 			Client:      options.HTTPClient,

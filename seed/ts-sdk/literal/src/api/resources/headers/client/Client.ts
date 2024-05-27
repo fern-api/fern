@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedLiteral from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedLiteral from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Headers {
     interface Options {
@@ -16,12 +16,24 @@ export declare namespace Headers {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Headers {
     constructor(protected readonly _options: Headers.Options) {}
 
+    /**
+     * @param {SeedLiteral.SendLiteralsInHeadersRequest} request
+     * @param {Headers.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedLiteral.headers.send({
+     *         endpointVersion: "02-12-2024",
+     *         async: true,
+     *         query: "What is the weather today"
+     *     })
+     */
     public async send(
         request: SeedLiteral.SendLiteralsInHeadersRequest,
         requestOptions?: Headers.RequestOptions
@@ -46,6 +58,7 @@ export class Headers {
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.SendResponse.parseOrThrow(_response.body, {

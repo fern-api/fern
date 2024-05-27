@@ -44,7 +44,8 @@ export function convertAsyncSyncOperation({
                 )
             }
         },
-        context
+        context,
+        streamFormat: undefined
     });
 
     const asyncOperation = convertHttpOperation({
@@ -56,7 +57,8 @@ export function convertAsyncSyncOperation({
         },
         context,
         suffix: "async",
-        responseStatusCode: asyncResponseStatusCode
+        responseStatusCode: asyncResponseStatusCode,
+        streamFormat: undefined
     });
 
     asyncOperation.headers.push({

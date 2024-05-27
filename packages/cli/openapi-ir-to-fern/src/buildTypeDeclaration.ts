@@ -4,7 +4,7 @@ import {
     ArraySchema,
     CasingOverrides,
     EnumSchema,
-    LiteralSchemaValue,
+    LiteralSchema,
     MapSchema,
     ObjectProperty,
     ObjectSchema,
@@ -61,7 +61,7 @@ export function buildTypeDeclaration({
         case "enum":
             return buildEnumTypeDeclaration(schema);
         case "literal":
-            return buildLiteralTypeDeclaration(schema.value, schema.nameOverride, schema.generatedName);
+            return buildLiteralTypeDeclaration(schema, schema.nameOverride, schema.generatedName);
         case "object":
             return buildObjectTypeDeclaration({ schema, context, declarationFile });
         case "oneOf":
@@ -107,11 +107,21 @@ export function buildObjectTypeDeclaration({
             context,
             fileContainingReference: declarationFile
         });
-        if (property.audiences.length > 0) {
+        const audiences = property.audiences;
+        const name = property.nameOverride;
+        if (audiences.length > 0 && name != null) {
             properties[property.key] =
                 typeof typeReference === "string"
-                    ? { type: typeReference, audiences: property.audiences }
-                    : { ...typeReference, audiences: property.audiences };
+                    ? { type: typeReference, audiences, name }
+                    : { ...typeReference, audiences, name };
+        } else if (name != null) {
+            properties[property.key] =
+                typeof typeReference === "string" ? { type: typeReference, name } : { ...typeReference, name };
+        } else if (audiences.length > 0) {
+            properties[property.key] =
+                typeof typeReference === "string"
+                    ? { type: typeReference, audiences }
+                    : { ...typeReference, audiences };
         } else {
             properties[property.key] = typeReference;
         }
@@ -128,6 +138,9 @@ export function buildObjectTypeDeclaration({
     const extendedSchemas: string[] = [];
     for (const allOf of schema.allOf) {
         const resolvedSchemaId = getSchemaIdOfResolvedType({ schema: allOf.schema, context });
+        if (resolvedSchemaId == null) {
+            continue;
+        }
         if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
             continue; // dont extend from schemas that need to be inlined
         }
@@ -191,6 +204,9 @@ export function buildObjectTypeDeclaration({
     if (extendedSchemas.length > 0) {
         objectTypeDeclaration.extends = extendedSchemas;
     }
+    if (schema.additionalProperties) {
+        objectTypeDeclaration["extra-properties"] = true;
+    }
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: objectTypeDeclaration
@@ -207,6 +223,9 @@ function getAllParentSchemasToInline({
     context: OpenApiIrConverterContext;
 }): SchemaId[] {
     const schema = context.getSchema(schemaId);
+    if (schema == null) {
+        return [];
+    }
     if (schema.type === "reference") {
         return getAllParentSchemasToInline({ property, schemaId: schema.schema, context });
     }
@@ -235,6 +254,9 @@ function getProperties(
     allOf: ReferencedSchema[];
 } {
     const schema = context.getSchema(schemaId);
+    if (schema == null) {
+        return { properties: [], allOf: [] };
+    }
     if (schema.type === "object") {
         return { properties: schema.properties, allOf: schema.allOf };
     } else if (schema.type === "reference") {
@@ -274,9 +296,20 @@ export function buildMapTypeDeclaration({
 }
 
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
+    const typeReference = buildPrimitiveTypeReference(schema);
+    if (typeof typeReference === "string") {
+        return {
+            name: schema.nameOverride ?? schema.generatedName,
+            schema: typeReference
+        };
+    }
+    // We don't want to include the default value in the type alias declaration.
+    const { default: _, ...rest } = typeReference;
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: buildPrimitiveTypeReference(schema)
+        schema: {
+            ...rest
+        }
     };
 }
 
@@ -398,13 +431,13 @@ export function buildUnknownTypeDeclaration(
 }
 
 export function buildLiteralTypeDeclaration(
-    value: LiteralSchemaValue,
+    schema: LiteralSchema,
     nameOverride: string | null | undefined,
     generatedName: string
 ): ConvertedTypeDeclaration {
     return {
         name: nameOverride ?? generatedName,
-        schema: buildLiteralTypeReference(value)
+        schema: buildLiteralTypeReference(schema)
     };
 }
 
@@ -476,8 +509,11 @@ function getSchemaIdOfResolvedType({
 }: {
     schema: SchemaId;
     context: OpenApiIrConverterContext;
-}): SchemaId {
+}): SchemaId | undefined {
     const resolvedSchema = context.getSchema(schema);
+    if (resolvedSchema == null) {
+        return undefined;
+    }
     if (resolvedSchema.type === "reference") {
         return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema });
     }

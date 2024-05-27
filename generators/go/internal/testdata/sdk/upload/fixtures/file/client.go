@@ -49,7 +49,7 @@ func (c *Client) Upload(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "file/upload"
+	endpointURL := baseURL + "/file/upload"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -109,7 +109,7 @@ func (c *Client) UploadSimple(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "file/upload-simple"
+	endpointURL := baseURL + "/file/upload-simple"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -165,7 +165,7 @@ func (c *Client) UploadMultiple(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "file/upload-multi"
+	endpointURL := baseURL + "/file/upload-multi"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

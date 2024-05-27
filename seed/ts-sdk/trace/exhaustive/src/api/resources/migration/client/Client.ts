@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
+import * as serializers from "../../../../serialization/index";
 
 export declare namespace Migration {
     interface Options {
@@ -18,12 +18,22 @@ export declare namespace Migration {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Migration {
     constructor(protected readonly _options: Migration.Options = {}) {}
 
+    /**
+     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
+     * @param {Migration.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedTrace.migration.getAttemptedMigrations({
+     *         adminKeyHeader: "string"
+     *     })
+     */
     public async getAttemptedMigrations(
         request: SeedTrace.GetAttemptedMigrationsRequest,
         requestOptions?: Migration.RequestOptions
@@ -52,6 +62,7 @@ export class Migration {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return {
@@ -71,7 +82,7 @@ export class Migration {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

@@ -3,7 +3,7 @@
  */
 
 import * as core from "../../../../../../core";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace B {
     interface Options {
@@ -13,12 +13,19 @@ export declare namespace B {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class B {
     constructor(protected readonly _options: B.Options) {}
 
+    /**
+     * @param {B.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedApi.a.b.foo()
+     */
     public async foo(requestOptions?: B.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
@@ -33,6 +40,7 @@ export class B {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;

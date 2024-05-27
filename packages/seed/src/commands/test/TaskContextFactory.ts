@@ -21,21 +21,24 @@ export class TaskContextFactory {
                     (log) => LOG_LEVELS.indexOf(log.level) >= LOG_LEVELS.indexOf(this.logLevel)
                 );
                 filtered.forEach((log) => {
-                    switch (log.level) {
-                        case "debug":
-                            CONSOLE_LOGGER.debug(`[${prefixWithColor}]: `, ...log.parts);
-                            break;
-                        case "error":
-                            CONSOLE_LOGGER.error(`[${prefixWithColor}]: `, ...log.parts);
-                            break;
-                        case "warn":
-                            CONSOLE_LOGGER.warn(`[${prefixWithColor}]: `, ...log.parts);
-                            break;
-                        case "info":
-                            CONSOLE_LOGGER.info(`[${prefixWithColor}]: `, ...log.parts);
-                            break;
-                        default:
-                            assertNever(log.level);
+                    const parts = log.parts.flatMap((parts) => parts).flatMap((part) => part.split("\n"));
+                    for (const part of parts) {
+                        switch (log.level) {
+                            case "debug":
+                                CONSOLE_LOGGER.debug(`[${prefixWithColor}]: `, part);
+                                break;
+                            case "error":
+                                CONSOLE_LOGGER.error(`[${prefixWithColor}]: `, part);
+                                break;
+                            case "warn":
+                                CONSOLE_LOGGER.warn(`[${prefixWithColor}]: `, part);
+                                break;
+                            case "info":
+                                CONSOLE_LOGGER.info(`[${prefixWithColor}]: `, part);
+                                break;
+                            default:
+                                assertNever(log.level);
+                        }
                     }
                 });
             },

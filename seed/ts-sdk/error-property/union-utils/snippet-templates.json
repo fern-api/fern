@@ -1,0 +1,26 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/error-property",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/property-based-error",
+            "method": "GET",
+            "identifierOverride": "endpoint_property-based-error.ThrowError"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedErrorProperty = new SeedErrorPropertyClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedErrorProperty.propertyBasedError.throwError()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

@@ -9,6 +9,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.resource import Resource
@@ -20,11 +21,19 @@ class ServiceClient:
 
     def get_resource(self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Resource:
         """
-        Parameters:
-            - resource_id: str.
+        Parameters
+        ----------
+        resource_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Resource
+
+        Examples
+        --------
         from seed.client import SeedMixedCase
 
         client = SeedMixedCase(
@@ -35,12 +44,14 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"resource/{jsonable_encoder(resource_id)}"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -68,13 +79,21 @@ class ServiceClient:
         self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Resource]:
         """
-        Parameters:
-            - page_limit: int.
+        Parameters
+        ----------
+        page_limit : int
 
-            - before_date: dt.date.
+        before_date : dt.date
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Resource]
+
+        Examples
+        --------
         import datetime
 
         from seed.client import SeedMixedCase
@@ -90,19 +109,21 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "resource"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "page_limit": page_limit,
-                        "beforeDate": str(before_date),
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "resource"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "page_limit": page_limit,
+                            "beforeDate": str(before_date),
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -136,11 +157,19 @@ class AsyncServiceClient:
         self, resource_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Resource:
         """
-        Parameters:
-            - resource_id: str.
+        Parameters
+        ----------
+        resource_id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Resource
+
+        Examples
+        --------
         from seed.client import AsyncSeedMixedCase
 
         client = AsyncSeedMixedCase(
@@ -151,12 +180,14 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"resource/{jsonable_encoder(resource_id)}"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -184,13 +215,21 @@ class AsyncServiceClient:
         self, *, page_limit: int, before_date: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.List[Resource]:
         """
-        Parameters:
-            - page_limit: int.
+        Parameters
+        ----------
+        page_limit : int
 
-            - before_date: dt.date.
+        before_date : dt.date
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[Resource]
+
+        Examples
+        --------
         import datetime
 
         from seed.client import AsyncSeedMixedCase
@@ -206,19 +245,21 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "resource"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "page_limit": page_limit,
-                        "beforeDate": str(before_date),
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "resource"),
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "page_limit": page_limit,
+                            "beforeDate": str(before_date),
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(

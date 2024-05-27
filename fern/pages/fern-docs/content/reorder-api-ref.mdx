@@ -1,0 +1,38 @@
+---
+title: Reorder your API reference
+description: Reorder your API reference section and customize the structure of your documentation. 
+---
+
+This configuration allows you to reorder sections and endpoints in the sidebar navigation menu.
+
+## Configuration
+
+To reorder sections, add the `layout` field to the `api` field in the `docs.yml` file. The `layout` field is an array of the sections you want to display in the order you want them to appear.
+
+```yaml title="docs.yml"
+navigation:
+  - api: API Reference
+    layout:
+      - pet
+      - store
+      - user
+```
+
+To reorder endpoints, add a `:` (colon) to the end of the section name, followed by an array of the endpoints you want to display in the order you want them to appear.
+
+```yaml title="docs.yml"
+navigation:
+  - api: API Reference
+    layout:
+      - pet:
+        - addPet
+        - updatePet
+        - deletePet
+      - store:
+        - getInventory
+        - placeOrder
+      - user:
+        - createUser
+        - createUsersWithArrayInput
+        - createUsersWithListInput
+```

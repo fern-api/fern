@@ -44,7 +44,7 @@ func (c *Client) BootInstance(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "ec2/boot"
+	endpointURL := baseURL + "/ec2/boot"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

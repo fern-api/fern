@@ -18,6 +18,7 @@ export const InlinedRequestBody: core.serialization.ObjectSchema<
         core.serialization.lazyObject(async () => (await import("../../..")).InlinedRequestBodyProperty)
     ),
     contentType: core.serialization.string().optional(),
+    extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
 });
 
 export declare namespace InlinedRequestBody {
@@ -26,5 +27,6 @@ export declare namespace InlinedRequestBody {
         extends: serializers.DeclaredTypeName.Raw[];
         properties: serializers.InlinedRequestBodyProperty.Raw[];
         contentType?: string | null;
+        "extra-properties": boolean;
     }
 }

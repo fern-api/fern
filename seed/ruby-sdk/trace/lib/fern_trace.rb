@@ -38,10 +38,16 @@ module SeedTraceClient
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::Client]
-    def initialize(token:, environment: Environment::PROD, base_url: nil, max_retries: nil, timeout_in_seconds: nil,
-                   x_random_header: nil)
-      @request_client = SeedTraceClient::RequestClient.new(environment: environment, base_url: base_url,
-                                                           max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token, x_random_header: x_random_header)
+    def initialize(token:, environment: SeedTraceClient::Environment::PROD, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil, x_random_header: nil)
+      @request_client = SeedTraceClient::RequestClient.new(
+        environment: environment,
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token,
+        x_random_header: x_random_header
+      )
       @v_2 = SeedTraceClient::V2::V2Client.new(request_client: @request_client)
       @admin = SeedTraceClient::AdminClient.new(request_client: @request_client)
       @homepage = SeedTraceClient::HomepageClient.new(request_client: @request_client)
@@ -78,10 +84,16 @@ module SeedTraceClient
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::AsyncClient]
-    def initialize(token:, environment: Environment::PROD, base_url: nil, max_retries: nil, timeout_in_seconds: nil,
-                   x_random_header: nil)
-      @async_request_client = SeedTraceClient::AsyncRequestClient.new(environment: environment, base_url: base_url,
-                                                                      max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token, x_random_header: x_random_header)
+    def initialize(token:, environment: SeedTraceClient::Environment::PROD, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil, x_random_header: nil)
+      @async_request_client = SeedTraceClient::AsyncRequestClient.new(
+        environment: environment,
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token,
+        x_random_header: x_random_header
+      )
       @v_2 = SeedTraceClient::V2::AsyncV2Client.new(request_client: @async_request_client)
       @admin = SeedTraceClient::AsyncAdminClient.new(request_client: @async_request_client)
       @homepage = SeedTraceClient::AsyncHomepageClient.new(request_client: @async_request_client)

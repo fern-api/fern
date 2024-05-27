@@ -37,7 +37,11 @@ module SeedQueryParametersClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]
         tags = struct["tags"]
-        new(name: name, tags: tags, additional_properties: struct)
+        new(
+          name: name,
+          tags: tags,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of User to a JSON object

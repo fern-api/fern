@@ -10,8 +10,8 @@ from .primitive_value import PrimitiveValue
 
 
 class ContainerValue_List(pydantic_v1.BaseModel):
-    type: typing.Literal["list"] = "list"
     value: typing.List[FieldValue]
+    type: typing.Literal["list"] = "list"
 
     class Config:
         frozen = True
@@ -19,8 +19,8 @@ class ContainerValue_List(pydantic_v1.BaseModel):
 
 
 class ContainerValue_Optional(pydantic_v1.BaseModel):
+    value: typing.Optional[FieldValue] = None
     type: typing.Literal["optional"] = "optional"
-    value: typing.Optional[FieldValue]
 
     class Config:
         frozen = True
@@ -30,5 +30,5 @@ class ContainerValue_Optional(pydantic_v1.BaseModel):
 ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]
 from .field_value import FieldValue  # noqa: E402
 
-ContainerValue_List.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
-ContainerValue_Optional.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
+ContainerValue_List.update_forward_refs(FieldValue=FieldValue)
+ContainerValue_Optional.update_forward_refs(FieldValue=FieldValue)

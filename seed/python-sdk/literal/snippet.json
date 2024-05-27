@@ -4,7 +4,8 @@
         {
             "id": {
                 "path": "/headers",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_headers.send"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.headers.send(\n    query=\"What is the weather today\",\n)\n",
@@ -15,7 +16,8 @@
         {
             "id": {
                 "path": "/inlined",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_inlined.send"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined.send(\n    temperature=10.1,\n    query=\"What is the weather today\",\n)\n",
@@ -26,7 +28,8 @@
         {
             "id": {
                 "path": "/path/{id}",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_path.send"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.path.send()\n",
@@ -37,7 +40,8 @@
         {
             "id": {
                 "path": "/query",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_query.send"
             },
             "snippet": {
                 "sync_client": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query.send(\n    query=\"What is the weather today\",\n)\n",
@@ -48,11 +52,12 @@
         {
             "id": {
                 "path": "/reference",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_reference.send"
             },
             "snippet": {
-                "sync_client": "from seed import SendRequest\nfrom seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.reference.send(\n    request=SendRequest(\n        prompt=\"You are a helpful assistant\",\n        stream=False,\n        query=\"What is the weather today\",\n    ),\n)\n",
-                "async_client": "from seed import SendRequest\nfrom seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.reference.send(\n    request=SendRequest(\n        prompt=\"You are a helpful assistant\",\n        stream=False,\n        query=\"What is the weather today\",\n    ),\n)\n",
+                "sync_client": "from seed.client import SeedLiteral\n\nclient = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.reference.send(\n    prompt=\"You are a helpful assistant\",\n    stream=False,\n    query=\"What is the weather today\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedLiteral\n\nclient = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.reference.send(\n    prompt=\"You are a helpful assistant\",\n    stream=False,\n    query=\"What is the weather today\",\n)\n",
                 "type": "python"
             }
         }

@@ -1,0 +1,450 @@
+[
+    {
+        "sdk": {
+            "package": "fern_enum",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/inlined",
+            "method": "POST",
+            "identifierOverride": "endpoint_inlined-request.send"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.inlined_request.send(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "operand=$FERN_INPUT",
+                            "values": {
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": "operand"
+                            },
+                            "type": "enum"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "maybe_operand=$FERN_INPUT",
+                            "values": {
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": "maybeOperand"
+                            },
+                            "type": "enum"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.inlined_request.send(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "operand=$FERN_INPUT",
+                                "values": {
+                                    ">": "\">\"",
+                                    "=": "\"=\"",
+                                    "less_than": "\"less_than\""
+                                },
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "operand"
+                                },
+                                "type": "enum"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_operand=$FERN_INPUT",
+                                "values": {
+                                    ">": "\">\"",
+                                    "=": "\"=\"",
+                                    "less_than": "\"less_than\""
+                                },
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "maybeOperand"
+                                },
+                                "type": "enum"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_enum",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+            "method": "POST",
+            "identifierOverride": "endpoint_path-param.send"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.path_param.send(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "operand=$FERN_INPUT",
+                            "values": {
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
+                            },
+                            "templateInput": {
+                                "location": "PATH",
+                                "path": "operand"
+                            },
+                            "type": "enum"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "maybe_operand=$FERN_INPUT",
+                            "values": {
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
+                            },
+                            "templateInput": {
+                                "location": "PATH",
+                                "path": "maybeOperand"
+                            },
+                            "type": "enum"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.path_param.send(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "operand=$FERN_INPUT",
+                                "values": {
+                                    ">": "\">\"",
+                                    "=": "\"=\"",
+                                    "less_than": "\"less_than\""
+                                },
+                                "templateInput": {
+                                    "location": "PATH",
+                                    "path": "operand"
+                                },
+                                "type": "enum"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_operand=$FERN_INPUT",
+                                "values": {
+                                    ">": "\">\"",
+                                    "=": "\"=\"",
+                                    "less_than": "\"less_than\""
+                                },
+                                "templateInput": {
+                                    "location": "PATH",
+                                    "path": "maybeOperand"
+                                },
+                                "type": "enum"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_enum",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/query",
+            "method": "POST",
+            "identifierOverride": "endpoint_query-param.send"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.query_param.send(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "operand=$FERN_INPUT",
+                            "values": {
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
+                            },
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "operand"
+                            },
+                            "type": "enum"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "maybe_operand=$FERN_INPUT",
+                            "values": {
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
+                            },
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "maybeOperand"
+                            },
+                            "type": "enum"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.query_param.send(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "operand=$FERN_INPUT",
+                                "values": {
+                                    ">": "\">\"",
+                                    "=": "\"=\"",
+                                    "less_than": "\"less_than\""
+                                },
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "operand"
+                                },
+                                "type": "enum"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_operand=$FERN_INPUT",
+                                "values": {
+                                    ">": "\">\"",
+                                    "=": "\"=\"",
+                                    "less_than": "\"less_than\""
+                                },
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "maybeOperand"
+                                },
+                                "type": "enum"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_enum",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/query-list",
+            "method": "POST",
+            "identifierOverride": "endpoint_query-param.sendList"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.query_param.send_list(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "operand=$FERN_INPUT",
+                            "values": {
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
+                            },
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "operand"
+                            },
+                            "type": "enum"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "maybe_operand=$FERN_INPUT",
+                            "values": {
+                                ">": "\">\"",
+                                "=": "\"=\"",
+                                "less_than": "\"less_than\""
+                            },
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "maybeOperand"
+                            },
+                            "type": "enum"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.query_param.send_list(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "operand=$FERN_INPUT",
+                                "values": {
+                                    ">": "\">\"",
+                                    "=": "\"=\"",
+                                    "less_than": "\"less_than\""
+                                },
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "operand"
+                                },
+                                "type": "enum"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_operand=$FERN_INPUT",
+                                "values": {
+                                    ">": "\">\"",
+                                    "=": "\"=\"",
+                                    "less_than": "\"less_than\""
+                                },
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "maybeOperand"
+                                },
+                                "type": "enum"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    }
+]

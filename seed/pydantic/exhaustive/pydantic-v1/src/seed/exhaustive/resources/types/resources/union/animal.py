@@ -2,26 +2,61 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
-from .cat import Cat
-from .dog import Dog
+import pydantic
+
+from .....core.datetime_utils import serialize_datetime
+from .....core.pydantic_utilities import deep_union_pydantic_dicts
 
 
-class Animal_Dog(Dog):
+class Animal_Dog(pydantic.BaseModel):
+    name: str
+    likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
     animal: typing.Literal["dog"] = "dog"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Animal_Cat(Cat):
+class Animal_Cat(pydantic.BaseModel):
+    name: str
+    likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
     animal: typing.Literal["cat"] = "cat"
 
+    def json(self, **kwargs: typing.Any) -> str:
+        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        return super().json(**kwargs_with_defaults)
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+
+        return deep_union_pydantic_dicts(
+            super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+        )
+
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
+        extra = pydantic.Extra.allow
+        json_encoders = {dt.datetime: serialize_datetime}
 
 
 Animal = typing.Union[Animal_Dog, Animal_Cat]

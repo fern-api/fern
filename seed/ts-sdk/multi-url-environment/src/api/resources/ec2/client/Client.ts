@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedMultiUrlEnvironment from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedMultiUrlEnvironment from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Ec2 {
     interface Options {
@@ -20,12 +20,22 @@ export declare namespace Ec2 {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Ec2 {
     constructor(protected readonly _options: Ec2.Options) {}
 
+    /**
+     * @param {SeedMultiUrlEnvironment.BootInstanceRequest} request
+     * @param {Ec2.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedMultiUrlEnvironment.ec2.bootInstance({
+     *         size: "string"
+     *     })
+     */
     public async bootInstance(
         request: SeedMultiUrlEnvironment.BootInstanceRequest,
         requestOptions?: Ec2.RequestOptions
@@ -51,6 +61,7 @@ export class Ec2 {
             body: await serializers.BootInstanceRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return;
@@ -78,7 +89,7 @@ export class Ec2 {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

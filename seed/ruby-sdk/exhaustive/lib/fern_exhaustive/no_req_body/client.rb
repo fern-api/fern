@@ -2,6 +2,7 @@
 
 require_relative "../../requests"
 require_relative "../types/object/types/object_with_optional_field"
+require "json"
 require "async"
 
 module SeedExhaustiveClient
@@ -36,7 +37,7 @@ module SeedExhaustiveClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/no-req-body"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 
@@ -74,7 +75,8 @@ module SeedExhaustiveClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/no-req-body"
         end
-        response.body
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
   end

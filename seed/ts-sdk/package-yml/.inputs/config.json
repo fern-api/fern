@@ -1,25 +1,30 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/package-yml/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "npm",
                 "registryUrl": "",
                 "packageName": "@fern/package-yml",
-                "tokenEnvironmentVariable": "",
-                "type": "npm"
-            },
-            "type": "github"
+                "tokenEnvironmentVariable": ""
+            }
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,
-    "writeUnitTests": true
+    "writeUnitTests": true,
+    "generateOauthClients": true,
+    "generatePaginatedClients": true
 }

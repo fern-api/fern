@@ -5,6 +5,282 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.0-rc1] - 2024-05-20
+
+- Fix: Pass `abortSignal` to `Stream` for server-sent-events and JSON streams so that the user
+  can opt out and break from a stream.
+
+## [0.20.0-rc0] - 2024-05-20
+
+- Feature: Add `abortSignal` to `RequestOptions`. SDK consumers can now specify an
+  an arbitrary abort signal that can interrupt the API call.
+
+  ```ts
+  const controller = new AbortController();
+  client.endpoint.call(..., {
+    abortSignal: controller.signal,
+  })
+  ```
+
+## [0.19.0] - 2024-05-20
+
+- Feature: Add `inlineFileProperties` configuration to support generating file upload properties
+  as in-lined request properties (instead of positional parameters). Simply configure the following:
+
+  ```yaml
+  - name: fernapi/fern-typscript-node-sdk
+    version: 0.19.0
+    ...
+    config:
+      inlineFileProperties: true
+  ```
+
+  **Before**:
+
+  ```ts
+  /**
+    * @param {File | fs.ReadStream} file
+    * @param {File[] | fs.ReadStream[]} fileList
+    * @param {File | fs.ReadStream | undefined} maybeFile
+    * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
+    */
+  public async post(
+      file: File | fs.ReadStream,
+      fileList: File[] | fs.ReadStream[],
+      maybeFile: File | fs.ReadStream | undefined,
+      maybeFileList: File[] | fs.ReadStream[] | undefined,
+      request: Acme.MyRequest,
+      requestOptions?: Acme.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+  **After**:
+
+  ```ts
+  /**
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post({
+    *        file: fs.createReadStream("/path/to/your/file"),
+    *        fileList: [fs.createReadStream("/path/to/your/file")]
+    *     })
+    */
+  public async post(
+      request: Acme.MyRequest,
+      requestOptions?: Service.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+## [0.18.3] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
+## [0.18.2] - 2024-05-15
+
+- Fix: If OAuth is configured, the generated `getAuthorizationHeader` helper now treats the
+  bearer token as optional. This prevents us from sending the `Authorization` header
+  when retrieving the access token.
+
+## [0.18.1] - 2024-05-14
+
+- Fix: If OAuth environment variables are specified, the `clientId` and `clientSecret` parameters
+  are optional.
+
+  ```ts
+  export declare namespace Client {
+    interface Options {
+        ...
+        clientId?: core.Supplier<string>;
+        clientSecret?: core.Supplier<string>;
+    }
+    ...
+  }
+  ```
+
+## [0.18.0] - 2024-05-13
+
+- Feature: Add support for the OAuth client credentials flow. The new `OAuthTokenProvider` automatically
+  resolves the access token and refreshes it as needed. The resolved access token is then used as the
+  bearer token in all client requests.
+
+## [0.17.1] - 2024-05-06
+
+- Fix: Multipart form data requests are now compatible across browser and Node.js runtimes.
+
+## [0.17.0] - 2024-05-06
+
+- Internal: Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your
+  CLI version, please run `fern upgrade`.
+
+## [0.16.0-rc8] - 2024-05-06
+
+- Improvement: The SDK generator now supports upload endpoints that specify an array of files like so:
+
+  ```ts
+  /**
+    * @param {File[] | fs.ReadStream[]} files
+    * @param {Acme.UploadFileRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    */
+  public async post(
+      files: File[] | fs.ReadStream[],
+      request: Acme.UploadFileRequest,
+      requestOptions?: Service.RequestOptions
+  ): Promise<void> {
+      const _request = new FormData();
+      for (const _file of files) {
+        _request.append("files", _file);
+      }
+      ...
+  }
+  ```
+
+## [0.16.0-rc7] - 2024-05-02
+
+- Improvement: The SDK generator now supports `@param` JSDoc comments for endpoint parameters.
+  The generator now arranges JSDoc in a few separate groups, one for each of `@param`, `@throws`,
+  and `@examples` like so:
+
+  ```ts
+    /**
+     * This endpoint checks the health of a resource.
+     *
+     * @param {string} id - A unique identifier.
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link Acme.UnauthorizedRequest}
+     * @throws {@link Acme.BadRequest}
+     *
+     * @example
+     *     await testSdk.health.service.check("id-2sdx82h")
+     */
+    public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
+      ...
+    }
+  ```
+
+- Improvement: The generator will only include user-provided examples if they exist, and otherwise
+  only include a single generated example, like so:
+
+  ```ts
+    /**
+     * This endpoint checks the health of a resource.
+     *
+     * @example
+     *     await testSdk.health.service.check("id-2sdx82h")
+     */
+    public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
+      ...
+    }
+  ```
+
+- Fix: The SDK generator now escapes path parameters that would previously create invalid
+  URLs (e.g. "\\example"). Method implementations will now have references to
+  `encodeURIComponent` like the following:
+
+  ```ts
+  const _response = await core.fetcher({
+    url: urlJoin(
+      (await core.Supplier.get(this._options.environment)) ?? environments.AcmeEnvironment.Prod,
+      `/users/${encodeURIComponent(userId)}`
+    ),
+    ...
+  });
+  ```
+
+## [0.16.0-rc6] - 2024-04-30
+
+- Fix: snippet templates now move file upload parameters to unnamed args
+
+## [0.16.0-rc5] - 2024-04-30
+
+- Fix: remove duplicate quotation marks in snippet templates
+
+## [0.16.0-rc4] - 2024-04-25
+
+- Fix: fixes to styling of the SDK code snippet templates.
+
+## [0.16.0-rc0] - 2024-04-24
+
+- Feature: The generator now registers snippet templates which can be used for dynamic
+  SDK code snippet generation.
+
+## [0.15.1-rc1] - 2024-04-24
+
+- Improvement: Earlier for inlined request exports, we were doing the following:
+
+```ts
+export { MyRequest } from "./MyRequest";
+```
+
+In an effort to make the generated code JSR compatible, the TS generator
+will now append the `type` explicitly for request exports.
+
+```ts
+export { type MyRequest } from "./MyRequest";
+```
+
+## [0.15.1-rc0] - 2024-04-22
+
+- Feature: plain text responses are now supported in the TypeScript generator.
+
+## [0.15.0-rc1] - 2024-04-22
+
+- Fix: Minor fixes to SSE processing. In particular, stream terminal characters are now
+  respected like `[DONE]` and JSON parsed data is sent to the deserialize function.
+
+## [0.15.0-rc0] - 2024-04-19
+
+- Feature: Bump to v38 of IR and support server-sent events where the events are sent
+  with a `data: ` prefix and terminated with a new line.
+
+## [0.14.1-rc5] - 2024-04-17
+
+- Fix: Code snippets are generated for file upload endpoints using `fs.readStream`. Previously,
+  generation for these endpoints was being skipped.
+
+- Fix: If integration tests are not enabled, simple jest tests with a `yarn test`
+  script will be created.
+
+- Improvement: In an effort to make the generated code JSR compatible, the generator now
+  directly imports from files instead of using directory imports.
+
+- Improvement: In an effort to make the generated code JSR compatible, we make sure all methods
+  are strongly typed with return signatures (in this case `_getAuthorizationHeader()`).
+
+- Fix: Generate code snippet for FileDownload endpoint
+
+- Fix: Import for `node-fetch` in `Fetcher.ts` uses a dynamic import instead of `require` which
+  so that the SDK works in ESM environments (that are using local file output). When the
+  `outputEsm` config flag is turned on, the dynamic import will be turned into an ESM specific import.
+
+- Fix: The test job in `ci.yml` works even if you have not configured Fern to
+  generate integration tests.
+
+  Without integration tests the test job will run `yarn && yarn test`. With the
+  integration tests, the test job will delegate to the fern cli `fern yarn test`.
+
+- Feature: Add `allowExtraFields` option to permit extra fields in the serialized request.
+
+  ```yaml
+  - name: fernapi/fern-typscript-node-sdk
+    version: 0.14.0-rc0
+    ...
+    config:
+      allowExtraFields: true
+  ```
+
 ## [0.13.0] - 2024-04-09
 
 - Support V37 of the IR.

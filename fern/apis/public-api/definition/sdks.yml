@@ -5,7 +5,7 @@ service:
     generate:
       path: /generate
       display-name: Generate SDKs
-      docs: Generate an SDK for your API 
+      docs: Generate an SDK for your API defined at the url provided
       method: POST
       request:
         name: GenerateSDKRequest
@@ -43,7 +43,7 @@ service:
     getGenerationStatus:
       display-name: Get SDK generation status
       path: /generate/{generationId}
-      docs: Get the status of a generation request
+      docs: Get the status of an SDK generation request
       method: GET
       path-parameters: 
         generationId: 

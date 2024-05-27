@@ -1,1 +1,1 @@
-export { SendLiteralsInQueryRequest } from "./SendLiteralsInQueryRequest";
+export { type SendLiteralsInQueryRequest } from "./SendLiteralsInQueryRequest";

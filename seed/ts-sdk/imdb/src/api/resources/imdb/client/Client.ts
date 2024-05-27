@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedApi from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedApi from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Imdb {
     interface Options {
@@ -17,6 +17,7 @@ export declare namespace Imdb {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -25,6 +26,9 @@ export class Imdb {
 
     /**
      * Add a movie to the database
+     *
+     * @param {SeedApi.CreateMovieRequest} request
+     * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await seedApi.imdb.createMovie({
@@ -51,6 +55,7 @@ export class Imdb {
             body: await serializers.CreateMovieRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.MovieId.parseOrThrow(_response.body, {
@@ -84,6 +89,9 @@ export class Imdb {
     }
 
     /**
+     * @param {SeedApi.MovieId} movieId
+     * @param {Imdb.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedApi.MovieDoesNotExistError}
      *
      * @example
@@ -93,7 +101,7 @@ export class Imdb {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/movies/${await serializers.MovieId.jsonOrThrow(movieId)}`
+                `/movies/${encodeURIComponent(await serializers.MovieId.jsonOrThrow(movieId))}`
             ),
             method: "GET",
             headers: {
@@ -107,6 +115,7 @@ export class Imdb {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.Movie.parseOrThrow(_response.body, {
@@ -151,7 +160,7 @@ export class Imdb {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

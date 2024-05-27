@@ -1,0 +1,418 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+        "title": "Polytomic API",
+        "contact": {
+            "name": "Polytomic",
+            "url": "https://www.polytomic.com",
+            "email": "support@polytomic.com"
+        },
+        "version": "2024-02-08"
+    },
+    "servers": [
+        {
+            "url": "https://app.polytomic.com"
+        }
+    ],
+    "paths": {
+        "/api/connections": {
+            "post": {
+                "tags": [
+                    "Connections"
+                ],
+                "summary": "Create Connection",
+                "operationId": "api/v2.CreateConnection",
+                "parameters": [
+                    {
+                        "name": "X-Polytomic-Version",
+                        "in": "header",
+                        "schema": {
+                            "type": "string",
+                            "default": "2024-02-08"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/V2CreateConnectionRequestSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/V2CreateConnectionResponseEnvelope"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiError"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RestErrResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiError"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ApiError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "DeploymentKey": []
+                    },
+                    {
+                        "APIKey": []
+                    }
+                ],
+                "x-fern-sdk-group-name": [
+                    "connections"
+                ],
+                "x-fern-sdk-method-name": "Create"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ApiError": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "metadata": {},
+                    "status": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "BulkItemizedSchedule": {
+                "required": [
+                    "item",
+                    "schedule"
+                ],
+                "type": "object",
+                "properties": {
+                    "item": {
+                        "$ref": "#/components/schemas/BulkSelectiveMode"
+                    },
+                    "schedule": {
+                        "$ref": "#/components/schemas/BulkSchedule"
+                    }
+                }
+            },
+            "BulkMultiScheduleConfiguration": {
+                "required": [
+                    "type",
+                    "schedules"
+                ],
+                "type": "object",
+                "properties": {
+                    "schedules": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/BulkItemizedSchedule"
+                        },
+                        "nullable": true
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BulkSchedule": {
+                "required": [
+                    "frequency"
+                ],
+                "type": "object",
+                "properties": {
+                    "day_of_month": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "day_of_week": {
+                        "type": "string",
+                        "example": "monday"
+                    },
+                    "frequency": {
+                        "$ref": "#/components/schemas/ScheduleFrequency"
+                    },
+                    "hour": {
+                        "type": "string",
+                        "example": "0"
+                    },
+                    "minute": {
+                        "type": "string",
+                        "example": "0"
+                    },
+                    "month": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "multi": {
+                        "$ref": "#/components/schemas/BulkMultiScheduleConfiguration"
+                    }
+                }
+            },
+            "BulkSelectiveMode": {
+                "enum": [
+                    "none",
+                    "incrementalFields",
+                    "nonincrementalFields"
+                ],
+                "type": "string"
+            },
+            "RestErrResponse": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "integer",
+                        "description": "Application-specific error code."
+                    },
+                    "context": {
+                        "type": "object",
+                        "additionalProperties": {},
+                        "description": "Application context."
+                    },
+                    "error": {
+                        "type": "string",
+                        "description": "Error message."
+                    },
+                    "status": {
+                        "type": "string",
+                        "description": "Status text."
+                    }
+                }
+            },
+            "ScheduleFrequency": {
+                "enum": [
+                    "manual",
+                    "continuous",
+                    "hourly",
+                    "daily",
+                    "weekly",
+                    "custom",
+                    "builder",
+                    "runafter",
+                    "multi",
+                    "dbtcloud"
+                ],
+                "type": "string"
+            },
+            "V2ConnectionTypeSchema": {
+                "title": "ConnectionTypeSchema",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "postgresql"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "PostgreSQL"
+                    },
+                    "operations": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "nullable": true,
+                        "example": "bulksyncsource"
+                    }
+                }
+            },
+            "V2CreateConnectionRequestSchema": {
+                "title": "CreateConnectionRequestSchema",
+                "required": [
+                    "type",
+                    "name",
+                    "configuration"
+                ],
+                "type": "object",
+                "properties": {
+                    "configuration": {
+                        "type": "object",
+                        "additionalProperties": {},
+                        "nullable": true,
+                        "example": {
+                            "database": "example",
+                            "hostname": "postgres.example.com",
+                            "password": "password",
+                            "port": 5432,
+                            "username": "user"
+                        }
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "My Postgres Connection"
+                    },
+                    "organization_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true,
+                        "example": "248df4b7-aa70-47b8-a036-33ac447e668d"
+                    },
+                    "policies": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "248df4b7-aa70-47b8-a036-33ac447e668d"
+                        },
+                        "format": "uuid",
+                        "nullable": true
+                    },
+                    "redirect_url": {
+                        "type": "string",
+                        "description": "URL to redirect to after completing OAuth flow.",
+                        "example": "https://example.com/oauth_redirect"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "postgresql"
+                    },
+                    "validate": {
+                        "type": "boolean",
+                        "description": "Validate connection configuration.",
+                        "default": true,
+                        "example": true
+                    }
+                }
+            },
+            "V2CreateConnectionResponseEnvelope": {
+                "title": "CreateConnectionResponseEnvelope",
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/V2CreateConnectionResponseSchema"
+                    }
+                }
+            },
+            "V2CreateConnectionResponseSchema": {
+                "title": "CreateConnectionResponseSchema",
+                "type": "object",
+                "properties": {
+                    "auth_code": {
+                        "type": "string",
+                        "description": "Code to enter in order to complete connection authentication."
+                    },
+                    "auth_url": {
+                        "type": "string",
+                        "description": "URL to visit to complete connection authentication."
+                    },
+                    "configuration": {
+                        "type": "object",
+                        "additionalProperties": {},
+                        "nullable": true,
+                        "example": {
+                            "database": "example",
+                            "hostname": "postgres.example.com",
+                            "password": "password",
+                            "port": 5432,
+                            "username": "user"
+                        }
+                    },
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "248df4b7-aa70-47b8-a036-33ac447e668d"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "My Postgres Connection"
+                    },
+                    "organization_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "248df4b7-aa70-47b8-a036-33ac447e668d"
+                    },
+                    "policies": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "example": "248df4b7-aa70-47b8-a036-33ac447e668d"
+                        }
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "healthy"
+                    },
+                    "status_error": {
+                        "type": "string",
+                        "example": "error message"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/V2ConnectionTypeSchema"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "APIKey": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "Bearer",
+                "description": "This is the Polytomic API key"
+            },
+            "DeploymentKey": {
+                "type": "http",
+                "scheme": "basic",
+                "description": "This is the Polytomic deployment key (on-premises only)"
+            }
+        }
+    },
+    "x-fern-global-headers": [
+        {
+            "header": "X-Polytomic-Version",
+            "name": "version",
+            "type": "literal\u003c2024-02-08\u003e"
+        }
+    ]
+}

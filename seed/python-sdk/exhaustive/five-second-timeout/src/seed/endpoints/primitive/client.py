@@ -10,6 +10,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import pydantic_v1
+from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 
@@ -23,11 +24,19 @@ class PrimitiveClient:
 
     def get_and_return_string(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -39,10 +48,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/string"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/string"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -69,11 +80,19 @@ class PrimitiveClient:
 
     def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
-        Parameters:
-            - request: int.
+        Parameters
+        ----------
+        request : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        int
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -85,10 +104,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/integer"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/integer"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -115,11 +136,19 @@ class PrimitiveClient:
 
     def get_and_return_long(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
-        Parameters:
-            - request: int.
+        Parameters
+        ----------
+        request : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        int
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -131,10 +160,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/long"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/long"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -168,11 +199,19 @@ class PrimitiveClient:
         self, *, request: float, request_options: typing.Optional[RequestOptions] = None
     ) -> float:
         """
-        Parameters:
-            - request: float.
+        Parameters
+        ----------
+        request : float
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        float
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -184,10 +223,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/double"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/double"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -214,11 +255,19 @@ class PrimitiveClient:
 
     def get_and_return_bool(self, *, request: bool, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Parameters:
-            - request: bool.
+        Parameters
+        ----------
+        request : bool
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -230,10 +279,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/boolean"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/boolean"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -262,11 +313,19 @@ class PrimitiveClient:
         self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
     ) -> dt.datetime:
         """
-        Parameters:
-            - request: dt.datetime.
+        Parameters
+        ----------
+        request : dt.datetime
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        dt.datetime
+
+        Examples
+        --------
         import datetime
 
         from seed.client import SeedExhaustive
@@ -282,10 +341,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/datetime"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/datetime"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -319,11 +380,19 @@ class PrimitiveClient:
         self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> dt.date:
         """
-        Parameters:
-            - request: dt.date.
+        Parameters
+        ----------
+        request : dt.date
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        dt.date
+
+        Examples
+        --------
         import datetime
 
         from seed.client import SeedExhaustive
@@ -339,10 +408,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/date"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/date"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -376,11 +447,19 @@ class PrimitiveClient:
         self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
     ) -> uuid.UUID:
         """
-        Parameters:
-            - request: uuid.UUID.
+        Parameters
+        ----------
+        request : uuid.UUID
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        uuid.UUID
+
+        Examples
+        --------
         import uuid
 
         from seed.client import SeedExhaustive
@@ -396,10 +475,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/uuid"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/uuid"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -431,11 +512,19 @@ class PrimitiveClient:
 
     def get_and_return_base_64(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
 
         client = SeedExhaustive(
@@ -447,10 +536,12 @@ class PrimitiveClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/base64"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/base64"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -489,11 +580,19 @@ class AsyncPrimitiveClient:
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -505,10 +604,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/string"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/string"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -535,11 +636,19 @@ class AsyncPrimitiveClient:
 
     async def get_and_return_int(self, *, request: int, request_options: typing.Optional[RequestOptions] = None) -> int:
         """
-        Parameters:
-            - request: int.
+        Parameters
+        ----------
+        request : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        int
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -551,10 +660,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/integer"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/integer"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -583,11 +694,19 @@ class AsyncPrimitiveClient:
         self, *, request: int, request_options: typing.Optional[RequestOptions] = None
     ) -> int:
         """
-        Parameters:
-            - request: int.
+        Parameters
+        ----------
+        request : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        int
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -599,10 +718,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/long"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/long"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -636,11 +757,19 @@ class AsyncPrimitiveClient:
         self, *, request: float, request_options: typing.Optional[RequestOptions] = None
     ) -> float:
         """
-        Parameters:
-            - request: float.
+        Parameters
+        ----------
+        request : float
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        float
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -652,10 +781,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/double"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/double"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -684,11 +815,19 @@ class AsyncPrimitiveClient:
         self, *, request: bool, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
-        Parameters:
-            - request: bool.
+        Parameters
+        ----------
+        request : bool
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -700,10 +839,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/boolean"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/boolean"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -732,11 +873,19 @@ class AsyncPrimitiveClient:
         self, *, request: dt.datetime, request_options: typing.Optional[RequestOptions] = None
     ) -> dt.datetime:
         """
-        Parameters:
-            - request: dt.datetime.
+        Parameters
+        ----------
+        request : dt.datetime
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        dt.datetime
+
+        Examples
+        --------
         import datetime
 
         from seed.client import AsyncSeedExhaustive
@@ -752,10 +901,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/datetime"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/datetime"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -789,11 +940,19 @@ class AsyncPrimitiveClient:
         self, *, request: dt.date, request_options: typing.Optional[RequestOptions] = None
     ) -> dt.date:
         """
-        Parameters:
-            - request: dt.date.
+        Parameters
+        ----------
+        request : dt.date
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        dt.date
+
+        Examples
+        --------
         import datetime
 
         from seed.client import AsyncSeedExhaustive
@@ -809,10 +968,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/date"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/date"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -846,11 +1007,19 @@ class AsyncPrimitiveClient:
         self, *, request: uuid.UUID, request_options: typing.Optional[RequestOptions] = None
     ) -> uuid.UUID:
         """
-        Parameters:
-            - request: uuid.UUID.
+        Parameters
+        ----------
+        request : uuid.UUID
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        uuid.UUID
+
+        Examples
+        --------
         import uuid
 
         from seed.client import AsyncSeedExhaustive
@@ -866,10 +1035,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/uuid"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/uuid"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -903,11 +1074,19 @@ class AsyncPrimitiveClient:
         self, *, request: str, request_options: typing.Optional[RequestOptions] = None
     ) -> str:
         """
-        Parameters:
-            - request: str.
+        Parameters
+        ----------
+        request : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
@@ -919,10 +1098,12 @@ class AsyncPrimitiveClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/base64"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/base64"),
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None

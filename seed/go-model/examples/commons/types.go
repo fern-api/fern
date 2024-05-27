@@ -138,14 +138,7 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "metadata":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Metadata
-		}{
-			Type:     "metadata",
-			Metadata: e.Metadata,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
 	case "tag":
 		var marshaler = struct {
 			Type string `json:"type"`
@@ -178,6 +171,29 @@ type Metadata struct {
 	Id         string            `json:"id" url:"id"`
 	Data       map[string]string `json:"data,omitempty" url:"data,omitempty"`
 	JsonString *string           `json:"jsonString,omitempty" url:"jsonString,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *Metadata) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *Metadata) UnmarshalJSON(data []byte) error {
+	type unmarshaler Metadata
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Metadata(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
+	return nil
 }
 
 func (m *Metadata) String() string {

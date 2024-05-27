@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/payment",
+                "method": "POST",
+                "identifier_override": "endpoint_payment.create"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/idempotency-headers/fern\"\n\tfernclient \"github.com/idempotency-headers/fern/client\"\n\toption \"github.com/idempotency-headers/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Payment.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreatePaymentRequest{\n\t\tAmount:   1,\n\t\tCurrency: fern.CurrencyUsd,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/payment/{paymentId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_payment.delete"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/idempotency-headers/fern/client\"\n\toption \"github.com/idempotency-headers/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Payment.Delete(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+            }
+        }
+    ]
+}

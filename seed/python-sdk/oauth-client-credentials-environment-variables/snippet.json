@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedOauthClientCredentialsEnvironmentVariables\n\nclient = SeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.auth.get_token_with_client_credentials(\n    client_id=\"string\",\n    client_secret=\"string\",\n    scope=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedOauthClientCredentialsEnvironmentVariables\n\nclient = AsyncSeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.auth.get_token_with_client_credentials(\n    client_id=\"string\",\n    client_secret=\"string\",\n    scope=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST",
+                "identifier_override": "endpoint_auth.refreshToken"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedOauthClientCredentialsEnvironmentVariables\n\nclient = SeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.auth.refresh_token(\n    client_id=\"string\",\n    client_secret=\"string\",\n    refresh_token=\"string\",\n    scope=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedOauthClientCredentialsEnvironmentVariables\n\nclient = AsyncSeedOauthClientCredentialsEnvironmentVariables(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.auth.refresh_token(\n    client_id=\"string\",\n    client_secret=\"string\",\n    refresh_token=\"string\",\n    scope=\"string\",\n)\n",
+                "type": "python"
+            }
+        }
+    ]
+}

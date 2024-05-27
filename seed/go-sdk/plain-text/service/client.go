@@ -43,7 +43,7 @@ func (c *Client) GetText(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "text"
+	endpointURL := baseURL + "/text"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

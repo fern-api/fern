@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as serializers from "../../../../serialization";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Optional {
     interface Options {
@@ -15,12 +15,24 @@ export declare namespace Optional {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class Optional {
     constructor(protected readonly _options: Optional.Options) {}
 
+    /**
+     * @param {Record<string, unknown>} request
+     * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedObjectsWithImports.optional.sendOptionalBody({
+     *         "string": {
+     *             "key": "value"
+     *         }
+     *     })
+     */
     public async sendOptionalBody(
         request?: Record<string, unknown>,
         requestOptions?: Optional.RequestOptions
@@ -44,6 +56,7 @@ export class Optional {
                     : undefined,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.optional.sendOptionalBody.Response.parseOrThrow(_response.body, {

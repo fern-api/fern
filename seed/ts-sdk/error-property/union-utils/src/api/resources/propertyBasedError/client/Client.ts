@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedErrorProperty from "../../..";
+import * as SeedErrorProperty from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace PropertyBasedError {
     interface Options {
@@ -16,6 +16,7 @@ export declare namespace PropertyBasedError {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -24,6 +25,9 @@ export class PropertyBasedError {
 
     /**
      * GET request that always throws an error
+     *
+     * @param {PropertyBasedError.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
      *
      * @example
@@ -43,6 +47,7 @@ export class PropertyBasedError {
             contentType: "application/json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
             return await serializers.propertyBasedError.throwError.Response.parseOrThrow(_response.body, {

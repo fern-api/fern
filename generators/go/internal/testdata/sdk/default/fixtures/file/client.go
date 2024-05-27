@@ -5,7 +5,6 @@ package file
 import (
 	bytes "bytes"
 	context "context"
-	fmt "fmt"
 	io "io"
 	http "net/http"
 	core "sdk/core"
@@ -46,7 +45,7 @@ func (c *Client) Download(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"file/%v/download", filename)
+	endpointURL := core.EncodeURL(baseURL+"/file/%v/download", filename)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

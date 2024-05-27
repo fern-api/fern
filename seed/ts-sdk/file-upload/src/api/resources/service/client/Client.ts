@@ -4,9 +4,8 @@
 
 import * as core from "../../../../core";
 import * as fs from "fs";
-import * as SeedFileUpload from "../../..";
-import { default as FormData } from "form-data";
-import * as errors from "../../../../errors";
+import * as SeedFileUpload from "../../../index";
+import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
 export declare namespace Service {
@@ -23,44 +22,61 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
+    /**
+     * @param {File | fs.ReadStream} file
+     * @param {File[] | fs.ReadStream[]} fileList
+     * @param {File | fs.ReadStream | undefined} maybeFile
+     * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
+     * @param {SeedFileUpload.MyRequest} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedFileUpload.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
+     */
     public async post(
         file: File | fs.ReadStream,
-        fileList: File | fs.ReadStream,
+        fileList: File[] | fs.ReadStream[],
         maybeFile: File | fs.ReadStream | undefined,
-        maybeFileList: File | fs.ReadStream | undefined,
+        maybeFileList: File[] | fs.ReadStream[] | undefined,
         request: SeedFileUpload.MyRequest,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
-        const _request = new FormData();
+        const _request = new core.FormDataWrapper();
         if (request.maybeString != null) {
-            _request.append("maybeString", request.maybeString);
+            await _request.append("maybeString", request.maybeString);
         }
 
-        _request.append("integer", request.integer.toString());
-        _request.append("file", file);
-        _request.append("fileList", fileList);
+        await _request.append("integer", request.integer.toString());
+        await _request.append("file", file);
+        for (const _file of fileList) {
+            await _request.append("fileList", _file);
+        }
+
         if (maybeFile != null) {
-            _request.append("maybeFile", maybeFile);
+            await _request.append("maybeFile", maybeFile);
         }
 
         if (maybeFileList != null) {
-            _request.append("maybeFileList", maybeFileList);
+            for (const _file of maybeFileList) {
+                await _request.append("maybeFileList", _file);
+            }
         }
 
         if (request.maybeInteger != null) {
-            _request.append("maybeInteger", request.maybeInteger.toString());
+            await _request.append("maybeInteger", request.maybeInteger.toString());
         }
 
         if (request.optionalListOfStrings != null) {
             for (const _item of request.optionalListOfStrings) {
-                _request.append("optionalListOfStrings", _item);
+                await _request.append("optionalListOfStrings", _item);
             }
         }
 
         for (const _item of request.listOfObjects) {
-            _request.append("listOfObjects", JSON.stringify(_item));
+            await _request.append("listOfObjects", JSON.stringify(_item));
         }
 
+        const _maybeEncodedRequest = _request.getRequest();
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
             method: "POST",
@@ -70,9 +86,9 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...(await _maybeEncodedRequest.getHeaders()),
             },
-            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
-            body: _request,
+            body: await _maybeEncodedRequest.getBody(),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -102,9 +118,17 @@ export class Service {
         }
     }
 
+    /**
+     * @param {File | fs.ReadStream} file
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedFileUpload.service.justFile(fs.createReadStream("/path/to/your/file"))
+     */
     public async justFile(file: File | fs.ReadStream, requestOptions?: Service.RequestOptions): Promise<void> {
-        const _request = new FormData();
-        _request.append("file", file);
+        const _request = new core.FormDataWrapper();
+        await _request.append("file", file);
+        const _maybeEncodedRequest = _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file"),
             method: "POST",
@@ -114,9 +138,9 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...(await _maybeEncodedRequest.getHeaders()),
             },
-            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
-            body: _request,
+            body: await _maybeEncodedRequest.getBody(),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
@@ -146,6 +170,20 @@ export class Service {
         }
     }
 
+    /**
+     * @param {File | fs.ReadStream} file
+     * @param {SeedFileUpload.JustFileWithQueryParamsRequet} request
+     * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await seedFileUpload.service.justFileWithQueryParams(fs.createReadStream("/path/to/your/file"), {
+     *         maybeString: "string",
+     *         integer: 1,
+     *         maybeInteger: 1,
+     *         listOfStrings: "string",
+     *         optionalListOfStrings: "string"
+     *     })
+     */
     public async justFileWithQueryParams(
         file: File | fs.ReadStream,
         request: SeedFileUpload.JustFileWithQueryParamsRequet,
@@ -175,8 +213,9 @@ export class Service {
             }
         }
 
-        const _request = new FormData();
-        _request.append("file", file);
+        const _request = new core.FormDataWrapper();
+        await _request.append("file", file);
+        const _maybeEncodedRequest = _request.getRequest();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
             method: "POST",
@@ -186,10 +225,10 @@ export class Service {
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...(await _maybeEncodedRequest.getHeaders()),
             },
-            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
             queryParameters: _queryParams,
-            body: _request,
+            body: await _maybeEncodedRequest.getBody(),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });

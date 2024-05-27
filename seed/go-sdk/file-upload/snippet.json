@@ -1,0 +1,37 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_service.post"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tcontext.TODO(),\n\t\u0026fern.MyRequest{},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/just-file-with-query-params",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFileWithQueryParams"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/file-upload/fern\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.JustFileWithQueryParams(\n\tcontext.TODO(),\n\t\u0026fern.JustFileWithQueryParamsRequet{\n\t\tMaybeString:  \"string\",\n\t\tInteger:      1,\n\t\tMaybeInteger: 1,\n\t\tListOfStrings: []string{\n\t\t\t\"string\",\n\t\t},\n\t\tOptionalListOfStrings: []string{\n\t\t\t\"string\",\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/just-file",
+                "method": "POST",
+                "identifier_override": "endpoint_service.justFile"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/file-upload/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.JustFile(\n\tcontext.TODO(),\n)\n"
+            }
+        }
+    ]
+}

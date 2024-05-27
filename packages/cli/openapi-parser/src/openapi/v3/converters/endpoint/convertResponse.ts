@@ -1,5 +1,5 @@
-import { assertNever } from "@fern-api/core-utils";
-import { ResponseWithExample, StatusCode } from "@fern-api/openapi-ir-sdk";
+import { assertNever, MediaType } from "@fern-api/core-utils";
+import { FernOpenapiIr, ResponseWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { convertSchema } from "../../../../schema/convertSchemas";
@@ -8,12 +8,8 @@ import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
-import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
-
-const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
-const APPLICATION_PDF = "application/pdf";
-const AUDIO_MPEG = "audio/mpeg";
-const TEXT_PLAIN_CONTENT = "text/plain";
+import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError";
+import { getApplicationJsonSchemaMediaObject, getSchemaMediaObject } from "./getApplicationJsonSchema";
 
 // The converter will attempt to get response in priority order
 // (i.e. try for 200, then 201, then 204)
@@ -21,7 +17,7 @@ const SUCCESSFUL_STATUS_CODES = ["200", "201", "204"];
 
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined;
-    errorStatusCodes: StatusCode[];
+    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample>;
 }
 
 export function convertResponse({
@@ -30,10 +26,10 @@ export function convertResponse({
     context,
     responseBreadcrumbs,
     responseStatusCode,
-    isStreaming
+    streamFormat
 }: {
     operationContext: OperationContext;
-    isStreaming: boolean;
+    streamFormat: "sse" | "json" | undefined;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -41,9 +37,9 @@ export function convertResponse({
 }): ConvertedResponse {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (responses == null) {
-        return { value: undefined, errorStatusCodes: [] };
+        return { value: undefined, errors: {} };
     }
-    const errorStatusCodes = markErrorSchemas({ responses, context });
+    const errors = markErrorSchemas({ responses, context });
     for (const statusCode of responseStatusCode != null ? [responseStatusCode] : SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];
         if (response == null) {
@@ -55,26 +51,27 @@ export function convertResponse({
             response,
             context,
             responseBreadcrumbs,
-            isStreaming
+            streamFormat
         });
         if (convertedResponse != null) {
             switch (convertedResponse.type) {
                 case "json":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes
+                        errors
                     };
                 case "streamingJson":
+                case "streamingSse":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes
+                        errors
                     };
                 case "file":
                 case "text":
                 case "streamingText":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes: []
+                        errors
                     };
                 default:
                     assertNever(convertedResponse);
@@ -84,19 +81,19 @@ export function convertResponse({
 
     return {
         value: undefined,
-        errorStatusCodes
+        errors
     };
 }
 
 function convertResolvedResponse({
     operationContext,
-    isStreaming,
+    streamFormat,
     response,
     context,
     responseBreadcrumbs
 }: {
     operationContext: OperationContext;
-    isStreaming: boolean;
+    streamFormat: "sse" | "json" | undefined;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -118,16 +115,27 @@ function convertResolvedResponse({
         }
     }
 
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {});
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
     if (jsonMediaObject != null) {
-        if (isStreaming) {
-            return ResponseWithExample.streamingJson({
-                description: resolvedResponse.description,
-                responseProperty: undefined,
-                schema: convertSchemaWithExampleToSchema(
-                    convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
-                )
-            });
+        if (streamFormat != null) {
+            switch (streamFormat) {
+                case "json":
+                    return ResponseWithExample.streamingJson({
+                        description: resolvedResponse.description,
+                        responseProperty: undefined,
+                        schema: convertSchemaWithExampleToSchema(
+                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
+                        )
+                    });
+                case "sse":
+                    return ResponseWithExample.streamingSse({
+                        description: resolvedResponse.description,
+                        responseProperty: undefined,
+                        schema: convertSchemaWithExampleToSchema(
+                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
+                        )
+                    });
+            }
         }
         return ResponseWithExample.json({
             description: resolvedResponse.description,
@@ -137,30 +145,35 @@ function convertResolvedResponse({
         });
     }
 
-    if (resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema != null) {
-        return ResponseWithExample.file({ description: resolvedResponse.description });
-    }
+    for (const [mediaType, mediaObject] of Object.entries(resolvedResponse.content ?? {})) {
+        const mimeType = MediaType.parse(mediaType);
+        if (mimeType == null) {
+            continue;
+        }
 
-    if (resolvedResponse.content?.[APPLICATION_PDF]?.schema != null) {
-        return ResponseWithExample.file({ description: resolvedResponse.description });
-    }
+        if (
+            mimeType.isOctetStream() ||
+            mimeType.isPDF() ||
+            mimeType.isAudio() ||
+            mimeType.isImage() ||
+            mimeType.isVideo()
+        ) {
+            return ResponseWithExample.file({ description: resolvedResponse.description });
+        }
 
-    if (resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema != null) {
-        const textPlainSchema = resolvedResponse.content[TEXT_PLAIN_CONTENT]?.schema;
-        if (textPlainSchema == null) {
+        if (mimeType.isPlainText()) {
+            const textPlainSchema = mediaObject.schema;
+            if (textPlainSchema == null) {
+                return ResponseWithExample.text({ description: resolvedResponse.description });
+            }
+            const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
+                ? context.resolveSchemaReference(textPlainSchema)
+                : textPlainSchema;
+            if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
+                return ResponseWithExample.file({ description: resolvedResponse.description });
+            }
             return ResponseWithExample.text({ description: resolvedResponse.description });
         }
-        const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
-            ? context.resolveSchemaReference(textPlainSchema)
-            : textPlainSchema;
-        if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
-            return;
-        }
-        return ResponseWithExample.text({ description: resolvedResponse.description });
-    }
-
-    if (resolvedResponse.content?.[AUDIO_MPEG] != null) {
-        return ResponseWithExample.file({ description: resolvedResponse.description });
     }
 
     return undefined;
@@ -172,8 +185,8 @@ function markErrorSchemas({
 }: {
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
-}): StatusCode[] {
-    const errorStatusCodes: StatusCode[] = [];
+}): Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> {
+    const errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> = {};
     for (const [statusCode, response] of Object.entries(responses)) {
         if (statusCode === "default") {
             continue;
@@ -183,10 +196,21 @@ function markErrorSchemas({
             // if status code is not between [400, 600], then it won't count as an error
             continue;
         }
-        errorStatusCodes.push(parsedStatusCode);
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-        const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {});
-        context.markSchemaForStatusCode(parsedStatusCode, jsonMediaObject?.schema ?? {}); // defaults to unknown schema
+        const mediaObject = getSchemaMediaObject(resolvedResponse.content ?? {}, context);
+        const errorName = ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode];
+        if (errorName == null) {
+            context.logger.warn(`No error name found for status code ${statusCode}`);
+            continue;
+        }
+        errors[parsedStatusCode] = {
+            statusCode: parsedStatusCode,
+            nameOverride: undefined,
+            generatedName: errorName,
+            description: resolvedResponse.description,
+            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"]),
+            fullExamples: mediaObject?.examples
+        };
     }
-    return errorStatusCodes;
+    return errors;
 }

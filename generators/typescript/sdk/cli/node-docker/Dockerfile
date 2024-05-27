@@ -5,8 +5,6 @@ RUN apk --no-cache add git zip \
   && git config --global user.email "hey@buildwithfern.com"
 
 COPY generators/typescript/utils/core-utilities/fetcher/src/ /assets/fetcher
-COPY generators/typescript/utils/core-utilities/stream-utils/src/ /assets/stream-utils
-COPY generators/typescript/utils/core-utilities/form-data-utils/src/ /assets/form-data-utils
 COPY generators/typescript/utils/core-utilities/callback-queue/src/ /assets/callback-queue
 COPY generators/typescript/utils/core-utilities/auth/src/ /assets/auth
 COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg

@@ -33,7 +33,15 @@ import { V34_TO_V33_MIGRATION } from "./migrations/v34-to-v33/migrateFromV34ToV3
 import { V35_TO_V34_MIGRATION } from "./migrations/v35-to-v34/migrateFromV35ToV34";
 import { V36_TO_V35_MIGRATION } from "./migrations/v36-to-v35/migrateFromV36ToV35";
 import { V37_TO_V36_MIGRATION } from "./migrations/v37-to-v36/migrateFromV37ToV36";
+import { V38_TO_V37_MIGRATION } from "./migrations/v38-to-v37/migrateFromV38ToV37";
+import { V39_TO_V38_MIGRATION } from "./migrations/v39-to-v38/migrateFromV39ToV38";
 import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
+import { V40_TO_V39_MIGRATION } from "./migrations/v40-to-v39/migrateFromV40ToV39";
+import { V41_TO_V40_MIGRATION } from "./migrations/v41-to-v40/migrateFromV41ToV40";
+import { V42_TO_V41_MIGRATION } from "./migrations/v42-to-v41/migrateFromV42ToV41";
+import { V43_TO_V42_MIGRATION } from "./migrations/v43-to-v42/migrateFromV43ToV42";
+import { V44_TO_V43_MIGRATION } from "./migrations/v44-to-v43/migrateFromV44ToV43";
+import { V45_TO_V44_MIGRATION } from "./migrations/v45-to-v44/migrateFromV45ToV44";
 import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
 import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
 import { V7_TO_V6_MIGRATION } from "./migrations/v7-to-v6/migrateFromV7ToV6";
@@ -208,7 +216,6 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
                 unrecognizedObjectKeys: "strip"
             });
-
         for (const migration of this.migrations) {
             if (!shouldMigrate(migration)) {
                 break;
@@ -263,6 +270,14 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V45_TO_V44_MIGRATION)
+    .withMigration(V44_TO_V43_MIGRATION)
+    .withMigration(V43_TO_V42_MIGRATION)
+    .withMigration(V42_TO_V41_MIGRATION)
+    .withMigration(V41_TO_V40_MIGRATION)
+    .withMigration(V40_TO_V39_MIGRATION)
+    .withMigration(V39_TO_V38_MIGRATION)
+    .withMigration(V38_TO_V37_MIGRATION)
     .withMigration(V37_TO_V36_MIGRATION)
     .withMigration(V36_TO_V35_MIGRATION)
     .withMigration(V35_TO_V34_MIGRATION)

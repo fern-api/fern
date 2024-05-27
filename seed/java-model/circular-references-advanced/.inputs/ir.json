@@ -158,7 +158,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_a:A",
@@ -230,7 +231,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -334,7 +336,8 @@
                         "typeId": "type_:RootType"
                     }
                 ],
-                "properties": []
+                "properties": [],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_:RootType"
@@ -889,7 +892,8 @@
             "shape": {
                 "_type": "object",
                 "extends": [],
-                "properties": []
+                "properties": [],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -1660,7 +1664,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_ast:FieldName",
@@ -1722,6 +1727,7 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_a": {
             "name": {
@@ -1794,6 +1800,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -1873,6 +1880,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -1883,6 +1891,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [
             "type_:ImportingA",

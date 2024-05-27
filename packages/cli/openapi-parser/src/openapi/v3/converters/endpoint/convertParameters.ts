@@ -58,6 +58,9 @@ export function convertParameters({
                       nameOverride: undefined,
                       generatedName,
                       schema: PrimitiveSchemaValueWithExample.string({
+                          default: undefined,
+                          pattern: undefined,
+                          format: undefined,
                           minLength: undefined,
                           maxLength: undefined,
                           example: getExamplesString(resolvedParameter.example)
@@ -72,6 +75,9 @@ export function convertParameters({
                           nameOverride: undefined,
                           generatedName,
                           schema: PrimitiveSchemaValueWithExample.string({
+                              default: undefined,
+                              pattern: undefined,
+                              format: undefined,
                               minLength: undefined,
                               maxLength: undefined,
                               example: getExamplesString(resolvedParameter.example)
