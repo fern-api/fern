@@ -1,16 +1,54 @@
 ---
 title: Bring your custom domain
-description: Learn how to set up your Fern-generated documentation site to use a custom domain, subdomain, or subpath.
+description: Learn how to set up your Fern-generated documentation site to use a custom subdomain or subpath.
 ---
 
 Bring Fern Docs to your custom domain.
 
 You can use:
-- A custom domain, such as `example.com`
 - A subdomain on your custom domain, such as `docs.example.com`
 - A subpath on your custom domain, such as `example.com/docs`
 
-<Tip>This feature is available on the Starter plan and above. Want to get set up? Reach out in [Discord](https://discord.com/invite/JkkXumPzcG) or [email us](mailto:sales@buildwithfern.com).</Tip>
+<Tip>This feature is available on the Starter plan and above. [Contact us](https://buildwithfern.com/contact) to get set up.</Tip>
+
+## Option 1: Subdomain
+
+To host your documentation on a subdomain, i.e. `docs.mydomain.com`, you need to create a CNAME record in your DNS settings.
+
+<Steps>
+
+### Create a CNAME record
+
+1. Log in to your domain registrar's dashboard.
+2. Navigate to the DNS settings for your domain.
+3. Add a new CNAME record with the following details:
+   - **Type**: `CNAME`
+   - **Name**: `docs` (or any subdomain you want to use)
+   - **Value**: `cname.vercel-dns.com.`
+
+### Update the domain in `docs.yml`
+
+```yaml
+instances:
+ - url: example.docs.buildwithfern.com
+   custom-domain: docs.mydomain.com
+```
+
+Merge your changes into `main`. [Here's an example](https://github.com/octoml/fern-config/blob/389b67679953856ba0716537981a6d749635556f/fern/docs.yml#L1-L3 ).
+
+### Reach out to us
+
+Once you've completed the above steps, ask a member of the Fern team to complete the setup on our end.
+
+If you have an existing project in Vercel, we may need you to verify our access to your subdomain via a TXT record, which we'll provide you with.
+
+### Verify the setup
+
+Once we've completed the setup on our end, you should be able to access your documentation at `docs.mydomain.com`. SSL will be automatically provisioned for your domain, but it may take a few minutes to propagate globally.
+
+</Steps>
+
+## Option 2: Subpath
 
 ## Steps
 
@@ -20,24 +58,9 @@ You can use:
 
 Open the `docs.yml` file, which lives in the `fern/` folder of your Fern Docs repository.
 
-<Tip>
-No Fern Docs repository yet? Use our [Fern Docs Quickstart](/learn/docs/getting-started/quickstart) to set up your starter site, then return to this page. 
-</Tip>
-
 ### Step 2: Configure the `url`
 
-The subdomain of the `url` under `instances` must match your custom domain. If you want to use a custom domain of `example.com`, the subdomain must be `example`, as shown below:
-
-<CodeBlock title="docs.yml example">
-```yaml
-instances: 
-  - url: example.docs.buildwithfern.com
-```
-</CodeBlock>
-
-Leave the `.docs.buildwithfern.com` part of the `url` unchanged. 
-
-If you intend to use a subpath with your custom domain, such as `example.com/docs`, append that subpath to the end of the `url`:
+Append that subpath to the end of the `url`:
 
 <CodeBlock title="docs.yml example for subpath">
 ```yaml
@@ -46,20 +69,12 @@ instances:
 ```
 </CodeBlock>
 
+<Tip>This use `docs` for the subpath specified in `custom-domain`, but you can use any word you like, such as `reference` or `learn`.</Tip>
+
 ### Step 3: Configure the `custom-domain`
 
 Below the `url`, add a `custom-domain` key as shown in the examples below.
 
-<Tip>The examples use `docs` for the subdomain and subpath specified in `custom-domain`, but you can use any word you like, such as `reference` or `learn`.</Tip>
-
-<CodeBlocks>
-<CodeBlock title="Custom subdomain">
-```yaml 
-instances: 
-  - url: example.docs.buildwithfern.com
-    custom-domain: docs.example.com
-```
-</CodeBlock>
 <CodeBlock title="Custom subpath">
 ```yaml 
 instances: 
@@ -67,14 +82,8 @@ instances:
     custom-domain: example.com/docs
 ```
 </CodeBlock>
-<CodeBlock title="Custom domain">
-```yaml 
-instances: 
-  - url: example.docs.buildwithfern.com
-    custom-domain: example.com
-```
-</CodeBlock>
-</CodeBlocks>
+
+[Here's an example.](https://github.com/fern-api/fern/blob/7d8631c6119787a8aaccb4ba49837e73c985db28/fern/docs.yml#L1-L3)
 
 ### Step 4: Update the Fern Docs site
 
