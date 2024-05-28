@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.8.0] - 2024-05-28
 
-- Fix: Undiscriminated unions are now generated with de-conflicted method signatures. Previously, these types would
-  sometimes fail to compile to Java's type erasure causing conflicts.
+- Fix: Undiscriminated unions are now generated with de-conflicted method signatures. Previously, certain
+  undiscriminated unions would have failed to compile due to Java's type erasure causing conflicts.
 
 ## [0.8.0-rc0] - 2024-05-13
 - Chore: Bump intermediate representation to v42
