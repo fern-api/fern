@@ -1,5 +1,7 @@
 using SeedLiteral;
 
+#nullable enable
+
 namespace SeedLiteral;
 
 public partial class SeedLiteralClient

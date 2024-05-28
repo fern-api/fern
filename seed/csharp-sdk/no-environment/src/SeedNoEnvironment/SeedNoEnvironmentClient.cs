@@ -1,5 +1,7 @@
 using SeedNoEnvironment;
 
+#nullable enable
+
 namespace SeedNoEnvironment;
 
 public partial class SeedNoEnvironmentClient

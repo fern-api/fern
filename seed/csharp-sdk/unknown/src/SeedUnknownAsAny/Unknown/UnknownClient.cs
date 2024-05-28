@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedUnknownAsAny;
 
+#nullable enable
+
 namespace SeedUnknownAsAny;
 
 public class UnknownClient

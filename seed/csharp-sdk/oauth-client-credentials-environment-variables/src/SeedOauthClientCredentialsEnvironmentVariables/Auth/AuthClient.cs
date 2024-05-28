@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedOauthClientCredentialsEnvironmentVariables;
 
+#nullable enable
+
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
 public class AuthClient

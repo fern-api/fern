@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedUnions;
 
+#nullable enable
+
 namespace SeedUnions;
 
 public class UnionClient

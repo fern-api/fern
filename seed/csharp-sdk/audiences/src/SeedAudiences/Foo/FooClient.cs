@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedAudiences;
 
+#nullable enable
+
 namespace SeedAudiences;
 
 public class FooClient

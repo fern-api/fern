@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedMixedCase;
 
+#nullable enable
+
 namespace SeedMixedCase;
 
 public class ServiceClient

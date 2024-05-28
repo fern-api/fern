@@ -1,5 +1,7 @@
 using SeedCustomAuth;
 
+#nullable enable
+
 namespace SeedCustomAuth;
 
 public partial class SeedCustomAuthClient

@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExhaustive;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class PrimitiveClient

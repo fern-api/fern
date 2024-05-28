@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedIdempotencyHeaders;
 
+#nullable enable
+
 namespace SeedIdempotencyHeaders;
 
 public class PaymentClient

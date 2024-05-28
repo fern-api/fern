@@ -1,6 +1,8 @@
 using SeedApi;
 using SeedApi.Folder;
 
+#nullable enable
+
 namespace SeedApi.Folder;
 
 public class FolderClient

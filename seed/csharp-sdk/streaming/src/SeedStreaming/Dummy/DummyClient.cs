@@ -1,5 +1,7 @@
 using SeedStreaming;
 
+#nullable enable
+
 namespace SeedStreaming;
 
 public class DummyClient

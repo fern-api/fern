@@ -1,5 +1,7 @@
 using SeedVariables;
 
+#nullable enable
+
 namespace SeedVariables;
 
 public partial class SeedVariablesClient

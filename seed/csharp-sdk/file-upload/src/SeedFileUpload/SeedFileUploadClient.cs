@@ -1,5 +1,7 @@
 using SeedFileUpload;
 
+#nullable enable
+
 namespace SeedFileUpload;
 
 public partial class SeedFileUploadClient

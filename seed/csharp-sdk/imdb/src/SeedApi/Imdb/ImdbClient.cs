@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedApi;
 
+#nullable enable
+
 namespace SeedApi;
 
 public class ImdbClient

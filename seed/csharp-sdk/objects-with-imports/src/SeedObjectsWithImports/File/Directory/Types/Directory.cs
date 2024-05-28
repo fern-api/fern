@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.File;
 
+#nullable enable
+
 namespace SeedObjectsWithImports.File;
 
 public class Directory

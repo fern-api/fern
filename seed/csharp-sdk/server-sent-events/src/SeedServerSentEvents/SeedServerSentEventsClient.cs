@@ -1,5 +1,7 @@
 using SeedServerSentEvents;
 
+#nullable enable
+
 namespace SeedServerSentEvents;
 
 public partial class SeedServerSentEventsClient

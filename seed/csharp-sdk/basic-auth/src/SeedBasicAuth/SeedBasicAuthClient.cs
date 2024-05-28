@@ -1,5 +1,7 @@
 using SeedBasicAuth;
 
+#nullable enable
+
 namespace SeedBasicAuth;
 
 public partial class SeedBasicAuthClient

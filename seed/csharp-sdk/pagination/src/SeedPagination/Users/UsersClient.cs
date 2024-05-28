@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedPagination;
 
+#nullable enable
+
 namespace SeedPagination;
 
 public class UsersClient

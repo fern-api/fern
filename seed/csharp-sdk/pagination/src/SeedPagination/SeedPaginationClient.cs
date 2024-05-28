@@ -1,5 +1,7 @@
 using SeedPagination;
 
+#nullable enable
+
 namespace SeedPagination;
 
 public partial class SeedPaginationClient

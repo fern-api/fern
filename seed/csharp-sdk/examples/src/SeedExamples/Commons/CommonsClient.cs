@@ -1,6 +1,8 @@
 using SeedExamples;
 using SeedExamples.Commons;
 
+#nullable enable
+
 namespace SeedExamples.Commons;
 
 public class CommonsClient

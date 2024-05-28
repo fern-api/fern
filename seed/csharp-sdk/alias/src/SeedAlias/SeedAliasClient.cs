@@ -1,5 +1,7 @@
 using SeedAlias;
 
+#nullable enable
+
 namespace SeedAlias;
 
 public partial class SeedAliasClient

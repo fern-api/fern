@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedMultiLineDocs;
 
+#nullable enable
+
 namespace SeedMultiLineDocs;
 
 public class UserClient
