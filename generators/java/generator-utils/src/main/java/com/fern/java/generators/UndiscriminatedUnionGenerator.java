@@ -231,7 +231,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
         if (containerTypeEnum.isEmpty() || !duplicatedOuterContainerTypes.contains(containerTypeEnum.get())) {
             return prefix;
         }
-        return prefix + member.getType().visit(new TypeReferenceToName());
+        return prefix + member.getType().visit(new TypeReferenceToName(multiple));
     }
 
     private TypeSpec getDeserializer() {

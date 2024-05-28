@@ -49,27 +49,30 @@ public class TypeReferenceUtils {
 
     public static class TypeReferenceToName implements TypeReference.Visitor<String> {
 
-        private static final ContainerTypeToName CONTAINER_TYPE_TO_NAME = new ContainerTypeToName();
-        private static final PrimitiveTypeToName PRIMITIVE_TYPE_TO_NAME = new PrimitiveTypeToName();
+        public final boolean multiple;
+
+        public TypeReferenceToName(boolean multiple) {
+            this.multiple = multiple;
+        }
 
         @Override
         public String visitContainer(ContainerType container) {
-            return container.visit(CONTAINER_TYPE_TO_NAME);
+            return container.visit(new ContainerTypeToName(multiple));
         }
 
         @Override
         public String visitNamed(DeclaredTypeName named) {
-            return named.getName().getPascalCase().getUnsafeName();
+            return named.getName().getPascalCase().getUnsafeName() + (multiple ? "s" : "");
         }
 
         @Override
         public String visitPrimitive(PrimitiveType primitive) {
-            return primitive.visit(PRIMITIVE_TYPE_TO_NAME);
+            return primitive.visit(new PrimitiveTypeToName()) + (multiple ? "s" : "");
         }
 
         @Override
         public String visitUnknown() {
-            return "Unknown";
+            return "Unknown" + (multiple ? "s" : "");
         }
 
         @Override
@@ -80,27 +83,33 @@ public class TypeReferenceUtils {
 
     public static class ContainerTypeToName implements ContainerType.Visitor<String> {
 
-        private static final TypeReferenceToName TYPE_REFERENCE_TO_NAME = new TypeReferenceToName();
+        public final boolean multiple;
+
+        public ContainerTypeToName(boolean multiple) {
+            this.multiple = multiple;
+        }
 
         @Override
         public String visitList(TypeReference list) {
-            return "ListOf" + list.visit(TYPE_REFERENCE_TO_NAME) + "s";
+            return multiple ? "ListsOf" : "ListOf" + list.visit(new TypeReferenceToName(true));
         }
 
         @Override
         public String visitMap(MapType map) {
-            return "MapOf" + map.getKeyType().visit(TYPE_REFERENCE_TO_NAME) + "To"
-                    + map.getValueType().visit(TYPE_REFERENCE_TO_NAME);
+            return multiple
+                    ? "MapsOf"
+                    : "MapOf" + map.getKeyType().visit(new TypeReferenceToName(false)) + "To"
+                            + map.getValueType().visit(new TypeReferenceToName(false));
         }
 
         @Override
         public String visitOptional(TypeReference optional) {
-            return "Optional" + optional.visit(TYPE_REFERENCE_TO_NAME);
+            return "Optional" + optional.visit(new TypeReferenceToName(false)) + (multiple ? "s" : "");
         }
 
         @Override
         public String visitSet(TypeReference set) {
-            return "SetOf" + set.visit(TYPE_REFERENCE_TO_NAME) + "s";
+            return multiple ? "SetsOf" : "SetOf" + set.visit(new TypeReferenceToName(true)) + "s";
         }
 
         @Override
