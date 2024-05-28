@@ -546,9 +546,12 @@ export function getEnvironments(environmentsConfig: EnvironmentsConfig): Map<Env
     });
 }
 
-export function getDefaultEnvironmentUrl(environmentsConfig?: EnvironmentsConfig): string | undefined {
+export function getDefaultEnvironmentUrl(
+    clientName: string,
+    environmentsConfig?: EnvironmentsConfig
+): string | undefined {
     if (environmentsConfig !== undefined && environmentsConfig.defaultEnvironment !== undefined) {
-        return `Environment::${
+        return `${clientName}::Environment::${
             getEnvironments(environmentsConfig).get(environmentsConfig.defaultEnvironment)?.screamingSnakeCase.safeName
         }`;
     }

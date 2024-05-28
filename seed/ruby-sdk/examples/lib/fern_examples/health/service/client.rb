@@ -23,7 +23,7 @@ module SeedExamplesClient
       # @return [Void]
       # @example
       #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  examples.health.check(id: "id-2sdx82h")
+      #  examples.health.service.check(id: "id-2sdx82h")
       def check(id:, request_options: nil)
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -39,7 +39,7 @@ module SeedExamplesClient
       # @return [Boolean]
       # @example
       #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  examples.health.ping
+      #  examples.health.service.ping
       def ping(request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -68,7 +68,7 @@ module SeedExamplesClient
       # @return [Void]
       # @example
       #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  examples.health.check(id: "id-2sdx82h")
+      #  examples.health.service.check(id: "id-2sdx82h")
       def check(id:, request_options: nil)
         Async do
           @request_client.conn.get do |req|
@@ -86,7 +86,7 @@ module SeedExamplesClient
       # @return [Boolean]
       # @example
       #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-      #  examples.health.ping
+      #  examples.health.service.ping
       def ping(request_options: nil)
         Async do
           response = @request_client.conn.get do |req|

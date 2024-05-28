@@ -28,7 +28,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(request: { prompt: "You are a helpful assistant", stream: false, query: "What is the weather today" })
+    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, query: "What is the weather today" })
     def send(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -67,7 +67,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(request: { prompt: "You are a helpful assistant", stream: false, query: "What is the weather today" })
+    #  literal.reference.send(request: { prompt: "You are a helpful assistant", stream: false, query: "What is the weather today" })
     def send(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

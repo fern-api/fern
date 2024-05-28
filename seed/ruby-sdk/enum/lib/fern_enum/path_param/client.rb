@@ -24,7 +24,7 @@ module SeedEnumClient
     # @return [Void]
     # @example
     #  enum = SeedEnumClient::Client.new(base_url: "https://api.example.com")
-    #  enum.send(
+    #  enum.path_param.send(
     #    operand: GREATER_THAN,
     #    maybe_operand: LESS_THAN,
     #    operand_or_color: RED,
@@ -57,7 +57,7 @@ module SeedEnumClient
     # @return [Void]
     # @example
     #  enum = SeedEnumClient::Client.new(base_url: "https://api.example.com")
-    #  enum.send(
+    #  enum.path_param.send(
     #    operand: GREATER_THAN,
     #    maybe_operand: LESS_THAN,
     #    operand_or_color: RED,

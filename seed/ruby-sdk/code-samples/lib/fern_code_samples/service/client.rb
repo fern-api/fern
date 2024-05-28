@@ -20,7 +20,7 @@ module SeedCodeSamplesClient
     # @return [SeedCodeSamplesClient::Service::MyResponse]
     # @example
     #  code_samples = SeedCodeSamplesClient::Client.new(base_url: "https://api.example.com")
-    #  code_samples.hello(num_events: 5)
+    #  code_samples.service.hello(num_events: 5)
     def hello(num_events:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -47,7 +47,7 @@ module SeedCodeSamplesClient
     # @return [SeedCodeSamplesClient::Service::MyResponse]
     # @example
     #  code_samples = SeedCodeSamplesClient::Client.new(base_url: "https://api.example.com")
-    #  code_samples.hello(num_events: 5)
+    #  code_samples.service.hello(num_events: 5)
     def hello(num_events:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

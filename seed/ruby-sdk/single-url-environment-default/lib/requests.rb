@@ -22,8 +22,8 @@ module SeedSingleUrlEnvironmentDefaultClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedSingleUrlEnvironmentDefaultClient::RequestClient]
-    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
-                   timeout_in_seconds: nil)
+    def initialize(token:, environment: SeedSingleUrlEnvironmentDefaultClient::Environment::PRODUCTION, base_url: nil,
+                   max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @base_url = environment || base_url
       @headers = {
@@ -63,8 +63,8 @@ module SeedSingleUrlEnvironmentDefaultClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedSingleUrlEnvironmentDefaultClient::AsyncRequestClient]
-    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
-                   timeout_in_seconds: nil)
+    def initialize(token:, environment: SeedSingleUrlEnvironmentDefaultClient::Environment::PRODUCTION, base_url: nil,
+                   max_retries: nil, timeout_in_seconds: nil)
       @default_environment = environment
       @base_url = environment || base_url
       @headers = {
