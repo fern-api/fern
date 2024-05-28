@@ -35,13 +35,13 @@ public final class MyUnion {
         if (this.type == 0) {
             return visitor.visit((String) this.value);
         } else if (this.type == 1) {
-            return visitor.visit((List<String>) this.value);
+            return visitor.visitListOfStrings((List<String>) this.value);
         } else if (this.type == 2) {
             return visitor.visit((int) this.value);
         } else if (this.type == 3) {
-            return visitor.visit((List<Integer>) this.value);
+            return visitor.visitListOfIntegers((List<Integer>) this.value);
         } else if (this.type == 4) {
-            return visitor.visit((List<List<Integer>>) this.value);
+            return visitor.visitListOfListOfIntegerss((List<List<Integer>>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -70,7 +70,7 @@ public final class MyUnion {
         return new MyUnion(value, 0);
     }
 
-    public static MyUnion of(List<String> value) {
+    public static MyUnion ofListOfStrings(List<String> value) {
         return new MyUnion(value, 1);
     }
 
@@ -78,24 +78,24 @@ public final class MyUnion {
         return new MyUnion(value, 2);
     }
 
-    public static MyUnion of(List<Integer> value) {
+    public static MyUnion ofListOfIntegers(List<Integer> value) {
         return new MyUnion(value, 3);
     }
 
-    public static MyUnion of(List<List<Integer>> value) {
+    public static MyUnion ofListOfListOfIntegerss(List<List<Integer>> value) {
         return new MyUnion(value, 4);
     }
 
     public interface Visitor<T> {
         T visit(String value);
 
-        T visit(List<String> value);
+        T visitListOfStrings(List<String> value);
 
         T visit(int value);
 
-        T visit(List<Integer> value);
+        T visitListOfIntegers(List<Integer> value);
 
-        T visit(List<List<Integer>> value);
+        T visitListOfListOfIntegerss(List<List<Integer>> value);
     }
 
     static final class Deserializer extends StdDeserializer<MyUnion> {
@@ -111,18 +111,21 @@ public final class MyUnion {
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
+                return ofListOfStrings(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<String>>() {}));
             } catch (IllegalArgumentException e) {
             }
             if (value instanceof Integer) {
                 return of((Integer) value);
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Integer>>() {}));
+                return ofListOfIntegers(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<Integer>>() {}));
             } catch (IllegalArgumentException e) {
             }
             try {
-                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<List<Integer>>>() {}));
+                return ofListOfListOfIntegerss(
+                        ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<List<Integer>>>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
