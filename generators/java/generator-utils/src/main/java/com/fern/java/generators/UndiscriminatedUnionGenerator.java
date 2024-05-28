@@ -67,9 +67,9 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
     private final UndiscriminatedUnionTypeDeclaration undiscriminatedUnion;
     private final Map<UndiscriminatedUnionMember, TypeName> memberTypeNames;
     /**
-     * The outer container types that are present in more than one member. For example, if we have two member types
-     * with a container type of List, ContainerTypeEnum.LIST will be present here. These require special method naming
-     * to deconflict due to Java's type erasure.
+     * The outer container types that are present in more than one member. For example, if we have two member types with
+     * a container type of List, ContainerTypeEnum.LIST will be present here. These require special method naming to
+     * deconflict due to Java's type erasure.
      */
     private final Set<ContainerTypeEnum> duplicatedOuterContainerTypes;
 
