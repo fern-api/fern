@@ -1,5 +1,7 @@
 using System.Runtime.Serialization;
 
+#nullable enable
+
 namespace SeedIdempotencyHeaders;
 
 public enum Currency
