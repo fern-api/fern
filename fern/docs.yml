@@ -298,13 +298,14 @@ navigation:
       - section: CLI Reference
         contents:
           - page: CLI Overview
-            path: ./pages/cli/overview.mdx
+            path: ./pages/cli-api/overview.mdx
           - page: Global Options
-            path: ./pages/cli/global-options.mdx
+            path: ./pages/cli-api/global-options.mdx
           - page: Commands
-            path: ./pages/cli/commands.mdx
+            path: ./pages/cli-api/commands.mdx
       - api: API Reference
         api-name: public-api
+        summary: ./pages/cli-api/api-summary.mdx
         # audiences:
         #   - external
         # snippets:
