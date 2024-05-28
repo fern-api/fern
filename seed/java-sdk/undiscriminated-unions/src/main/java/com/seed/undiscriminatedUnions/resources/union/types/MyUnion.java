@@ -14,6 +14,7 @@ import com.seed.undiscriminatedUnions.core.ObjectMappers;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @JsonDeserialize(using = MyUnion.Deserializer.class)
 public final class MyUnion {
@@ -42,6 +43,8 @@ public final class MyUnion {
             return visitor.visitListOfInteger((List<Integer>) this.value);
         } else if (this.type == 4) {
             return visitor.visitListOfListOfInteger((List<List<Integer>>) this.value);
+        } else if (this.type == 5) {
+            return visitor.visit((Set<String>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -86,6 +89,10 @@ public final class MyUnion {
         return new MyUnion(value, 4);
     }
 
+    public static MyUnion of(Set<String> value) {
+        return new MyUnion(value, 5);
+    }
+
     public interface Visitor<T> {
         T visit(String value);
 
@@ -96,6 +103,8 @@ public final class MyUnion {
         T visitListOfInteger(List<Integer> value);
 
         T visitListOfListOfInteger(List<List<Integer>> value);
+
+        T visit(Set<String> value);
     }
 
     static final class Deserializer extends StdDeserializer<MyUnion> {
@@ -126,6 +135,10 @@ public final class MyUnion {
             try {
                 return ofListOfListOfInteger(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<List<Integer>>>() {}));
+            } catch (IllegalArgumentException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<Set<String>>() {}));
             } catch (IllegalArgumentException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");
