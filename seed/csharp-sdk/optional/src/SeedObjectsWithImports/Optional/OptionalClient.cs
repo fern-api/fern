@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedObjectsWithImports;
 
+#nullable enable
+
 namespace SeedObjectsWithImports;
 
 public class OptionalClient

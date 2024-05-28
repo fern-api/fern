@@ -1,5 +1,7 @@
 using SeedEnum;
 
+#nullable enable
+
 namespace SeedEnum;
 
 public partial class SeedEnumClient

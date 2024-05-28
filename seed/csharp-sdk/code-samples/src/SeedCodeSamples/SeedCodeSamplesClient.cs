@@ -1,5 +1,7 @@
 using SeedCodeSamples;
 
+#nullable enable
+
 namespace SeedCodeSamples;
 
 public partial class SeedCodeSamplesClient

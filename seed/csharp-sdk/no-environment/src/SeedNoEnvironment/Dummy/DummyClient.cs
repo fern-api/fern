@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedNoEnvironment;
 
+#nullable enable
+
 namespace SeedNoEnvironment;
 
 public class DummyClient

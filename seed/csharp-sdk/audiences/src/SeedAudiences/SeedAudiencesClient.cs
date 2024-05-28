@@ -3,6 +3,8 @@ using SeedAudiences.FolderA;
 using SeedAudiences.FolderB;
 using SeedAudiences.FolderC;
 
+#nullable enable
+
 namespace SeedAudiences;
 
 public partial class SeedAudiencesClient

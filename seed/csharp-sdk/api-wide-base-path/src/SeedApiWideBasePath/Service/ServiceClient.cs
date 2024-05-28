@@ -1,5 +1,7 @@
 using SeedApiWideBasePath;
 
+#nullable enable
+
 namespace SeedApiWideBasePath;
 
 public class ServiceClient

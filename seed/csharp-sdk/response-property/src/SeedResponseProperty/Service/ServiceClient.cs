@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedResponseProperty;
 
+#nullable enable
+
 namespace SeedResponseProperty;
 
 public class ServiceClient

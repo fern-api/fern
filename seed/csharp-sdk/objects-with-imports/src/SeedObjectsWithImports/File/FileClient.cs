@@ -1,6 +1,8 @@
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.File;
 
+#nullable enable
+
 namespace SeedObjectsWithImports;
 
 public class FileClient

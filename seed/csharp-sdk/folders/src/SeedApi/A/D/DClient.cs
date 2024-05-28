@@ -1,6 +1,8 @@
 using SeedApi;
 using SeedApi.A.D;
 
+#nullable enable
+
 namespace SeedApi.A.D;
 
 public class DClient

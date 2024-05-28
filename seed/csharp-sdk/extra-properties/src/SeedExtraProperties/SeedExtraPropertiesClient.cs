@@ -1,5 +1,7 @@
 using SeedExtraProperties;
 
+#nullable enable
+
 namespace SeedExtraProperties;
 
 public partial class SeedExtraPropertiesClient

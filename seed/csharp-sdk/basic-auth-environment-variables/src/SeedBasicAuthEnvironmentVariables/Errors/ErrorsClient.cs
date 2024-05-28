@@ -1,5 +1,7 @@
 using SeedBasicAuthEnvironmentVariables;
 
+#nullable enable
+
 namespace SeedBasicAuthEnvironmentVariables;
 
 public class ErrorsClient

@@ -98,14 +98,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
 
         return new CSharpFile({
             clazz: class_,
-            directory: RelativeFilePath.of(`${this.context.getDirectoryForServiceId(this.serviceId)}/requests`)
+            directory: RelativeFilePath.of(`${this.context.getDirectoryForServiceId(this.serviceId)}/Requests`)
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
             this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(`${this.context.getDirectoryForServiceId(this.serviceId)}/requests`),
+            RelativeFilePath.of(`${this.context.getDirectoryForServiceId(this.serviceId)}/Requests`),
             RelativeFilePath.of(this.classReference.name + ".cs")
         );
     }

@@ -1,6 +1,8 @@
 using SeedExhaustive;
 using SeedExhaustive.Endpoints;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class EndpointsClient

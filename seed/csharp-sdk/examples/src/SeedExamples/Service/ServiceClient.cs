@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExamples;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public class ServiceClient

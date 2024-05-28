@@ -1,5 +1,7 @@
 using SeedExhaustive;
 
+#nullable enable
+
 namespace SeedExhaustive.Types;
 
 public class ObjectClient

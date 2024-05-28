@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedErrorProperty;
 
+#nullable enable
+
 namespace SeedErrorProperty;
 
 public class PropertyBasedErrorClient

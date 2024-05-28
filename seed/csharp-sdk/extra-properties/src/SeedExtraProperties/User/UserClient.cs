@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedExtraProperties;
 
+#nullable enable
+
 namespace SeedExtraProperties;
 
 public class UserClient

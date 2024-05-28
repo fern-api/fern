@@ -2,6 +2,8 @@ using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Endpoints;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class ParamsClient
