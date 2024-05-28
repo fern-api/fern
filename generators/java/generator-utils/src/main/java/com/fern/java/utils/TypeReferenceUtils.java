@@ -55,6 +55,10 @@ public class TypeReferenceUtils {
             this.multiple = multiple;
         }
 
+        public TypeReferenceToName() {
+            this.multiple = false;
+        }
+
         @Override
         public String visitContainer(ContainerType container) {
             return container.visit(new ContainerTypeToName(multiple));
