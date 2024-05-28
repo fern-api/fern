@@ -1,5 +1,7 @@
 using SeedAuthEnvironmentVariables;
 
+#nullable enable
+
 namespace SeedAuthEnvironmentVariables;
 
 public partial class SeedAuthEnvironmentVariablesClient

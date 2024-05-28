@@ -1,6 +1,8 @@
 using OneOf;
 using SeedEnum;
 
+#nullable enable
+
 namespace SeedEnum;
 
 public class SendEnumAsQueryParamRequest

@@ -2,6 +2,8 @@ using SeedExhaustive;
 using SeedExhaustive.Types;
 using System.Text.Json;
 
+#nullable enable
+
 namespace SeedExhaustive.Endpoints;
 
 public class ObjectClient

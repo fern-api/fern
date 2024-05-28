@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedCustomAuth;
 
+#nullable enable
+
 namespace SeedCustomAuth;
 
 public class CustomAuthClient

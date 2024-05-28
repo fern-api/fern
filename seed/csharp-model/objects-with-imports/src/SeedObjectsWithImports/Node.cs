@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Commons;
 
+#nullable enable
+
 namespace SeedObjectsWithImports;
 
 public class Node

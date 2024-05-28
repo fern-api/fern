@@ -2,6 +2,8 @@ using System.Text.Json;
 using OneOf;
 using SeedUndiscriminatedUnions;
 
+#nullable enable
+
 namespace SeedUndiscriminatedUnions;
 
 public class UnionClient

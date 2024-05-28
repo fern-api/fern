@@ -1,5 +1,7 @@
 using SeedExtends;
 
+#nullable enable
+
 namespace SeedExtends;
 
 public partial class SeedExtendsClient

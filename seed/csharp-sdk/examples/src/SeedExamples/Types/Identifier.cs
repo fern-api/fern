@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using OneOf;
 using SeedExamples;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public class Identifier

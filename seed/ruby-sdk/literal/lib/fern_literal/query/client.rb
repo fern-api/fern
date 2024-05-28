@@ -26,7 +26,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
+    #  literal.query.send(
     #    prompt: "You are a helpful assistant",
     #    query: "What is the weather today",
     #    stream: false
@@ -73,7 +73,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
+    #  literal.query.send(
     #    prompt: "You are a helpful assistant",
     #    query: "What is the weather today",
     #    stream: false

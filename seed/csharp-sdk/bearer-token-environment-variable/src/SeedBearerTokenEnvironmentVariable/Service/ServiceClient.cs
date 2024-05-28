@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedBearerTokenEnvironmentVariable;
 
+#nullable enable
+
 namespace SeedBearerTokenEnvironmentVariable;
 
 public class ServiceClient

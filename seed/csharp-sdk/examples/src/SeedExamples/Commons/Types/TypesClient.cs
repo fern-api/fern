@@ -1,5 +1,7 @@
 using SeedExamples;
 
+#nullable enable
+
 namespace SeedExamples.Commons;
 
 public class TypesClient

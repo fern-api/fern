@@ -27,7 +27,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
+    #  literal.inlined.send(
     #    prompt: "You are a helpful assistant",
     #    query: "What is the weather today",
     #    temperature: 10.1,
@@ -77,7 +77,7 @@ module SeedLiteralClient
     #    version: "Version",
     #    audit_logging: "AuditLogging"
     #  )
-    #  literal.send(
+    #  literal.inlined.send(
     #    prompt: "You are a helpful assistant",
     #    query: "What is the weather today",
     #    temperature: 10.1,

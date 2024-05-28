@@ -1,5 +1,7 @@
 using SeedBytes;
 
+#nullable enable
+
 namespace SeedBytes;
 
 public partial class SeedBytesClient

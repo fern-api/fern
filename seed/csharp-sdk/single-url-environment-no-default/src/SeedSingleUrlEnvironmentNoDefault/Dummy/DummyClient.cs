@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedSingleUrlEnvironmentNoDefault;
 
+#nullable enable
+
 namespace SeedSingleUrlEnvironmentNoDefault;
 
 public class DummyClient

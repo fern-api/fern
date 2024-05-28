@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedMultiUrlEnvironment;
 
+#nullable enable
+
 namespace SeedMultiUrlEnvironment;
 
 public class S3Client
