@@ -41,7 +41,7 @@ public final class MyUnion {
         } else if (this.type == 3) {
             return visitor.visitListOfIntegers((List<Integer>) this.value);
         } else if (this.type == 4) {
-            return visitor.visitListOfListsOf((List<List<Integer>>) this.value);
+            return visitor.visitListOfListsOfIntegers((List<List<Integer>>) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -82,7 +82,7 @@ public final class MyUnion {
         return new MyUnion(value, 3);
     }
 
-    public static MyUnion ofListOfListsOf(List<List<Integer>> value) {
+    public static MyUnion ofListOfListsOfIntegers(List<List<Integer>> value) {
         return new MyUnion(value, 4);
     }
 
@@ -95,7 +95,7 @@ public final class MyUnion {
 
         T visitListOfIntegers(List<Integer> value);
 
-        T visitListOfListsOf(List<List<Integer>> value);
+        T visitListOfListsOfIntegers(List<List<Integer>> value);
     }
 
     static final class Deserializer extends StdDeserializer<MyUnion> {
@@ -124,7 +124,7 @@ public final class MyUnion {
             } catch (IllegalArgumentException e) {
             }
             try {
-                return ofListOfListsOf(
+                return ofListOfListsOfIntegers(
                         ObjectMappers.JSON_MAPPER.convertValue(value, new TypeReference<List<List<Integer>>>() {}));
             } catch (IllegalArgumentException e) {
             }

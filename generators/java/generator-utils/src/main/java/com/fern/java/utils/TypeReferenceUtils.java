@@ -95,15 +95,13 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitList(TypeReference list) {
-            return multiple ? "ListsOf" : "ListOf" + list.visit(new TypeReferenceToName(true));
+            return (multiple ? "ListsOf" : "ListOf") + list.visit(new TypeReferenceToName(true));
         }
 
         @Override
         public String visitMap(MapType map) {
-            return multiple
-                    ? "MapsOf"
-                    : "MapOf" + map.getKeyType().visit(new TypeReferenceToName(false)) + "To"
-                            + map.getValueType().visit(new TypeReferenceToName(false));
+            return (multiple ? "MapsOf" : "MapOf") + map.getKeyType().visit(new TypeReferenceToName(false)) + "To"
+                    + map.getValueType().visit(new TypeReferenceToName(false));
         }
 
         @Override
@@ -113,7 +111,7 @@ public class TypeReferenceUtils {
 
         @Override
         public String visitSet(TypeReference set) {
-            return multiple ? "SetsOf" : "SetOf" + set.visit(new TypeReferenceToName(true)) + "s";
+            return (multiple ? "SetsOf" : "SetOf") + set.visit(new TypeReferenceToName(true));
         }
 
         @Override
