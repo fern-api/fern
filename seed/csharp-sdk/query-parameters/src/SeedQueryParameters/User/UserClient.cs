@@ -1,6 +1,8 @@
 using System.Text.Json;
 using SeedQueryParameters;
 
+#nullable enable
+
 namespace SeedQueryParameters;
 
 public class UserClient

@@ -2,6 +2,8 @@ using SeedTrace;
 using SeedTrace.V2;
 using SeedTrace.V2.V3;
 
+#nullable enable
+
 namespace SeedTrace.V2;
 
 public class V2Client

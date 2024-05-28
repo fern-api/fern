@@ -1,5 +1,7 @@
 using SeedTrace.Core;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public partial class ClientOptions

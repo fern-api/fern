@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedQueryParameters;
 
+#nullable enable
+
 namespace SeedQueryParameters;
 
 public class NestedUser

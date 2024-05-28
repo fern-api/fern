@@ -1,5 +1,7 @@
 using SeedValidation;
 
+#nullable enable
+
 namespace SeedValidation;
 
 public partial class SeedValidationClient

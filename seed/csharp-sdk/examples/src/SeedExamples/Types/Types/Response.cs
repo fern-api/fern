@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedExamples;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public class Response

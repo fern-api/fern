@@ -1,6 +1,8 @@
 using SeedExhaustive;
 using SeedExhaustive.Types;
 
+#nullable enable
+
 namespace SeedExhaustive.Types;
 
 public class TypesClient

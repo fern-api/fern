@@ -1,5 +1,7 @@
 using SeedSingleUrlEnvironmentDefault.Core;
 
+#nullable enable
+
 namespace SeedSingleUrlEnvironmentDefault;
 
 public partial class ClientOptions

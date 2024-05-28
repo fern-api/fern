@@ -1,5 +1,7 @@
 using SeedIdempotencyHeaders;
 
+#nullable enable
+
 namespace SeedIdempotencyHeaders;
 
 public partial class SeedIdempotencyHeadersClient

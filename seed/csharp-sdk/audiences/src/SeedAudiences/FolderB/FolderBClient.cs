@@ -1,6 +1,8 @@
 using SeedAudiences;
 using SeedAudiences.FolderB;
 
+#nullable enable
+
 namespace SeedAudiences.FolderB;
 
 public class FolderBClient

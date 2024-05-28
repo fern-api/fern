@@ -3,6 +3,8 @@ using SeedApi.A.B;
 using SeedApi.A.C;
 using SeedApi.A.D;
 
+#nullable enable
+
 namespace SeedApi.A;
 
 public class AClient

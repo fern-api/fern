@@ -1,5 +1,7 @@
 using SeedOauthClientCredentialsDefault;
 
+#nullable enable
+
 namespace SeedOauthClientCredentialsDefault;
 
 public partial class SeedOauthClientCredentialsDefaultClient
