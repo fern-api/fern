@@ -46,7 +46,7 @@ class PydanticModelGenerator(AbstractGenerator):
     ) -> Tuple[str, ...]:
         return (
             generator_config.organization,
-            ir.api_name.snake_case.unsafe_name,
+            ir.api_name.snake_case.safe_name,
         )
 
     def run(

@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 
@@ -21,19 +22,19 @@ class ReqWithHeadersClient:
     def get_with_custom_header(
         self,
         *,
-        request: str,
         x_test_service_header: str,
         x_test_endpoint_header: str,
+        request: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        request : str
-
         x_test_service_header : str
 
         x_test_endpoint_header : str
+
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -59,8 +60,10 @@ class ReqWithHeadersClient:
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "test-headers/custom-header"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
@@ -99,19 +102,19 @@ class AsyncReqWithHeadersClient:
     async def get_with_custom_header(
         self,
         *,
-        request: str,
         x_test_service_header: str,
         x_test_endpoint_header: str,
+        request: str,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters
         ----------
-        request : str
-
         x_test_service_header : str
 
         x_test_endpoint_header : str
+
+        request : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -137,8 +140,10 @@ class AsyncReqWithHeadersClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "test-headers/custom-header"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(

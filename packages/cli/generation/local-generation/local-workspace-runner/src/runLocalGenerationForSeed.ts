@@ -64,7 +64,8 @@ export async function runLocalGenerationForSeed({
                         irVersionOverride,
                         outputVersionOverride,
                         writeUnitTests: true,
-                        generateOauthClients: true
+                        generateOauthClients: true,
+                        generatePaginatedClients: true
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -133,7 +134,8 @@ export async function writeIrAndConfigJson({
                         irVersionOverride,
                         outputVersionOverride,
                         writeUnitTests: true,
-                        generateOauthClients: true
+                        generateOauthClients: true,
+                        generatePaginatedClients: true
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)

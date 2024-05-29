@@ -15,13 +15,20 @@ export interface Express {
         }) => ts.TypeNode;
     };
     Response: {
-        json: (args: { referenceToExpressResponse: ts.Expression; valueToSend: ts.Expression }) => ts.Expression;
+        json: (args: {
+            referenceToExpressResponse: ts.Expression;
+            valueToSend: ts.Expression;
+            status?: number;
+        }) => ts.Expression;
         cookie: {
             _getBoundReference: (args: { referenceToExpressResponse: ts.Expression }) => ts.Expression;
         };
         status: (args: { referenceToExpressResponse: ts.Expression; status: number }) => ts.Expression;
         sendStatus: (args: { referenceToExpressResponse: ts.Expression; status: number }) => ts.Expression;
         locals: (args: { referenceToExpressResponse: ts.Expression }) => ts.Expression;
+        _getReferenceToType: () => ts.TypeNode;
+    };
+    NextFunction: {
         _getReferenceToType: () => ts.TypeNode;
     };
     App: {

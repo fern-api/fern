@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using SeedApi;
 
+#nullable enable
+
 namespace SeedApi;
 
 public class ImportingA
 {
     [JsonPropertyName("a")]
-    public List<A?> A { get; init; }
+    public A? A { get; init; }
 }

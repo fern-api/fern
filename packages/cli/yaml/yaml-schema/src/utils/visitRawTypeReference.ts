@@ -1,4 +1,7 @@
-import { Literal, PrimitiveType } from "@fern-api/ir-sdk";
+import { Literal, PrimitiveType, PrimitiveTypeV1, PrimitiveTypeV2 } from "@fern-api/ir-sdk";
+import { NumberValidationSchema } from "../schemas/NumberValidationSchema";
+import { StringValidationSchema } from "../schemas/StringValidationSchema";
+import { ValidationSchema } from "../schemas/ValidationSchema";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {
@@ -20,26 +23,109 @@ export interface RawTypeReferenceVisitor<R> {
     unknown: () => R;
 }
 
-export function visitRawTypeReference<R>(type: string, visitor: RawTypeReferenceVisitor<R>): R {
+export function visitRawTypeReference<R>({
+    type,
+    _default,
+    validation,
+    visitor
+}: {
+    type: string;
+    _default?: unknown;
+    validation?: ValidationSchema;
+    visitor: RawTypeReferenceVisitor<R>;
+}): R {
     switch (type) {
-        case RawPrimitiveType.integer:
-            return visitor.primitive(PrimitiveType.Integer);
-        case RawPrimitiveType.double:
-            return visitor.primitive(PrimitiveType.Double);
+        case RawPrimitiveType.integer: {
+            const maybeNumberValidation = validation != null ? (validation as NumberValidationSchema) : undefined;
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Integer,
+                v2: PrimitiveTypeV2.integer({
+                    default: _default != null ? (_default as number) : undefined,
+                    validation:
+                        maybeNumberValidation != null
+                            ? {
+                                  min: maybeNumberValidation.min,
+                                  max: maybeNumberValidation.max,
+                                  exclusiveMin: maybeNumberValidation.exclusiveMin,
+                                  exclusiveMax: maybeNumberValidation.exclusiveMax,
+                                  multipleOf: maybeNumberValidation.multipleOf
+                              }
+                            : undefined
+                })
+            });
+        }
+        case RawPrimitiveType.double: {
+            const maybeNumberValidation = validation != null ? (validation as NumberValidationSchema) : undefined;
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Double,
+                v2: PrimitiveTypeV2.double({
+                    default: _default != null ? (_default as number) : undefined,
+                    validation:
+                        maybeNumberValidation != null
+                            ? {
+                                  min: maybeNumberValidation.min,
+                                  max: maybeNumberValidation.max,
+                                  exclusiveMin: maybeNumberValidation.exclusiveMin,
+                                  exclusiveMax: maybeNumberValidation.exclusiveMax,
+                                  multipleOf: maybeNumberValidation.multipleOf
+                              }
+                            : undefined
+                })
+            });
+        }
+        case RawPrimitiveType.string: {
+            const maybeStringValidation = validation != null ? (validation as StringValidationSchema) : undefined;
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.String,
+                v2: PrimitiveTypeV2.string({
+                    default: _default != null ? (_default as string) : undefined,
+                    validation:
+                        maybeStringValidation != null
+                            ? {
+                                  format: maybeStringValidation.format,
+                                  pattern: maybeStringValidation.pattern,
+                                  minLength: maybeStringValidation.minLength,
+                                  maxLength: maybeStringValidation.maxLength
+                              }
+                            : undefined
+                })
+            });
+        }
         case RawPrimitiveType.long:
-            return visitor.primitive(PrimitiveType.Long);
-        case RawPrimitiveType.string:
-            return visitor.primitive(PrimitiveType.String);
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Long,
+                v2: undefined
+            });
         case RawPrimitiveType.boolean:
-            return visitor.primitive(PrimitiveType.Boolean);
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Boolean,
+                v2: undefined
+            });
         case RawPrimitiveType.datetime:
-            return visitor.primitive(PrimitiveType.DateTime);
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.DateTime,
+                v2: undefined
+            });
         case RawPrimitiveType.date:
-            return visitor.primitive(PrimitiveType.Date);
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Date,
+                v2: undefined
+            });
         case RawPrimitiveType.uuid:
-            return visitor.primitive(PrimitiveType.Uuid);
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Uuid,
+                v2: undefined
+            });
         case RawPrimitiveType.base64:
-            return visitor.primitive(PrimitiveType.Base64);
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.Base64,
+                v2: undefined
+            });
+        case RawPrimitiveType.bigint:
+            return visitor.primitive({
+                v1: PrimitiveTypeV1.BigInteger,
+                v2: undefined
+            });
         case RawPrimitiveType.unknown:
             return visitor.unknown();
     }

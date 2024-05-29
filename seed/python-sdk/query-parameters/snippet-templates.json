@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/user",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_user.getUsername"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedQueryParameters\n\nclient = SeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

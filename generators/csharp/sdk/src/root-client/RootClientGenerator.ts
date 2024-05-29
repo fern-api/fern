@@ -48,15 +48,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         class_.addConstructor(this.getConstructorMethod());
 
         for (const subpackage of this.getSubpackages()) {
-            if (subpackage.service == null) {
-                continue;
-            }
             class_.addField(
                 csharp.field({
                     access: "public",
                     get: true,
                     name: subpackage.name.pascalCase.safeName,
-                    type: csharp.Type.reference(this.context.getServiceClassReference(subpackage.service))
+                    type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
             );
         }
@@ -135,7 +132,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         if (this.context.config.publish != null) {
             headerEntries.push({
                 key: csharp.codeblock(`"${platformHeaders.sdkName}"`),
-                value: csharp.codeblock(`"${this.context.config.publish.registriesV2.rubygems.packageName}"`)
+                value: csharp.codeblock(`"${this.context.getNamespace()}"`)
             });
             headerEntries.push({
                 key: csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
@@ -164,7 +161,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 }
                 writer.writeLine("_client = ");
-                writer.writeNode(
+                writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: this.context.getRawClientClassReference(),
                         arguments_: [
@@ -176,13 +173,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     })
                 );
                 for (const subpackage of this.getSubpackages()) {
-                    if (subpackage.service == null) {
-                        continue;
-                    }
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
-                    writer.writeNode(
+                    writer.writeNodeStatement(
                         csharp.instantiateClass({
-                            classReference: this.context.getServiceClassReference(subpackage.service),
+                            classReference: this.context.getSubpackageClassReference(subpackage),
                             arguments_: [csharp.codeblock("_client")]
                         })
                     );
@@ -285,6 +279,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         const name = header.name.name.camelCase.safeName;
         return {
             name,
+            header: {
+                name: header.name.wireValue
+            },
             docs: header.docs,
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
             typeReference: header.valueType

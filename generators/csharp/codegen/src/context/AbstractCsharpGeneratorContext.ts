@@ -24,6 +24,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public readonly flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
+    public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -40,6 +41,16 @@ export abstract class AbstractCsharpGeneratorContext<
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
         this.csharpTypeMapper = new CsharpTypeMapper(this);
+        config.output.mode._visit<void>({
+            github: (github) => {
+                if (github.publishInfo?.type === "nuget") {
+                    this.publishConfig = github.publishInfo;
+                }
+            },
+            publish: () => undefined,
+            downloadFiles: () => undefined,
+            _other: () => undefined
+        });
     }
 
     public getNamespace(): string {

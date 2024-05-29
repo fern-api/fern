@@ -126,8 +126,11 @@
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
-                        "type": "text",
-                        "docs": null
+                        "body": {
+                            "type": "text",
+                            "docs": null
+                        },
+                        "status-code": null
                     },
                     "errors": [],
                     "examples": [

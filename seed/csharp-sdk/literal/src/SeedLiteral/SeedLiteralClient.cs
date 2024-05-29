@@ -1,19 +1,17 @@
 using SeedLiteral;
 
+#nullable enable
+
 namespace SeedLiteral;
 
 public partial class SeedLiteralClient
 {
     private RawClient _client;
 
-    public SeedLiteralClient(
-        List<string> version,
-        List<bool> auditLogging,
-        ClientOptions clientOptions
-    )
+    public SeedLiteralClient(string version, bool auditLogging, ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Headers = new HeadersClient(_client);

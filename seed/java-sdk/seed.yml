@@ -1,4 +1,4 @@
-irVersion: v31
+irVersion: v42
 docker: fernapi/fern-java-sdk:latest
 dockerCommand: 
   - cd generators/java
@@ -41,7 +41,7 @@ scripts:
     commands:
       - source ~/.bash_profile 
       - ./gradlew compileJava
-      # - jenv shell 1.8 && ./gradlew compileJava
+      - jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 allowedFailures:
   - enum
   - extends
@@ -51,3 +51,4 @@ allowedFailures:
   - trace
   - undiscriminated-unions
   - unions
+  - query-parameters

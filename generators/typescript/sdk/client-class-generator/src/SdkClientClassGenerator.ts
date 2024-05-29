@@ -3,6 +3,7 @@ import { ImportsManager, JavaScriptRuntime, NpmPackage, PackageId } from "@fern-
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
+import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {
@@ -19,10 +20,13 @@ export declare namespace SdkClientClassGenerator {
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        inlineFileProperties: boolean;
+        oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     }
 
     export namespace generateService {
         export interface Args {
+            isRoot: boolean;
             packageId: PackageId;
             serviceClassName: string;
             importsManager: ImportsManager;
@@ -44,6 +48,8 @@ export class SdkClientClassGenerator {
     private includeContentHeadersOnFileDownloadResponse: boolean;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private inlineFileProperties: boolean;
+    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
 
     constructor({
         intermediateRepresentation,
@@ -58,7 +64,9 @@ export class SdkClientClassGenerator {
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        inlineFileProperties,
+        oauthTokenProviderGenerator
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -73,14 +81,18 @@ export class SdkClientClassGenerator {
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
+        this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
     }
 
     public generateService({
+        isRoot,
         packageId,
         serviceClassName,
         importsManager
     }: SdkClientClassGenerator.generateService.Args): GeneratedSdkClientClass {
         return new GeneratedSdkClientClassImpl({
+            isRoot,
             importsManager,
             intermediateRepresentation: this.intermediateRepresentation,
             packageId,
@@ -96,7 +108,9 @@ export class SdkClientClassGenerator {
             targetRuntime: this.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            inlineFileProperties: this.inlineFileProperties,
+            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator
         });
     }
 }

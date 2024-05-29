@@ -8,21 +8,36 @@ import { Auth } from "./api/resources/auth/client/Client";
 export declare namespace SeedOauthClientCredentialsClient {
     interface Options {
         environment: core.Supplier<string>;
-        token?: core.Supplier<core.BearerToken | undefined>;
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
     }
 
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 
 export class SeedOauthClientCredentialsClient {
-    constructor(protected readonly _options: SeedOauthClientCredentialsClient.Options) {}
+    private readonly _oauthTokenProvider: core.OAuthTokenProvider;
+
+    constructor(protected readonly _options: SeedOauthClientCredentialsClient.Options) {
+        this._oauthTokenProvider = new core.OAuthTokenProvider({
+            clientId: this._options.clientId,
+            clientSecret: this._options.clientSecret,
+            authClient: new Auth({
+                environment: this._options.environment,
+            }),
+        });
+    }
 
     protected _auth: Auth | undefined;
 
     public get auth(): Auth {
-        return (this._auth ??= new Auth(this._options));
+        return (this._auth ??= new Auth({
+            ...this._options,
+            token: async () => await this._oauthTokenProvider.getToken(),
+        }));
     }
 }

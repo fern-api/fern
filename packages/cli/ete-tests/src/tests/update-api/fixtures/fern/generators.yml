@@ -1,0 +1,12 @@
+default-group: local
+api:
+  path: ./openapi/openapi.json
+  origin: https://bump.sh/bump-examples/doc/train-travel-api.json
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.9.5
+        output:
+          location: local-file-system
+          path: ../sdks/typescript

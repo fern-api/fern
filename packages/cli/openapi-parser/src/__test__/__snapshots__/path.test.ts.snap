@@ -2,6 +2,7 @@
 
 exports[`path parsing path parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -29,6 +30,7 @@ exports[`path parsing path parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/example-without-trailing-slash",
       "pathParameters": [],
       "queryParameters": [],
@@ -64,6 +66,7 @@ exports[`path parsing path parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/example-with-trailing-slash/",
       "pathParameters": [],
       "queryParameters": [],

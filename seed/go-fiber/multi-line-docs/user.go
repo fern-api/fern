@@ -3,6 +3,7 @@
 package multilinedocs
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/multi-line-docs/fern/core"
 )
@@ -10,10 +11,10 @@ import (
 type CreateUserRequest struct {
 	// The name of the user to create.
 	// This name is unique to each user.
-	Name string `json:"name" url:"name"`
+	Name string `json:"name" url:"-"`
 	// The age of the user.
 	// This propery is not required.
-	Age *int `json:"age,omitempty" url:"age,omitempty"`
+	Age *int `json:"age,omitempty" url:"-"`
 }
 
 // A user object. This type is used throughout the following APIs:
@@ -30,6 +31,29 @@ type User struct {
 	Name string `json:"name" url:"name"`
 	// The user's age.
 	Age *int `json:"age,omitempty" url:"age,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
+}
+
+func (u *User) UnmarshalJSON(data []byte) error {
+	type unmarshaler User
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = User(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
+	return nil
 }
 
 func (u *User) String() string {

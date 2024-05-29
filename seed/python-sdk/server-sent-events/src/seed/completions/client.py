@@ -11,6 +11,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.streamed_completion import StreamedCompletion
@@ -45,15 +46,19 @@ class CompletionsClient:
         client = SeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        client.completions.stream(
+        response = client.completions.stream(
             query="string",
         )
+        for chunk in response:
+            yield chunk
         """
         with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "stream"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"query": query})
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -114,15 +119,19 @@ class AsyncCompletionsClient:
         client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
         )
-        await client.completions.stream(
+        response = await client.completions.stream(
             query="string",
         )
+        async for chunk in response:
+            yield chunk
         """
         async with self._client_wrapper.httpx_client.stream(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "stream"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder({"query": query})
             if request_options is None or request_options.get("additional_body_parameters") is None

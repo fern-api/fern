@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/basic-auth",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_basic-auth.getWithBasicAuth"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedBasicAuthEnvironmentVariables\n\nclient = SeedBasicAuthEnvironmentVariables(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
@@ -44,7 +45,8 @@
         },
         "endpointId": {
             "path": "/basic-auth",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_basic-auth.postWithBasicAuth"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedBasicAuthEnvironmentVariables\n\nclient = SeedBasicAuthEnvironmentVariables(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

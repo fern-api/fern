@@ -5,6 +5,147 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.20.0-rc1] - 2024-05-20
+
+- Fix: Pass `abortSignal` to `Stream` for server-sent-events and JSON streams so that the user
+  can opt out and break from a stream.
+
+## [0.20.0-rc0] - 2024-05-20
+
+- Feature: Add `abortSignal` to `RequestOptions`. SDK consumers can now specify an
+  an arbitrary abort signal that can interrupt the API call.
+
+  ```ts
+  const controller = new AbortController();
+  client.endpoint.call(..., {
+    abortSignal: controller.signal,
+  })
+  ```
+
+## [0.19.0] - 2024-05-20
+
+- Feature: Add `inlineFileProperties` configuration to support generating file upload properties
+  as in-lined request properties (instead of positional parameters). Simply configure the following:
+
+  ```yaml
+  - name: fernapi/fern-typscript-node-sdk
+    version: 0.19.0
+    ...
+    config:
+      inlineFileProperties: true
+  ```
+
+  **Before**:
+
+  ```ts
+  /**
+    * @param {File | fs.ReadStream} file
+    * @param {File[] | fs.ReadStream[]} fileList
+    * @param {File | fs.ReadStream | undefined} maybeFile
+    * @param {File[] | fs.ReadStream[] | undefined} maybeFileList
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post(fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], fs.createReadStream("/path/to/your/file"), [fs.createReadStream("/path/to/your/file")], {})
+    */
+  public async post(
+      file: File | fs.ReadStream,
+      fileList: File[] | fs.ReadStream[],
+      maybeFile: File | fs.ReadStream | undefined,
+      maybeFileList: File[] | fs.ReadStream[] | undefined,
+      request: Acme.MyRequest,
+      requestOptions?: Acme.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+  **After**:
+
+  ```ts
+  /**
+    * @param {Acme.MyRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    *
+    * @example
+    *     await client.service.post({
+    *        file: fs.createReadStream("/path/to/your/file"),
+    *        fileList: [fs.createReadStream("/path/to/your/file")]
+    *     })
+    */
+  public async post(
+      request: Acme.MyRequest,
+      requestOptions?: Service.RequestOptions
+  ): Promise<void> {
+    ...
+  }
+  ```
+
+## [0.18.3] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
+## [0.18.2] - 2024-05-15
+
+- Fix: If OAuth is configured, the generated `getAuthorizationHeader` helper now treats the
+  bearer token as optional. This prevents us from sending the `Authorization` header
+  when retrieving the access token.
+
+## [0.18.1] - 2024-05-14
+
+- Fix: If OAuth environment variables are specified, the `clientId` and `clientSecret` parameters
+  are optional.
+
+  ```ts
+  export declare namespace Client {
+    interface Options {
+        ...
+        clientId?: core.Supplier<string>;
+        clientSecret?: core.Supplier<string>;
+    }
+    ...
+  }
+  ```
+
+## [0.18.0] - 2024-05-13
+
+- Feature: Add support for the OAuth client credentials flow. The new `OAuthTokenProvider` automatically
+  resolves the access token and refreshes it as needed. The resolved access token is then used as the
+  bearer token in all client requests.
+
+## [0.17.1] - 2024-05-06
+
+- Fix: Multipart form data requests are now compatible across browser and Node.js runtimes.
+
+## [0.17.0] - 2024-05-06
+
+- Internal: Bump to v43 of IR which means that you will need `0.26.1` of the Fern CLI version. To bump your
+  CLI version, please run `fern upgrade`.
+
+## [0.16.0-rc8] - 2024-05-06
+
+- Improvement: The SDK generator now supports upload endpoints that specify an array of files like so:
+
+  ```ts
+  /**
+    * @param {File[] | fs.ReadStream[]} files
+    * @param {Acme.UploadFileRequest} request
+    * @param {Service.RequestOptions} requestOptions - Request-specific configuration.
+    */
+  public async post(
+      files: File[] | fs.ReadStream[],
+      request: Acme.UploadFileRequest,
+      requestOptions?: Service.RequestOptions
+  ): Promise<void> {
+      const _request = new FormData();
+      for (const _file of files) {
+        _request.append("files", _file);
+      }
+      ...
+  }
+  ```
+
 ## [0.16.0-rc7] - 2024-05-02
 
 - Improvement: The SDK generator now supports `@param` JSDoc comments for endpoint parameters.

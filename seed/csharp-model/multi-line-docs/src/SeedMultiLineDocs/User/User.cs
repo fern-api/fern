@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedMultiLineDocs;
 
 public class User
@@ -21,5 +23,5 @@ public class User
     /// The user's age.
     /// </summary>
     [JsonPropertyName("age")]
-    public List<int?> Age { get; init; }
+    public int? Age { get; init; }
 }

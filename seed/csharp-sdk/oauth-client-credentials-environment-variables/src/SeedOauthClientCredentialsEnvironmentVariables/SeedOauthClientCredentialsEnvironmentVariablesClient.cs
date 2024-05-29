@@ -1,5 +1,7 @@
 using SeedOauthClientCredentialsEnvironmentVariables;
 
+#nullable enable
+
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
 public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
@@ -8,11 +10,11 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
 
     public SeedOauthClientCredentialsEnvironmentVariablesClient(
         string token,
-        ClientOptions clientOptions
+        ClientOptions clientOptions = null
     )
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Auth = new AuthClient(_client);

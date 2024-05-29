@@ -19,7 +19,8 @@ export interface AuthServiceMethods {
             send: (responseBody: SeedOauthClientCredentials.TokenResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     refreshToken(
         req: express.Request<
@@ -32,7 +33,8 @@ export interface AuthServiceMethods {
             send: (responseBody: SeedOauthClientCredentials.TokenResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -59,20 +61,23 @@ export class AuthService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getTokenWithClientCredentials(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.TokenResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getTokenWithClientCredentials(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.TokenResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedOauthClientCredentialsError) {
                         console.warn(
                             `Endpoint 'getTokenWithClientCredentials' unexpectedly threw ${error.constructor.name}.` +
@@ -99,20 +104,23 @@ export class AuthService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.refreshToken(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.TokenResponse.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.refreshToken(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.TokenResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedOauthClientCredentialsError) {
                         console.warn(
                             `Endpoint 'refreshToken' unexpectedly threw ${error.constructor.name}.` +

@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class RecordedResponseNotification
@@ -11,5 +13,5 @@ public class RecordedResponseNotification
     public int TraceResponsesSize { get; init; }
 
     [JsonPropertyName("testCaseId")]
-    public List<string?> TestCaseId { get; init; }
+    public string? TestCaseId { get; init; }
 }

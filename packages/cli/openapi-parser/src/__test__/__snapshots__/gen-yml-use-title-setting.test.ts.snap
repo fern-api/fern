@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser gen-yml-use-title parse open api 1`] = `
+{
+  "basePath": null,
+  "channel": [],
+  "description": null,
+  "endpoints": [],
+  "globalHeaders": [],
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [],
+  "schemas": {
+    "SchemaWithALongNameIsRightHereAndNotSomewhereElse": {
+      "additionalProperties": false,
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": null,
+      "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElse",
+      "groupName": null,
+      "nameOverride": null,
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
+          "key": "id",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
+            "groupName": null,
+            "nameOverride": null,
+            "type": "optional",
+            "value": {
+              "description": null,
+              "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElseId",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": {
+                "default": null,
+                "format": "uuid",
+                "maxLength": null,
+                "minLength": null,
+                "pattern": null,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": null,
+    "tagsById": {},
+  },
+  "title": "Test setting to disable usage of title param",
+  "variables": {},
+  "webhooks": [],
+}
+`;

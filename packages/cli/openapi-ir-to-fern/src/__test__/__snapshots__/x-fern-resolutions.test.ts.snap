@@ -24,6 +24,7 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user",
             "response": {
               "docs": "Success",
@@ -45,6 +46,7 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/users",
             "response": {
               "docs": "Success",
@@ -60,7 +62,17 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
       "User": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },
@@ -99,6 +111,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user",
             "response": {
               "docs": "Success",
@@ -120,6 +133,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/users",
             "response": {
               "docs": "Success",
@@ -135,7 +149,17 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
       "User": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },

@@ -20,7 +20,8 @@ export interface ServiceServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     ping(
         req: express.Request<never, boolean, never, never>,
@@ -28,7 +29,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -52,16 +54,19 @@ export class ServiceService {
     public toRouter(): express.Router {
         this.router.get("/check/:id", async (req, res, next) => {
             try {
-                await this.methods.check(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.check(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExamplesError) {
                     console.warn(
                         `Endpoint 'check' unexpectedly threw ${error.constructor.name}.` +
@@ -77,20 +82,23 @@ export class ServiceService {
         });
         this.router.get("/ping", async (req, res, next) => {
             try {
-                await this.methods.ping(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.health.service.ping.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.ping(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.health.service.ping.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExamplesError) {
                     console.warn(
                         `Endpoint 'ping' unexpectedly threw ${error.constructor.name}.` +

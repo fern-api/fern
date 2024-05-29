@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace.V2.V3;
 
 public class GetFunctionSignatureResponse
 {
     [JsonPropertyName("functionByLanguage")]
-    public List<Dictionary<Language, string>> FunctionByLanguage { get; init; }
+    public Dictionary<Language, string> FunctionByLanguage { get; init; }
 }

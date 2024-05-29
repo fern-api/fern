@@ -43,164 +43,186 @@ export function getSchemaFromFernType({
     description: string | undefined;
     groupName: string[] | undefined;
 }): SchemaWithExample | undefined {
-    return recursivelyVisitRawTypeReference<SchemaWithExample | undefined>(fernType, {
-        primitive: (primitive) => {
-            switch (primitive) {
-                case "BASE_64":
-                    return SchemaWithExample.primitive({
-                        nameOverride,
-                        generatedName,
-                        description,
-                        groupName,
-                        schema: PrimitiveSchemaValueWithExample.base64({
-                            example: undefined
-                        })
-                    });
-                case "BOOLEAN":
-                    return SchemaWithExample.primitive({
-                        nameOverride,
-                        generatedName,
-                        description,
-                        groupName,
-                        schema: PrimitiveSchemaValueWithExample.boolean({
-                            example: undefined
-                        })
-                    });
-                case "DATE":
-                    return SchemaWithExample.primitive({
-                        nameOverride,
-                        generatedName,
-                        description,
-                        groupName,
-                        schema: PrimitiveSchemaValueWithExample.date({
-                            example: undefined
-                        })
-                    });
-                case "DATE_TIME":
-                    return SchemaWithExample.primitive({
-                        nameOverride,
-                        generatedName,
-                        description,
-                        groupName,
-                        schema: PrimitiveSchemaValueWithExample.datetime({
-                            example: undefined
-                        })
-                    });
-                case "DOUBLE":
-                    return SchemaWithExample.primitive({
-                        nameOverride,
-                        generatedName,
-                        description,
-                        groupName,
-                        schema: PrimitiveSchemaValueWithExample.double({
-                            example: undefined
-                        })
-                    });
-                case "INTEGER":
-                    return SchemaWithExample.primitive({
-                        nameOverride,
-                        generatedName,
-                        description,
-                        groupName,
-                        schema: PrimitiveSchemaValueWithExample.int({
-                            example: undefined
-                        })
-                    });
-                case "LONG":
-                    return SchemaWithExample.primitive({
-                        nameOverride,
-                        generatedName,
-                        description,
-                        groupName,
-                        schema: PrimitiveSchemaValueWithExample.int64({
-                            example: undefined
-                        })
-                    });
-                case "STRING":
-                case "UUID":
-                    return SchemaWithExample.primitive({
-                        nameOverride,
-                        generatedName,
-                        description,
-                        groupName,
-                        schema: PrimitiveSchemaValueWithExample.string({
-                            maxLength: undefined,
-                            minLength: undefined,
-                            example: undefined,
-                            format: undefined
-                        })
-                    });
-                default:
-                    assertNever(primitive);
-            }
-        },
-        unknown: () => {
-            return SchemaWithExample.unknown({
-                nameOverride,
-                generatedName,
-                example: undefined,
-                description,
-                groupName
-            });
-        },
-        map: ({ keyType, valueType }) =>
-            keyType?.type === "primitive" && valueType != null
-                ? SchemaWithExample.map({
-                      nameOverride,
-                      generatedName,
-                      key: keyType,
-                      value: valueType,
-                      description,
-                      groupName,
-                      example: undefined
-                  })
-                : undefined,
-        list: (itemType) =>
-            itemType != null
-                ? SchemaWithExample.array({
-                      nameOverride,
-                      generatedName,
-                      value: itemType,
-                      description,
-                      groupName
-                  })
-                : undefined,
-        optional: (itemType) =>
-            itemType != null
-                ? SchemaWithExample.optional({
-                      nameOverride,
-                      generatedName,
-                      value: itemType,
-                      description,
-                      groupName
-                  })
-                : undefined,
-        set: (itemType) =>
-            itemType != null
-                ? SchemaWithExample.array({
-                      nameOverride,
-                      generatedName,
-                      value: itemType,
-                      description,
-                      groupName
-                  })
-                : undefined,
-        literal: (literal) =>
-            SchemaWithExample.literal({
-                nameOverride,
-                generatedName,
-                value: literal._visit<LiteralSchemaValue>({
-                    string: (value) => LiteralSchemaValue.string(value),
-                    boolean: (value) => LiteralSchemaValue.boolean(value),
-                    _other: () => {
-                        throw new Error("Unexpected literal type");
-                    }
+    return recursivelyVisitRawTypeReference<SchemaWithExample | undefined>({
+        type: fernType,
+        _default: undefined,
+        validation: undefined,
+        visitor: {
+            primitive: (primitive) => {
+                switch (primitive.v1) {
+                    case "BASE_64":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.base64({
+                                example: undefined
+                            })
+                        });
+                    case "BOOLEAN":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.boolean({
+                                example: undefined
+                            })
+                        });
+                    case "DATE":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.date({
+                                example: undefined
+                            })
+                        });
+                    case "DATE_TIME":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.datetime({
+                                example: undefined
+                            })
+                        });
+                    case "DOUBLE":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.double({
+                                default: undefined,
+                                minimum: undefined,
+                                maximum: undefined,
+                                exclusiveMinimum: undefined,
+                                exclusiveMaximum: undefined,
+                                multipleOf: undefined,
+                                example: undefined
+                            })
+                        });
+                    case "INTEGER":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.int({
+                                default: undefined,
+                                minimum: undefined,
+                                maximum: undefined,
+                                exclusiveMinimum: undefined,
+                                exclusiveMaximum: undefined,
+                                multipleOf: undefined,
+                                example: undefined
+                            })
+                        });
+                    case "LONG":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.int64({
+                                example: undefined
+                            })
+                        });
+                    case "STRING":
+                    case "UUID":
+                    case "BIG_INTEGER":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.string({
+                                default: undefined,
+                                pattern: undefined,
+                                maxLength: undefined,
+                                minLength: undefined,
+                                example: undefined,
+                                format: undefined
+                            })
+                        });
+                    default:
+                        assertNever(primitive.v1);
+                }
+            },
+            unknown: () => {
+                return SchemaWithExample.unknown({
+                    nameOverride,
+                    generatedName,
+                    example: undefined,
+                    description,
+                    groupName
+                });
+            },
+            map: ({ keyType, valueType }) =>
+                keyType?.type === "primitive" && valueType != null
+                    ? SchemaWithExample.map({
+                          nameOverride,
+                          generatedName,
+                          key: keyType,
+                          value: valueType,
+                          description,
+                          groupName,
+                          example: undefined
+                      })
+                    : undefined,
+            list: (itemType) =>
+                itemType != null
+                    ? SchemaWithExample.array({
+                          nameOverride,
+                          generatedName,
+                          value: itemType,
+                          description,
+                          groupName,
+                          example: undefined
+                      })
+                    : undefined,
+            optional: (itemType) =>
+                itemType != null
+                    ? SchemaWithExample.optional({
+                          nameOverride,
+                          generatedName,
+                          value: itemType,
+                          description,
+                          groupName
+                      })
+                    : undefined,
+            set: (itemType) =>
+                itemType != null
+                    ? SchemaWithExample.array({
+                          nameOverride,
+                          generatedName,
+                          value: itemType,
+                          description,
+                          groupName,
+                          example: undefined
+                      })
+                    : undefined,
+            literal: (literal) =>
+                SchemaWithExample.literal({
+                    nameOverride,
+                    generatedName,
+                    value: literal._visit<LiteralSchemaValue>({
+                        string: (value) => LiteralSchemaValue.string(value),
+                        boolean: (value) => LiteralSchemaValue.boolean(value),
+                        _other: () => {
+                            throw new Error("Unexpected literal type");
+                        }
+                    }),
+                    description,
+                    groupName
                 }),
-                description,
-                groupName
-            }),
-        named: () => {
-            return undefined;
+            named: () => {
+                return undefined;
+            }
         }
     });
 }

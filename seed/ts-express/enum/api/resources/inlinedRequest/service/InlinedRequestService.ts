@@ -14,7 +14,8 @@ export interface InlinedRequestServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -41,16 +42,19 @@ export class InlinedRequestService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.send(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.send(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedEnumError) {
                         console.warn(
                             `Endpoint 'send' unexpectedly threw ${error.constructor.name}.` +

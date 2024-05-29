@@ -21,7 +21,8 @@ export interface SyspropServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getNumWarmInstances(
         req: express.Request<never, Record<SeedTrace.Language, number | undefined>, never, never>,
@@ -29,7 +30,8 @@ export interface SyspropServiceMethods {
             send: (responseBody: Record<SeedTrace.Language, number | undefined>) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -53,16 +55,19 @@ export class SyspropService {
     public toRouter(): express.Router {
         this.router.put("/num-warm-instances/:language/:numWarmInstances", async (req, res, next) => {
             try {
-                await this.methods.setNumWarmInstances(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.setNumWarmInstances(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'setNumWarmInstances' unexpectedly threw ${error.constructor.name}.` +
@@ -78,16 +83,19 @@ export class SyspropService {
         });
         this.router.get("/num-warm-instances", async (req, res, next) => {
             try {
-                await this.methods.getNumWarmInstances(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.getNumWarmInstances(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getNumWarmInstances' unexpectedly threw ${error.constructor.name}.` +

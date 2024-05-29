@@ -96,6 +96,8 @@ export declare namespace SdkContextImpl {
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        generateOAuthClients: boolean;
+        inlineFileProperties: boolean;
     }
 }
 
@@ -125,6 +127,8 @@ export class SdkContextImpl implements SdkContext {
     public readonly targetRuntime: JavaScriptRuntime;
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
+    public readonly inlineFileProperties: boolean;
+    public readonly generateOAuthClients: boolean;
 
     constructor({
         npmPackage,
@@ -166,11 +170,15 @@ export class SdkContextImpl implements SdkContext {
         fernConstants,
         includeSerdeLayer,
         retainOriginalCasing,
-        targetRuntime
+        targetRuntime,
+        inlineFileProperties,
+        generateOAuthClients
     }: SdkContextImpl.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
         this.targetRuntime = targetRuntime;
+        this.generateOAuthClients = generateOAuthClients;
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = camelCase(this.namespaceExport);
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
@@ -241,7 +249,8 @@ export class SdkContextImpl implements SdkContext {
             sourceFile: this.sourceFile,
             importsManager,
             includeSerdeLayer,
-            retainOriginalCasing
+            retainOriginalCasing,
+            inlineFileProperties
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

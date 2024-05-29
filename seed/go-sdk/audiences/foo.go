@@ -10,14 +10,19 @@ import (
 
 type FindRequest struct {
 	OptionalString  OptionalString `json:"-" url:"optionalString,omitempty"`
-	PublicProperty  *string        `json:"publicProperty,omitempty" url:"publicProperty,omitempty"`
-	PrivateProperty *int           `json:"privateProperty,omitempty" url:"privateProperty,omitempty"`
+	PublicProperty  *string        `json:"publicProperty,omitempty" url:"-"`
+	PrivateProperty *int           `json:"privateProperty,omitempty" url:"-"`
 }
 
 type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (i *ImportingType) GetExtraProperties() map[string]interface{} {
+	return i.extraProperties
 }
 
 func (i *ImportingType) UnmarshalJSON(data []byte) error {
@@ -27,6 +32,13 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*i = ImportingType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+
 	i._rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class WorkspaceStarterFilesResponse
 {
     [JsonPropertyName("files")]
-    public List<Dictionary<Language, WorkspaceFiles>> Files { get; init; }
+    public Dictionary<Language, WorkspaceFiles> Files { get; init; }
 }

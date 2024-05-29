@@ -21,7 +21,8 @@ export interface UnionServiceMethods {
             send: (responseBody: SeedUnions.Shape) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     update(
         req: express.Request<never, boolean, SeedUnions.Shape, never>,
@@ -29,7 +30,8 @@ export interface UnionServiceMethods {
             send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -53,18 +55,21 @@ export class UnionService {
     public toRouter(): express.Router {
         this.router.get("/:id", async (req, res, next) => {
             try {
-                await this.methods.get(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.Shape.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                        );
+                await this.methods.get(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Shape.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedUnionsError) {
                     console.warn(
                         `Endpoint 'get' unexpectedly threw ${error.constructor.name}.` +
@@ -83,20 +88,23 @@ export class UnionService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.update(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.union.update.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.update(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.union.update.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedUnionsError) {
                         console.warn(
                             `Endpoint 'update' unexpectedly threw ${error.constructor.name}.` +

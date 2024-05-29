@@ -1,4 +1,4 @@
-irVersion: v38
+irVersion: v43
 docker: fernapi/fern-typescript-express:local
 dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
 language: typescript
@@ -27,6 +27,12 @@ fixtures:
     - customConfig:
         outputSourceFiles: false
       outputFolder: output-compiled
+    - customConfig: 
+        skipRequestValidation: true
+      outputFolder: skip-request-validation
+    - customConfig: 
+        skipResponseValidation: true
+      outputFolder: skip-response-validation
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config

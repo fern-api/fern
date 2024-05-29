@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedPagination;
 
+#nullable enable
+
 namespace SeedPagination;
 
 public class Page
@@ -12,7 +14,7 @@ public class Page
     public int Page_ { get; init; }
 
     [JsonPropertyName("next")]
-    public List<NextPage?> Next { get; init; }
+    public NextPage? Next { get; init; }
 
     [JsonPropertyName("per_page")]
     public int PerPage { get; init; }

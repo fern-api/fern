@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_.echo"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/file/notification/{notificationId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_file/notification/service.getException"
             },
             "snippet": {
                 "type": "typescript",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/file/{filename}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_file/service.getFile"
             },
             "snippet": {
                 "type": "typescript",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/check/{id}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.check"
             },
             "snippet": {
                 "type": "typescript",
@@ -43,7 +47,8 @@
         {
             "id": {
                 "path": "/ping",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_health/service.ping"
             },
             "snippet": {
                 "type": "typescript",
@@ -53,7 +58,8 @@
         {
             "id": {
                 "path": "/movie/{movieId}",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.getMovie"
             },
             "snippet": {
                 "type": "typescript",
@@ -63,7 +69,8 @@
         {
             "id": {
                 "path": "/movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.createMovie"
             },
             "snippet": {
                 "type": "typescript",
@@ -73,11 +80,23 @@
         {
             "id": {
                 "path": "/metadata",
-                "method": "GET"
+                "method": "GET",
+                "identifier_override": "endpoint_service.getMetadata"
             },
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getMetadata({\n    \"X-API-Version\": \"0.0.1\",\n    shallow: false,\n    tag: \"development\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/response",
+                "method": "POST",
+                "identifier_override": "endpoint_service.getResponse"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"@fern/examples\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getResponse();\n"
             }
         }
     ],

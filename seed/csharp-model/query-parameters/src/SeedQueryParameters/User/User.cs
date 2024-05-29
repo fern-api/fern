@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedQueryParameters;
 
 public class User
@@ -8,5 +10,5 @@ public class User
     public string Name { get; init; }
 
     [JsonPropertyName("tags")]
-    public List<List<string>> Tags { get; init; }
+    public List<string> Tags { get; init; }
 }

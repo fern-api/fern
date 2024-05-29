@@ -1,4 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
+import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
@@ -57,11 +58,28 @@ export function buildEndpoint({
         names.add(queryParameter.name);
     }
 
+    let pagination: RawSchemas.PaginationSchema | undefined = undefined;
+    if (endpoint.pagination != null) {
+        if (endpoint.pagination.type === "cursor") {
+            pagination = {
+                cursor: endpoint.pagination.cursor,
+                next_cursor: endpoint.pagination.nextCursor,
+                results: endpoint.pagination.results
+            };
+        } else {
+            pagination = {
+                offset: endpoint.pagination.offset,
+                results: endpoint.pagination.results
+            };
+        }
+    }
+
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
         path: endpoint.path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
-        docs: endpoint.description ?? undefined
+        docs: endpoint.description ?? undefined,
+        pagination
     };
 
     if (Object.keys(pathParameters).length > 0) {
@@ -251,7 +269,10 @@ export function buildEndpoint({
                     docs: example.description
                 };
 
-                context.builder.addTypeExample(fileContainingReference, errorTypeReference, convertedExample);
+                context.builder.addErrorExample(ERROR_DECLARATIONS_FILENAME, {
+                    name: errorName,
+                    example: convertedExample
+                });
             });
         }
     });
@@ -403,6 +424,9 @@ function getRequest({
         if (extendedSchemas.length > 0) {
             requestBodySchema.extends = extendedSchemas;
         }
+        if (request.additionalProperties) {
+            requestBodySchema["extra-properties"] = true;
+        }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
             name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
@@ -422,10 +446,10 @@ function getRequest({
             schemaIdsToExclude: [],
             value: {
                 body: "bytes",
-                "content-type": "application/octet-stream"
+                "content-type": MediaType.APPLICATION_OCTET_STREAM
             }
         };
-    } else {
+    } else if (request.type === "multipart") {
         // multipart
         const properties = Object.fromEntries(
             request.properties.map((property) => {
@@ -451,8 +475,10 @@ function getRequest({
                 body: {
                     properties
                 },
-                "content-type": "multipart/form-data"
+                "content-type": MediaType.MULTIPART_FORM_DATA
             }
         };
+    } else {
+        assertNever(request);
     }
 }

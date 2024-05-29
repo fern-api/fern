@@ -30,6 +30,7 @@ class ClientConfiguration(pydantic.BaseModel):
 
 class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, str] = {}
+    extra_dev_dependencies: Dict[str, str] = {}
     skip_formatting: bool = False
     client: ClientConfiguration = ClientConfiguration()
     include_union_utils: bool = False
@@ -47,12 +48,17 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.
-    inline_request_params: bool = False
+    inline_request_params: bool = True
 
     # deprecated, use client config instead
     client_class_name: Optional[str] = None
     # deprecated, use client config instead
     client_filename: Optional[str] = None
+
+    # WARNING - this changes your declared python dependency, which is not meant to
+    # be done often if at all. This is a last resort if any dependencies force you
+    # to change your version requirements.
+    pyproject_python_version: Optional[str] = "^3.8"
 
     class Config:
         extra = pydantic.Extra.forbid

@@ -1,5 +1,7 @@
 using SeedNurseryApi;
 
+#nullable enable
+
 namespace SeedNurseryApi;
 
 public class PackageClient
@@ -11,5 +13,16 @@ public class PackageClient
         _client = client;
     }
 
-    public async void TestAsync() { }
+    public async void TestAsync(TestRequest request)
+    {
+        var _query = new Dictionary<string, object>() { { "for", request.For }, };
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "",
+                Query = _query
+            }
+        );
+    }
 }

@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using SeedTrace.V2.V3;
 
+#nullable enable
+
 namespace SeedTrace.V2.V3;
 
 public class TestCaseImplementationDescription
 {
     [JsonPropertyName("boards")]
-    public List<List<TestCaseImplementationDescriptionBoard>> Boards { get; init; }
+    public List<TestCaseImplementationDescriptionBoard> Boards { get; init; }
 }

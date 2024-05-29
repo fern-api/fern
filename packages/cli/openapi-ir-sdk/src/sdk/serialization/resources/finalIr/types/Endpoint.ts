@@ -44,6 +44,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             examples: core.serialization.list(
                 core.serialization.lazy(async () => (await import("../../..")).EndpointExample)
             ),
+            pagination: core.serialization.lazy(async () => (await import("../../..")).Pagination).optional(),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -69,5 +70,6 @@ export declare namespace Endpoint {
         errors: Record<serializers.StatusCode.Raw, serializers.HttpError.Raw>;
         server: serializers.Server.Raw[];
         examples: serializers.EndpointExample.Raw[];
+        pagination?: serializers.Pagination.Raw | null;
     }
 }

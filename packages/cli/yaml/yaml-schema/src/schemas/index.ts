@@ -20,7 +20,12 @@ export { ErrorDiscriminationSchema } from "./ErrorDiscriminationSchema";
 export { ErrorReferenceSchema } from "./ErrorReferenceSchema";
 export { ExampleCodeSampleSchema, SupportedSdkLanguageSchema } from "./ExampleCodeSampleSchema";
 export { ExampleEndpointCallArraySchema, ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
-export { ExampleResponseSchema } from "./ExampleResponseSchema";
+export {
+    ExampleBodyResponseSchema,
+    ExampleResponseSchema,
+    ExampleSseResponseSchema,
+    ExampleStreamResponseSchema
+} from "./ExampleResponseSchema";
 export { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
 export { ExampleTypeSchema } from "./ExampleTypeSchema";
 export { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";
@@ -39,9 +44,13 @@ export { HttpResponseSchema } from "./HttpResponseSchema";
 export { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 export { HttpServiceSchema } from "./HttpServiceSchema";
 export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlsEnvironmentSchema";
+export { NumberValidationSchema } from "./NumberValidationSchema";
+export { OAuthAccessTokenRequestPropertiesSchema } from "./OAuthAccessTokenRequestPropertiesSchema";
+export { OAuthAccessTokenResponsePropertiesSchema } from "./OAuthAccessTokenResponsePropertiesSchema";
 export { OAuthClientCredentialsSchema } from "./OAuthClientCredentialsSchema";
 export { OAuthGetTokenEndpointSchema } from "./OAuthGetTokenEndpointSchema";
 export { OAuthRefreshTokenEndpointSchema } from "./OAuthRefreshTokenEndpointSchema";
+export { OAuthRefreshTokenRequestPropertiesSchema } from "./OAuthRefreshTokenRequestPropertiesSchema";
 export { OAuthSchemeSchema } from "./OAuthSchemeSchema";
 export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
@@ -53,9 +62,11 @@ export { SingleBaseUrlEnvironmentSchema } from "./SingleBaseUrlEnvironmentSchema
 export { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
 export { SingleUnionTypeSchema } from "./SingleUnionTypeSchema";
 export { StatusCodeErrorDiscriminationSchema } from "./StatusCodeErrorDiscriminationSchema";
+export { StringValidationSchema } from "./StringValidationSchema";
 export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema, TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
+export { ValidationSchema } from "./ValidationSchema";
 export { VariableDeclarationSchema } from "./VariableDeclarationSchema";
 export { WebhookInlinedPayloadSchema } from "./WebhookInlinedPayloadSchema";
 export { WebhookPayloadSchema } from "./WebhookPayloadSchema";

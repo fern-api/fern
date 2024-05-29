@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedLiteral;
 
 public class SendResponse
@@ -11,5 +13,5 @@ public class SendResponse
     public int Status { get; init; }
 
     [JsonPropertyName("success")]
-    public List<bool> Success { get; init; }
+    public bool Success { get; init; }
 }

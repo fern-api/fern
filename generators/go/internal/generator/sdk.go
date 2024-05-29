@@ -1568,8 +1568,9 @@ func newGeneratedEndpoint(
 
 func endpointToIdentifier(endpoint *ir.HttpEndpoint) *generatorexec.EndpointIdentifier {
 	return &generatorexec.EndpointIdentifier{
-		Path:   fullPathForEndpoint(endpoint),
-		Method: irMethodToGeneratorExecMethod(endpoint.Method),
+		Path:               fullPathForEndpoint(endpoint),
+		Method:             irMethodToGeneratorExecMethod(endpoint.Method),
+		IdentifierOverride: &endpoint.Id,
 	}
 }
 
@@ -2534,7 +2535,7 @@ func (f *fileWriter) WriteRequestType(
 	}
 	if requestBody.extraProperties {
 		f.P()
-		writeExtractExtraProperties(f, literals, receiver)
+		writeExtractExtraProperties(f, literals, receiver, getExtraPropertiesFieldName(requestBody.extraProperties))
 	}
 	f.P("return nil")
 	f.P("}")
@@ -2821,7 +2822,12 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 		writer:         r.writer,
 	}
 	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
-	objectProperties := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, r.includeGenericOptionals)
+	objectProperties := typeVisitor.visitObjectProperties(
+		objectTypeDeclaration,
+		true,  // includeJSONTags
+		false, // includeURLTags
+		r.includeGenericOptionals,
+	)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals
 	r.extraProperties = objectTypeDeclaration.ExtraProperties
@@ -2859,7 +2865,12 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 		writer:         r.writer,
 	}
 	objectTypeDeclaration := inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties)
-	objectProperties := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, r.includeGenericOptionals)
+	objectProperties := typeVisitor.visitObjectProperties(
+		objectTypeDeclaration,
+		true,  // includeJSONTags
+		false, // includeURLTags
+		r.includeGenericOptionals,
+	)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals
 	return nil

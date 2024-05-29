@@ -132,9 +132,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/dummy",
                         "parts": []
@@ -146,6 +147,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -160,9 +162,38 @@
                         }
                     },
                     "errors": [],
-                    "auth": true,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/dummy",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -260,6 +291,7 @@
         "sharedTypes": []
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_dummy": {
             "name": {
@@ -330,6 +362,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -340,6 +373,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],

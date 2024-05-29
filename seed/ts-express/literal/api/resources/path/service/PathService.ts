@@ -21,7 +21,8 @@ export interface PathServiceMethods {
             send: (responseBody: SeedLiteral.SendResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -45,20 +46,23 @@ export class PathService {
     public toRouter(): express.Router {
         this.router.post("/path/:id", async (req, res, next) => {
             try {
-                await this.methods.send(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.SendResponse.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.send(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.SendResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedLiteralError) {
                     console.warn(
                         `Endpoint 'send' unexpectedly threw ${error.constructor.name}.` +

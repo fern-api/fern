@@ -21,7 +21,8 @@ export interface SubmissionServiceMethods {
             send: (responseBody: SeedTrace.ExecutionSessionResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getExecutionSession(
         req: express.Request<
@@ -36,7 +37,8 @@ export interface SubmissionServiceMethods {
             send: (responseBody: SeedTrace.ExecutionSessionResponse | undefined) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     stopExecutionSession(
         req: express.Request<
@@ -51,7 +53,8 @@ export interface SubmissionServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getExecutionSessionsState(
         req: express.Request<never, SeedTrace.GetExecutionSessionStateResponse, never, never>,
@@ -59,7 +62,8 @@ export interface SubmissionServiceMethods {
             send: (responseBody: SeedTrace.GetExecutionSessionStateResponse) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -86,20 +90,23 @@ export class SubmissionService {
     public toRouter(): express.Router {
         this.router.post("/create-session/:language", async (req, res, next) => {
             try {
-                await this.methods.createExecutionSession(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.ExecutionSessionResponse.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.createExecutionSession(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.ExecutionSessionResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'createExecutionSession' unexpectedly threw ${error.constructor.name}.` +
@@ -115,20 +122,23 @@ export class SubmissionService {
         });
         this.router.get("/:sessionId", async (req, res, next) => {
             try {
-                await this.methods.getExecutionSession(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.submission.getExecutionSession.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getExecutionSession(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.submission.getExecutionSession.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getExecutionSession' unexpectedly threw ${error.constructor.name}.` +
@@ -144,16 +154,19 @@ export class SubmissionService {
         });
         this.router.delete("/stop/:sessionId", async (req, res, next) => {
             try {
-                await this.methods.stopExecutionSession(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.stopExecutionSession(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'stopExecutionSession' unexpectedly threw ${error.constructor.name}.` +
@@ -169,20 +182,23 @@ export class SubmissionService {
         });
         this.router.get("/execution-sessions-state", async (req, res, next) => {
             try {
-                await this.methods.getExecutionSessionsState(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.GetExecutionSessionStateResponse.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getExecutionSessionsState(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.GetExecutionSessionStateResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getExecutionSessionsState' unexpectedly threw ${error.constructor.name}.` +

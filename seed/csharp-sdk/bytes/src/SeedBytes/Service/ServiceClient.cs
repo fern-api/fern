@@ -1,5 +1,7 @@
 using SeedBytes;
 
+#nullable enable
+
 namespace SeedBytes;
 
 public class ServiceClient
@@ -11,5 +13,10 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void UploadAsync() { }
+    public async void UploadAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/upload-content" }
+        );
+    }
 }

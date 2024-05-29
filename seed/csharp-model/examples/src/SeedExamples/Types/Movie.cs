@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public class Movie
@@ -8,7 +10,7 @@ public class Movie
     public string Id { get; init; }
 
     [JsonPropertyName("prequel")]
-    public List<string?> Prequel { get; init; }
+    public string? Prequel { get; init; }
 
     [JsonPropertyName("title")]
     public string Title { get; init; }
@@ -23,14 +25,14 @@ public class Movie
     public double Rating { get; init; }
 
     [JsonPropertyName("type")]
-    public List<string> Type { get; init; }
+    public string Type { get; init; }
 
     [JsonPropertyName("tag")]
     public string Tag { get; init; }
 
     [JsonPropertyName("book")]
-    public List<string?> Book { get; init; }
+    public string? Book { get; init; }
 
     [JsonPropertyName("metadata")]
-    public List<Dictionary<string, object>> Metadata { get; init; }
+    public Dictionary<string, object> Metadata { get; init; }
 }

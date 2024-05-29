@@ -1,5 +1,7 @@
 using SeedFileUpload;
 
+#nullable enable
+
 namespace SeedFileUpload;
 
 public class ServiceClient
@@ -11,9 +13,46 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void PostAsync() { }
+    public async void PostAsync(MyRequest request)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
+        );
+    }
 
-    public async void JustFileAsync() { }
+    public async void JustFileAsync(JustFileRequet request)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/just-file" }
+        );
+    }
 
-    public async void JustFileWithQueryParamsAsync() { }
+    public async void JustFileWithQueryParamsAsync(JustFileWithQueryParamsRequet request)
+    {
+        var _query = new Dictionary<string, object>()
+        {
+            { "integer", request.Integer.ToString() },
+            { "listOfStrings", request.ListOfStrings },
+        };
+        if (request.MaybeString != null)
+        {
+            _query["maybeString"] = request.MaybeString;
+        }
+        if (request.MaybeInteger != null)
+        {
+            _query["maybeInteger"] = request.MaybeInteger;
+        }
+        if (request.OptionalListOfStrings != null)
+        {
+            _query["optionalListOfStrings"] = request.OptionalListOfStrings;
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/just-file-with-query-params",
+                Query = _query
+            }
+        );
+    }
 }

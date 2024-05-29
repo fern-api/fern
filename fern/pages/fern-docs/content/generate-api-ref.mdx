@@ -5,13 +5,25 @@ description: Use Fern Docs to generate your API reference documentation from you
 
 A key benefit of using Fern Docs is that once you've defined your API, you get your API Reference documentation with just one line.
 Add `- api: API Reference` to your navigation in `docs.yml` and Fern takes care of the rest! You'll see your endpoints, types,
-and errors automatically populated from your [OpenAPI specification](/learn/overview/define-your-api/openapi/overview) or [Fern Definition](/learn/overview/define-your-api/ferndef/overview).
+and errors automatically populated from your [OpenAPI specification](/learn/api-definition/openapi/overview) or [Fern Definition](/learn/api-definition/fern/overview).
 
 Example:
 
-<CodeBlock title='docs.yml'>
-```yml
+```yml docs.yml
 navigation:
   - api: API Reference
 ```
-</CodeBlock>
+
+| Property         | Description                                                                                   |
+| ---------------- | --------------------------------------------------------------------------------------------- |
+| `api` (required) | Title of the API Reference Section                                                            |
+| `api-name`       | Name of the API we are referencing, if there are multiple APIs                                |
+| `audiences`      | List of audiences to filter the API reference for                                             |
+| `display-errors` | Displays error schemas in the API references                                                  |
+| `snippets`       | Enable [generated SDK code snippets](/docs/api-references/sdk-snippets) in your API reference |
+| `summary`        | Relative path to the markdown file. This summary is displayed at the top of the API section   |
+| `layout`         | Customize the order that your API endpoints are displayed in the docs site                    |
+| `icon`           | Icon to display next to the API section in the navigation                                     |
+| `slug`           | Customize the slug for the API section (By default, the slug is generated from the API title) |
+| `skip-slug`      | Skip the slug generation for the API section                                                  |
+| `flattened`      | Display all endpoints at the top level (hides the API Reference Section's title)              |

@@ -14,6 +14,7 @@ from ....core.route_args import get_route_args
 from ...types.types.metadata import Metadata
 from ...types.types.movie import Movie
 from ...types.types.movie_id import MovieId
+from ...types.types.response import Response
 
 
 class AbstractServiceService(AbstractFernService):
@@ -43,6 +44,10 @@ class AbstractServiceService(AbstractFernService):
     ) -> Metadata:
         ...
 
+    @abc.abstractmethod
+    def get_response(self) -> Response:
+        ...
+
     """
     Below are internal methods used by Fern to register your implementation.
     You can ignore them.
@@ -53,6 +58,7 @@ class AbstractServiceService(AbstractFernService):
         cls.__init_get_movie(router=router)
         cls.__init_create_movie(router=router)
         cls.__init_get_metadata(router=router)
+        cls.__init_get_response(router=router)
 
     @classmethod
     def __init_get_movie(cls, router: fastapi.APIRouter) -> None:
@@ -84,7 +90,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.get_movie.__globals__)
 
         router.get(
-            path="//movie/{movie_id}",
+            path="/movie/{movie_id}",
             response_model=Movie,
             description=AbstractServiceService.get_movie.__doc__,
             **get_route_args(cls.get_movie, default_tag="service"),
@@ -120,7 +126,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.create_movie.__globals__)
 
         router.post(
-            path="//movie",
+            path="/movie",
             response_model=MovieId,
             description=AbstractServiceService.create_movie.__doc__,
             **get_route_args(cls.create_movie, default_tag="service"),
@@ -160,8 +166,42 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.get_metadata.__globals__)
 
         router.get(
-            path="//metadata",
+            path="/metadata",
             response_model=Metadata,
             description=AbstractServiceService.get_metadata.__doc__,
             **get_route_args(cls.get_metadata, default_tag="service"),
+        )(wrapper)
+
+    @classmethod
+    def __init_get_response(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.get_response)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            else:
+                new_parameters.append(parameter)
+        setattr(cls.get_response, "__signature__", endpoint_function.replace(parameters=new_parameters))
+
+        @functools.wraps(cls.get_response)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> Response:
+            try:
+                return cls.get_response(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'get_response' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.get_response.__globals__)
+
+        router.post(
+            path="/response",
+            response_model=Response,
+            description=AbstractServiceService.get_response.__doc__,
+            **get_route_args(cls.get_response, default_tag="service"),
         )(wrapper)

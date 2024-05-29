@@ -11,10 +11,10 @@ import (
 type CreateUserRequest struct {
 	// The name of the user to create.
 	// This name is unique to each user.
-	Name string `json:"name" url:"name"`
+	Name string `json:"name" url:"-"`
 	// The age of the user.
 	// This propery is not required.
-	Age *int `json:"age,omitempty" url:"age,omitempty"`
+	Age *int `json:"age,omitempty" url:"-"`
 }
 
 // A user object. This type is used throughout the following APIs:
@@ -32,7 +32,12 @@ type User struct {
 	// The user's age.
 	Age *int `json:"age,omitempty" url:"age,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.extraProperties
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {
@@ -42,6 +47,13 @@ func (u *User) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = User(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+
 	u._rawJSON = json.RawMessage(data)
 	return nil
 }

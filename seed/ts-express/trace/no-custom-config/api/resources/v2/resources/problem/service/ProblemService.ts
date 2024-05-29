@@ -14,7 +14,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.v2.LightweightProblemInfoV2[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getProblems(
         req: express.Request<never, SeedTrace.v2.ProblemInfoV2[], never, never>,
@@ -22,7 +23,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.v2.ProblemInfoV2[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getLatestProblem(
         req: express.Request<
@@ -37,7 +39,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.v2.ProblemInfoV2) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getProblemVersion(
         req: express.Request<
@@ -53,7 +56,8 @@ export interface ProblemServiceMethods {
             send: (responseBody: SeedTrace.v2.ProblemInfoV2) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -77,20 +81,23 @@ export class ProblemService {
     public toRouter(): express.Router {
         this.router.get("/lightweight-problem-info", async (req, res, next) => {
             try {
-                await this.methods.getLightweightProblems(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getLightweightProblems(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.v2.problem.getLightweightProblems.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getLightweightProblems' unexpectedly threw ${error.constructor.name}.` +
@@ -106,20 +113,23 @@ export class ProblemService {
         });
         this.router.get("/problem-info", async (req, res, next) => {
             try {
-                await this.methods.getProblems(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.v2.problem.getProblems.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getProblems(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.v2.problem.getProblems.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getProblems' unexpectedly threw ${error.constructor.name}.` +
@@ -135,20 +145,23 @@ export class ProblemService {
         });
         this.router.get("/problem-info/:problemId", async (req, res, next) => {
             try {
-                await this.methods.getLatestProblem(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getLatestProblem(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getLatestProblem' unexpectedly threw ${error.constructor.name}.` +
@@ -164,20 +177,23 @@ export class ProblemService {
         });
         this.router.get("/problem-info/:problemId/version/:problemVersion", async (req, res, next) => {
             try {
-                await this.methods.getProblemVersion(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "strip",
-                            })
-                        );
+                await this.methods.getProblemVersion(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.v2.ProblemInfoV2.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getProblemVersion' unexpectedly threw ${error.constructor.name}.` +

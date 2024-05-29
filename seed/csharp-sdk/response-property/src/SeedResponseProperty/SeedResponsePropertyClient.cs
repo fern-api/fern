@@ -1,15 +1,17 @@
 using SeedResponseProperty;
 
+#nullable enable
+
 namespace SeedResponseProperty;
 
 public partial class SeedResponsePropertyClient
 {
     private RawClient _client;
 
-    public SeedResponsePropertyClient(ClientOptions clientOptions)
+    public SeedResponsePropertyClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

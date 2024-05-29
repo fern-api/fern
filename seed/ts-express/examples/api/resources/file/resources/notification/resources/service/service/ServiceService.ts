@@ -21,7 +21,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedExamples.Exception) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -45,18 +46,23 @@ export class ServiceService {
     public toRouter(): express.Router {
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.getException(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.Exception.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                        );
+                await this.methods.getException(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Exception.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExamplesError) {
                     console.warn(
                         `Endpoint 'getException' unexpectedly threw ${error.constructor.name}.` +

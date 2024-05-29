@@ -6,6 +6,7 @@ from typing import List, Optional, Sequence, Tuple, Type
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.codegen.ast.nodes.expressions import function_invocation
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
@@ -219,8 +220,8 @@ class FernAwarePydanticModel:
         else:
             unique_name = []
             if self._type_name is not None:
-                unique_name = [path.snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path]
-                unique_name.append(self._type_name.name.snake_case.unsafe_name)
+                unique_name = [path.snake_case.safe_name for path in self._type_name.fern_filepath.package_path]
+                unique_name.append(self._type_name.name.snake_case.safe_name)
             return PydanticValidatorsGenerator(
                 model=self._pydantic_model,
                 extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
@@ -235,8 +236,8 @@ class FernAwarePydanticModel:
             if shape_union.type == "object":
                 for property in shape_union.properties:
                     field = self._create_pydantic_field(
-                        name=property.name.name.snake_case.unsafe_name,
-                        pascal_case_field_name=property.name.name.pascal_case.unsafe_name,
+                        name=property.name.name.snake_case.safe_name,
+                        pascal_case_field_name=property.name.name.pascal_case.safe_name,
                         json_field_name=property.name.wire_value,
                         type_reference=property.value_type,
                         description=property.docs,
@@ -292,11 +293,23 @@ class FernAwarePydanticModel:
 
     def _override_dict(self) -> None:
         def write_dict_body(writer: AST.NodeWriter) -> None:
-            writer.write("kwargs_with_defaults: ")
+            writer.write("kwargs_with_defaults_exclude_unset: ")
             writer.write_node(AST.TypeHint.any())
-            writer.write(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
+            writer.write_line(' = { "by_alias": True, "exclude_unset": True, **kwargs }')
+            writer.write("kwargs_with_defaults_exclude_none: ")
+            writer.write_node(AST.TypeHint.any())
+            writer.write_line(' = { "by_alias": True, "exclude_none": True, **kwargs }')
             writer.write_line()
-            writer.write_line("return super().dict(**kwargs_with_defaults)")
+
+            function_invocation = AST.FunctionInvocation(
+                function_definition=self._context.core_utilities.get_pydantic_deep_union_import(),
+                args=[
+                    AST.Expression("super().dict(**kwargs_with_defaults_exclude_unset)"),
+                    AST.Expression("super().dict(**kwargs_with_defaults_exclude_none)"),
+                ],
+            )
+            writer.write("return ")
+            writer.write_node(AST.Expression(function_invocation))
 
         self._pydantic_model.add_method(
             AST.FunctionDeclaration(

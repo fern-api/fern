@@ -2,6 +2,7 @@
 
 exports[`x-fern-type x-fern-type parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [],
@@ -20,8 +21,11 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
       },
@@ -33,8 +37,11 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
         "groupName": null,
         "nameOverride": null,
         "schema": {
+          "default": null,
+          "format": null,
           "maxLength": null,
           "minLength": null,
+          "pattern": null,
           "type": "string",
         },
         "type": "primitive",

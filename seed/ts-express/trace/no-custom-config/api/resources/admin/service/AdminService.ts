@@ -21,7 +21,8 @@ export interface AdminServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     sendTestSubmissionUpdate(
         req: express.Request<
@@ -36,7 +37,8 @@ export interface AdminServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     updateWorkspaceSubmissionStatus(
         req: express.Request<
@@ -51,7 +53,8 @@ export interface AdminServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     sendWorkspaceSubmissionUpdate(
         req: express.Request<
@@ -66,7 +69,8 @@ export interface AdminServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     storeTracedTestCase(
         req: express.Request<
@@ -82,7 +86,8 @@ export interface AdminServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     storeTracedTestCaseV2(
         req: express.Request<
@@ -98,7 +103,8 @@ export interface AdminServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     storeTracedWorkspace(
         req: express.Request<
@@ -113,7 +119,8 @@ export interface AdminServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     storeTracedWorkspaceV2(
         req: express.Request<
@@ -128,7 +135,8 @@ export interface AdminServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -155,16 +163,19 @@ export class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.updateTestSubmissionStatus(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.updateTestSubmissionStatus(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'updateTestSubmissionStatus' unexpectedly threw ${error.constructor.name}.` +
@@ -191,16 +202,19 @@ export class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.sendTestSubmissionUpdate(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.sendTestSubmissionUpdate(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'sendTestSubmissionUpdate' unexpectedly threw ${error.constructor.name}.` +
@@ -227,16 +241,19 @@ export class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.updateWorkspaceSubmissionStatus(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.updateWorkspaceSubmissionStatus(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'updateWorkspaceSubmissionStatus' unexpectedly threw ${error.constructor.name}.` +
@@ -263,16 +280,19 @@ export class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.sendWorkspaceSubmissionUpdate(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.sendWorkspaceSubmissionUpdate(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'sendWorkspaceSubmissionUpdate' unexpectedly threw ${error.constructor.name}.` +
@@ -299,16 +319,19 @@ export class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.storeTracedTestCase(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.storeTracedTestCase(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'storeTracedTestCase' unexpectedly threw ${error.constructor.name}.` +
@@ -337,16 +360,19 @@ export class AdminService {
                 if (request.ok) {
                     req.body = request.value;
                     try {
-                        await this.methods.storeTracedTestCaseV2(req as any, {
-                            send: async () => {
-                                res.sendStatus(204);
+                        await this.methods.storeTracedTestCaseV2(
+                            req as any,
+                            {
+                                send: async () => {
+                                    res.sendStatus(204);
+                                },
+                                cookie: res.cookie.bind(res),
+                                locals: res.locals,
                             },
-                            cookie: res.cookie.bind(res),
-                            locals: res.locals,
-                        });
+                            next
+                        );
                         next();
                     } catch (error) {
-                        console.error(error);
                         if (error instanceof errors.SeedTraceError) {
                             console.warn(
                                 `Endpoint 'storeTracedTestCaseV2' unexpectedly threw ${error.constructor.name}.` +
@@ -374,16 +400,19 @@ export class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.storeTracedWorkspace(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.storeTracedWorkspace(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'storeTracedWorkspace' unexpectedly threw ${error.constructor.name}.` +
@@ -410,16 +439,19 @@ export class AdminService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.storeTracedWorkspaceV2(req as any, {
-                        send: async () => {
-                            res.sendStatus(204);
+                    await this.methods.storeTracedWorkspaceV2(
+                        req as any,
+                        {
+                            send: async () => {
+                                res.sendStatus(204);
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedTraceError) {
                         console.warn(
                             `Endpoint 'storeTracedWorkspaceV2' unexpectedly threw ${error.constructor.name}.` +

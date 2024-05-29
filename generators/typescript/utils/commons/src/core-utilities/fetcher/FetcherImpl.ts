@@ -14,6 +14,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("form-data", "4.0.0");
+            dependencyManager.addDependency("formdata-node", "^6.0.3");
             dependencyManager.addDependency("node-fetch", "2.7.0");
             dependencyManager.addDependency("qs", "6.11.2");
             dependencyManager.addDependency("@types/qs", "6.9.8", {
@@ -37,7 +38,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
-                responseType: "responseType"
+                responseType: "responseType",
+                abortSignal: "abortSignal"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -86,14 +88,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     )
                 );
             }
-            properties.push(
-                ts.factory.createPropertyAssignment(
-                    this.Fetcher.Args.properties.contentType,
-                    typeof args.contentType === "string"
-                        ? ts.factory.createStringLiteral(args.contentType)
-                        : args.contentType
-                )
-            );
+            if (args.contentType != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.contentType,
+                        typeof args.contentType === "string"
+                            ? ts.factory.createStringLiteral(args.contentType)
+                            : args.contentType
+                    )
+                );
+            }
             if (args.queryParameters != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(
@@ -127,6 +131,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         this.Fetcher.Args.properties.withCredentials,
                         ts.factory.createTrue()
                     )
+                );
+            }
+            if (args.abortSignal) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.abortSignal, args.abortSignal)
                 );
             }
 

@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedResponseProperty;
 
 public class WithMetadata
 {
     [JsonPropertyName("metadata")]
-    public List<Dictionary<string, string>> Metadata { get; init; }
+    public Dictionary<string, string> Metadata { get; init; }
 }

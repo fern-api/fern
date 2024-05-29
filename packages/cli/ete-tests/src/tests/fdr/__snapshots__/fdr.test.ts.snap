@@ -321,6 +321,7 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     "auth": false,
                     "method": "POST",
                     "id": "createMovie",
+                    "originalEndpointId": "endpoint_imdb.createMovie",
                     "name": "Create Movie",
                     "path": {
                         "pathParameters": [],
@@ -359,11 +360,6 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         }
                     },
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -441,6 +437,7 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     "auth": false,
                     "method": "GET",
                     "id": "getMovie",
+                    "originalEndpointId": "endpoint_imdb.getMovie",
                     "name": "Get Movie by Id",
                     "path": {
                         "pathParameters": [
@@ -492,20 +489,6 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         }
                     },
-                    "errors": [
-                        {
-                            "type": {
-                                "type": "primitive",
-                                "value": {
-                                    "type": "string"
-                                }
-                            },
-                            "statusCode": 404
-                        },
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "type": {
@@ -588,6 +571,7 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     "auth": false,
                     "method": "DELETE",
                     "id": "delete",
+                    "originalEndpointId": "endpoint_imdb.delete",
                     "name": "Delete",
                     "path": {
                         "pathParameters": [
@@ -620,11 +604,6 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -637,6 +616,7 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     "auth": false,
                     "method": "POST",
                     "id": "upload",
+                    "originalEndpointId": "endpoint_imdb.upload",
                     "name": "Upload",
                     "path": {
                         "pathParameters": [
@@ -675,11 +655,6 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             "isOptional": false
                         }
                     },
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1054,6 +1029,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "auth": false,
                     "method": "POST",
                     "id": "createMovie",
+                    "originalEndpointId": "endpoint_imdb.createMovie",
                     "name": "Create Movie",
                     "path": {
                         "pathParameters": [],
@@ -1092,11 +1068,6 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         }
                     },
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1174,6 +1145,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "auth": false,
                     "method": "GET",
                     "id": "getMovie",
+                    "originalEndpointId": "endpoint_imdb.getMovie",
                     "name": "Get Movie by Id",
                     "path": {
                         "pathParameters": [
@@ -1225,20 +1197,6 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         }
                     },
-                    "errors": [
-                        {
-                            "type": {
-                                "type": "primitive",
-                                "value": {
-                                    "type": "string"
-                                }
-                            },
-                            "statusCode": 404
-                        },
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "type": {
@@ -1321,6 +1279,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "auth": false,
                     "method": "DELETE",
                     "id": "delete",
+                    "originalEndpointId": "endpoint_imdb.delete",
                     "name": "Delete",
                     "path": {
                         "pathParameters": [
@@ -1353,11 +1312,6 @@ exports[`fdr {"name":"simple"} 1`] = `
                     },
                     "queryParameters": [],
                     "headers": [],
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,
@@ -1370,6 +1324,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "auth": false,
                     "method": "POST",
                     "id": "upload",
+                    "originalEndpointId": "endpoint_imdb.upload",
                     "name": "Upload",
                     "path": {
                         "pathParameters": [
@@ -1408,11 +1363,6 @@ exports[`fdr {"name":"simple"} 1`] = `
                             "isOptional": false
                         }
                     },
-                    "errors": [
-                        {
-                            "statusCode": 400
-                        }
-                    ],
                     "errorsV2": [
                         {
                             "statusCode": 400,

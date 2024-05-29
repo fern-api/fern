@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern add fern add <generator> 1`] = `
+exports[`fern add fern add <generator> --group sdk 1`] = `
 [
   {
     "contents": [
@@ -100,14 +100,11 @@ groups:
         version: 0.9.5
         output:
           location: local-file-system
-          path: ../generated/sdks/typescript
-      - name: fernapi/fern-java-sdk
-        version: 0.5.7
-      - name: fernapi/fern-postman
-        version: 0.0.45
-        output:
-          location: local-file-system
-          path: ../postman
+          path: ../sdks/typescript
+  typescript:
+    generators:
+      - name: fernapi/fern-typescript
+        version: 0.7.2
 ",
         "name": "generators.yml",
         "type": "file",

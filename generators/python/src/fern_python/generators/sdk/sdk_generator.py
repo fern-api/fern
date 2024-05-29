@@ -59,7 +59,7 @@ class SdkGenerator(AbstractGenerator):
         return (
             (
                 generator_config.organization,
-                ir.api_name.snake_case.unsafe_name,
+                ir.api_name.snake_case.safe_name,
             )
             if custom_config.use_api_name_in_package
             else (generator_config.organization,)
@@ -86,6 +86,9 @@ class SdkGenerator(AbstractGenerator):
 
         for dep, version in custom_config.extra_dependencies.items():
             project.add_dependency(dependency=AST.Dependency(name=dep, version=version))
+
+        for dep, version in custom_config.extra_dev_dependencies.items():
+            project.add_dev_dependency(dependency=AST.Dependency(name=dep, version=version))
 
         # Export from root init
         if custom_config.additional_init_exports is not None:
@@ -532,11 +535,7 @@ pip install --upgrade {project._project_config.package_name}
         snippet_writer: SnippetWriter,
         ir: ir_types.IntermediateRepresentation,
     ) -> None:
-        # Write tests
-        #
-        # TODO(FER-1142): Re-enable this feature as soon as we can.
-        # snippet_test_factory.tests(ir, snippet_writer)
-        pass
+        snippet_test_factory.tests(ir, snippet_writer)
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

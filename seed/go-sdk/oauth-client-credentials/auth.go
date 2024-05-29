@@ -9,9 +9,9 @@ import (
 )
 
 type GetTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"client_id"`
-	ClientSecret string  `json:"client_secret" url:"client_secret"`
-	Scope        *string `json:"scope,omitempty" url:"scope,omitempty"`
+	ClientId     string  `json:"client_id" url:"-"`
+	ClientSecret string  `json:"client_secret" url:"-"`
+	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
 	grantType    string
 }
@@ -51,10 +51,10 @@ func (g *GetTokenRequest) MarshalJSON() ([]byte, error) {
 }
 
 type RefreshTokenRequest struct {
-	ClientId     string  `json:"client_id" url:"client_id"`
-	ClientSecret string  `json:"client_secret" url:"client_secret"`
-	RefreshToken string  `json:"refresh_token" url:"refresh_token"`
-	Scope        *string `json:"scope,omitempty" url:"scope,omitempty"`
+	ClientId     string  `json:"client_id" url:"-"`
+	ClientSecret string  `json:"client_secret" url:"-"`
+	RefreshToken string  `json:"refresh_token" url:"-"`
+	Scope        *string `json:"scope,omitempty" url:"-"`
 	audience     string
 	grantType    string
 }
@@ -99,7 +99,12 @@ type TokenResponse struct {
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
 	RefreshToken *string `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 
-	_rawJSON json.RawMessage
+	extraProperties map[string]interface{}
+	_rawJSON        json.RawMessage
+}
+
+func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *TokenResponse) UnmarshalJSON(data []byte) error {
@@ -109,6 +114,13 @@ func (t *TokenResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*t = TokenResponse(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	t._rawJSON = json.RawMessage(data)
 	return nil
 }

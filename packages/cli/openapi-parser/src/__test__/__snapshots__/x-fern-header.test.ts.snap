@@ -2,6 +2,7 @@
 
 exports[`x-fern-header x-fern-header parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -17,6 +18,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get_stream",
+      "pagination": null,
       "path": "/user/{userId}",
       "pathParameters": [
         {
@@ -28,8 +30,11 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -39,9 +44,11 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -162,6 +169,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "get",
+      "pagination": null,
       "path": "/user/{userId}",
       "pathParameters": [
         {
@@ -173,8 +181,11 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -184,9 +195,11 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       ],
       "queryParameters": [],
       "request": {
+        "additionalProperties": false,
         "contentType": null,
         "description": null,
         "schema": {
+          "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": null,
@@ -253,6 +266,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
   ],
   "schemas": {
     "StreamUser": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -278,8 +292,11 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uuid",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -315,6 +332,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "type": "object",
     },
     "User": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -340,8 +358,11 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uuid",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",

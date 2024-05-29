@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedPagination;
 
 public class UsernamePage
 {
     [JsonPropertyName("after")]
-    public List<string?> After { get; init; }
+    public string? After { get; init; }
 
     [JsonPropertyName("data")]
-    public List<List<string>> Data { get; init; }
+    public List<string> Data { get; init; }
 }

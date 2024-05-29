@@ -2,6 +2,8 @@ using System.Text.Json.Serialization;
 using SeedObjectsWithImports;
 using SeedObjectsWithImports.File;
 
+#nullable enable
+
 namespace SeedObjectsWithImports.File;
 
 public class Directory
@@ -10,8 +12,8 @@ public class Directory
     public string Name { get; init; }
 
     [JsonPropertyName("files")]
-    public List<List<List<File>>?> Files { get; init; }
+    public List<File>? Files { get; init; }
 
     [JsonPropertyName("directories")]
-    public List<List<List<Directory>>?> Directories { get; init; }
+    public List<Directory>? Directories { get; init; }
 }

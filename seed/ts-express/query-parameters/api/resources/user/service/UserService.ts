@@ -32,7 +32,8 @@ export interface UserServiceMethods {
             send: (responseBody: SeedQueryParameters.User) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -56,16 +57,21 @@ export class UserService {
     public toRouter(): express.Router {
         this.router.get("", async (req, res, next) => {
             try {
-                await this.methods.getUsername(req as any, {
-                    send: async (responseBody) => {
-                        res.json(await serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
+                await this.methods.getUsername(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedQueryParametersError) {
                     console.warn(
                         `Endpoint 'getUsername' unexpectedly threw ${error.constructor.name}.` +

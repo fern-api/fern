@@ -10,6 +10,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import pydantic_v1
+from ...core.query_encoder import encode_query
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
@@ -31,16 +32,16 @@ class ObjectClient:
         *,
         string: typing.Optional[str] = OMIT,
         integer: typing.Optional[int] = OMIT,
-        long: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
         double: typing.Optional[float] = OMIT,
-        bool: typing.Optional[bool] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[uuid.UUID] = OMIT,
         base_64: typing.Optional[str] = OMIT,
-        list: typing.Optional[typing.Sequence[str]] = OMIT,
-        set: typing.Optional[typing.Set[str]] = OMIT,
-        map: typing.Optional[typing.Dict[int, str]] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Set[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -50,25 +51,25 @@ class ObjectClient:
 
         integer : typing.Optional[int]
 
-        long : typing.Optional[int]
+        long_ : typing.Optional[int]
 
         double : typing.Optional[float]
 
-        bool : typing.Optional[bool]
+        bool_ : typing.Optional[bool]
 
         datetime : typing.Optional[dt.datetime]
 
         date : typing.Optional[dt.date]
 
-        uuid : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[uuid.UUID]
 
         base_64 : typing.Optional[str]
 
-        list : typing.Optional[typing.Sequence[str]]
+        list_ : typing.Optional[typing.Sequence[str]]
 
-        set : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Set[str]]
 
-        map : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[int, str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -114,33 +115,35 @@ class ObjectClient:
             _request["string"] = string
         if integer is not OMIT:
             _request["integer"] = integer
-        if long is not OMIT:
-            _request["long"] = long
+        if long_ is not OMIT:
+            _request["long"] = long_
         if double is not OMIT:
             _request["double"] = double
-        if bool is not OMIT:
-            _request["bool"] = bool
+        if bool_ is not OMIT:
+            _request["bool"] = bool_
         if datetime is not OMIT:
             _request["datetime"] = datetime
         if date is not OMIT:
             _request["date"] = date
-        if uuid is not OMIT:
-            _request["uuid"] = uuid
+        if uuid_ is not OMIT:
+            _request["uuid"] = uuid_
         if base_64 is not OMIT:
             _request["base64"] = base_64
-        if list is not OMIT:
-            _request["list"] = list
-        if set is not OMIT:
-            _request["set"] = set
-        if map is not OMIT:
-            _request["map"] = map
+        if list_ is not OMIT:
+            _request["list"] = list_
+        if set_ is not OMIT:
+            _request["set"] = set_
+        if map_ is not OMIT:
+            _request["map"] = map_
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -203,8 +206,10 @@ class ObjectClient:
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -235,12 +240,12 @@ class ObjectClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_and_return_with_map_of_map(
-        self, *, map: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
+        self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithMapOfMap:
         """
         Parameters
         ----------
-        map : typing.Dict[str, typing.Dict[str, str]]
+        map_ : typing.Dict[str, typing.Dict[str, str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -261,14 +266,16 @@ class ObjectClient:
             map_={"string": {"string": "string"}},
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"map": map}
+        _request: typing.Dict[str, typing.Any] = {"map": map_}
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -365,8 +372,10 @@ class ObjectClient:
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -398,6 +407,7 @@ class ObjectClient:
 
     def get_and_return_nested_with_required_field(
         self,
+        string_: str,
         *,
         string: str,
         nested_object: ObjectWithOptionalField,
@@ -406,6 +416,8 @@ class ObjectClient:
         """
         Parameters
         ----------
+        string_ : str
+
         string : str
 
         nested_object : ObjectWithOptionalField
@@ -430,6 +442,7 @@ class ObjectClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.endpoints.object.get_and_return_nested_with_required_field(
+            string_="string",
             string="string",
             nested_object=ObjectWithOptionalField(
                 string="string",
@@ -457,10 +470,13 @@ class ObjectClient:
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -553,8 +569,10 @@ class ObjectClient:
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field-list"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -594,16 +612,16 @@ class AsyncObjectClient:
         *,
         string: typing.Optional[str] = OMIT,
         integer: typing.Optional[int] = OMIT,
-        long: typing.Optional[int] = OMIT,
+        long_: typing.Optional[int] = OMIT,
         double: typing.Optional[float] = OMIT,
-        bool: typing.Optional[bool] = OMIT,
+        bool_: typing.Optional[bool] = OMIT,
         datetime: typing.Optional[dt.datetime] = OMIT,
         date: typing.Optional[dt.date] = OMIT,
-        uuid: typing.Optional[uuid.UUID] = OMIT,
+        uuid_: typing.Optional[uuid.UUID] = OMIT,
         base_64: typing.Optional[str] = OMIT,
-        list: typing.Optional[typing.Sequence[str]] = OMIT,
-        set: typing.Optional[typing.Set[str]] = OMIT,
-        map: typing.Optional[typing.Dict[int, str]] = OMIT,
+        list_: typing.Optional[typing.Sequence[str]] = OMIT,
+        set_: typing.Optional[typing.Set[str]] = OMIT,
+        map_: typing.Optional[typing.Dict[int, str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ObjectWithOptionalField:
         """
@@ -613,25 +631,25 @@ class AsyncObjectClient:
 
         integer : typing.Optional[int]
 
-        long : typing.Optional[int]
+        long_ : typing.Optional[int]
 
         double : typing.Optional[float]
 
-        bool : typing.Optional[bool]
+        bool_ : typing.Optional[bool]
 
         datetime : typing.Optional[dt.datetime]
 
         date : typing.Optional[dt.date]
 
-        uuid : typing.Optional[uuid.UUID]
+        uuid_ : typing.Optional[uuid.UUID]
 
         base_64 : typing.Optional[str]
 
-        list : typing.Optional[typing.Sequence[str]]
+        list_ : typing.Optional[typing.Sequence[str]]
 
-        set : typing.Optional[typing.Set[str]]
+        set_ : typing.Optional[typing.Set[str]]
 
-        map : typing.Optional[typing.Dict[int, str]]
+        map_ : typing.Optional[typing.Dict[int, str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -677,33 +695,35 @@ class AsyncObjectClient:
             _request["string"] = string
         if integer is not OMIT:
             _request["integer"] = integer
-        if long is not OMIT:
-            _request["long"] = long
+        if long_ is not OMIT:
+            _request["long"] = long_
         if double is not OMIT:
             _request["double"] = double
-        if bool is not OMIT:
-            _request["bool"] = bool
+        if bool_ is not OMIT:
+            _request["bool"] = bool_
         if datetime is not OMIT:
             _request["datetime"] = datetime
         if date is not OMIT:
             _request["date"] = date
-        if uuid is not OMIT:
-            _request["uuid"] = uuid
+        if uuid_ is not OMIT:
+            _request["uuid"] = uuid_
         if base_64 is not OMIT:
             _request["base64"] = base_64
-        if list is not OMIT:
-            _request["list"] = list
-        if set is not OMIT:
-            _request["set"] = set
-        if map is not OMIT:
-            _request["map"] = map
+        if list_ is not OMIT:
+            _request["list"] = list_
+        if set_ is not OMIT:
+            _request["set"] = set_
+        if map_ is not OMIT:
+            _request["map"] = map_
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -766,8 +786,10 @@ class AsyncObjectClient:
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -798,12 +820,12 @@ class AsyncObjectClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_and_return_with_map_of_map(
-        self, *, map: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
+        self, *, map_: typing.Dict[str, typing.Dict[str, str]], request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithMapOfMap:
         """
         Parameters
         ----------
-        map : typing.Dict[str, typing.Dict[str, str]]
+        map_ : typing.Dict[str, typing.Dict[str, str]]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -824,14 +846,16 @@ class AsyncObjectClient:
             map_={"string": {"string": "string"}},
         )
         """
-        _request: typing.Dict[str, typing.Any] = {"map": map}
+        _request: typing.Dict[str, typing.Any] = {"map": map_}
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -928,8 +952,10 @@ class AsyncObjectClient:
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -961,6 +987,7 @@ class AsyncObjectClient:
 
     async def get_and_return_nested_with_required_field(
         self,
+        string_: str,
         *,
         string: str,
         nested_object: ObjectWithOptionalField,
@@ -969,6 +996,8 @@ class AsyncObjectClient:
         """
         Parameters
         ----------
+        string_ : str
+
         string : str
 
         nested_object : ObjectWithOptionalField
@@ -993,6 +1022,7 @@ class AsyncObjectClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.endpoints.object.get_and_return_nested_with_required_field(
+            string_="string",
             string="string",
             nested_object=ObjectWithOptionalField(
                 string="string",
@@ -1020,10 +1050,13 @@ class AsyncObjectClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(
-                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"object/get-and-return-nested-with-required-field/{jsonable_encoder(string_)}",
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
@@ -1116,8 +1149,10 @@ class AsyncObjectClient:
             url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field-list"
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.get("additional_body_parameters") is None

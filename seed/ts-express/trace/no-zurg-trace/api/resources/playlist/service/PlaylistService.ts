@@ -23,7 +23,8 @@ export interface PlaylistServiceMethods {
             send: (responseBody: SeedTrace.Playlist) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getPlaylists(
         req: express.Request<
@@ -44,7 +45,8 @@ export interface PlaylistServiceMethods {
             send: (responseBody: SeedTrace.Playlist[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getPlaylist(
         req: express.Request<
@@ -60,7 +62,8 @@ export interface PlaylistServiceMethods {
             send: (responseBody: SeedTrace.Playlist) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     updatePlaylist(
         req: express.Request<
@@ -76,7 +79,8 @@ export interface PlaylistServiceMethods {
             send: (responseBody: SeedTrace.Playlist | undefined) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     deletePlaylist(
         req: express.Request<
@@ -92,7 +96,8 @@ export interface PlaylistServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -116,16 +121,19 @@ export class PlaylistService {
     public toRouter(): express.Router {
         this.router.post("/create", async (req, res, next) => {
             try {
-                await this.methods.createPlaylist(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.createPlaylist(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'createPlaylist' unexpectedly threw ${error.constructor.name}.` +
@@ -141,16 +149,19 @@ export class PlaylistService {
         });
         this.router.get("/all", async (req, res, next) => {
             try {
-                await this.methods.getPlaylists(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.getPlaylists(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'getPlaylists' unexpectedly threw ${error.constructor.name}.` +
@@ -166,16 +177,19 @@ export class PlaylistService {
         });
         this.router.get("/:playlistId", async (req, res, next) => {
             try {
-                await this.methods.getPlaylist(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.getPlaylist(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     switch (error.errorName) {
                         case "PlaylistIdNotFoundError":
@@ -197,16 +211,19 @@ export class PlaylistService {
         });
         this.router.put("/:playlistId", async (req, res, next) => {
             try {
-                await this.methods.updatePlaylist(req as any, {
-                    send: async (responseBody) => {
-                        res.json(responseBody);
+                await this.methods.updatePlaylist(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(responseBody);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     switch (error.errorName) {
                         case "PlaylistIdNotFoundError":
@@ -227,16 +244,19 @@ export class PlaylistService {
         });
         this.router.delete("/:playlist_id", async (req, res, next) => {
             try {
-                await this.methods.deletePlaylist(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.deletePlaylist(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedTraceError) {
                     console.warn(
                         `Endpoint 'deletePlaylist' unexpectedly threw ${error.constructor.name}.` +

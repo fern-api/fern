@@ -26,13 +26,12 @@ public class RawClient
         _headers = headers;
     }
 
-    public async Task<ApiResponse> MakeRequestAsync(
-        HttpMethod method,
-        string path,
-        ApiRequest request
-    )
+    public async Task<ApiResponse> MakeRequestAsync(ApiRequest request)
     {
-        var httpRequest = new HttpRequestMessage(method, this.BuildUrl(path, request.Query));
+        var httpRequest = new HttpRequestMessage(
+            request.Method,
+            this.BuildUrl(request.Path, request.Query)
+        );
         if (request.ContentType != null)
         {
             request.Headers.Add("Content-Type", request.ContentType);
@@ -50,15 +49,21 @@ public class RawClient
         // Add the request body to the request
         if (request.Body != null)
         {
+            var serializerOptions = new JsonSerializerOptions
+            {
+                Converters = { new JsonEnumMemberStringEnumConverter() },
+                // Set other options as required:
+                WriteIndented = true,
+            };
             httpRequest.Content = new StringContent(
-                JsonSerializer.Serialize(request.Body),
+                JsonSerializer.Serialize(request.Body, serializerOptions),
                 Encoding.UTF8,
                 "application/json"
             );
         }
         // Send the request
         HttpResponseMessage response = await _clientOptions.HttpClient.SendAsync(httpRequest);
-        return new ApiResponse { StatusCode = (int)response.StatusCode, Body = response };
+        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
     /// <summary>
@@ -66,6 +71,10 @@ public class RawClient
     /// </summary>
     public class ApiRequest
     {
+        public HttpMethod Method;
+
+        public string Path;
+
         public string? ContentType = null;
 
         public object? Body { get; init; } = null;
@@ -84,7 +93,7 @@ public class RawClient
     {
         public int StatusCode;
 
-        public HttpResponseMessage Body;
+        public HttpResponseMessage Raw;
     }
 
     private Dictionary<string, string> GetHeaders(ApiRequest request)
@@ -103,7 +112,7 @@ public class RawClient
 
     private string BuildUrl(string path, Dictionary<string, object> query)
     {
-        var url = $"{_clientOptions.BaseUrl}/{path}";
+        var url = $"{_clientOptions.BaseUrl}{path}";
         if (query.Count > 0)
         {
             url += "?";

@@ -2675,7 +2675,6 @@
                 },
                 "wireValue": "BadRequestBody"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -2742,6 +2741,7 @@
                 },
                 "typeId": "type_general-errors:BadObjectRequestInfo"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/enum:ErrorWithEnumBody": {
@@ -2871,7 +2871,6 @@
                 },
                 "wireValue": "ErrorWithEnumBody"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -2977,6 +2976,7 @@
                 },
                 "typeId": "type_types/enum:WeatherReport"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/object:ObjectWithOptionalFieldError": {
@@ -3106,7 +3106,6 @@
                 },
                 "wireValue": "ObjectWithOptionalFieldError"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3212,6 +3211,7 @@
                 },
                 "typeId": "type_types/object:ObjectWithOptionalField"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/object:ObjectWithRequiredFieldError": {
@@ -3341,7 +3341,6 @@
                 },
                 "wireValue": "ObjectWithRequiredFieldError"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3447,6 +3446,7 @@
                 },
                 "typeId": "type_types/object:ObjectWithRequiredField"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/object:NestedObjectWithOptionalFieldError": {
@@ -3576,7 +3576,6 @@
                 },
                 "wireValue": "NestedObjectWithOptionalFieldError"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3682,6 +3681,7 @@
                 },
                 "typeId": "type_types/object:NestedObjectWithOptionalField"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/object:NestedObjectWithRequiredFieldError": {
@@ -3811,7 +3811,6 @@
                 },
                 "wireValue": "NestedObjectWithRequiredFieldError"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -3917,6 +3916,7 @@
                 },
                 "typeId": "type_types/object:NestedObjectWithRequiredField"
             },
+            "statusCode": 400,
             "docs": null
         },
         "error_types/union:ErrorWithUnionBody": {
@@ -4046,7 +4046,6 @@
                 },
                 "wireValue": "ErrorWithUnionBody"
             },
-            "statusCode": 400,
             "type": {
                 "_type": "named",
                 "name": {
@@ -4152,6 +4151,7 @@
                 },
                 "typeId": "type_types/union:Animal"
             },
+            "statusCode": 400,
             "docs": null
         }
     },
@@ -10174,15 +10174,83 @@
                     "headers": [],
                     "baseUrl": null,
                     "path": {
-                        "head": "/get-and-return-nested-with-required-field",
-                        "parts": []
+                        "head": "/get-and-return-nested-with-required-field/",
+                        "parts": [
+                            {
+                                "pathParameter": "string",
+                                "tail": ""
+                            }
+                        ]
                     },
                     "fullPath": {
-                        "head": "/object/get-and-return-nested-with-required-field",
-                        "parts": []
+                        "head": "/object/get-and-return-nested-with-required-field/",
+                        "parts": [
+                            {
+                                "pathParameter": "string",
+                                "tail": ""
+                            }
+                        ]
                     },
-                    "pathParameters": [],
-                    "allPathParameters": [],
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "string",
+                                "camelCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string_"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string_"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STRING",
+                                    "safeName": "STRING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "String",
+                                    "safeName": "String"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "string",
+                                "camelCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string_"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "string",
+                                    "safeName": "string_"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STRING",
+                                    "safeName": "STRING"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "String",
+                                    "safeName": "String"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
                     "queryParameters": [],
                     "requestBody": {
                         "type": "reference",

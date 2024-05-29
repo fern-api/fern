@@ -17,4 +17,6 @@ export * from "./MigrationStatus";
 export * from "./Migration";
 export * from "./Request";
 export * from "./Response";
+export * from "./ResponseType";
 export * from "./Test";
+export * from "./Entity";

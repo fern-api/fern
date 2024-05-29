@@ -72,8 +72,41 @@ auth-schemes:
 ```
 </CodeBlock>
 
-Custom authentication schemes include custom `OAuth` integrations, too. Simply hook up
-your OAuth token endpoint and (optionally) configure token refresh like so:
+And additionally customize the naming conventions used for standard frameworks such as `Basic`:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+auth: Basic                  # The name here must match the name of the auth-scheme defined below.
+auth-schemes:
+  Basic:                     # The name here must match the name of the auth scheme defined above.
+    scheme: basic
+    username:
+      name: clientId
+      env: MY_CLIENT_ID
+    password:
+      name: clientSecret
+      env: MY_CLIENT_SECRET
+```
+</CodeBlock>
+
+and `Bearer`:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+auth: Bearer                  # The name here must match the name of the auth-scheme defined below.
+auth-schemes:
+  Bearer:                     # The name here must match the name of the auth scheme defined above.
+    scheme: bearer
+    token:
+      name: apiKey
+      env: MY_API_KEY
+```
+</CodeBlock>
+
+Custom authentication schemes include custom `OAuth` integrations, too. Simply hook up your OAuth token endpoint and
+optionally configure environment variables to read from like so:
 
 <CodeBlock title="api.yml">
 ```yaml
@@ -85,27 +118,44 @@ auth-schemes:
   OAuthScheme:
     scheme: oauth
     type: client-credentials
+    clientIdEnvVar: YOUR_CLIENT_ID
+    clientSecretEnvVar: YOUR_CLIENT_SECRET
     get-token:
-      endpoint: auth.getToken                 # Assumes the auth.yml file defines this endpoint.
-      response-properties:
-        access-token: $response.access_token
-        expires-in: $response.expires_in
-    refresh-token:
-      endpoint: auth.refreshToken             # Assumes the auth.yml file defines this endpoint.
-      request-properties:
-        refresh-token: $request.refresh_token
-      response-properties:
-        access-token: $response.access_token
-        expires-in: $response.expires_in
-        refresh-token: $response.refresh_token
+      endpoint: auth.getToken  # The getToken endpoint defined in the auth.yml must retrieve an access token.
 ```
 </CodeBlock>
 
-The `request-properties` are the properties sent to the endpoint, whereas the `response-properties` are
-used to identify and extract the OAuth access token details from the endpoint's response.
+If you need further customization, you can specify the `request-properties` and `response-properties` to bind specific
+properties defined on the `request` and `response`:
 
-With this, all of the OAuth logic happens automatically in the generated SDKs. As long as you configure your
-`client-id` and `client-secret`, your client will automatcally retrieve an access token and refresh it as needed.
+<CodeBlock title="api.yml">
+```yaml
+name: api
+imports:
+  auth: auth.yml
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    clientIdEnvVar: YOUR_CLIENT_ID
+    clientSecretEnvVar: YOUR_CLIENT_SECRET
+    get-token:
+      endpoint: auth.getToken
+      request-properties:
+        client-id: $request.client_id
+        client-secret: $request.client_secret
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+```
+</CodeBlock>
+
+If the `expires-in` property is set, the generated OAuth token provider will automatically refresh the token when it expires.
+Otherwise, it's assumed that the access token is valid indefinitely.
+
+With this, all of the OAuth logic happens automatically in the generated SDKs. As long as you configure these settings, your
+client will automatcally retrieve an access token and refresh it as needed.
 
 ## Global headers
 

@@ -6,5 +6,7 @@ export enum AsIsFiles {
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",
     UsingCs = "Using.cs",
-    RawClient = "RawClient.Template.cs"
+    RawClient = "RawClient.Template.cs",
+    CiYaml = "github-ci.yml",
+    JsonEnumMemberStringEnumConverter = "JsonEnumMemberStringEnumConverter.cs"
 }

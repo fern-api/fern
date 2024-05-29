@@ -1,15 +1,17 @@
 using SeedNurseryApi;
 
+#nullable enable
+
 namespace SeedNurseryApi;
 
 public partial class SeedNurseryApiClient
 {
     private RawClient _client;
 
-    public SeedNurseryApiClient(ClientOptions clientOptions)
+    public SeedNurseryApiClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Package = new PackageClient(_client);

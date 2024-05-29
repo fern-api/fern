@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class InitializeProblemRequest
@@ -8,5 +10,5 @@ public class InitializeProblemRequest
     public string ProblemId { get; init; }
 
     [JsonPropertyName("problemVersion")]
-    public List<int?> ProblemVersion { get; init; }
+    public int? ProblemVersion { get; init; }
 }

@@ -29,10 +29,12 @@ export interface AsyncAPIIntermediateRepresentation {
 
 export function parseAsyncAPI({
     document,
-    taskContext
+    taskContext,
+    shouldUseTitleAsName
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
+    shouldUseTitleAsName: boolean;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
@@ -41,7 +43,7 @@ export function parseAsyncAPI({
         breadcrumbs.push("websocket");
     }
 
-    const context = new AsyncAPIV2ParserContext({ document, taskContext });
+    const context = new AsyncAPIV2ParserContext({ document, taskContext, shouldUseTitleAsName });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     let parsedChannel: WebsocketChannel | undefined = undefined;
@@ -70,10 +72,12 @@ export function parseAsyncAPI({
                             ? convertSchema(parameter.schema, false, context, breadcrumbs)
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
-                                      example: undefined,
+                                      default: undefined,
+                                      pattern: undefined,
                                       format: undefined,
                                       maxLength: undefined,
-                                      minLength: undefined
+                                      minLength: undefined,
+                                      example: undefined
                                   }),
                                   description: undefined,
                                   generatedName: "",

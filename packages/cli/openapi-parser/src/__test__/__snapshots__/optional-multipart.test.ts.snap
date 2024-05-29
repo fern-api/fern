@@ -2,6 +2,7 @@
 
 exports[`optional-multipart optional-multipart parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -31,8 +32,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -43,6 +47,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "speech_operation",
+      "pagination": null,
       "path": "/v1/speech/{voice_id}",
       "pathParameters": [
         {
@@ -54,8 +59,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -80,6 +88,12 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -117,8 +131,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": "model-1",
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -143,8 +160,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -217,8 +237,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -229,6 +252,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "internal": null,
       "method": "POST",
       "operationId": "speech_stream_operation",
+      "pagination": null,
       "path": "/v1/speech/{voice_id}/stream",
       "pathParameters": [
         {
@@ -240,8 +264,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -266,6 +293,12 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": 0,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -303,8 +336,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": "model-1",
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -329,8 +365,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
+                    "default": null,
+                    "format": null,
                     "maxLength": null,
                     "minLength": null,
+                    "pattern": null,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -426,6 +465,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
   ],
   "schemas": {
     "SpeechBody": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -445,8 +485,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "groupName": null,
             "nameOverride": "Audio",
             "schema": {
+              "default": null,
+              "format": "binary",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -470,8 +513,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "model-1",
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -496,8 +542,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -508,6 +557,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "type": "object",
     },
     "SpeechBodyStream": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -527,8 +577,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "groupName": null,
             "nameOverride": "Audio",
             "schema": {
+              "default": null,
+              "format": "binary",
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",
@@ -552,8 +605,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": "model-1",
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -578,8 +634,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -659,6 +718,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "type": "object",
     },
     "request-model": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -678,8 +738,11 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": {
+              "default": null,
+              "format": null,
               "maxLength": null,
               "minLength": null,
+              "pattern": null,
               "type": "string",
             },
             "type": "primitive",

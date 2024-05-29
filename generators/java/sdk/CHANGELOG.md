@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.9.3] - 2024-05-23
+
+- Feature: Generated SDK clients with an OAuth security scheme will now automatically refresh access tokens before they
+  expire.
+
+## [0.9.2] - 2024-05-21
+
+- Fix: Java 8 Compatibility.
+
+## [0.9.1] - 2024-05-14
+
+- Feature: Support OAuth without token refresh. Example of initializing a client with OAuth:
+
+```java
+ExampleApiClient client = ExampleApiClient
+    .builder()
+    .clientId("4bf2a37d-8512-44a2-af50-28a7701d9f2e")
+    .clientSecret("b3b187b0-ef48-49ba-9d99-80d89fd11c4a")
+    .build();
+```
+
+## [0.9.0-rc0] - 2024-05-13
+
+- Chore: Bump intermediate representation to v42
+
+## [0.8.11] - 2024-05-08
+
+- Fix: Corrects the fix in 0.8.10 to check null value as opposed to a .isPresent check, given the header is
+  not `Optional`, it's always `String`
+
+## [0.8.10] - 2024-05-08
+
+- Fix: Fixes regression from 0.8.8, headers are no longer added to the header map unless they are non-null.
+
+## [0.8.9] - 2024-05-07
+
+- Fix: Generated SDK clients now handle null response bodies and avoid NPEs when they receive error responses.
+
+## [0.8.8] - 2024-05-07
+
+- Fix: The generated SDKs no longer require global headers that are not directly related to auth if auth is mandatory
+  within the SDK. Previously, the generator would require all global headers if auth was mandatory.
+
 ## [0.8.7] - 2024-03-21
 
 - Fix: numerous fixes to Maven Central publishing
@@ -25,11 +68,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.8.6] - 2024-03-20
 
-- Fix: the SDK now generates RequestOptions functions for timeouts with IdempotentRequestOptions correctly, previously timeout functions were only taking in regular RequestOptions. This also addresses a JavaPoet issue where fields were being initialized twice across RequestOptions and IdempotentRequestOptions classes, preventing the SDK from generating at all.
+- Fix: the SDK now generates RequestOptions functions for timeouts with IdempotentRequestOptions correctly, previously
+  timeout functions were only taking in regular RequestOptions. This also addresses a JavaPoet issue where fields were
+  being initialized twice across RequestOptions and IdempotentRequestOptions classes, preventing the SDK from generating
+  at all.
 
 ## [0.8.5] - 2024-03-18
 
-- Feat: add in publishing config that allows for signing published artifacts, this is required for publishing to Maven Central.
+- Feat: add in publishing config that allows for signing published artifacts, this is required for publishing to Maven
+  Central.
   To sign your artifacts, you must add the below to your publishing config:
   ```yaml
   generators:
@@ -65,7 +112,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.8.4] - 2024-02-23
 
-- Improvement: The timeout specified on the RequestOptions object now sets the timeout on the entire call, not just the read timeout of the request.
+- Improvement: The timeout specified on the RequestOptions object now sets the timeout on the entire call, not just the
+  read timeout of the request.
   As a refresher, a timeout can be added per request like so:
   ```java
   RequestOptions ro = RequestOptions.builder().timeout(90).build(); // Creates a timeout of 90 seconds for the request

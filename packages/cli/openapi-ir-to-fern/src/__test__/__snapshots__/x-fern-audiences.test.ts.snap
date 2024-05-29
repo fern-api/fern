@@ -17,6 +17,7 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/v1/users",
           "request": {
             "body": {
@@ -46,7 +47,15 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
             "audiences": [
               "public",
             ],
+            "default": undefined,
+            "docs": undefined,
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },
@@ -79,6 +88,7 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/v1/users",
           "request": {
             "body": {
@@ -108,7 +118,15 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
             "audiences": [
               "public",
             ],
+            "default": undefined,
+            "docs": undefined,
             "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
           },
         },
       },

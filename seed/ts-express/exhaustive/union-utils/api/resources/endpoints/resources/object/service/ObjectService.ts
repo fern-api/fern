@@ -19,7 +19,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnWithRequiredField(
         req: express.Request<
@@ -32,7 +33,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithRequiredField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnWithMapOfMap(
         req: express.Request<
@@ -45,7 +47,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithMapOfMap) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnNestedWithOptionalField(
         req: express.Request<
@@ -58,11 +61,14 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.NestedObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnNestedWithRequiredField(
         req: express.Request<
-            never,
+            {
+                string: string;
+            },
             SeedExhaustive.types.NestedObjectWithRequiredField,
             SeedExhaustive.types.NestedObjectWithRequiredField,
             never
@@ -71,7 +77,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.NestedObjectWithRequiredField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnNestedWithRequiredFieldAsList(
         req: express.Request<
@@ -84,7 +91,8 @@ export interface ObjectServiceMethods {
             send: (responseBody: SeedExhaustive.types.NestedObjectWithRequiredField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -111,20 +119,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnWithOptionalField(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getAndReturnWithOptionalField(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnWithOptionalField' unexpectedly threw ${error.constructor.name}.` +
@@ -149,20 +160,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnWithRequiredField(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithRequiredField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getAndReturnWithRequiredField(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnWithRequiredField' unexpectedly threw ${error.constructor.name}.` +
@@ -187,20 +201,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnWithMapOfMap(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithMapOfMap.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getAndReturnWithMapOfMap(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithMapOfMap.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnWithMapOfMap' unexpectedly threw ${error.constructor.name}.` +
@@ -225,20 +242,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnNestedWithOptionalField(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getAndReturnNestedWithOptionalField(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnNestedWithOptionalField' unexpectedly threw ${error.constructor.name}.` +
@@ -258,25 +278,28 @@ export class ObjectService {
                 next(request.errors);
             }
         });
-        this.router.post("/get-and-return-nested-with-required-field", async (req, res, next) => {
+        this.router.post("/get-and-return-nested-with-required-field/:string", async (req, res, next) => {
             const request = await serializers.types.NestedObjectWithRequiredField.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnNestedWithRequiredField(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getAndReturnNestedWithRequiredField(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnNestedWithRequiredField' unexpectedly threw ${error.constructor.name}.` +
@@ -303,20 +326,23 @@ export class ObjectService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnNestedWithRequiredFieldAsList(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.getAndReturnNestedWithRequiredFieldAsList(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnNestedWithRequiredFieldAsList' unexpectedly threw ${error.constructor.name}.` +

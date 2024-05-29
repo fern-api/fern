@@ -272,10 +272,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, modelFiles...)
 	files = append(files, newStringerFile(g.coordinator))
 	files = append(files, newTimeFile(g.coordinator))
-	if needsExtraPropertyHelpers(ir) {
-		files = append(files, newExtraPropertiesFile(g.coordinator))
-		files = append(files, newExtraPropertiesTestFile(g.coordinator))
-	}
+	files = append(files, newExtraPropertiesFile(g.coordinator))
+	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
 	var rootClientInstantiation *ast.AssignStmt
 	generatedRootClient := &GeneratedClient{
@@ -1504,31 +1502,6 @@ func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
 	for _, irService := range ir.Services {
 		for _, irEndpoint := range irService.Endpoints {
 			if irEndpoint.Pagination != nil {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-// needsExtraPropertyHelpers returns true if at least one object or in-lined request supports
-// extra properties, or any unions are specified with samePropertiesAsObject.
-func needsExtraPropertyHelpers(ir *fernir.IntermediateRepresentation) bool {
-	for _, irType := range ir.Types {
-		if irType.Shape.Object != nil && irType.Shape.Object.ExtraProperties {
-			return true
-		}
-		if irType.Shape.Union != nil {
-			for _, unionType := range irType.Shape.Union.Types {
-				if unionType.Shape.SamePropertiesAsObject != nil {
-					return true
-				}
-			}
-		}
-	}
-	for _, irService := range ir.Services {
-		for _, irEndpoint := range irService.Endpoints {
-			if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.InlinedRequestBody != nil && irEndpoint.RequestBody.InlinedRequestBody.ExtraProperties {
 				return true
 			}
 		}

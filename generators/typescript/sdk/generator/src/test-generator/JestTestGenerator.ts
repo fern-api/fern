@@ -1,6 +1,7 @@
 import * as IR from "@fern-fern/ir-sdk/api";
 import { DependencyManager, DependencyType, ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
+import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
 import { arrayOf, code, Code, conditionalOutput, literalOf } from "ts-poet";
@@ -202,6 +203,17 @@ describe("test", () => {
                         code`process.env.${schema.passwordEnvVar ?? "TESTS_PASSWORD"} || "test"`
                     ]);
                 },
+                oauth: (schema) => {
+                    // noop
+                    options.push([
+                        OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
+                        code`process.env.${schema.configuration.clientIdEnvVar ?? "TESTS_CLIENT_ID"} || "test"`
+                    ]);
+                    options.push([
+                        OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
+                        code`process.env.${schema.configuration.clientSecretEnvVar ?? "TESTS_CLIENT_SECRET"} || "test"`
+                    ]);
+                },
                 _other: () => {
                     // noop
                 }
@@ -238,7 +250,7 @@ describe("test", () => {
     ): Code | undefined {
         const notSupportedResponse =
             !!endpoint.response &&
-            (endpoint.response.type === "streaming" || endpoint.response.type === "fileDownload");
+            (endpoint.response.body?.type === "streaming" || endpoint.response.body?.type === "fileDownload");
         const notSupportedRequest =
             !!endpoint.requestBody &&
             (endpoint.requestBody.type === "bytes" || endpoint.requestBody.type === "fileUpload");

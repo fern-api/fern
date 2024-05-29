@@ -21,7 +21,8 @@ export interface ServiceServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -45,16 +46,19 @@ export class ServiceService {
     public toRouter(): express.Router {
         this.router.post("/:endpointParam/:resourceParam", async (req, res, next) => {
             try {
-                await this.methods.post(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.post(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiWideBasePathError) {
                     console.warn(
                         `Endpoint 'post' unexpectedly threw ${error.constructor.name}.` +

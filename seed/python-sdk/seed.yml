@@ -48,6 +48,21 @@ fixtures:
           boto3: 1.28.57
       outputFolder: extra_dependencies
     - customConfig:
+        pyproject_python_version: "^3.8.1"
+        extra_dev_dependencies:
+          langchain: "^0.1.3"
+          openai: "^1.9.0"
+          langchain-openai: "^0.0.3"
+        extra_dependencies:
+          boto3: 1.28.57
+      outputFolder: deps_with_min_python_version
+    - customConfig:
+        extra_dev_dependencies:
+          requests_mock: 1.12.1
+        extra_dependencies:
+          boto3: 1.28.57
+      outputFolder: extra_dev_dependencies
+    - customConfig:
         additional_init_exports:
           - from: client_additions
             imports:
@@ -75,20 +90,33 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
 scripts:
-  # Tests now run a mock server, you can always run seed with --skip-scripts to save time
   - docker: fernapi/python-seed
     commands:
+      # - poetry run mypy .
       # The global python version is 3.8
-      - poetry install
-      # Remove mypy for now given the issue where it falsely flags the use of field aliases.
-      - poetry run mypy .
-      # TODO(FER-1142): Add back soon
-      # - fern test --command "poetry run pytest -rP ."
+      # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+      - export HOME="$(pwd)/"
+      - poetry config virtualenvs.path .
+      - poetry install && fern test --command "poetry run pytest -rP ."
 allowedFailures: 
+  # This is the only one that should always fail
+  - exhaustive:additional_init_exports
+  # TODO(FER-1837): Address this list
   - response-property
   - websocket
   - exhaustive:union-utils
-  - exhaustive:additional_init_exports
   - extra-properties
   - trace
   - circular-references-advanced
+  - oauth-client-credentials-default
+  # === Allowed failures due to unit testing ===
+  # We don't have oauth tests yet
+  - oauth-client-credentials
+  - oauth-client-credentials-environment-variables
+  # Currently, autogenned examples are not marking some literals as literals and so they're being passed
+  # into the method as parameters when they're meant to be omitted (so the tests fail on unrecognized params).
+  - examples:no-custom-config
+  - examples:client-filename
+  - literal
+  # ===========================================

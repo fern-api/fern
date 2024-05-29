@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "POST"
+            "method": "POST",
+            "identifierOverride": "endpoint_service.downloadFile"
         },
         "snippetTemplate": {
             "clientInstantiation": "from seed.client import SeedFileDownload\n\nclient = SeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",

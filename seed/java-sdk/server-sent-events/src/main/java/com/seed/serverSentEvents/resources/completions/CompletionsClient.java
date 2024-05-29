@@ -8,7 +8,9 @@ import com.seed.serverSentEvents.core.ClientOptions;
 import com.seed.serverSentEvents.core.MediaTypes;
 import com.seed.serverSentEvents.core.ObjectMappers;
 import com.seed.serverSentEvents.core.RequestOptions;
+import com.seed.serverSentEvents.core.Stream;
 import com.seed.serverSentEvents.resources.completions.requests.StreamCompletionRequest;
+import com.seed.serverSentEvents.resources.completions.types.StreamedCompletion;
 import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -16,6 +18,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class CompletionsClient {
     protected final ClientOptions clientOptions;
@@ -24,11 +27,11 @@ public class CompletionsClient {
         this.clientOptions = clientOptions;
     }
 
-    public void stream(StreamCompletionRequest request) {
-        stream(request, null);
+    public Iterable<StreamedCompletion> stream(StreamCompletionRequest request) {
+        return stream(request, null);
     }
 
-    public void stream(StreamCompletionRequest request, RequestOptions requestOptions) {
+    public Iterable<StreamedCompletion> stream(StreamCompletionRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("stream")
@@ -52,12 +55,14 @@ public class CompletionsClient {
                 client = clientOptions.httpClientWithTimeout(requestOptions);
             }
             Response response = client.newCall(okhttpRequest).execute();
+            ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return;
+                return new Stream<StreamedCompletion>(StreamedCompletion.class, responseBody.charStream(), "[[DONE]]");
             }
             throw new ApiError(
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(
+                            responseBody != null ? responseBody.string() : "{}", Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

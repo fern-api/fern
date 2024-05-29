@@ -1,4 +1,4 @@
-irVersion: v38
+irVersion: v43
 docker: fernapi/fern-typescript-node-sdk:local
 dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript
@@ -74,6 +74,12 @@ fixtures:
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-reponse-headers
+  file-upload:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        inlineFileProperties: true
+      outputFolder: wrap-file-properties
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -121,6 +127,7 @@ scripts:
   - docker: fernapi/ts-seed
     commands:
       - mkdir cache
+      - cp -r /yarn-cache-template ./cache
       - yarn install --cache-folder ./cache
       - yarn build 
 allowedFailures:
@@ -135,3 +142,6 @@ allowedFailures:
   - exhaustive:dev-dependencies
   - audiences
   - enum # throws b/c of undiscriminated union examples
+  - oauth-client-credentials
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables

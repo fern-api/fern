@@ -1,15 +1,17 @@
 using SeedUndiscriminatedUnions;
 
+#nullable enable
+
 namespace SeedUndiscriminatedUnions;
 
 public partial class SeedUndiscriminatedUnionsClient
 {
     private RawClient _client;
 
-    public SeedUndiscriminatedUnionsClient(ClientOptions clientOptions)
+    public SeedUndiscriminatedUnionsClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Union = new UnionClient(_client);

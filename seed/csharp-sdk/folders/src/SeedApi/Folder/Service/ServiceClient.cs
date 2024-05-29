@@ -1,5 +1,7 @@
 using SeedApi;
 
+#nullable enable
+
 namespace SeedApi.Folder;
 
 public class ServiceClient
@@ -11,7 +13,22 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void EndpointAsync() { }
+    public async void EndpointAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+        );
+    }
 
-    public async void UnknownRequestAsync() { }
+    public async void UnknownRequestAsync(object request)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "",
+                Body = request
+            }
+        );
+    }
 }

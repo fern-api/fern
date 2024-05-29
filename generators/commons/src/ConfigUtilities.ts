@@ -21,6 +21,7 @@ export function getPackageName(config: FernGeneratorExec.GeneratorConfig): strin
                 npm: (nrc: FernGeneratorExec.NpmRegistryConfigV2) => nrc.packageName,
                 pypi: (prc: FernGeneratorExec.PypiRegistryConfig) => prc.packageName,
                 rubygems: (rgrc: FernGeneratorExec.RubyGemsRegistryConfig) => rgrc.packageName,
+                nuget: (nrc: FernGeneratorExec.NugetRegistryConfig) => nrc.packageName,
                 postman: () => undefined,
                 _other: () => undefined
             }),
@@ -31,6 +32,7 @@ export function getPackageName(config: FernGeneratorExec.GeneratorConfig): strin
                 npm: (nrc: FernGeneratorExec.NpmGithubPublishInfo) => nrc.packageName,
                 pypi: (prc: FernGeneratorExec.PypiGithubPublishInfo) => prc.packageName,
                 rubygems: (rgrc: FernGeneratorExec.RubyGemsGithubPublishInfo) => rgrc.packageName,
+                nuget: (nrc: FernGeneratorExec.NugetGithubPublishInfo) => nrc.packageName,
                 postman: () => undefined,
                 _other: () => undefined
             }),

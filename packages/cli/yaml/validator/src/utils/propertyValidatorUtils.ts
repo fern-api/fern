@@ -1,15 +1,22 @@
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { isInlineRequestBody, isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 
-const REQUEST_PREFIX = "$request.";
-const RESPONSE_PREFIX = "$response.";
+export const REQUEST_PREFIX = "$request.";
+export const RESPONSE_PREFIX = "$response.";
 
-export interface PropertyValidator {
+export interface RequestPropertyValidator {
     propertyID: string;
-    validate: PropertyValidatorFunc;
+    validate: RequestPropertyValidatorFunc;
 }
 
-export type PropertyValidatorFunc = ({
+export type RequestPropertyValidatorFunc = ({ resolvedType }: { resolvedType: ResolvedType | undefined }) => boolean;
+
+export interface ResponsePropertyValidator {
+    propertyID: string;
+    validate: ResponsePropertyValidatorFunc;
+}
+
+export type ResponsePropertyValidatorFunc = ({
     typeResolver,
     file,
     resolvedType,
@@ -32,7 +39,7 @@ export function requestTypeHasProperty({
     file: FernFileContext;
     endpoint: RawSchemas.HttpEndpointSchema;
     propertyComponents: string[];
-    validate: (resolvedType: ResolvedType | undefined) => boolean;
+    validate: RequestPropertyValidatorFunc;
 }): boolean {
     if (endpoint.request == null) {
         return false;
@@ -69,8 +76,19 @@ function inlinedRequestTypeHasProperty({
     file: FernFileContext;
     requestType: RawSchemas.HttpRequestSchema;
     propertyComponents: string[];
-    validate: (resolvedType: ResolvedType | undefined) => boolean;
+    validate: RequestPropertyValidatorFunc;
 }): boolean {
+    if (
+        isQueryParameterProperty({
+            typeResolver,
+            file,
+            requestType,
+            propertyComponents,
+            validate
+        })
+    ) {
+        return true;
+    }
     if (requestType.body == null) {
         return false;
     }
@@ -107,6 +125,35 @@ function inlinedRequestTypeHasProperty({
     });
 }
 
+export function isQueryParameterProperty({
+    typeResolver,
+    file,
+    requestType,
+    propertyComponents,
+    validate
+}: {
+    typeResolver: TypeResolver;
+    file: FernFileContext;
+    requestType: RawSchemas.HttpRequestSchema;
+    propertyComponents: string[];
+    validate: RequestPropertyValidatorFunc;
+}): boolean {
+    if (propertyComponents.length !== 1 || typeof requestType === "string" || requestType["query-parameters"] == null) {
+        return false;
+    }
+    const queryParameter = requestType["query-parameters"][propertyComponents[0] ?? ""];
+    if (queryParameter == null) {
+        return false;
+    }
+    const resolvedQueryParameterType = typeResolver.resolveType({
+        type: typeof queryParameter !== "string" ? queryParameter.type : queryParameter,
+        file
+    });
+    return validate({
+        resolvedType: resolvedQueryParameterType
+    });
+}
+
 export function resolvedTypeHasProperty({
     typeResolver,
     file,
@@ -118,10 +165,10 @@ export function resolvedTypeHasProperty({
     file: FernFileContext;
     resolvedType: ResolvedType | undefined;
     propertyComponents: string[];
-    validate: (resolvedType: ResolvedType | undefined) => boolean;
+    validate: RequestPropertyValidatorFunc;
 }): boolean {
     if (propertyComponents.length === 0) {
-        return validate(resolvedType);
+        return validate({ resolvedType });
     }
     const objectSchema = maybeObjectSchema(resolvedType);
     if (objectSchema == null) {
@@ -157,7 +204,7 @@ export function resolveResponseType({
 
 export function maybePrimitiveType(resolvedType: ResolvedType | undefined): string | undefined {
     if (resolvedType?._type === "primitive") {
-        return resolvedType.primitive;
+        return resolvedType.primitive.v1;
     }
     if (resolvedType?._type === "container" && resolvedType.container._type === "optional") {
         return maybePrimitiveType(resolvedType.container.itemType);
@@ -199,7 +246,7 @@ function objectSchemaHasProperty({
     file: FernFileContext;
     objectSchema: RawSchemas.ObjectSchema;
     propertyComponents: string[];
-    validate: (resolvedType: ResolvedType | undefined) => boolean;
+    validate: RequestPropertyValidatorFunc;
 }): boolean {
     const property = getPropertyTypeFromObjectSchema({
         typeResolver,

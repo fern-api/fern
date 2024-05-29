@@ -1,15 +1,17 @@
 using SeedUnknownAsAny;
 
+#nullable enable
+
 namespace SeedUnknownAsAny;
 
 public partial class SeedUnknownAsAnyClient
 {
     private RawClient _client;
 
-    public SeedUnknownAsAnyClient(ClientOptions clientOptions)
+    public SeedUnknownAsAnyClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Unknown = new UnknownClient(_client);

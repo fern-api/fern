@@ -11,9 +11,167 @@ import (
 	time "time"
 )
 
+type BasicType string
+
+const (
+	BasicTypePrimitive BasicType = "primitive"
+	BasicTypeLiteral   BasicType = "literal"
+)
+
+func NewBasicTypeFromString(s string) (BasicType, error) {
+	switch s {
+	case "primitive":
+		return BasicTypePrimitive, nil
+	case "literal":
+		return BasicTypeLiteral, nil
+	}
+	var t BasicType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BasicType) Ptr() *BasicType {
+	return &b
+}
+
+type ComplexType string
+
+const (
+	ComplexTypeObject  ComplexType = "object"
+	ComplexTypeUnion   ComplexType = "union"
+	ComplexTypeUnknown ComplexType = "unknown"
+)
+
+func NewComplexTypeFromString(s string) (ComplexType, error) {
+	switch s {
+	case "object":
+		return ComplexTypeObject, nil
+	case "union":
+		return ComplexTypeUnion, nil
+	case "unknown":
+		return ComplexTypeUnknown, nil
+	}
+	var t ComplexType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ComplexType) Ptr() *ComplexType {
+	return &c
+}
+
+type Identifier struct {
+	Type  *Type  `json:"type,omitempty" url:"type,omitempty"`
+	Value string `json:"value" url:"value"`
+	Label string `json:"label" url:"label"`
+
+	extraProperties map[string]interface{}
+}
+
+func (i *Identifier) GetExtraProperties() map[string]interface{} {
+	return i.extraProperties
+}
+
+func (i *Identifier) UnmarshalJSON(data []byte) error {
+	type unmarshaler Identifier
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = Identifier(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+
+	return nil
+}
+
+func (i *Identifier) String() string {
+	if value, err := core.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+type Type struct {
+	BasicType   BasicType
+	ComplexType ComplexType
+}
+
+func NewTypeFromBasicType(value BasicType) *Type {
+	return &Type{BasicType: value}
+}
+
+func NewTypeFromComplexType(value ComplexType) *Type {
+	return &Type{ComplexType: value}
+}
+
+func (t *Type) UnmarshalJSON(data []byte) error {
+	var valueBasicType BasicType
+	if err := json.Unmarshal(data, &valueBasicType); err == nil {
+		t.BasicType = valueBasicType
+		return nil
+	}
+	var valueComplexType ComplexType
+	if err := json.Unmarshal(data, &valueComplexType); err == nil {
+		t.ComplexType = valueComplexType
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, t)
+}
+
+func (t Type) MarshalJSON() ([]byte, error) {
+	if t.BasicType != "" {
+		return json.Marshal(t.BasicType)
+	}
+	if t.ComplexType != "" {
+		return json.Marshal(t.ComplexType)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", t)
+}
+
+type TypeVisitor interface {
+	VisitBasicType(BasicType) error
+	VisitComplexType(ComplexType) error
+}
+
+func (t *Type) Accept(visitor TypeVisitor) error {
+	if t.BasicType != "" {
+		return visitor.VisitBasicType(t.BasicType)
+	}
+	if t.ComplexType != "" {
+		return visitor.VisitComplexType(t.ComplexType)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", t)
+}
+
 type Actor struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+}
+
+func (a *Actor) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *Actor) UnmarshalJSON(data []byte) error {
+	type unmarshaler Actor
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = Actor(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+
+	return nil
 }
 
 func (a *Actor) String() string {
@@ -26,6 +184,29 @@ func (a *Actor) String() string {
 type Actress struct {
 	Name string `json:"name" url:"name"`
 	Id   string `json:"id" url:"id"`
+
+	extraProperties map[string]interface{}
+}
+
+func (a *Actress) GetExtraProperties() map[string]interface{} {
+	return a.extraProperties
+}
+
+func (a *Actress) UnmarshalJSON(data []byte) error {
+	type unmarshaler Actress
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = Actress(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+
+	return nil
 }
 
 func (a *Actress) String() string {
@@ -108,6 +289,29 @@ type Directory struct {
 	Name        string       `json:"name" url:"name"`
 	Files       []*File      `json:"files,omitempty" url:"files,omitempty"`
 	Directories []*Directory `json:"directories,omitempty" url:"directories,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (d *Directory) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *Directory) UnmarshalJSON(data []byte) error {
+	type unmarshaler Directory
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = Directory(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+
+	return nil
 }
 
 func (d *Directory) String() string {
@@ -115,6 +319,41 @@ func (d *Directory) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", d)
+}
+
+type Entity struct {
+	Type *Type  `json:"type,omitempty" url:"type,omitempty"`
+	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (e *Entity) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
+}
+
+func (e *Entity) UnmarshalJSON(data []byte) error {
+	type unmarshaler Entity
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = Entity(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
+	return nil
+}
+
+func (e *Entity) String() string {
+	if value, err := core.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
 }
 
 type Exception struct {
@@ -194,6 +433,29 @@ type ExceptionInfo struct {
 	ExceptionType       string `json:"exceptionType" url:"exceptionType"`
 	ExceptionMessage    string `json:"exceptionMessage" url:"exceptionMessage"`
 	ExceptionStacktrace string `json:"exceptionStacktrace" url:"exceptionStacktrace"`
+
+	extraProperties map[string]interface{}
+}
+
+func (e *ExceptionInfo) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
+}
+
+func (e *ExceptionInfo) UnmarshalJSON(data []byte) error {
+	type unmarshaler ExceptionInfo
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ExceptionInfo(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
+	return nil
 }
 
 func (e *ExceptionInfo) String() string {
@@ -215,6 +477,12 @@ type ExtendedMovie struct {
 	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
 	Cast     []string               `json:"cast,omitempty" url:"cast,omitempty"`
 	type_    string
+
+	extraProperties map[string]interface{}
+}
+
+func (e *ExtendedMovie) GetExtraProperties() map[string]interface{} {
+	return e.extraProperties
 }
 
 func (e *ExtendedMovie) Type() string {
@@ -233,6 +501,13 @@ func (e *ExtendedMovie) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExtendedMovie(unmarshaler.embed)
 	e.type_ = "movie"
+
+	extraProperties, err := core.ExtractExtraProperties(data, *e, "type")
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+
 	return nil
 }
 
@@ -258,6 +533,29 @@ func (e *ExtendedMovie) String() string {
 type File struct {
 	Name     string `json:"name" url:"name"`
 	Contents string `json:"contents" url:"contents"`
+
+	extraProperties map[string]interface{}
+}
+
+func (f *File) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *File) UnmarshalJSON(data []byte) error {
+	type unmarshaler File
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = File(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+
+	return nil
 }
 
 func (f *File) String() string {
@@ -368,6 +666,29 @@ func (m *Metadata) Accept(visitor MetadataVisitor) error {
 type Migration struct {
 	Name   string          `json:"name" url:"name"`
 	Status MigrationStatus `json:"status" url:"status"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *Migration) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
+}
+
+func (m *Migration) UnmarshalJSON(data []byte) error {
+	type unmarshaler Migration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*m = Migration(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
+	return nil
 }
 
 func (m *Migration) String() string {
@@ -408,6 +729,12 @@ type Moment struct {
 	Id       uuid.UUID `json:"id" url:"id"`
 	Date     time.Time `json:"date" url:"date" format:"date"`
 	Datetime time.Time `json:"datetime" url:"datetime"`
+
+	extraProperties map[string]interface{}
+}
+
+func (m *Moment) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Moment) UnmarshalJSON(data []byte) error {
@@ -425,6 +752,13 @@ func (m *Moment) UnmarshalJSON(data []byte) error {
 	*m = Moment(unmarshaler.embed)
 	m.Date = unmarshaler.Date.Time()
 	m.Datetime = unmarshaler.Datetime.Time()
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m)
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	return nil
 }
 
@@ -460,6 +794,12 @@ type Movie struct {
 	Book     *string                `json:"book,omitempty" url:"book,omitempty"`
 	Metadata map[string]interface{} `json:"metadata,omitempty" url:"metadata,omitempty"`
 	type_    string
+
+	extraProperties map[string]interface{}
+}
+
+func (m *Movie) GetExtraProperties() map[string]interface{} {
+	return m.extraProperties
 }
 
 func (m *Movie) Type() string {
@@ -478,6 +818,13 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	}
 	*m = Movie(unmarshaler.embed)
 	m.type_ = "movie"
+
+	extraProperties, err := core.ExtractExtraProperties(data, *m, "type")
+	if err != nil {
+		return err
+	}
+	m.extraProperties = extraProperties
+
 	return nil
 }
 
@@ -506,6 +853,29 @@ type Node struct {
 	Name  string  `json:"name" url:"name"`
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
 	Trees []*Tree `json:"trees,omitempty" url:"trees,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (n *Node) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *Node) UnmarshalJSON(data []byte) error {
+	type unmarshaler Node
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = Node(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
+	return nil
 }
 
 func (n *Node) String() string {
@@ -517,6 +887,29 @@ func (n *Node) String() string {
 
 type Request struct {
 	Request interface{} `json:"request,omitempty" url:"request,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (r *Request) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *Request) UnmarshalJSON(data []byte) error {
+	type unmarshaler Request
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Request(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
+	return nil
 }
 
 func (r *Request) String() string {
@@ -527,7 +920,31 @@ func (r *Request) String() string {
 }
 
 type Response struct {
-	Response interface{} `json:"response,omitempty" url:"response,omitempty"`
+	Response    interface{}   `json:"response,omitempty" url:"response,omitempty"`
+	Identifiers []*Identifier `json:"identifiers,omitempty" url:"identifiers,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (r *Response) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *Response) UnmarshalJSON(data []byte) error {
+	type unmarshaler Response
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Response(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
+	return nil
 }
 
 func (r *Response) String() string {
@@ -537,9 +954,66 @@ func (r *Response) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+type ResponseType struct {
+	Type *Type `json:"type,omitempty" url:"type,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (r *ResponseType) GetExtraProperties() map[string]interface{} {
+	return r.extraProperties
+}
+
+func (r *ResponseType) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResponseType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResponseType(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+
+	return nil
+}
+
+func (r *ResponseType) String() string {
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
 type StuntDouble struct {
 	Name             string `json:"name" url:"name"`
 	ActorOrActressId string `json:"actorOrActressId" url:"actorOrActressId"`
+
+	extraProperties map[string]interface{}
+}
+
+func (s *StuntDouble) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *StuntDouble) UnmarshalJSON(data []byte) error {
+	type unmarshaler StuntDouble
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = StuntDouble(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+
+	return nil
 }
 
 func (s *StuntDouble) String() string {
@@ -635,6 +1109,29 @@ func (t *Test) Accept(visitor TestVisitor) error {
 
 type Tree struct {
 	Nodes []*Node `json:"nodes,omitempty" url:"nodes,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (t *Tree) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *Tree) UnmarshalJSON(data []byte) error {
+	type unmarshaler Tree
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = Tree(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
+	return nil
 }
 
 func (t *Tree) String() string {

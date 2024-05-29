@@ -58,7 +58,14 @@ export async function rewriteInputsForWorkspace({
                     taskContext,
                     docker,
                     language: generator.workspaceConfig.language,
-                    customConfig: fixtureConfigInstance.customConfig,
+                    customConfig:
+                        generator.workspaceConfig.defaultCustomConfig != null ||
+                        fixtureConfigInstance.customConfig != null
+                            ? {
+                                  ...(generator.workspaceConfig.defaultCustomConfig ?? {}),
+                                  ...((fixtureConfigInstance.customConfig as Record<string, unknown>) ?? {})
+                              }
+                            : undefined,
                     publishConfig: fixtureConfigInstance.publishConfig,
                     outputMode: fixtureConfigInstance.outputMode ?? generator.workspaceConfig.defaultOutputMode,
                     fixtureName: fixture,
@@ -85,7 +92,7 @@ export async function rewriteInputsForWorkspace({
                 taskContext,
                 docker,
                 language: generator.workspaceConfig.language,
-                customConfig: undefined,
+                customConfig: generator.workspaceConfig.defaultCustomConfig,
                 publishConfig: undefined,
                 outputMode: generator.workspaceConfig.defaultOutputMode,
                 fixtureName: fixture,
@@ -156,6 +163,7 @@ export async function writeInputs({
         absolutePathToSnippetTemplates: undefined,
         writeUnitTests: true,
         generateOauthClients: true,
+        generatePaginatedClients: true,
         absolutePathToSnippet: AbsoluteFilePath.of(
             join(absolutePathToOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
         )

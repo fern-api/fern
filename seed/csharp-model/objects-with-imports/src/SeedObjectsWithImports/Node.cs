@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Commons;
 
+#nullable enable
+
 namespace SeedObjectsWithImports;
 
 public class Node
@@ -9,8 +11,8 @@ public class Node
     public string Id { get; init; }
 
     [JsonPropertyName("label")]
-    public List<string?> Label { get; init; }
+    public string? Label { get; init; }
 
     [JsonPropertyName("metadata")]
-    public List<Metadata?> Metadata { get; init; }
+    public Metadata? Metadata { get; init; }
 }

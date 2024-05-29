@@ -8,10 +8,10 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .errors.movie_does_not_exist_error import MovieDoesNotExistError
-from .types.create_movie_request import CreateMovieRequest
 from .types.movie import Movie
 from .types.movie_id import MovieId
 
@@ -24,14 +24,16 @@ class ImdbClient:
         self._client_wrapper = client_wrapper
 
     def create_movie(
-        self, *, request: CreateMovieRequest, request_options: typing.Optional[RequestOptions] = None
+        self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
         Add a movie to the database
 
         Parameters
         ----------
-        request : CreateMovieRequest
+        title : str
+
+        rating : float
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -42,7 +44,6 @@ class ImdbClient:
 
         Examples
         --------
-        from seed import CreateMovieRequest
         from seed.client import SeedApi
 
         client = SeedApi(
@@ -50,22 +51,23 @@ class ImdbClient:
             base_url="https://yourhost.com/path/to/api",
         )
         client.imdb.create_movie(
-            request=CreateMovieRequest(
-                title="string",
-                rating=1.1,
-            ),
+            title="string",
+            rating=1.1,
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"title": title, "rating": rating}
         _response = self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movies/create-movie"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -118,8 +120,10 @@ class ImdbClient:
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movies/{jsonable_encoder(movie_id)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -151,14 +155,16 @@ class AsyncImdbClient:
         self._client_wrapper = client_wrapper
 
     async def create_movie(
-        self, *, request: CreateMovieRequest, request_options: typing.Optional[RequestOptions] = None
+        self, *, title: str, rating: float, request_options: typing.Optional[RequestOptions] = None
     ) -> MovieId:
         """
         Add a movie to the database
 
         Parameters
         ----------
-        request : CreateMovieRequest
+        title : str
+
+        rating : float
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -169,7 +175,6 @@ class AsyncImdbClient:
 
         Examples
         --------
-        from seed import CreateMovieRequest
         from seed.client import AsyncSeedApi
 
         client = AsyncSeedApi(
@@ -177,22 +182,23 @@ class AsyncImdbClient:
             base_url="https://yourhost.com/path/to/api",
         )
         await client.imdb.create_movie(
-            request=CreateMovieRequest(
-                title="string",
-                rating=1.1,
-            ),
+            title="string",
+            rating=1.1,
         )
         """
+        _request: typing.Dict[str, typing.Any] = {"title": title, "rating": rating}
         _response = await self._client_wrapper.httpx_client.request(
             method="POST",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movies/create-movie"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
-            json=jsonable_encoder(request)
+            json=jsonable_encoder(_request)
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder(request),
+                **jsonable_encoder(_request),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -245,8 +251,10 @@ class AsyncImdbClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movies/{jsonable_encoder(movie_id)}"),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             headers=jsonable_encoder(
                 remove_none_from_dict(

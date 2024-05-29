@@ -2,6 +2,7 @@
 
 exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [],
@@ -11,6 +12,7 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "BaseUser": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -36,8 +38,11 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": "uuid",
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",

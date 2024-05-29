@@ -2,7 +2,7 @@ import {
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
-    HttpResponse
+    HttpResponseBody
 } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
@@ -16,10 +16,10 @@ export declare namespace GeneratedNonThrowingEndpointResponse {
         packageId: PackageId;
         endpoint: HttpEndpoint;
         response:
-            | HttpResponse.Json
-            | HttpResponse.FileDownload
-            | HttpResponse.Streaming
-            | HttpResponse.Text
+            | HttpResponseBody.Json
+            | HttpResponseBody.FileDownload
+            | HttpResponseBody.Streaming
+            | HttpResponseBody.Text
             | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
@@ -33,10 +33,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
     private response:
-        | HttpResponse.Json
-        | HttpResponse.FileDownload
-        | HttpResponse.Streaming
-        | HttpResponse.Text
+        | HttpResponseBody.Json
+        | HttpResponseBody.FileDownload
+        | HttpResponseBody.Streaming
+        | HttpResponseBody.Text
         | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
@@ -121,7 +121,9 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     private getReturnValueForOkResponse(context: SdkContext): ts.Expression | undefined {
         return context.coreUtilities.fetcher.APIResponse.SuccessfulResponse._build(
-            this.endpoint.response != null ? this.getOkResponseBody(context) : ts.factory.createIdentifier("undefined")
+            this.endpoint.response?.body != null
+                ? this.getOkResponseBody(context)
+                : ts.factory.createIdentifier("undefined")
         );
     }
 

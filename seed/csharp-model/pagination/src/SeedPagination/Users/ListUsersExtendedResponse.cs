@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedPagination;
 
+#nullable enable
+
 namespace SeedPagination;
 
 public class ListUsersExtendedResponse
@@ -15,5 +17,5 @@ public class ListUsersExtendedResponse
     public UserListContainer Data { get; init; }
 
     [JsonPropertyName("next")]
-    public List<Guid?> Next { get; init; }
+    public Guid? Next { get; init; }
 }

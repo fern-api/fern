@@ -68,7 +68,8 @@ export async function visitTypeDeclaration({
                     docs: createDocsVisitor(visitor, nodePathForType),
                     availability: noop,
                     audiences: noop,
-                    examples: visitExamples
+                    examples: visitExamples,
+                    validation: noop
                 });
             }
         },
@@ -101,9 +102,14 @@ export async function visitTypeDeclaration({
                                 docs: createDocsVisitor(visitor, nodePathForProperty),
                                 availability: noop,
                                 type: async (type) => {
-                                    await visitTypeReference(type, [...nodePathForProperty, "type"]);
+                                    await visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                        _default: property.default,
+                                        validation: property.validation
+                                    });
                                 },
-                                audiences: noop
+                                audiences: noop,
+                                default: noop,
+                                validation: noop
                             });
                         }
                     }

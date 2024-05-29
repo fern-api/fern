@@ -1,4 +1,3 @@
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
@@ -11,8 +10,8 @@ export declare namespace Dictionary {
     }
 
     interface MapEntry {
-        key: CodeBlock;
-        value: CodeBlock;
+        key: AstNode;
+        value: AstNode;
     }
 }
 
@@ -33,7 +32,7 @@ export class Dictionary extends AstNode {
         this.keyType.write(writer);
         writer.write(", ");
         this.valueType.write(writer);
-        writer.write("> {");
+        writer.write(">() {");
         writer.newLine();
         writer.indent();
         for (const { key, value } of this.entries) {

@@ -19,7 +19,8 @@ export interface InlinedRequestsServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithOptionalField) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -46,22 +47,25 @@ export class InlinedRequestsService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.postWithObjectBodyandResponse(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                })
-                            );
+                    await this.methods.postWithObjectBodyandResponse(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "passthrough",
+                                        allowUnrecognizedUnionMembers: true,
+                                        allowUnrecognizedEnumValues: true,
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         switch (error.errorName) {
                             case "BadRequestBody":

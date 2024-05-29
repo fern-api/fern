@@ -2,14 +2,16 @@ import {
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
-    HttpResponse,
+    HttpResponseBody,
     ResponseError
 } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
+import { GeneratedSdkClientClassImpl } from "../../../GeneratedSdkClientClassImpl";
 import { GeneratedStreamingEndpointImplementation } from "../../GeneratedStreamingEndpointImplementation";
+import { getAbortSignalExpression } from "../../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./GeneratedEndpointResponse";
 import {
     CONTENT_LENGTH_RESPONSE_KEY,
@@ -24,14 +26,15 @@ export declare namespace GeneratedThrowingEndpointResponse {
         packageId: PackageId;
         endpoint: HttpEndpoint;
         response:
-            | HttpResponse.Json
-            | HttpResponse.FileDownload
-            | HttpResponse.Streaming
-            | HttpResponse.Text
+            | HttpResponseBody.Json
+            | HttpResponseBody.FileDownload
+            | HttpResponseBody.Streaming
+            | HttpResponseBody.Text
             | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeContentHeadersOnResponse: boolean;
+        clientClass: GeneratedSdkClientClassImpl;
     }
 }
 
@@ -41,14 +44,15 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
     private response:
-        | HttpResponse.Json
-        | HttpResponse.FileDownload
-        | HttpResponse.Streaming
-        | HttpResponse.Text
+        | HttpResponseBody.Json
+        | HttpResponseBody.FileDownload
+        | HttpResponseBody.Streaming
+        | HttpResponseBody.Text
         | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeContentHeadersOnResponse: boolean;
+    private clientClass: GeneratedSdkClientClassImpl;
 
     constructor({
         packageId,
@@ -56,7 +60,8 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         response,
         errorDiscriminationStrategy,
         errorResolver,
-        includeContentHeadersOnResponse
+        includeContentHeadersOnResponse,
+        clientClass
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -64,6 +69,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.errorResolver = errorResolver;
         this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
+        this.clientClass = clientClass;
     }
 
     public getResponseVariableName(): string {
@@ -188,6 +194,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                             )
                         ),
                         eventShape,
+                        signal: getAbortSignalExpression({
+                            abortSignalReference: this.clientClass.getReferenceToAbortSignal.bind(this.clientClass)
+                        }),
                         parse: ts.factory.createArrowFunction(
                             [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                             undefined,
@@ -471,7 +480,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     private getReturnStatementsForOkResponse(context: SdkContext): ts.Statement[] {
-        return this.endpoint.response != null
+        return this.endpoint.response?.body != null
             ? this.getReturnStatementsForOkResponseBody(context)
             : [ts.factory.createReturnStatement(undefined)];
     }

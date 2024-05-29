@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.color_or_operand import ColorOrOperand
@@ -64,8 +65,10 @@ class PathParamClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None
@@ -144,8 +147,10 @@ class AsyncPathParamClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"path/{jsonable_encoder(operand)}/{jsonable_encoder(maybe_operand)}/{jsonable_encoder(operand_or_color)}/{jsonable_encoder(maybe_operand_or_color)}",
             ),
-            params=jsonable_encoder(
-                request_options.get("additional_query_parameters") if request_options is not None else None
+            params=encode_query(
+                jsonable_encoder(
+                    request_options.get("additional_query_parameters") if request_options is not None else None
+                )
             ),
             json=jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))
             if request_options is not None

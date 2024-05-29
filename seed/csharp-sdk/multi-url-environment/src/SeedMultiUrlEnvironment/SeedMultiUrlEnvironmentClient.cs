@@ -1,15 +1,17 @@
 using SeedMultiUrlEnvironment;
 
+#nullable enable
+
 namespace SeedMultiUrlEnvironment;
 
 public partial class SeedMultiUrlEnvironmentClient
 {
     private RawClient _client;
 
-    public SeedMultiUrlEnvironmentClient(string token, ClientOptions clientOptions)
+    public SeedMultiUrlEnvironmentClient(string token = null, ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>
+            new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },

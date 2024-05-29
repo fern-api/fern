@@ -1,18 +1,20 @@
 using SeedBearerTokenEnvironmentVariable;
 
+#nullable enable
+
 namespace SeedBearerTokenEnvironmentVariable;
 
 public partial class SeedBearerTokenEnvironmentVariableClient
 {
     private RawClient _client;
 
-    public SeedBearerTokenEnvironmentVariableClient (string apiKey, ClientOptions clientOptions) {
+    public SeedBearerTokenEnvironmentVariableClient (string apiKey = null, ClientOptions clientOptions = null) {
         apiKey = apiKey ?? GetFromEnvironmentOrThrow(
             "COURIER_API_KEY",
             "Please pass in apiKey or set the environment variable COURIER_API_KEY."
         _client = 
         new RawClient(
-            new Dictionary<string, string> {
+            new Dictionary<string, string>() {
                 { "Authorization", $"Bearer {apiKey}" }, 
                 { "X-Fern-Language", "C#" }, 
             }, clientOptions ?? new ClientOptions());

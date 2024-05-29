@@ -1,9 +1,11 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class GetTraceResponsesPageRequest
 {
     [JsonPropertyName("offset")]
-    public List<int?> Offset { get; init; }
+    public int? Offset { get; init; }
 }

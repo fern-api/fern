@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedCodeSamples;
 
 public class MyResponse
@@ -8,5 +10,5 @@ public class MyResponse
     public string Id { get; init; }
 
     [JsonPropertyName("name")]
-    public List<string?> Name { get; init; }
+    public string? Name { get; init; }
 }

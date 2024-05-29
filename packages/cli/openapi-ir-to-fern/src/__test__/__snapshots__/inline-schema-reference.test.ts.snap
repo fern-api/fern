@@ -22,6 +22,7 @@ exports[`open api parser inline-schema-reference docs 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/example",
           "response": {
             "docs": "Successful response",
@@ -101,6 +102,7 @@ exports[`open api parser inline-schema-reference simple 1`] = `
             },
           ],
           "method": "GET",
+          "pagination": undefined,
           "path": "/example",
           "response": {
             "docs": "Successful response",

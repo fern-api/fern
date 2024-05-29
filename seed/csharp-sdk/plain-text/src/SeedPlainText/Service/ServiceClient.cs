@@ -1,5 +1,7 @@
 using SeedPlainText;
 
+#nullable enable
+
 namespace SeedPlainText;
 
 public class ServiceClient
@@ -11,5 +13,10 @@ public class ServiceClient
         _client = client;
     }
 
-    public async void GetTextAsync() { }
+    public async void GetTextAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/text" }
+        );
+    }
 }

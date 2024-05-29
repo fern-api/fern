@@ -7,7 +7,8 @@
         },
         "endpointId": {
             "path": "/{id}",
-            "method": "GET"
+            "method": "GET",
+            "identifierOverride": "endpoint_union.get"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",
@@ -59,7 +60,8 @@
         },
         "endpointId": {
             "path": "/",
-            "method": "PATCH"
+            "method": "PATCH",
+            "identifierOverride": "endpoint_union.update"
         },
         "snippetTemplate": {
             "clientInstantiation": "const seedUnions = new SeedUnionsClient;\n",

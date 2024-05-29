@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class StackInformation
@@ -9,5 +11,5 @@ public class StackInformation
     public int NumStackFrames { get; init; }
 
     [JsonPropertyName("topStackFrame")]
-    public List<StackFrame?> TopStackFrame { get; init; }
+    public StackFrame? TopStackFrame { get; init; }
 }

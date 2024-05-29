@@ -1,0 +1,442 @@
+components:
+  schemas:
+    ChatCompletionChoice:
+      properties:
+        finish_reason:
+          anyOf:
+            - $ref: "#/components/schemas/FinishReason"
+            - type: "null"
+        index:
+          title: Index
+          type: integer
+        message:
+          allOf:
+            - $ref: "#/components/schemas/ChatMessage"
+      required:
+        - index
+        - message
+      type: object
+    ChatCompletionChunk:
+      properties:
+        choices:
+          items:
+            $ref: "#/components/schemas/ChatCompletionChunkChoice"
+          title: Choices
+          type: array
+        created:
+          examples:
+            - 1672342342
+          title: Created
+          type: integer
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          const: chat.completion.chunk
+          default: chat.completion.chunk
+      required:
+        - id
+        - created
+        - model
+        - choices
+      type: object
+    ChatCompletionChunkChoice:
+      properties:
+        delta:
+          $ref: "#/components/schemas/ChatCompletionDelta"
+        finish_reason:
+          anyOf:
+            - $ref: "#/components/schemas/FinishReason"
+            - type: "null"
+        index:
+          type: integer
+      required:
+        - index
+        - delta
+      type: object
+    ChatCompletionDelta:
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - type: "null"
+        role:
+          anyOf:
+            - type: string
+            - type: "null"
+      required:
+        - role
+        - content
+      type: object
+    ChatCompletionRequestExt:
+      properties:
+        vllm:
+          anyOf:
+            - $ref: "#/components/schemas/ChatCompletionRequestExtVLLM"
+            - type: "null"
+          default:
+            best_of: 1
+            ignore_eos: false
+            skip_special_tokens: true
+            stop_token_ids: []
+            top_k: -1
+            use_beam_search: false
+      type: object
+    ChatCompletionRequestExtVLLM:
+      properties:
+        best_of:
+          anyOf:
+            - type: integer
+            - type: "null"
+          default: 1
+        ignore_eos:
+          anyOf:
+            - type: boolean
+            - type: "null"
+          default: false
+        skip_special_tokens:
+          anyOf:
+            - type: boolean
+            - type: "null"
+          default: true
+        stop_token_ids:
+          anyOf:
+            - items:
+                type: integer
+              type: array
+            - type: "null"
+        top_k:
+          anyOf:
+            - type: integer
+            - type: "null"
+          default: -1
+        use_beam_search:
+          anyOf:
+            - type: boolean
+            - type: "null"
+          default: false
+      type: object
+    ChatCompletionResponse:
+      properties:
+        choices:
+          items:
+            $ref: "#/components/schemas/ChatCompletionChoice"
+          type: array
+        created:
+          examples:
+            - 1672342342
+          type: integer
+        id:
+          type: string
+        model:
+          type: string
+        object:
+          const: chat.completion
+          default: chat.completion
+        usage:
+          allOf:
+            - $ref: "#/components/schemas/UsageStats"
+      required:
+        - id
+        - created
+        - model
+        - choices
+        - usage
+      type: object
+    ChatCompletionResponseFormat:
+      properties:
+        schema:
+          anyOf:
+            - type: object
+            - type: "null"
+        type:
+          type: string
+      required:
+        - type
+      type: object
+    ChatMessage:
+      properties:
+        content:
+          anyOf:
+            - type: string
+            - type: "null"
+        role:
+          type: string
+      required:
+        - role
+        - content
+      type: object
+    CreateChatCompletionRequest:
+      examples:
+        - max_tokens: 128
+          messages:
+            - content: >-
+                You are a helpful assistant. Keep your responses limited to one
+                short paragraph if possible.
+              role: system
+            - content: Hello world
+              role: user
+          model: llama-2-13b-chat-fp16
+          temperature: 0.1
+          top_p: 0.9
+      properties:
+        frequency_penalty:
+          anyOf:
+            - maximum: 2
+              minimum: -2
+              type: number
+            - type: "null"
+          default: 0
+        function_call:
+          anyOf:
+            - type: string
+            - additionalProperties:
+                type: string
+              type: object
+            - type: "null"
+        functions:
+          anyOf:
+            - items:
+                $ref: "#/components/schemas/Function"
+              type: array
+            - type: "null"
+          default: []
+        ignore_eos:
+          anyOf:
+            - type: boolean
+            - type: "null"
+          default: false
+        logit_bias:
+          anyOf:
+            - additionalProperties:
+                type: number
+              type: object
+            - type: "null"
+        max_tokens:
+          anyOf:
+            - minimum: 1
+              type: integer
+            - type: "null"
+          default: 512
+        messages:
+          items:
+            $ref: "#/components/schemas/ChatMessage"
+          type: array
+        model:
+          type: string
+        "n":
+          anyOf:
+            - minimum: 1
+              type: integer
+            - type: "null"
+          default: 1
+        octoai:
+          anyOf:
+            - $ref: "#/components/schemas/ChatCompletionRequestExt"
+            - type: "null"
+        presence_penalty:
+          anyOf:
+            - maximum: 2
+              minimum: -2
+              type: number
+            - type: "null"
+          default: 0
+        repetition_penalty:
+          anyOf:
+            - minimum: 0
+              type: number
+            - type: "null"
+          default: 1
+        response_format:
+          anyOf:
+            - $ref: "#/components/schemas/ChatCompletionResponseFormat"
+            - type: "null"
+        stop:
+          anyOf:
+            - type: string
+            - items:
+                type: string
+              type: array
+            - type: "null"
+        stream:
+          anyOf:
+            - type: boolean
+            - type: "null"
+          default: false
+        temperature:
+          anyOf:
+            - maximum: 2
+              minimum: 0
+              type: number
+            - type: "null"
+          default: 1
+        top_p:
+          anyOf:
+            - exclusiveMinimum: 0
+              maximum: 1
+              type: number
+            - type: "null"
+          default: 1
+        user:
+          anyOf:
+            - type: string
+            - type: "null"
+      required:
+        - model
+        - messages
+      type: object
+    FinishReason:
+      enum:
+        - stop
+        - length
+        - content_filter
+        - function_call
+      title: FinishReason
+      type: string
+    Function:
+      properties:
+        description:
+          type: string
+        name:
+          type: string
+        parameters: {}
+      required:
+        - name
+        - description
+        - parameters
+      title: Function
+      type: object
+    UsageStats:
+      properties:
+        completion_tokens:
+          title: Completion Tokens
+          type: integer
+        prompt_tokens:
+          title: Prompt Tokens
+          type: integer
+        total_tokens:
+          title: Total Tokens
+          type: integer
+      required:
+        - prompt_tokens
+        - completion_tokens
+        - total_tokens
+      title: UsageStats
+      type: object
+info:
+  title: ollm-api
+  version: "0.1"
+openapi: 3.1.0
+servers:
+  - url: https://test-ai-api.com/api
+paths:
+  /v1/chat/completions:
+    post:
+      operationId: create_chat_completion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateChatCompletionRequest"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              examples: {}
+              schema:
+                $ref: "#/components/schemas/ChatCompletionResponse"
+                anyOf:
+                  - $ref: "#/components/schemas/ChatCompletionResponse"
+                  - $ref: "#/components/schemas/ChatCompletionChunk"
+                  - $ref: "#/components/schemas/ChatCompletionResponse"
+                  - $ref: "#/components/schemas/ChatCompletionChunk"
+            text/event-stream:
+              examples: {}
+              schema:
+                $ref: "#/components/schemas/ChatCompletionChunk"
+      summary: Create Chat Completion
+      tags:
+        - text
+      x-fern-streaming:
+        stream-condition: $request.stream
+        format: sse
+        response:
+          $ref: "#/components/schemas/ChatCompletionResponse"
+        response-stream:
+          $ref: "#/components/schemas/ChatCompletionChunk"
+      x-fern-examples:
+        - name: "Chat Completion Batch"
+          request:
+            messages:
+              - role: "user"
+                content: "Once upon a time, there was a"
+            model: "llama-2-13b-chat"
+            stream: false
+          response:
+            body:
+              choices:
+                - index: 0
+                  message: " llama that was a llama."
+              created: 1631616000
+              id: "chat-completion-1"
+              model: "llama-2-13b-chat"
+              usage:
+                completion_tokens: 1
+                prompt_tokens: 8
+                total_tokens: 9
+        - name: "Chat Completion Stream"
+          request:
+            messages:
+              - role: "user"
+                content: "Once upon a time, there was a"
+            model: "llama-2-13b-chat"
+            stream: true
+          response:
+            stream:
+              - event: "data"
+                data:
+                  choices:
+                    - index: 0
+                      delta:
+                        content: " llama"
+                  created: 1631616000
+                  id: "chat-completion-1"
+                  model: "llama-2-13b-chat"
+              - event: "data"
+                data:
+                  choices:
+                    - index: 0
+                      delta:
+                        content: " that"
+                  created: 1631616000
+                  id: "chat-completion-1"
+                  model: "llama-2-13b-chat"
+              - event: data
+                data:
+                  choices:
+                    - index: 0
+                      delta:
+                        content: " was"
+                  created: 1631616000
+                  id: "chat-completion-1"
+                  model: "llama-2-13b-chat"
+              - event: data
+                data:
+                  choices:
+                    - index: 0
+                      delta:
+                        content: " a"
+                  created: 1631616000
+                  id: "chat-completion-1"
+                  model: "llama-2-13b-chat"
+              - event: data
+                data:
+                  choices:
+                    - index: 0
+                      delta:
+                        content: " llama."
+                  created: 1631616000
+                  id: "chat-completion-1"
+                  model: "llama-2-13b-chat"

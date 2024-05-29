@@ -81,7 +81,7 @@ class AbstractBasicAuthService(AbstractFernService):
         wrapper.__globals__.update(cls.get_with_basic_auth.__globals__)
 
         router.get(
-            path="//basic-auth",
+            path="/basic-auth",
             response_model=bool,
             description=AbstractBasicAuthService.get_with_basic_auth.__doc__,
             **get_route_args(cls.get_with_basic_auth, default_tag="basic_auth"),
@@ -121,7 +121,7 @@ class AbstractBasicAuthService(AbstractFernService):
         wrapper.__globals__.update(cls.post_with_basic_auth.__globals__)
 
         router.post(
-            path="//basic-auth",
+            path="/basic-auth",
             response_model=bool,
             description=AbstractBasicAuthService.post_with_basic_auth.__doc__,
             **get_route_args(cls.post_with_basic_auth, default_tag="basic_auth"),

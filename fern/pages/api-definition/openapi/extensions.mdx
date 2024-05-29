@@ -35,13 +35,27 @@ paths:
       x-fern-sdk-method-name: create_user
 ```
 
+If you add more than one `x-fern-sdk-group-name` extension, then the generated SDK will nested group names. The order of the group names is preserved in the generated SDK method.
+
+For example, the following OpenAPI will generate `client.admin.users.create()`:
+
+```yaml title="openapi.yaml"
+paths:
+  /users:
+    post:
+      x-fern-sdk-group-name: 
+        - admin
+        - users
+      x-fern-sdk-method-name: create
+```
+
 ## Authentication overrides
 
 For authentication within your SDK, you may want to customize the:
 - Names of the parameters a user will populate to provide their credentials
 - Any environment variable the SDK can scan for to automatically provide the user's credentials automatically
 
-By default, Fern uses selects names for authentication parameters like api_key, username and password, etc.
+By default, Fern uses names for authentication parameters like api_key, username and password, etc.
 Note that this configuration is optional, and even when provided `name` or `env` may be provided alone, both are not required.
 
 For bearer authentication:
@@ -330,6 +344,22 @@ export const ExampleEnvironment = {
 export type ExampleEnvironment = typeof ExampleEnvironment.Production;
 ```
 
+## Base path
+
+The `x-fern-base-path` extension is used to configure the base path prepended to every endpoint.
+
+In the example below, we have configured the `/v1` base path so the full endpoint path is
+`https://api.example.com/v1/users`.
+
+```yaml title="Set the base path in openapi.yml" {1}
+x-fern-base-path: /v1
+servers:
+- url: https://api.example.com
+paths:
+  /users:
+    ...
+```
+
 ## Audiences
 
 The `x-fern-audiences` extension is used to mark endpoints with a particular audience
@@ -493,29 +523,23 @@ components:
 
 Because of the number of tools that use OpenAPI, it may be more convenient to
 "overlay" your fern specific OpenAPI extensions onto your original definition. \
-In order to do this you can use the `x-fern-overrides-filepath` extension.
+In order to do this you can specify your overrides file in `generators.yml`.
 
 Below is an example of how someone can overlay the extensions `x-fern-sdk-method-name` and
 `x-fern-sdk-group-name` without polluting their original OpenAPI. The combined result is
 shown in the third tab.
 
 <CodeBlocks>
-    ```yaml title="openapi.yml" {5}
-    openapi: 3.0.0
-    info:
-      title: User API
-      version: 1.0.0
-    x-fern-overrides-filepath: overrides.yml
-    paths:
-      /users:
-        get:
-          summary: Get a list of users
-          description: Retrieve a list of users from the system.
-          responses:
-            '200':
-              description: Successful response
-            '500':
-              description: Internal Server Error
+    ```yaml title="generators.yml" {3}
+    api:
+      path: ./openapi/openapi.yaml
+      overrides: ./openapi/overrides.yaml
+    default-group: sdk
+    groups:
+      sdk:
+        generators:
+          - name: fernapi/fern-python-sdk
+            version: 2.2.0
     ```
 
     ```yaml title="overrides.yml"
@@ -541,6 +565,15 @@ shown in the third tab.
               description: Internal Server Error
     ```
 </CodeBlocks>
+
+## Embedding extensions
+
+If instead of overlaying your extensions within an overrides file, as mentioned above. Certain frameworks that generate OpenAPI specs make it easy to embed extensions directly from code.
+
+### FastAPI
+
+Please view our page on [FastAPI](/learn/api-definition/openapi/frameworks/fastapi) for more information on how to extend your OpenAPI spec within FastAPI.
+
 
 ## Request + response examples
 

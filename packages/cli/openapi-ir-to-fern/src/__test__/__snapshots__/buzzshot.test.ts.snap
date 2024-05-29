@@ -30,6 +30,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/accounts/",
             "request": {
               "name": "listAccountsRequest",
@@ -87,6 +88,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/games/",
             "request": {
               "name": "listGamesRequest",
@@ -177,6 +179,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/groups/",
             "request": {
               "name": "listGroupsRequest",
@@ -222,6 +225,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/rooms/",
             "request": {
               "name": "listLocationsRequest",
@@ -264,6 +268,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/photos/",
             "request": {
               "name": "listPhotosRequest",
@@ -312,6 +317,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/players/",
             "request": {
               "name": "listPlayersRequest",
@@ -345,6 +351,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/accounts/{id}/",
             "path-parameters": {
               "id": {
@@ -403,6 +410,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/games/{id}/",
             "path-parameters": {
               "id": {
@@ -507,6 +515,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/groups/{id}/",
             "path-parameters": {
               "id": {
@@ -550,6 +559,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/rooms/{id}/",
             "path-parameters": {
               "id": {
@@ -590,6 +600,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/photos/{photo_id}/",
             "path-parameters": {
               "photo_id": {
@@ -632,6 +643,7 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/players/{id}/",
             "path-parameters": {
               "id": {
@@ -651,8 +663,28 @@ exports[`open api parser buzzshot docs 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Room>>",
           },
         },
@@ -660,8 +692,28 @@ exports[`open api parser buzzshot docs 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Game>>",
           },
         },
@@ -669,8 +721,28 @@ exports[`open api parser buzzshot docs 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Group>>",
           },
         },
@@ -678,8 +750,28 @@ exports[`open api parser buzzshot docs 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Room>>",
           },
         },
@@ -687,8 +779,28 @@ exports[`open api parser buzzshot docs 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Photo>>",
           },
         },
@@ -696,8 +808,28 @@ exports[`open api parser buzzshot docs 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Player>>",
           },
         },
@@ -711,11 +843,29 @@ exports[`open api parser buzzshot docs 1`] = `
         "properties": {
           "added_at": "optional<datetime>",
           "complete": "GameComplete",
-          "date": "string",
+          "date": {
+            "type": "string",
+            "validation": {
+              "format": "date",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "extra_fields": "list<GameExtraFieldsItem>",
           "group": "optional<string>",
           "id": "optional<integer>",
-          "name": "optional<string>",
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "photos": "optional<list<GamePhotosItem>>",
           "room": "optional<string>",
           "start_at": "optional<datetime>",
@@ -747,7 +897,17 @@ exports[`open api parser buzzshot docs 1`] = `
         "properties": {
           "added_at": "optional<datetime>",
           "photo": "string",
-          "processed_image": "optional<string>",
+          "processed_image": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "binary",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "ready": "optional<string>",
         },
       },
@@ -755,11 +915,29 @@ exports[`open api parser buzzshot docs 1`] = `
         "docs": undefined,
         "properties": {
           "added_at": "optional<datetime>",
-          "date": "string",
+          "date": {
+            "type": "string",
+            "validation": {
+              "format": "date",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "games": "optional<list<GroupGamesItem>>",
           "id": "optional<integer>",
           "is_event": "optional<boolean>",
-          "name": "optional<string>",
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "photos": "optional<list<GroupPhotosItem>>",
           "players": "list<GroupPlayersItem>",
           "start_at": "optional<datetime>",
@@ -772,10 +950,28 @@ exports[`open api parser buzzshot docs 1`] = `
         "properties": {
           "added_at": "optional<datetime>",
           "complete": "GroupGamesItemComplete",
-          "date": "string",
+          "date": {
+            "type": "string",
+            "validation": {
+              "format": "date",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
           "id": "optional<integer>",
-          "name": "optional<string>",
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "room": "optional<string>",
           "start_at": "optional<datetime>",
           "time": "string",
@@ -807,7 +1003,17 @@ exports[`open api parser buzzshot docs 1`] = `
           "added_at": "optional<datetime>",
           "game": "optional<string>",
           "photo": "string",
-          "processed_image": "optional<string>",
+          "processed_image": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "binary",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "ready": "optional<string>",
         },
       },
@@ -815,10 +1021,38 @@ exports[`open api parser buzzshot docs 1`] = `
         "docs": undefined,
         "properties": {
           "added_at": "optional<datetime>",
-          "email": "string",
+          "email": {
+            "type": "string",
+            "validation": {
+              "format": "email",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "extra_fields": "list<GroupPlayersItemExtraFieldsItem>",
-          "first_name": "optional<string>",
-          "last_name": "optional<string>",
+          "first_name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "last_name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "phone": "string",
           "player": "optional<string>",
           "signature": "optional<string>",
@@ -839,7 +1073,15 @@ exports[`open api parser buzzshot docs 1`] = `
         "properties": {
           "added_at": "optional<datetime>",
           "id": "optional<string>",
-          "original_image": "string",
+          "original_image": {
+            "type": "string",
+            "validation": {
+              "format": "binary",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "processed": "list<PhotoProcessedItem>",
         },
       },
@@ -850,7 +1092,17 @@ exports[`open api parser buzzshot docs 1`] = `
           "game": "optional<string>",
           "group": "optional<string>",
           "photo": "string",
-          "processed_image": "optional<string>",
+          "processed_image": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "binary",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "ready": "optional<string>",
         },
       },
@@ -858,11 +1110,39 @@ exports[`open api parser buzzshot docs 1`] = `
         "docs": undefined,
         "properties": {
           "added_at": "optional<datetime>",
-          "email": "string",
+          "email": {
+            "type": "string",
+            "validation": {
+              "format": "email",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "extra_fields": "list<PlayerExtraFieldsItem>",
-          "first_name": "optional<string>",
+          "first_name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "id": "optional<integer>",
-          "last_name": "optional<string>",
+          "last_name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "marketing_email_allowed": "optional<boolean>",
           "phone": "string",
           "updated_at": "optional<datetime>",
@@ -882,7 +1162,15 @@ exports[`open api parser buzzshot docs 1`] = `
         "properties": {
           "hidden": "optional<boolean>",
           "id": "optional<integer>",
-          "name": "string",
+          "name": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },
@@ -936,6 +1224,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/accounts/",
             "request": {
               "name": "listAccountsRequest",
@@ -993,6 +1282,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/games/",
             "request": {
               "name": "listGamesRequest",
@@ -1083,6 +1373,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/groups/",
             "request": {
               "name": "listGroupsRequest",
@@ -1128,6 +1419,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/rooms/",
             "request": {
               "name": "listLocationsRequest",
@@ -1170,6 +1462,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/photos/",
             "request": {
               "name": "listPhotosRequest",
@@ -1218,6 +1511,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/players/",
             "request": {
               "name": "listPlayersRequest",
@@ -1251,6 +1545,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/accounts/{id}/",
             "path-parameters": {
               "id": {
@@ -1309,6 +1604,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/games/{id}/",
             "path-parameters": {
               "id": {
@@ -1413,6 +1709,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/groups/{id}/",
             "path-parameters": {
               "id": {
@@ -1456,6 +1753,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/rooms/{id}/",
             "path-parameters": {
               "id": {
@@ -1496,6 +1794,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/photos/{photo_id}/",
             "path-parameters": {
               "photo_id": {
@@ -1538,6 +1837,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/api/v2/players/{id}/",
             "path-parameters": {
               "id": {
@@ -1557,8 +1857,28 @@ exports[`open api parser buzzshot simple 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Room>>",
           },
         },
@@ -1566,8 +1886,28 @@ exports[`open api parser buzzshot simple 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Game>>",
           },
         },
@@ -1575,8 +1915,28 @@ exports[`open api parser buzzshot simple 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Group>>",
           },
         },
@@ -1584,8 +1944,28 @@ exports[`open api parser buzzshot simple 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Room>>",
           },
         },
@@ -1593,8 +1973,28 @@ exports[`open api parser buzzshot simple 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Photo>>",
           },
         },
@@ -1602,8 +2002,28 @@ exports[`open api parser buzzshot simple 1`] = `
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
-            "next": "optional<string>",
-            "previous": "optional<string>",
+            "next": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
+            "previous": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uri",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
             "results": "optional<list<root.Player>>",
           },
         },
@@ -1617,11 +2037,29 @@ exports[`open api parser buzzshot simple 1`] = `
         "properties": {
           "added_at": "optional<datetime>",
           "complete": "GameComplete",
-          "date": "string",
+          "date": {
+            "type": "string",
+            "validation": {
+              "format": "date",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "extra_fields": "list<GameExtraFieldsItem>",
           "group": "optional<string>",
           "id": "optional<integer>",
-          "name": "optional<string>",
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "photos": "optional<list<GamePhotosItem>>",
           "room": "optional<string>",
           "start_at": "optional<datetime>",
@@ -1653,7 +2091,17 @@ exports[`open api parser buzzshot simple 1`] = `
         "properties": {
           "added_at": "optional<datetime>",
           "photo": "string",
-          "processed_image": "optional<string>",
+          "processed_image": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "binary",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "ready": "optional<string>",
         },
       },
@@ -1661,11 +2109,29 @@ exports[`open api parser buzzshot simple 1`] = `
         "docs": undefined,
         "properties": {
           "added_at": "optional<datetime>",
-          "date": "string",
+          "date": {
+            "type": "string",
+            "validation": {
+              "format": "date",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "games": "optional<list<GroupGamesItem>>",
           "id": "optional<integer>",
           "is_event": "optional<boolean>",
-          "name": "optional<string>",
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "photos": "optional<list<GroupPhotosItem>>",
           "players": "list<GroupPlayersItem>",
           "start_at": "optional<datetime>",
@@ -1678,10 +2144,28 @@ exports[`open api parser buzzshot simple 1`] = `
         "properties": {
           "added_at": "optional<datetime>",
           "complete": "GroupGamesItemComplete",
-          "date": "string",
+          "date": {
+            "type": "string",
+            "validation": {
+              "format": "date",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
           "id": "optional<integer>",
-          "name": "optional<string>",
+          "name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "room": "optional<string>",
           "start_at": "optional<datetime>",
           "time": "string",
@@ -1713,7 +2197,17 @@ exports[`open api parser buzzshot simple 1`] = `
           "added_at": "optional<datetime>",
           "game": "optional<string>",
           "photo": "string",
-          "processed_image": "optional<string>",
+          "processed_image": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "binary",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "ready": "optional<string>",
         },
       },
@@ -1721,10 +2215,38 @@ exports[`open api parser buzzshot simple 1`] = `
         "docs": undefined,
         "properties": {
           "added_at": "optional<datetime>",
-          "email": "string",
+          "email": {
+            "type": "string",
+            "validation": {
+              "format": "email",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "extra_fields": "list<GroupPlayersItemExtraFieldsItem>",
-          "first_name": "optional<string>",
-          "last_name": "optional<string>",
+          "first_name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+          "last_name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "phone": "string",
           "player": "optional<string>",
           "signature": "optional<string>",
@@ -1745,7 +2267,15 @@ exports[`open api parser buzzshot simple 1`] = `
         "properties": {
           "added_at": "optional<datetime>",
           "id": "optional<string>",
-          "original_image": "string",
+          "original_image": {
+            "type": "string",
+            "validation": {
+              "format": "binary",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "processed": "list<PhotoProcessedItem>",
         },
       },
@@ -1756,7 +2286,17 @@ exports[`open api parser buzzshot simple 1`] = `
           "game": "optional<string>",
           "group": "optional<string>",
           "photo": "string",
-          "processed_image": "optional<string>",
+          "processed_image": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "binary",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "ready": "optional<string>",
         },
       },
@@ -1764,11 +2304,39 @@ exports[`open api parser buzzshot simple 1`] = `
         "docs": undefined,
         "properties": {
           "added_at": "optional<datetime>",
-          "email": "string",
+          "email": {
+            "type": "string",
+            "validation": {
+              "format": "email",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "extra_fields": "list<PlayerExtraFieldsItem>",
-          "first_name": "optional<string>",
+          "first_name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "id": "optional<integer>",
-          "last_name": "optional<string>",
+          "last_name": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
           "marketing_email_allowed": "optional<boolean>",
           "phone": "string",
           "updated_at": "optional<datetime>",
@@ -1788,7 +2356,15 @@ exports[`open api parser buzzshot simple 1`] = `
         "properties": {
           "hidden": "optional<boolean>",
           "id": "optional<integer>",
-          "name": "string",
+          "name": {
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": 255,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },

@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class SinglyLinkedListNodeValue
@@ -11,5 +13,5 @@ public class SinglyLinkedListNodeValue
     public double Val { get; init; }
 
     [JsonPropertyName("next")]
-    public List<string?> Next { get; init; }
+    public string? Next { get; init; }
 }

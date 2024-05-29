@@ -4,6 +4,92 @@
 
 import * as FernIr from "../../..";
 
-export interface ExampleEndpointSuccessResponse {
-    body: FernIr.ExampleTypeReference | undefined;
+export type ExampleEndpointSuccessResponse =
+    | FernIr.ExampleEndpointSuccessResponse.Body
+    | FernIr.ExampleEndpointSuccessResponse.Stream
+    | FernIr.ExampleEndpointSuccessResponse.Sse;
+
+export declare namespace ExampleEndpointSuccessResponse {
+    interface Body extends _Utils {
+        type: "body";
+        value: FernIr.ExampleTypeReference | undefined;
+    }
+
+    interface Stream extends _Utils {
+        type: "stream";
+        value: FernIr.ExampleTypeReference[];
+    }
+
+    interface Sse extends _Utils {
+        type: "sse";
+        value: FernIr.ExampleServerSideEvent[];
+    }
+
+    interface _Utils {
+        _visit: <_Result>(visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>) => _Result;
+    }
+
+    interface _Visitor<_Result> {
+        body: (value: FernIr.ExampleTypeReference | undefined) => _Result;
+        stream: (value: FernIr.ExampleTypeReference[]) => _Result;
+        sse: (value: FernIr.ExampleServerSideEvent[]) => _Result;
+        _other: (value: { type: string }) => _Result;
+    }
 }
+
+export const ExampleEndpointSuccessResponse = {
+    body: (value?: FernIr.ExampleTypeReference): FernIr.ExampleEndpointSuccessResponse.Body => {
+        return {
+            value: value,
+            type: "body",
+            _visit: function <_Result>(
+                this: FernIr.ExampleEndpointSuccessResponse.Body,
+                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>
+            ) {
+                return FernIr.ExampleEndpointSuccessResponse._visit(this, visitor);
+            },
+        };
+    },
+
+    stream: (value: FernIr.ExampleTypeReference[]): FernIr.ExampleEndpointSuccessResponse.Stream => {
+        return {
+            value: value,
+            type: "stream",
+            _visit: function <_Result>(
+                this: FernIr.ExampleEndpointSuccessResponse.Stream,
+                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>
+            ) {
+                return FernIr.ExampleEndpointSuccessResponse._visit(this, visitor);
+            },
+        };
+    },
+
+    sse: (value: FernIr.ExampleServerSideEvent[]): FernIr.ExampleEndpointSuccessResponse.Sse => {
+        return {
+            value: value,
+            type: "sse",
+            _visit: function <_Result>(
+                this: FernIr.ExampleEndpointSuccessResponse.Sse,
+                visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>
+            ) {
+                return FernIr.ExampleEndpointSuccessResponse._visit(this, visitor);
+            },
+        };
+    },
+
+    _visit: <_Result>(
+        value: FernIr.ExampleEndpointSuccessResponse,
+        visitor: FernIr.ExampleEndpointSuccessResponse._Visitor<_Result>
+    ): _Result => {
+        switch (value.type) {
+            case "body":
+                return visitor.body(value.value);
+            case "stream":
+                return visitor.stream(value.value);
+            case "sse":
+                return visitor.sse(value.value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

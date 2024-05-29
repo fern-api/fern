@@ -128,7 +128,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -292,6 +293,7 @@
                 },
                 "typeId": "type_errors:PropertyBasedErrorTestBody"
             },
+            "examples": [],
             "docs": null
         }
     },
@@ -373,9 +375,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/property-based-error",
                         "parts": []
@@ -387,6 +390,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -470,9 +474,121 @@
                             "docs": null
                         }
                     ],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/property-based-error",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        },
+                        {
+                            "exampleType": "generated",
+                            "url": "/property-based-error",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "error",
+                                "error": {
+                                    "name": {
+                                        "originalName": "PropertyBasedErrorTest",
+                                        "camelCase": {
+                                            "unsafeName": "propertyBasedErrorTest",
+                                            "safeName": "propertyBasedErrorTest"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "property_based_error_test",
+                                            "safeName": "property_based_error_test"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PROPERTY_BASED_ERROR_TEST",
+                                            "safeName": "PROPERTY_BASED_ERROR_TEST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PropertyBasedErrorTest",
+                                            "safeName": "PropertyBasedErrorTest"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "errors",
+                                                "camelCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "errors",
+                                                    "safeName": "errors"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "ERRORS",
+                                                    "safeName": "ERRORS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Errors",
+                                                    "safeName": "Errors"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "errors",
+                                            "camelCase": {
+                                                "unsafeName": "errors",
+                                                "safeName": "errors"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "errors",
+                                                "safeName": "errors"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ERRORS",
+                                                "safeName": "ERRORS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Errors",
+                                                "safeName": "Errors"
+                                            }
+                                        }
+                                    },
+                                    "errorId": "error_errors:PropertyBasedErrorTest"
+                                },
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": "GET request that always throws an error"
                 }
@@ -561,6 +677,7 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_errors": {
             "name": {
@@ -635,6 +752,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -707,6 +825,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -717,6 +836,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],

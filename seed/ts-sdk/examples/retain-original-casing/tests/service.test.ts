@@ -62,4 +62,15 @@ describe("Service", () => {
             value: "<head>...</head>",
         });
     });
+
+    test("getResponse", async () => {
+        const response = await client.service.getResponse();
+        expect(response).toEqual({
+            response: "Initializing...",
+            identifiers: [
+                { type: "primitive", value: "example", label: "Primitive" },
+                { type: "unknown", value: "{}", label: "Unknown" },
+            ],
+        });
+    });
 });

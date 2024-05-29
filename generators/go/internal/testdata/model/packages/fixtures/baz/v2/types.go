@@ -3,12 +3,36 @@
 package v2
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/core"
 )
 
 type Baz struct {
 	Name string `json:"name" url:"name"`
+
+	extraProperties map[string]interface{}
+}
+
+func (b *Baz) GetExtraProperties() map[string]interface{} {
+	return b.extraProperties
+}
+
+func (b *Baz) UnmarshalJSON(data []byte) error {
+	type unmarshaler Baz
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*b = Baz(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *b)
+	if err != nil {
+		return err
+	}
+	b.extraProperties = extraProperties
+
+	return nil
 }
 
 func (b *Baz) String() string {

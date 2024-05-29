@@ -1,3 +1,7 @@
+using SeedTrace.Core;
+
+#nullable enable
+
 namespace SeedTrace;
 
 public partial class ClientOptions
@@ -5,7 +9,7 @@ public partial class ClientOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string? BaseUrl { get; init; }
+    public string BaseUrl { get; init; } = Environments.PROD;
 
     /// <summary>
     /// The http client used to make requests.

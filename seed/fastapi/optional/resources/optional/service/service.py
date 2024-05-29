@@ -65,7 +65,7 @@ class AbstractOptionalService(AbstractFernService):
         wrapper.__globals__.update(cls.send_optional_body.__globals__)
 
         router.post(
-            path="//send-optional-body",
+            path="/send-optional-body",
             response_model=str,
             description=AbstractOptionalService.send_optional_body.__doc__,
             **get_route_args(cls.send_optional_body, default_tag="optional"),

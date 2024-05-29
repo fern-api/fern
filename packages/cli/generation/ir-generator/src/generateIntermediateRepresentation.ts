@@ -206,7 +206,10 @@ export async function generateIntermediateRepresentation({
                     const convertedErrorDeclaration = convertErrorDeclaration({
                         errorName,
                         errorDeclaration,
-                        file
+                        file,
+                        typeResolver,
+                        exampleResolver,
+                        workspace
                     });
 
                     const errorId = IdGenerator.generateErrorId(convertedErrorDeclaration.name);
@@ -365,11 +368,15 @@ export async function generateIntermediateRepresentation({
         });
 
     const hasStreamingEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
-        return service.endpoints.some((endpoint) => endpoint.response?.type === "streaming");
+        return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "streaming");
+    });
+
+    const hasPaginatedEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
+        return service.endpoints.some((endpoint) => endpoint.pagination != null);
     });
 
     const hasFileDownloadEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
-        return service.endpoints.some((endpoint) => endpoint.response?.type === "fileDownload");
+        return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "fileDownload");
     });
 
     return {
@@ -378,6 +385,7 @@ export async function generateIntermediateRepresentation({
         sdkConfig: {
             isAuthMandatory,
             hasStreamingEndpoints,
+            hasPaginatedEndpoints,
             hasFileDownloadEndpoints,
             platformHeaders: {
                 language: "X-Fern-Language",

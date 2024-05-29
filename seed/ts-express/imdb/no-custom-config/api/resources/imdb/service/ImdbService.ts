@@ -14,7 +14,8 @@ export interface ImdbServiceMethods {
             send: (responseBody: SeedApi.MovieId) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getMovie(
         req: express.Request<
@@ -29,7 +30,8 @@ export interface ImdbServiceMethods {
             send: (responseBody: SeedApi.Movie) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -56,18 +58,23 @@ export class ImdbService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.createMovie(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                    await this.methods.createMovie(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.status(201).json(
+                                    await serializers.MovieId.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedApiError) {
                         console.warn(
                             `Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -91,18 +98,21 @@ export class ImdbService {
         });
         this.router.get("/:movieId", async (req, res, next) => {
             try {
-                await this.methods.getMovie(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                        );
+                await this.methods.getMovie(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiError) {
                     switch (error.errorName) {
                         case "MovieDoesNotExistError":

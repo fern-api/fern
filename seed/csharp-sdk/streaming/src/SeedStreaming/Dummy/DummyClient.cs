@@ -1,5 +1,7 @@
 using SeedStreaming;
 
+#nullable enable
+
 namespace SeedStreaming;
 
 public class DummyClient
@@ -11,5 +13,15 @@ public class DummyClient
         _client = client;
     }
 
-    public async void GenerateStreamAsync() { }
+    public async void GenerateStreamAsync(GenerateStreamRequestzs request)
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Post,
+                Path = "/generate-stream",
+                Body = request
+            }
+        );
+    }
 }

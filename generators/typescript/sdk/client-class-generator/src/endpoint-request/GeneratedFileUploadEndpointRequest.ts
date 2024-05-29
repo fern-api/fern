@@ -37,12 +37,14 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        inlineFileProperties: boolean;
         importsManager: ImportsManager;
     }
 }
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
     private static FORM_DATA_VARIABLE_NAME = "_request";
+    private static FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME = "_maybeEncodedRequest";
 
     private importsManager: ImportsManager;
     private ir: IntermediateRepresentation;
@@ -54,6 +56,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private targetRuntime: JavaScriptRuntime;
     private retainOriginalCasing: boolean;
+    private inlineFileProperties: boolean;
 
     constructor({
         ir,
@@ -64,6 +67,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         generatedSdkClientClass,
         targetRuntime,
         retainOriginalCasing,
+        inlineFileProperties,
         importsManager
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
@@ -73,8 +77,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.inlineFileProperties = inlineFileProperties;
         this.importsManager = importsManager;
         if (
+            this.inlineFileProperties ||
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
             endpoint.queryParameters.length > 0
         ) {
@@ -108,19 +114,18 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }): ts.Expression[] | undefined {
         const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
         const result: ts.Expression[] = [];
-        for (const property of this.requestBody.properties) {
-            if (property.type === "file") {
-                result.push(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createIdentifier("fs"),
-                            ts.factory.createIdentifier("createReadStream")
-                        ),
-                        undefined,
-                        [ts.factory.createStringLiteral("/path/to/your/file")]
-                    )
-                );
-                context.externalDependencies.fs.ReadStream._getReferenceToType();
+        if (!context.inlineFileProperties) {
+            for (const property of this.requestBody.properties) {
+                if (property.type === "file") {
+                    const createReadStream = context.externalDependencies.fs.createReadStream(
+                        ts.factory.createStringLiteral("/path/to/your/file")
+                    );
+                    if (property.value.type === "fileArray") {
+                        result.push(ts.factory.createArrayLiteralExpression([createReadStream]));
+                    } else {
+                        result.push(createReadStream);
+                    }
+                }
             }
         }
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
@@ -153,15 +158,20 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
-        for (const property of this.requestBody.properties) {
-            if (property.type === "file") {
-                parameters.push({
-                    name: getParameterNameForFile({
-                        property: property.value,
-                        retainOriginalCasing: context.retainOriginalCasing
-                    }),
-                    type: getTextOfTsNode(this.getFileParameterType(property.value, context))
-                });
+        if (!context.inlineFileProperties) {
+            for (const property of this.requestBody.properties) {
+                if (property.type === "file") {
+                    parameters.push({
+                        name: getParameterNameForFile({
+                            property: property.value,
+                            wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
+                            includeSerdeLayer: context.includeSerdeLayer,
+                            retainOriginalCasing: context.retainOriginalCasing,
+                            inlineFileProperties: context.inlineFileProperties
+                        }),
+                        type: getTextOfTsNode(this.getFileParameterType(property.value, context))
+                    });
+                }
             }
         }
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
@@ -181,21 +191,41 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
-        const types: ts.TypeNode[] = [ts.factory.createTypeReferenceNode("File")];
+        const types: ts.TypeNode[] = [
+            this.maybeWrapFileArray({
+                property,
+                value: ts.factory.createTypeReferenceNode("File")
+            })
+        ];
 
         visitJavaScriptRuntime(this.targetRuntime, {
             node: () => {
-                types.push(context.externalDependencies.fs.ReadStream._getReferenceToType());
+                types.push(
+                    this.maybeWrapFileArray({
+                        property,
+                        value: context.externalDependencies.fs.ReadStream._getReferenceToType()
+                    })
+                );
             },
             browser: () => {
-                types.push(ts.factory.createTypeReferenceNode("Blob"));
+                types.push(
+                    this.maybeWrapFileArray({
+                        property,
+                        value: ts.factory.createTypeReferenceNode("Blob")
+                    })
+                );
             }
         });
 
         if (property.isOptional) {
             types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
         }
+
         return ts.factory.createUnionTypeNode(types);
+    }
+
+    private maybeWrapFileArray({ property, value }: { property: FileProperty; value: ts.TypeNode }): ts.TypeNode {
+        return property.type === "fileArray" ? ts.factory.createArrayTypeNode(value) : value;
     }
 
     public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
@@ -218,7 +248,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                             GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME,
                             undefined,
                             undefined,
-                            context.externalDependencies.formData._instantiate()
+                            context.coreUtilities.formDataUtils._instantiate()
                         )
                     ],
                     ts.NodeFlags.Const
@@ -233,10 +263,32 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     referenceToFormData: ts.factory.createIdentifier(
                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                     ),
+                    wrapperName: this.endpoint.sdkRequest?.requestParameterName.camelCase.safeName ?? "request",
                     requestParameter: this.requestParameter
                 })
             );
         }
+
+        statements.push(
+            ts.factory.createVariableStatement(
+                undefined,
+                ts.factory.createVariableDeclarationList(
+                    [
+                        ts.factory.createVariableDeclaration(
+                            GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME,
+                            undefined,
+                            undefined,
+                            context.coreUtilities.formDataUtils.getRequest({
+                                referencetoFormData: ts.factory.createIdentifier(
+                                    GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
+                                )
+                            })
+                        )
+                    ],
+                    ts.NodeFlags.Const
+                )
+            )
+        );
 
         return statements;
     }
@@ -247,16 +299,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
-            body: ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME),
-            contentType: ts.factory.createBinaryExpression(
-                ts.factory.createStringLiteral("multipart/form-data; boundary="),
-                ts.factory.createToken(ts.SyntaxKind.PlusToken),
-                context.externalDependencies.formData.getBoundary({
-                    referencetoFormData: ts.factory.createIdentifier(
-                        GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
-                    )
-                })
-            )
+            body: context.coreUtilities.formDataUtils.getBody({
+                referencetoFormDataRequest: ts.factory.createIdentifier(
+                    GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
+                )
+            })
         };
     }
 
@@ -267,7 +314,14 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             idempotencyHeaders: this.ir.idempotencyHeaders,
             generatedSdkClientClass: this.generatedSdkClientClass,
             service: this.service,
-            endpoint: this.endpoint
+            endpoint: this.endpoint,
+            additionalSpreadHeaders: [
+                context.coreUtilities.formDataUtils.getHeaders({
+                    referencetoFormDataRequest: ts.factory.createIdentifier(
+                        GeneratedFileUploadEndpointRequest.FORM_DATA_REQUEST_OPTIONS_VARIABLE_NAME
+                    )
+                })
+            ]
         });
     }
 

@@ -5,6 +5,243 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.4] - 2024-05-28
+
+- Fix: Add typing library for dateutils in testing lib to satisfy mypy errors.
+
+## [2.5.3] - 2024-05-24
+
+- Fix: Stop specifying custom licenses manually, let poetry handle adding them.
+
+## [2.5.2] - 2024-05-23
+
+- Fix: Support `list` SDK method names instead of defaulting to `list_`.
+
+## [2.5.1-rc0] - 2024-05-23
+
+- Fix: Literal parameters are added back to the request body.
+
+## [2.5.0-rc2] - 2024-05-23
+
+- Fix: Do not attempt to run `fern test` in CI until the command is more widely rolled out.
+
+## [2.5.0-rc1] - 2024-05-22
+
+- Fix: Address `propogate` -> `propagate` typo in python codegen.
+
+## [2.5.0-rc0] - 2024-05-22
+
+- Fix: This version addresses issues in unit test generation and reenables the creation of unit tests.
+
+## [2.4.0-rc0] - 2024-05-21
+
+- Fix: The Python SDK generator now uses safe names wherever string concat is not used (like in client generation naming), so this will update module and parameter names.
+
+## [2.3.4] - 2024-05-21
+
+- Fix: Snippets and unit tests now correctly write optional request bodies when `inline_request_params` is set to `True`. Previously the generator wrote snippets that inlined these parameters, which does not match the generated SDK itself.
+
+## [2.3.3] - 2024-05-21
+
+- Fix: Inlined body parameters now deconflict in naming with header and query parameters by prefixing the request objects name.
+
+## [2.3.2] - 2024-05-21
+
+- Fix: The `pyproject.toml` generator now writes authors in a valid format for `tool.poetry`, not just `project`
+
+- Fix: The query encoder now correctly handles none values
+
+## [2.3.1] - 2024-05-21
+
+- Fix: The `pyproject.toml` generator now includes project URLs when specified.
+
+## [2.3.0] - 2024-05-21
+
+- Improvement: Users can now specify information that will appear in their pypi record.
+
+```yaml
+generators:
+  - name: fernapi/fern-python-sdk
+    metadata:
+      description: this is the desc for my package
+      keywords:
+        - science
+        - data analysis
+      documentationLink: "https://buildwithfern.com/learn"
+      homepageLink: "https://buildwithfern.com/"
+      authors:
+        - email: support@buildwithfern.com
+          name: Armando
+```
+
+## [2.2.2] - 2024-05-20
+
+- Fix: Inline request parameters now deconflict in naming with the unnamed path parameter arguments. Previously, when inlining request parameters into the method signature, we would not deconflict naming with the unnamed args preceeding them. Now, conflicting unnamed parameters are post-fixed with an "\_".
+
+Before:
+
+```python
+def method_name(id: str, *, id: str) -> None:
+  ...
+```
+
+After:
+
+```python
+def method_name(id_: str, *, id: str) -> None:
+  ...
+```
+
+## [2.2.1] - 2024-05-17
+
+- Internal: The generator now uses the latest FDR SDK.
+
+## [2.2.0] - 2024-05-16
+
+- Improvement: The generated SDK will now correctly encode deep object query parameters.
+  For example, if you have an object `{"test": {"nested": "object"}}` as a query parameter, we will now encode it as `test[nested]=object`.
+
+## [2.1.1] - 2024-05-15
+
+- Chore: add enhanced snippet support for streaming endpoints.
+
+  Before:
+
+  ```python
+  from seed.client import SeedStreaming
+
+  client = SeedStreaming(
+      base_url="https://yourhost.com/path/to/api",
+  )
+  client.dummy.generate_stream(
+      num_events=1,
+  )
+  ```
+
+  After:
+
+  ```python
+  from seed.client import SeedStreaming
+
+  client = SeedStreaming(
+      base_url="https://yourhost.com/path/to/api",
+  )
+  response = client.dummy.generate_stream(
+      num_events=1,
+  )
+  for chunk in response:
+      yield chunk
+  ```
+
+## [2.1.0] - 2024-05-14
+
+- Feature: Add support for cursor and offset pagination.
+
+  For example, consider the following endpoint `/users` endpoint:
+
+  ```yaml
+  types:
+    User:
+      properties:
+        name: string
+
+    ListUserResponse:
+      properties:
+        next: optional<string>
+        data: list<User>
+
+  service:
+    auth: false
+    base-path: /users
+    endpoints:
+      list:
+        path: ""
+        method: GET
+        pagination:
+          cursor: $request.starting_after
+          next_cursor: $response.next
+          results: $response.data
+        request:
+          name: ListUsersRequest
+          query-parameters:
+            starting_after: optional<string>
+        response: ListUsersResponse
+  ```
+
+  The generated `client.Users.List` can then be used as a `User` generator (effectively the "default"):
+
+  ```python
+  for user in client.users.list(...):
+    print user
+  ```
+
+  a page-by-page generator:
+
+  ```python
+  for page in client.users.list(...).iter_pages():
+    print(page.items)
+  ```
+
+  or statically calling `next_page` to perform the pagination manually:
+
+  ```python
+  pager = client.users.list(...)
+  # First page
+  print(pager.items)
+  # Second page
+  pager = pager.next_page()
+  print(pager.items)
+  ```
+
+## [2.0.1] - 2024-05-14
+
+- Fix: the python generator previously used `exclude_unset` on pydantic models, however this would remove defaulted values. This change updates this to only exclude none fields that were not required.
+
+## [2.0.0] - 2024-05-09
+
+- Break: the python SDK is now on major version 2, there are no substantial logic changes, however default configuration has changed. To take this upgrade without any breaks, please add the below configuration to your `generators.yml` file:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        inline_request_params: false
+  ```
+
+## [1.7.0-rc0] - 2024-05-09
+
+- Improvement: you can now declare a new python version range for your `pyproject.toml`, which will declare a new version range for your pip package.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        pyproject_python_version: ^3.8.1
+  ```
+
+## [1.6.0-rc0] - 2024-05-09
+
+- Improvement: you can now specify dev dependencies from your `generators.yml` file:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        extra_dev_dependencies:
+          requests_mock: 1.12.1
+          boto3: 1.28.57
+  ```
+
+  These will then populare your `pyproject.toml` automatically:
+
+  ```toml
+  ...
+  [tool.poetry.dev-dependencies]
+  requests_mock = "1.12.1"
+  boto3 = "1.28.57"
+  ...
+  ```
+
 ## [1.5.3-rc0] - 2024-05-02
 
 - Fix: the unchecked basemodel no longer tries to dereference an object if it's null.

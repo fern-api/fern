@@ -21,7 +21,8 @@ export interface UserServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     createUser(
         req: express.Request<never, SeedMultiLineDocs.User, SeedMultiLineDocs.CreateUserRequest, never>,
@@ -29,7 +30,8 @@ export interface UserServiceMethods {
             send: (responseBody: SeedMultiLineDocs.User) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -53,16 +55,19 @@ export class UserService {
     public toRouter(): express.Router {
         this.router.get("/users/:userId", async (req, res, next) => {
             try {
-                await this.methods.getUser(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.getUser(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedMultiLineDocsError) {
                     console.warn(
                         `Endpoint 'getUser' unexpectedly threw ${error.constructor.name}.` +
@@ -81,18 +86,23 @@ export class UserService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.createUser(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                    await this.methods.createUser(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.User.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedMultiLineDocsError) {
                         console.warn(
                             `Endpoint 'createUser' unexpectedly threw ${error.constructor.name}.` +

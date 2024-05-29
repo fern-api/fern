@@ -13,6 +13,29 @@ import (
 type Name struct {
 	Id    string `json:"id" url:"id"`
 	Value string `json:"value" url:"value"`
+
+	extraProperties map[string]interface{}
+}
+
+func (n *Name) GetExtraProperties() map[string]interface{} {
+	return n.extraProperties
+}
+
+func (n *Name) UnmarshalJSON(data []byte) error {
+	type unmarshaler Name
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*n = Name(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *n)
+	if err != nil {
+		return err
+	}
+	n.extraProperties = extraProperties
+
+	return nil
 }
 
 func (n *Name) String() string {
@@ -43,6 +66,12 @@ type Type struct {
 	Seventeen []*uuid.UUID     `json:"seventeen,omitempty" url:"seventeen,omitempty"`
 	Nineteen  *Name            `json:"nineteen,omitempty" url:"nineteen,omitempty"`
 	eighteen  string
+
+	extraProperties map[string]interface{}
+}
+
+func (t *Type) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
 }
 
 func (t *Type) Eighteen() string {
@@ -65,6 +94,13 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	t.Six = unmarshaler.Six.Time()
 	t.Seven = unmarshaler.Seven.Time()
 	t.eighteen = "eighteen"
+
+	extraProperties, err := core.ExtractExtraProperties(data, *t, "eighteen")
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+
 	return nil
 }
 

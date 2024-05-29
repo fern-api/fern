@@ -1,10 +1,12 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class MapValue
 {
     [JsonPropertyName("keyValuePairs")]
-    public List<List<KeyValuePair>> KeyValuePairs { get; init; }
+    public List<KeyValuePair> KeyValuePairs { get; init; }
 }

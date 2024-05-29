@@ -14,4 +14,9 @@ export interface Auth {
         toAuthorizationHeader: (username: ts.Expression, password: ts.Expression) => ts.Expression;
         fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
     };
+
+    OAuthTokenProvider: {
+        _getExpression: () => ts.Expression;
+        _getReferenceToType: () => ts.TypeNode;
+    };
 }

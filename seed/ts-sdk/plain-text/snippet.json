@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/text",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.getText"
             },
             "snippet": {
                 "type": "typescript",

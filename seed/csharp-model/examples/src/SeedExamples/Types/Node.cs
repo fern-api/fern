@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedExamples;
 
+#nullable enable
+
 namespace SeedExamples;
 
 public class Node
@@ -9,8 +11,8 @@ public class Node
     public string Name { get; init; }
 
     [JsonPropertyName("nodes")]
-    public List<List<List<Node>>?> Nodes { get; init; }
+    public List<Node>? Nodes { get; init; }
 
     [JsonPropertyName("trees")]
-    public List<List<List<Tree>>?> Trees { get; init; }
+    public List<Tree>? Trees { get; init; }
 }

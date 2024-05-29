@@ -61,15 +61,16 @@ class ImdbService {
                 try {
                     yield this.methods.createMovie(req, {
                         send: (responseBody) => __awaiter(this, void 0, void 0, function* () {
-                            res.json(yield serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
+                            res.status(201).json(yield serializers.MovieId.jsonOrThrow(responseBody, {
+                                unrecognizedObjectKeys: "strip",
+                            }));
                         }),
                         cookie: res.cookie.bind(res),
                         locals: res.locals,
-                    });
+                    }, next);
                     next();
                 }
                 catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedApiError) {
                         console.warn(`Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
@@ -97,11 +98,10 @@ class ImdbService {
                     }),
                     cookie: res.cookie.bind(res),
                     locals: res.locals,
-                });
+                }, next);
                 next();
             }
             catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedApiError) {
                     switch (error.errorName) {
                         case "MovieDoesNotExistError":

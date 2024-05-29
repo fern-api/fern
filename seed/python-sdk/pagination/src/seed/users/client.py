@@ -8,13 +8,16 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import pydantic_v1
+from ..core.query_encoder import encode_query
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..types.username_cursor import UsernameCursor
 from .types.list_users_extended_response import ListUsersExtendedResponse
 from .types.list_users_pagination_response import ListUsersPaginationResponse
 from .types.order import Order
+from .types.user import User
 from .types.username_container import UsernameContainer
 
 
@@ -30,7 +33,7 @@ class UsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListUsersPaginationResponse:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -51,7 +54,7 @@ class UsersClient:
 
         Returns
         -------
-        ListUsersPaginationResponse
+        SyncPager[User]
 
         Examples
         --------
@@ -71,19 +74,21 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "page": page,
-                        "per_page": per_page,
-                        "order": order,
-                        "starting_after": starting_after,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "page": page,
+                            "per_page": per_page,
+                            "order": order,
+                            "starting_after": starting_after,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -101,7 +106,21 @@ class UsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+            _has_next = False
+            _get_next = None
+            if _parsed_response.page is not None and _parsed_response.page.next is not None:
+                _parsed_next = _parsed_response.page.next.starting_after
+                _has_next = _parsed_next is not None
+                _get_next = lambda: self.list_with_cursor_pagination(
+                    page=page,
+                    per_page=per_page,
+                    order=order,
+                    starting_after=_parsed_next,
+                    request_options=request_options,
+                )
+            _items = _parsed_response.data
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -116,7 +135,7 @@ class UsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListUsersPaginationResponse:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -137,7 +156,7 @@ class UsersClient:
 
         Returns
         -------
-        ListUsersPaginationResponse
+        SyncPager[User]
 
         Examples
         --------
@@ -157,19 +176,21 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "page": page,
-                        "per_page": per_page,
-                        "order": order,
-                        "starting_after": starting_after,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "page": page,
+                            "per_page": per_page,
+                            "order": order,
+                            "starting_after": starting_after,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -187,7 +208,17 @@ class UsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+            _has_next = True
+            _get_next = lambda: self.list_with_offset_pagination(
+                page=page + 1 if page is not None else 1,
+                per_page=per_page,
+                order=order,
+                starting_after=starting_after,
+                request_options=request_options,
+            )
+            _items = _parsed_response.data
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -196,7 +227,7 @@ class UsersClient:
 
     def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> ListUsersExtendedResponse:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -207,7 +238,7 @@ class UsersClient:
 
         Returns
         -------
-        ListUsersExtendedResponse
+        SyncPager[User]
 
         Examples
         --------
@@ -228,16 +259,18 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "cursor": jsonable_encoder(cursor),
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "cursor": jsonable_encoder(cursor),
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -255,7 +288,14 @@ class UsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
+            _has_next = _parsed_response.next is not None
+            _parsed_next = _parsed_response.next
+            _get_next = lambda: self.list_with_extended_results(cursor=_parsed_next, request_options=request_options)
+            _items = []
+            if _parsed_response.data is not None:
+                _items = _parsed_response.data.users
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -264,7 +304,7 @@ class UsersClient:
 
     def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsernameCursor:
+    ) -> SyncPager[str]:
         """
         Parameters
         ----------
@@ -277,7 +317,7 @@ class UsersClient:
 
         Returns
         -------
-        UsernameCursor
+        SyncPager[str]
 
         Examples
         --------
@@ -294,16 +334,18 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "starting_after": starting_after,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "starting_after": starting_after,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -321,7 +363,17 @@ class UsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
+            _has_next = False
+            _get_next = None
+            if _parsed_response.cursor is not None:
+                _parsed_next = _parsed_response.cursor.after
+                _has_next = _parsed_next is not None
+                _get_next = lambda: self.list_usernames(starting_after=_parsed_next, request_options=request_options)
+            _items = []
+            if _parsed_response.cursor is not None:
+                _items = _parsed_response.cursor.data
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -330,7 +382,7 @@ class UsersClient:
 
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsernameContainer:
+    ) -> SyncPager[str]:
         """
         Parameters
         ----------
@@ -341,7 +393,7 @@ class UsersClient:
 
         Returns
         -------
-        UsernameContainer
+        SyncPager[str]
 
         Examples
         --------
@@ -358,16 +410,18 @@ class UsersClient:
         _response = self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "offset": offset,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "offset": offset,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -385,7 +439,13 @@ class UsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
+            _has_next = True
+            _get_next = lambda: self.list_with_global_config(
+                offset=offset + 1 if offset is not None else 1, request_options=request_options
+            )
+            _items = _parsed_response.results
+            return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -405,7 +465,7 @@ class AsyncUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListUsersPaginationResponse:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -426,7 +486,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        ListUsersPaginationResponse
+        AsyncPager[User]
 
         Examples
         --------
@@ -446,19 +506,21 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "page": page,
-                        "per_page": per_page,
-                        "order": order,
-                        "starting_after": starting_after,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "page": page,
+                            "per_page": per_page,
+                            "order": order,
+                            "starting_after": starting_after,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -476,7 +538,21 @@ class AsyncUsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+            _has_next = False
+            _get_next = None
+            if _parsed_response.page is not None and _parsed_response.page.next is not None:
+                _parsed_next = _parsed_response.page.next.starting_after
+                _has_next = _parsed_next is not None
+                _get_next = lambda: self.list_with_cursor_pagination(
+                    page=page,
+                    per_page=per_page,
+                    order=order,
+                    starting_after=_parsed_next,
+                    request_options=request_options,
+                )
+            _items = _parsed_response.data
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -491,7 +567,7 @@ class AsyncUsersClient:
         order: typing.Optional[Order] = None,
         starting_after: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListUsersPaginationResponse:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -512,7 +588,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        ListUsersPaginationResponse
+        AsyncPager[User]
 
         Examples
         --------
@@ -532,19 +608,21 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "page": page,
-                        "per_page": per_page,
-                        "order": order,
-                        "starting_after": starting_after,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "page": page,
+                            "per_page": per_page,
+                            "order": order,
+                            "starting_after": starting_after,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -562,7 +640,17 @@ class AsyncUsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+            _has_next = True
+            _get_next = lambda: self.list_with_offset_pagination(
+                page=page + 1 if page is not None else 1,
+                per_page=per_page,
+                order=order,
+                starting_after=starting_after,
+                request_options=request_options,
+            )
+            _items = _parsed_response.data
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -571,7 +659,7 @@ class AsyncUsersClient:
 
     async def list_with_extended_results(
         self, *, cursor: typing.Optional[uuid.UUID] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> ListUsersExtendedResponse:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -582,7 +670,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        ListUsersExtendedResponse
+        AsyncPager[User]
 
         Examples
         --------
@@ -603,16 +691,18 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "cursor": jsonable_encoder(cursor),
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "cursor": jsonable_encoder(cursor),
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -630,7 +720,14 @@ class AsyncUsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(ListUsersExtendedResponse, _response.json())  # type: ignore
+            _has_next = _parsed_response.next is not None
+            _parsed_next = _parsed_response.next
+            _get_next = lambda: self.list_with_extended_results(cursor=_parsed_next, request_options=request_options)
+            _items = []
+            if _parsed_response.data is not None:
+                _items = _parsed_response.data.users
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -639,7 +736,7 @@ class AsyncUsersClient:
 
     async def list_usernames(
         self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsernameCursor:
+    ) -> AsyncPager[str]:
         """
         Parameters
         ----------
@@ -652,7 +749,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        UsernameCursor
+        AsyncPager[str]
 
         Examples
         --------
@@ -669,16 +766,18 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "starting_after": starting_after,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "starting_after": starting_after,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -696,7 +795,17 @@ class AsyncUsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(UsernameCursor, _response.json())  # type: ignore
+            _has_next = False
+            _get_next = None
+            if _parsed_response.cursor is not None:
+                _parsed_next = _parsed_response.cursor.after
+                _has_next = _parsed_next is not None
+                _get_next = lambda: self.list_usernames(starting_after=_parsed_next, request_options=request_options)
+            _items = []
+            if _parsed_response.cursor is not None:
+                _items = _parsed_response.cursor.data
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -705,7 +814,7 @@ class AsyncUsersClient:
 
     async def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> UsernameContainer:
+    ) -> AsyncPager[str]:
         """
         Parameters
         ----------
@@ -716,7 +825,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        UsernameContainer
+        AsyncPager[str]
 
         Examples
         --------
@@ -733,16 +842,18 @@ class AsyncUsersClient:
         _response = await self._client_wrapper.httpx_client.request(
             method="GET",
             url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
-            params=jsonable_encoder(
-                remove_none_from_dict(
-                    {
-                        "offset": offset,
-                        **(
-                            request_options.get("additional_query_parameters", {})
-                            if request_options is not None
-                            else {}
-                        ),
-                    }
+            params=encode_query(
+                jsonable_encoder(
+                    remove_none_from_dict(
+                        {
+                            "offset": offset,
+                            **(
+                                request_options.get("additional_query_parameters", {})
+                                if request_options is not None
+                                else {}
+                            ),
+                        }
+                    )
                 )
             ),
             headers=jsonable_encoder(
@@ -760,7 +871,13 @@ class AsyncUsersClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
+            _parsed_response = pydantic_v1.parse_obj_as(UsernameContainer, _response.json())  # type: ignore
+            _has_next = True
+            _get_next = lambda: self.list_with_global_config(
+                offset=offset + 1 if offset is not None else 1, request_options=request_options
+            )
+            _items = _parsed_response.results
+            return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
         try:
             _response_json = _response.json()
         except JSONDecodeError:

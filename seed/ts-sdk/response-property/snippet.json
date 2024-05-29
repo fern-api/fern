@@ -3,7 +3,8 @@
         {
             "id": {
                 "path": "/movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.getMovie"
             },
             "snippet": {
                 "type": "typescript",
@@ -13,7 +14,8 @@
         {
             "id": {
                 "path": "/movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.getMovieDocs"
             },
             "snippet": {
                 "type": "typescript",
@@ -23,7 +25,8 @@
         {
             "id": {
                 "path": "/movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.getMovieName"
             },
             "snippet": {
                 "type": "typescript",
@@ -33,7 +36,8 @@
         {
             "id": {
                 "path": "/movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.getMovieMetadata"
             },
             "snippet": {
                 "type": "typescript",
@@ -43,7 +47,8 @@
         {
             "id": {
                 "path": "/movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.getOptionalMovie"
             },
             "snippet": {
                 "type": "typescript",
@@ -53,7 +58,8 @@
         {
             "id": {
                 "path": "/movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.getOptionalMovieDocs"
             },
             "snippet": {
                 "type": "typescript",
@@ -63,7 +69,8 @@
         {
             "id": {
                 "path": "/movie",
-                "method": "POST"
+                "method": "POST",
+                "identifier_override": "endpoint_service.getOptionalMovieName"
             },
             "snippet": {
                 "type": "typescript",

@@ -44,6 +44,7 @@ export { parseRawTextType, type RawTextType } from "./utils/parseRawTextType";
 export { RawPrimitiveType } from "./utils/RawPrimitiveType";
 export { recursivelyVisitRawTypeReference } from "./utils/recursivelyVisitRawTypeReference";
 export { visitExampleCodeSampleSchema } from "./utils/visitExampleCodeSampleSchema";
+export { visitExampleResponseSchema, type ExampleResponseSchemaVisitor } from "./utils/visitExampleResponseSchema";
 export { isAnyAuthSchemes, isSingleAuthScheme, visitRawApiAuth, type RawApiAuthVisitor } from "./utils/visitRawApiAuth";
 export {
     isHeaderAuthScheme,

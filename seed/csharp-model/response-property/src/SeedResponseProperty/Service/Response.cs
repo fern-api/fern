@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedResponseProperty;
 
+#nullable enable
+
 namespace SeedResponseProperty;
 
 public class Response
@@ -9,7 +11,7 @@ public class Response
     public Movie Data { get; init; }
 
     [JsonPropertyName("metadata")]
-    public List<Dictionary<string, string>> Metadata { get; init; }
+    public Dictionary<string, string> Metadata { get; init; }
 
     [JsonPropertyName("docs")]
     public string Docs { get; init; }

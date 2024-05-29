@@ -1,6 +1,8 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class GradedResponse
@@ -9,5 +11,5 @@ public class GradedResponse
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("testCases")]
-    public List<Dictionary<string, TestCaseResultWithStdout>> TestCases { get; init; }
+    public Dictionary<string, TestCaseResultWithStdout> TestCases { get; init; }
 }

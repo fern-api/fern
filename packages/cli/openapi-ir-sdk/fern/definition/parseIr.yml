@@ -55,6 +55,7 @@ types:
         docs: |
           Populated by `x-fern-examples` on a path object.
           Also migrated from `x-readme.code-samples` if present.
+      pagination: optional<finalIr.Pagination>
 
   HttpErrorWithExample:
     extends:
@@ -77,6 +78,7 @@ types:
       schema: SchemaWithExample
       contentType: optional<string>
       fullExamples: optional<list<NamedFullExample>>
+      additionalProperties: boolean
 
   ResponseWithExample:
     union:
@@ -145,6 +147,7 @@ types:
       - commons.WithDescription
     properties:
       value: SchemaWithExample
+      example: optional<list<unknown>>
 
   MapSchemaWithExample:
     extends:
@@ -199,6 +202,7 @@ types:
       properties: list<ObjectPropertyWithExample>
       allOfPropertyConflicts: list<finalIr.AllOfPropertyConflict>
       fullExamples: optional<list<NamedFullExample>>
+      additionalProperties: boolean
 
   ObjectPropertyWithExample:
     properties:
@@ -267,6 +271,12 @@ types:
 
   IntWithExample:
     properties:
+      default: optional<integer>
+      minimum: optional<integer>
+      maximum: optional<integer>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<integer>
       example: optional<integer>
 
   Int64WithExample:
@@ -279,10 +289,18 @@ types:
 
   DoubleWithExample:
     properties:
+      default: optional<double>
+      minimum: optional<double>
+      maximum: optional<double>
+      exclusiveMinimum: optional<boolean>
+      exclusiveMaximum: optional<boolean>
+      multipleOf: optional<double>
       example: optional<double>
 
   StringSchemaWithExample:
     properties:
+      default: optional<string>
+      pattern: optional<string>
       format: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>

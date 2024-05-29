@@ -14,7 +14,8 @@ export interface ContainerServiceMethods {
             send: (responseBody: string[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnListOfObjects(
         req: express.Request<
@@ -27,7 +28,8 @@ export interface ContainerServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithRequiredField[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnSetOfPrimitives(
         req: express.Request<never, Set<string>, Set<string>, never>,
@@ -35,7 +37,8 @@ export interface ContainerServiceMethods {
             send: (responseBody: Set<string>) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnSetOfObjects(
         req: express.Request<
@@ -48,7 +51,8 @@ export interface ContainerServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithRequiredField[]) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnMapPrimToPrim(
         req: express.Request<never, Record<string, string>, Record<string, string>, never>,
@@ -56,7 +60,8 @@ export interface ContainerServiceMethods {
             send: (responseBody: Record<string, string>) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnMapOfPrimToObject(
         req: express.Request<
@@ -69,7 +74,8 @@ export interface ContainerServiceMethods {
             send: (responseBody: Record<string, SeedExhaustive.types.ObjectWithRequiredField>) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getAndReturnOptional(
         req: express.Request<
@@ -82,7 +88,8 @@ export interface ContainerServiceMethods {
             send: (responseBody: SeedExhaustive.types.ObjectWithRequiredField | undefined) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -109,21 +116,24 @@ export class ContainerService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnListOfPrimitives(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.endpoints.container.getAndReturnListOfPrimitives.Response.jsonOrThrow(
-                                    responseBody,
-                                    { unrecognizedObjectKeys: "strip" }
-                                )
-                            );
+                    await this.methods.getAndReturnListOfPrimitives(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.endpoints.container.getAndReturnListOfPrimitives.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnListOfPrimitives' unexpectedly threw ${error.constructor.name}.` +
@@ -148,21 +158,24 @@ export class ContainerService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnListOfObjects(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.endpoints.container.getAndReturnListOfObjects.Response.jsonOrThrow(
-                                    responseBody,
-                                    { unrecognizedObjectKeys: "strip" }
-                                )
-                            );
+                    await this.methods.getAndReturnListOfObjects(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.endpoints.container.getAndReturnListOfObjects.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnListOfObjects' unexpectedly threw ${error.constructor.name}.` +
@@ -187,21 +200,24 @@ export class ContainerService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnSetOfPrimitives(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.jsonOrThrow(
-                                    responseBody,
-                                    { unrecognizedObjectKeys: "strip" }
-                                )
-                            );
+                    await this.methods.getAndReturnSetOfPrimitives(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnSetOfPrimitives' unexpectedly threw ${error.constructor.name}.` +
@@ -226,21 +242,24 @@ export class ContainerService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnSetOfObjects(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.endpoints.container.getAndReturnSetOfObjects.Response.jsonOrThrow(
-                                    responseBody,
-                                    { unrecognizedObjectKeys: "strip" }
-                                )
-                            );
+                    await this.methods.getAndReturnSetOfObjects(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.endpoints.container.getAndReturnSetOfObjects.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnSetOfObjects' unexpectedly threw ${error.constructor.name}.` +
@@ -265,21 +284,24 @@ export class ContainerService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnMapPrimToPrim(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.jsonOrThrow(
-                                    responseBody,
-                                    { unrecognizedObjectKeys: "strip" }
-                                )
-                            );
+                    await this.methods.getAndReturnMapPrimToPrim(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnMapPrimToPrim' unexpectedly threw ${error.constructor.name}.` +
@@ -304,21 +326,24 @@ export class ContainerService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnMapOfPrimToObject(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.jsonOrThrow(
-                                    responseBody,
-                                    { unrecognizedObjectKeys: "strip" }
-                                )
-                            );
+                    await this.methods.getAndReturnMapOfPrimToObject(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnMapOfPrimToObject' unexpectedly threw ${error.constructor.name}.` +
@@ -343,21 +368,24 @@ export class ContainerService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.getAndReturnOptional(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.endpoints.container.getAndReturnOptional.Response.jsonOrThrow(
-                                    responseBody,
-                                    { unrecognizedObjectKeys: "strip" }
-                                )
-                            );
+                    await this.methods.getAndReturnOptional(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.endpoints.container.getAndReturnOptional.Response.jsonOrThrow(
+                                        responseBody,
+                                        { unrecognizedObjectKeys: "strip" }
+                                    )
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExhaustiveError) {
                         console.warn(
                             `Endpoint 'getAndReturnOptional' unexpectedly threw ${error.constructor.name}.` +

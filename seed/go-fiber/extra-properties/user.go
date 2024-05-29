@@ -9,7 +9,7 @@ import (
 )
 
 type CreateUserRequest struct {
-	Name    string `json:"name" url:"name"`
+	Name    string `json:"name" url:"-"`
 	type_   string
 	version string
 }
@@ -52,6 +52,10 @@ type User struct {
 	Name string `json:"name" url:"name"`
 
 	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+}
+
+func (u *User) GetExtraProperties() map[string]interface{} {
+	return u.ExtraProperties
 }
 
 func (u *User) UnmarshalJSON(data []byte) error {

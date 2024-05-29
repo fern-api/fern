@@ -26,6 +26,7 @@ export class Parameter extends AstNode {
         this.name = name;
         this.type = type;
         this.docs = docs;
+        this.initializer = initializer;
     }
 
     public write(writer: Writer): void {

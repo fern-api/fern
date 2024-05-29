@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using SeedPagination;
 
+#nullable enable
+
 namespace SeedPagination;
 
 public class ListUsersPaginationResponse
 {
     [JsonPropertyName("page")]
-    public List<Page?> Page { get; init; }
+    public Page? Page { get; init; }
 
     /// <summary>
     /// The totall number of /users
@@ -15,5 +17,5 @@ public class ListUsersPaginationResponse
     public int TotalCount { get; init; }
 
     [JsonPropertyName("data")]
-    public List<List<User>> Data { get; init; }
+    public List<User> Data { get; init; }
 }

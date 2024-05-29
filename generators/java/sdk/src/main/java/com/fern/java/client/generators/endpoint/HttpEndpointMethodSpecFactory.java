@@ -16,19 +16,18 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.ir.model.commons.TypeId;
-import com.fern.ir.model.http.HttpEndpoint;
-import com.fern.ir.model.http.HttpService;
-import com.fern.ir.model.http.SdkRequestBodyType;
-import com.fern.ir.model.http.SdkRequestShape;
-import com.fern.ir.model.http.SdkRequestWrapper;
+import com.fern.irV42.model.commons.TypeId;
+import com.fern.irV42.model.http.HttpEndpoint;
+import com.fern.irV42.model.http.HttpService;
+import com.fern.irV42.model.http.SdkRequestBodyType;
+import com.fern.irV42.model.http.SdkRequestShape;
+import com.fern.irV42.model.http.SdkRequestWrapper;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.GeneratedWrappedRequest.FileUploadRequestBodyGetters;
 import com.fern.java.client.generators.WrappedRequestGenerator;
-import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.FieldSpec;

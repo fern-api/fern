@@ -21,7 +21,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedExamples.Movie) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     createMovie(
         req: express.Request<never, SeedExamples.MovieId, SeedExamples.Movie, never>,
@@ -29,7 +30,8 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedExamples.MovieId) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     getMetadata(
         req: express.Request<
@@ -45,7 +47,17 @@ export interface ServiceServiceMethods {
             send: (responseBody: SeedExamples.Metadata) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
+    getResponse(
+        req: express.Request<never, SeedExamples.Response, never, never>,
+        res: {
+            send: (responseBody: SeedExamples.Response) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -69,18 +81,21 @@ export class ServiceService {
     public toRouter(): express.Router {
         this.router.get("/movie/:movieId", async (req, res, next) => {
             try {
-                await this.methods.getMovie(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                        );
+                await this.methods.getMovie(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Movie.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExamplesError) {
                     console.warn(
                         `Endpoint 'getMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -99,18 +114,23 @@ export class ServiceService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.createMovie(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.MovieId.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                            );
+                    await this.methods.createMovie(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.MovieId.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedExamplesError) {
                         console.warn(
                             `Endpoint 'createMovie' unexpectedly threw ${error.constructor.name}.` +
@@ -134,21 +154,58 @@ export class ServiceService {
         });
         this.router.get("/metadata", async (req, res, next) => {
             try {
-                await this.methods.getMetadata(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.Metadata.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
-                        );
+                await this.methods.getMetadata(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Metadata.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExamplesError) {
                     console.warn(
                         `Endpoint 'getMetadata' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition."
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.post("/response", async (req, res, next) => {
+            try {
+                await this.methods.getResponse(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next
+                );
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedExamplesError) {
+                    console.warn(
+                        `Endpoint 'getResponse' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
                             " the endpoint's errors list in your Fern Definition."
                     );

@@ -1,13 +1,15 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class SinglyLinkedListValue
 {
     [JsonPropertyName("head")]
-    public List<string?> Head { get; init; }
+    public string? Head { get; init; }
 
     [JsonPropertyName("nodes")]
-    public List<Dictionary<string, SinglyLinkedListNodeValue>> Nodes { get; init; }
+    public Dictionary<string, SinglyLinkedListNodeValue> Nodes { get; init; }
 }

@@ -29,6 +29,7 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/auth/user",
             "response": {
               "docs": "Success",
@@ -57,7 +58,17 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
           "docs": "This user object should be in user.yml",
           "properties": {
             "associatedPersons": "optional<list<root.Person>>",
-            "id": "optional<string>",
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
       },
@@ -68,7 +79,17 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
       "Person": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },
@@ -112,6 +133,7 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/auth/user",
             "response": {
               "docs": "Success",
@@ -140,7 +162,17 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
           "docs": "This user object should be in user.yml",
           "properties": {
             "associatedPersons": "optional<list<root.Person>>",
-            "id": "optional<string>",
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
       },
@@ -151,7 +183,17 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
       "Person": {
         "docs": undefined,
         "properties": {
-          "id": "optional<string>",
+          "id": {
+            "default": undefined,
+            "docs": undefined,
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
         },
       },
     },

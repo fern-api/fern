@@ -1,4 +1,7 @@
+using System.Text.Json;
 using SeedAuthEnvironmentVariables;
+
+#nullable enable
 
 namespace SeedAuthEnvironmentVariables;
 
@@ -14,10 +17,41 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async void GetWithApiKeyAsync() { }
+    public async Task<string> GetWithApiKeyAsync()
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/apiKey" }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<string>(responseBody);
+        }
+        throw new Exception();
+    }
 
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async void GetWithHeaderAsync() { }
+    public async Task<string> GetWithHeaderAsync(HeaderAuthRequest request)
+    {
+        var _headers = new Dictionary<string, string>()
+        {
+            { "X-Endpoint-Header", request.XEndpointHeader },
+        };
+        var response = await _client.MakeRequestAsync(
+            new RawClient.ApiRequest
+            {
+                Method = HttpMethod.Get,
+                Path = "/apiKeyInHeader",
+                Headers = _headers
+            }
+        );
+        string responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        {
+            return JsonSerializer.Deserialize<string>(responseBody);
+        }
+        throw new Exception();
+    }
 }

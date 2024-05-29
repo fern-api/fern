@@ -4,26 +4,35 @@ types:
   DocsConfiguration:
     properties:
       instances: list<DocsInstances>
-      navigation:
-        type: optional<NavigationConfig>
-        docs: The navigation config is skipped when multiple versions are present.
-      tabs:
-        type: optional<map<TabId, TabConfig>>
-      versions: optional<list<VersionConfig>>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
+
+      # navigation
+      tabs: optional<map<TabId, TabConfig>>
+      versions: optional<list<VersionConfig>>
+      navigation:
+        type: optional<NavigationConfig>
+        docs: The navigation config is skipped when multiple versions are present.
+      "navbar-links": optional<list<NavbarLink>>
+      "footer-links": optional<FooterLinksConfig>
+
+      # seo
+      metadata: optional<MetadataConfig>
+      redirects: optional<list<RedirectConfig>>
+
+      # branding
       logo: optional<LogoConfiguration>
       favicon: optional<string>
-      background-image:
-        type: optional<BackgroundImageConfiguration>
-        docs: This background image is used to customize the appearance of your docs site.
+      background-image: optional<BackgroundImageConfiguration>
       colors: optional<ColorsConfiguration>
-      "navbar-links": optional<list<NavbarLink>>
       typography: optional<DocsTypographyConfig>
-      layout:
-        type: optional<LayoutConfig>
-        availability: in-development
+      layout: optional<LayoutConfig>
+
+      # integrations
+      integrations: optional<IntegrationsConfig>
+
+      # scripts
       css: optional<CssConfig>
       js: optional<JsConfig>
 
@@ -168,6 +177,7 @@ types:
       href: optional<string>
 
   BackgroundImageConfiguration:
+    docs: This background image is used to customize the appearance of your docs site.
     discriminated: false
     union:
       - string
@@ -185,6 +195,7 @@ types:
       codeFont: optional<FontConfig>
 
   LayoutConfig:
+    availability: generally-available
     properties:
       page-width:
         type: optional<string>
@@ -262,7 +273,7 @@ types:
 
       header-position:
         type: optional<HeaderPosition>
-        availability: in-development
+        availability: generally-available
         docs: |
           If `header-position` is set to `fixed`, the header will be fixed to the top of the viewport.
           If `header-position` is set to `absolute`, the header will be absolute and will scroll with the content.
@@ -271,7 +282,7 @@ types:
 
       disable-header:
         type: optional<boolean>
-        availability: in-development
+        availability: generally-available
         docs: |
           If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
           and a 1px border will separate the sidebar from the content.
@@ -398,6 +409,7 @@ types:
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
       icon: optional<string>
+      slug: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       flattened:
@@ -558,21 +570,45 @@ types:
 
   NavbarLink:
     union:
-      filled: NavbarLinkConfiguration
-      outlined: NavbarLinkConfiguration
-      minimal: NavbarLinkConfiguration
+      filled: NavbarLinkConfig
+      outlined: NavbarLinkConfig
+      minimal: NavbarLinkConfig
+      github: NavbarGithubConfig
 
       # deprecated
-      primary: NavbarLinkConfiguration # use `outlined` instead
-      secondary: NavbarLinkConfiguration # use `minimal` instead
+      primary: NavbarLinkConfig # use `outlined` instead
+      secondary: NavbarLinkConfig # use `minimal` instead
 
-  NavbarLinkConfiguration:
+  NavbarLinkConfig:
     properties:
       href: optional<string>
       url:
         type: optional<string>
         availability: deprecated
-      text: string
+        docs: Use `href` instead.
+      text: optional<string>
+      icon: optional<string>
+      rightIcon: optional<string>
+      rounded: optional<boolean>
+
+  NavbarGithubConfig:
+    type: string
+    availability: in-development
+
+  FooterLinksConfig:
+    properties:
+      github: optional<string>
+      twitter: optional<string>
+      x: optional<string>
+      linkedin: optional<string>
+      youtube: optional<string>
+      instagram: optional<string>
+      facebook: optional<string>
+      discord: optional<string>
+      slack: optional<string>
+      hackernews: optional<string>
+      medium: optional<string>
+      website: optional<string>
 
   CssConfig:
     docs: |-
@@ -659,3 +695,55 @@ types:
       - beforeInteractive
       - afterInteractive # default
       - lazyOnload
+
+  MetadataConfig:
+    docs: |
+      The `metadata` object allows you to customize the appearance of your docs site in search engines and social media.
+      These settings are applied globally, but can be overridden on a per-page basis using frontmatter.
+    availability: in-development
+    properties:
+      "og:site_name": optional<string>
+      "og:title": optional<string>
+      "og:description": optional<string>
+      "og:url": optional<string>
+      "og:image": optional<string>
+      "og:image:width": optional<double>
+      "og:image:height": optional<double>
+      "og:locale": optional<string>
+      "og:logo": optional<string>
+      "twitter:title": optional<string>
+      "twitter:description": optional<string>
+      "twitter:handle": optional<string>
+      "twitter:image": optional<string>
+      "twitter:site": optional<string>
+      "twitter:url": optional<string>
+      "twitter:card": optional<TwitterCardSetting>
+
+  TwitterCardSetting:
+    enum:
+      - summary
+      - summary_large_image
+      - app
+      - player
+
+  RedirectConfig:
+    availability: in-development
+    docs: |
+      The `redirects` object allows you to redirect traffic from one path to another, i.e.
+
+      ```yaml
+      redirects:
+        - source: "/old-path"
+          destination: "/new-path"
+      ```
+    properties:
+      source:
+        type: string
+        docs: The path that you want to redirect from, i.e. `/old-path`
+      destination:
+        type: string
+        docs: The path that you want to redirect to, i.e. `/new-path`
+
+  IntegrationsConfig:
+    properties:
+      intercom: optional<string>

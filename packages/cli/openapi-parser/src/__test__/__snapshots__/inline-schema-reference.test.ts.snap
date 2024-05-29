@@ -2,6 +2,7 @@
 
 exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
 {
+  "basePath": null,
   "channel": [],
   "description": null,
   "endpoints": [
@@ -40,6 +41,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": null,
+      "pagination": null,
       "path": "/example",
       "pathParameters": [],
       "queryParameters": [],
@@ -57,6 +59,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
             "nameOverride": null,
             "schemas": [
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -82,8 +85,11 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
+                          "format": null,
                           "maxLength": null,
                           "minLength": null,
+                          "pattern": null,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -110,6 +116,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                 "type": "reference",
               },
               {
+                "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": null,
@@ -135,8 +142,11 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": {
+                          "default": null,
+                          "format": null,
                           "maxLength": null,
                           "minLength": null,
+                          "pattern": null,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -167,6 +177,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
   ],
   "schemas": {
     "Schema1": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -192,6 +203,12 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",
@@ -216,8 +233,11 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -228,6 +248,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "type": "object",
     },
     "Schema2": {
+      "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
       "description": null,
@@ -253,8 +274,11 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "format": null,
                 "maxLength": null,
                 "minLength": null,
+                "pattern": null,
                 "type": "string",
               },
               "type": "primitive",
@@ -279,6 +303,12 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": {
+                "default": null,
+                "exclusiveMaximum": null,
+                "exclusiveMinimum": null,
+                "maximum": null,
+                "minimum": null,
+                "multipleOf": null,
                 "type": "int",
               },
               "type": "primitive",

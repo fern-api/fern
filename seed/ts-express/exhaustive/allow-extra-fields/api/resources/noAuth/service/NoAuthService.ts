@@ -13,7 +13,8 @@ export interface NoAuthServiceMethods {
             send: (responseBody: boolean) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -37,22 +38,25 @@ export class NoAuthService {
     public toRouter(): express.Router {
         this.router.post("", async (req, res, next) => {
             try {
-                await this.methods.postWithNoAuth(req as any, {
-                    send: async (responseBody) => {
-                        res.json(
-                            await serializers.noAuth.postWithNoAuth.Response.jsonOrThrow(responseBody, {
-                                unrecognizedObjectKeys: "passthrough",
-                                allowUnrecognizedUnionMembers: true,
-                                allowUnrecognizedEnumValues: true,
-                            })
-                        );
+                await this.methods.postWithNoAuth(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                await serializers.noAuth.postWithNoAuth.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedExhaustiveError) {
                     switch (error.errorName) {
                         case "BadRequestBody":

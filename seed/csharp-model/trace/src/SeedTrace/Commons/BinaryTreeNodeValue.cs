@@ -1,5 +1,7 @@
 using System.Text.Json.Serialization;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class BinaryTreeNodeValue
@@ -11,8 +13,8 @@ public class BinaryTreeNodeValue
     public double Val { get; init; }
 
     [JsonPropertyName("right")]
-    public List<string?> Right { get; init; }
+    public string? Right { get; init; }
 
     [JsonPropertyName("left")]
-    public List<string?> Left { get; init; }
+    public string? Left { get; init; }
 }

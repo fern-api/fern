@@ -21,6 +21,7 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user",
             "response": {
               "docs": "Success",
@@ -42,6 +43,7 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/users",
             "response": {
               "docs": "Success",
@@ -54,13 +56,33 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
         "UserGetAllResponseItem": {
           "docs": undefined,
           "properties": {
-            "id": "optional<string>",
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
         "UserGetResponse": {
           "docs": undefined,
           "properties": {
-            "id": "optional<string>",
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
       },
@@ -112,6 +134,7 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/user",
             "response": {
               "docs": "Success",
@@ -133,6 +156,7 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
               },
             ],
             "method": "GET",
+            "pagination": undefined,
             "path": "/users",
             "response": {
               "docs": "Success",
@@ -145,13 +169,33 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
         "UserGetAllResponseItem": {
           "docs": undefined,
           "properties": {
-            "id": "optional<string>",
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
         "UserGetResponse": {
           "docs": undefined,
           "properties": {
-            "id": "optional<string>",
+            "id": {
+              "default": undefined,
+              "docs": undefined,
+              "type": "optional<string>",
+              "validation": {
+                "format": "uuid",
+                "maxLength": undefined,
+                "minLength": undefined,
+                "pattern": undefined,
+              },
+            },
           },
         },
       },

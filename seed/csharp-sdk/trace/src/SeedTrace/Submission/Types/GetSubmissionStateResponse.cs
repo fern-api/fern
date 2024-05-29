@@ -1,12 +1,14 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
 
+#nullable enable
+
 namespace SeedTrace;
 
 public class GetSubmissionStateResponse
 {
     [JsonPropertyName("timeSubmitted")]
-    public List<DateTime?> TimeSubmitted { get; init; }
+    public DateTime? TimeSubmitted { get; init; }
 
     [JsonPropertyName("submission")]
     public string Submission { get; init; }

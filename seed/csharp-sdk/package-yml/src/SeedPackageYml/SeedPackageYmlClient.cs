@@ -1,15 +1,17 @@
 using SeedPackageYml;
 
+#nullable enable
+
 namespace SeedPackageYml;
 
 public partial class SeedPackageYmlClient
 {
     private RawClient _client;
 
-    public SeedPackageYmlClient(ClientOptions clientOptions)
+    public SeedPackageYmlClient(ClientOptions clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

@@ -28,10 +28,10 @@ export async function loadAPIWorkspace({
     cliVersion: string;
     workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
-    let generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined = undefined;
-    try {
-        generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
-    } catch (err) {}
+    const generatorsConfiguration = await generatorsYml.loadGeneratorsConfiguration({
+        absolutePathToWorkspace,
+        context
+    });
 
     let changelog: APIChangelog | undefined = undefined;
     try {
@@ -81,7 +81,8 @@ export async function loadAPIWorkspace({
                 absoluteFilepath,
                 absoluteFilepathToOverrides,
                 settings: {
-                    audiences: definition.audiences ?? []
+                    audiences: definition.audiences ?? [],
+                    shouldUseTitleAsName: definition.shouldUseTitleAsName ?? true
                 }
             });
         }

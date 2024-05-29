@@ -14,7 +14,8 @@ export interface PaymentServiceMethods {
             send: (responseBody: string) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
     delete(
         req: express.Request<
@@ -29,7 +30,8 @@ export interface PaymentServiceMethods {
             send: () => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
-        }
+        },
+        next: express.NextFunction
     ): void | Promise<void>;
 }
 
@@ -56,20 +58,23 @@ export class PaymentService {
             if (request.ok) {
                 req.body = request.value;
                 try {
-                    await this.methods.create(req as any, {
-                        send: async (responseBody) => {
-                            res.json(
-                                await serializers.payment.create.Response.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
-                            );
+                    await this.methods.create(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    await serializers.payment.create.Response.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
                         },
-                        cookie: res.cookie.bind(res),
-                        locals: res.locals,
-                    });
+                        next
+                    );
                     next();
                 } catch (error) {
-                    console.error(error);
                     if (error instanceof errors.SeedIdempotencyHeadersError) {
                         console.warn(
                             `Endpoint 'create' unexpectedly threw ${error.constructor.name}.` +
@@ -93,16 +98,19 @@ export class PaymentService {
         });
         this.router.delete("/:paymentId", async (req, res, next) => {
             try {
-                await this.methods.delete(req as any, {
-                    send: async () => {
-                        res.sendStatus(204);
+                await this.methods.delete(
+                    req as any,
+                    {
+                        send: async () => {
+                            res.sendStatus(204);
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
                     },
-                    cookie: res.cookie.bind(res),
-                    locals: res.locals,
-                });
+                    next
+                );
                 next();
             } catch (error) {
-                console.error(error);
                 if (error instanceof errors.SeedIdempotencyHeadersError) {
                     console.warn(
                         `Endpoint 'delete' unexpectedly threw ${error.constructor.name}.` +

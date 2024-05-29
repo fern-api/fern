@@ -23,6 +23,7 @@ export declare namespace SeedTraceClient {
     interface RequestOptions {
         timeoutInSeconds?: number;
         maxRetries?: number;
+        abortSignal?: AbortSignal;
     }
 }
 

@@ -1,25 +1,30 @@
+import { MediaType } from "@fern-api/core-utils";
 import { MultipartRequestProperty, MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
-export const APPLICATION_JSON_CONTENT = "application/json";
-export const APPLICATION_JSON_REGEX = /^application.*json$/;
-
-export const MULTIPART_CONTENT = "multipart/form-data";
-
-export const OCTET_STREAM = "application/octet-stream";
-
 function getMultipartFormDataRequest(
     requestBody: OpenAPIV3.RequestBodyObject
 ): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return requestBody.content[MULTIPART_CONTENT]?.schema;
+    for (const [mediaType, mediaTypeObject] of Object.entries(requestBody.content)) {
+        if (MediaType.parse(mediaType)?.isMultipart()) {
+            return mediaTypeObject.schema;
+        }
+    }
+    return undefined;
 }
 
 function isOctetStreamRequest(requestBody: OpenAPIV3.RequestBodyObject): boolean {
-    return requestBody.content[OCTET_STREAM] != null;
+    for (const mediaType in requestBody.content) {
+        if (MediaType.parse(mediaType)?.isOctetStream()) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function multipartRequestHasFile(
@@ -167,7 +172,10 @@ export function convertRequest({
         description: undefined,
         schema: requestSchema,
         contentType: undefined,
-        fullExamples: jsonMediaObject.examples
+        fullExamples: jsonMediaObject.examples,
+        additionalProperties:
+            !isReferenceObject(jsonMediaObject.schema) &&
+            isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties)
     });
 }
 

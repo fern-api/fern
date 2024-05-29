@@ -5,7 +5,12 @@
             "type": "github",
             "repoUrl": "https://github.com/query-parameters/fern",
             "version": "0.0.1",
-            "publishInfo": null
+            "publishInfo": {
+                "type": "nuget",
+                "registryUrl": "",
+                "packageName": "Fernquery-parameters",
+                "apiKeyEnvironmentVariable": ""
+            }
         },
         "path": "/fern/output",
         "publishingMetadata": null,
@@ -20,5 +25,6 @@
     "dryRun": false,
     "whitelabel": false,
     "writeUnitTests": true,
-    "generateOauthClients": true
+    "generateOauthClients": true,
+    "generatePaginatedClients": true
 }
