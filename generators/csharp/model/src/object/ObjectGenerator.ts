@@ -1,9 +1,9 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
-import { getEnumSerializationAnnotation } from "../enum/getEnumSerializationAnnotation";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { getUndiscriminatedUnionSerializerAnnotation } from "../undiscriminated-union/getUndiscriminatedUnionSerializerAnnotation";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
     private readonly classReference: csharp.ClassReference;
@@ -28,9 +28,13 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
         properties.forEach((property) => {
             const annotations: csharp.Annotation[] = [];
-            if (this.context.isEnum(property.valueType)) {
+            const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(property.valueType);
+            if (maybeUndiscriminatedUnion != null) {
                 annotations.push(
-                    getEnumSerializationAnnotation({ context: this.context, enumReference: property.valueType })
+                    getUndiscriminatedUnionSerializerAnnotation({
+                        context: this.context,
+                        undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion
+                    })
                 );
             }
 

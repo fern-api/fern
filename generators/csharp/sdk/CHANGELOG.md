@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.20 - 2024-05-29]
+
+- Fix: Enum serializer is now added to enum declarations instead of enum references. This
+  means that using a `JsonSerializer.serialize(myEnum)` will also provide the correct value.
+
+- Fix: `OneOf` serializer is now added as a `Core` class. It uses reflection to scan all the
+  generic classes and see if there is an opportunity to deserialize into that particular class.
+
 ## [0.0.19 - 2024-05-29]
 
 - Fix: Enum serializer hands reading + writing enum string values. There is now no need to pass

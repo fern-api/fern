@@ -1,5 +1,5 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { getEnumSerializationAnnotation } from "@fern-api/fern-csharp-model";
+import { getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpEndpoint, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -80,9 +80,15 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 // TODO(dsinghvi): handle extends of inlined request bodies
                 for (const property of request.properties) {
                     const annotations: csharp.Annotation[] = [];
-                    if (this.context.isEnum(property.valueType)) {
+                    const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(
+                        property.valueType
+                    );
+                    if (addJsonAnnotations && maybeUndiscriminatedUnion != null) {
                         annotations.push(
-                            getEnumSerializationAnnotation({ context: this.context, enumReference: property.valueType })
+                            getUndiscriminatedUnionSerializerAnnotation({
+                                context: this.context,
+                                undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion
+                            })
                         );
                     }
 
