@@ -8,10 +8,10 @@ instances:
         branch: main
   - url: fern.docs.dev.buildwithfern.com/learn
     edit-this-page:
-    github:
-      owner: fern-api
-      repo: fern
-      branch: main
+      github:
+        owner: fern-api
+        repo: fern
+        branch: main
 title: Fern
 
 tabs:
