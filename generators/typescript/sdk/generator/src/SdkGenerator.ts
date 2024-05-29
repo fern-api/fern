@@ -302,7 +302,10 @@ export class SdkGenerator {
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
-        this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator(intermediateRepresentation);
+        this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator({
+            intermediateRepresentation,
+            neverThrowErrors: this.config.neverThrowErrors
+        });
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation,
             errorResolver: this.errorResolver,
