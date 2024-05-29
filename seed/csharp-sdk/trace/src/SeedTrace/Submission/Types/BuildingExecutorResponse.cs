@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using SeedTrace.Core;
 
 #nullable enable
 
@@ -12,6 +11,5 @@ public class BuildingExecutorResponse
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("status")]
-    [JsonConverter(typeof(StringEnumSerializer<ExecutionSessionStatus>))]
     public ExecutionSessionStatus Status { get; init; }
 }

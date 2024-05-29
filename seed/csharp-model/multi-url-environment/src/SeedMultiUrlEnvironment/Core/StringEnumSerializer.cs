@@ -2,11 +2,11 @@ using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace SeedMultiUrlEnvironment
+namespace SeedMultiUrlEnvironment;
 
-public class StringEnumSerializer<TEnum> : JsonConverter<TEnum> where TEnum : struct, System.Enum
+public class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
+    where TEnum : struct, System.Enum
 {
-
     private readonly Dictionary<TEnum, string> _enumToString = new Dictionary<TEnum, string>();
     private readonly Dictionary<string, TEnum> _stringToEnum = new Dictionary<string, TEnum>();
 
@@ -18,7 +18,8 @@ public class StringEnumSerializer<TEnum> : JsonConverter<TEnum> where TEnum : st
         foreach (var value in values)
         {
             var enumMember = type.GetMember(value.ToString())[0];
-            var attr = enumMember.GetCustomAttributes(typeof(EnumMemberAttribute), false)
+            var attr = enumMember
+                .GetCustomAttributes(typeof(EnumMemberAttribute), false)
                 .Cast<EnumMemberAttribute>()
                 .FirstOrDefault();
 
@@ -36,7 +37,11 @@ public class StringEnumSerializer<TEnum> : JsonConverter<TEnum> where TEnum : st
         }
     }
 
-    public override TEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    public override TEnum Read(
+        ref Utf8JsonReader reader,
+        Type typeToConvert,
+        JsonSerializerOptions options
+    )
     {
         var stringValue = reader.GetString();
 
