@@ -79,17 +79,17 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             inlinedRequestBody: (request) => {
                 // TODO(dsinghvi): handle extends of inlined request bodies
                 for (const property of request.properties) {
-                    const type = this.context.csharpTypeMapper.convert({ reference: property.valueType });
-                    const isEnum = this.context.isEnum(property.valueType);
                     const annotations: csharp.Annotation[] = [];
-                    if (isEnum) {
-                        annotations.push(getEnumSerializationAnnotation({ context: this.context, type }));
+                    if (this.context.isEnum(property.valueType)) {
+                        annotations.push(
+                            getEnumSerializationAnnotation({ context: this.context, enumReference: property.valueType })
+                        );
                     }
 
                     class_.addField(
                         csharp.field({
                             name: property.name.name.pascalCase.safeName,
-                            type,
+                            type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
                             access: "public",
                             get: true,
                             init: true,

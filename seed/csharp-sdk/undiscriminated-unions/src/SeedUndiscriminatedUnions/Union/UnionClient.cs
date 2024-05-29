@@ -34,6 +34,6 @@ public class UnionClient
                 OneOf<string, List<string>, int, List<int>, List<List<int>>>
             >(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

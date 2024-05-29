@@ -27,17 +27,17 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
 
         const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
         properties.forEach((property) => {
-            const type = this.context.csharpTypeMapper.convert({ reference: property.valueType });
-            const isEnum = this.context.isEnum(property.valueType);
             const annotations: csharp.Annotation[] = [];
-            if (isEnum) {
-                annotations.push(getEnumSerializationAnnotation({ context: this.context, type }));
+            if (this.context.isEnum(property.valueType)) {
+                annotations.push(
+                    getEnumSerializationAnnotation({ context: this.context, enumReference: property.valueType })
+                );
             }
 
             class_.addField(
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: property }),
-                    type,
+                    type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
                     access: "public",
                     get: true,
                     init: true,

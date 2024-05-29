@@ -1,14 +1,16 @@
 import { AbstractCsharpGeneratorContext, csharp } from "@fern-api/csharp-codegen";
+import { TypeReference } from "@fern-fern/ir-sdk/api";
 
 // For enum references, we must add an annotation to the enum serializer:
 // [JsonConverter(typeof(StringEnumSerializer<T>))] where T is the enum
 export function getEnumSerializationAnnotation({
     context,
-    type
+    enumReference
 }: {
     context: AbstractCsharpGeneratorContext<any>;
-    type: csharp.Type;
+    enumReference: TypeReference;
 }): csharp.Annotation {
+    const type = context.csharpTypeMapper.convert({ reference: enumReference, unboxOptionals: true });
     return csharp.annotation({
         reference: csharp.classReference({
             name: "JsonConverter",
@@ -16,9 +18,9 @@ export function getEnumSerializationAnnotation({
         }),
         argument: csharp.codeblock((writer) => {
             writer.write("typeof(");
-            writer.writeNodeStatement(csharp.classReference(context.getStringEnumSerializerClassReference()));
+            writer.writeNode(csharp.classReference(context.getStringEnumSerializerClassReference()));
             writer.write("<");
-            writer.writeNodeStatement(type);
+            writer.writeNode(type);
             writer.write(">");
             writer.write(")");
         })

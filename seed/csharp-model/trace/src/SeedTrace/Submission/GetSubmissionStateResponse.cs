@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using SeedTrace.Core;
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -14,9 +14,8 @@ public class GetSubmissionStateResponse
     [JsonPropertyName("submission")]
     public string Submission { get; init; }
 
-    [JsonPropertyName("language")JsonConverter(typeof(StringEnumSerializer;
-    <Language;
-    >))]
+    [JsonPropertyName("language")]
+    [JsonConverter(typeof(StringEnumSerializer<Language>))]
     public Language Language { get; init; }
 
     [JsonPropertyName("submissionTypeState")]

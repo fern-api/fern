@@ -29,7 +29,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Response> GetMovieDocsAsync(string request)
@@ -47,7 +47,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<StringResponse> GetMovieNameAsync(string request)
@@ -65,7 +65,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<StringResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Response> GetMovieMetadataAsync(string request)
@@ -83,7 +83,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Response>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Response?> GetOptionalMovieAsync(string request)
@@ -101,7 +101,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Response?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<WithDocs?> GetOptionalMovieDocsAsync(string request)
@@ -119,7 +119,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<WithDocs?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<StringResponse?> GetOptionalMovieNameAsync(string request)
@@ -137,6 +137,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<StringResponse?>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

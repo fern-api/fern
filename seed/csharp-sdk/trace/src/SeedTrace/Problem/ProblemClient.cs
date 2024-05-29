@@ -32,7 +32,7 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<CreateProblemResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<UpdateProblemResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     /// <summary>
@@ -89,6 +89,6 @@ public class ProblemClient
         {
             return JsonSerializer.Deserialize<GetDefaultStarterFilesResponse>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

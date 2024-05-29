@@ -30,6 +30,6 @@ public class UnionClient
         {
             return JsonSerializer.Deserialize<Animal>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

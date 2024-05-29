@@ -29,6 +29,6 @@ public class UnknownClient
         {
             return JsonSerializer.Deserialize<List<object>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

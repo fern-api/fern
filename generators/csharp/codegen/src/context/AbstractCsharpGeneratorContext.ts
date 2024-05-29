@@ -92,6 +92,9 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public isEnum(reference: TypeReference): boolean {
+        if (reference.type === "container" && reference.container.type === "optional") {
+            return this.isEnum(reference.container.optional);
+        }
         if (reference.type !== "named") {
             return false;
         }

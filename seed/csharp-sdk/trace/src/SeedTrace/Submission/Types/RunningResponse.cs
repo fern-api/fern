@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
-using SeedTrace.Core;
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -11,8 +11,7 @@ public class RunningResponse
     [JsonPropertyName("submissionId")]
     public Guid SubmissionId { get; init; }
 
-    [JsonPropertyName("state")JsonConverter(typeof(StringEnumSerializer;
-    <RunningSubmissionState;
-    >))]
+    [JsonPropertyName("state")]
+    [JsonConverter(typeof(StringEnumSerializer<RunningSubmissionState>))]
     public RunningSubmissionState State { get; init; }
 }

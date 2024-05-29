@@ -178,7 +178,7 @@ export class EndpointGenerator {
                     writer.writeLine("}");
                     writer.dedent();
 
-                    writer.writeLine("throw new Exception();");
+                    writer.writeLine(`throw new Exception(${RESPONSE_BODY_VARIABLE_NAME});`);
                 });
             },
             streaming: () => undefined,
