@@ -181,7 +181,7 @@ If the fern folder that you are pointing to has multiple APIs, then you must poi
 specific API that you are looking to generate:
 
 ```sh
-yarn seed test --generator ts-sdk --path /Users/jdoe/fern/apis/imdb
+yarn seed run --generator ts-sdk --path /Users/jdoe/fern/apis/imdb
 ```
 
 ### Running generators from source

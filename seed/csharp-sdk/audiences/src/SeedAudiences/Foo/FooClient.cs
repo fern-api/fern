@@ -34,6 +34,6 @@ public class FooClient
         {
             return JsonSerializer.Deserialize<ImportingType>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

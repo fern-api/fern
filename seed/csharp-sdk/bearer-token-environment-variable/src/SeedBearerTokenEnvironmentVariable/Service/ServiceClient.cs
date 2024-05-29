@@ -27,6 +27,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

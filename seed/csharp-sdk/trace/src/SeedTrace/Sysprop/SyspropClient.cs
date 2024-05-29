@@ -35,6 +35,6 @@ public class SyspropClient
         {
             return JsonSerializer.Deserialize<Dictionary<Language, int>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

@@ -24,7 +24,7 @@ public class HomepageClient
         {
             return JsonSerializer.Deserialize<List<string>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async void SetHomepageProblemsAsync(List<string> request)

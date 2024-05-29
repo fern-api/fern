@@ -24,7 +24,7 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<Resource>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<List<Resource>> ListResourcesAsync(ListResourcesRequest request)
@@ -47,6 +47,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<List<Resource>>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

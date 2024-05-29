@@ -28,6 +28,6 @@ public class ServiceClient
         {
             return JsonSerializer.Deserialize<File>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }

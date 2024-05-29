@@ -91,11 +91,11 @@ export class Field extends AstNode {
         }
 
         if (this.annotations.length > 0) {
-            writer.write("[");
             for (const annotation of this.annotations) {
+                writer.write("[");
                 annotation.write(writer);
+                writer.writeLine("]");
             }
-            writer.writeLine("]");
         }
 
         writer.write(`${this.access} `);

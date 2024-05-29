@@ -48,9 +48,7 @@ public class RawClient
     {
       var serializerOptions = new JsonSerializerOptions
       {
-          Converters = { new JsonEnumMemberStringEnumConverter() },
-          // Set other options as required:
-          WriteIndented = true,
+        WriteIndented = true,
       };
       httpRequest.Content = new StringContent(
           JsonSerializer.Serialize(request.Body, serializerOptions), Encoding.UTF8, "application/json");
@@ -69,9 +67,9 @@ public class RawClient
   /// </summary>
   public class ApiRequest
   {
-    public HttpMethod Method; 
-    
-    public string Path; 
+    public HttpMethod Method;
+
+    public string Path;
 
     public string? ContentType = null;
 

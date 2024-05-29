@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -11,6 +12,7 @@ public class WorkspaceSubmitRequest
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("language")]
+    [JsonConverter(typeof(StringEnumSerializer<Language>))]
     public Language Language { get; init; }
 
     [JsonPropertyName("submissionFiles")]

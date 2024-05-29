@@ -32,7 +32,7 @@ public class ImdbClient
         {
             return JsonSerializer.Deserialize<string>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 
     public async Task<Movie> GetMovieAsync(string movieId)
@@ -45,6 +45,6 @@ public class ImdbClient
         {
             return JsonSerializer.Deserialize<Movie>(responseBody);
         }
-        throw new Exception();
+        throw new Exception(responseBody);
     }
 }
