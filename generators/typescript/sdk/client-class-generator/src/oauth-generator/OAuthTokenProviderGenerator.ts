@@ -21,7 +21,19 @@ export class OAuthTokenProviderGenerator {
     public static OAUTH_CLIENT_SECRET_PROPERTY_NAME = "clientSecret";
     public static OAUTH_AUTH_CLIENT_PROPERTY_NAME = "authClient";
 
-    constructor(private ir: IntermediateRepresentation) {}
+    private ir: IntermediateRepresentation;
+    private neverThrowErrors: boolean;
+
+    constructor({
+        intermediateRepresentation,
+        neverThrowErrors
+    }: {
+        intermediateRepresentation: IntermediateRepresentation;
+        neverThrowErrors: boolean;
+    }) {
+        this.ir = intermediateRepresentation;
+        this.neverThrowErrors = neverThrowErrors;
+    }
 
     public getExportedFilePath(): ExportedFilePath {
         return {
@@ -236,6 +248,7 @@ export class OAuthTokenProviderGenerator {
         const accessTokenProperty = this.responsePropertyToDotDelimitedAccessor({
             responseProperty: responseProperties.accessToken
         });
+        const handleNeverThrowErrors = this.getNeverThrowErrorsHandler();
         if (responseProperties.expiresIn != null) {
             const expiresInProperty = this.responsePropertyToDotDelimitedAccessor({
                 responseProperty: responseProperties.expiresIn
@@ -246,6 +259,7 @@ export class OAuthTokenProviderGenerator {
                         ${clientIdProperty}: await core.Supplier.get(this._clientId),
                         ${clientSecretProperty}: await core.Supplier.get(this._clientSecret),
                     });
+                    ${handleNeverThrowErrors}
                     this._accessToken = tokenResponse.${accessTokenProperty};
                     this._expiresAt = this.getExpiresAt(tokenResponse.${expiresInProperty}, this.BUFFER_IN_MINUTES);
                     return this._accessToken;
@@ -258,10 +272,19 @@ export class OAuthTokenProviderGenerator {
                     ${clientIdProperty}: await core.Supplier.get(this._clientId),
                     ${clientSecretProperty}: await core.Supplier.get(this._clientSecret),
                 });
+                ${handleNeverThrowErrors}
                 this._accessToken = tokenResponse.${accessTokenProperty};
                 return this._accessToken;
             }
         `;
+    }
+
+    private getNeverThrowErrorsHandler(): Code {
+        return this.neverThrowErrors
+            ? code`if (!tokenResponse.ok) {
+                return this._accessToken ?? "";
+            }`
+            : code``;
     }
 
     private getExpiresAtMethod({
@@ -285,11 +308,13 @@ export class OAuthTokenProviderGenerator {
     }: {
         responseProperty: ResponseProperty;
     }): string {
+        const prefix = this.neverThrowErrors ? "body." : "";
         const propertyPath = responseProperty.propertyPath;
         if (propertyPath == null || propertyPath.length === 0) {
-            return responseProperty.property.name.name.camelCase.unsafeName;
+            return prefix + responseProperty.property.name.name.camelCase.unsafeName;
         }
         return (
+            prefix +
             propertyPath.map((name) => name.camelCase.unsafeName).join(".") +
             "." +
             responseProperty.property.name.name.camelCase.unsafeName

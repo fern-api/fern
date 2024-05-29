@@ -3,6 +3,7 @@ import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
 import { EndpointResolver } from "../resolvers/EndpointResolver";
 import { PropertyResolver } from "../resolvers/PropertyResolver";
+import { isRootFernFilepath } from "../utils/isRootFernFilepath";
 import { TokenEndpoint } from "./convertOAuthUtils";
 
 export async function convertOAuthTokenEndpoint({
@@ -24,10 +25,9 @@ export async function convertOAuthTokenEndpoint({
         endpointReference: {
             endpointId: IdGenerator.generateEndpointIdFromResolvedEndpoint(resolvedEndpoint),
             serviceId: IdGenerator.generateServiceIdFromFernFilepath(resolvedEndpoint.file.fernFilepath),
-            subpackageId:
-                resolvedEndpoint.file.fernFilepath.file != null
-                    ? IdGenerator.generateSubpackageId(resolvedEndpoint.file.fernFilepath)
-                    : undefined
+            subpackageId: !isRootFernFilepath({ fernFilePath: resolvedEndpoint.file.fernFilepath })
+                ? IdGenerator.generateSubpackageId(resolvedEndpoint.file.fernFilepath)
+                : undefined
         },
         requestProperties: {
             clientId: await propertyResolver.resolveRequestPropertyOrThrow({

@@ -5,20 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.20.1] - 2024-05-20
+## [0.20.2] - 2024-05-29
 
-- Fix: Remove instances of `node:stream` so that the generated SDK is Webpack + Next.js compatible. 
+- Fix: The OAuth token provider supports SDKs that enable the `neverThrowErrors` setting.
+  If the OAuth token provider fails to retrieve and/or refresh an access token, an error
+  will _not_ be thrown. Instead, the original access token will be used and the user will be
+  able to act upon an error available on the response. For example,
 
-## [0.20.1-rc0] - 2024-05-20
+  ```ts
+  const response = await client.user.get(...)
+  if (!response.ok) {
+    // Handle the response.error ...
+  }
+  ```
+
+## [0.20.1] - 2024-05-29
+
+- Fix: Remove instances of `node:stream` so that the generated SDK is Webpack + Next.js compatible.
+
+## [0.20.1-rc0] - 2024-05-29
 
 - (Pre-emptive) Fix: URL encoded bodies are now appropriately encoded within the fetcher.
 
-## [0.20.0-rc1] - 2024-05-20
+## [0.20.0-rc1] - 2024-05-24
 
 - Fix: Pass `abortSignal` to `Stream` for server-sent-events and JSON streams so that the user
   can opt out and break from a stream.
 
-## [0.20.0-rc0] - 2024-05-20
+## [0.20.0-rc0] - 2024-05-24
 
 - Feature: Add `abortSignal` to `RequestOptions`. SDK consumers can now specify an
   an arbitrary abort signal that can interrupt the API call.
