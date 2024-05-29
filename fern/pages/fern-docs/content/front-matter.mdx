@@ -1,6 +1,7 @@
 ---
 title: Customize content using frontmatter
-description: Set the page title, meta description, a URL to suggest edits to the page, and its OpenGraph image by using frontmatter.
+subtitle: Set titles, add meta descriptions, and more
+description: Use frontmatter to set the page title, subtitle, slug, meta description, its OpenGraph image, and a URL to suggest edits.
 ---
 
 You can optionally use front matter to set each page's title, full slug override, meta description, a URL to suggest edits to the page, and its OpenGraph image. 
@@ -10,10 +11,11 @@ Front matter must be added to the top of a `.md` or `.mdx` file, before the rest
 <CodeBlock title="Example front matter">
 ```mdx
 ---
-title: Introduction to the Fern toolkit for REST APIs
-slug: introduction
-description: Define your API with OpenAPI or Fern's simpler format, then generate SDKs, server boilerplate, and a documentation website with an API Reference. 
-editThisPageUrl: https://github.com/fern-api/fern/blob/main/fern/docs/pages/overview/introduction.mdx
+title: Customize content using frontmatter
+subtitle: Set titles, add meta descriptions, and more 
+slug: frontmatter
+description: Use frontmatter to set the page title, subtitle, slug, meta description, its OpenGraph image, and a URL to suggest edits.
+editThisPageUrl: https://github.com/fern-api/fern/blob/main/fern/pages/fern-docs/content/front-matter.mdx
 image: https://github.com/fern-api/fern/blob/main/fern/images/logo-green.png
 ---
 ```
@@ -65,6 +67,13 @@ title: Fern | Documentation # <-- set site-wide
 The value you enter for this field is appended to every page's title across your docs site, as ` - TITLE_VALUE`.
 
 For example, with the above setting in `docs.yml`, the `Overview` page's title becomes `Overview - Fern | Documentation`.
+
+## subtitle
+
+**Type**: string<br />
+**Default**: None
+
+Renders as a subtitle on the page. If `description` is not set, `subtitle` is also used as the meta description tag.
 
 ## slug
 
