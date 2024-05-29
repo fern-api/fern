@@ -24,17 +24,23 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public refOccurrences: Record<string, number>;
     public DUMMY: SchemaParserContext;
     public shouldUseTitleAsName: boolean;
+    public shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    public sdkLanguage: "python" | undefined;
 
     constructor({
         document,
         taskContext,
         authHeaders,
-        shouldUseTitleAsName
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsForDiscriminated,
+        sdkLanguage
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         shouldUseTitleAsName: boolean;
+        shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+        sdkLanguage: "python" | undefined;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
@@ -43,6 +49,11 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.refOccurrences = getReferenceOccurrences(document);
         this.DUMMY = this.getDummy();
         this.shouldUseTitleAsName = shouldUseTitleAsName;
+        this.shouldUseUndiscriminatedUnionsForDiscriminated = shouldUseUndiscriminatedUnionsForDiscriminated;
+        this.sdkLanguage = sdkLanguage;
+    }
+    getShouldUseUndiscriminatedUnionsForDiscriminated(): boolean {
+        return this.shouldUseUndiscriminatedUnionsForDiscriminated && this.sdkLanguage === "python";
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {

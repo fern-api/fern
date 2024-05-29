@@ -6,11 +6,14 @@ export interface SchemaParserContext {
     logger: Logger;
     DUMMY: SchemaParserContext;
 
+    sdkLanguage: "python" | undefined;
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
 
     referenceExists(ref: string): boolean;
     resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject;
     markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
     markSchemaAsReferencedByRequest(schemaId: SchemaId): void;
     markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string, times: number): void;
+    getShouldUseUndiscriminatedUnionsForDiscriminated(): boolean;
 }

@@ -14,21 +14,29 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
     public taskContext: TaskContext;
     public DUMMY: SchemaParserContext;
     public shouldUseTitleAsName: boolean;
+    public shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    public sdkLanguage: "python" | undefined;
 
     constructor({
         document,
         taskContext,
-        shouldUseTitleAsName
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsForDiscriminated,
+        sdkLanguage
     }: {
         document: AsyncAPIV2.Document;
         taskContext: TaskContext;
         shouldUseTitleAsName: boolean;
+        shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+        sdkLanguage: "python" | undefined;
     }) {
         this.document = document;
         this.taskContext = taskContext;
         this.logger = taskContext.logger;
         this.DUMMY = this;
         this.shouldUseTitleAsName = shouldUseTitleAsName;
+        this.shouldUseUndiscriminatedUnionsForDiscriminated = shouldUseUndiscriminatedUnionsForDiscriminated;
+        this.sdkLanguage = sdkLanguage;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -109,19 +117,33 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         discrminant: string,
         times: number
     ): void;
+
+    public getShouldUseUndiscriminatedUnionsForDiscriminated(): boolean {
+        return this.shouldUseUndiscriminatedUnionsForDiscriminated && this.sdkLanguage === "python";
+    }
 }
 
 export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
     constructor({
         document,
         taskContext,
-        shouldUseTitleAsName
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsForDiscriminated,
+        sdkLanguage
     }: {
         document: AsyncAPIV2.Document;
         taskContext: TaskContext;
         shouldUseTitleAsName: boolean;
+        shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+        sdkLanguage: "python" | undefined;
     }) {
-        super({ document, taskContext, shouldUseTitleAsName });
+        super({
+            document,
+            taskContext,
+            shouldUseTitleAsName,
+            shouldUseUndiscriminatedUnionsForDiscriminated,
+            sdkLanguage
+        });
     }
 
     markSchemaAsReferencedByNonRequest(schemaId: string): void {

@@ -419,6 +419,7 @@ export function convertSchemaObject(
     }
 
     // handle object with discriminant
+    // TODO(armando): handle having discriminator
     if (schema.type === "object" && schema.discriminator != null && schema.discriminator.mapping != null) {
         return convertDiscriminatedOneOf({
             nameOverride,
@@ -441,6 +442,7 @@ export function convertSchemaObject(
             schema.discriminator.mapping != null &&
             Object.keys(schema.discriminator.mapping).length > 0
         ) {
+            // TODO(armando): handle having discriminator
             return convertDiscriminatedOneOf({
                 nameOverride,
                 generatedName,
@@ -489,7 +491,9 @@ export function convertSchemaObject(
             }
 
             const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
-            if (maybeDiscriminant != null) {
+            // TODO(armando): see if this is sufficient, what exactly is getDiscriminant doing?
+            if (maybeDiscriminant != null && !context.getShouldUseUndiscriminatedUnionsForDiscriminated()) {
+                // convertDiscriminatedOneOfWithVariants removes the discriminant field from the properties
                 return convertDiscriminatedOneOfWithVariants({
                     nameOverride,
                     generatedName,
@@ -552,7 +556,8 @@ export function convertSchemaObject(
             schemas: schema.anyOf,
             context
         });
-        if (maybeDiscriminant != null) {
+        // TODO(armando): see if this is sufficient, what exactly is getDiscriminant doing?
+        if (maybeDiscriminant != null && !context.getShouldUseUndiscriminatedUnionsForDiscriminated()) {
             return convertDiscriminatedOneOfWithVariants({
                 nameOverride,
                 generatedName,

@@ -19,7 +19,9 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
+    sdkLanguage: "python" | undefined;
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
 }
 
 export interface RawOpenAPIFile {
@@ -76,7 +78,10 @@ export async function parse({
                     taskContext,
                     disableExamples: false,
                     audiences: spec.settings?.audiences ?? [],
-                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                    shouldUseUndiscriminatedUnionsForDiscriminated:
+                        spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
+                    sdkLanguage: spec.settings?.sdkLanguage
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
@@ -85,7 +90,10 @@ export async function parse({
                     taskContext,
                     disableExamples: false,
                     audiences: spec.settings?.audiences ?? [],
-                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+                    shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                    shouldUseUndiscriminatedUnionsForDiscriminated:
+                        spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
+                    sdkLanguage: spec.settings?.sdkLanguage
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -99,7 +107,10 @@ export async function parse({
             const parsedAsyncAPI = parseAsyncAPI({
                 document: asyncAPI,
                 taskContext,
-                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true
+                shouldUseTitleAsName: spec.settings?.shouldUseTitleAsName ?? true,
+                shouldUseUndiscriminatedUnionsForDiscriminated:
+                    spec.settings?.shouldUseUndiscriminatedUnionsForDiscriminated ?? false,
+                sdkLanguage: spec.settings?.sdkLanguage
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);

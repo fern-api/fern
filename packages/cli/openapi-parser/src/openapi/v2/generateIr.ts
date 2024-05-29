@@ -9,13 +9,17 @@ export async function generateIr({
     taskContext,
     disableExamples,
     audiences,
-    shouldUseTitleAsName
+    shouldUseTitleAsName,
+    shouldUseUndiscriminatedUnionsForDiscriminated,
+    sdkLanguage
 }: {
     openApi: OpenAPIV2.Document;
     taskContext: TaskContext;
     disableExamples: boolean | undefined;
     audiences: string[];
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    sdkLanguage: "python" | undefined;
 }): Promise<OpenApiIntermediateRepresentation> {
     const conversionResult = await convertObj(openApi, {});
     return generateIrFromV3({
@@ -23,6 +27,8 @@ export async function generateIr({
         taskContext,
         disableExamples,
         audiences,
-        shouldUseTitleAsName
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsForDiscriminated,
+        sdkLanguage
     });
 }

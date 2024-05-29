@@ -19,14 +19,25 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         document,
         taskContext,
         authHeaders,
-        shouldUseTitleAsName
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsForDiscriminated,
+        sdkLanguage
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         shouldUseTitleAsName: boolean;
+        shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+        sdkLanguage: "python" | undefined;
     }) {
-        super({ document, taskContext, authHeaders, shouldUseTitleAsName });
+        super({
+            document,
+            taskContext,
+            authHeaders,
+            shouldUseTitleAsName,
+            shouldUseUndiscriminatedUnionsForDiscriminated,
+            sdkLanguage
+        });
     }
 
     public getDummy(): SchemaParserContext {

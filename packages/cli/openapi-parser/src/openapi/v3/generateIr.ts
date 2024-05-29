@@ -42,13 +42,17 @@ export function generateIr({
     taskContext,
     disableExamples,
     audiences,
-    shouldUseTitleAsName
+    shouldUseTitleAsName,
+    shouldUseUndiscriminatedUnionsForDiscriminated,
+    sdkLanguage
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
     disableExamples: boolean | undefined;
     audiences: string[];
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
+    sdkLanguage: "python" | undefined;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -71,7 +75,14 @@ export function generateIr({
             return null;
         })
     );
-    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders, shouldUseTitleAsName });
+    const context = new OpenAPIV3ParserContext({
+        document: openApi,
+        taskContext,
+        authHeaders,
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsForDiscriminated,
+        sdkLanguage
+    });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
 

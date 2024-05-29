@@ -21,12 +21,17 @@ export interface SingleNamespaceAPIDefinition {
     definitions: APIDefinitionLocation[];
 }
 
+export interface APIDefinitionSettings {
+    shouldUseTitleAsName: boolean | undefined;
+    shouldUseUndiscriminatedUnionsForDiscriminated: boolean | undefined;
+}
+
 export interface APIDefinitionLocation {
     path: string;
     origin: string | undefined;
     overrides: string | undefined;
     audiences: string[] | undefined;
-    shouldUseTitleAsName: boolean | undefined;
+    settings: APIDefinitionSettings | undefined;
 }
 
 export interface GeneratorGroup {

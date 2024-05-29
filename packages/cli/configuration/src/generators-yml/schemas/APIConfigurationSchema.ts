@@ -14,6 +14,11 @@ export const APIDefinitionSettingsSchema = z.object({
         .optional(z.boolean())
         .describe(
             "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true."
+        ),
+    "use-undiscriminated-unions-with-literals": z
+        .optional(z.boolean())
+        .describe(
+            "Whether to use the undiscriminated unions with defaulted literal fields as discriminated unions. Defaults to false."
         )
 });
 

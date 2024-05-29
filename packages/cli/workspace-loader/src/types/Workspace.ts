@@ -36,7 +36,9 @@ export interface Spec {
 
 export interface SpecImportSettings {
     audiences: string[];
+    sdkLanguage: "python" | undefined;
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
 }
 export interface APIChangelog {
     files: ChangelogFile[];

@@ -30,11 +30,15 @@ export interface AsyncAPIIntermediateRepresentation {
 export function parseAsyncAPI({
     document,
     taskContext,
-    shouldUseTitleAsName
+    sdkLanguage,
+    shouldUseTitleAsName,
+    shouldUseUndiscriminatedUnionsForDiscriminated
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
+    sdkLanguage: "python" | undefined;
     shouldUseTitleAsName: boolean;
+    shouldUseUndiscriminatedUnionsForDiscriminated: boolean;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
@@ -43,7 +47,13 @@ export function parseAsyncAPI({
         breadcrumbs.push("websocket");
     }
 
-    const context = new AsyncAPIV2ParserContext({ document, taskContext, shouldUseTitleAsName });
+    const context = new AsyncAPIV2ParserContext({
+        document,
+        taskContext,
+        shouldUseTitleAsName,
+        shouldUseUndiscriminatedUnionsForDiscriminated,
+        sdkLanguage
+    });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     let parsedChannel: WebsocketChannel | undefined = undefined;
