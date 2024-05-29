@@ -155,6 +155,19 @@
                             }
                         },
                         "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "set",
+                                "set": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                }
+                            }
+                        },
+                        "docs": null
                     }
                 ]
             },
